@@ -1,0 +1,1 @@
+/* jquery transport client for elasticsearch-js */
