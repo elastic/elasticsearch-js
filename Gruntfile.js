@@ -1,3 +1,4 @@
+/* jshint node:true */
 'use strict';
 
 module.exports = function (grunt) {
@@ -32,7 +33,7 @@ module.exports = function (grunt) {
         src: pre.concat(['src/transport/elasticsearch-node.js'],post),
         dest: 'dist/elasticsearch-node.js'
       }
-    },    
+    },
     nodeunit: {
       files: ['test/**/*.js']
     },
