@@ -10,7 +10,15 @@
     "grunt-contrib": "~0.7.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-nodeunit": "~0.2.0"
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "mocha": "~1.12.1",
+    "grunt-mocha-test": "~0.6.3",
+    "should": "~1.3.0"
   },
-  "license": "Apache License"
+  "license": "Apache License",
+  "dependencies": {
+    "lodash": "~2.0.0",
+    "require-directory": "~1.1.1",
+    "cli-color": "~0.2.3"
+  }
 }

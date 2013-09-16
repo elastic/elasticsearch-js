@@ -34,42 +34,32 @@ module.exports = function (grunt) {
         dest: 'dist/elasticsearch-node.js'
       }
     },
-    nodeunit: {
-      files: ['test/**/*.js']
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec',
+          require: [
+            'should'
+          ]
+        },
+        src: ['spec/**/*.js']
+      }
     },
     jshint: {
-      files: ['Gruntfile.js', '<%= concat.node.dest %>', 'test/**/*.js' ],
+      cwd: 'src',
+      files: ['../Gruntfile.js', '**/*.js' ],
       options: {
-        bitwise: true,
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        indent: 2,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        globalstrict: true,
-        devel: true,
-        node: true,
-        globals: {
-          exports: true,
-          module: false
-        }
+        jshintrc: 'src/.jshintrc'
       }
     }
   });
 
   // load plugins
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
 
   // Default task.
-  grunt.registerTask('default', ['concat','nodeunit','jshint']);
+  grunt.registerTask('default', [/*'jshint',*/ 'mochaTest']);
 
 };

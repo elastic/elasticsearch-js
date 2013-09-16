@@ -1,32 +1,32 @@
 {
-  "browser": true,
+  "node": true,
 
-  "bitwise":false,
+  "bitwise": false,
   "curly": true,
   "eqnull": true,
-  "globalstrict": true,
-  "devel": true,
   "eqeqeq": true,
-  "forin": false,
+  "forin": true,
   "immed": true,
-  "supernew": true,
-  "expr": true,
+  "expr": false,
   "indent": 2,
-  "latedef": true,
+  "latedef": "nofunc",
   "newcap": true,
   "noarg": true,
   "noempty": true,
   "undef": true,
+  "quotmark": "single",
+  "plusplus": false,
   "boss": true,
-  "trailing": false,
+  "trailing": true,
   "laxbreak": true,
   "laxcomma": true,
+  "validthis": true,
   "sub": true,
-
   "maxlen": 140,
 
   "globals": {
-    "define": true,
-    "require": true
+    "describe": true,
+    "it": true,
+    "beforeEach": true
   }
 }
