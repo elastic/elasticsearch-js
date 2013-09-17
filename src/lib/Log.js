@@ -1,9 +1,7 @@
-var _ = require('../Utils'),
-  events = require('events'),
-  loggers = _.requireDir(module, './loggers');
+var _ = require('./Utils'),
+  EventEmitter = require('events').EventEmitter;
 
 /**
- *
  * Log bridge, which writes using one or more Logger's. Setup these loggers by
  * specifying their config with the first argument, or by calling addOutput.
  *
@@ -20,13 +18,13 @@ function Log(output) {
 
   output = output || 2;
 
-  if (_.isString(output)) {
+  if (_.isString(output) || _.isFinite(output)) {
     output = [
       {
         level: output
       }
     ];
-  } else if (_.isObject(output)) {
+  } else if (_.isPlainObject(output)) {
     output = [output];
   } else if (_.isArray(output)) {
     for (i = 0; i < output.length; i++) {
@@ -46,14 +44,12 @@ function Log(output) {
    * A list of the log streams, which are listening to this logger.
    * @type {Array}
    */
-  this.outputs = [];
-
   for (i = 0; i < output.length; i++) {
-    this.addLogger(output[i]);
+    this.addOutput(output[i]);
   }
 
 }
-_.inherits(Log, events.EventEmitter);
+_.inherits(Log, EventEmitter);
 
 /**
  * Levels observed by the loggers, with their rank
@@ -76,7 +72,7 @@ Log.levelsInverted = _.invert(Log.levels);
 
 /**
  * Converts a log identifier to an integer representing it's level
- * @private
+ * @static
  * @param  {*} ident - The identifying to convert, if invalid then the default will be returned
  * @param  {Integer} default - The default log level to use if the identifier is not valid
  * @return {Integer} - The number reprsenting the log level
@@ -94,6 +90,21 @@ Log.level = function (ident, def) {
 };
 
 /**
+ * Combine the array-like param into a simple string
+ * @param  {*} arrayish - An array like object that can be itterated by _.each
+ * @return {String} - The final string.
+ */
+Log.join = function (arrayish) {
+  return _.map(arrayish, function (item) {
+    if (_.isPlainObject(item)) {
+      return _.inspect(item, { showHidden: true, depth: null, color: true}) + '\n';
+    } else {
+      return item.toString();
+    }
+  }).join(' ');
+};
+
+/**
  * Create a new logger, based on the config.
  * @param {object} config  An object with config options for the logger. Type is used to find the
  *                         logger class, and should be one of 'file' or 'stdio' if running in node.js,
@@ -102,15 +113,12 @@ Log.level = function (ident, def) {
  */
 Log.prototype.addOutput = function (config) {
   _.defaults(config, {
-    type: 'stdio',
+    type: 'StdIo',
     level: Log.level(config.type, 2)
   });
 
-  if (loggers[config.type]) {
-    return this.outputs[this.outputs.push(new loggers[config.type](config, this)) - 1];
-  } else {
-    throw new TypeError('Invalid logger type ' + config.type);
-  }
+  var Logger = require('./loggers/' + config.type);
+  return new Logger(config, this);
 };
 
 /**
@@ -119,17 +127,21 @@ Log.prototype.addOutput = function (config) {
  * @return {undefined}
  */
 Log.prototype.error = function (e) {
-  this.emit('error', e instanceof Error ? e : new Error(e));
+  if (EventEmitter.listenerCount(this, 'error')) {
+    return this.emit('error', e instanceof Error ? e : new Error(e));
+  }
 };
 
 
 /**
  * Log a warning message
- * @param  {String} message The warning message
+ * @param  {...*} msg - Any amount of messages that will be joined before logged
  * @return {undefined}
  */
-Log.prototype.warning = function (message) {
-  this.emit('warning', message);
+Log.prototype.warning = function (/* ...msg */) {
+  if (EventEmitter.listenerCount(this, 'warning')) {
+    return this.emit('warning', Log.join(arguments));
+  }
 };
 /** @alias Log.warning */
 Log.prototype.warn = Log.prototype.warning;
@@ -137,29 +149,35 @@ Log.prototype.warn = Log.prototype.warning;
 
 /**
  * Log useful info about what's going on
- * @param  {String} message The warning message
+ * @param  {...*} msg - Any amount of messages that will be joined before logged
  * @return {undefined}
  */
-Log.prototype.info = function (message) {
-  this.emit('info', message);
+Log.prototype.info = function (/* ...msg */) {
+  if (EventEmitter.listenerCount(this, 'info')) {
+    return this.emit('info', Log.join(arguments));
+  }
 };
 
 /**
  * Log a debug level message
- * @param  {String} message The warning message
+ * @param  {...*} msg - Any amount of messages that will be joined before logged
  * @return {undefined}
  */
-Log.prototype.debug = function (message) {
-  this.emit('debug', message);
+Log.prototype.debug = function (/* ...msg */) {
+  if (EventEmitter.listenerCount(this, 'debug')) {
+    return this.emit('debug', Log.join(arguments));
+  }
 };
 
 /**
  * Log a trace level message
- * @param  {String} message The warning message
+ * @param  {...*} msg - Any amount of messages that will be joined before logged
  * @return {undefined}
  */
-Log.prototype.trace = function (message) {
-  this.emit('trace', message);
+Log.prototype.trace = function (/* ...msg */) {
+  if (EventEmitter.listenerCount(this, 'trace')) {
+    return this.emit('trace', Log.join(arguments));
+  }
 };
 
 

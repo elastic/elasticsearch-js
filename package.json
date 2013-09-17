@@ -11,9 +11,8 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "mocha": "~1.12.1",
-    "grunt-mocha-test": "~0.6.3",
-    "should": "~1.3.0"
+    "should": "~1.3.0",
+    "nodeunit": "~0.8.1"
   },
   "license": "Apache License",
   "dependencies": {

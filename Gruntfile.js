@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     'src/transport.js'
   ];
 
-  var post = ['src/client.js','src/post.js'];
+  var post = ['src/client.js', 'src/post.js'];
 
   // Project configuration.
   grunt.initConfig({
@@ -30,36 +30,45 @@ module.exports = function (grunt) {
         banner: '<%= meta.banner %>'
       },
       node: {
-        src: pre.concat(['src/transport/elasticsearch-node.js'],post),
+        src: pre.concat(['src/transport/elasticsearch-node.js'], post),
         dest: 'dist/elasticsearch-node.js'
       }
     },
-    mochaTest: {
-      test: {
-        options: {
-          reporter: 'spec',
-          require: [
-            'should'
-          ]
-        },
-        src: ['spec/**/*.js']
+    nodeunit: {
+      nodeunit: {
+        all: [
+          'test/**/*.test.js'
+        ]
       }
     },
     jshint: {
-      cwd: 'src',
-      files: ['../Gruntfile.js', '**/*.js' ],
-      options: {
-        jshintrc: 'src/.jshintrc'
+      source: {
+        src: [
+          'Gruntfile.js',
+          'src/**/*.js',
+        ],
+        options: {
+          jshintrc: 'src/.jshintrc'
+        }
+      },
+      tests: {
+        src: [
+          'test/**/*.js'
+        ],
+        options: {
+          jshintrc: 'test/.jshintrc'
+        }
       }
     }
   });
 
   // load plugins
-  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint',*/ 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('test', ['nodeunit']);
 
 };

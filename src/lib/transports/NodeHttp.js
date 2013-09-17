@@ -1,6 +1,6 @@
 /* elasticsearch-js nodejs transport */
-
-var http = require('http');
+var http = require('http')
+  , _ = require('../Utils');
 
 function NodeHttp() {
 
@@ -55,12 +55,12 @@ function NodeHttp() {
       request.on('error', errorcb);
     }
 
-    if(method !== 'GET' && method !== 'HEAD') {
+    if (method !== 'GET' && method !== 'HEAD') {
       request.write(body);
     }
 
     request.end();
-  };
+  }
 
   // Public functions
   return {
@@ -71,4 +71,6 @@ function NodeHttp() {
     head  : _.bind(performRequest, this, 'HEAD')
   };
 
-} ());
+}
+
+module.exports = NodeHttp;
