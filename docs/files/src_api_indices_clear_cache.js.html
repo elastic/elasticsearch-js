@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/api/indices/clear_cache.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/api/indices/clear_cache.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;../../lib/utils&#x27;);
+
+var ignoreIndicesOptions = [&#x27;none&#x27;, &#x27;missing&#x27;];
+
+
+
+/**
+ * Perform an elasticsearch [indices.clear_cache](http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/) request
+ *
+ * @for Client
+ * @method indices.clear_cache
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {boolean} params.field_data - Clear field data
+ * @param {boolean} params.fielddata - Clear field data
+ * @param {list} params.fields - A comma-separated list of fields to clear when using the &#x60;field_data&#x60; parameter (default: all)
+ * @param {boolean} params.filter - Clear filter caches
+ * @param {boolean} params.filter_cache - Clear filter caches
+ * @param {boolean} params.filter_keys - A comma-separated list of keys to clear when using the &#x60;filter_cache&#x60; parameter (default: all)
+ * @param {boolean} params.id - Clear ID caches for parent/child
+ * @param {boolean} params.id_cache - Clear ID caches for parent/child
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore &#x60;missing&#x60; ones
+ * @param {list} params.index - A comma-separated list of index name to limit the operation
+ * @param {boolean} params.recycler - Clear the recycler cache
+ */
+function doIndicesClearCache(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};
+
+  if (param.method) {
+    if (param.method === &#x27;POST&#x27; || param.method === &#x27;GET&#x27;) {
+      request.method = param.method;
+    } else {
+      throw new TypeError(&#x27;Invalid method: should be one of POST, GET&#x27;);
+    }
+  } else {
+    request.method = &#x27;POST&#x27;;
+  }
+
+  // find the url&#x27;s params
+  if (params.hasOwnProperty(&#x27;index&#x27;)) {
+    if (typeof params.index === &#x27;string&#x27;) {
+      url.index = params.index;
+    } else if (_.isArray(params.index)) {
+      url.index = params.index.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid index:&#x27; + params.index + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+
+  // build the url
+  if (url.hasOwnProperty(&#x27;index&#x27;)) {
+    request.url = &#x27;/&#x27; + url.index + &#x27;/_cache/clear&#x27;;
+  }
+  else  {
+    request.url = &#x27;/_cache/clear&#x27;;
+  }
+  
+
+  // build the query string
+  if (params.hasOwnProperty(&#x27;field_data&#x27;)) {
+    if (params.field_data.toLowerCase &amp;&amp; (params.field_data = params.field_data.toLowerCase())
+      &amp;&amp; (params.field_data === &#x27;no&#x27; || params.field_data === &#x27;off&#x27;)
+    ) {
+      query.field_data = false;
+    } else {
+      query.field_data = !!params.field_data;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;fielddata&#x27;)) {
+    if (params.fielddata.toLowerCase &amp;&amp; (params.fielddata = params.fielddata.toLowerCase())
+      &amp;&amp; (params.fielddata === &#x27;no&#x27; || params.fielddata === &#x27;off&#x27;)
+    ) {
+      query.fielddata = false;
+    } else {
+      query.fielddata = !!params.fielddata;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;fields&#x27;)) {
+    if (typeof params.fields === &#x27;string&#x27;) {
+      query.fields = params.fields;
+    } else if (_.isArray(params.fields)) {
+      query.fields = params.fields.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid fields:&#x27; + params.fields + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter&#x27;)) {
+    if (params.filter.toLowerCase &amp;&amp; (params.filter = params.filter.toLowerCase())
+      &amp;&amp; (params.filter === &#x27;no&#x27; || params.filter === &#x27;off&#x27;)
+    ) {
+      query.filter = false;
+    } else {
+      query.filter = !!params.filter;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_cache&#x27;)) {
+    if (params.filter_cache.toLowerCase &amp;&amp; (params.filter_cache = params.filter_cache.toLowerCase())
+      &amp;&amp; (params.filter_cache === &#x27;no&#x27; || params.filter_cache === &#x27;off&#x27;)
+    ) {
+      query.filter_cache = false;
+    } else {
+      query.filter_cache = !!params.filter_cache;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_keys&#x27;)) {
+    if (params.filter_keys.toLowerCase &amp;&amp; (params.filter_keys = params.filter_keys.toLowerCase())
+      &amp;&amp; (params.filter_keys === &#x27;no&#x27; || params.filter_keys === &#x27;off&#x27;)
+    ) {
+      query.filter_keys = false;
+    } else {
+      query.filter_keys = !!params.filter_keys;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;id&#x27;)) {
+    if (params.id.toLowerCase &amp;&amp; (params.id = params.id.toLowerCase())
+      &amp;&amp; (params.id === &#x27;no&#x27; || params.id === &#x27;off&#x27;)
+    ) {
+      query.id = false;
+    } else {
+      query.id = !!params.id;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;id_cache&#x27;)) {
+    if (params.id_cache.toLowerCase &amp;&amp; (params.id_cache = params.id_cache.toLowerCase())
+      &amp;&amp; (params.id_cache === &#x27;no&#x27; || params.id_cache === &#x27;off&#x27;)
+    ) {
+      query.id_cache = false;
+    } else {
+      query.id_cache = !!params.id_cache;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;ignore_indices&#x27;)) {
+    if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
+      query.ignore_indices = params.ignore_indices;
+    } else {
+      throw new TypeError(
+        &#x27;Invalid ignore_indices:&#x27; + params.ignore_indices +
+        &#x27; should be one of &#x27; + ignoreIndicesOptions.join(&#x27;, &#x27;) + &#x27;.&#x27;
+      );
+    }
+  } else {
+    query.ignore_indices = &#x27;none&#x27;;
+  }
+  
+  if (params.hasOwnProperty(&#x27;index&#x27;)) {
+    if (typeof params.index === &#x27;string&#x27;) {
+      query.index = params.index;
+    } else if (_.isArray(params.index)) {
+      query.index = params.index.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid index:&#x27; + params.index + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;recycler&#x27;)) {
+    if (params.recycler.toLowerCase &amp;&amp; (params.recycler = params.recycler.toLowerCase())
+      &amp;&amp; (params.recycler === &#x27;no&#x27; || params.recycler === &#x27;off&#x27;)
+    ) {
+      query.recycler = false;
+    } else {
+      query.recycler = !!params.recycler;
+    }
+  }
+  
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = doIndicesClearCache;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

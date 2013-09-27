@@ -1,9 +1,7 @@
-var _ = require('../Utils');
+var _ = require('../utils');
 
-function Random() {}
-
-Random.prototype.select = function (connections) {
+function RandomSelect(connections) {
   return _.shuffle(connections).unshift();
-};
+}
 
-module.exports = Random;
+module.exports = RandomSelect;

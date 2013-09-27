@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/api/indices/analyze.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/api/indices/analyze.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;../../lib/utils&#x27;);
+
+var formatOptions = [&#x27;detailed&#x27;, &#x27;text&#x27;];
+
+
+
+/**
+ * Perform an elasticsearch [indices.analyze](http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/) request
+ *
+ * @for Client
+ * @method indices.analyze
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {string} params.analyzer - The name of the analyzer to use
+ * @param {string} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
+ * @param {list} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {string} params.index - The name of the index to scope the operation
+ * @param {boolean} params.prefer_local - With &#x60;true&#x60;, specify that a local shard should be used if available, with &#x60;false&#x60;, use a random shard (default: true)
+ * @param {string} params.text - The text on which the analysis should be performed (when request body is not used)
+ * @param {string} params.tokenizer - The name of the tokenizer to use for the analysis
+ * @param {String} [params.format=detailed] - Format of the output
+ */
+function doIndicesAnalyze(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};
+
+  if (param.method) {
+    if (param.method === &#x27;GET&#x27; || param.method === &#x27;POST&#x27;) {
+      request.method = param.method;
+    } else {
+      throw new TypeError(&#x27;Invalid method: should be one of GET, POST&#x27;);
+    }
+  } else {
+    request.method = &#x27;GET&#x27;;
+  }
+
+  // find the url&#x27;s params
+  if (params.hasOwnProperty(&#x27;index&#x27;)) {
+    if (typeof params.index !== &#x27;object&#x27; &amp;&amp; typeof params.index !== &#x27;undefined&#x27;) {
+      url.index = &#x27;&#x27; + params.index;
+    } else {
+      throw new TypeError(&#x27;Invalid index:&#x27; + params.index + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+
+  // build the url
+  if (url.hasOwnProperty(&#x27;index&#x27;)) {
+    request.url = &#x27;/&#x27; + url.index + &#x27;/_analyze&#x27;;
+  }
+  else  {
+    request.url = &#x27;/_analyze&#x27;;
+  }
+  
+
+  // build the query string
+  if (params.hasOwnProperty(&#x27;analyzer&#x27;)) {
+    if (typeof params.analyzer !== &#x27;object&#x27; &amp;&amp; typeof params.analyzer !== &#x27;undefined&#x27;) {
+      query.analyzer = &#x27;&#x27; + params.analyzer;
+    } else {
+      throw new TypeError(&#x27;Invalid analyzer:&#x27; + params.analyzer + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;field&#x27;)) {
+    if (typeof params.field !== &#x27;object&#x27; &amp;&amp; typeof params.field !== &#x27;undefined&#x27;) {
+      query.field = &#x27;&#x27; + params.field;
+    } else {
+      throw new TypeError(&#x27;Invalid field:&#x27; + params.field + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filters&#x27;)) {
+    if (typeof params.filters === &#x27;string&#x27;) {
+      query.filters = params.filters;
+    } else if (_.isArray(params.filters)) {
+      query.filters = params.filters.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid filters:&#x27; + params.filters + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;index&#x27;)) {
+    if (typeof params.index !== &#x27;object&#x27; &amp;&amp; typeof params.index !== &#x27;undefined&#x27;) {
+      query.index = &#x27;&#x27; + params.index;
+    } else {
+      throw new TypeError(&#x27;Invalid index:&#x27; + params.index + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;prefer_local&#x27;)) {
+    if (params.prefer_local.toLowerCase &amp;&amp; (params.prefer_local = params.prefer_local.toLowerCase())
+      &amp;&amp; (params.prefer_local === &#x27;no&#x27; || params.prefer_local === &#x27;off&#x27;)
+    ) {
+      query.prefer_local = false;
+    } else {
+      query.prefer_local = !!params.prefer_local;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;text&#x27;)) {
+    if (typeof params.text !== &#x27;object&#x27; &amp;&amp; typeof params.text !== &#x27;undefined&#x27;) {
+      query.text = &#x27;&#x27; + params.text;
+    } else {
+      throw new TypeError(&#x27;Invalid text:&#x27; + params.text + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;tokenizer&#x27;)) {
+    if (typeof params.tokenizer !== &#x27;object&#x27; &amp;&amp; typeof params.tokenizer !== &#x27;undefined&#x27;) {
+      query.tokenizer = &#x27;&#x27; + params.tokenizer;
+    } else {
+      throw new TypeError(&#x27;Invalid tokenizer:&#x27; + params.tokenizer + &#x27; should be a string.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;format&#x27;)) {
+    if (_.contains(formatOptions, params.format)) {
+      query.format = params.format;
+    } else {
+      throw new TypeError(
+        &#x27;Invalid format:&#x27; + params.format +
+        &#x27; should be one of &#x27; + formatOptions.join(&#x27;, &#x27;) + &#x27;.&#x27;
+      );
+    }
+  } else {
+    query.format = &#x27;detailed&#x27;;
+  }
+  
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = doIndicesAnalyze;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -35,10 +35,11 @@ module.exports = function (grunt) {
       }
     },
     nodeunit: {
-      nodeunit: {
-        all: [
-          'test/**/*.test.js'
-        ]
+      all: [
+        'test/unit/*.test.js'
+      ],
+      options: {
+        reporter: 'default'
       }
     },
     jshint: {
@@ -59,12 +60,30 @@ module.exports = function (grunt) {
           jshintrc: 'test/.jshintrc'
         }
       }
+    },
+    yuidoc: {
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        logo: '<%= pkg.logo %>',
+        options: {
+          paths: 'src',
+          themedir: '../yuidoc-bootstrap-theme',
+          helpers: [
+            '../yuidoc-bootstrap-theme/helpers/helpers.js'
+          ],
+          outdir: 'docs'
+        }
+      }
     }
   });
 
   // load plugins
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 
   // Default task.

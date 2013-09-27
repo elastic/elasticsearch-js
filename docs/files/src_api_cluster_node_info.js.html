@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/api/cluster/node_info.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/api/cluster/node_info.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;../../lib/utils&#x27;);
+
+//TODO: this enpoint ***needs*** work, many of the possible urls are not supported
+
+
+/**
+ * Perform an elasticsearch [cluster.node_info](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/) request
+ *
+ * @for Client
+ * @method cluster.node_info
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {boolean} params.all - Return all available information
+ * @param {boolean} params.clear - Reset the default settings
+ * @param {boolean} params.http - Return information about HTTP
+ * @param {boolean} params.jvm - Return information about the JVM
+ * @param {boolean} params.network - Return information about network
+ * @param {boolean} params.os - Return information about the operating system
+ * @param {boolean} params.plugin - Return information about plugins
+ * @param {boolean} params.process - Return information about the Elasticsearch process
+ * @param {boolean} params.settings - Return information about node settings
+ * @param {boolean} params.thread_pool - Return information about the thread pool
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {boolean} params.transport - Return information about transport
+ */
+function doClusterNodeInfo(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};
+
+  request.method = &#x27;GET&#x27;;
+
+  // find the url&#x27;s params
+  if (params.hasOwnProperty(&#x27;node_id&#x27;)) {
+    if (typeof params.node_id === &#x27;string&#x27;) {
+      url.node_id = params.node_id;
+    } else if (_.isArray(params.node_id)) {
+      url.node_id = params.node_id.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid node_id:&#x27; + params.node_id + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+
+  // build the url
+  if (url.hasOwnProperty(&#x27;node_id&#x27;)) {
+    request.url = &#x27;/_nodes/&#x27; + url.node_id + &#x27;&#x27;;
+  }
+  else  {
+    request.url = &#x27;/_nodes&#x27;;
+  }
+  
+
+  // build the query string
+  if (params.hasOwnProperty(&#x27;all&#x27;)) {
+    if (params.all.toLowerCase &amp;&amp; (params.all = params.all.toLowerCase())
+      &amp;&amp; (params.all === &#x27;no&#x27; || params.all === &#x27;off&#x27;)
+    ) {
+      query.all = false;
+    } else {
+      query.all = !!params.all;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;clear&#x27;)) {
+    if (params.clear.toLowerCase &amp;&amp; (params.clear = params.clear.toLowerCase())
+      &amp;&amp; (params.clear === &#x27;no&#x27; || params.clear === &#x27;off&#x27;)
+    ) {
+      query.clear = false;
+    } else {
+      query.clear = !!params.clear;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;http&#x27;)) {
+    if (params.http.toLowerCase &amp;&amp; (params.http = params.http.toLowerCase())
+      &amp;&amp; (params.http === &#x27;no&#x27; || params.http === &#x27;off&#x27;)
+    ) {
+      query.http = false;
+    } else {
+      query.http = !!params.http;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;jvm&#x27;)) {
+    if (params.jvm.toLowerCase &amp;&amp; (params.jvm = params.jvm.toLowerCase())
+      &amp;&amp; (params.jvm === &#x27;no&#x27; || params.jvm === &#x27;off&#x27;)
+    ) {
+      query.jvm = false;
+    } else {
+      query.jvm = !!params.jvm;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;network&#x27;)) {
+    if (params.network.toLowerCase &amp;&amp; (params.network = params.network.toLowerCase())
+      &amp;&amp; (params.network === &#x27;no&#x27; || params.network === &#x27;off&#x27;)
+    ) {
+      query.network = false;
+    } else {
+      query.network = !!params.network;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;os&#x27;)) {
+    if (params.os.toLowerCase &amp;&amp; (params.os = params.os.toLowerCase())
+      &amp;&amp; (params.os === &#x27;no&#x27; || params.os === &#x27;off&#x27;)
+    ) {
+      query.os = false;
+    } else {
+      query.os = !!params.os;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;plugin&#x27;)) {
+    if (params.plugin.toLowerCase &amp;&amp; (params.plugin = params.plugin.toLowerCase())
+      &amp;&amp; (params.plugin === &#x27;no&#x27; || params.plugin === &#x27;off&#x27;)
+    ) {
+      query.plugin = false;
+    } else {
+      query.plugin = !!params.plugin;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;process&#x27;)) {
+    if (params.process.toLowerCase &amp;&amp; (params.process = params.process.toLowerCase())
+      &amp;&amp; (params.process === &#x27;no&#x27; || params.process === &#x27;off&#x27;)
+    ) {
+      query.process = false;
+    } else {
+      query.process = !!params.process;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;settings&#x27;)) {
+    if (params.settings.toLowerCase &amp;&amp; (params.settings = params.settings.toLowerCase())
+      &amp;&amp; (params.settings === &#x27;no&#x27; || params.settings === &#x27;off&#x27;)
+    ) {
+      query.settings = false;
+    } else {
+      query.settings = !!params.settings;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;thread_pool&#x27;)) {
+    if (params.thread_pool.toLowerCase &amp;&amp; (params.thread_pool = params.thread_pool.toLowerCase())
+      &amp;&amp; (params.thread_pool === &#x27;no&#x27; || params.thread_pool === &#x27;off&#x27;)
+    ) {
+      query.thread_pool = false;
+    } else {
+      query.thread_pool = !!params.thread_pool;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;timeout&#x27;)) {
+    if (params.timeout instanceof Date) {
+      query.timeout = params.timeout.getTime();
+    } else if (_.isNumeric(params.timeout)) {
+      query.timeout = params.timeout;
+    } else {
+      throw new TypeError(&#x27;Invalid timeout:&#x27; + params.timeout + &#x27; should be be some sort of time.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;transport&#x27;)) {
+    if (params.transport.toLowerCase &amp;&amp; (params.transport = params.transport.toLowerCase())
+      &amp;&amp; (params.transport === &#x27;no&#x27; || params.transport === &#x27;off&#x27;)
+    ) {
+      query.transport = false;
+    } else {
+      query.transport = !!params.transport;
+    }
+  }
+  
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = doClusterNodeInfo;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

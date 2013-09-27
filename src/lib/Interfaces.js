@@ -1,4 +1,4 @@
-var _ = require('./Utils')
+var _ = require('./utils')
   , TransportAbstract = require('./transports/TransportAbstract');
 
 function Interface(methods, properties) {

@@ -1,0 +1,66 @@
+var _ = require('<%= path2lib %>utils');<%
+
+
+if (_.keys(enumOptions).length) {
+  %>
+<% _.each(enumOptions, function(options, name) {
+    %>
+var <%= name %>Options = <%= stringify(options) %>;<%
+  });
+}
+%>
+
+<%= notes ? notes + '\n' : ''
+%>
+
+/**
+ * Perform an elasticsearch [<%= name %>](<%= docUrl %>) request
+ *
+ * @for Client
+ * @method <%= name %>
+ * @param {Object} params - An object with parameters used to carry out this action<% _.each(params, function(param, paramName) { %>
+ * @param {<%= paramType(param.type) %>} <%= paramWithDefault('params.' + paramName, param.default) %><% if (param.description) { %> - <%= param.description %><% } %><%
+})
+%>
+ */
+function do<%= _.studlyCase(name) %>(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};<%
+
+if (body) { %>
+  request.body = params.body || null;<%
+}
+%>
+<%
+if (methods.length > 1) { %>
+  if (params.method) {
+    if (<%= _.map(methods, function (method) { return 'params.method === ' + stringify(method) }).join(' || ') %>) {
+      request.method = params.method;
+    } else {
+      throw new TypeError('Invalid method: should be one of <%= methods.join(', ') %>');
+    }
+  } else {
+    request.method = <%= stringify(methods[0]) %>;
+  }<%
+} else { %>
+  request.method = <%= stringify(methods[0]) %>;<%
+}
+%>
+
+  // find the url's params
+<%= writeParams(2, urlParts, 'url.') %>
+
+  // build the url
+<%= writeUrls(2, urls) %>
+
+  // build the query string
+<%= writeParams(2, params, 'query.') %>
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = do<%= _.studlyCase(name) %>;

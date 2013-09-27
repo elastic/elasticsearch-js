@@ -1,61 +1,79 @@
 var clc = require('cli-color')
-  , Log = require('../Log')
-  , _ = require('../Utils');
+  , Log = require('../log')
+  , _ = require('../utils');
 
 /**
  * Special version of the Stream logger, which logs errors and warnings to stderr and all other
  * levels to stdout.
+ *
+ * @class Loggers.Stdio
+ * @constructor
  * @param {Object} config - The configuration for the Logger
- * @param {string} config.level - The highest log level for this logger to output. See {@link Log.levels}
+ * @param {string} config.level - The highest log level for this logger to output.
  * @param {Log} bridge - The object that triggers logging events, which we will record
  */
-function StdIo(config, bridge) {
+function Stdio(config, bridge) {
   this.bridge = bridge;
-  var i, method;
 
-  var handlers = this.handlers = {};
+  // config/state
+  this.color = _.has(config, 'color') ? !!config.color : true;
+  this.listeningLevels = [];
 
-  this.color = true;
+  // bound copies of the event handlers
+  this.handlers = _.reduce(Log.levels, function (handlers, name) {
+    handlers[name] = _.bindKey(this, 'on' + _.studlyCase(name));
+    return handlers;
+  }, {}, this);
 
-  _.each(Log.levels, function (i, name) {
-    // create a version of each log event handler that is bound to "this"
-    handlers[Log.levels[name]] = _.bind(this, 'on' + name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase());
-  }, this);
-  this.setupListeners(config.level);
+  // then the bridge closes, remove our event listeners
+  this.bridge.on('closing', _.bindKey(this, 'cleanUpListeners'));
+
+  this.setupListeners(config.levels);
 }
 
 /**
  * Clear the current event listeners and then re-listen for events based on the level specified
+ *
+ * @method setupListeners
+ * @private
  * @param  {Integer} level - The max log level that this logger should listen to
  * @return {undefined}
  */
-StdIo.prototype.setupListeners = function (level) {
+Stdio.prototype.setupListeners = function (levels) {
   this.cleanUpListeners();
-  for (this.listeningLevel = level; level > 0; level--) {
-    this.bridge.on(Log.levelsInverted[level], this.handlers[level]);
-  }
+
+  this.listeningLevels = levels;
+
+  _.each(this.listeningLevels, function (level) {
+    this.bridge.on(level, this.handlers[level]);
+  }, this);
 };
 
 /**
  * Clear the current event listeners
+ *
+ * @method cleanUpListeners
+ * @private
  * @return {undefined}
  */
-StdIo.prototype.cleanUpListeners = function () {
-  for (; this.listeningLevel > 0; this.listeningLevel--) {
-    // remove the listeners for each event
-    this.bridge.removeListener(Log.levelsInverted[this.listeningLevel], this.handlers[this.listeningLevel]);
-  }
+Stdio.prototype.cleanUpListeners = function () {
+  _.each(this.listeningLevels, function (level) {
+    this.bridge.removeListener(level, this.handlers[level]);
+  }, this);
 };
 
 /**
  * Sends output to a stream, does some formatting first
+ *
+ * @method write
+ * @private
  * @param  {WriteableStream} to - The stream that should receive this message
  * @param  {String} label - The text that should be used at the begining of the message
  * @param  {function} colorize - A function that recieves a string and returned a colored version of it
  * @param  {*} what - The message to log
  * @return {undefined}
  */
-StdIo.prototype.write = function (to, label, colorize, what) {
+Stdio.prototype.write = function (to, label, colorize, what) {
   if (this.color) {
     label = colorize(label);
   }
@@ -64,47 +82,77 @@ StdIo.prototype.write = function (to, label, colorize, what) {
 
 /**
  * Handler for the bridges "error" event
+ *
+ * @method onError
+ * @private
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-StdIo.prototype.onError = function (e) {
+Stdio.prototype.onError = function (e) {
   this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, clc.red.bold,  [e.message, '\n\nStack Trace:\n' + e.stack]);
 };
 
 /**
  * Handler for the bridges "warning" event
+ *
+ * @method onWarning
+ * @private
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-StdIo.prototype.onWarning = function (msg) {
+Stdio.prototype.onWarning = function (msg) {
   this.write(process.stderr, 'WARNING', clc.yellow.bold, msg);
 };
 
 /**
  * Handler for the bridges "info" event
+ *
+ * @method onInfo
+ * @private
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-StdIo.prototype.onInfo = function (msg) {
+Stdio.prototype.onInfo = function (msg) {
   this.write(process.stdout, 'INFO', clc.cyan.bold, msg);
 };
 
 /**
  * Handler for the bridges "debug" event
+ *
+ * @method onDebug
+ * @private
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-StdIo.prototype.onDebug = function (msg) {
+Stdio.prototype.onDebug = function (msg) {
   this.write(process.stdout, 'DEBUG', clc.magentaBright.bold, msg);
 };
 
 /**
  * Handler for the bridges "trace" event
+ *
+ * @method onTrace
+ * @private
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-StdIo.prototype.onTrace = function (msg) {
-  this.write(process.stdout, 'TRACE', clc.cyanBright.bold, msg);
+Stdio.prototype.onTrace = function (method, url, body, responseStatus, responseBody) {
+  var message = '\nHTTP ' + method + ' ' + url + ' -> ';
+  if (this.color) {
+    if (responseStatus === 200) {
+      message += clc.green.bold(responseStatus);
+    } else {
+      message += clc.red.bold(responseStatus);
+    }
+  } else {
+    message += responseStatus;
+  }
+  message += '\n' + responseBody + '\n\n';
+  message += 'curl "' + url.replace('"', '\\"') + '" -X' + method.toUpperCase();
+  if (body) {
+    message += ' -d ' + JSON.stringify(JSON.stringify(body));
+  }
+  this.write(process.stdout, 'TRACE', clc.cyanBright.bold, message + '\n\n');
 };
 
-module.exports = StdIo;
+module.exports = Stdio;

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/lib/utils.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/lib/utils.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var path = require(&#x27;path&#x27;)
+  , _ = require(&#x27;lodash&#x27;)
+  , fs = require(&#x27;fs&#x27;)
+  , requireDir = require(&#x27;require-directory&#x27;)
+  , qs = require(&#x27;qs&#x27;);
+
+/**
+ * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
+ * [node.uitls](http://nodejs.org/api/util.html#util_util) that doesn&#x27;t use mixins to prevent
+ * confusion when requiring lodash itself.
+ *
+ * @class utils
+ * @static
+ */
+var utils = _.extend({}, _, require(&#x27;util&#x27;));
+
+
+/**
+ * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
+ *
+ * @method utils.joinPath
+ * @type {function}
+ */
+utils.joinPath = path.join;
+
+/**
+ * Extends lodash&#x27;s map function so that objects can be passed to map and will be retuned as an object with
+ * each value transformed by the itterator.
+ *
+ * @method utils.map
+ * @param [Iterable] obj - the thing to iterate over
+ * @param [Function] mapper - the function to call for each element in obj
+ * @param [*] context - the this context to use for each call to mapper
+ */
+utils.map = function (obj, mapper, context) {
+  if (_.isPlainObject(obj)) {
+    return _.reduce(obj, function (note, val, key) { note[key] = mapper.call(context, val, key); return note; }, {});
+  } else {
+    return _.map(obj, mapper, context);
+  }
+};
+
+/**
+ * Require all of the modules in a directory
+ *
+ * @method requireDir
+ * @param {Module} module - The module object which will own the required modules.
+ * @param {String} path - Path to the directory which will be traversed (can be relative to module)
+ * @return {Object} - An object with each required file
+ */
+utils.requireDir = function (module, dirPath) {
+  if (dirPath &amp;&amp; dirPath[0] === &#x27;.&#x27;) {
+    dirPath = path.join(path.dirname(module.filename), dirPath);
+  }
+  return requireDir(module, dirPath);
+};
+
+
+
+
+/**
+ * Test if a value is an array and it&#x27;s contents are of a specific type
+ *
+ * @method isArrayOf&lt;Strings|Objects|Arrays|Finites|Functions|RegExps&gt;
+ * @param  {Array} arr - An array to check
+ * @return {Boolean}
+ */
+&#x27;String Object PlainObject Array Finite Function RegExp&#x27;.split(&#x27; &#x27;).forEach(function (type) {
+  var check = _.bind(_[&#x27;is&#x27; + type], _)
+    // used to find the first value that isn&#x27;t of the sub type specified
+    , checkForNotType = function (val) { return !check(val); };
+
+  utils[&#x27;isArrayOf&#x27; + type + &#x27;s&#x27;] = function (arr) {
+    // quick shallow check of arrays
+    return _.isArray(arr) &amp;&amp; !_.find(arr.slice(0, 10), checkForNotType);
+  };
+});
+
+
+/**
+ * Capitalize the first letter of a word
+ *
+ * @todo Tests
+ * @method  ucfirst
+ * @param  {string} word - The word to transform
+ * @return {string}
+ */
+utils.ucfirst = function (word) {
+  return word[0].toUpperCase() + word.substring(1).toLowerCase();
+};
+
+/**
+ * Transform a string into StudlyCase
+ *
+ * @todo Tests
+ * @method studlyCase
+ * @param  {String} string
+ * @return {String}
+ */
+utils.studlyCase = function (string) {
+  return string.split(/\b|_/).map(function (word) {
+    return word.match(/^[a-z]+$/i) ? word[0].toUpperCase() + word.substr(1) : &#x27;&#x27;;
+  }).join(&#x27;&#x27;);
+};
+
+/**
+ * Transfor a string into camelCase
+ *
+ * @todo Tests
+ * @method cameCase
+ * @param  {String} string
+ * @return {String}
+ */
+utils.camelCase = function (string) {
+  return _.map(string.split(/\b|_/), function (word, i) {
+    if (word.match(/^[a-z]+$/i)) {
+      return (i === 0 ? word[0].toLowerCase() : word[0].toUpperCase()) + word.substr(1).toLowerCase();
+    } else {
+      return &#x27;&#x27;;
+    }
+  }).join(&#x27;&#x27;);
+};
+
+/**
+ * Test if a value is &quot;numeric&quot; meaning that it can be transformed into something besides NaN
+ *
+ * @todo Test
+ * @method isNumeric
+ * @param  {*} val
+ * @return {Boolean}
+ */
+utils.isNumeric = function (val) {
+  return !isNaN(val * 1);
+};
+
+// regexp to test for intervals
+var intervalRE = /(\d+(?:\.\d+)?)([Mwdhmsy])/;
+
+/**
+ * Test if a string represents an interval (eg. 1m, 2Y)
+ *
+ * @todo Test
+ * @method isInterval
+ * @param {String} val
+ * @return {Boolean}
+ */
+utils.isInterval = function (val) {
+  return val.match &amp;&amp; val.match(intervalRE);
+};
+
+/**
+ * Repeat a string n times
+ *
+ * @todo Test
+ * @todo TestPerformance
+ * @method repeat
+ * @param {String} what - The string to repeat
+ * @param {Number} times - Times the string should be repeated
+ * @return {String}
+ */
+utils.repeat = function (what, times) {
+  return (new Array(times + 1)).join(what);
+};
+
+/**
+ * Convert an object into a query string
+ *
+ * @method  makeQueryString
+ * @param  {Object} obj - The object to convert
+ * @param  {Boolean} [start=true] - Should the query string start with a &#x27;?&#x27;
+ * @return {String}
+ */
+utils.makeQueryString = function (obj, start) {
+  var str = qs.stringify(obj);
+  return (start === false || str === &#x27;&#x27;) ? str : &#x27;?&#x27; + str;
+};
+
+module.exports = utils;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

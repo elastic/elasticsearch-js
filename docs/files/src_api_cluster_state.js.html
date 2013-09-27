@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/api/cluster/state.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/api/cluster/state.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;../../lib/utils&#x27;);
+
+
+
+/**
+ * Perform an elasticsearch [cluster.state](http://elasticsearch.org/guide/reference/api/admin-cluster-state/) request
+ *
+ * @for Client
+ * @method cluster.state
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {boolean} params.filter_blocks - Do not return information about blocks
+ * @param {boolean} params.filter_index_templates - Do not return information about index templates
+ * @param {list} params.filter_indices - Limit returned metadata information to specific indices
+ * @param {boolean} params.filter_metadata - Do not return information about indices metadata
+ * @param {boolean} params.filter_nodes - Do not return information about nodes
+ * @param {boolean} params.filter_routing_table - Do not return information about shard allocation (&#x60;routing_table&#x60; and &#x60;routing_nodes&#x60;)
+ * @param {boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ */
+function doClusterState(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};
+
+  request.method = &#x27;GET&#x27;;
+
+  // find the url&#x27;s params
+
+
+  // build the url
+  request.url = &#x27;/_cluster/state&#x27;;
+  
+
+  // build the query string
+  if (params.hasOwnProperty(&#x27;filter_blocks&#x27;)) {
+    if (params.filter_blocks.toLowerCase &amp;&amp; (params.filter_blocks = params.filter_blocks.toLowerCase())
+      &amp;&amp; (params.filter_blocks === &#x27;no&#x27; || params.filter_blocks === &#x27;off&#x27;)
+    ) {
+      query.filter_blocks = false;
+    } else {
+      query.filter_blocks = !!params.filter_blocks;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_index_templates&#x27;)) {
+    if (params.filter_index_templates.toLowerCase &amp;&amp; (params.filter_index_templates = params.filter_index_templates.toLowerCase())
+      &amp;&amp; (params.filter_index_templates === &#x27;no&#x27; || params.filter_index_templates === &#x27;off&#x27;)
+    ) {
+      query.filter_index_templates = false;
+    } else {
+      query.filter_index_templates = !!params.filter_index_templates;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_indices&#x27;)) {
+    if (typeof params.filter_indices === &#x27;string&#x27;) {
+      query.filter_indices = params.filter_indices;
+    } else if (_.isArray(params.filter_indices)) {
+      query.filter_indices = params.filter_indices.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid filter_indices:&#x27; + params.filter_indices + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_metadata&#x27;)) {
+    if (params.filter_metadata.toLowerCase &amp;&amp; (params.filter_metadata = params.filter_metadata.toLowerCase())
+      &amp;&amp; (params.filter_metadata === &#x27;no&#x27; || params.filter_metadata === &#x27;off&#x27;)
+    ) {
+      query.filter_metadata = false;
+    } else {
+      query.filter_metadata = !!params.filter_metadata;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_nodes&#x27;)) {
+    if (params.filter_nodes.toLowerCase &amp;&amp; (params.filter_nodes = params.filter_nodes.toLowerCase())
+      &amp;&amp; (params.filter_nodes === &#x27;no&#x27; || params.filter_nodes === &#x27;off&#x27;)
+    ) {
+      query.filter_nodes = false;
+    } else {
+      query.filter_nodes = !!params.filter_nodes;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;filter_routing_table&#x27;)) {
+    if (params.filter_routing_table.toLowerCase &amp;&amp; (params.filter_routing_table = params.filter_routing_table.toLowerCase())
+      &amp;&amp; (params.filter_routing_table === &#x27;no&#x27; || params.filter_routing_table === &#x27;off&#x27;)
+    ) {
+      query.filter_routing_table = false;
+    } else {
+      query.filter_routing_table = !!params.filter_routing_table;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;local&#x27;)) {
+    if (params.local.toLowerCase &amp;&amp; (params.local = params.local.toLowerCase())
+      &amp;&amp; (params.local === &#x27;no&#x27; || params.local === &#x27;off&#x27;)
+    ) {
+      query.local = false;
+    } else {
+      query.local = !!params.local;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;master_timeout&#x27;)) {
+    if (params.master_timeout instanceof Date) {
+      query.master_timeout = params.master_timeout.getTime();
+    } else if (_.isNumeric(params.master_timeout)) {
+      query.master_timeout = params.master_timeout;
+    } else {
+      throw new TypeError(&#x27;Invalid master_timeout:&#x27; + params.master_timeout + &#x27; should be be some sort of time.&#x27;);
+    }
+  }
+  
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = doClusterState;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

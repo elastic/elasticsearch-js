@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/lib/loggers/stdio.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/lib/loggers/stdio.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var clc = require(&#x27;cli-color&#x27;)
+  , Log = require(&#x27;../log&#x27;)
+  , _ = require(&#x27;../utils&#x27;);
+
+/**
+ * Special version of the Stream logger, which logs errors and warnings to stderr and all other
+ * levels to stdout.
+ *
+ * @class Loggers.Stdio
+ * @constructor
+ * @param {Object} config - The configuration for the Logger
+ * @param {string} config.level - The highest log level for this logger to output.
+ * @param {Log} bridge - The object that triggers logging events, which we will record
+ */
+function Stdio(config, bridge) {
+  this.bridge = bridge;
+
+  // config/state
+  this.color = true;
+  this.listeningLevels = [];
+
+  // bound copies of the event handlers
+  this.handlers = _.reduce(Log.levels, function (handlers, name) {
+    handlers[name] = _.bindKey(this, &#x27;on&#x27; + _.studlyCase(name));
+    return handlers;
+  }, {}, this);
+
+  // then the bridge closes, remove our event listeners
+  this.on(&#x27;closing&#x27;, _.bindKey(this, &#x27;cleanUpListeners&#x27;));
+
+  this.setupListeners(config.levels);
+}
+
+/**
+ * Clear the current event listeners and then re-listen for events based on the level specified
+ *
+ * @method setupListeners
+ * @private
+ * @param  {Integer} level - The max log level that this logger should listen to
+ * @return {undefined}
+ */
+Stdio.prototype.setupListeners = function (levels) {
+  this.cleanUpListeners();
+
+  this.listeningLevels = levels;
+
+  _.each(this.listeningLevels, function (level) {
+    this.bridge.on(level, this.handlers[level]);
+  }, this);
+};
+
+/**
+ * Clear the current event listeners
+ *
+ * @method cleanUpListeners
+ * @private
+ * @return {undefined}
+ */
+Stdio.prototype.cleanUpListeners = function () {
+  _.each(this.listeningLevels, function (level) {
+    this.bridge.removeListener(level, this.handlers[level]);
+  }, this);
+};
+
+/**
+ * Sends output to a stream, does some formatting first
+ *
+ * @method write
+ * @private
+ * @param  {WriteableStream} to - The stream that should receive this message
+ * @param  {String} label - The text that should be used at the begining of the message
+ * @param  {function} colorize - A function that recieves a string and returned a colored version of it
+ * @param  {*} what - The message to log
+ * @return {undefined}
+ */
+Stdio.prototype.write = function (to, label, colorize, what) {
+  if (this.color) {
+    label = colorize(label);
+  }
+  to.write(label + &#x27;: &#x27; + what + &#x27;\n&#x27;);
+};
+
+/**
+ * Handler for the bridges &quot;error&quot; event
+ *
+ * @method onError
+ * @private
+ * @param  {Error} e - The Error object to log
+ * @return {undefined}
+ */
+Stdio.prototype.onError = function (e) {
+  this.write(process.stderr, e.name === &#x27;Error&#x27; ? &#x27;ERROR&#x27; : e.name, clc.red.bold,  [e.message, &#x27;\n\nStack Trace:\n&#x27; + e.stack]);
+};
+
+/**
+ * Handler for the bridges &quot;warning&quot; event
+ *
+ * @method onWarning
+ * @private
+ * @param  {String} msg - The message to be logged
+ * @return {undefined}
+ */
+Stdio.prototype.onWarning = function (msg) {
+  this.write(process.stderr, &#x27;WARNING&#x27;, clc.yellow.bold, msg);
+};
+
+/**
+ * Handler for the bridges &quot;info&quot; event
+ *
+ * @method onInfo
+ * @private
+ * @param  {String} msg - The message to be logged
+ * @return {undefined}
+ */
+Stdio.prototype.onInfo = function (msg) {
+  this.write(process.stdout, &#x27;INFO&#x27;, clc.cyan.bold, msg);
+};
+
+/**
+ * Handler for the bridges &quot;debug&quot; event
+ *
+ * @method onDebug
+ * @private
+ * @param  {String} msg - The message to be logged
+ * @return {undefined}
+ */
+Stdio.prototype.onDebug = function (msg) {
+  this.write(process.stdout, &#x27;DEBUG&#x27;, clc.magentaBright.bold, msg);
+};
+
+/**
+ * Handler for the bridges &quot;trace&quot; event
+ *
+ * @method onTrace
+ * @private
+ * @param  {String} msg - The message to be logged
+ * @return {undefined}
+ */
+Stdio.prototype.onTrace = function (msg) {
+  this.write(process.stdout, &#x27;TRACE&#x27;, clc.cyanBright.bold, msg);
+};
+
+module.exports = Stdio;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

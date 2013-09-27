@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/lib/transport.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/lib/transport.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;./utils&#x27;)
+  , selectors = require(&#x27;./selector&#x27;);
+
+var configDefaults = {
+  hosts : [
+    {
+      host: &#x27;localhost&#x27;,
+      port: 9200
+    }
+  ],
+
+  //nodes_to_host_callback : construct_hosts_list,
+  sniff_on_start  : false,
+  sniff_after_requests : 0,
+  sniff_on_connection_fail : false,
+  max_retries : 3,
+  selector : &#x27;roundRobin&#x27;
+};
+
+
+/**
+ * &quot;Abstract&quot; class responsible for managing connection pools, sniffing for nodes, and serializing/
+ * deserializing requests and ES errors.
+ *
+ * @main Transport
+ * @class Transport
+ * @constructor
+ * @param {Object} [config={}] - An object with configuration parameters
+ * @param {String|ArrayOfStrings} [config.hosts=&#x27;localhost:9200&#x27;] - Host(s) that this client should communicate with.
+ * @param {Boolean} [config.sniff_on_start=false] - inspect the cluster for a list of nodes upon startup
+ * @param {Number} [config.sniff_after_requests=false] - Sniff after completing a certain number of request (disabled by default)
+ * @param {Boolean} [config.sniff_on_connection_fail=false] - Sniff after a connection fails (disabled by default)
+ * @param {Number} [config.max_retries=3] - The maximum number of time the client should retry connecting to a node
+ */
+function Transport(config) {
+  // These are all unique to each instance of client
+  config = _.defaults(config || {}, configDefaults);
+
+  if (_.isFunction(this.opts.selector)) {
+    this.selector = this.opts.selector;
+  } else if (_.has(selectors, this.opts.selector)) {
+    this.selector = selectors[this.opts.selector];
+  } else {
+    throw new Error(&#x27;Invalid Selector, specify a function or selector name.&#x27;);
+  }
+
+}
+
+/**
+ * Modify the defaults for the Transport class
+ *
+ * @method defaults
+ * @param  {Object} update An object representing the changes to be made to the defaults.
+ * @static
+ * @return {undefined}
+ */
+Transport.defaults = function (update) {
+  _.assign(configDefaults, update);
+};
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

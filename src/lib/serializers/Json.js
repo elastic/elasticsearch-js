@@ -1,6 +1,6 @@
 /* JSON serializer */
 
-var _ = require('../Utils');
+var _ = require('../utils');
 
 function Json() {}
 

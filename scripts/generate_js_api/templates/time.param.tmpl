@@ -1,0 +1,7 @@
+if (<%= get %> instanceof Date) {
+  <%= set %> = <%= get %>.getTime();
+} else if (_.isNumeric(<%= get %>)) {
+  <%= set %> = <%= get %>;
+} else {
+  throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be be some sort of time.');
+}

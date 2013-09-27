@@ -1,0 +1,5 @@
+if (_.isNumeric(<%= get %>)) {
+  <%= set %> = <%= get %> * 1;
+} else {
+  throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be a number.');
+}

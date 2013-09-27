@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/lib/transports/node_http.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/lib/transports/node_http.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+/* elasticsearch-js nodejs transport */
+var http = require(&#x27;http&#x27;)
+  , _ = require(&#x27;../utils&#x27;);
+
+/**
+ * Http transport to use in Node.js
+ *
+ * @class  NodeHttp
+ */
+function NodeHttp() {
+
+  // Split hostname:port into its repective parts
+  function splitHost(u) {
+    var s = u.split(&#x27;:&#x27;);
+    return {host: s[0], port: s[1]};
+  }
+
+  // Meta function for handling any http request that can have a body (PUT,POST,DELETE)
+  function performRequest(context, method, path, params, body, successcb, errorcb, retries) {
+
+    var
+      //context = context,
+      host = splitHost(context.selector(context.options.hosts)),
+      options = {
+        host: host.host,
+        port: host.port,
+        path: path + &#x27;?&#x27; + _.toQueryString(params),
+        method: method,
+        headers: {
+          &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+        }
+      };
+    var request = http.request(options, function (res) {
+
+      var data = &#x27;&#x27;;
+      res.setEncoding(&#x27;utf8&#x27;);
+
+      res.on(&#x27;data&#x27;, function (d) {
+        data = data + d;
+      });
+
+      res.on(&#x27;end&#x27;, function () {
+
+        var response = {
+          data : data.charAt(0) === &#x27;{&#x27; ? JSON.parse(data) : data,
+          headers : res.headers,
+          status : res.statusCode
+        };
+
+        if (successcb != null &amp;&amp; response.status &lt; 300) {
+          successcb(response);
+        } else if (errorcb != null) {
+          errorcb(response);
+        }
+      });
+
+    });
+
+    if (errorcb != null) {
+      request.on(&#x27;error&#x27;, errorcb);
+    }
+
+    if (method !== &#x27;GET&#x27; &amp;&amp; method !== &#x27;HEAD&#x27;) {
+      request.write(body);
+    }
+
+    request.end();
+  }
+
+  // Public functions
+  return {
+    get   : _.bind(performRequest, this, &#x27;PUT&#x27;),
+    put   : _.bind(performRequest, this, &#x27;POST&#x27;),
+    post  : _.bind(performRequest, this, &#x27;DELETE&#x27;),
+    del   : _.bind(performRequest, this, &#x27;GET&#x27;),
+    head  : _.bind(performRequest, this, &#x27;HEAD&#x27;)
+  };
+
+}
+
+module.exports = NodeHttp;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

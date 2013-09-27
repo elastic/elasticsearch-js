@@ -1,0 +1,2757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>Log <small>Class</small></h1>
+  
+    <small class="foundat">
+      Defined in: <a href="../files/src_lib_log.js.html#l4"><code>src&#x2F;lib&#x2F;log.js:4</code></a>
+    </small>
+  
+</div>
+
+
+
+<div class="well">
+  <p>Log bridge, which is an <a href="http://nodejs.org/api/events.html#events_class_events_eventemitter">EventEmitter</a>
+that sends events to one or more outputs/loggers. Setup these loggers by
+specifying their config as the first argument, or by passing it to addOutput().</p>
+
+
+  
+
+  
+
+  
+    <h3>Uses<h3>
+    <ul>
+      
+        <li><a href="Loggers.Stdio.html">Loggers.Stdio</a></li>
+      
+    </ul>
+  
+
+</div>
+
+
+  <div class="constructor">
+    <h2>Constructor</h2>
+    <div id="method_Log" class="method item">
+  <h3 class="name">
+    <code>
+      Log
+      <small>(output)</small>
+    </code>
+  </h3>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l4"><code>src&#x2F;lib&#x2F;log.js:4</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              output
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String | Object | ArrayOfStrings | ArrayOfObjects</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Either the level to setup a single logger, a
+full config object for alogger, or an array of config objects to use for creating log outputs.</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+
+  
+</div>
+
+  </div>
+
+
+<div>
+  <div id="index" class="pill">
+    <h2 class="off-left">Index</h2>
+
+    
+      <div class="index-section methods">
+        <h3>Methods</h3>
+
+        <ul class="index-list methods">
+          
+            <li class="index-item method">
+              <a href="#method_addOutput" data-tabid="#methods" data-tablink="addOutput">addOutput</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_cleanUpListeners" data-tabid="#methods" data-tablink="cleanUpListeners">cleanUpListeners</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_debug" data-tabid="#methods" data-tablink="debug">debug</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_error" data-tabid="#methods" data-tablink="error">error</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_info" data-tabid="#methods" data-tablink="info">info</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private">
+              <a href="#method_join" data-tabid="#methods" data-tablink="join">join</a>
+
+              
+                <span class="label label-primary">static</span>
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_onDebug" data-tabid="#methods" data-tablink="onDebug">onDebug</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_onError" data-tabid="#methods" data-tablink="onError">onError</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_onInfo" data-tabid="#methods" data-tablink="onInfo">onInfo</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_onTrace" data-tabid="#methods" data-tablink="onTrace">onTrace</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_onWarning" data-tabid="#methods" data-tablink="onWarning">onWarning</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private">
+              <a href="#method_parseLevels" data-tabid="#methods" data-tablink="parseLevels">parseLevels</a>
+
+              
+                <span class="label label-primary">static</span>
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_requestTrace" data-tabid="#methods" data-tablink="requestTrace">requestTrace</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_setupListeners" data-tabid="#methods" data-tablink="setupListeners">setupListeners</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_trace" data-tabid="#methods" data-tablink="trace">trace</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method">
+              <a href="#method_warning" data-tabid="#methods" data-tablink="warning">warning</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item method private inherited">
+              <a href="#method_write" data-tabid="#methods" data-tablink="write">write</a>
+
+              
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+
+    
+      <div class="index-section properties">
+        <h3>Properties</h3>
+
+        <ul class="index-list properties">
+          
+            <li class="index-item property">
+              <a href="#property_levels" data-tabid="#properties" data-tablink="levels">levels</a>
+
+              
+                <span class="flag static">static</span>
+              
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+
+    
+
+    
+      <div class="index-section events">
+        <h3>Events</h3>
+
+        <ul class="index-list events">
+          
+            <li class="index-item event">
+              <a href="#event_debug" data-tabid="#events" data-tablink="debug">debug</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item event">
+              <a href="#event_error" data-tabid="#events" data-tablink="error">error</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item event">
+              <a href="#event_info" data-tabid="#events" data-tablink="info">info</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item event">
+              <a href="#event_trace" data-tabid="#events" data-tablink="trace">trace</a>
+
+              
+              
+            </li>
+          
+            <li class="index-item event">
+              <a href="#event_warning" data-tabid="#events" data-tablink="warning">warning</a>
+
+              
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+  </div>
+
+  
+    <div id="methods">
+      <h2 class="off-left">Methods</h2>
+
+      
+        <div id="method_addOutput" class="method item">
+  <h3 class="name">
+    <code>
+      addOutput
+      <small>(config)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Logger</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l142"><code>src&#x2F;lib&#x2F;log.js:142</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Create a new logger, based on the config.</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              config
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">Object</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>An object with config options for the logger.</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Logger</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_cleanUpListeners" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      cleanUpListeners
+      <small>()</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_cleanUpListeners">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l52"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:52</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Clear the current event listeners</p>
+
+  </div>
+
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_debug" class="method item">
+  <h3 class="name">
+    <code>
+      debug
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l205"><code>src&#x2F;lib&#x2F;log.js:205</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Log a debug level message</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg<abbr title="This argument may occur one or more times.">...</span>
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Any amount of messages that will be joined before logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_error" class="method item">
+  <h3 class="name">
+    <code>
+      error
+      <small>(error)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l164"><code>src&#x2F;lib&#x2F;log.js:164</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Log an error</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              error
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">Error | String</span>
+          </td>
+          <td class="param-description">
+            <p>The Error to log</p>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_info" class="method item">
+  <h3 class="name">
+    <code>
+      info
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l192"><code>src&#x2F;lib&#x2F;log.js:192</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Log useful info about what&#39;s going on</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg<abbr title="This argument may occur one or more times.">...</span>
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Any amount of messages that will be joined before logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_join" class="method item private">
+  <h3 class="name">
+    <code>
+      join
+      <small>(arrayish)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">String</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+    <span class="flag static">static</span>
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l123"><code>src&#x2F;lib&#x2F;log.js:123</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Combine the array-like param into a simple string</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              arrayish
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>An array like object that can be itterated by _.each</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">String</span>:
+          
+          <ul>
+<li>The final string.</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_onDebug" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      onDebug
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_onDebug">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l119"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:119</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Handler for the bridges "debug" event</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The message to be logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_onError" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      onError
+      <small>(e)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_onError">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l83"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:83</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Handler for the bridges "error" event</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              e
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">Error</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The Error object to log</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_onInfo" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      onInfo
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_onInfo">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l107"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:107</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Handler for the bridges "info" event</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The message to be logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_onTrace" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      onTrace
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_onTrace">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l131"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:131</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Handler for the bridges "trace" event</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The message to be logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_onWarning" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      onWarning
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_onWarning">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l95"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:95</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Handler for the bridges "warning" event</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The message to be logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_parseLevels" class="method item private">
+  <h3 class="name">
+    <code>
+      parseLevels
+      <small>(input)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Array</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+    <span class="flag static">static</span>
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l105"><code>src&#x2F;lib&#x2F;log.js:105</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Converts a log config value (string or array) to an array of level names which it represents</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              input
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String | ArrayOfStrings</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Cound be a string to specify the max level, or an array of exact levels</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Array</span>:
+          
+          <p>-</p>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_requestTrace" class="method item">
+  <h3 class="name">
+    <code>
+      requestTrace
+      <small>(method, url, body, responseStatus, responseBody)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l231"><code>src&#x2F;lib&#x2F;log.js:231</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Shortcut for formatting a response trace message, which won&#39;t go through the trouble of formatting
+the message if nothing will be receiving the message.</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              method
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The HTTP method from the request</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              url
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The URL from the request</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              body
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The JSON body from the request</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              responseStatus
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The HTTP response&#39;s status code</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              responseBody
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The HTTP response&#39;s body</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_setupListeners" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      setupListeners
+      <small>(level)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_setupListeners">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l34"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:34</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Clear the current event listeners and then re-listen for events based on the level specified</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              level
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">Integer</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The max log level that this logger should listen to</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_trace" class="method item">
+  <h3 class="name">
+    <code>
+      trace
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l218"><code>src&#x2F;lib&#x2F;log.js:218</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Log a trace level message</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg<abbr title="This argument may occur one or more times.">...</span>
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Any amount of messages that will be joined before logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_warning" class="method item">
+  <h3 class="name">
+    <code>
+      warning
+      <small>(msg)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Boolean</span>
+    </span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l178"><code>src&#x2F;lib&#x2F;log.js:178</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Log a warning message</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              msg<abbr title="This argument may occur one or more times.">...</span>
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>Any amount of messages that will be joined before logged</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Boolean</span>:
+          
+          <ul>
+<li>True if any outputs accepted the message</li>
+</ul>
+
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+        <div id="method_write" class="method item private inherited">
+  <h3 class="name">
+    <code>
+      write
+      <small>(to, label, colorize, what)</small>
+    </code>
+  </h3>
+
+  
+    <span class="returns-inline">
+      <span class="type">Undefined</span>
+    </span>
+  
+
+  
+
+  
+    <span class="flag private">private</span>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        <p>Inherited from
+        <a href="../classes/Loggers.Stdio.html#method_write">Loggers.Stdio</a>:
+      
+    
+    
+    <a href="../files/src_lib_loggers_stdio.js.html#l65"><code>src&#x2F;lib&#x2F;loggers&#x2F;stdio.js:65</code></a>
+    
+    </p>
+
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Sends output to a stream, does some formatting first</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Parameters:</h4>
+      <table>
+      
+        <tr>
+          <td>
+            <code>
+            
+              to
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">WriteableStream</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The stream that should receive this message</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              label
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">String</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The text that should be used at the begining of the message</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              colorize
+            
+            </code>
+          </td>
+          <td>
+            <span class="type">Function</span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>A function that recieves a string and returned a colored version of it</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+        <tr>
+          <td>
+            <code>
+            
+              what
+            
+            </code>
+          </td>
+          <td>
+            <span class="type"></span>
+          </td>
+          <td class="param-description">
+            <ul>
+<li>The message to log</li>
+</ul>
+
+          </td>
+
+          
+          </tr>
+      
+      </table>
+    </div>
+  
+
+  
+    <div class="returns">
+      <h4>Returns:</h4>
+
+      <div class="returns-description">
+        
+          
+            <span class="type">Undefined</span>:
+          
+        
+      </div>
+    </div>
+  
+
+  
+</div>
+
+      
+    </div>
+  
+
+  
+    <div id="properties">
+      <h2 class="off-left">Properties</h2>
+
+      
+        <div id="property_levels" class="property item">
+  <h3 class="name"><code>levels</code></h3>
+  <span class="type">Array</span>
+
+  
+
+  
+
+  
+
+  
+    <span class="flag static">static</span>
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l51"><code>src&#x2F;lib&#x2F;log.js:51</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Levels observed by the loggers, ordered by rank</p>
+
+  </div>
+
+  
+
+  
+
+  
+</div>
+
+      
+    </div>
+  
+
+  
+
+  
+    <div id="events">
+      <h2 class="off-left">Events</h2>
+
+      
+        <div id="event_debug" class="events item">
+  <h3 class="name"><code>debug</code></h3>
+  <span class="type"></span>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l82"><code>src&#x2F;lib&#x2F;log.js:82</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Event fired for "debug" level log entries, which will describe requests sent, including their
+url (no data, response codes, or exec times)</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+        <li class="param">
+          
+            <code class="param-name">message</code>
+            <span class="type">String</span>
+          
+
+          
+
+          <div class="param-description">
+            <ul>
+<li>A message to be logged</li>
+</ul>
+
+          </div>
+
+          
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+  
+</div>
+
+      
+        <div id="event_error" class="events item">
+  <h3 class="name"><code>error</code></h3>
+  <span class="type"></span>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l59"><code>src&#x2F;lib&#x2F;log.js:59</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Event fired for error level log entries</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+        <li class="param">
+          
+            <code class="param-name">error</code>
+            <span class="type">Error</span>
+          
+
+          
+
+          <div class="param-description">
+            <ul>
+<li>The error object to log</li>
+</ul>
+
+          </div>
+
+          
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+  
+</div>
+
+      
+        <div id="event_info" class="events item">
+  <h3 class="name"><code>info</code></h3>
+  <span class="type"></span>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l74"><code>src&#x2F;lib&#x2F;log.js:74</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Event fired for "info" level log entries, which usually describe what a client is doing
+(sniffing etc)</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+        <li class="param">
+          
+            <code class="param-name">message</code>
+            <span class="type">String</span>
+          
+
+          
+
+          <div class="param-description">
+            <ul>
+<li>A message to be logged</li>
+</ul>
+
+          </div>
+
+          
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+  
+</div>
+
+      
+        <div id="event_trace" class="events item">
+  <h3 class="name"><code>trace</code></h3>
+  <span class="type"></span>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l90"><code>src&#x2F;lib&#x2F;log.js:90</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Event fired for "trace" level log entries, which provide detailed information about each request
+made from a client, including reponse codes, execution times, and a full curl command that can be
+copied and pasted into a terminal</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+        <li class="param">
+          
+            <code class="param-name">params</code>
+            <span class="type">Object</span>
+          
+
+          
+
+          <div class="param-description">
+             
+          </div>
+
+          
+            <ul class="params-list">
+              
+              <li class="param">
+                
+                  <code class="param-name">status</code>
+                  <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                  <ul>
+<li>the HTTP response code from the request</li>
+</ul>
+
+                </div>
+
+                
+              </li>
+              
+              <li class="param">
+                
+                  <code class="param-name">url</code>
+                  <span class="type">String</span>
+                
+
+                <div class="param-description">
+                  <ul>
+<li>The URL from the request</li>
+</ul>
+
+                </div>
+
+                
+              </li>
+              
+              <li class="param">
+                
+                  <code class="param-name">request_body</code>
+                  <span class="type">String</span>
+                
+
+                <div class="param-description">
+                  <ul>
+<li>The body of the request</li>
+</ul>
+
+                </div>
+
+                
+              </li>
+              
+              <li class="param">
+                
+                  <code class="param-name">response_body</code>
+                  <span class="type">String</span>
+                
+
+                <div class="param-description">
+                  <ul>
+<li>The body of the response</li>
+</ul>
+
+                </div>
+
+                
+              </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+  
+</div>
+
+      
+        <div id="event_warning" class="events item">
+  <h3 class="name"><code>warning</code></h3>
+  <span class="type"></span>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="meta">
+    
+      
+        
+        <p>
+        
+        Defined in
+        
+      
+    
+    
+    <a href="../files/src_lib_log.js.html#l65"><code>src&#x2F;lib&#x2F;log.js:65</code></a>
+    
+    </p>
+
+    
+
+    
+  </div>
+
+  <div class="description">
+    <p>Event fired for "warning" level log entries, which usually represent things like
+correctly formatted error responses from ES (400, ...) and recoverable errors
+(one node unresponsive)</p>
+
+  </div>
+
+  
+    <div class="params">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+        <li class="param">
+          
+            <code class="param-name">message</code>
+            <span class="type">String</span>
+          
+
+          
+
+          <div class="param-description">
+            <ul>
+<li>A message to be logged</li>
+</ul>
+
+          </div>
+
+          
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+  
+</div>
+
+      
+    </div>
+  
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

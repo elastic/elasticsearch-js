@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/lib/client.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/lib/client.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;./utils&#x27;)
+  , transports = _.requireDir(module, &#x27;./transports&#x27;)
+  , api = _.requireDir(module, &#x27;../api&#x27;)
+  , Log = require(&#x27;./log&#x27;);
+
+/**
+ * A client that makes requests to Elasticsearch via a {{#crossLink &quot;Transport&quot;}}Transport{{/crossLink}}
+ *
+ * Initializing a client might look something like:
+ *
+ * &#x60;&#x60;&#x60;
+ * var client = new Elasticsearch.Client({
+ *   transport: {
+ *     hosts: [
+ *       &#x27;es1.net:9200&#x27;,
+ *       &#x27;es2.net:9200&#x27;
+ *     ],
+ *     sniff_on_start: true
+ *   },
+ *   log: {
+ *     type: &#x27;file&#x27;,
+ *     level: &#x27;warning&#x27;
+ *   }
+ * })
+ * &#x60;&#x60;&#x60;
+ *
+ * @class Client
+ * @constructor
+ * @param {Object} [config={}] - Configuration for the transport
+ * @param {Object} [config.transport] - Transport settings passed to {{#crossLink &quot;Transport&quot;}}Transport Constructor{{/crossLink}}
+ * @param {String|ArrayOfStrings&gt;} [config.log] - Log output settings {{#crossLink &quot;Log&quot;}}Log Constructor{{/crossLink}}
+ * @param {Object} [config.trace=false] - Create a log output to stdio that only tracks trace logs
+ */
+function Client(config) {
+  this.client = this;
+
+  for (var i = 0; i &lt; Client.namespaces.length; i++) {
+    this[Client.namespaces[i]] = new this[Client.namespaces[i]](this);
+  }
+
+  // this.transport = this.options.transport || new transports.NodeHttp(this.options);
+  this.log = new Log(config.logger);
+  // this.serializer = this.options.serializer || new es.Serializer.json();
+}
+
+/**
+ * Perform a request with the client&#x27;s transport
+ *
+ * @method request
+ * @param {object} params
+ * @param {String} params.url - The url for the request
+ * @param {String} params.method - The HTTP method for the request
+ * @param {String} params.body - The body of the HTTP request
+ * @return {Promise} - A promise that will be resolved with the response
+ */
+Client.prototype.request = function (params) {
+  console.log(params);
+  this.log.requestTrace(params.method, params.url, params.body);
+};
+
+// Many API commands are namespaced, like cluster.node_stats. The names of these namespaces will be
+// tracked here and the namespace objects will be instantiated by reading the values from this
+// array
+var namespaces = [];
+
+// creates a namespace, who&#x27;s prototype offers the actions within that namespace and this context
+// provides the API actions a link back to the client they were intended to operate on.
+function makeNamespaceConstructor(actions) {
+
+  function Namespace(client) {
+    this.client = client;
+  }
+
+  Namespace.prototype = actions;
+
+  return Namespace;
+}
+
+// Extend the Client prototype with the top level API actions and the namespaces for other API actions
+_.extend(Client.prototype, _.map(api, function (action, name) {
+  switch (typeof action) {
+  case &#x27;function&#x27;:
+    return action;
+  case &#x27;object&#x27;:
+    namespaces.push(name);
+    return makeNamespaceConstructor(action);
+  }
+}));
+
+module.exports = Client;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

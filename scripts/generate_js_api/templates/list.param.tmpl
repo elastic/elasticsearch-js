@@ -1,0 +1,7 @@
+if (typeof <%= get %> === 'string') {
+  <%= set %> = <%= get %>;
+} else if (_.isArray(<%= get %>)) {
+  <%= set %> = <%= get %>.join(',');
+} else {
+  throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be a comma seperated list or array.');
+}

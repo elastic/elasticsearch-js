@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>src/api/indices/optimize.js - elasticsearch-js</title>
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="#">elasticsearch-js</a>
+    <p class="navbar-text">
+      API Docs for Version: <b>0.0.1</b>
+    </p>
+
+    <form class="navbar-form navbar-right visible-md visible-large" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+    	  <div>
+  <h3>APIs</h3>
+  <div id="sidebar">
+    <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+      
+      <li class="active" style="visibility:hidden;"><a>just classes</a></li>
+      
+    </ul>
+
+    <div id="api-tabview-filter">
+      <input type="search" placeholder="Type to filter APIs">
+    </div>
+
+    <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+      <div class="tab-pane active" id="classes">
+        <ul id="api-classes" class="nav nav-list">
+          
+            <li><a href="../classes/Client.html">Client</a></li>
+          
+            <li><a href="../classes/ConnectionPool.html">ConnectionPool</a></li>
+          
+            <li><a href="../classes/jQueryXhr.html">jQueryXhr</a></li>
+          
+            <li><a href="../classes/Log.html">Log</a></li>
+          
+            <li><a href="../classes/Loggers.File.html">Loggers.File</a></li>
+          
+            <li><a href="../classes/Loggers.Stdio.html">Loggers.Stdio</a></li>
+          
+            <li><a href="../classes/Loggers.Stream.html">Loggers.Stream</a></li>
+          
+            <li><a href="../classes/NodeHttp.html">NodeHttp</a></li>
+          
+            <li><a href="../classes/Transport.html">Transport</a></li>
+          
+            <li><a href="../classes/utils.html">utils</a></li>
+          
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div class="col-md-9">
+        
+        <div id="docs-main">
+          <div class="content">
+          <div class="page-header">
+  <h1>src/api/indices/optimize.js <small>File</small></h1>
+</div>
+
+<div class="file">
+  <pre class="prettyprint linenums">
+var _ = require(&#x27;../../lib/utils&#x27;);
+
+var ignoreIndicesOptions = [&#x27;none&#x27;, &#x27;missing&#x27;];
+
+
+
+/**
+ * Perform an elasticsearch [indices.optimize](http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/) request
+ *
+ * @for Client
+ * @method indices.optimize
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {boolean} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore &#x60;missing&#x60; ones
+ * @param {number} params.max_num_segments - The number of segments the index should be merged into (default: dynamic)
+ * @param {boolean} params.only_expunge_deletes - Specify whether the operation should only expunge deleted documents
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {boolean} params.refresh - Specify whether the index should be refreshed after performing the operation (default: true)
+ * @param {boolean} params.wait_for_merge - Specify whether the request should block until the merge process is finished (default: true)
+ */
+function doIndicesOptimize(params) {
+  var request = {}
+    , url = {}
+    , query = {};
+
+  params = params || {};
+
+  if (param.method) {
+    if (param.method === &#x27;POST&#x27; || param.method === &#x27;GET&#x27;) {
+      request.method = param.method;
+    } else {
+      throw new TypeError(&#x27;Invalid method: should be one of POST, GET&#x27;);
+    }
+  } else {
+    request.method = &#x27;POST&#x27;;
+  }
+
+  // find the url&#x27;s params
+  if (params.hasOwnProperty(&#x27;index&#x27;)) {
+    if (typeof params.index === &#x27;string&#x27;) {
+      url.index = params.index;
+    } else if (_.isArray(params.index)) {
+      url.index = params.index.join(&#x27;,&#x27;);
+    } else {
+      throw new TypeError(&#x27;Invalid index:&#x27; + params.index + &#x27; should be a comma seperated list or array.&#x27;);
+    }
+  }
+  
+
+  // build the url
+  if (url.hasOwnProperty(&#x27;index&#x27;)) {
+    request.url = &#x27;/&#x27; + url.index + &#x27;/_optimize&#x27;;
+  }
+  else  {
+    request.url = &#x27;/_optimize&#x27;;
+  }
+  
+
+  // build the query string
+  if (params.hasOwnProperty(&#x27;flush&#x27;)) {
+    if (params.flush.toLowerCase &amp;&amp; (params.flush = params.flush.toLowerCase())
+      &amp;&amp; (params.flush === &#x27;no&#x27; || params.flush === &#x27;off&#x27;)
+    ) {
+      query.flush = false;
+    } else {
+      query.flush = !!params.flush;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;ignore_indices&#x27;)) {
+    if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
+      query.ignore_indices = params.ignore_indices;
+    } else {
+      throw new TypeError(
+        &#x27;Invalid ignore_indices:&#x27; + params.ignore_indices +
+        &#x27; should be one of &#x27; + ignoreIndicesOptions.join(&#x27;, &#x27;) + &#x27;.&#x27;
+      );
+    }
+  } else {
+    query.ignore_indices = &#x27;none&#x27;;
+  }
+  
+  if (params.hasOwnProperty(&#x27;max_num_segments&#x27;)) {
+    if (_.isNumeric(params.max_num_segments)) {
+      query.max_num_segments = params.max_num_segments * 1;
+    } else {
+      throw new TypeError(&#x27;Invalid max_num_segments:&#x27; + params.max_num_segments + &#x27; should be a number.&#x27;);
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;only_expunge_deletes&#x27;)) {
+    if (params.only_expunge_deletes.toLowerCase &amp;&amp; (params.only_expunge_deletes = params.only_expunge_deletes.toLowerCase())
+      &amp;&amp; (params.only_expunge_deletes === &#x27;no&#x27; || params.only_expunge_deletes === &#x27;off&#x27;)
+    ) {
+      query.only_expunge_deletes = false;
+    } else {
+      query.only_expunge_deletes = !!params.only_expunge_deletes;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;operation_threading&#x27;)) {
+    query.operation_threading = params.operation_threading;
+  }
+  
+  if (params.hasOwnProperty(&#x27;refresh&#x27;)) {
+    if (params.refresh.toLowerCase &amp;&amp; (params.refresh = params.refresh.toLowerCase())
+      &amp;&amp; (params.refresh === &#x27;no&#x27; || params.refresh === &#x27;off&#x27;)
+    ) {
+      query.refresh = false;
+    } else {
+      query.refresh = !!params.refresh;
+    }
+  }
+  
+  if (params.hasOwnProperty(&#x27;wait_for_merge&#x27;)) {
+    if (params.wait_for_merge.toLowerCase &amp;&amp; (params.wait_for_merge = params.wait_for_merge.toLowerCase())
+      &amp;&amp; (params.wait_for_merge === &#x27;no&#x27; || params.wait_for_merge === &#x27;off&#x27;)
+    ) {
+      query.wait_for_merge = false;
+    } else {
+      query.wait_for_merge = !!params.wait_for_merge;
+    }
+  }
+  
+  request.url = request.url + _.makeQueryString(query);
+
+  return this.client.request(request);
+}
+
+module.exports = doIndicesOptimize;
+  </pre>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/vendor/jquery/jquery-1.10.2.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
