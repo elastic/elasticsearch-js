@@ -44,7 +44,7 @@ function Client(config) {
     this[namespaces[i]] = new this[namespaces[i]](this);
   }
 
-  this.hosts = config.hosts;
+  this.hosts = config.hosts || ['http://localhost:9200'];
 
   // this.transport = this.options.transport || new transports.NodeHttp(this.options);
   this.log = new Log(config && config.log);
@@ -53,6 +53,14 @@ function Client(config) {
 
 Client.prototype.sniff = function () {
 
+};
+
+Client.prototype.ping = function () {
+  return this.request({
+    url: '/',
+    method: 'HEAD',
+    timeout: '100'
+  });
 };
 
 /**
@@ -67,7 +75,7 @@ Client.prototype.sniff = function () {
  */
 Client.prototype.request = function (params) {
   var deferred = Q.defer();
-  setTimeout(function () {
+  setTimeout(_.bind(function () {
     var response = {
       status: 200,
       body: {
@@ -83,7 +91,7 @@ Client.prototype.request = function (params) {
       JSON.stringify(response.body)
     );
     deferred.resolve();
-  }, 3);
+  }, this), 3);
   return deferred.promise;
 };
 

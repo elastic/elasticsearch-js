@@ -1,9 +1,11 @@
-
+/* global describe, before, beforeEach, setup */
+/* jshint -W030:true */
 var fs = require('fs')
   , path = require('path')
   , async = require('async')
   , assert = require('assert')
   , jsYaml = require('js-yaml')
+  , expect = require('chai').expect
   , indexPrefix = 'yaml_tests_'
   , nodeunit = require('nodeunit')
   , _ = require('../../src/lib/utils')
@@ -29,10 +31,7 @@ var nodeunitTests = {
 
 
 var client = new es.Client({
-  hosts: ['localhost:9200'],
-  log: {
-    level: 'trace'
-  }
+  hosts: ['localhost:9200']
 });
 
 /**
@@ -55,67 +54,6 @@ function loadDir(dir) {
 }
 
 /**
- * read the file's contents, parse the yaml, pass to makeTest
- * @param  {String} path - Full path to yaml file
- * @return {undefined}
- */
-function loadFile(location) {
-  var fileContents = fs.readFileSync(location, { encoding:'utf8' });
-  var relativeName = path.relative(TEST_DIR, location);
-  var groupName = path.dirname(relativeName);
-
-  nodeunitTests[groupName] = (nodeunitTests[groupName] || {});
-
-  var itterator = _.bind(makeTest, null,
-    nodeunitTests[groupName],
-    path.basename(relativeName)
-  );
-
-  jsYaml.loadAll(fileContents, itterator, { filename: location });
-}
-
-
-/**
- * Read the test descriptions from a yaml document (usually only one test, per doc but
- * sometimes multiple docs per file)
- * @param  {Object} tests       The object to place the tests, which is a part of the spec
- *                              delivered to nodeunit
- * @param  {String} fileName    The filename that this yaml document came from
- * @param  {Object} testConfigs The yaml document
- * @return {undefined}
- */
-function makeTest(tests, fileName, testConfigs) {
-  _.forOwn(testConfigs, function (config, description) {
-    /**
-     * convert the config from: [ {name:args}, ... ] to: [ {name:"", args:"" } ]
-     * so it's easier to work with, taking into consideration the possibility
-     * that each "set" _could_ have more than one action
-     */
-
-    // creates [ [ {name:"", args:"" }, ... ], ... ]
-    var actionSets = _.map(config, function (set) {
-      return _.map(_.pairs(set), function (pair) {
-        return {
-          name: pair[0],
-          args: pair[1]
-        };
-      });
-    });
-
-    var actionList = _.reduce(actionSets, function(note, set) {
-      return note.concat(set);
-    }, []);
-
-
-    if (actionList.length) {
-      tests[fileName + '::' + description] = function (test) {
-        var outcome = new YamlTest(actionList, test);
-      };
-    }
-  });
-}
-
-/**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
  * @type {String}
  */
@@ -130,96 +68,161 @@ var versionRegExp = new RegExp(versionExp);
 var versionRangeRegExp = new RegExp(versionExp + '\\s*\\-\\s*' + versionExp);
 
 /**
- * Accepts a list of actions and searched for skips if it finds one it will:
- *   - query elasticsearch to learn it's version
- *
- *   - parse out the the version and remove
- * @param  {Array}   actions - An array of action objects.
- * @param  {Function} done   - callback for when complete
+ * Call out to ES and ask for it's version number before any tests run
+ * @param  {Function} done - callback
  */
-function filterSkips(actions, done) {
-  var rangeString, range;
-  for (var i = 0; i < actions.length; i++) {
-    if (actions[i].name === 'skip') {
-      rangeString = actions[i].args.version;
-      return ES_VERSION == null ? getEsVersion() : haveEsVersion();
-    }
-  }
-  done(); //only called if skip is never found
+before(function getESVersion(done) {
+  setTimeout(function () {
+    var resp = {
+      version: {
+        number: '0.80.3'
+      }
+    };
+    expect(resp.version.number).to.match(versionRegExp);
+    ES_VERSION = versionToComparableString(versionRegExp.exec(resp.version.number)[1]);
+    done();
+  }, 100);
+});
 
-  function versionToComparableString(version) {
-    var parts = _.map(version.split('.'), function (part) {
-      part = '' + _.parseInt(part);
-      return (new Array(4 - part.length)).join('0') + part;
-    });
+/**
+ * Transform x.x.x into xxx.xxx.xxx, striping off any text at the end like beta or pre-alpha35
+ * @param  {String} version - Version number represented as a string
+ * @return {String} - Version number represented as three numbers, seperated by -, all numbers are
+ *   padded with 0 and will be three characters long so the strings can be compared.
+ */
+function versionToComparableString(version) {
+  var parts = _.map(version.split('.'), function (part) {
+    part = '' + _.parseInt(part);
+    return (new Array(4 - part.length)).join('0') + part;
+  });
 
-    while(parts.length < 3) {
-      parts.push('000');
-    }
-
-    return parts.join('-');
-  }
-
-  function getEsVersion() {
-    client.info().then(function (resp) {
-      assert(ES_VERSION = versionRegExp.exec(resp.version.number));
-      ES_VERSION = versionToComparableString(ES_VERSION[1]);
-      haveEsVersion();
-    });
+  while(parts.length < 3) {
+    parts.push('000');
   }
 
-  function haveEsVersion() {
-    range = versionRegExp.exec(rangeString);
-
-    if (!range) {
-      throw new Error('Unable to parse version string '+rangeString);
-    }
-
-    range = _.map(_.last(range, 2), versionToComparableString);
-    if (ES_VERSION >= range[0] && ES_VERSION <= range[1]) {
-      // remove this and the rest of the skips
-      actions.splice(i);
-      done();
-    } else {
-      // just remove this skip
-      actions.splice(i, 1);
-      // check again incase there are other skips in the list
-      filterSkips(actions, done);
-    }
-  }
-
+  return parts.join('-');
 }
 
-function YamlTest(actions, test) {
+/**
+ * Compare a version range to the ES_VERSION, determining if the current version
+ * falls within the range.
+ * @param  {String} rangeString - a string representing two version numbers seperated by a "-"
+ * @return {Boolean} - is the current version within the range (inclusive)
+ */
+function rangeMatchesCurrent(rangeString) {
+  expect(rangeString).to.match(versionRangeRegExp);
+
+  var range = versionRangeRegExp.exec(rangeString);
+  range = _.map(_.last(range, 2), versionToComparableString);
+
+  return ES_VERSION >= range[0] && ES_VERSION <= range[1];
+}
+
+/**
+ * read the file's contents, parse the yaml, pass to makeTest
+ * @param  {String} path - Full path to yaml file
+ * @return {undefined}
+ */
+function loadFile(location) {
+  var fileContents = fs.readFileSync(location, { encoding:'utf8' });
+  var relativeName = path.relative(TEST_DIR, location);
+  var groupName = path.dirname(relativeName);
+
+  nodeunitTests[groupName] = (nodeunitTests[groupName] || {});
+
+  var itterator = _.bind(makeTest, null,
+    path.basename(relativeName)
+  );
+
+  jsYaml.loadAll(fileContents, itterator, { filename: location });
+}
+
+/**
+ * convert tests actions
+ *   from: [ {name:args, name:args}, {name:args}, ... ]
+ *   to:   [ {name:'', args:'' }, {name:'', args:''} ]
+ * so it's easier to work with
+ * @param {ArrayOfObjects} config - Actions to be taken as defined in the yaml specs
+ */
+function flattenTestActions(config) {
+  // creates [ [ {name:"", args:"" }, ... ], ... ]
+  // from [ {name:args, name:args}, {name:args} ]
+  var actionSets = _.map(config, function (set) {
+    return _.map(_.pairs(set), function (pair) {
+      return { name: pair[0], args: pair[1] };
+    });
+  });
+
+  // do a single level flatten, mergeing the nested arrays from step one
+  // into a master array, creating an array of actions
+  return _.reduce(actionSets, function(note, set) {
+    return note.concat(set);
+  }, []);
+}
+
+
+/**
+ * Read the test descriptions from a yaml document (usually only one test, per doc but
+ * sometimes multiple docs per file)
+ * @param  {Object} tests       The object to place the tests, which is a part of the spec
+ *                              delivered to nodeunit
+ * @param  {String} fileName    The filename that this yaml document came from
+ * @param  {Object} testConfigs The yaml document
+ * @return {undefined}
+ */
+function makeTest(fileName, testConfigs) {
+  describe(fileName, function () {
+    _.forOwn(testConfigs, function (config, description) {
+      describe(description, new YamlTest('do ' + fileName + '::' + description, flattenTestActions(config)));
+    });
+  });
+}
+
+
+
+function YamlTest(description, actions) {
   this.actions = actions;
-  this.test = test;
   this._stash = {};
   this._last_request = null;
 
-  filterSkips(actions, _.bindKey(this, 'run'));
-
+  return _.bind(function () {
+    var me = this;
+    describe('actions', function () {
+      var skip = false;
+      _.each(actions, function (action, i) {
+        if (action.name === 'skip') {
+          it('skip when version is ' + action.args.version, function () {
+            if (rangeMatchesCurrent(action.args.version)) {
+              skip = true;
+            }
+          });
+        } else {
+          var method = me['do_' + action.name];
+          expect(method).to.be.a('function');
+          if (method.length > 1) {
+            // async do
+            it(action.name, function (done) {
+              if (skip) {
+                done();
+              } else {
+                method.call(me, action.args, done);
+              }
+            });
+          } else {
+            // sync do
+            it(action.name, function () {
+              if (!skip) {
+                method.call(me, action.args);
+              }
+            });
+          }
+        }
+      });
+    });
+  }, this);
 }
 
 YamlTest.prototype = {
-
-  run: function () {
-    async.eachSeries(
-      this.actions,
-      _.bind(function (action, done) {
-        var method = this['do_' + action.name];
-        this.test.ok(method, 'method exists');
-        if (method.length > 1) {
-          // it's async
-          method.call(this, action.args, done);
-        } else {
-          // its a sync test
-          method.call(this, action.args);
-          done();
-        }
-      }, this),
-      _.bindKey(this.test, 'done')
-    );
-  },
 
   /**
    * Get a value from the last response, using dot-notation
@@ -243,10 +246,13 @@ YamlTest.prototype = {
    * @param  {string} path - The dot-notation path to the value needed.
    * @return {*} - The value requested, or undefined if it was not found
    */
-  get: function (path) {
+  get: function (path, from) {
     var steps = path.split('.')
-      , from = path[0] === '$' ? this._stash : this._last_request
       , i;
+
+    if (!from) {
+      from = path[0] === '$' ? this._stash : this._last_request;
+    }
 
     for (i = 0; from != null && i < steps.length; i++) {
       from = from[steps[i]];
@@ -267,29 +273,16 @@ YamlTest.prototype = {
 
     var action = Object.keys(args).pop()
       , params = args[action]
-      , callee = client
-      , parent;
+      , callee = this.get(_.map(action.split('.'), _.camelCase).join('.'), client);
+
+    expect(callee).to.be.a('function');
 
     if (params.index) {
       params.index = params.index.replace(/^test_/, indexPrefix);
     }
 
-    action.split('.').forEach(function (step) {
-      step = _.camelCase(step);
-      if(callee[step]) {
-        // reference to the previous parent, used to set context
-        parent = callee;
-        // find the function that this action refers to
-        callee = callee[step];
-      } else {
-        console.log('tried to find', step, 'on', callee);
-        console.log('parent is', parent);
-        throw new Error('unable to find step');
-      }
-    }, this);
-
     if (typeof callee === 'function') {
-      callee.call(parent, params)
+      callee.call(client, params)
         .then(function (resp) {
           done();
         })
@@ -326,7 +319,7 @@ YamlTest.prototype = {
    * @return {undefined}
    */
   do_is_true: function (path) {
-    this.test.ok(this.get(path));
+    expect(this.get(path)).to.be.ok;
   },
 
   /**
@@ -336,7 +329,7 @@ YamlTest.prototype = {
    * @return {undefined}
    */
   do_is_false: function (path) {
-    this.test.ok(!this.get(path));
+    expect(this.get(path)).to.not.be.ok;
   },
 
   /**
@@ -346,7 +339,7 @@ YamlTest.prototype = {
    */
   do_match: function (args) {
     _.forOwn(args, function (val, path) {
-      this.test.deepEqual(this.get(path), val);
+      expect(this.get(path)).to.deep.eq(val);
     }, this);
   },
 
@@ -357,7 +350,7 @@ YamlTest.prototype = {
    */
   do_lt: function (args) {
     _.forOwn(args, function (num, path) {
-      this.test.ok(this.get(path) < num);
+      expect(this.get(path)).to.be.lt(num);
     }, this);
   },
 
@@ -368,7 +361,7 @@ YamlTest.prototype = {
    */
   do_gt: function (args) {
     _.forOwn(args, function (num, path) {
-      this.test.ok(this.get(path) > num);
+      expect(this.get(path)).to.be.gt(num);
     }, this);
   },
 
@@ -380,7 +373,7 @@ YamlTest.prototype = {
    */
   do_length: function (args) {
     _.forOwn(args, function (len, path) {
-      this.test.equal(_.size(this.get(path)), len);
+      expect(_.size(this.get(path))).to.eq(len);
     }, this);
   }
 };
