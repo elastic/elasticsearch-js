@@ -1,4 +1,4 @@
-var _ = require('./utils')
+var _ = require('./toolbelt')
   , selectors = require('./selector');
 
 var configDefaults = {

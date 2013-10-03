@@ -1,81 +1,109 @@
 /* elasticsearch-js nodejs transport */
 var http = require('http')
-  , _ = require('../utils');
+  , _ = require('../toolbelt')
+  , url = require('url')
+  , Q = require('q');
 
 /**
  * Http transport to use in Node.js
  *
  * @class  NodeHttp
  */
-function NodeHttp() {
+function NodeHttp(hosts, client) {
+  this.hosts = _.map(hosts, function (host) {
+    if (!~host.indexOf('//')) {
+      host = '//' + host;
+    }
+    return _.pick(url.parse(host, false, true), ['hostname', 'port']);
+  });
+  this.client = client;
+}
 
-  // Split hostname:port into its repective parts
-  function splitHost(u) {
-    var s = u.split(':');
-    return {host: s[0], port: s[1]};
+NodeHttp.prototype.request = function (params) {
+  var deferred = Q.defer()
+    , req = _.extend(
+      url.parse(params.url, false, false),
+      this.hosts[Math.round(Math.random() * (this.hosts.length - 1))]
+    );
+
+  // we need to have a method
+  req.method = params.method || (params.body ? 'post' : 'get');
+
+  // ensure that get isn't being used with a request body
+  if (params.body && req.method.toLowerCase() === 'get') {
+    deferred.reject(new TypeError('HTTP Method GET can not have a body'));
+    return deferred.promise;
   }
 
-  // Meta function for handling any http request that can have a body (PUT,POST,DELETE)
-  function performRequest(context, method, path, params, body, successcb, errorcb, retries) {
+  var request = http.request(req, function (res) {
+    var response = {
+      data : '',
+      headers : res.headers,
+      status : res.statusCode
+    };
 
-    var
-      //context = context,
-      host = splitHost(context.selector(context.options.hosts)),
-      options = {
-        host: host.host,
-        port: host.port,
-        path: path + '?' + _.toQueryString(params),
-        method: method,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-    var request = http.request(options, function (res) {
+    res.setEncoding('utf8');
 
-      var data = '';
-      res.setEncoding('utf8');
-
-      res.on('data', function (d) {
-        data = data + d;
-      });
-
-      res.on('end', function () {
-
-        var response = {
-          data : data.charAt(0) === '{' ? JSON.parse(data) : data,
-          headers : res.headers,
-          status : res.statusCode
-        };
-
-        if (successcb != null && response.status < 300) {
-          successcb(response);
-        } else if (errorcb != null) {
-          errorcb(response);
-        }
-      });
-
+    res.on('data', function (d) {
+      response.data += d;
     });
 
-    if (errorcb != null) {
-      request.on('error', errorcb);
-    }
+    res.on('end', function () {
+      this.client.log.trace(req.method, req, params.body, response.status, response.data);
 
-    if (method !== 'GET' && method !== 'HEAD') {
-      request.write(body);
-    }
+      // attempt to parse the response
+      if (response.data) {
+        try {
+          response.data = JSON.parse(response.data);
+        } catch (e) {
+          response.error = new TypeError('Non-valid JSON reponse from Elasticsearch');
+        }
+      }
 
-    request.end();
+      if (!response.error && response.status >= 400) {
+        response.error = new Error(errorMessage(response));
+        response.error.status = response.status;
+      }
+
+      if (response.error) {
+        if (_.contains(params.ignore, response.status)) {
+          deferred.resolve(false, response);
+        } else {
+          // reject with error
+          deferred.reject(response.error, response);
+        }
+      } else {
+        // we're done
+        deferred.resolve(req.method === 'head' ? true : response.data, response);
+      }
+    }.bind(this));
+
+  }.bind(this));
+
+  request.on('error', function (err) {
+    deferred.reject(err);
+  });
+
+  if (params.body) {
+    request.write(params.body);
   }
 
-  // Public functions
-  return {
-    get   : _.bind(performRequest, this, 'PUT'),
-    put   : _.bind(performRequest, this, 'POST'),
-    post  : _.bind(performRequest, this, 'DELETE'),
-    del   : _.bind(performRequest, this, 'GET'),
-    head  : _.bind(performRequest, this, 'HEAD')
-  };
+  request.end();
 
+  return deferred.promise;
+};
+
+function errorMessage(response) {
+  if (response.data.error) {
+    return response.data.error;
+  } else {
+    switch (response.status) {
+    case 404:
+      return 'Not Found';
+    default:
+      return response.status + ' - Unkown Error';
+    }
+  }
 }
 
 module.exports = NodeHttp;

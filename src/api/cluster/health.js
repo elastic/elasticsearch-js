@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 var levelOptions = ['cluster', 'indices', 'shards'];
 var waitForStatusOptions = ['green', 'yellow', 'red'];
@@ -16,22 +17,25 @@ var waitForStatusOptions = ['green', 'yellow', 'red'];
  * @param {Date|Number} params.master_timeout - Explicit operation timeout for connection to master node
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {number} params.wait_for_active_shards - Wait until the specified number of shards is active
- * @param {number} params.wait_for_nodes - Wait until the specified number of nodes is available
+ * @param {string} params.wait_for_nodes - Wait until the specified number of nodes is available
  * @param {number} params.wait_for_relocating_shards - Wait until the specified number of relocating shards is finished
  * @param {String} params.wait_for_status - Wait until cluster is in a specific state
  */
-function doClusterHealth(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doClusterHealth(params, callback) {
   params = params || {};
 
-  request.method = 'GET';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'get';
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+    if (typeof params.index !== 'object' && params.index) {
       url.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
@@ -41,9 +45,9 @@ function doClusterHealth(params) {
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/_cluster/health/' + url.index + '';
+    request.url = '/_cluster/health/' + encodeURIComponent(url.index) + '';
   }
-  else  {
+  else {
     request.url = '/_cluster/health';
   }
   
@@ -99,10 +103,10 @@ function doClusterHealth(params) {
   }
   
   if (typeof params.wait_for_nodes !== 'undefined') {
-    if (_.isNumeric(params.wait_for_nodes)) {
-      query.wait_for_nodes = params.wait_for_nodes * 1;
+    if (typeof params.wait_for_nodes !== 'object' && params.wait_for_nodes) {
+      query.wait_for_nodes = '' + params.wait_for_nodes;
     } else {
-      throw new TypeError('Invalid wait_for_nodes: ' + params.wait_for_nodes + ' should be a number.');
+      throw new TypeError('Invalid wait_for_nodes: ' + params.wait_for_nodes + ' should be a string.');
     }
   }
   
@@ -127,7 +131,11 @@ function doClusterHealth(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doClusterHealth;

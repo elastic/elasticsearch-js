@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 var ignoreIndicesOptions = ['none', 'missing'];
 
@@ -18,40 +19,50 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {boolean} params.refresh - Specify whether the index should be refreshed after performing the operation (default: true)
  * @param {boolean} params.wait_for_merge - Specify whether the request should block until the merge process is finished (default: true)
  */
-function doIndicesOptimize(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesOptimize(params, callback) {
   params = params || {};
 
-  if (params.method) {
-    if (params.method === 'POST' || params.method === 'GET') {
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'post' || params.method === 'get') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of POST, GET');
+      throw new TypeError('Invalid method: should be one of post, get');
     }
   } else {
-    request.method = 'POST';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_optimize';
+    request.url = '/' + encodeURIComponent(url.index) + '/_optimize';
   }
-  else  {
+  else {
     request.url = '/_optimize';
   }
   
@@ -122,7 +133,11 @@ function doIndicesOptimize(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesOptimize;

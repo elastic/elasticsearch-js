@@ -1,6 +1,6 @@
 var clc = require('cli-color')
-  , Log = require('../log')
-  , _ = require('../utils');
+  , LogAbstract = require('./log_abstract')
+  , _ = require('../toolbelt');
 
 /**
  * Special version of the Stream logger, which logs errors and warnings to stderr and all other
@@ -13,54 +13,13 @@ var clc = require('cli-color')
  * @param {Log} bridge - The object that triggers logging events, which we will record
  */
 function Stdio(config, bridge) {
-  this.bridge = bridge;
+  this._constructSuper(arguments);
 
   // config/state
   this.color = _.has(config, 'color') ? !!config.color : true;
-  this.listeningLevels = [];
-
-  // bound copies of the event handlers
-  this.handlers = _.reduce(Log.levels, function (handlers, name) {
-    handlers[name] = _.bindKey(this, 'on' + _.studlyCase(name));
-    return handlers;
-  }, {}, this);
-
-  // then the bridge closes, remove our event listeners
-  this.bridge.on('closing', _.bindKey(this, 'cleanUpListeners'));
-
-  this.setupListeners(config.levels);
 }
 
-/**
- * Clear the current event listeners and then re-listen for events based on the level specified
- *
- * @method setupListeners
- * @private
- * @param  {Integer} level - The max log level that this logger should listen to
- * @return {undefined}
- */
-Stdio.prototype.setupListeners = function (levels) {
-  this.cleanUpListeners();
-
-  this.listeningLevels = levels;
-
-  _.each(this.listeningLevels, function (level) {
-    this.bridge.on(level, this.handlers[level]);
-  }, this);
-};
-
-/**
- * Clear the current event listeners
- *
- * @method cleanUpListeners
- * @private
- * @return {undefined}
- */
-Stdio.prototype.cleanUpListeners = function () {
-  _.each(this.listeningLevels, function (level) {
-    this.bridge.removeListener(level, this.handlers[level]);
-  }, this);
-};
+_.inherits(Stdio, LogAbstract);
 
 /**
  * Sends output to a stream, does some formatting first
@@ -73,11 +32,11 @@ Stdio.prototype.cleanUpListeners = function () {
  * @param  {*} what - The message to log
  * @return {undefined}
  */
-Stdio.prototype.write = function (to, label, colorize, what) {
+Stdio.prototype.write = function (to, label, colorize, message) {
   if (this.color) {
     label = colorize(label);
   }
-  to.write(label + ': ' + what + '\n');
+  to.write(this.format(label, message));
 };
 
 /**

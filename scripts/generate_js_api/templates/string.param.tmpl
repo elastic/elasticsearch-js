@@ -1,4 +1,4 @@
-if (typeof <%= get %> !== 'object' && typeof <%= get %> !== 'undefined') {
+if (typeof <%= get %> !== 'object' && <%= get %>) {
   <%= set %> = '' + <%= get %>;
 } else {
   throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be a string.');

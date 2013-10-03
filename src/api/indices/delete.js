@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 
 
@@ -11,32 +12,42 @@ var _ = require('../../lib/utils');
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
-function doIndicesDelete(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesDelete(params, callback) {
   params = params || {};
 
-  request.method = 'DELETE';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'delete';
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '';
+    request.url = '/' + encodeURIComponent(url.index) + '';
   }
-  else  {
+  else {
     request.url = '/';
   }
   
@@ -64,7 +75,11 @@ function doIndicesDelete(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesDelete;

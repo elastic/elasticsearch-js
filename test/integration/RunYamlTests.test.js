@@ -1,15 +1,14 @@
-/* global describe, before, beforeEach, setup */
-/* jshint -W030:true */
 var fs = require('fs')
   , path = require('path')
   , async = require('async')
   , assert = require('assert')
   , jsYaml = require('js-yaml')
-  , expect = require('chai').expect
-  , indexPrefix = 'yaml_tests_'
+  , expect = require('expect.js')
   , nodeunit = require('nodeunit')
-  , _ = require('../../src/lib/utils')
+  , _ = require('../../src/lib/toolbelt')
   , es = require('../../src/elasticsearch');
+
+require('mocha-as-promised')();
 
 /**
  * Where do our tests live?
@@ -17,22 +16,33 @@ var fs = require('fs')
  */
 var TEST_DIR = path.resolve(__dirname, '../../es_api_spec/test/');
 
+// var doRE = '.*';
+var doRE = /(^|\/)(.*)\/.*/;
+// var FILE_WHITELIST = ['indices.analyze/10_analyze.yaml'];
+
 /**
- * This will be the object passed to nodeunit, which will run the tests.
- * @type {Object}
+ * We'll use this client for all of our work
+ * @type {es.Client}
  */
-var nodeunitTests = {
-  setUp: function (done) {
-    // RESET the test cluster (deleting indices etc)
-    // the response var and the stash should be cleared.
-    done();
-  }
-};
-
-
 var client = new es.Client({
-  hosts: ['localhost:9200']
+  hosts: ['localhost:9200'],
+  log: {
+    type: 'file',
+    level: 'trace',
+    path: path.resolve(__dirname, '../integration-test.log')
+  },
+  max_connections: 1
 });
+
+function clearIndicies (done) {
+  client.indices.delete({
+    index: '*'
+  }, function () {
+    done();
+  });
+}
+// before running any tests, clear the test* indicies
+before(clearIndicies);
 
 /**
  * recursively crawl the directory, looking for yaml files which will be passed to loadFile
@@ -41,15 +51,17 @@ var client = new es.Client({
  */
 function loadDir(dir) {
   fs.readdirSync(dir).forEach(function (fileName) {
-    var location = path.join(dir, fileName)
-      , stat = fs.statSync(location);
+    describe(fileName, function () {
+      var location = path.join(dir, fileName)
+        , stat = fs.statSync(location);
 
-    if (stat.isFile() && fileName.match(/\.yaml$/)) {
-      loadFile(location);
-    }
-    else if (stat.isDirectory()) {
-      loadDir(location);
-    }
+      if (stat.isFile() && fileName.match(/\.yaml$/) && location.match(doRE)) {
+        loadFile(location);
+      }
+      else if (stat.isDirectory()) {
+        loadDir(location);
+      }
+    });
   });
 }
 
@@ -63,26 +75,17 @@ var ES_VERSION = null;
  * Regular Expression to extract version numbers from a version string
  * @type {RegExp}
  */
-var versionExp = '([\\d\\.]+)(?:\\.\\w+)?';
-var versionRegExp = new RegExp(versionExp);
-var versionRangeRegExp = new RegExp(versionExp + '\\s*\\-\\s*' + versionExp);
+var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
+var versionRE = new RegExp(versionExp);
+var versionRangeRE = new RegExp(versionExp + '\\s*\\-\\s*' + versionExp);
 
-/**
- * Call out to ES and ask for it's version number before any tests run
- * @param  {Function} done - callback
- */
-before(function getESVersion(done) {
-  setTimeout(function () {
-    var resp = {
-      version: {
-        number: '0.80.3'
-      }
-    };
-    expect(resp.version.number).to.match(versionRegExp);
-    ES_VERSION = versionToComparableString(versionRegExp.exec(resp.version.number)[1]);
+function getVersionFromES(done) {
+  client.info().then(function (resp) {
+    expect(resp.version.number).to.match(versionRE);
+    ES_VERSION = versionToComparableString(versionRE.exec(resp.version.number)[1]);
     done();
-  }, 100);
-});
+  });
+}
 
 /**
  * Transform x.x.x into xxx.xxx.xxx, striping off any text at the end like beta or pre-alpha35
@@ -109,13 +112,21 @@ function versionToComparableString(version) {
  * @param  {String} rangeString - a string representing two version numbers seperated by a "-"
  * @return {Boolean} - is the current version within the range (inclusive)
  */
-function rangeMatchesCurrent(rangeString) {
-  expect(rangeString).to.match(versionRangeRegExp);
+function rangeMatchesCurrentVersion(rangeString, done) {
+  function doWork() {
+    expect(rangeString).to.match(versionRangeRE);
 
-  var range = versionRangeRegExp.exec(rangeString);
-  range = _.map(_.last(range, 2), versionToComparableString);
+    var range = versionRangeRE.exec(rangeString);
+    range = _.map(_.last(range, 2), versionToComparableString);
 
-  return ES_VERSION >= range[0] && ES_VERSION <= range[1];
+    done(ES_VERSION >= range[0] && ES_VERSION <= range[1]);
+  }
+
+  if (!ES_VERSION) {
+    getVersionFromES(doWork);
+  } else {
+    doWork();
+  }
 }
 
 /**
@@ -124,105 +135,134 @@ function rangeMatchesCurrent(rangeString) {
  * @return {undefined}
  */
 function loadFile(location) {
-  var fileContents = fs.readFileSync(location, { encoding:'utf8' });
-  var relativeName = path.relative(TEST_DIR, location);
-  var groupName = path.dirname(relativeName);
+  var relativeName = path.relative(TEST_DIR, location)
+    , groupName = path.dirname(relativeName)
+    , fileName = path.basename(relativeName)
+    , docsInFile = []
+    , standardTestConfigs = [];
 
-  nodeunitTests[groupName] = (nodeunitTests[groupName] || {});
-
-  var itterator = _.bind(makeTest, null,
-    path.basename(relativeName)
+  jsYaml.loadAll(
+    fs.readFileSync(location, { encoding:'utf8' }),
+    function (testConfig) {
+      docsInFile.push(testConfig);
+    },
+    {
+      filename: location
+    }
   );
 
-  jsYaml.loadAll(fileContents, itterator, { filename: location });
+  _.each(docsInFile, makeTest);
 }
-
-/**
- * convert tests actions
- *   from: [ {name:args, name:args}, {name:args}, ... ]
- *   to:   [ {name:'', args:'' }, {name:'', args:''} ]
- * so it's easier to work with
- * @param {ArrayOfObjects} config - Actions to be taken as defined in the yaml specs
- */
-function flattenTestActions(config) {
-  // creates [ [ {name:"", args:"" }, ... ], ... ]
-  // from [ {name:args, name:args}, {name:args} ]
-  var actionSets = _.map(config, function (set) {
-    return _.map(_.pairs(set), function (pair) {
-      return { name: pair[0], args: pair[1] };
-    });
-  });
-
-  // do a single level flatten, mergeing the nested arrays from step one
-  // into a master array, creating an array of actions
-  return _.reduce(actionSets, function(note, set) {
-    return note.concat(set);
-  }, []);
-}
-
 
 /**
  * Read the test descriptions from a yaml document (usually only one test, per doc but
- * sometimes multiple docs per file)
- * @param  {Object} tests       The object to place the tests, which is a part of the spec
- *                              delivered to nodeunit
- * @param  {String} fileName    The filename that this yaml document came from
- * @param  {Object} testConfigs The yaml document
+ * sometimes multiple docs per file, and because of the layout there COULD be
+ * multiple test per test...)
+ * @param  {Object} testConfigs - The yaml document
  * @return {undefined}
  */
-function makeTest(fileName, testConfigs) {
-  describe(fileName, function () {
-    _.forOwn(testConfigs, function (config, description) {
-      describe(description, new YamlTest('do ' + fileName + '::' + description, flattenTestActions(config)));
+function makeTest(testConfig, count) {
+  var setup;
+  if (_.has(testConfig, 'setup')) {
+    (new ActionRunner(testConfig.setup)).each(function (action, name) {
+      console.log('setup', name);
+      before(action);
     });
-  });
-}
-
-
-
-function YamlTest(description, actions) {
-  this.actions = actions;
-  this._stash = {};
-  this._last_request = null;
-
-  return _.bind(function () {
-    var me = this;
-    describe('actions', function () {
-      var skip = false;
-      _.each(actions, function (action, i) {
-        if (action.name === 'skip') {
-          it('skip when version is ' + action.args.version, function () {
-            if (rangeMatchesCurrent(action.args.version)) {
-              skip = true;
-            }
-          });
-        } else {
-          var method = me['do_' + action.name];
-          expect(method).to.be.a('function');
-          if (method.length > 1) {
-            // async do
-            it(action.name, function (done) {
-              if (skip) {
-                done();
-              } else {
-                method.call(me, action.args, done);
-              }
-            });
-          } else {
-            // sync do
-            it(action.name, function () {
-              if (!skip) {
-                method.call(me, action.args);
-              }
-            });
-          }
-        }
+    delete testConfig.setup;
+  }
+  _.forOwn(testConfig, function (test, description) {
+    describe(description, function () {
+      var actions = new ActionRunner(test);
+      actions.each(function (action, name) {
+        it(name, action);
       });
     });
+  });
+
+  // after running the tests, remove all indices
+  after(clearIndicies);
+}
+
+function ActionRunner(actions) {
+  this._actions = [];
+
+  this._stash = {};
+  this._last_requests_response = null;
+
+  // setup the actions, creating a bound and testable method for each
+  _.each(this.flattenTestActions(actions), function (action, i) {
+    // get the method that will do the action
+    var method = this['do_' + action.name];
+    var runner = this;
+
+    // check that it's a function
+    expect(method).to.be.a('function');
+
+    if (typeof action.args === 'object') {
+      action.name += ' ' + Object.keys(action.args).join(', ');
+    } else {
+      action.name += ' ' + action.args;
+    }
+
+    // wrap in a check for skipping
+    action.bound = _.bind(method, this, action.args);
+
+    // create a function that can be passed to
+    action.testable = function (done) {
+      if (runner.skipping) {
+        return done();
+      }
+      if (method.length > 1) {
+        action.bound(done);
+      } else {
+        action.bound();
+        done();
+      }
+    };
+
+    this._actions.push(action);
   }, this);
 }
 
-YamlTest.prototype = {
+ActionRunner.prototype = {
+
+  /**
+   * convert tests actions
+   *   from: [ {name:args, name:args}, {name:args}, ... ]
+   *   to:   [ {name:'', args:'' }, {name:'', args:''} ]
+   * so it's easier to work with
+   * @param {ArrayOfObjects} config - Actions to be taken as defined in the yaml specs
+   */
+  flattenTestActions: function (config) {
+    // creates [ [ {name:"", args:"" }, ... ], ... ]
+    // from [ {name:args, name:args}, {name:args} ]
+    var actionSets = _.map(config, function (set) {
+      return _.map(_.pairs(set), function (pair) {
+        return { name: pair[0], args: pair[1] };
+      });
+    });
+
+    // do a single level flatten, merge=ing the nested arrays from step one
+    // into a master array, creating an array of action objects
+    return _.reduce(actionSets, function(note, set) {
+      return note.concat(set);
+    }, []);
+  },
+
+  /**
+   * Itterate over each of the actions, provides the testable function, and a name/description.
+   * return a litteral false to stop itterating
+   * @param  {Function} ittr - The function to call for each action.
+   * @return {undefined}
+   */
+  each: function (ittr) {
+    var action;
+    while(action = this._actions.shift()) {
+      if (ittr(action.testable, action.name) === false) {
+        break;
+      }
+    }
+  },
 
   /**
    * Get a value from the last response, using dot-notation
@@ -247,48 +287,139 @@ YamlTest.prototype = {
    * @return {*} - The value requested, or undefined if it was not found
    */
   get: function (path, from) {
-    var steps = path.split('.')
-      , i;
+
+    var i
+      , log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {} ;
 
     if (!from) {
-      from = path[0] === '$' ? this._stash : this._last_request;
+      if (path[0] === '$') {
+        from = this._stash;
+        path = path.substring(1);
+      } else {
+        from = this._last_requests_response;
+      }
     }
+
+    log('getting', path, 'from', from);
+
+    var steps = path ? path.split('.') : []
+      , remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i++) {
-      from = from[steps[i]];
+      if (typeof from[steps[i]] === 'undefined') {
+        remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
+        from = from[remainingSteps];
+        break;
+      } else {
+        from = from[steps[i]];
+      }
     }
 
+    log('found', typeof from !== 'function' ? from : 'function');
     return from;
   },
 
+  do_skip: function (args, done) {
+    rangeMatchesCurrentVersion(args.version, function (match) {
+      if (match) {
+        this.skipping = true;
+        console.log('skipping the rest of these actions' + (args.reason ? ' because ' + args.reason : ''));
+      } else {
+        this.skipping = false;
+      }
+      done();
+    }.bind(this));
+  },
 
   /**
-   * Do a request, as outline
+   * Do a request, as outlined in the args
    * @param  {[type]}   args [description]
    * @param  {Function} done [description]
    * @return {[type]}        [description]
    */
   do_do: function (args, done) {
-    this._last_request = null;
+    this._last_requests_response = null;
 
-    var action = Object.keys(args).pop()
-      , params = args[action]
-      , callee = this.get(_.map(action.split('.'), _.camelCase).join('.'), client);
+    var catcher;
 
-    expect(callee).to.be.a('function');
-
-    if (params.index) {
-      params.index = params.index.replace(/^test_/, indexPrefix);
+    // resolve the catch arg to a value used for matching once the request is complete
+    switch(args.catch) {
+    case void 0:
+      catcher = null;
+      break;
+    case 'missing':
+      catcher = 404;
+      break;
+    case 'conflict':
+      catcher = 409;
+      break;
+    case 'forbidden':
+      catcher = 403;
+      break;
+    case 'request':
+      catcher = /.*/;
+      break;
+    case 'param':
+      catcher = TypeError;
+      break;
+    default:
+      catcher = args.catch.match(/^\/(.*)\/$/);
+      if (catcher) {
+        catcher = new RegExp(catcher[1]);
+      }
     }
 
-    if (typeof callee === 'function') {
-      callee.call(client, params)
+    delete args.catch;
+
+    var action = Object.keys(args).pop()
+      , clientActionName = _.map(action.split('.'), _.camelCase).join('.')
+      , clientAction = this.get(clientActionName, client)
+      , response
+      , error
+      , params = _.map(args[action], function (val) {
+        if (typeof val === 'string' && val[0] === '$') {
+          return this.get(val);
+        }
+        return val;
+      }, this);
+
+    expect(clientAction, clientActionName).to.be.a('function');
+
+    if (typeof clientAction === 'function') {
+      if (_.isNumeric(catcher)) {
+        params.ignore = _.union(params.ignore || [], [catcher]);
+        catcher = null;
+      }
+
+      clientAction.call(client, params)
         .then(function (resp) {
-          done();
+          response = resp;
         })
-        .fail(function (error) {
-          throw new Error('The call failed');
-        });
+        .fail(function (err, resp) {
+          error = err;
+          response = resp;
+        })
+        .finally(function () {
+          this._last_requests_response = response;
+
+          if (error){
+            if (catcher) {
+              if (catcher instanceof RegExp) {
+                // error message should match the regexp
+                expect(error.message).to.match(catcher);
+              } else if (typeof catcher === 'function') {
+                // error should be an instance of
+                expect(error).to.be.a(catcher);
+              } else {
+                throw new Error('Invalid catcher '+catcher);
+              }
+            } else {
+              return done(error);
+            }
+          }
+
+          done();
+        }.bind(this));
     } else {
       throw new Error('stepped in do_do, did not find a function');
     }
@@ -339,7 +470,10 @@ YamlTest.prototype = {
    */
   do_match: function (args) {
     _.forOwn(args, function (val, path) {
-      expect(this.get(path)).to.deep.eq(val);
+      if (val[0] === '$') {
+        val = this.get(val);
+      }
+      expect(this.get(path)).to.eql(val);
     }, this);
   },
 
@@ -350,7 +484,7 @@ YamlTest.prototype = {
    */
   do_lt: function (args) {
     _.forOwn(args, function (num, path) {
-      expect(this.get(path)).to.be.lt(num);
+      expect(this.get(path)).to.be.below(num);
     }, this);
   },
 
@@ -361,7 +495,7 @@ YamlTest.prototype = {
    */
   do_gt: function (args) {
     _.forOwn(args, function (num, path) {
-      expect(this.get(path)).to.be.gt(num);
+      expect(this.get(path)).to.be.above(num);
     }, this);
   },
 
@@ -373,10 +507,9 @@ YamlTest.prototype = {
    */
   do_length: function (args) {
     _.forOwn(args, function (len, path) {
-      expect(_.size(this.get(path))).to.eq(len);
+      expect(_.size(this.get(path))).to.be(len);
     }, this);
   }
 };
 
 loadDir(TEST_DIR);
-module.exports['YAML Tests'] = nodeunitTests;

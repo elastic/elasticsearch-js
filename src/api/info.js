@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 
 
@@ -9,21 +10,24 @@ var _ = require('../lib/utils');
  * @method info
  * @param {Object} params - An object with parameters used to carry out this action
  */
-function doInfo(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doInfo(params, callback) {
   params = params || {};
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'HEAD') {
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'head') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, HEAD');
+      throw new TypeError('Invalid method: should be one of get, head');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'head' : 'get';
   }
 
   // find the url's params
@@ -37,7 +41,11 @@ function doInfo(params) {
 
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doInfo;

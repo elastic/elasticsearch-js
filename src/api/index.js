@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 var consistencyOptions = ['one', 'quorum', 'all'];
 var opTypeOptions = ['index', 'create'];
@@ -26,40 +27,43 @@ var versionTypeOptions = ['internal', 'external'];
  * @param {number} params.version - Explicit version number for concurrency control
  * @param {String} params.version_type - Specific version type
  */
-function doIndex(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndex(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'POST' || params.method === 'PUT') {
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'post' || params.method === 'put') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of POST, PUT');
+      throw new TypeError('Invalid method: should be one of post, put');
     }
   } else {
-    request.method = 'POST';
+    request.method = 'post';
   }
 
   // find the url's params
   if (typeof params.id !== 'undefined') {
-    if (typeof params.id !== 'object' && typeof params.id !== 'undefined') {
+    if (typeof params.id !== 'object' && params.id) {
       url.id = '' + params.id;
     } else {
       throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
     }
   }
   
-  if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+  if (typeof params.index !== 'object' && params.index) {
     url.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
   
-  if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+  if (typeof params.type !== 'object' && params.type) {
     url.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -68,13 +72,13 @@ function doIndex(params) {
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + url.index + '/' + url.type + '/' + url.id + '';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '';
   }
   else if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + url.index + '/' + url.type + '';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least index, type');
+    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object]');
   }
   
 
@@ -102,7 +106,7 @@ function doIndex(params) {
   }
   
   if (typeof params.parent !== 'undefined') {
-    if (typeof params.parent !== 'object' && typeof params.parent !== 'undefined') {
+    if (typeof params.parent !== 'object' && params.parent) {
       query.parent = '' + params.parent;
     } else {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
@@ -110,7 +114,7 @@ function doIndex(params) {
   }
   
   if (typeof params.percolate !== 'undefined') {
-    if (typeof params.percolate !== 'object' && typeof params.percolate !== 'undefined') {
+    if (typeof params.percolate !== 'object' && params.percolate) {
       query.percolate = '' + params.percolate;
     } else {
       throw new TypeError('Invalid percolate: ' + params.percolate + ' should be a string.');
@@ -139,7 +143,7 @@ function doIndex(params) {
   }
   
   if (typeof params.routing !== 'undefined') {
-    if (typeof params.routing !== 'object' && typeof params.routing !== 'undefined') {
+    if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
     } else {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
@@ -167,10 +171,10 @@ function doIndex(params) {
   }
   
   if (typeof params.ttl !== 'undefined') {
-    if (_.isInterval(params.ttl)) {
+    if (_.isNumeric(params.ttl) || _.isInterval(params.ttl)) {
       query.ttl = params.ttl;
     } else {
-      throw new TypeError('Invalid ttl: ' + params.ttl + ' should be in interval notation (an integer followed by one of Mwdhmsy).');
+      throw new TypeError('Invalid ttl: ' + params.ttl + ' should be a number or in interval notation (an integer followed by one of Mwdhmsy).');
     }
   }
   
@@ -195,7 +199,11 @@ function doIndex(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndex;

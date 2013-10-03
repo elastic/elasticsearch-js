@@ -2,7 +2,7 @@
 'use strict';
 
 var Client = require('../../src/lib/client')
-  , _ = require('../../src/lib/utils')
+  , _ = require('../../src/lib/toolbelt')
   , api = _.requireDir(module, '../../src/api')
   , c;
 

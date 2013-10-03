@@ -1,7 +1,14 @@
-if (typeof <%= get %> === 'string') {
+switch (typeof <%= get %>) {
+case 'string':
   <%= set %> = <%= get %>;
-} else if (_.isArray(<%= get %>)) {
-  <%= set %> = <%= get %>.join(',');
-} else {
-  throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be a comma seperated list or array.');
+  break;
+case 'object':
+  if (_.isArray(<%= get %>)) {
+    <%= set %> = <%= get %>.join(',');
+  } else {
+    throw new TypeError('Invalid <%= name %>: ' + <%= get %> + ' should be a comma seperated list, array, or boolean.');
+  }
+  break;
+default:
+  <%= set %> = !!<%= get %>;
 }

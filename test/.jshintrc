@@ -23,9 +23,12 @@
   "validthis": true,
   "sub": true,
   "maxlen": 140,
+  "-W030":true,
 
   "globals": {
     "describe": true,
+    "before": true,
+    "after": true,
     "it": true,
     "beforeEach": true
   }

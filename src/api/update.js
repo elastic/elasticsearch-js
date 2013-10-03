@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 var consistencyOptions = ['one', 'quorum', 'all'];
 var replicationOptions = ['sync', 'async'];
@@ -12,7 +13,7 @@ var replicationOptions = ['sync', 'async'];
  * @method update
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {list} params.fields - A comma-separated list of fields to return in the response
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {string} params.lang - The script language (default: mvel)
  * @param {string} params.parent - ID of the parent document
  * @param {string} params.percolate - Perform percolation during the operation; use specific registered query name, attribute, or wildcard
@@ -27,30 +28,33 @@ var replicationOptions = ['sync', 'async'];
  * @param {number} params.version - Explicit version number for concurrency control
  * @param {number} params.version_type - Explicit version number for concurrency control
  */
-function doUpdate(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doUpdate(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  request.method = 'POST';
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'post';
 
   // find the url's params
-  if (typeof params.id !== 'object' && typeof params.id !== 'undefined') {
+  if (typeof params.id !== 'object' && params.id) {
     url.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
   
-  if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+  if (typeof params.index !== 'object' && params.index) {
     url.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
   
-  if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+  if (typeof params.type !== 'object' && params.type) {
     url.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -59,10 +63,10 @@ function doUpdate(params) {
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + url.index + '/' + url.type + '/' + url.id + '/_update';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '/_update';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least index, type, id');
+    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
   }
   
 
@@ -79,17 +83,24 @@ function doUpdate(params) {
   }
   
   if (typeof params.fields !== 'undefined') {
-    if (typeof params.fields === 'string') {
+    switch (typeof params.fields) {
+    case 'string':
       query.fields = params.fields;
-    } else if (_.isArray(params.fields)) {
-      query.fields = params.fields.join(',');
-    } else {
-      throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.fields)) {
+        query.fields = params.fields.join(',');
+      } else {
+        throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.fields = !!params.fields;
     }
   }
   
   if (typeof params.lang !== 'undefined') {
-    if (typeof params.lang !== 'object' && typeof params.lang !== 'undefined') {
+    if (typeof params.lang !== 'object' && params.lang) {
       query.lang = '' + params.lang;
     } else {
       throw new TypeError('Invalid lang: ' + params.lang + ' should be a string.');
@@ -97,7 +108,7 @@ function doUpdate(params) {
   }
   
   if (typeof params.parent !== 'undefined') {
-    if (typeof params.parent !== 'object' && typeof params.parent !== 'undefined') {
+    if (typeof params.parent !== 'object' && params.parent) {
       query.parent = '' + params.parent;
     } else {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
@@ -105,7 +116,7 @@ function doUpdate(params) {
   }
   
   if (typeof params.percolate !== 'undefined') {
-    if (typeof params.percolate !== 'object' && typeof params.percolate !== 'undefined') {
+    if (typeof params.percolate !== 'object' && params.percolate) {
       query.percolate = '' + params.percolate;
     } else {
       throw new TypeError('Invalid percolate: ' + params.percolate + ' should be a string.');
@@ -142,7 +153,7 @@ function doUpdate(params) {
   }
   
   if (typeof params.routing !== 'undefined') {
-    if (typeof params.routing !== 'object' && typeof params.routing !== 'undefined') {
+    if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
     } else {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
@@ -174,10 +185,10 @@ function doUpdate(params) {
   }
   
   if (typeof params.ttl !== 'undefined') {
-    if (_.isInterval(params.ttl)) {
+    if (_.isNumeric(params.ttl) || _.isInterval(params.ttl)) {
       query.ttl = params.ttl;
     } else {
-      throw new TypeError('Invalid ttl: ' + params.ttl + ' should be in interval notation (an integer followed by one of Mwdhmsy).');
+      throw new TypeError('Invalid ttl: ' + params.ttl + ' should be a number or in interval notation (an integer followed by one of Mwdhmsy).');
     }
   }
   
@@ -199,7 +210,11 @@ function doUpdate(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doUpdate;

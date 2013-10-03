@@ -1,7 +1,8 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-var metricFamilyOptions = ['docs', 'fielddata', 'filter_cache', 'flush', 'get', 'groups', 'id_cache', 'ignore_indices', 'indexing', 'merge', 'refresh', 'search', 'store', 'warmer'];
+var metricFamilyOptions = ['completion', 'docs', 'fielddata', 'filter_cache', 'flush', 'get', 'groups', 'id_cache', 'ignore_indices', 'indexing', 'merge', 'refresh', 'search', 'store', 'warmer'];
 
 
 
@@ -13,9 +14,12 @@ var metricFamilyOptions = ['docs', 'fielddata', 'filter_cache', 'flush', 'get', 
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {boolean} params.all - Return all available information
  * @param {boolean} params.clear - Reset the default level of detail
+ * @param {boolean} params.completion - Return information about completion suggester stats
+ * @param {String|ArrayOfStrings|Boolean} params.completion_fields - A comma-separated list of fields for `completion` metric (supports wildcards)
  * @param {boolean} params.docs - Return information about indexed and deleted documents
  * @param {boolean} params.fielddata - Return information about field data
- * @param {boolean} params.fields - A comma-separated list of fields for `fielddata` metric (supports wildcards)
+ * @param {String|ArrayOfStrings|Boolean} params.fielddata_fields - A comma-separated list of fields for `fielddata` metric (supports wildcards)
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` metric (supports wildcards)
  * @param {boolean} params.filter_cache - Return information about filter cache
  * @param {boolean} params.flush - Return information about flush operations
  * @param {boolean} params.get - Return information about get operations
@@ -29,43 +33,67 @@ var metricFamilyOptions = ['docs', 'fielddata', 'filter_cache', 'flush', 'get', 
  * @param {boolean} params.store - Return information about the size of the index
  * @param {boolean} params.warmer - Return information about warmers
  */
-function doIndicesStats(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesStats(params, callback) {
   params = params || {};
 
-  request.method = 'GET';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'get';
 
   // find the url's params
   if (typeof params.fields !== 'undefined') {
-    if (typeof params.fields === 'string') {
+    switch (typeof params.fields) {
+    case 'string':
       url.fields = params.fields;
-    } else if (_.isArray(params.fields)) {
-      url.fields = params.fields.join(',');
-    } else {
-      throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.fields)) {
+        url.fields = params.fields.join(',');
+      } else {
+        throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.fields = !!params.fields;
     }
   }
   
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
   if (typeof params.indexing_types !== 'undefined') {
-    if (typeof params.indexing_types === 'string') {
+    switch (typeof params.indexing_types) {
+    case 'string':
       url.indexing_types = params.indexing_types;
-    } else if (_.isArray(params.indexing_types)) {
-      url.indexing_types = params.indexing_types.join(',');
-    } else {
-      throw new TypeError('Invalid indexing_types: ' + params.indexing_types + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.indexing_types)) {
+        url.indexing_types = params.indexing_types.join(',');
+      } else {
+        throw new TypeError('Invalid indexing_types: ' + params.indexing_types + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.indexing_types = !!params.indexing_types;
     }
   }
   
@@ -81,21 +109,28 @@ function doIndicesStats(params) {
   }
   
   if (typeof params.search_groups !== 'undefined') {
-    if (typeof params.search_groups === 'string') {
+    switch (typeof params.search_groups) {
+    case 'string':
       url.search_groups = params.search_groups;
-    } else if (_.isArray(params.search_groups)) {
-      url.search_groups = params.search_groups.join(',');
-    } else {
-      throw new TypeError('Invalid search_groups: ' + params.search_groups + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.search_groups)) {
+        url.search_groups = params.search_groups.join(',');
+      } else {
+        throw new TypeError('Invalid search_groups: ' + params.search_groups + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.search_groups = !!params.search_groups;
     }
   }
   
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_stats';
+    request.url = '/' + encodeURIComponent(url.index) + '/_stats';
   }
-  else  {
+  else {
     request.url = '/_stats';
   }
   
@@ -121,6 +156,33 @@ function doIndicesStats(params) {
     }
   }
   
+  if (typeof params.completion !== 'undefined') {
+    if (params.completion.toLowerCase && (params.completion = params.completion.toLowerCase())
+      && (params.completion === 'no' || params.completion === 'off')
+    ) {
+      query.completion = false;
+    } else {
+      query.completion = !!params.completion;
+    }
+  }
+  
+  if (typeof params.completion_fields !== 'undefined') {
+    switch (typeof params.completion_fields) {
+    case 'string':
+      query.completion_fields = params.completion_fields;
+      break;
+    case 'object':
+      if (_.isArray(params.completion_fields)) {
+        query.completion_fields = params.completion_fields.join(',');
+      } else {
+        throw new TypeError('Invalid completion_fields: ' + params.completion_fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.completion_fields = !!params.completion_fields;
+    }
+  }
+  
   if (typeof params.docs !== 'undefined') {
     if (params.docs.toLowerCase && (params.docs = params.docs.toLowerCase())
       && (params.docs === 'no' || params.docs === 'off')
@@ -141,12 +203,36 @@ function doIndicesStats(params) {
     }
   }
   
+  if (typeof params.fielddata_fields !== 'undefined') {
+    switch (typeof params.fielddata_fields) {
+    case 'string':
+      query.fielddata_fields = params.fielddata_fields;
+      break;
+    case 'object':
+      if (_.isArray(params.fielddata_fields)) {
+        query.fielddata_fields = params.fielddata_fields.join(',');
+      } else {
+        throw new TypeError('Invalid fielddata_fields: ' + params.fielddata_fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.fielddata_fields = !!params.fielddata_fields;
+    }
+  }
+  
   if (typeof params.fields !== 'undefined') {
-    if (params.fields.toLowerCase && (params.fields = params.fields.toLowerCase())
-      && (params.fields === 'no' || params.fields === 'off')
-    ) {
-      query.fields = false;
-    } else {
+    switch (typeof params.fields) {
+    case 'string':
+      query.fields = params.fields;
+      break;
+    case 'object':
+      if (_.isArray(params.fields)) {
+        query.fields = params.fields.join(',');
+      } else {
+        throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
       query.fields = !!params.fields;
     }
   }
@@ -274,7 +360,11 @@ function doIndicesStats(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesStats;

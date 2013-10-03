@@ -1,8 +1,8 @@
-var _ = require('./utils')
-  , transports = _.requireDir(module, './transports')
-  , api = _.requireDir(module, '../api')
+var _ = require('./toolbelt')
+  , transports = _.requireClasses(module, './transports')
+  , serializers = _.requireClasses(module, './serializers')
   , Log = require('./log')
-  , Q = require('q');
+  , api = _.reKey(_.requireDir(module, '../api'), _.camelCase);
 
 // Many API commands are namespaced, like cluster.node_stats. The names of these namespaces will be
 // tracked here and the namespace objects will be instantiated by reading the values from this
@@ -44,16 +44,10 @@ function Client(config) {
     this[namespaces[i]] = new this[namespaces[i]](this);
   }
 
-  this.hosts = config.hosts || ['http://localhost:9200'];
-
-  // this.transport = this.options.transport || new transports.NodeHttp(this.options);
-  this.log = new Log(config && config.log);
-  // this.serializer = this.options.serializer || new es.Serializer.json();
+  this.log = new Log(config && config.log, this);
+  this.serializer = new serializers.Json(this);
+  this.transport = new transports.NodeHttp(config.hosts || ['//localhost:9200'], this);
 }
-
-Client.prototype.sniff = function () {
-
-};
 
 Client.prototype.ping = function () {
   return this.request({
@@ -74,29 +68,29 @@ Client.prototype.ping = function () {
  * @return {Promise} - A promise that will be resolved with the response
  */
 Client.prototype.request = function (params) {
-  var deferred = Q.defer();
-  setTimeout(_.bind(function () {
-    var response = {
-      status: 200,
-      body: {
-        not: 'a real response'
-      }
-    };
 
-    this.log.trace(
-      params.method,
-      'http://' + this.hosts[Math.floor(Math.random() * this.hosts.length)] + params.url,
-      params.body,
-      response.status,
-      JSON.stringify(response.body)
-    );
-    deferred.resolve();
-  }, this), 3);
-  return deferred.promise;
+  // serialize the body
+  params.body = this.serializer.serialize(params.body);
+
+  // ensure that ignore is an array
+  if (params.ignore && !_.isArray(params.ignore)) {
+    params.ignore = [params.ignore];
+  }
+
+  // return the request's promise
+  return this.transport.request(params);
 };
 
-// creates a namespace, who's prototype offers the actions within that namespace and this context
-// provides the API actions a link back to the client they were intended to operate on.
+/**
+ * These namespaces will be instanciated
+ * @type {Array}
+ */
+Client.namespaces = [];
+
+/**
+ * creates a namespace, who's prototype offers the actions within that namespace and this context
+ * provides the API actions and a link back to the client they were intended to operate on.
+ */
 function makeNamespaceConstructor(actions) {
 
   function Namespace(client) {

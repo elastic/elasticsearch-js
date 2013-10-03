@@ -1,5 +1,5 @@
 
-var _ = require('../../../src/lib/utils')
+var _ = require('../../../src/lib/toolbelt')
   , fs = require('fs')
   , path = require('path')
   , urlParamRE = /\{(\w+)\}/g;
@@ -89,25 +89,56 @@ var templateGlobals = {
     return l.toString();
   },
 
-  writeUrls: function (indent, urls) {
+  writeUrls: function (indent, urls, urlParams, queryStringParams) {
     var l = lines(indent);
+
+    function urlVarIsRequired(varDetails) {
+      varDetails = typeof varDetails === 'string' ? urlParams[varDetails] : varDetails;
+      return varDetails && (varDetails.required || !varDetails.default);
+    }
+
+    // turn a url string into an object describing the url, then sort them in decending order by how many args they have
+    urls = _.sortBy(urls, function (url) {
+      var requiredVars = _.filter(_.collectMatches(url, urlParamRE), function (match) {
+        return urlVarIsRequired(urlParams[match[1]]);
+      });
+      return requiredVars ? requiredVars.length * -1 : 0;
+    });
 
     _.each(urls, function (url, urlIndex) {
       // collect the vars from the url and replace them to form the js that will build the url
       var makeL = lines(), vars = [];
 
       makeL('request.url = \'' + url.replace(urlParamRE, function (match, varName) {
-        vars.push(varName);
-        return '\' + url.' + varName + ' + \'';
+        var varDetails = urlParams[varName];
+        varDetails.name = varName;
+        vars.push(varDetails);
+        if (urlVarIsRequired(varDetails)) {
+          return '\' + encodeURIComponent(url.' + varName + ') + \'';
+        } else {
+          return '\' + encodeURIComponent(url.' + varName + ' || ' + stringify(varDetails.default) + ') + \'';
+        }
       }) + '\';');
 
+      makeL(_.filter(_.map(vars, function (v, i) {
+        if (_.has(queryStringParams, v.name)) {
+          // delete the param so that it's not used later on in the queryString
+          return 'delete params.' + v.name + ';';
+        }
+      })).join(' '));
+
       if (vars.length || urlIndex) {
-        var condition = _.map(vars, function (v) { return 'url.hasOwnProperty(\'' + v + '\')'; }).join(' && ');
-        l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : ' ') + '{').in();
+        var requiredVars = _.filter(vars, urlVarIsRequired);
+
+        var condition = _.map(requiredVars, function (v) {
+          return 'url.hasOwnProperty(\'' + v.name + '\')';
+        }).join(' && ');
+
+        l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : '') + '{').in();
         l.split(makeL.toString()).out();
         l('}');
 
-        if (urlIndex === urls.length - 1 && vars.length) {
+        if (urlIndex === urls.length - 1 && condition) {
           l('else {').in();
           l('throw new TypeError(\'Unable to build a url with those params. Supply at least ' + vars.join(', ') + '\');').out();
           l('}');
@@ -141,6 +172,8 @@ var templateGlobals = {
       return '*';
     case 'enum':
       return 'String';
+    case 'list':
+      return 'String|ArrayOfStrings|Boolean';
     default:
       return type;
     }

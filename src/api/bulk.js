@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 var consistencyOptions = ['one', 'quorum', 'all'];
 var replicationOptions = ['sync', 'async'];
@@ -16,27 +17,30 @@ var replicationOptions = ['sync', 'async'];
  * @param {String} [params.replication=sync] - Explicitely set the replication type
  * @param {string} params.type - Default document type for items which don't provide one
  */
-function doBulk(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doBulk(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'POST' || params.method === 'PUT') {
+  var request = {
+      ignore: params.ignore,
+      body: paramHelper.bulkBody(params.body, this.client.serializer) || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'post' || params.method === 'put') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of POST, PUT');
+      throw new TypeError('Invalid method: should be one of post, put');
     }
   } else {
-    request.method = 'POST';
+    request.method = 'post';
   }
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+    if (typeof params.index !== 'object' && params.index) {
       url.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
@@ -44,7 +48,7 @@ function doBulk(params) {
   }
   
   if (typeof params.type !== 'undefined') {
-    if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+    if (typeof params.type !== 'object' && params.type) {
       url.type = '' + params.type;
     } else {
       throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -54,12 +58,13 @@ function doBulk(params) {
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + url.index + '/' + url.type + '/_bulk';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/_bulk';
+    delete params.type;
   }
   else if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_bulk';
+    request.url = '/' + encodeURIComponent(url.index) + '/_bulk';
   }
-  else  {
+  else {
     request.url = '/_bulk';
   }
   
@@ -98,7 +103,7 @@ function doBulk(params) {
   }
   
   if (typeof params.type !== 'undefined') {
-    if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+    if (typeof params.type !== 'object' && params.type) {
       query.type = '' + params.type;
     } else {
       throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -107,7 +112,11 @@ function doBulk(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doBulk;

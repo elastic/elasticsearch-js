@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 var searchTypeOptions = ['query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch', 'count', 'scan'];
 
@@ -12,54 +13,71 @@ var searchTypeOptions = ['query_then_fetch', 'query_and_fetch', 'dfs_query_then_
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.search_type - Search operation type
  */
-function doMsearch(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doMsearch(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'POST') {
+  var request = {
+      ignore: params.ignore,
+      body: paramHelper.bulkBody(params.body, this.client.serializer) || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'post') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, POST');
+      throw new TypeError('Invalid method: should be one of get, post');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
   if (typeof params.type !== 'undefined') {
-    if (typeof params.type === 'string') {
+    switch (typeof params.type) {
+    case 'string':
       url.type = params.type;
-    } else if (_.isArray(params.type)) {
-      url.type = params.type.join(',');
-    } else {
-      throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.type)) {
+        url.type = params.type.join(',');
+      } else {
+        throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.type = !!params.type;
     }
   }
   
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + url.index + '/' + url.type + '/_msearch';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/_msearch';
   }
   else if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_msearch';
+    request.url = '/' + encodeURIComponent(url.index) + '/_msearch';
   }
-  else  {
+  else {
     request.url = '/_msearch';
   }
   
@@ -78,7 +96,11 @@ function doMsearch(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doMsearch;

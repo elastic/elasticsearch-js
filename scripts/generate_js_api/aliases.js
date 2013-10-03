@@ -1,5 +1,5 @@
 module.exports = {
-  'cluster.nodeHotThreads': [
+  'cluster.node_hot_threads': [
     '/_cluster/nodes/hotthreads',
     '/_cluster/nodes/hot_threads',
     '/_nodes/hot_threads',
@@ -7,7 +7,7 @@ module.exports = {
     '/_cluster/nodes/{node_id}/hot_threads',
     '/_nodes/{node_id}/hot_threads'
   ],
-  'cluster.nodeInfo': [
+  'cluster.node_info': [
     '/_cluster/nodes',
     '/_nodes/settings',
     '/_nodes/os',
@@ -29,10 +29,10 @@ module.exports = {
     '/_nodes/{node_id}/http',
     '/_nodes/{node_id}/plugin'
   ],
-  'cluster.nodeShutdown': [
+  'cluster.node_shutdown': [
     '/_cluster/nodes/_shutdown'
   ],
-  'cluster.nodeStats': [
+  'cluster.node_stats': [
     '/_cluster/nodes/stats',
     '/_nodes/stats/{metric_family}',
     '/_nodes/stats/indices/{metric}/{fields}',
@@ -43,7 +43,7 @@ module.exports = {
   'get': [
     '/{index}/{type}/{id}/_source'
   ],
-  'indices.deleteMapping': [
+  'indices.delete_mapping': [
     '/{index}/{type}/_mapping'
   ],
   'indices.stats': [
@@ -56,5 +56,8 @@ module.exports = {
     '/{index}/_stats/indexing',
     '/{index}/_stats/search/{search_groups}',
     '/{index}/_stats/fielddata/{fields}'
+  ],
+  'search': [
+    '/_search'
   ]
 };

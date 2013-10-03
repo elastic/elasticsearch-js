@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 var formatOptions = ['detailed', 'text'];
 
@@ -12,34 +13,37 @@ var formatOptions = ['detailed', 'text'];
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {string} params.analyzer - The name of the analyzer to use
  * @param {string} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
- * @param {list} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {String|ArrayOfStrings|Boolean} params.filters - A comma-separated list of filters to use for the analysis
  * @param {string} params.index - The name of the index to scope the operation
  * @param {boolean} params.prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {string} params.text - The text on which the analysis should be performed (when request body is not used)
  * @param {string} params.tokenizer - The name of the tokenizer to use for the analysis
  * @param {String} [params.format=detailed] - Format of the output
  */
-function doIndicesAnalyze(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesAnalyze(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'POST') {
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'post') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, POST');
+      throw new TypeError('Invalid method: should be one of get, post');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+    if (typeof params.index !== 'object' && params.index) {
       url.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
@@ -49,16 +53,17 @@ function doIndicesAnalyze(params) {
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_analyze';
+    request.url = '/' + encodeURIComponent(url.index) + '/_analyze';
+    delete params.index;
   }
-  else  {
+  else {
     request.url = '/_analyze';
   }
   
 
   // build the query string
   if (typeof params.analyzer !== 'undefined') {
-    if (typeof params.analyzer !== 'object' && typeof params.analyzer !== 'undefined') {
+    if (typeof params.analyzer !== 'object' && params.analyzer) {
       query.analyzer = '' + params.analyzer;
     } else {
       throw new TypeError('Invalid analyzer: ' + params.analyzer + ' should be a string.');
@@ -66,7 +71,7 @@ function doIndicesAnalyze(params) {
   }
   
   if (typeof params.field !== 'undefined') {
-    if (typeof params.field !== 'object' && typeof params.field !== 'undefined') {
+    if (typeof params.field !== 'object' && params.field) {
       query.field = '' + params.field;
     } else {
       throw new TypeError('Invalid field: ' + params.field + ' should be a string.');
@@ -74,17 +79,24 @@ function doIndicesAnalyze(params) {
   }
   
   if (typeof params.filters !== 'undefined') {
-    if (typeof params.filters === 'string') {
+    switch (typeof params.filters) {
+    case 'string':
       query.filters = params.filters;
-    } else if (_.isArray(params.filters)) {
-      query.filters = params.filters.join(',');
-    } else {
-      throw new TypeError('Invalid filters: ' + params.filters + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.filters)) {
+        query.filters = params.filters.join(',');
+      } else {
+        throw new TypeError('Invalid filters: ' + params.filters + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.filters = !!params.filters;
     }
   }
   
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+    if (typeof params.index !== 'object' && params.index) {
       query.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
@@ -102,7 +114,7 @@ function doIndicesAnalyze(params) {
   }
   
   if (typeof params.text !== 'undefined') {
-    if (typeof params.text !== 'object' && typeof params.text !== 'undefined') {
+    if (typeof params.text !== 'object' && params.text) {
       query.text = '' + params.text;
     } else {
       throw new TypeError('Invalid text: ' + params.text + ' should be a string.');
@@ -110,7 +122,7 @@ function doIndicesAnalyze(params) {
   }
   
   if (typeof params.tokenizer !== 'undefined') {
-    if (typeof params.tokenizer !== 'object' && typeof params.tokenizer !== 'undefined') {
+    if (typeof params.tokenizer !== 'object' && params.tokenizer) {
       query.tokenizer = '' + params.tokenizer;
     } else {
       throw new TypeError('Invalid tokenizer: ' + params.tokenizer + ' should be a string.');
@@ -130,7 +142,11 @@ function doIndicesAnalyze(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesAnalyze;

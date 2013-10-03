@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 
 
@@ -15,51 +16,54 @@ var _ = require('../lib/utils');
  * @param {number} params.min_doc_freq - The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
  * @param {number} params.min_term_freq - The term frequency as percent: terms with lower occurence in the source document will be ignored
  * @param {number} params.min_word_len - The minimum length of the word: shorter words will be ignored
- * @param {list} params.mlt_fields - Specific fields to perform the query against
+ * @param {String|ArrayOfStrings|Boolean} params.mlt_fields - Specific fields to perform the query against
  * @param {number} params.percent_terms_to_match - How many terms have to match in order to consider the document a match (default: 0.3)
  * @param {string} params.routing - Specific routing value
  * @param {number} params.search_from - The offset from which to return results
- * @param {list} params.search_indices - A comma-separated list of indices to perform the query against (default: the index containing the document)
+ * @param {String|ArrayOfStrings|Boolean} params.search_indices - A comma-separated list of indices to perform the query against (default: the index containing the document)
  * @param {string} params.search_query_hint - The search query hint
  * @param {string} params.search_scroll - A scroll search request definition
  * @param {number} params.search_size - The number of documents to return (default: 10)
  * @param {string} params.search_source - A specific search request definition (instead of using the request body)
  * @param {string} params.search_type - Specific search type (eg. `dfs_then_fetch`, `count`, etc)
- * @param {list} params.search_types - A comma-separated list of types to perform the query against (default: the same type as the document)
- * @param {list} params.stop_words - A list of stop words to be ignored
+ * @param {String|ArrayOfStrings|Boolean} params.search_types - A comma-separated list of types to perform the query against (default: the same type as the document)
+ * @param {String|ArrayOfStrings|Boolean} params.stop_words - A list of stop words to be ignored
  */
-function doMlt(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doMlt(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'POST') {
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'post') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, POST');
+      throw new TypeError('Invalid method: should be one of get, post');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
-  if (typeof params.id !== 'object' && typeof params.id !== 'undefined') {
+  if (typeof params.id !== 'object' && params.id) {
     url.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
   
-  if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+  if (typeof params.index !== 'object' && params.index) {
     url.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
   
-  if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+  if (typeof params.type !== 'object' && params.type) {
     url.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -68,10 +72,10 @@ function doMlt(params) {
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + url.index + '/' + url.type + '/' + url.id + '/_mlt';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '/_mlt';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least index, type, id');
+    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
   }
   
 
@@ -133,12 +137,19 @@ function doMlt(params) {
   }
   
   if (typeof params.mlt_fields !== 'undefined') {
-    if (typeof params.mlt_fields === 'string') {
+    switch (typeof params.mlt_fields) {
+    case 'string':
       query.mlt_fields = params.mlt_fields;
-    } else if (_.isArray(params.mlt_fields)) {
-      query.mlt_fields = params.mlt_fields.join(',');
-    } else {
-      throw new TypeError('Invalid mlt_fields: ' + params.mlt_fields + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.mlt_fields)) {
+        query.mlt_fields = params.mlt_fields.join(',');
+      } else {
+        throw new TypeError('Invalid mlt_fields: ' + params.mlt_fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.mlt_fields = !!params.mlt_fields;
     }
   }
   
@@ -151,7 +162,7 @@ function doMlt(params) {
   }
   
   if (typeof params.routing !== 'undefined') {
-    if (typeof params.routing !== 'object' && typeof params.routing !== 'undefined') {
+    if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
     } else {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
@@ -167,17 +178,24 @@ function doMlt(params) {
   }
   
   if (typeof params.search_indices !== 'undefined') {
-    if (typeof params.search_indices === 'string') {
+    switch (typeof params.search_indices) {
+    case 'string':
       query.search_indices = params.search_indices;
-    } else if (_.isArray(params.search_indices)) {
-      query.search_indices = params.search_indices.join(',');
-    } else {
-      throw new TypeError('Invalid search_indices: ' + params.search_indices + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.search_indices)) {
+        query.search_indices = params.search_indices.join(',');
+      } else {
+        throw new TypeError('Invalid search_indices: ' + params.search_indices + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.search_indices = !!params.search_indices;
     }
   }
   
   if (typeof params.search_query_hint !== 'undefined') {
-    if (typeof params.search_query_hint !== 'object' && typeof params.search_query_hint !== 'undefined') {
+    if (typeof params.search_query_hint !== 'object' && params.search_query_hint) {
       query.search_query_hint = '' + params.search_query_hint;
     } else {
       throw new TypeError('Invalid search_query_hint: ' + params.search_query_hint + ' should be a string.');
@@ -185,7 +203,7 @@ function doMlt(params) {
   }
   
   if (typeof params.search_scroll !== 'undefined') {
-    if (typeof params.search_scroll !== 'object' && typeof params.search_scroll !== 'undefined') {
+    if (typeof params.search_scroll !== 'object' && params.search_scroll) {
       query.search_scroll = '' + params.search_scroll;
     } else {
       throw new TypeError('Invalid search_scroll: ' + params.search_scroll + ' should be a string.');
@@ -201,7 +219,7 @@ function doMlt(params) {
   }
   
   if (typeof params.search_source !== 'undefined') {
-    if (typeof params.search_source !== 'object' && typeof params.search_source !== 'undefined') {
+    if (typeof params.search_source !== 'object' && params.search_source) {
       query.search_source = '' + params.search_source;
     } else {
       throw new TypeError('Invalid search_source: ' + params.search_source + ' should be a string.');
@@ -209,7 +227,7 @@ function doMlt(params) {
   }
   
   if (typeof params.search_type !== 'undefined') {
-    if (typeof params.search_type !== 'object' && typeof params.search_type !== 'undefined') {
+    if (typeof params.search_type !== 'object' && params.search_type) {
       query.search_type = '' + params.search_type;
     } else {
       throw new TypeError('Invalid search_type: ' + params.search_type + ' should be a string.');
@@ -217,28 +235,46 @@ function doMlt(params) {
   }
   
   if (typeof params.search_types !== 'undefined') {
-    if (typeof params.search_types === 'string') {
+    switch (typeof params.search_types) {
+    case 'string':
       query.search_types = params.search_types;
-    } else if (_.isArray(params.search_types)) {
-      query.search_types = params.search_types.join(',');
-    } else {
-      throw new TypeError('Invalid search_types: ' + params.search_types + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.search_types)) {
+        query.search_types = params.search_types.join(',');
+      } else {
+        throw new TypeError('Invalid search_types: ' + params.search_types + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.search_types = !!params.search_types;
     }
   }
   
   if (typeof params.stop_words !== 'undefined') {
-    if (typeof params.stop_words === 'string') {
+    switch (typeof params.stop_words) {
+    case 'string':
       query.stop_words = params.stop_words;
-    } else if (_.isArray(params.stop_words)) {
-      query.stop_words = params.stop_words.join(',');
-    } else {
-      throw new TypeError('Invalid stop_words: ' + params.stop_words + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.stop_words)) {
+        query.stop_words = params.stop_words.join(',');
+      } else {
+        throw new TypeError('Invalid stop_words: ' + params.stop_words + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.stop_words = !!params.stop_words;
     }
   }
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doMlt;

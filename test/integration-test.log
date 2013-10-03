@@ -1,0 +1,7198 @@
+TRACE: 2013-10-03T16:57:01Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_bulk?refresh=true" -XPOST -d "{\"index\":{\"_index\":\"test_index\",\"_type\":\"test_type\",\"_id\":\"test_id\"}}
+  {\"f1\":\"v1\",\"f2\":42}
+  {\"index\":{\"_index\":\"test_index\",\"_type\":\"test_type\",\"_id\":\"test_id2\"}}
+  {\"f1\":\"v2\",\"f2\":47}
+  "
+  <- 200
+  {
+    "took": 717,
+    "items": [
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id",
+          "_version": 1,
+          "ok": true
+        }
+      },
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id2",
+          "_version": 1,
+          "ok": true
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/test_index/_count" -XGET
+  <- 200
+  {
+    "count": 2,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_bulk?refresh=true" -XPOST -d "{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id\"}}
+  {\"f1\": \"v1\", \"f2\": 42}
+  {\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id2\"}}
+  {\"f1\": \"v2\", \"f2\": 47}
+  "
+  <- 200
+  {
+    "took": 146,
+    "items": [
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id",
+          "_version": 1,
+          "ok": true
+        }
+      },
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id2",
+          "_version": 1,
+          "ok": true
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/test_index/_count" -XGET
+  <- 200
+  {
+    "count": 2,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_bulk?refresh=true" -XPOST -d "{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id\"}}
+  {\"f1\": \"v1\", \"f2\": 42}
+  {\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id2\"}}
+  {\"f1\": \"v2\", \"f2\": 47}
+  "
+  <- 200
+  {
+    "took": 150,
+    "items": [
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id",
+          "_version": 1,
+          "ok": true
+        }
+      },
+      {
+        "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id2",
+          "_version": 1,
+          "ok": true
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/test_index/_count" -XGET
+  <- 200
+  {
+    "count": 2,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_nodes" -XGET
+  <- 200
+  {
+    "ok": true,
+    "cluster_name": "spencera",
+    "nodes": {
+      "eShMMMk0Sk6ucyGA0vf6MQ": {
+        "name": "Anti-Cap",
+        "transport_address": "inet[/127.0.0.1:9300]",
+        "hostname": "Spencers-MacBook-Pro.local",
+        "version": "0.90.5",
+        "http_address": "inet[/127.0.0.1:9200]"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_nodes/stats?indices=true&transport=true" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "nodes": {
+      "eShMMMk0Sk6ucyGA0vf6MQ": {
+        "timestamp": 1380819422887,
+        "name": "Anti-Cap",
+        "transport_address": "inet[/127.0.0.1:9300]",
+        "hostname": "Spencers-MacBook-Pro.local",
+        "indices": {
+          "docs": {
+            "count": 0,
+            "deleted": 0
+          },
+          "store": {
+            "size": "0b",
+            "size_in_bytes": 0,
+            "throttle_time": "0s",
+            "throttle_time_in_millis": 0
+          },
+          "indexing": {
+            "index_total": 6,
+            "index_time": "104ms",
+            "index_time_in_millis": 104,
+            "index_current": 0,
+            "delete_total": 0,
+            "delete_time": "0s",
+            "delete_time_in_millis": 0,
+            "delete_current": 0
+          },
+          "get": {
+            "total": 0,
+            "get_time": "0s",
+            "time_in_millis": 0,
+            "exists_total": 0,
+            "exists_time": "0s",
+            "exists_time_in_millis": 0,
+            "missing_total": 0,
+            "missing_time": "0s",
+            "missing_time_in_millis": 0,
+            "current": 0
+          },
+          "search": {
+            "open_contexts": 0,
+            "query_total": 0,
+            "query_time": "0s",
+            "query_time_in_millis": 0,
+            "query_current": 0,
+            "fetch_total": 0,
+            "fetch_time": "0s",
+            "fetch_time_in_millis": 0,
+            "fetch_current": 0
+          },
+          "merges": {
+            "current": 0,
+            "current_docs": 0,
+            "current_size": "0b",
+            "current_size_in_bytes": 0,
+            "total": 0,
+            "total_time": "0s",
+            "total_time_in_millis": 0,
+            "total_docs": 0,
+            "total_size": "0b",
+            "total_size_in_bytes": 0
+          },
+          "refresh": {
+            "total": 18,
+            "total_time": "97ms",
+            "total_time_in_millis": 97
+          },
+          "flush": {
+            "total": 0,
+            "total_time": "0s",
+            "total_time_in_millis": 0
+          },
+          "warmer": {
+            "current": 0,
+            "total": 0,
+            "total_time": "0s",
+            "total_time_in_millis": 0
+          },
+          "filter_cache": {
+            "memory_size": "0b",
+            "memory_size_in_bytes": 0,
+            "evictions": 0
+          },
+          "id_cache": {
+            "memory_size": "0b",
+            "memory_size_in_bytes": 0
+          },
+          "fielddata": {
+            "memory_size": "0b",
+            "memory_size_in_bytes": 0,
+            "evictions": 0
+          },
+          "completion": {
+            "size": "0b",
+            "size_in_bytes": 0
+          }
+        },
+        "transport": {
+          "server_open": 10,
+          "rx_count": 0,
+          "rx_size": "0b",
+          "rx_size_in_bytes": 0,
+          "tx_count": 0,
+          "tx_size": "0b",
+          "tx_size_in_bytes": 0
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_cluster/settings" -XPUT -d "{\"transient\":{\"discovery.zen.minimum_master_nodes\":1}}"
+  <- 200
+  {
+    "persistent": {},
+    "transient": {
+      "discovery.zen.minimum_master_nodes": "1"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_cluster/settings" -XGET
+  <- 200
+  {
+    "persistent": {},
+    "transient": {
+      "discovery.zen.minimum_master_nodes": "1"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_cluster/reroute" -XPOST
+  <- 200
+  {
+    "ok": true,
+    "state": {
+      "master_node": "eShMMMk0Sk6ucyGA0vf6MQ",
+      "blocks": {},
+      "nodes": {
+        "eShMMMk0Sk6ucyGA0vf6MQ": {
+          "name": "Anti-Cap",
+          "transport_address": "inet[/127.0.0.1:9300]",
+          "attributes": {}
+        }
+      },
+      "routing_table": {
+        "indices": {}
+      },
+      "routing_nodes": {
+        "unassigned": [],
+        "nodes": {
+          "eShMMMk0Sk6ucyGA0vf6MQ": []
+        }
+      },
+      "allocations": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/_cluster/state" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "master_node": "eShMMMk0Sk6ucyGA0vf6MQ",
+    "blocks": {},
+    "nodes": {
+      "eShMMMk0Sk6ucyGA0vf6MQ": {
+        "name": "Anti-Cap",
+        "transport_address": "inet[/127.0.0.1:9300]",
+        "attributes": {}
+      }
+    },
+    "metadata": {
+      "templates": {
+        "test": {
+          "template": "test-*",
+          "order": 0,
+          "settings": {
+            "index.number_of_replicas": "0",
+            "index.number_of_shards": "1"
+          },
+          "mappings": {}
+        }
+      },
+      "indices": {}
+    },
+    "routing_table": {
+      "indices": {}
+    },
+    "routing_nodes": {
+      "unassigned": [],
+      "nodes": {
+        "eShMMMk0Sk6ucyGA0vf6MQ": []
+      }
+    },
+    "allocations": []
+  }
+
+TRACE: 2013-10-03T16:57:02Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "DocumentAlreadyExistsException[[test_1][2] [test][1]: document already exists]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "cJgVOJstTSS1HNkDrcChWg",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/cJgVOJstTSS1HNkDrcChWg" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "cJgVOJstTSS1HNkDrcChWg",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "DocumentAlreadyExistsException[[test_1][2] [test][1]: document already exists]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create?version=5&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create?version=5&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "VersionConflictEngineException[[test_1][2] [test][1]: version conflict, current [5], provided [5]]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create?version=6&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "DocumentAlreadyExistsException[[test_1][2] [test][1]: document already exists]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1?fields=_routing&routing=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 500
+  {
+    "error": "RoutingMissingException[routing is required for [test_1]/[test]/[1]]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1/_create?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:03Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1/_create?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5&routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "4",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":1}}}"
+  <- 200
+  {
+    "took": 33,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/2/_create?refresh=true" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":2}}}"
+  <- 200
+  {
+    "took": 19,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 1,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "2",
+          "_score": 1,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_timestamp\":{\"enabled\":1,\"store\":\"yes\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1380819424933
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1/_create?timestamp=1372011280000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 4
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1/_create?timestamp=1372011280000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:04Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_ttl\":{\"enabled\":1,\"store\":\"yes\",\"default\":\"10s\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1/_create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_ttl": 9993
+    }
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1/_create?ttl=100000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_ttl": 99996
+    }
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 4
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1/_create?ttl=20s" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5,
+    "exists": true,
+    "fields": {
+      "_ttl": 19996
+    }
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 6
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1/_create?timestamp=1372011280000&ttl=20s" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 400
+  {
+    "error": "MapperParsingException[failed to parse [_ttl]]; nested: AlreadyExpiredException[already expired [test_1]/[test]/[1] due to expire at [1372011300000] and was processed at [1380819425294]]; ",
+    "status": 400
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?version=2" -XDELETE
+  <- 409
+  {
+    "error": "VersionConflictEngineException[[test_1][2] [test][1]: version conflict, current [1], provided [2]]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?version=1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?version=5&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?version=4&version_type=external" -XDELETE
+  <- 409
+  {
+    "error": "VersionConflictEngineException[[test_1][2] [test][1]: version conflict, current [5], provided [4]]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?version=6&version_type=external" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 6
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?routing=4" -XDELETE
+  <- 404
+  {
+    "ok": true,
+    "found": false,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/" -XGET
+  <- 200
+  {
+    "ok": true,
+    "status": 200,
+    "name": "Anti-Cap",
+    "version": {
+      "number": "0.90.5",
+      "build_hash": "c8714e8e0620b62638f660f6144831792b9dedee",
+      "build_timestamp": "2013-09-17T12:50:20Z",
+      "build_snapshot": false,
+      "lucene_version": "4.4"
+    },
+    "tagline": "You Know, for Search"
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?parent=1" -XDELETE
+  <- 404
+  {
+    "ok": true,
+    "found": false,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:05Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=1" -XDELETE
+  <- 404
+  {
+    "ok": true,
+    "found": false,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1?refresh=true" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/2?refresh=true" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"terms\":{\"_id\":[1,2]}}}"
+  <- 200
+  {
+    "took": 7,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 2,
+      "max_score": 0.35355338,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "1",
+          "_score": 0.35355338,
+          "_source": {
+            "foo": "bar"
+          }
+        },
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "2",
+          "_score": 0.35355338,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"terms\":{\"_id\":[1,2]}}}"
+  <- 200
+  {
+    "took": 2,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 2,
+      "max_score": 0.35355338,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "1",
+          "_score": 0.35355338,
+          "_source": {
+            "foo": "bar"
+          }
+        },
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "2",
+          "_score": 0.35355338,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/2?refresh=true" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "found": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"terms\":{\"_id\":[1,2]}}}"
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 0.35355338,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "1",
+          "_score": 0.35355338,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 404
+  {
+    "ok": true,
+    "found": false,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XDELETE
+  <- 404
+  {
+    "ok": true,
+    "found": false,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/2" -XPOST -d "{\"foo\":\"baz\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/3" -XPOST -d "{\"foo\":\"foo\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "3",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/_query" -XDELETE -d "{\"match\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_indices": {
+      "test_1": {
+        "_shards": {
+          "total": 5,
+          "successful": 5,
+          "failed": 0
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/_count" -XGET
+  <- 200
+  {
+    "count": 2,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1/test/1" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:06Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?routing=4" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?realtime=true" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?realtime=false" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1?realtime=false&refresh=true" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/_all/1" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\",\"title\":\"howdy\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/1/_explain" -XPOST -d "{\"query\":{\"match_all\":{}}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "matched": true,
+    "explanation": {
+      "value": 1,
+      "description": "ConstantScore(cache(_type:test)), product of:",
+      "details": [
+        {
+          "value": 1,
+          "description": "boost"
+        },
+        {
+          "value": 1,
+          "description": "queryNorm"
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:07Z
+  curl "http://localhost:9200/test_1/test/%E4%B8%AD%E6%96%87" -XPOST -d "{\"foo\":\"Hello: 中文\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "中文",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/%E4%B8%AD%E6%96%87" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "中文",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "Hello: 中文"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/_all/%E4%B8%AD%E6%96%87" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "中文",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "Hello: 中文"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/_all/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\",\"count\":1}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=foo" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=foo%2Ccount" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "count": 1,
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=foo%2Ccount%2C_source" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar",
+      "count": 1
+    },
+    "fields": {
+      "count": 1,
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?parent=%E4%B8%AD%E6%96%87" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=%E4%B8%AD%E6%96%87" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "中文",
+      "_parent": "中文"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=_routing&routing=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5&routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "4",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1/test/1?routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:08Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?realtime=true" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?realtime=false" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?realtime=false&refresh=true" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[test_1] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[test_1] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/_all/1/_source" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/_all/1/_source" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?parent=5" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source" -XGET
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?routing=5" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source" -XGET
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?parent=5&routing=4" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?parent=5" -XGET
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?routing=4" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?realtime=true" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?realtime=false" -XGET
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source?realtime=false&refresh=true" -XGET
+  <- 200
+  {
+    "foo": "bar"
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[test_1] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/1/_source" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[test_1] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test-weird-index-%E4%B8%AD%E6%96%87/weird.type/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test-weird-index-中文",
+    "_type": "weird.type",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test-weird-index-%E4%B8%AD%E6%96%87/weird.type/1" -XGET
+  <- 200
+  {
+    "_index": "test-weird-index-中文",
+    "_type": "weird.type",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "IoN2mZ0tRY2PbtbY0bGRqA",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:09Z
+  curl "http://localhost:9200/test_1/test/IoN2mZ0tRY2PbtbY0bGRqA" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "IoN2mZ0tRY2PbtbY0bGRqA",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?op_type=create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?op_type=create" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "DocumentAlreadyExistsException[[test_1][2] [test][1]: document already exists]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?op_type=index" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?version=1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "VersionConflictEngineException[[test_1][2] [test][1]: version conflict, current [2], provided [1]]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?version=2" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?version=5&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 5
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?version=5&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 409
+  {
+    "error": "VersionConflictEngineException[[test_1][2] [test][1]: version conflict, current [5], provided [5]]",
+    "status": 409
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?version=6&version_type=external" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 6
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?fields=_routing&routing=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 500
+  {
+    "error": "RoutingMissingException[routing is required for [test_1]/[test]/[1]]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?parent=5&routing=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5&routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "4",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?parent=5" -XGET
+  <- 404
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "exists": false
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1/test/1?routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:10Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":1}}}"
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/2?refresh=true" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":2}}}"
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 1,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "2",
+          "_score": 1,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_timestamp\":{\"enabled\":1,\"store\":\"yes\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1380819431333
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?timestamp=1372011280000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?timestamp=1372011280000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_ttl\":{\"enabled\":1,\"store\":\"yes\",\"default\":\"10s\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_ttl": 9995
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?ttl=100000" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "fields": {
+      "_ttl": 99996
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?ttl=20s" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_ttl": 19996
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test_1/test/1?timestamp=1372011280000&ttl=20s" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 400
+  {
+    "error": "MapperParsingException[failed to parse [_ttl]]; nested: AlreadyExpiredException[already expired [test_1]/[test]/[1] due to expire at [1372011300000] and was processed at [1380819431633]]; ",
+    "status": 400
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_analyze?text=Foo%20Bar" -XGET
+  <- 200
+  {
+    "tokens": [
+      {
+        "token": "foo",
+        "start_offset": 0,
+        "end_offset": 3,
+        "type": "<ALPHANUM>",
+        "position": 1
+      },
+      {
+        "token": "bar",
+        "start_offset": 4,
+        "end_offset": 7,
+        "type": "<ALPHANUM>",
+        "position": 2
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_analyze?filters=lowercase&text=Foo%20Bar&tokenizer=keyword" -XGET
+  <- 200
+  {
+    "tokens": [
+      {
+        "token": "foo bar",
+        "start_offset": 0,
+        "end_offset": 7,
+        "type": "word",
+        "position": 1
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test" -XPUT -d "{\"mappings\":{\"test\":{\"properties\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"}}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/test/_analyze?field=text&text=Foo%20Bar!" -XGET
+  <- 200
+  {
+    "tokens": [
+      {
+        "token": "Foo",
+        "start_offset": 0,
+        "end_offset": 3,
+        "type": "word",
+        "position": 1
+      },
+      {
+        "token": "Bar!",
+        "start_offset": 4,
+        "end_offset": 8,
+        "type": "word",
+        "position": 2
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_analyze?text=tHE%20BLACK%20and%20white!%20AND%20red&format=text" -XGET
+  <- 200
+  {
+    "tokens": "[black:4->9:<ALPHANUM>]\n\n4: \n[white:14->19:<ALPHANUM>]\n\n6: \n[red:25->28:<ALPHANUM>]\n"
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/_cache/clear" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 0,
+      "successful": 0,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/testind" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:11Z
+  curl "http://localhost:9200/testind/_alias/testali" -XPUT -d "{\"routing\":\"routing value\"}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_alias/testali" -XGET
+  <- 200
+  {
+    "testind": {
+      "aliases": {
+        "testali": {
+          "index_routing": "routing value",
+          "search_routing": "routing value"
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/testind/_alias/testali" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/testind/_alias/testali" -XGET
+  <- 404
+  {
+    "error": "alias [testali] missing",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT -d "{\"mappings\":{\"test_type\":{\"properties\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"}}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type" -XDELETE
+  <- 200
+  {
+    "ok": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT -d "{\"mappings\":{\"test_type\":{\"properties\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"}}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_mapping" -XGET
+  <- 200
+  {
+    "test_index": {
+      "test_type": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+          }
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type/_mapping" -XGET
+  <- 200
+  {
+    "test_type": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "analyzer": "whitespace"
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT -d "{\"mappings\":{\"test_type\":{\"properties\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"}}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/not_test_type/_mapping" -XGET
+  <- 404
+  {
+    "error": "TypeMissingException[[test_index] type[not_test_type] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/not_test_type/_mapping" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[test_index] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/test" -XPUT -d "{\"template\":\"test-*\",\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/test" -XGET
+  <- 200
+  {
+    "test": {
+      "order": 0,
+      "template": "test-*",
+      "settings": {
+        "index.number_of_replicas": "0",
+        "index.number_of_shards": "1"
+      },
+      "mappings": {}
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/test" -XGET
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_close" -XPOST
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_search" -XGET
+  <- 403
+  {
+    "error": "ClusterBlockException[blocked by: [FORBIDDEN/4/index closed];]",
+    "status": 403
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_open" -XPOST
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_search" -XGET
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/testing" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/testing/_optimize?max_num_segments=1" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 3,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_alias/test_alias" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_alias/test_alias" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_alias/test_alias" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_alias/test_alias" -XGET
+  <- 200
+  {
+    "test_index": {
+      "aliases": {
+        "test_alias": {}
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type/_mapping" -XPUT -d "{\"test_type\":{\"properties\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_mapping" -XGET
+  <- 200
+  {
+    "test_index": {
+      "test_type": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+          }
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/test_type/_mapping" -XPUT -d "{\"test_type\":{\"properties\":{\"text\":{\"type\":\"multi_field\",\"fields\":{\"text\":{\"type\":\"string\",\"analyzer\":\"whitespace\"},\"text_raw\":{\"type\":\"string\",\"index\":\"not_analyzed\"}}}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test_index/_mapping" -XGET
+  <- 200
+  {
+    "test_index": {
+      "test_type": {
+        "properties": {
+          "text": {
+            "type": "multi_field",
+            "fields": {
+              "text": {
+                "type": "string",
+                "analyzer": "whitespace"
+              },
+              "text_raw": {
+                "type": "string",
+                "index": "not_analyzed",
+                "omit_norms": true,
+                "index_options": "docs",
+                "include_in_all": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test-index" -XPUT -d "{\"settings\":{\"index\":{\"number_of_replicas\":0}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/test-index/_settings" -XGET
+  <- 200
+  {
+    "test-index": {
+      "settings": {
+        "index.number_of_replicas": "0",
+        "index.number_of_shards": "5",
+        "index.version.created": "900599"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_settings" -XPUT -d "{\"number_of_replicas\":1}"
+  <- 200
+  {
+    "ok": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_settings" -XGET
+  <- 200
+  {
+    "test-index": {
+      "settings": {
+        "index.number_of_replicas": "1",
+        "index.number_of_shards": "5",
+        "index.version.created": "900599"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/test" -XPUT -d "{\"template\":\"test-*\",\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/_template/test" -XGET
+  <- 200
+  {
+    "test": {
+      "order": 0,
+      "template": "test-*",
+      "settings": {
+        "index.number_of_replicas": "0",
+        "index.number_of_shards": "1"
+      },
+      "mappings": {}
+    }
+  }
+
+TRACE: 2013-10-03T16:57:12Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_warmer/test_warmer" -XGET
+  <- 404
+  {
+    "error": "IndexWarmerMissingException[index_warmer [test_warmer] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_warmer/test_warmer" -XPUT -d "{\"query\":{\"match_all\":{}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_warmer/test_warmer" -XGET
+  <- 200
+  {
+    "test_index": {
+      "warmers": {
+        "test_warmer": {
+          "types": [],
+          "source": {
+            "query": {
+              "match_all": {}
+            }
+          }
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_warmer" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_warmer/test_warmer" -XGET
+  <- 404
+  {
+    "error": "IndexWarmerMissingException[index_warmer [test_warmer] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_segments" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 0,
+      "successful": 0,
+      "failed": 0
+    },
+    "indices": {}
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_gateway/snapshot" -XPOST
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 0,
+      "successful": 0,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_stats" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 0,
+      "successful": 0,
+      "failed": 0
+    },
+    "_all": {
+      "primaries": {},
+      "total": {}
+    },
+    "indices": {}
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_status" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 0,
+      "successful": 0,
+      "failed": 0
+    },
+    "indices": {}
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/not_here/_status" -XGET
+  <- 404
+  {
+    "error": "IndexMissingException[[not_here] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_alias/test_alias" -XHEAD
+  <- 404
+  
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_aliases" -XPOST -d "{\"actions\":[{\"add\":{\"index\":\"test_index\",\"alias\":\"test_alias\",\"routing\":\"routing_value\"}}]}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_alias/test_alias" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_index/_aliases" -XGET
+  <- 200
+  {
+    "test_index": {
+      "aliases": {
+        "test_alias": {
+          "index_routing": "routing_value",
+          "search_routing": "routing_value"
+        }
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/testing" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_validate/query?q=query%20string" -XGET
+  <- 200
+  {
+    "valid": true,
+    "_shards": {
+      "total": 1,
+      "successful": 1,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_validate/query" -XPOST -d "{\"query\":{\"invalid_query\":{}}}"
+  <- 200
+  {
+    "valid": false,
+    "_shards": {
+      "total": 1,
+      "successful": 1,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/" -XGET
+  <- 200
+  {
+    "ok": true,
+    "status": 200,
+    "name": "Anti-Cap",
+    "version": {
+      "number": "0.90.5",
+      "build_hash": "c8714e8e0620b62638f660f6144831792b9dedee",
+      "build_timestamp": "2013-09-17T12:50:20Z",
+      "build_snapshot": false,
+      "lucene_version": "4.4"
+    },
+    "tagline": "You Know, for Search"
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/" -XGET
+  <- 200
+  {
+    "ok": true,
+    "status": 200,
+    "name": "Anti-Cap",
+    "version": {
+      "number": "0.90.5",
+      "build_hash": "c8714e8e0620b62638f660f6144831792b9dedee",
+      "build_timestamp": "2013-09-17T12:50:20Z",
+      "build_snapshot": false,
+      "lucene_version": "4.4"
+    },
+    "tagline": "You Know, for Search"
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_2" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_flush?refresh=true" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 20,
+      "successful": 10,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[{\"_index\":\"test_2\",\"_type\":\"test\",\"_id\":1},{\"_index\":\"test_1\",\"_type\":\"none\",\"_id\":1},{\"_index\":\"test_1\",\"_type\":\"test\",\"_id\":2},{\"_index\":\"test_1\",\"_type\":\"test\",\"_id\":1}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_2",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "none",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "2",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_2" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 10,
+    "active_shards": 10,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 10
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_1/test/_mget" -XPOST -d "{\"docs\":[{\"_index\":\"test_2\",\"_id\":1},{\"_type\":\"none\",\"_id\":1},{\"_id\":2},{\"_id\":1}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_2",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "none",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "2",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[{\"_index\":\"test_2\",\"_type\":\"test\",\"_id\":1}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_2",
+        "_type": "test",
+        "_id": "1",
+        "error": "[test_2] missing"
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:13Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"index\":\"test_2\",\"docs\":[{\"_index\":\"test_1\",\"_type\":\"test\",\"_id\":1}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[{\"_index\":\"test_1\",\"_type\":\"test\"}]}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: id is missing for doc 0;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[{\"_type\":\"test\",\"_id\":1}]}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: index is missing for doc 0;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[]}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: no documents to get;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: no documents to get;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_mget" -XPOST -d "{\"docs\":[{\"_index\":\"test_1\",\"_id\":1}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test_2/2" -XPOST -d "{\"foo\":\"baz\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test_2",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget" -XPOST -d "{\"ids\":[1,2]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "2",
+        "exists": false
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/_mget" -XPOST -d "{\"ids\":[1,2]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test_2",
+        "_id": "2",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "baz"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/_mget" -XPOST -d "{\"ids\":[]}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: no documents to get;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/_mget" -XPOST -d "{}"
+  <- 500
+  {
+    "error": "ActionRequestValidationException[Validation Failed: 1: no documents to get;]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"fields\":\"foo\"},{\"_id\":1,\"fields\":[\"foo\"]},{\"_id\":1,\"fields\":[\"foo\",\"_source\"]}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        },
+        "fields": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget?fields=foo" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"fields\":\"foo\"},{\"_id\":1,\"fields\":[\"foo\"]},{\"_id\":1,\"fields\":[\"foo\",\"_source\"]}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        },
+        "fields": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget?fields=foo" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"fields\":\"foo\"},{\"_id\":1,\"fields\":[\"foo\"]},{\"_id\":1,\"fields\":[\"foo\",\"_source\"]}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        },
+        "fields": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget?fields=foo%2C_source" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"fields\":\"foo\"},{\"_id\":1,\"fields\":[\"foo\"]},{\"_id\":1,\"fields\":[\"foo\",\"_source\"]}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        },
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "foo": "bar"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        },
+        "fields": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/1?parent=4" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/2?parent=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"parent\":5,\"fields\":[\"_parent\",\"_routing\"]},{\"_id\":1,\"parent\":4,\"fields\":[\"_parent\",\"_routing\"]},{\"_id\":2,\"parent\":5,\"fields\":[\"_parent\",\"_routing\"]}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "_routing": "4",
+          "_parent": "4"
+        }
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "2",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "_routing": "5",
+          "_parent": "5"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/1?routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1/test/_mget?fields=_routing" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"routing\":4},{\"_id\":1,\"routing\":5}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "_routing": "5"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:14Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1?parent=4&routing=5" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/_mget?fields=_routing%2C_parent" -XPOST -d "{\"docs\":[{\"_id\":1},{\"_id\":1,\"parent\":4},{\"_id\":1,\"parent\":4,\"routing\":5}]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      },
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "fields": {
+          "_parent": "4",
+          "_routing": "5"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/_mget?realtime=false" -XPOST -d "{\"ids\":[1]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "exists": false
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/_mget?realtime=true" -XPOST -d "{\"ids\":[1]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/_mget?realtime=false&refresh=true" -XPOST -d "{\"ids\":[1]}"
+  <- 200
+  {
+    "docs": [
+      {
+        "_index": "test_1",
+        "_type": "test",
+        "_id": "1",
+        "_version": 1,
+        "exists": true,
+        "_source": {
+          "foo": "bar"
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\",\"title\":\"howdy\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1/_mlt?mlt_fields=title" -XGET
+  <- 200
+  {
+    "took": 5,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/2" -XPOST -d "{\"foo\":\"baz\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/3" -XPOST -d "{\"foo\":\"foo\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "3",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_msearch" -XPOST -d "{\"index\":\"test_1\"}
+  {\"query\":{\"match_all\":{}}}
+  {\"index\":\"test_2\"}
+  {\"query\":{\"match_all\":{}}}
+  {\"search_type\":\"count\",\"index\":\"test_1\"}
+  {\"query\":{\"match\":{\"foo\":\"bar\"}}}
+  "
+  <- 200
+  {
+    "responses": [
+      {
+        "took": 1,
+        "timed_out": false,
+        "_shards": {
+          "total": 5,
+          "successful": 5,
+          "failed": 0
+        },
+        "hits": {
+          "total": 3,
+          "max_score": 1,
+          "hits": [
+            {
+              "_index": "test_1",
+              "_type": "test",
+              "_id": "1",
+              "_score": 1,
+              "_source": {
+                "foo": "bar"
+              }
+            },
+            {
+              "_index": "test_1",
+              "_type": "test",
+              "_id": "3",
+              "_score": 1,
+              "_source": {
+                "foo": "foo"
+              }
+            },
+            {
+              "_index": "test_1",
+              "_type": "test",
+              "_id": "2",
+              "_score": 1,
+              "_source": {
+                "foo": "baz"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "error": "IndexMissingException[[test_2] missing]"
+      },
+      {
+        "took": 1,
+        "timed_out": false,
+        "_shards": {
+          "total": 5,
+          "successful": 5,
+          "failed": 0
+        },
+        "hits": {
+          "total": 1,
+          "max_score": 0,
+          "hits": []
+        }
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_index" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_percolator/test_index/test_percolator" -XPOST -d "{\"query\":{\"match_all\":{}}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "_percolator",
+    "_type": "test_index",
+    "_id": "test_percolator",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 11,
+      "successful": 6,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_index/test_type/_percolate" -XPOST -d "{\"doc\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "matches": [
+      "test_percolator"
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/" -XHEAD
+  <- 200
+  
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_scroll" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_scroll/test/42" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_scroll",
+    "_type": "test",
+    "_id": "42",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_scroll/_search?scroll=1m&search_type=scan" -XPOST -d "{\"query\":{\"match_all\":{}}}"
+  <- 200
+  {
+    "_scroll_id": "c2Nhbjs1OzY1OmVTaE1NTWswU2s2dWN5R0EwdmY2TVE7NjQ6ZVNoTU1NazBTazZ1Y3lHQTB2ZjZNUTs2MjplU2hNTU1rMFNrNnVjeUdBMHZmNk1ROzYzOmVTaE1NTWswU2s2dWN5R0EwdmY2TVE7NjE6ZVNoTU1NazBTazZ1Y3lHQTB2ZjZNUTsxO3RvdGFsX2hpdHM6MTs=",
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 0,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_search/scroll/c2Nhbjs1OzY1OmVTaE1NTWswU2s2dWN5R0EwdmY2TVE7NjQ6ZVNoTU1NazBTazZ1Y3lHQTB2ZjZNUTs2MjplU2hNTU1rMFNrNnVjeUdBMHZmNk1ROzYzOmVTaE1NTWswU2s2dWN5R0EwdmY2TVE7NjE6ZVNoTU1NazBTazZ1Y3lHQTB2ZjZNUTsxO3RvdGFsX2hpdHM6MTs%3D" -XGET
+  <- 200
+  {
+    "took": 3,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 0,
+      "hits": [
+        {
+          "_index": "test_scroll",
+          "_type": "test",
+          "_id": "42",
+          "_score": 0,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_2" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1" -XPUT
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_2/test/42" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_2",
+    "_type": "test",
+    "_id": "42",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test_1%2Ctest_2/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 20,
+      "successful": 10,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_all/test/_search" -XPOST -d "{\"query\":{\"match\":{\"foo\":\"bar\"}}}"
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 10,
+      "successful": 10,
+      "failed": 0
+    },
+    "hits": {
+      "total": 2,
+      "max_score": 0.30685282,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "1",
+          "_score": 0.30685282,
+          "_source": {
+            "foo": "bar"
+          }
+        },
+        {
+          "_index": "test_2",
+          "_type": "test",
+          "_id": "42",
+          "_score": 0.30685282,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/test/test/testing_document" -XPOST -d "{\"body\":\"Amsterdam meetup\"}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test",
+    "_type": "test",
+    "_id": "testing_document",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_refresh" -XGET
+  <- 200
+  {
+    "ok": true,
+    "_shards": {
+      "total": 10,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/_suggest" -XPOST -d "{\"test_suggestion\":{\"text\":\"The Amsterdma meetpu\",\"term\":{\"field\":\"body\"}}}"
+  <- 200
+  {
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "test_suggestion": [
+      {
+        "text": "amsterdma",
+        "offset": 4,
+        "length": 9,
+        "options": [
+          {
+            "text": "amsterdam",
+            "score": 0.8888889,
+            "freq": 1
+          }
+        ]
+      },
+      {
+        "text": "meetpu",
+        "offset": 14,
+        "length": 6,
+        "options": [
+          {
+            "text": "meetup",
+            "score": 0.8333333,
+            "freq": 1
+          }
+        ]
+      }
+    ]
+  }
+
+TRACE: 2013-10-03T16:57:15Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\",\"count\":1,\"nested\":{\"one\":1,\"two\":2}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\",\"nested\":{\"one\":3}}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "_source": {
+      "foo": "baz",
+      "count": 1,
+      "nested": {
+        "one": 3,
+        "two": 2
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XPOST -d "{\"foo\":\"bar\",\"count\":1}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?script=1" -XPOST -d "{\"lang\":\"mvel\",\"script\":\"ctx._source.foo = bar\",\"params\":{\"bar\":\"xxx\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "_source": {
+      "foo": "xxx",
+      "count": 1
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?lang=mvel&script=ctx._source.foo%20%3D%20%27yyy%27" -XPOST
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "_source": {
+      "foo": "yyy",
+      "count": 1
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"script\":\"1\",\"lang\":\"doesnotexist\",\"params\":{\"bar\":\"xxx\"}}"
+  <- 400
+  {
+    "error": "ElasticSearchIllegalArgumentException[failed to execute script]; nested: ElasticSearchIllegalArgumentException[script_lang not supported [doesnotexist]]; ",
+    "status": 400
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?lang=doesnotexist&script=1" -XPOST
+  <- 400
+  {
+    "error": "ElasticSearchIllegalArgumentException[failed to execute script]; nested: ElasticSearchIllegalArgumentException[script_lang not supported [doesnotexist]]; ",
+    "status": 400
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"bar\",\"count\":1},\"upsert\":{\"foo\":\"baz\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "baz"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"bar\",\"count\":1},\"upsert\":{\"foo\":\"baz\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "_source": {
+      "foo": "bar",
+      "count": 1
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"bar\",\"count\":1},\"doc_as_upsert\":1}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "bar",
+      "count": 1
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"count\":2},\"doc_as_upsert\":1}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "_source": {
+      "foo": "bar",
+      "count": 2
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"script\":\"ctx._source.foo = bar\",\"params\":{\"bar\":\"xxx\"},\"upsert\":{\"foo\":\"baz\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "_source": {
+      "foo": "baz"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"script\":\"ctx._source.foo = bar\",\"params\":{\"bar\":\"xxx\"},\"upsert\":{\"foo\":\"baz\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "_source": {
+      "foo": "xxx"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?routing=5" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1?fields=_routing&routing=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?fields=foo&routing=5" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "get": {
+      "exists": true,
+      "fields": {
+        "foo": "baz"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 500
+  {
+    "error": "RoutingMissingException[routing is required for [test_1]/[test]/[1]]",
+    "status": 500
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?parent=5" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "5",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1/test/1/_update?fields=foo&parent=5" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "get": {
+      "exists": true,
+      "fields": {
+        "foo": "baz"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:16Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_parent\":{\"type\":\"foo\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?parent=5&routing=4" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_parent%2C_routing&parent=5&routing=4" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_routing": "4",
+      "_parent": "5"
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?parent=5" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][1] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?fields=foo&parent=5&routing=4" -XPOST -d "{\"doc\":{\"foo\":\"baz\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "get": {
+      "exists": true,
+      "fields": {
+        "foo": "baz"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"settings\":{\"index.refresh_interval\":-1}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":1}}}"
+  <- 200
+  {
+    "took": 0,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/2/_update?refresh=true" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "2",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/_search" -XPOST -d "{\"query\":{\"term\":{\"_id\":2}}}"
+  <- 200
+  {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 1,
+      "hits": [
+        {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": "2",
+          "_score": 1,
+          "_source": {
+            "foo": "bar"
+          }
+        }
+      ]
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_timestamp\":{\"enabled\":1,\"store\":\"yes\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1380819437569
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?timestamp=1372011280000" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?timestamp=1372011280000" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_timestamp" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_timestamp": 1372011280000
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1" -XPUT -d "{\"mappings\":{\"test\":{\"_ttl\":{\"enabled\":1,\"store\":\"yes\",\"default\":\"10s\"}}}}"
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/_cluster/health?wait_for_status=yellow" -XGET
+  <- 200
+  {
+    "cluster_name": "spencera",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 5,
+    "active_shards": 5,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "exists": true,
+    "fields": {
+      "_ttl": 9997
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?ttl=100000" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 2,
+    "exists": true,
+    "fields": {
+      "_ttl": 99996
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?ttl=20s" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 200
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?fields=_ttl" -XGET
+  <- 200
+  {
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 3,
+    "exists": true,
+    "fields": {
+      "_ttl": 19997
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1?timestamp=1372011280000&ttl=20s" -XPOST -d "{\"foo\":\"bar\"}"
+  <- 400
+  {
+    "error": "MapperParsingException[failed to parse [_ttl]]; nested: AlreadyExpiredException[already expired [test_1]/[test]/[1] due to expire at [1372011300000] and was processed at [1380819437862]]; ",
+    "status": 400
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update?fields=foo%2Cbar%2C_source" -XPOST -d "{\"doc\":{\"foo\":\"baz\"},\"upsert\":{\"foo\":\"bar\"}}"
+  <- 201
+  {
+    "ok": true,
+    "_index": "test_1",
+    "_type": "test",
+    "_id": "1",
+    "_version": 1,
+    "get": {
+      "exists": true,
+      "_source": {
+        "foo": "bar"
+      },
+      "fields": {
+        "foo": "bar"
+      }
+    }
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"bar\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"doc\":{\"foo\":\"bar\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"script\":\"ctx._source.foo = bar\",\"params\":{\"bar\":\"xxx\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/test_1/test/1/_update" -XPOST -d "{\"script\":\"ctx._source.foo = bar\",\"params\":{\"bar\":\"xxx\"}}"
+  <- 404
+  {
+    "error": "DocumentMissingException[[test_1][2] [test][1]: document missing]",
+    "status": 404
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 200
+  {
+    "ok": true,
+    "acknowledged": true
+  }
+
+TRACE: 2013-10-03T16:57:17Z
+  curl "http://localhost:9200/*" -XDELETE
+  <- 404
+  {
+    "error": "IndexMissingException[[*] missing]",
+    "status": 404
+  }
+

@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 
 
@@ -10,32 +11,35 @@ var _ = require('../lib/utils');
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {boolean} params.prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  */
-function doPercolate(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doPercolate(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'POST') {
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'post') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, POST');
+      throw new TypeError('Invalid method: should be one of get, post');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
-  if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+  if (typeof params.index !== 'object' && params.index) {
     url.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
   
-  if (typeof params.type !== 'object' && typeof params.type !== 'undefined') {
+  if (typeof params.type !== 'object' && params.type) {
     url.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
@@ -44,10 +48,10 @@ function doPercolate(params) {
 
   // build the url
   if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + url.index + '/' + url.type + '/_percolate';
+    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/_percolate';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least index, type');
+    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object]');
   }
   
 
@@ -64,7 +68,11 @@ function doPercolate(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doPercolate;

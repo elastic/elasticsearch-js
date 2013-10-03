@@ -1,5 +1,6 @@
-var _ = require('./utils'),
-  EventEmitter = require('events').EventEmitter;
+var _ = require('./toolbelt')
+  , url = require('url')
+  , EventEmitter = require('events').EventEmitter;
 
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -9,12 +10,13 @@ var _ = require('./utils'),
  * @class Log
  * @uses Loggers.Stdio
  * @constructor
- * @param {string|Object|ArrayOfStrings|ArrayOfObjects} output - Either the level to setup a single logger, a
- *   full config object for alogger, or an array of config objects to use for creating log outputs.
+ * @param {string|Object|ArrayOfStrings|ArrayOfObjects} output - Either the level
+ *  to setup a single logger, a full config object for alogger, or an array of
+ *  config objects to use for creating log outputs.
  * @param {string} output.level - One of the keys in Log.levels (error, warning, etc.)
  * @param {string} output.type - The name of the logger to use for this output
  */
-function Log(output) {
+function Log(output, client) {
   var i;
 
   output = output || 2;
@@ -63,34 +65,34 @@ Log.levels = [
    */
   'error'
   /**
-   * Event fired for "warning" level log entries, which usually represent things like
-   * correctly formatted error responses from ES (400, ...) and recoverable errors
-   * (one node unresponsive)
+   * Event fired for "warning" level log entries, which usually represent things
+   * like correctly formatted error responses from ES (400, ...) and recoverable
+   * errors (one node unresponsive)
    *
    * @event warning
    * @param {String} message - A message to be logged
    */
   , 'warning'
   /**
-   * Event fired for "info" level log entries, which usually describe what a client is doing
-   * (sniffing etc)
+   * Event fired for "info" level log entries, which usually describe what a
+   * client is doing (sniffing etc)
    *
    * @event info
    * @param {String} message - A message to be logged
    */
   , 'info'
   /**
-   * Event fired for "debug" level log entries, which will describe requests sent, including their
-   * url (no data, response codes, or exec times)
+   * Event fired for "debug" level log entries, which will describe requests sent,
+   * including their url (no data, response codes, or exec times)
    *
    * @event debug
    * @param {String} message - A message to be logged
    */
   , 'debug'
   /**
-   * Event fired for "trace" level log entries, which provide detailed information about each request
-   * made from a client, including reponse codes, execution times, and a full curl command that can be
-   * copied and pasted into a terminal
+   * Event fired for "trace" level log entries, which provide detailed information
+   * about each request made from a client, including reponse codes, execution times,
+   * and a full curl command that can be copied and pasted into a terminal
    *
    * @event trace
    * @param {String} method method, , body, responseStatus, responseBody
@@ -103,17 +105,19 @@ Log.levels = [
 ];
 
 /**
- * Converts a log config value (string or array) to an array of level names which it represents
+ * Converts a log config value (string or array) to an array of level names which
+ * it represents
  *
  * @method parseLevels
  * @static
  * @private
- * @param  {String|ArrayOfStrings} input - Cound be a string to specify the max level, or an array of exact levels
+ * @param  {String|ArrayOfStrings} input - Cound be a string to specify the max
+ *   level, or an array of exact levels
  * @return {Array} -
  */
 Log.parseLevels = function (input) {
   if (_.isString(input)) {
-    return _.first(Log.levels, _.indexOf(Log.levels, input) + 1);
+    return Log.levels.slice(0, _.indexOf(Log.levels, input) + 1);
   }
   else if (_.isArray(input)) {
     return _.intersection(input, Log.levels);
@@ -132,7 +136,7 @@ Log.parseLevels = function (input) {
 Log.join = function (arrayish) {
   return _.map(arrayish, function (item) {
     if (_.isPlainObject(item)) {
-      return _.inspect(item, { showHidden: true, depth: null, color: true}) + '\n';
+      return _.inspect(item) + '\n';
     } else {
       return item.toString();
     }
@@ -144,18 +148,24 @@ Log.join = function (arrayish) {
  *
  * @method addOutput
  * @param {object} config - An object with config options for the logger.
- * @param {String} [config.type=stdio] - The name of an output/logger. Options can be found in the
- *   `src/loggers` directory.
- * @param {String|ArrayOfStrings} [config.levels=warning] - The levels to output to this logger, when an
- *   array is specified no levels other than the ones specified will be listened to. When a string is
- *   specified, that and all lower levels will be logged.
+ * @param {String} [config.type=stdio] - The name of an output/logger. Options
+ *   can be found in the `src/loggers` directory.
+ * @param {String|ArrayOfStrings} [config.levels=warning] - The levels to output
+ *   to this logger, when an array is specified no levels other than the ones
+ *   specified will be listened to. When a string is specified, that and all lower
+ *   levels will be logged.
  * @return {Logger}
  */
 Log.prototype.addOutput = function (config) {
+  var levels = Log.parseLevels(config.levels || config.level || 'warning');
+
   _.defaults(config, {
     type: 'stdio',
-    levels: Log.parseLevels(config.levels || config.level || 'warning')
   });
+
+  // force the levels config
+  delete config.level;
+  config.levels = levels;
 
   var Logger = require('./loggers/' + config.type);
   return new Logger(config, this);
@@ -220,15 +230,22 @@ Log.prototype.debug = function (/* ...msg */) {
  *
  * @method trace
  * @param {String} method - HTTP request method
- * @param {String} url - URL requested
+ * @param {String|Object} requestUrl - URL requested. If the value is an object,
+ *   it is expected to be the return value of Node's url.parse()
  * @param {String} body - The request's body
  * @param {Number} responseStatus - The status code returned
  * @param {String} responseBody - The body of the returned response
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.trace = function (method, url, body, responseStatus, responseBody) {
+Log.prototype.trace = function (method, requestUrl, body, responseStatus, responseBody) {
   if (EventEmitter.listenerCount(this, 'trace')) {
-    return this.emit('trace', method, url, body, responseStatus, responseBody);
+    if (typeof requestUrl === 'object') {
+      if (!requestUrl.protocol) {
+        requestUrl.protocol = 'http';
+      }
+      requestUrl = url.format(requestUrl);
+    }
+    return this.emit('trace', method, requestUrl, body, responseStatus, responseBody);
   }
 };
 

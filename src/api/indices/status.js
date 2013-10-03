@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 var ignoreIndicesOptions = ['none', 'missing'];
 
@@ -15,32 +16,42 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {boolean} params.recovery - Return information about shard recovery
  * @param {boolean} params.snapshot - TODO: ?
  */
-function doIndicesStatus(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesStatus(params, callback) {
   params = params || {};
 
-  request.method = 'GET';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'get';
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_status';
+    request.url = '/' + encodeURIComponent(url.index) + '/_status';
   }
-  else  {
+  else {
     request.url = '/_status';
   }
   
@@ -83,7 +94,11 @@ function doIndicesStatus(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesStatus;

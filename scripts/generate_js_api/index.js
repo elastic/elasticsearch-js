@@ -1,4 +1,4 @@
-var _ = require('../../src/lib/utils')
+var _ = require('../../src/lib/toolbelt')
   , asset = require('assert')
   , path = require('path')
   , fs = require('fs')
@@ -29,18 +29,13 @@ _.each(docs, function (doc) {
   // and each definition within each doc (should only be one)
   _.each(doc, function (def, name) {
 
-    name = _.map(name.split('.'), function (name) {
-      return _.camelCase(name);
-    }).join('.');
-
     var steps = name.split('.')
       , fileName = steps.pop() + '.js'
       , dirName = _.joinPath(outputDir, steps.join('/') || './');
 
-
     var spec = {
       name: name,
-      methods: def.methods,
+      methods: _.map(def.methods, function (m) { return m.toLowerCase(); }),
       docUrl: def.documentation,
       urlParts: def.url.parts,
       params: def.url.params,
@@ -56,12 +51,6 @@ _.each(docs, function (doc) {
         return [_.camelCase(pair[0]), pair[1].options];
       }
     })));
-
-    // turn a url string into an object describing the url, then sort them in decending order by how many args they have
-    spec.urls = _.sortBy(spec.urls, function (url) {
-      var vars = url.match(templates.urlParamRE);
-      return vars ? vars.length * -1 : 0;
-    });
 
     mkdirp.sync(dirName);
     fs.writeFileSync(_.joinPath(dirName, fileName), templates.action(spec));

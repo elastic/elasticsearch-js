@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 
 
@@ -11,17 +12,20 @@ var _ = require('../../lib/utils');
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
-function doIndicesOpen(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doIndicesOpen(params, callback) {
   params = params || {};
 
-  request.method = 'POST';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'post';
 
   // find the url's params
-  if (typeof params.index !== 'object' && typeof params.index !== 'undefined') {
+  if (typeof params.index !== 'object' && params.index) {
     url.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
@@ -30,10 +34,10 @@ function doIndicesOpen(params) {
 
   // build the url
   if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_open';
+    request.url = '/' + encodeURIComponent(url.index) + '/_open';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least index');
+    throw new TypeError('Unable to build a url with those params. Supply at least [object Object]');
   }
   
 
@@ -60,7 +64,11 @@ function doIndicesOpen(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doIndicesOpen;

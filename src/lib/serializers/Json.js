@@ -1,10 +1,22 @@
 /* JSON serializer */
 
-var _ = require('../utils');
+var _ = require('../toolbelt');
 
-function Json() {}
+function Json(client) {
+  this.client = client;
+}
 
-Json.prototype.serialize = _.bind(JSON.stringify, JSON);
+Json.prototype.serialize = function (val, replacer, spaces) {
+  if (val == null) {
+    return null;
+  }
+  else if (typeof val === 'string') {
+    this.client.log.info('body is already a string, not encoding');
+    return val;
+  } else {
+    return JSON.stringify(val, replacer, spaces);
+  }
+};
 
 Json.prototype.unserialize = _.bind(JSON.parse, JSON);
 

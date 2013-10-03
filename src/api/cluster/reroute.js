@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 
 
@@ -11,15 +12,18 @@ var _ = require('../../lib/utils');
  * @param {boolean} params.dry_run - Simulate the operation only and return the resulting state
  * @param {boolean} params.filter_metadata - Don't return cluster state metadata (default: false)
  */
-function doClusterReroute(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doClusterReroute(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  request.method = 'POST';
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'post';
 
   // find the url's params
 
@@ -51,7 +55,11 @@ function doClusterReroute(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doClusterReroute;

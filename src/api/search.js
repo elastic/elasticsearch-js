@@ -1,4 +1,5 @@
-var _ = require('../lib/utils');
+var _ = require('../lib/toolbelt')
+  , paramHelper = require('../lib/param_helper');
 
 var defaultOperatorOptions = ['AND', 'OR'];
 var ignoreIndicesOptions = ['none', 'missing'];
@@ -18,21 +19,24 @@ var suggestModeOptions = ['missing', 'popular', 'always'];
  * @param {String} [params.default_operator=OR] - The default operator for query string query (AND or OR)
  * @param {string} params.df - The field to use as default where no field prefix is given in the query string
  * @param {boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
- * @param {list} params.fields - A comma-separated list of fields to return as part of a hit
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return as part of a hit
  * @param {number} params.from - Starting offset (default: 0)
  * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
- * @param {list} params.indices_boost - Comma-separated list of index boosts
+ * @param {String|ArrayOfStrings|Boolean} params.indices_boost - Comma-separated list of index boosts
  * @param {boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {boolean} params.lowercase_expanded_terms - Specify whether query terms should be lowercased
  * @param {string} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {string} params.q - Query in the Lucene query string syntax
- * @param {list} params.routing - A comma-separated list of specific routing values
+ * @param {String|ArrayOfStrings|Boolean} params.routing - A comma-separated list of specific routing values
  * @param {duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.search_type - Search operation type
  * @param {number} params.size - Number of hits to return (default: 10)
- * @param {list} params.sort - A comma-separated list of <field>:<direction> pairs
+ * @param {String|ArrayOfStrings|Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {string} params.source - The URL-encoded request definition using the Query DSL (instead of using request body)
- * @param {list} params.stats - Specific 'tag' of the request for logging and statistical purposes
+ * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {string} params.suggest_field - Specify which field to use for suggestions
  * @param {String} [params.suggest_mode=missing] - Specify suggest mode
  * @param {number} params.suggest_size - How many suggestions to return in response
@@ -40,61 +44,75 @@ var suggestModeOptions = ['missing', 'popular', 'always'];
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {boolean} params.version - Specify whether to return document version as part of a hit
  */
-function doSearch(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doSearch(params, callback) {
   params = params || {};
-  request.body = params.body || null;
 
-  if (params.method) {
-    if (params.method === 'GET' || params.method === 'POST') {
+  var request = {
+      ignore: params.ignore,
+      body: params.body || null
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  if (params.method = _.toLowerString(params.method)) {
+    if (params.method === 'get' || params.method === 'post') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of GET, POST');
+      throw new TypeError('Invalid method: should be one of get, post');
     }
   } else {
-    request.method = 'GET';
+    request.method = params.body ? 'post' : 'get';
   }
 
   // find the url's params
   if (typeof params.index !== 'undefined') {
-    if (typeof params.index === 'string') {
+    switch (typeof params.index) {
+    case 'string':
       url.index = params.index;
-    } else if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
-    } else {
-      throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.index)) {
+        url.index = params.index.join(',');
+      } else {
+        throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.index = !!params.index;
     }
   }
   
   if (typeof params.type !== 'undefined') {
-    if (typeof params.type === 'string') {
+    switch (typeof params.type) {
+    case 'string':
       url.type = params.type;
-    } else if (_.isArray(params.type)) {
-      url.type = params.type.join(',');
-    } else {
-      throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.type)) {
+        url.type = params.type.join(',');
+      } else {
+        throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      url.type = !!params.type;
     }
   }
   
 
   // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + url.index + '/' + url.type + '/_search';
+  if (url.hasOwnProperty('type')) {
+    request.url = '/' + encodeURIComponent(url.index || '_all') + '/' + encodeURIComponent(url.type) + '/_search';
   }
-  else if (url.hasOwnProperty('index')) {
-    request.url = '/' + url.index + '/_search';
-  }
-  else  {
-    request.url = '/_search';
+  else {
+    request.url = '/' + encodeURIComponent(url.index || '_all') + '/_search';
   }
   
 
   // build the query string
   if (typeof params.analyzer !== 'undefined') {
-    if (typeof params.analyzer !== 'object' && typeof params.analyzer !== 'undefined') {
+    if (typeof params.analyzer !== 'object' && params.analyzer) {
       query.analyzer = '' + params.analyzer;
     } else {
       throw new TypeError('Invalid analyzer: ' + params.analyzer + ' should be a string.');
@@ -123,7 +141,7 @@ function doSearch(params) {
   }
   
   if (typeof params.df !== 'undefined') {
-    if (typeof params.df !== 'object' && typeof params.df !== 'undefined') {
+    if (typeof params.df !== 'object' && params.df) {
       query.df = '' + params.df;
     } else {
       throw new TypeError('Invalid df: ' + params.df + ' should be a string.');
@@ -141,12 +159,19 @@ function doSearch(params) {
   }
   
   if (typeof params.fields !== 'undefined') {
-    if (typeof params.fields === 'string') {
+    switch (typeof params.fields) {
+    case 'string':
       query.fields = params.fields;
-    } else if (_.isArray(params.fields)) {
-      query.fields = params.fields.join(',');
-    } else {
-      throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.fields)) {
+        query.fields = params.fields.join(',');
+      } else {
+        throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.fields = !!params.fields;
     }
   }
   
@@ -170,12 +195,19 @@ function doSearch(params) {
   }
   
   if (typeof params.indices_boost !== 'undefined') {
-    if (typeof params.indices_boost === 'string') {
+    switch (typeof params.indices_boost) {
+    case 'string':
       query.indices_boost = params.indices_boost;
-    } else if (_.isArray(params.indices_boost)) {
-      query.indices_boost = params.indices_boost.join(',');
-    } else {
-      throw new TypeError('Invalid indices_boost: ' + params.indices_boost + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.indices_boost)) {
+        query.indices_boost = params.indices_boost.join(',');
+      } else {
+        throw new TypeError('Invalid indices_boost: ' + params.indices_boost + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.indices_boost = !!params.indices_boost;
     }
   }
   
@@ -200,7 +232,7 @@ function doSearch(params) {
   }
   
   if (typeof params.preference !== 'undefined') {
-    if (typeof params.preference !== 'object' && typeof params.preference !== 'undefined') {
+    if (typeof params.preference !== 'object' && params.preference) {
       query.preference = '' + params.preference;
     } else {
       throw new TypeError('Invalid preference: ' + params.preference + ' should be a string.');
@@ -208,7 +240,7 @@ function doSearch(params) {
   }
   
   if (typeof params.q !== 'undefined') {
-    if (typeof params.q !== 'object' && typeof params.q !== 'undefined') {
+    if (typeof params.q !== 'object' && params.q) {
       query.q = '' + params.q;
     } else {
       throw new TypeError('Invalid q: ' + params.q + ' should be a string.');
@@ -216,20 +248,27 @@ function doSearch(params) {
   }
   
   if (typeof params.routing !== 'undefined') {
-    if (typeof params.routing === 'string') {
+    switch (typeof params.routing) {
+    case 'string':
       query.routing = params.routing;
-    } else if (_.isArray(params.routing)) {
-      query.routing = params.routing.join(',');
-    } else {
-      throw new TypeError('Invalid routing: ' + params.routing + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.routing)) {
+        query.routing = params.routing.join(',');
+      } else {
+        throw new TypeError('Invalid routing: ' + params.routing + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.routing = !!params.routing;
     }
   }
   
   if (typeof params.scroll !== 'undefined') {
-    if (_.isInterval(params.scroll)) {
+    if (_.isNumeric(params.scroll) || _.isInterval(params.scroll)) {
       query.scroll = params.scroll;
     } else {
-      throw new TypeError('Invalid scroll: ' + params.scroll + ' should be in interval notation (an integer followed by one of Mwdhmsy).');
+      throw new TypeError('Invalid scroll: ' + params.scroll + ' should be a number or in interval notation (an integer followed by one of Mwdhmsy).');
     }
   }
   
@@ -253,35 +292,100 @@ function doSearch(params) {
   }
   
   if (typeof params.sort !== 'undefined') {
-    if (typeof params.sort === 'string') {
+    switch (typeof params.sort) {
+    case 'string':
       query.sort = params.sort;
-    } else if (_.isArray(params.sort)) {
-      query.sort = params.sort.join(',');
-    } else {
-      throw new TypeError('Invalid sort: ' + params.sort + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.sort)) {
+        query.sort = params.sort.join(',');
+      } else {
+        throw new TypeError('Invalid sort: ' + params.sort + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.sort = !!params.sort;
     }
   }
   
   if (typeof params.source !== 'undefined') {
-    if (typeof params.source !== 'object' && typeof params.source !== 'undefined') {
+    if (typeof params.source !== 'object' && params.source) {
       query.source = '' + params.source;
     } else {
       throw new TypeError('Invalid source: ' + params.source + ' should be a string.');
     }
   }
   
+  if (typeof params._source !== 'undefined') {
+    switch (typeof params._source) {
+    case 'string':
+      query._source = params._source;
+      break;
+    case 'object':
+      if (_.isArray(params._source)) {
+        query._source = params._source.join(',');
+      } else {
+        throw new TypeError('Invalid _source: ' + params._source + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query._source = !!params._source;
+    }
+  }
+  
+  if (typeof params._source_exclude !== 'undefined') {
+    switch (typeof params._source_exclude) {
+    case 'string':
+      query._source_exclude = params._source_exclude;
+      break;
+    case 'object':
+      if (_.isArray(params._source_exclude)) {
+        query._source_exclude = params._source_exclude.join(',');
+      } else {
+        throw new TypeError('Invalid _source_exclude: ' + params._source_exclude + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query._source_exclude = !!params._source_exclude;
+    }
+  }
+  
+  if (typeof params._source_include !== 'undefined') {
+    switch (typeof params._source_include) {
+    case 'string':
+      query._source_include = params._source_include;
+      break;
+    case 'object':
+      if (_.isArray(params._source_include)) {
+        query._source_include = params._source_include.join(',');
+      } else {
+        throw new TypeError('Invalid _source_include: ' + params._source_include + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query._source_include = !!params._source_include;
+    }
+  }
+  
   if (typeof params.stats !== 'undefined') {
-    if (typeof params.stats === 'string') {
+    switch (typeof params.stats) {
+    case 'string':
       query.stats = params.stats;
-    } else if (_.isArray(params.stats)) {
-      query.stats = params.stats.join(',');
-    } else {
-      throw new TypeError('Invalid stats: ' + params.stats + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.stats)) {
+        query.stats = params.stats.join(',');
+      } else {
+        throw new TypeError('Invalid stats: ' + params.stats + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.stats = !!params.stats;
     }
   }
   
   if (typeof params.suggest_field !== 'undefined') {
-    if (typeof params.suggest_field !== 'object' && typeof params.suggest_field !== 'undefined') {
+    if (typeof params.suggest_field !== 'object' && params.suggest_field) {
       query.suggest_field = '' + params.suggest_field;
     } else {
       throw new TypeError('Invalid suggest_field: ' + params.suggest_field + ' should be a string.');
@@ -308,7 +412,7 @@ function doSearch(params) {
   }
   
   if (typeof params.suggest_text !== 'undefined') {
-    if (typeof params.suggest_text !== 'object' && typeof params.suggest_text !== 'undefined') {
+    if (typeof params.suggest_text !== 'object' && params.suggest_text) {
       query.suggest_text = '' + params.suggest_text;
     } else {
       throw new TypeError('Invalid suggest_text: ' + params.suggest_text + ' should be a string.');
@@ -337,7 +441,11 @@ function doSearch(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doSearch;

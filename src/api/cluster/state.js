@@ -1,4 +1,5 @@
-var _ = require('../../lib/utils');
+var _ = require('../../lib/toolbelt')
+  , paramHelper = require('../../lib/param_helper');
 
 
 
@@ -10,21 +11,24 @@ var _ = require('../../lib/utils');
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {boolean} params.filter_blocks - Do not return information about blocks
  * @param {boolean} params.filter_index_templates - Do not return information about index templates
- * @param {list} params.filter_indices - Limit returned metadata information to specific indices
+ * @param {String|ArrayOfStrings|Boolean} params.filter_indices - Limit returned metadata information to specific indices
  * @param {boolean} params.filter_metadata - Do not return information about indices metadata
  * @param {boolean} params.filter_nodes - Do not return information about nodes
  * @param {boolean} params.filter_routing_table - Do not return information about shard allocation (`routing_table` and `routing_nodes`)
  * @param {boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
-function doClusterState(params) {
-  var request = {}
-    , url = {}
-    , query = {};
-
+function doClusterState(params, callback) {
   params = params || {};
 
-  request.method = 'GET';
+  var request = {
+      ignore: params.ignore
+    }
+    , url = {}
+    , query = {}
+    , responseOpts = {};
+    
+  request.method = 'get';
 
   // find the url's params
 
@@ -55,12 +59,19 @@ function doClusterState(params) {
   }
   
   if (typeof params.filter_indices !== 'undefined') {
-    if (typeof params.filter_indices === 'string') {
+    switch (typeof params.filter_indices) {
+    case 'string':
       query.filter_indices = params.filter_indices;
-    } else if (_.isArray(params.filter_indices)) {
-      query.filter_indices = params.filter_indices.join(',');
-    } else {
-      throw new TypeError('Invalid filter_indices: ' + params.filter_indices + ' should be a comma seperated list or array.');
+      break;
+    case 'object':
+      if (_.isArray(params.filter_indices)) {
+        query.filter_indices = params.filter_indices.join(',');
+      } else {
+        throw new TypeError('Invalid filter_indices: ' + params.filter_indices + ' should be a comma seperated list, array, or boolean.');
+      }
+      break;
+    default:
+      query.filter_indices = !!params.filter_indices;
     }
   }
   
@@ -116,7 +127,11 @@ function doClusterState(params) {
   
   request.url = request.url + _.makeQueryString(query);
 
-  return this.client.request(request);
+  var reqPromise = this.client.request(request);
+  if (callback) {
+    reqPromise.then(_.bind(callback, null, null), callback);
+  }
+  return reqPromise;
 }
 
 module.exports = doClusterState;

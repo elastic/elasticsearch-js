@@ -2,7 +2,7 @@
 var Log = require('../../src/lib/log')
   , log = new Log([])
   , Stdio = require('../../src/lib/loggers/stdio')
-  , _ = require('../../src/lib/utils')
+  , _ = require('../../src/lib/toolbelt')
   , warningLogger;
 
 exports['Stdio Logger'] = {

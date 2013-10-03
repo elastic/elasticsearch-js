@@ -34,12 +34,15 @@ module.exports = function (grunt) {
         dest: 'dist/elasticsearch-node.js'
       }
     },
-    nodeunit: {
-      all: [
+    simplemocha: {
+      unit: [
         'test/unit/*.test.js'
       ],
+      integration: [
+        'test/integration/*.test.js'
+      ],
       options: {
-        reporter: 'default'
+        reporter: 'spec'
       }
     },
     jshint: {
@@ -81,13 +84,13 @@ module.exports = function (grunt) {
   });
 
   // load plugins
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
-  grunt.registerTask('test', ['nodeunit']);
+  grunt.registerTask('default', ['jshint', 'simple-mocha']);
+  grunt.registerTask('test', ['simplemocha:integration']);
 
 };
