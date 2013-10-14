@@ -1,10 +1,10 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var levelOptions = ['cluster', 'indices', 'shards'];
 var waitForStatusOptions = ['green', 'yellow', 'red'];
-
-
 
 /**
  * Perform an elasticsearch [cluster.health](http://elasticsearch.org/guide/reference/api/admin-cluster-health/) request
@@ -21,36 +21,36 @@ var waitForStatusOptions = ['green', 'yellow', 'red'];
  * @param {number} params.wait_for_relocating_shards - Wait until the specified number of relocating shards is finished
  * @param {String} params.wait_for_status - Wait until cluster is in a specific state
  */
-function doClusterHealth(params, callback) {
+function doClusterHealth(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     if (typeof params.index !== 'object' && params.index) {
-      url.index = '' + params.index;
+      parts.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/_cluster/health/' + encodeURIComponent(url.index) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/_cluster/health/' + encodeURIComponent(parts.index) + '';
   }
   else {
-    request.url = '/_cluster/health';
+    request.path = '/_cluster/health';
   }
-  
+
 
   // build the query string
   if (typeof params.level !== 'undefined') {
@@ -63,7 +63,7 @@ function doClusterHealth(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.local !== 'undefined') {
     if (params.local.toLowerCase && (params.local = params.local.toLowerCase())
       && (params.local === 'no' || params.local === 'off')
@@ -73,7 +73,7 @@ function doClusterHealth(params, callback) {
       query.local = !!params.local;
     }
   }
-  
+
   if (typeof params.master_timeout !== 'undefined') {
     if (params.master_timeout instanceof Date) {
       query.master_timeout = params.master_timeout.getTime();
@@ -83,7 +83,7 @@ function doClusterHealth(params, callback) {
       throw new TypeError('Invalid master_timeout: ' + params.master_timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.timeout !== 'undefined') {
     if (params.timeout instanceof Date) {
       query.timeout = params.timeout.getTime();
@@ -93,7 +93,7 @@ function doClusterHealth(params, callback) {
       throw new TypeError('Invalid timeout: ' + params.timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.wait_for_active_shards !== 'undefined') {
     if (_.isNumeric(params.wait_for_active_shards)) {
       query.wait_for_active_shards = params.wait_for_active_shards * 1;
@@ -101,7 +101,7 @@ function doClusterHealth(params, callback) {
       throw new TypeError('Invalid wait_for_active_shards: ' + params.wait_for_active_shards + ' should be a number.');
     }
   }
-  
+
   if (typeof params.wait_for_nodes !== 'undefined') {
     if (typeof params.wait_for_nodes !== 'object' && params.wait_for_nodes) {
       query.wait_for_nodes = '' + params.wait_for_nodes;
@@ -109,7 +109,7 @@ function doClusterHealth(params, callback) {
       throw new TypeError('Invalid wait_for_nodes: ' + params.wait_for_nodes + ' should be a string.');
     }
   }
-  
+
   if (typeof params.wait_for_relocating_shards !== 'undefined') {
     if (_.isNumeric(params.wait_for_relocating_shards)) {
       query.wait_for_relocating_shards = params.wait_for_relocating_shards * 1;
@@ -117,7 +117,7 @@ function doClusterHealth(params, callback) {
       throw new TypeError('Invalid wait_for_relocating_shards: ' + params.wait_for_relocating_shards + ' should be a number.');
     }
   }
-  
+
   if (typeof params.wait_for_status !== 'undefined') {
     if (_.contains(waitForStatusOptions, params.wait_for_status)) {
       query.wait_for_status = params.wait_for_status;
@@ -128,14 +128,10 @@ function doClusterHealth(params, callback) {
       );
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doClusterHealth;

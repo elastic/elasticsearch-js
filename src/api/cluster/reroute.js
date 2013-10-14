@@ -1,7 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [cluster.reroute](http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/) request
@@ -12,25 +12,25 @@ var _ = require('../../lib/toolbelt')
  * @param {boolean} params.dry_run - Simulate the operation only and return the resulting state
  * @param {boolean} params.filter_metadata - Don't return cluster state metadata (default: false)
  */
-function doClusterReroute(params, callback) {
+function doClusterReroute(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'post';
 
-  // find the url's params
+  request.method = 'POST';
+
+  // find the paths's params
 
 
-  // build the url
-  request.url = '/_cluster/reroute';
-  
+  // build the path
+  request.path = '/_cluster/reroute';
+
 
   // build the query string
   if (typeof params.dry_run !== 'undefined') {
@@ -42,7 +42,7 @@ function doClusterReroute(params, callback) {
       query.dry_run = !!params.dry_run;
     }
   }
-  
+
   if (typeof params.filter_metadata !== 'undefined') {
     if (params.filter_metadata.toLowerCase && (params.filter_metadata = params.filter_metadata.toLowerCase())
       && (params.filter_metadata === 'no' || params.filter_metadata === 'off')
@@ -52,14 +52,10 @@ function doClusterReroute(params, callback) {
       query.filter_metadata = !!params.filter_metadata;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doClusterReroute;

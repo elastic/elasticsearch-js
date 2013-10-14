@@ -1,7 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [indices.get_template](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
@@ -10,44 +10,40 @@ var _ = require('../../lib/toolbelt')
  * @method indices.get_template
  * @param {Object} params - An object with parameters used to carry out this action
  */
-function doIndicesGetTemplate(params, callback) {
+function doIndicesGetTemplate(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.name !== 'object' && params.name) {
-    url.name = '' + params.name;
+    parts.name = '' + params.name;
   } else {
     throw new TypeError('Invalid name: ' + params.name + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('name')) {
-    request.url = '/_template/' + encodeURIComponent(url.name) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('name')) {
+    request.path = '/_template/' + encodeURIComponent(parts.name) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object]');
   }
-  
+
 
   // build the query string
 
-  request.url = request.url + _.makeQueryString(query);
+  request.path = request.path + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesGetTemplate;

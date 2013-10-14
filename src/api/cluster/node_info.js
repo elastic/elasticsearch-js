@@ -1,8 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-//TODO: this enpoint ***needs*** work, many of the possible urls are not supported
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [cluster.node_info](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/) request
@@ -23,45 +22,45 @@ var _ = require('../../lib/toolbelt')
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {boolean} params.transport - Return information about transport
  */
-function doClusterNodeInfo(params, callback) {
+function doClusterNodeInfo(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.node_id !== 'undefined') {
     switch (typeof params.node_id) {
     case 'string':
-      url.node_id = params.node_id;
+      parts.node_id = params.node_id;
       break;
     case 'object':
       if (_.isArray(params.node_id)) {
-        url.node_id = params.node_id.join(',');
+        parts.node_id = params.node_id.join(',');
       } else {
         throw new TypeError('Invalid node_id: ' + params.node_id + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.node_id = !!params.node_id;
+      parts.node_id = !!params.node_id;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('node_id')) {
-    request.url = '/_nodes/' + encodeURIComponent(url.node_id) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('node_id')) {
+    request.path = '/_nodes/' + encodeURIComponent(parts.node_id) + '';
   }
   else {
-    request.url = '/_nodes';
+    request.path = '/_nodes';
   }
-  
+
 
   // build the query string
   if (typeof params.all !== 'undefined') {
@@ -73,7 +72,7 @@ function doClusterNodeInfo(params, callback) {
       query.all = !!params.all;
     }
   }
-  
+
   if (typeof params.clear !== 'undefined') {
     if (params.clear.toLowerCase && (params.clear = params.clear.toLowerCase())
       && (params.clear === 'no' || params.clear === 'off')
@@ -83,7 +82,7 @@ function doClusterNodeInfo(params, callback) {
       query.clear = !!params.clear;
     }
   }
-  
+
   if (typeof params.http !== 'undefined') {
     if (params.http.toLowerCase && (params.http = params.http.toLowerCase())
       && (params.http === 'no' || params.http === 'off')
@@ -93,7 +92,7 @@ function doClusterNodeInfo(params, callback) {
       query.http = !!params.http;
     }
   }
-  
+
   if (typeof params.jvm !== 'undefined') {
     if (params.jvm.toLowerCase && (params.jvm = params.jvm.toLowerCase())
       && (params.jvm === 'no' || params.jvm === 'off')
@@ -103,7 +102,7 @@ function doClusterNodeInfo(params, callback) {
       query.jvm = !!params.jvm;
     }
   }
-  
+
   if (typeof params.network !== 'undefined') {
     if (params.network.toLowerCase && (params.network = params.network.toLowerCase())
       && (params.network === 'no' || params.network === 'off')
@@ -113,7 +112,7 @@ function doClusterNodeInfo(params, callback) {
       query.network = !!params.network;
     }
   }
-  
+
   if (typeof params.os !== 'undefined') {
     if (params.os.toLowerCase && (params.os = params.os.toLowerCase())
       && (params.os === 'no' || params.os === 'off')
@@ -123,7 +122,7 @@ function doClusterNodeInfo(params, callback) {
       query.os = !!params.os;
     }
   }
-  
+
   if (typeof params.plugin !== 'undefined') {
     if (params.plugin.toLowerCase && (params.plugin = params.plugin.toLowerCase())
       && (params.plugin === 'no' || params.plugin === 'off')
@@ -133,7 +132,7 @@ function doClusterNodeInfo(params, callback) {
       query.plugin = !!params.plugin;
     }
   }
-  
+
   if (typeof params.process !== 'undefined') {
     if (params.process.toLowerCase && (params.process = params.process.toLowerCase())
       && (params.process === 'no' || params.process === 'off')
@@ -143,7 +142,7 @@ function doClusterNodeInfo(params, callback) {
       query.process = !!params.process;
     }
   }
-  
+
   if (typeof params.settings !== 'undefined') {
     if (params.settings.toLowerCase && (params.settings = params.settings.toLowerCase())
       && (params.settings === 'no' || params.settings === 'off')
@@ -153,7 +152,7 @@ function doClusterNodeInfo(params, callback) {
       query.settings = !!params.settings;
     }
   }
-  
+
   if (typeof params.thread_pool !== 'undefined') {
     if (params.thread_pool.toLowerCase && (params.thread_pool = params.thread_pool.toLowerCase())
       && (params.thread_pool === 'no' || params.thread_pool === 'off')
@@ -163,7 +162,7 @@ function doClusterNodeInfo(params, callback) {
       query.thread_pool = !!params.thread_pool;
     }
   }
-  
+
   if (typeof params.timeout !== 'undefined') {
     if (params.timeout instanceof Date) {
       query.timeout = params.timeout.getTime();
@@ -173,7 +172,7 @@ function doClusterNodeInfo(params, callback) {
       throw new TypeError('Invalid timeout: ' + params.timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.transport !== 'undefined') {
     if (params.transport.toLowerCase && (params.transport = params.transport.toLowerCase())
       && (params.transport === 'no' || params.transport === 'off')
@@ -183,14 +182,10 @@ function doClusterNodeInfo(params, callback) {
       query.transport = !!params.transport;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doClusterNodeInfo;

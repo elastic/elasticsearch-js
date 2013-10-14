@@ -1,5 +1,5 @@
 
-var _ = require('../../../src/lib/toolbelt')
+var _ = require('../../../../src/lib/utils')
   , fs = require('fs')
   , path = require('path')
   , urlParamRE = /\{(\w+)\}/g;
@@ -13,7 +13,9 @@ var _ = require('../../../src/lib/toolbelt')
 function lines(i) {
 
   function l(line) {
-    l.lines.push(_.repeat(' ', l.indent) + line);
+    if (typeof line !== 'undefined') {
+      l.lines.push(_.repeat(' ', l.indent) + line);
+    }
     return l;
   }
 
@@ -25,14 +27,14 @@ function lines(i) {
     return l;
   };
 
-  l.in = function () {
+  l.in = function (line) {
     l.indent += 2;
-    return l;
+    return l(line);
   };
 
-  l.out = function () {
+  l.out = function (line) {
     l.indent -= 2;
-    return l;
+    return l(line);
   };
 
   l.toString = function () {
@@ -109,14 +111,14 @@ var templateGlobals = {
       // collect the vars from the url and replace them to form the js that will build the url
       var makeL = lines(), vars = [];
 
-      makeL('request.url = \'' + url.replace(urlParamRE, function (match, varName) {
+      makeL('request.path = \'' + url.replace(urlParamRE, function (match, varName) {
         var varDetails = urlParams[varName];
         varDetails.name = varName;
         vars.push(varDetails);
         if (urlVarIsRequired(varDetails)) {
-          return '\' + encodeURIComponent(url.' + varName + ') + \'';
+          return '\' + encodeURIComponent(parts.' + varName + ') + \'';
         } else {
-          return '\' + encodeURIComponent(url.' + varName + ' || ' + stringify(varDetails.default) + ') + \'';
+          return '\' + encodeURIComponent(parts.' + varName + ' || ' + stringify(varDetails.default) + ') + \'';
         }
       }) + '\';');
 
@@ -131,17 +133,20 @@ var templateGlobals = {
         var requiredVars = _.filter(vars, urlVarIsRequired);
 
         var condition = _.map(requiredVars, function (v) {
-          return 'url.hasOwnProperty(\'' + v.name + '\')';
+          return 'parts.hasOwnProperty(\'' + v.name + '\')';
         }).join(' && ');
 
-        l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : '') + '{').in();
-        l.split(makeL.toString()).out();
-        l('}');
+        l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : '') + '{')
+          .in()
+            .split(makeL.toString())
+          .out('}');
 
         if (urlIndex === urls.length - 1 && condition) {
-          l('else {').in();
-          l('throw new TypeError(\'Unable to build a url with those params. Supply at least ' + vars.join(', ') + '\');').out();
-          l('}');
+          l('else {')
+            .in('throw new TypeError(\'Unable to build a path with those params. Supply at least ' +
+              vars.join(', ') + '\');'
+            )
+          .out('}');
         }
 
       } else {
@@ -185,6 +190,22 @@ var templateGlobals = {
     } else {
       return name;
     }
+  },
+
+  returnStatement: function (indent, name) {
+    var l = lines(indent);
+    if (name.match(/(^|\.)exists/)) {
+      l('this.client.request(request, function (err, response) {')
+        .in('if (err instanceof errors.NotFound) {')
+          .in('cb(err, false);')
+        .out('} else {')
+          .in('cb(err, true);')
+        .out('}')
+      .out('});');
+    } else {
+      l('this.client.request(request, cb);');
+    }
+    return l.toString();
   }
 };
 

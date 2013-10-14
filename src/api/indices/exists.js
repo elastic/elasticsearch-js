@@ -1,7 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [indices.exists](http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/) request
@@ -10,53 +10,55 @@ var _ = require('../../lib/toolbelt')
  * @method indices.exists
  * @param {Object} params - An object with parameters used to carry out this action
  */
-function doIndicesExists(params, callback) {
+function doIndicesExists(params, cb) {
   params = params || {};
 
   var request = {
       ignore: _.union([404], params.ignore)
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'head';
 
-  // find the url's params
+  request.method = 'HEAD';
+
+  // find the paths's params
   switch (typeof params.index) {
   case 'string':
-    url.index = params.index;
+    parts.index = params.index;
     break;
   case 'object':
     if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
+      parts.index = params.index.join(',');
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
     }
     break;
   default:
-    url.index = !!params.index;
+    parts.index = !!params.index;
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object]');
   }
-  
+
 
   // build the query string
 
-  request.url = request.url + _.makeQueryString(query);
+  request.path = request.path + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  this.client.request(request, function (err, response) {
+    if (err instanceof errors.NotFound) {
+      cb(err, false);
+    } else {
+      cb(err, true);
+    }
+  });
 }
 
 module.exports = doIndicesExists;

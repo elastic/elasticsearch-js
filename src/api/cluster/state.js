@@ -1,7 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [cluster.state](http://elasticsearch.org/guide/reference/api/admin-cluster-state/) request
@@ -18,24 +18,24 @@ var _ = require('../../lib/toolbelt')
  * @param {boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
-function doClusterState(params, callback) {
+function doClusterState(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
 
 
-  // build the url
-  request.url = '/_cluster/state';
-  
+  // build the path
+  request.path = '/_cluster/state';
+
 
   // build the query string
   if (typeof params.filter_blocks !== 'undefined') {
@@ -47,7 +47,7 @@ function doClusterState(params, callback) {
       query.filter_blocks = !!params.filter_blocks;
     }
   }
-  
+
   if (typeof params.filter_index_templates !== 'undefined') {
     if (params.filter_index_templates.toLowerCase && (params.filter_index_templates = params.filter_index_templates.toLowerCase())
       && (params.filter_index_templates === 'no' || params.filter_index_templates === 'off')
@@ -57,7 +57,7 @@ function doClusterState(params, callback) {
       query.filter_index_templates = !!params.filter_index_templates;
     }
   }
-  
+
   if (typeof params.filter_indices !== 'undefined') {
     switch (typeof params.filter_indices) {
     case 'string':
@@ -74,7 +74,7 @@ function doClusterState(params, callback) {
       query.filter_indices = !!params.filter_indices;
     }
   }
-  
+
   if (typeof params.filter_metadata !== 'undefined') {
     if (params.filter_metadata.toLowerCase && (params.filter_metadata = params.filter_metadata.toLowerCase())
       && (params.filter_metadata === 'no' || params.filter_metadata === 'off')
@@ -84,7 +84,7 @@ function doClusterState(params, callback) {
       query.filter_metadata = !!params.filter_metadata;
     }
   }
-  
+
   if (typeof params.filter_nodes !== 'undefined') {
     if (params.filter_nodes.toLowerCase && (params.filter_nodes = params.filter_nodes.toLowerCase())
       && (params.filter_nodes === 'no' || params.filter_nodes === 'off')
@@ -94,7 +94,7 @@ function doClusterState(params, callback) {
       query.filter_nodes = !!params.filter_nodes;
     }
   }
-  
+
   if (typeof params.filter_routing_table !== 'undefined') {
     if (params.filter_routing_table.toLowerCase && (params.filter_routing_table = params.filter_routing_table.toLowerCase())
       && (params.filter_routing_table === 'no' || params.filter_routing_table === 'off')
@@ -104,7 +104,7 @@ function doClusterState(params, callback) {
       query.filter_routing_table = !!params.filter_routing_table;
     }
   }
-  
+
   if (typeof params.local !== 'undefined') {
     if (params.local.toLowerCase && (params.local = params.local.toLowerCase())
       && (params.local === 'no' || params.local === 'off')
@@ -114,7 +114,7 @@ function doClusterState(params, callback) {
       query.local = !!params.local;
     }
   }
-  
+
   if (typeof params.master_timeout !== 'undefined') {
     if (params.master_timeout instanceof Date) {
       query.master_timeout = params.master_timeout.getTime();
@@ -124,14 +124,10 @@ function doClusterState(params, callback) {
       throw new TypeError('Invalid master_timeout: ' + params.master_timeout + ' should be be some sort of time.');
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doClusterState;

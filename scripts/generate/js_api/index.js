@@ -1,10 +1,10 @@
-var _ = require('../../src/lib/toolbelt')
+var _ = require('../../../src/lib/utils')
   , asset = require('assert')
   , path = require('path')
   , fs = require('fs')
   , mkdirp = require('mkdirp')
-  , docs = _.requireDir(module, '../../es_api_spec/api')
-  , outputDir = _.joinPath(__dirname, '../../src/api/')
+  , docs = _.requireDir(module, '../../../es_api_spec/api')
+  , outputDir = _.joinPath(__dirname, '../../../src/api/')
   , templates = require('./templates')
   , notes = require('./notes')
   , aliases = require('./aliases');
@@ -35,7 +35,7 @@ _.each(docs, function (doc) {
 
     var spec = {
       name: name,
-      methods: _.map(def.methods, function (m) { return m.toLowerCase(); }),
+      methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
       docUrl: def.documentation,
       urlParts: def.url.parts,
       params: def.url.params,

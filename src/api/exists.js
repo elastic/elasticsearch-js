@@ -1,7 +1,7 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
-
-
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [exists](http://elasticsearch.org/guide/reference/api/get/) request
@@ -15,48 +15,48 @@ var _ = require('../lib/toolbelt')
  * @param {boolean} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {string} params.routing - Specific routing value
  */
-function doExists(params, callback) {
+function doExists(params, cb) {
   params = params || {};
 
   var request = {
       ignore: _.union([404], params.ignore)
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'head';
 
-  // find the url's params
+  request.method = 'HEAD';
+
+  // find the paths's params
   if (typeof params.id !== 'object' && params.id) {
-    url.id = '' + params.id;
+    parts.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
-  
+
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'undefined') {
     if (typeof params.type !== 'object' && params.type) {
-      url.type = '' + params.type;
+      parts.type = '' + params.type;
     } else {
       throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('id')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type || '_all') + '/' + encodeURIComponent(url.id) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('id')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type || '_all') + '/' + encodeURIComponent(parts.id) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.parent !== 'undefined') {
@@ -66,7 +66,7 @@ function doExists(params, callback) {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
     }
   }
-  
+
   if (typeof params.preference !== 'undefined') {
     if (typeof params.preference !== 'object' && params.preference) {
       query.preference = '' + params.preference;
@@ -74,7 +74,7 @@ function doExists(params, callback) {
       throw new TypeError('Invalid preference: ' + params.preference + ' should be a string.');
     }
   }
-  
+
   if (typeof params.realtime !== 'undefined') {
     if (params.realtime.toLowerCase && (params.realtime = params.realtime.toLowerCase())
       && (params.realtime === 'no' || params.realtime === 'off')
@@ -84,7 +84,7 @@ function doExists(params, callback) {
       query.realtime = !!params.realtime;
     }
   }
-  
+
   if (typeof params.refresh !== 'undefined') {
     if (params.refresh.toLowerCase && (params.refresh = params.refresh.toLowerCase())
       && (params.refresh === 'no' || params.refresh === 'off')
@@ -94,7 +94,7 @@ function doExists(params, callback) {
       query.refresh = !!params.refresh;
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
@@ -102,14 +102,16 @@ function doExists(params, callback) {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, function (err, response) {
+    if (err instanceof errors.NotFound) {
+      cb(err, false);
+    } else {
+      cb(err, true);
+    }
+  });
 }
 
 module.exports = doExists;

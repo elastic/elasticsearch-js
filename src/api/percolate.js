@@ -1,7 +1,7 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
-
-
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [percolate](http://elasticsearch.org/guide/reference/api/percolate/) request
@@ -11,49 +11,49 @@ var _ = require('../lib/toolbelt')
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {boolean} params.prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  */
-function doPercolate(params, callback) {
+function doPercolate(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'object' && params.type) {
-    url.type = '' + params.type;
+    parts.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/_percolate';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/_percolate';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.prefer_local !== 'undefined') {
@@ -65,14 +65,10 @@ function doPercolate(params, callback) {
       query.prefer_local = !!params.prefer_local;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doPercolate;

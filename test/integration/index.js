@@ -1,48 +1,89 @@
-var fs = require('fs')
-  , path = require('path')
-  , async = require('async')
-  , assert = require('assert')
-  , jsYaml = require('js-yaml')
-  , expect = require('expect.js')
-  , nodeunit = require('nodeunit')
-  , _ = require('../../src/lib/toolbelt')
-  , es = require('../../src/elasticsearch');
+var path = require('path'),
+  fs = require('fs'),
+  async = require('async'),
+  jsYaml = require('js-yaml'),
+  expect = require('expect.js'),
+  server = require('./server'),
+  _ = require('../../src/lib/utils'),
+  es = require('../../src/elasticsearch');
 
-require('mocha-as-promised')();
+var argv = require('optimist')
+  .default('executable', path.join(process.env.ES_HOME, './bin/elasticsearch'))
+  .default('clusterName', 'yaml-test-runner')
+  .default('dataPath', '/tmp/yaml-test-runner')
+  .argv;
 
-/**
- * Where do our tests live?
- * @type {[type]}
- */
+
+if (argv.hostname || argv.port) {
+  console.log('working with ES instance at ' + argv.hostname + ':' + argv.port);
+}
+
+// Where do the tests live?
 var TEST_DIR = path.resolve(__dirname, '../../es_api_spec/test/');
 
-// var doRE = '.*';
+// test names matching this will be run
 var doRE = /(^|\/)(.*)\/.*/;
-// var FILE_WHITELIST = ['indices.analyze/10_analyze.yaml'];
 
-/**
- * We'll use this client for all of our work
- * @type {es.Client}
- */
-var client = new es.Client({
-  hosts: ['localhost:9200'],
-  log: {
-    type: 'file',
-    level: 'trace',
-    path: path.resolve(__dirname, '../integration-test.log')
-  },
-  max_connections: 1
+// a reference to a personal instance of ES Server
+var esServer = null;
+
+// the client
+var client = null;
+
+// location that the logger will write to
+var logFile = path.resolve(__dirname, '../integration-test.log');
+
+// empty all of the indices in ES please
+function clearIndices (done) {
+  client.indices.delete({
+    index: '*',
+    ignore: 404
+  }, done);
+}
+
+// before running any tests...
+before(function (done) {
+  // start our personal ES Server
+  this.timeout(null);
+  if (argv.hostname) {
+    done();
+  } else {
+    server.start(argv, function (err, server) {
+      esServer = server;
+      done(err);
+    });
+  }
 });
 
-function clearIndicies (done) {
-  client.indices.delete({
-    index: '*'
-  }, function () {
-    done();
+before(function (done) {
+  // delete the integration log
+  fs.unlink(logFile, function (err) {
+    if (err && ~err.message.indexOf('ENOENT')) {
+      done();
+    } else {
+      done(err);
+    }
   });
-}
-// before running any tests, clear the test* indicies
-before(clearIndicies);
+});
+
+before(function () {
+  // create the client
+  client = new es.Client({
+    hosts: [
+      {
+        hostname: esServer ? esServer.__hostname : argv.hostname,
+        port: esServer ? esServer.__port : argv.port
+      }
+    ],
+    log: {
+      type: 'file',
+      level: ['error', 'trace'],
+      path: logFile
+    }
+  });
+});
+
+before(clearIndices);
 
 /**
  * recursively crawl the directory, looking for yaml files which will be passed to loadFile
@@ -52,8 +93,8 @@ before(clearIndicies);
 function loadDir(dir) {
   fs.readdirSync(dir).forEach(function (fileName) {
     describe(fileName, function () {
-      var location = path.join(dir, fileName)
-        , stat = fs.statSync(location);
+      var location = path.join(dir, fileName),
+          stat = fs.statSync(location);
 
       if (stat.isFile() && fileName.match(/\.yaml$/) && location.match(doRE)) {
         loadFile(location);
@@ -71,16 +112,30 @@ function loadDir(dir) {
  */
 var ES_VERSION = null;
 
+// core expression for finding a version
+var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
+
 /**
- * Regular Expression to extract version numbers from a version string
+ * Regular Expression to extract a version number from a string
  * @type {RegExp}
  */
-var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
 var versionRE = new RegExp(versionExp);
+
+/**
+ * Regular Expression to extract a version range from a string
+ * @type {RegExp}
+ */
 var versionRangeRE = new RegExp(versionExp + '\\s*\\-\\s*' + versionExp);
 
+/**
+ * Fetches the client.info, and parses out the version number to a comparable string
+ * @param done {Function} - callback
+ */
 function getVersionFromES(done) {
-  client.info().then(function (resp) {
+  client.info({}, function (err, resp) {
+    if (err) {
+      throw new Error('unable to get info about ES');
+    }
     expect(resp.version.number).to.match(versionRE);
     ES_VERSION = versionToComparableString(versionRE.exec(resp.version.number)[1]);
     done();
@@ -89,6 +144,7 @@ function getVersionFromES(done) {
 
 /**
  * Transform x.x.x into xxx.xxx.xxx, striping off any text at the end like beta or pre-alpha35
+ *
  * @param  {String} version - Version number represented as a string
  * @return {String} - Version number represented as three numbers, seperated by -, all numbers are
  *   padded with 0 and will be three characters long so the strings can be compared.
@@ -109,6 +165,7 @@ function versionToComparableString(version) {
 /**
  * Compare a version range to the ES_VERSION, determining if the current version
  * falls within the range.
+ *
  * @param  {String} rangeString - a string representing two version numbers seperated by a "-"
  * @return {Boolean} - is the current version within the range (inclusive)
  */
@@ -131,15 +188,12 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 
 /**
  * read the file's contents, parse the yaml, pass to makeTest
+ *
  * @param  {String} path - Full path to yaml file
  * @return {undefined}
  */
 function loadFile(location) {
-  var relativeName = path.relative(TEST_DIR, location)
-    , groupName = path.dirname(relativeName)
-    , fileName = path.basename(relativeName)
-    , docsInFile = []
-    , standardTestConfigs = [];
+  var docsInFile = [];
 
   jsYaml.loadAll(
     fs.readFileSync(location, { encoding:'utf8' }),
@@ -158,6 +212,7 @@ function loadFile(location) {
  * Read the test descriptions from a yaml document (usually only one test, per doc but
  * sometimes multiple docs per file, and because of the layout there COULD be
  * multiple test per test...)
+ *
  * @param  {Object} testConfigs - The yaml document
  * @return {undefined}
  */
@@ -165,7 +220,6 @@ function makeTest(testConfig, count) {
   var setup;
   if (_.has(testConfig, 'setup')) {
     (new ActionRunner(testConfig.setup)).each(function (action, name) {
-      console.log('setup', name);
       before(action);
     });
     delete testConfig.setup;
@@ -180,9 +234,16 @@ function makeTest(testConfig, count) {
   });
 
   // after running the tests, remove all indices
-  after(clearIndicies);
+  after(clearIndices);
 }
 
+/**
+ * Class to wrap a single document from a yaml test file
+ *
+ * @constructor
+ * @class ActionRunner
+ * @param actions {Array} - The array of actions directly from the Yaml file
+ */
 function ActionRunner(actions) {
   this._actions = [];
 
@@ -319,8 +380,15 @@ ActionRunner.prototype = {
     return from;
   },
 
+  /**
+   * Do a skip operation, setting the skipping flag to true if the version matches
+   * the range defined in args.version
+   *
+   * @param args
+   * @param done
+   */
   do_skip: function (args, done) {
-    rangeMatchesCurrentVersion(args.version, function (match) {
+    rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
       if (match) {
         this.skipping = true;
         console.log('skipping the rest of these actions' + (args.reason ? ' because ' + args.reason : ''));
@@ -328,18 +396,17 @@ ActionRunner.prototype = {
         this.skipping = false;
       }
       done();
-    }.bind(this));
+    }, this));
   },
 
   /**
    * Do a request, as outlined in the args
+   *
    * @param  {[type]}   args [description]
    * @param  {Function} done [description]
    * @return {[type]}        [description]
    */
   do_do: function (args, done) {
-    this._last_requests_response = null;
-
     var catcher;
 
     // resolve the catch arg to a value used for matching once the request is complete
@@ -374,9 +441,7 @@ ActionRunner.prototype = {
     var action = Object.keys(args).pop()
       , clientActionName = _.map(action.split('.'), _.camelCase).join('.')
       , clientAction = this.get(clientActionName, client)
-      , response
-      , error
-      , params = _.map(args[action], function (val) {
+      , params = _.map(args[action], function (val, name) {
         if (typeof val === 'string' && val[0] === '$') {
           return this.get(val);
         }
@@ -391,35 +456,27 @@ ActionRunner.prototype = {
         catcher = null;
       }
 
-      clientAction.call(client, params)
-        .then(function (resp) {
-          response = resp;
-        })
-        .fail(function (err, resp) {
-          error = err;
-          response = resp;
-        })
-        .finally(function () {
-          this._last_requests_response = response;
+      clientAction.call(client, params, _.bind(function (error, body, status) {
+        this._last_requests_response = body;
 
-          if (error){
-            if (catcher) {
-              if (catcher instanceof RegExp) {
-                // error message should match the regexp
-                expect(error.message).to.match(catcher);
-              } else if (typeof catcher === 'function') {
-                // error should be an instance of
-                expect(error).to.be.a(catcher);
-              } else {
-                throw new Error('Invalid catcher '+catcher);
-              }
+        if (error){
+          if (catcher) {
+            if (catcher instanceof RegExp) {
+              // error message should match the regexp
+              expect(error.message).to.match(catcher);
+            } else if (typeof catcher === 'function') {
+              // error should be an instance of
+              expect(error).to.be.a(catcher);
             } else {
-              return done(error);
+              throw new Error('Invalid catcher ' + catcher);
             }
+          } else {
+            throw error;
           }
+        }
 
-          done();
-        }.bind(this));
+        done();
+      }, this));
     } else {
       throw new Error('stepped in do_do, did not find a function');
     }
@@ -456,6 +513,7 @@ ActionRunner.prototype = {
   /**
    * Test that the specified path exists in the response and has a
    * false value (eg. 0, false, undefined, null or the empty string)
+   *
    * @param  {string} path - Path to the response value to test
    * @return {undefined}
    */
@@ -465,6 +523,7 @@ ActionRunner.prototype = {
 
   /**
    * Test that the response field (arg key) matches the value specified
+   *
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
@@ -479,6 +538,7 @@ ActionRunner.prototype = {
 
   /**
    * Test that the response field (arg key) is less than the value specified
+   *
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
@@ -490,6 +550,7 @@ ActionRunner.prototype = {
 
   /**
    * Test that the response field (arg key) is greater than the value specified
+   *
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
@@ -502,6 +563,7 @@ ActionRunner.prototype = {
   /**
    * Test that the response field (arg key) has a length equal to that specified.
    * For object values, checks the length of the keys.
+   *
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */

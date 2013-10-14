@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-
-
 
 /**
  * Perform an elasticsearch [indices.exists_type](http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/) request
@@ -13,58 +13,58 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
  */
-function doIndicesExistsType(params, callback) {
+function doIndicesExistsType(params, cb) {
   params = params || {};
 
   var request = {
       ignore: _.union([404], params.ignore)
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'head';
 
-  // find the url's params
+  request.method = 'HEAD';
+
+  // find the paths's params
   switch (typeof params.index) {
   case 'string':
-    url.index = params.index;
+    parts.index = params.index;
     break;
   case 'object':
     if (_.isArray(params.index)) {
-      url.index = params.index.join(',');
+      parts.index = params.index.join(',');
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
     }
     break;
   default:
-    url.index = !!params.index;
+    parts.index = !!params.index;
   }
-  
+
   switch (typeof params.type) {
   case 'string':
-    url.type = params.type;
+    parts.type = params.type;
     break;
   case 'object':
     if (_.isArray(params.type)) {
-      url.type = params.type.join(',');
+      parts.type = params.type.join(',');
     } else {
       throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list, array, or boolean.');
     }
     break;
   default:
-    url.type = !!params.type;
+    parts.type = !!params.type;
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.ignore_indices !== 'undefined') {
@@ -77,14 +77,16 @@ function doIndicesExistsType(params, callback) {
       );
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, function (err, response) {
+    if (err instanceof errors.NotFound) {
+      cb(err, false);
+    } else {
+      cb(err, true);
+    }
+  });
 }
 
 module.exports = doIndicesExistsType;

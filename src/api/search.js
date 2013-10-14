@@ -1,12 +1,12 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 var defaultOperatorOptions = ['AND', 'OR'];
 var ignoreIndicesOptions = ['none', 'missing'];
 var searchTypeOptions = ['query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch', 'count', 'scan'];
 var suggestModeOptions = ['missing', 'popular', 'always'];
-
-
 
 /**
  * Perform an elasticsearch [search](http://www.elasticsearch.org/guide/reference/api/search/) request
@@ -44,71 +44,71 @@ var suggestModeOptions = ['missing', 'popular', 'always'];
  * @param {Date|Number} params.timeout - Explicit operation timeout
  * @param {boolean} params.version - Specify whether to return document version as part of a hit
  */
-function doSearch(params, callback) {
+function doSearch(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
+
   if (typeof params.type !== 'undefined') {
     switch (typeof params.type) {
     case 'string':
-      url.type = params.type;
+      parts.type = params.type;
       break;
     case 'object':
       if (_.isArray(params.type)) {
-        url.type = params.type.join(',');
+        parts.type = params.type.join(',');
       } else {
         throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.type = !!params.type;
+      parts.type = !!params.type;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('type')) {
-    request.url = '/' + encodeURIComponent(url.index || '_all') + '/' + encodeURIComponent(url.type) + '/_search';
+
+  // build the path
+  if (parts.hasOwnProperty('type')) {
+    request.path = '/' + encodeURIComponent(parts.index || '_all') + '/' + encodeURIComponent(parts.type) + '/_search';
   }
   else {
-    request.url = '/' + encodeURIComponent(url.index || '_all') + '/_search';
+    request.path = '/' + encodeURIComponent(parts.index || '_all') + '/_search';
   }
-  
+
 
   // build the query string
   if (typeof params.analyzer !== 'undefined') {
@@ -118,7 +118,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid analyzer: ' + params.analyzer + ' should be a string.');
     }
   }
-  
+
   if (typeof params.analyze_wildcard !== 'undefined') {
     if (params.analyze_wildcard.toLowerCase && (params.analyze_wildcard = params.analyze_wildcard.toLowerCase())
       && (params.analyze_wildcard === 'no' || params.analyze_wildcard === 'off')
@@ -128,7 +128,7 @@ function doSearch(params, callback) {
       query.analyze_wildcard = !!params.analyze_wildcard;
     }
   }
-  
+
   if (typeof params.default_operator !== 'undefined') {
     if (_.contains(defaultOperatorOptions, params.default_operator)) {
       query.default_operator = params.default_operator;
@@ -139,7 +139,7 @@ function doSearch(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.df !== 'undefined') {
     if (typeof params.df !== 'object' && params.df) {
       query.df = '' + params.df;
@@ -147,7 +147,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid df: ' + params.df + ' should be a string.');
     }
   }
-  
+
   if (typeof params.explain !== 'undefined') {
     if (params.explain.toLowerCase && (params.explain = params.explain.toLowerCase())
       && (params.explain === 'no' || params.explain === 'off')
@@ -157,7 +157,7 @@ function doSearch(params, callback) {
       query.explain = !!params.explain;
     }
   }
-  
+
   if (typeof params.fields !== 'undefined') {
     switch (typeof params.fields) {
     case 'string':
@@ -174,7 +174,7 @@ function doSearch(params, callback) {
       query.fields = !!params.fields;
     }
   }
-  
+
   if (typeof params.from !== 'undefined') {
     if (_.isNumeric(params.from)) {
       query.from = params.from * 1;
@@ -182,7 +182,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid from: ' + params.from + ' should be a number.');
     }
   }
-  
+
   if (typeof params.ignore_indices !== 'undefined') {
     if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
       query.ignore_indices = params.ignore_indices;
@@ -193,7 +193,7 @@ function doSearch(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.indices_boost !== 'undefined') {
     switch (typeof params.indices_boost) {
     case 'string':
@@ -210,7 +210,7 @@ function doSearch(params, callback) {
       query.indices_boost = !!params.indices_boost;
     }
   }
-  
+
   if (typeof params.lenient !== 'undefined') {
     if (params.lenient.toLowerCase && (params.lenient = params.lenient.toLowerCase())
       && (params.lenient === 'no' || params.lenient === 'off')
@@ -220,7 +220,7 @@ function doSearch(params, callback) {
       query.lenient = !!params.lenient;
     }
   }
-  
+
   if (typeof params.lowercase_expanded_terms !== 'undefined') {
     if (params.lowercase_expanded_terms.toLowerCase && (params.lowercase_expanded_terms = params.lowercase_expanded_terms.toLowerCase())
       && (params.lowercase_expanded_terms === 'no' || params.lowercase_expanded_terms === 'off')
@@ -230,7 +230,7 @@ function doSearch(params, callback) {
       query.lowercase_expanded_terms = !!params.lowercase_expanded_terms;
     }
   }
-  
+
   if (typeof params.preference !== 'undefined') {
     if (typeof params.preference !== 'object' && params.preference) {
       query.preference = '' + params.preference;
@@ -238,7 +238,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid preference: ' + params.preference + ' should be a string.');
     }
   }
-  
+
   if (typeof params.q !== 'undefined') {
     if (typeof params.q !== 'object' && params.q) {
       query.q = '' + params.q;
@@ -246,7 +246,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid q: ' + params.q + ' should be a string.');
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     switch (typeof params.routing) {
     case 'string':
@@ -263,7 +263,7 @@ function doSearch(params, callback) {
       query.routing = !!params.routing;
     }
   }
-  
+
   if (typeof params.scroll !== 'undefined') {
     if (_.isNumeric(params.scroll) || _.isInterval(params.scroll)) {
       query.scroll = params.scroll;
@@ -271,7 +271,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid scroll: ' + params.scroll + ' should be a number or in interval notation (an integer followed by one of Mwdhmsy).');
     }
   }
-  
+
   if (typeof params.search_type !== 'undefined') {
     if (_.contains(searchTypeOptions, params.search_type)) {
       query.search_type = params.search_type;
@@ -282,7 +282,7 @@ function doSearch(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.size !== 'undefined') {
     if (_.isNumeric(params.size)) {
       query.size = params.size * 1;
@@ -290,7 +290,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid size: ' + params.size + ' should be a number.');
     }
   }
-  
+
   if (typeof params.sort !== 'undefined') {
     switch (typeof params.sort) {
     case 'string':
@@ -307,7 +307,7 @@ function doSearch(params, callback) {
       query.sort = !!params.sort;
     }
   }
-  
+
   if (typeof params.source !== 'undefined') {
     if (typeof params.source !== 'object' && params.source) {
       query.source = '' + params.source;
@@ -315,7 +315,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid source: ' + params.source + ' should be a string.');
     }
   }
-  
+
   if (typeof params._source !== 'undefined') {
     switch (typeof params._source) {
     case 'string':
@@ -332,7 +332,7 @@ function doSearch(params, callback) {
       query._source = !!params._source;
     }
   }
-  
+
   if (typeof params._source_exclude !== 'undefined') {
     switch (typeof params._source_exclude) {
     case 'string':
@@ -349,7 +349,7 @@ function doSearch(params, callback) {
       query._source_exclude = !!params._source_exclude;
     }
   }
-  
+
   if (typeof params._source_include !== 'undefined') {
     switch (typeof params._source_include) {
     case 'string':
@@ -366,7 +366,7 @@ function doSearch(params, callback) {
       query._source_include = !!params._source_include;
     }
   }
-  
+
   if (typeof params.stats !== 'undefined') {
     switch (typeof params.stats) {
     case 'string':
@@ -383,7 +383,7 @@ function doSearch(params, callback) {
       query.stats = !!params.stats;
     }
   }
-  
+
   if (typeof params.suggest_field !== 'undefined') {
     if (typeof params.suggest_field !== 'object' && params.suggest_field) {
       query.suggest_field = '' + params.suggest_field;
@@ -391,7 +391,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid suggest_field: ' + params.suggest_field + ' should be a string.');
     }
   }
-  
+
   if (typeof params.suggest_mode !== 'undefined') {
     if (_.contains(suggestModeOptions, params.suggest_mode)) {
       query.suggest_mode = params.suggest_mode;
@@ -402,7 +402,7 @@ function doSearch(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.suggest_size !== 'undefined') {
     if (_.isNumeric(params.suggest_size)) {
       query.suggest_size = params.suggest_size * 1;
@@ -410,7 +410,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid suggest_size: ' + params.suggest_size + ' should be a number.');
     }
   }
-  
+
   if (typeof params.suggest_text !== 'undefined') {
     if (typeof params.suggest_text !== 'object' && params.suggest_text) {
       query.suggest_text = '' + params.suggest_text;
@@ -418,7 +418,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid suggest_text: ' + params.suggest_text + ' should be a string.');
     }
   }
-  
+
   if (typeof params.timeout !== 'undefined') {
     if (params.timeout instanceof Date) {
       query.timeout = params.timeout.getTime();
@@ -428,7 +428,7 @@ function doSearch(params, callback) {
       throw new TypeError('Invalid timeout: ' + params.timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.version !== 'undefined') {
     if (params.version.toLowerCase && (params.version = params.version.toLowerCase())
       && (params.version === 'no' || params.version === 'off')
@@ -438,14 +438,10 @@ function doSearch(params, callback) {
       query.version = !!params.version;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doSearch;

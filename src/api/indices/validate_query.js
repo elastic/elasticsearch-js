@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-
-
 
 /**
  * Perform an elasticsearch [indices.validate_query](http://www.elasticsearch.org/guide/reference/api/validate/) request
@@ -17,74 +17,74 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {string} params.source - The URL-encoded query definition (instead of using the request body)
  * @param {string} params.q - Query in the Lucene query string syntax
  */
-function doIndicesValidateQuery(params, callback) {
+function doIndicesValidateQuery(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
+
   if (typeof params.type !== 'undefined') {
     switch (typeof params.type) {
     case 'string':
-      url.type = params.type;
+      parts.type = params.type;
       break;
     case 'object':
       if (_.isArray(params.type)) {
-        url.type = params.type.join(',');
+        parts.type = params.type.join(',');
       } else {
         throw new TypeError('Invalid type: ' + params.type + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.type = !!params.type;
+      parts.type = !!params.type;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/_validate/query';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/_validate/query';
   }
-  else if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_validate/query';
+  else if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_validate/query';
   }
   else {
-    request.url = '/_validate/query';
+    request.path = '/_validate/query';
   }
-  
+
 
   // build the query string
   if (typeof params.explain !== 'undefined') {
@@ -96,7 +96,7 @@ function doIndicesValidateQuery(params, callback) {
       query.explain = !!params.explain;
     }
   }
-  
+
   if (typeof params.ignore_indices !== 'undefined') {
     if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
       query.ignore_indices = params.ignore_indices;
@@ -107,11 +107,11 @@ function doIndicesValidateQuery(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.operation_threading !== 'undefined') {
     query.operation_threading = params.operation_threading;
   }
-  
+
   if (typeof params.source !== 'undefined') {
     if (typeof params.source !== 'object' && params.source) {
       query.source = '' + params.source;
@@ -119,7 +119,7 @@ function doIndicesValidateQuery(params, callback) {
       throw new TypeError('Invalid source: ' + params.source + ' should be a string.');
     }
   }
-  
+
   if (typeof params.q !== 'undefined') {
     if (typeof params.q !== 'object' && params.q) {
       query.q = '' + params.q;
@@ -127,14 +127,10 @@ function doIndicesValidateQuery(params, callback) {
       throw new TypeError('Invalid q: ' + params.q + ' should be a string.');
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesValidateQuery;

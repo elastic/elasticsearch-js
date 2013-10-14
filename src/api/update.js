@@ -1,10 +1,10 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 var consistencyOptions = ['one', 'quorum', 'all'];
 var replicationOptions = ['sync', 'async'];
-
-
 
 /**
  * Perform an elasticsearch [update](http://elasticsearch.org/guide/reference/api/update/) request
@@ -28,47 +28,47 @@ var replicationOptions = ['sync', 'async'];
  * @param {number} params.version - Explicit version number for concurrency control
  * @param {number} params.version_type - Explicit version number for concurrency control
  */
-function doUpdate(params, callback) {
+function doUpdate(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'post';
 
-  // find the url's params
+  request.method = 'POST';
+
+  // find the paths's params
   if (typeof params.id !== 'object' && params.id) {
-    url.id = '' + params.id;
+    parts.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
-  
+
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'object' && params.type) {
-    url.type = '' + params.type;
+    parts.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '/_update';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type') && parts.hasOwnProperty('id')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/' + encodeURIComponent(parts.id) + '/_update';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.consistency !== 'undefined') {
@@ -81,7 +81,7 @@ function doUpdate(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.fields !== 'undefined') {
     switch (typeof params.fields) {
     case 'string':
@@ -98,7 +98,7 @@ function doUpdate(params, callback) {
       query.fields = !!params.fields;
     }
   }
-  
+
   if (typeof params.lang !== 'undefined') {
     if (typeof params.lang !== 'object' && params.lang) {
       query.lang = '' + params.lang;
@@ -106,7 +106,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid lang: ' + params.lang + ' should be a string.');
     }
   }
-  
+
   if (typeof params.parent !== 'undefined') {
     if (typeof params.parent !== 'object' && params.parent) {
       query.parent = '' + params.parent;
@@ -114,7 +114,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
     }
   }
-  
+
   if (typeof params.percolate !== 'undefined') {
     if (typeof params.percolate !== 'object' && params.percolate) {
       query.percolate = '' + params.percolate;
@@ -122,7 +122,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid percolate: ' + params.percolate + ' should be a string.');
     }
   }
-  
+
   if (typeof params.refresh !== 'undefined') {
     if (params.refresh.toLowerCase && (params.refresh = params.refresh.toLowerCase())
       && (params.refresh === 'no' || params.refresh === 'off')
@@ -132,7 +132,7 @@ function doUpdate(params, callback) {
       query.refresh = !!params.refresh;
     }
   }
-  
+
   if (typeof params.replication !== 'undefined') {
     if (_.contains(replicationOptions, params.replication)) {
       query.replication = params.replication;
@@ -143,7 +143,7 @@ function doUpdate(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.retry_on_conflict !== 'undefined') {
     if (_.isNumeric(params.retry_on_conflict)) {
       query.retry_on_conflict = params.retry_on_conflict * 1;
@@ -151,7 +151,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid retry_on_conflict: ' + params.retry_on_conflict + ' should be a number.');
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
@@ -159,11 +159,11 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
     }
   }
-  
+
   if (typeof params.script !== 'undefined') {
     query.script = params.script;
   }
-  
+
   if (typeof params.timeout !== 'undefined') {
     if (params.timeout instanceof Date) {
       query.timeout = params.timeout.getTime();
@@ -173,7 +173,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid timeout: ' + params.timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.timestamp !== 'undefined') {
     if (params.timestamp instanceof Date) {
       query.timestamp = params.timestamp.getTime();
@@ -183,7 +183,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid timestamp: ' + params.timestamp + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.ttl !== 'undefined') {
     if (_.isNumeric(params.ttl) || _.isInterval(params.ttl)) {
       query.ttl = params.ttl;
@@ -191,7 +191,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid ttl: ' + params.ttl + ' should be a number or in interval notation (an integer followed by one of Mwdhmsy).');
     }
   }
-  
+
   if (typeof params.version !== 'undefined') {
     if (_.isNumeric(params.version)) {
       query.version = params.version * 1;
@@ -199,7 +199,7 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid version: ' + params.version + ' should be a number.');
     }
   }
-  
+
   if (typeof params.version_type !== 'undefined') {
     if (_.isNumeric(params.version_type)) {
       query.version_type = params.version_type * 1;
@@ -207,14 +207,10 @@ function doUpdate(params, callback) {
       throw new TypeError('Invalid version_type: ' + params.version_type + ' should be a number.');
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doUpdate;

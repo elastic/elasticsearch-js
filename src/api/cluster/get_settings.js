@@ -1,7 +1,7 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
-
-
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [cluster.get_settings](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
@@ -10,34 +10,30 @@ var _ = require('../../lib/toolbelt')
  * @method cluster.get_settings
  * @param {Object} params - An object with parameters used to carry out this action
  */
-function doClusterGetSettings(params, callback) {
+function doClusterGetSettings(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
 
 
-  // build the url
-  request.url = '/_cluster/settings';
-  
+  // build the path
+  request.path = '/_cluster/settings';
+
 
   // build the query string
 
-  request.url = request.url + _.makeQueryString(query);
+  request.path = request.path + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  this.client.request(request, cb);
 }
 
 module.exports = doClusterGetSettings;

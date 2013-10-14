@@ -1,7 +1,7 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
-
-
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [info](http://elasticsearch.org/guide/) request
@@ -10,42 +10,38 @@ var _ = require('../lib/toolbelt')
  * @method info
  * @param {Object} params - An object with parameters used to carry out this action
  */
-function doInfo(params, callback) {
+function doInfo(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'head') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'HEAD') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, head');
+      throw new TypeError('Invalid method: should be one of GET, HEAD');
     }
   } else {
-    request.method = params.body ? 'head' : 'get';
+    request.method = params.body ? 'HEAD' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
 
 
-  // build the url
-  request.url = '/';
-  
+  // build the path
+  request.path = '/';
+
 
   // build the query string
 
-  request.url = request.url + _.makeQueryString(query);
+  request.path = request.path + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  this.client.request(request, cb);
 }
 
 module.exports = doInfo;

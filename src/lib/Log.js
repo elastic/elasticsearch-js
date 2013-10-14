@@ -1,6 +1,6 @@
-var _ = require('./toolbelt')
-  , url = require('url')
-  , EventEmitter = require('events').EventEmitter;
+var _ = require('./utils'),
+  url = require('url'),
+  EventEmitter = require('events').EventEmitter;
 
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -16,10 +16,11 @@ var _ = require('./toolbelt')
  * @param {string} output.level - One of the keys in Log.levels (error, warning, etc.)
  * @param {string} output.type - The name of the logger to use for this output
  */
-function Log(output, client) {
-  var i;
+function Log(client) {
+  this.client = client;
 
-  output = output || 2;
+  var i;
+  var output = client.config.log || 2;
 
   if (_.isString(output) || _.isFinite(output)) {
     output = [
@@ -39,7 +40,7 @@ function Log(output, client) {
     }
   }
 
-  if (!_.isArrayOfObjects(output)) {
+  if (!_.isArrayOfPlainObjects(output)) {
     throw new TypeError('Invalid Logging output config');
   }
 
@@ -63,7 +64,7 @@ Log.levels = [
    * @event error
    * @param {Error} error - The error object to log
    */
-  'error'
+  'error',
   /**
    * Event fired for "warning" level log entries, which usually represent things
    * like correctly formatted error responses from ES (400, ...) and recoverable
@@ -72,7 +73,7 @@ Log.levels = [
    * @event warning
    * @param {String} message - A message to be logged
    */
-  , 'warning'
+  'warning',
   /**
    * Event fired for "info" level log entries, which usually describe what a
    * client is doing (sniffing etc)
@@ -80,7 +81,7 @@ Log.levels = [
    * @event info
    * @param {String} message - A message to be logged
    */
-  , 'info'
+  'info',
   /**
    * Event fired for "debug" level log entries, which will describe requests sent,
    * including their url (no data, response codes, or exec times)
@@ -88,7 +89,7 @@ Log.levels = [
    * @event debug
    * @param {String} message - A message to be logged
    */
-  , 'debug'
+  'debug',
   /**
    * Event fired for "trace" level log entries, which provide detailed information
    * about each request made from a client, including reponse codes, execution times,
@@ -101,7 +102,7 @@ Log.levels = [
    * @param {Integer} responseStatus - The status code returned from the response
    * @param {String} responseBody - The body of the response
    */
-  , 'trace'
+  'trace'
 ];
 
 /**
@@ -233,11 +234,11 @@ Log.prototype.debug = function (/* ...msg */) {
  * @param {String|Object} requestUrl - URL requested. If the value is an object,
  *   it is expected to be the return value of Node's url.parse()
  * @param {String} body - The request's body
- * @param {Number} responseStatus - The status code returned
- * @param {String} responseBody - The body of the returned response
+ * @param {String} responseBody - body returned from ES
+ * @param {String} responseStatus - HTTP status code
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.trace = function (method, requestUrl, body, responseStatus, responseBody) {
+Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (EventEmitter.listenerCount(this, 'trace')) {
     if (typeof requestUrl === 'object') {
       if (!requestUrl.protocol) {
@@ -245,7 +246,7 @@ Log.prototype.trace = function (method, requestUrl, body, responseStatus, respon
       }
       requestUrl = url.format(requestUrl);
     }
-    return this.emit('trace', method, requestUrl, body, responseStatus, responseBody);
+    return this.emit('trace', method, requestUrl, body, responseBody, responseStatus);
   }
 };
 

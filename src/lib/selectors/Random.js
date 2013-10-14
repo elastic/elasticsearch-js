@@ -1,7 +1,5 @@
-var _ = require('../toolbelt');
+module.exports = RandomSelect;
 
 function RandomSelect(connections) {
-  return _.shuffle(connections).unshift();
+  return connections[Math.floor(Math.random() * connections.length)];
 }
-
-module.exports = RandomSelect;

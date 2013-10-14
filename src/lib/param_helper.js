@@ -1,4 +1,4 @@
-var _ = require('./toolbelt');
+var _ = require('./utils');
 
 exports.bulkBody = function (val, serializer) {
   var body = '', i;

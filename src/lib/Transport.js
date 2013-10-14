@@ -1,59 +1,90 @@
-var _ = require('./toolbelt')
-  , selectors = require('./selector');
-
-var configDefaults = {
-  hosts : [
-    {
-      host: 'localhost',
-      port: 9200
-    }
-  ],
-
-  //nodes_to_host_callback : construct_hosts_list,
-  sniff_on_start  : false,
-  sniff_after_requests : 0,
-  sniff_on_connection_fail : false,
-  max_retries : 3,
-  selector : 'roundRobin'
-};
-
-
 /**
- * "Abstract" class responsible for managing connection pools, sniffing for nodes, and serializing/
- * deserializing requests and ES errors.
+ * Manages connection pools, sniffs for nodes, and runs requests
  *
  * @main Transport
  * @class Transport
  * @constructor
  * @param {Object} [config={}] - An object with configuration parameters
  * @param {String|ArrayOfStrings} [config.hosts='localhost:9200'] - Host(s) that this client should communicate with.
- * @param {Boolean} [config.sniff_on_start=false] - inspect the cluster for a list of nodes upon startup
- * @param {Number} [config.sniff_after_requests=false] - Sniff after completing a certain number of request (disabled by default)
- * @param {Boolean} [config.sniff_on_connection_fail=false] - Sniff after a connection fails (disabled by default)
- * @param {Number} [config.max_retries=3] - The maximum number of time the client should retry connecting to a node
+ * @param {Boolean} [config.connectionConstructor=false] - A constructor to use for connections to ES nodes
+ * @param {Function} [config.nodesToHostCallback=parseNodeList] - convert the value returned from _cluster/nodes into
+ *   a host list
+ * @param {Boolean} [config.sniffOnStart=false] - inspect the cluster for a list of nodes upon startup
+ * @param {Number} [config.sniffAfterRequests=null] - Sniff after completing a certain number of request
+ * @param {Boolean} [config.sniffOnConnectionFail=false] - Sniff after a connection fails
+ * @param {Number} [config.max_retries=3] - The maximum number of times the client should retry connecting to a node
  */
-function Transport(config) {
-  // These are all unique to each instance of client
-  config = _.defaults(config || {}, configDefaults);
 
-  if (_.isFunction(this.opts.selector)) {
-    this.selector = this.opts.selector;
-  } else if (_.has(selectors, this.opts.selector)) {
-    this.selector = selectors[this.opts.selector];
-  } else {
-    throw new Error('Invalid Selector, specify a function or selector name.');
-  }
+module.exports = Transport;
 
+var _ = require('./utils'),
+  q = require('q'),
+  ConnectionPool = require('./connection_pool'),
+  errors = require('./errors');
+
+function Transport(client) {
+  this.client = client;
 }
 
-/**
- * Modify the defaults for the Transport class
- *
- * @method defaults
- * @param  {Object} update An object representing the changes to be made to the defaults.
- * @static
- * @return {undefined}
- */
-Transport.defaults = function (update) {
-  _.assign(configDefaults, update);
+
+Transport.prototype.sniff = function (cb) {
+  cb = typeof cb === 'function' ? cb : _.noop;
+
+  var connectionPool = this.client.connectionPool,
+    nodesToHostCallback = _.bind(this.client.config.nodesToHostCallback, this);
+
+  this.client.request({
+    path: '/_cluster/nodes'
+  }, function (err, resp) {
+    if (!err && resp && resp.nodes) {
+      connectionPool.setHosts(nodesToHostCallback(resp.nodes));
+    }
+    cb(err, resp);
+  });
+};
+
+
+Transport.prototype.request = function (params, cb) {
+  cb = typeof cb === 'function' ? cb : _.noop;
+
+  var client = this.client,
+    remainingRetries = client.config.maxRetries,
+    connection;
+
+  // serialize the body
+  params.body = client.serializer.serialize(params.body);
+
+  function sendRequestWithConnection(err, c) {
+    if (err) {
+      cb(err);
+    } else if (c) {
+      connection = c;
+      connection.request(params, checkRespForFailure);
+    } else {
+      cb(new errors.ConnectionError('No active nodes at this time.'));
+    }
+  }
+
+  function checkRespForFailure(err, body, status) {
+    // check for posotive response
+    if (err) {
+      client.connectionPool.setStatus(connection, 'dead');
+      checkForRetry(err, null, status);
+    } else {
+      client.connectionPool.setStatus(connection, 'alive');
+      return cb(null, client.serializer.unserialize(body), status);
+    }
+  }
+
+  function checkForRetry(err, resp) {
+    client.connectionPool.setStatus(connection, 'dead');
+    if (remainingRetries) {
+      remainingRetries--;
+      client.connectionPool.select(sendRequestWithConnection);
+    } else {
+      return cb(err, null);
+    }
+  }
+
+  client.connectionPool.select(sendRequestWithConnection);
 };

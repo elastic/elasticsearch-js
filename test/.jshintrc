@@ -23,7 +23,8 @@
   "validthis": true,
   "sub": true,
   "maxlen": 140,
-  "-W030":true,
+  "-W030": true,
+  "-W068": true,
 
   "globals": {
     "describe": true,

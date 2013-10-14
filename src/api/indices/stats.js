@@ -1,10 +1,10 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
 var metricFamilyOptions = ['completion', 'docs', 'fielddata', 'filter_cache', 'flush', 'get', 'groups', 'id_cache', 'ignore_indices', 'indexing', 'merge', 'refresh', 'search', 'store', 'warmer'];
-
-
 
 /**
  * Perform an elasticsearch [indices.stats](http://elasticsearch.org/guide/reference/api/admin-indices-stats/) request
@@ -33,73 +33,73 @@ var metricFamilyOptions = ['completion', 'docs', 'fielddata', 'filter_cache', 'f
  * @param {boolean} params.store - Return information about the size of the index
  * @param {boolean} params.warmer - Return information about warmers
  */
-function doIndicesStats(params, callback) {
+function doIndicesStats(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.fields !== 'undefined') {
     switch (typeof params.fields) {
     case 'string':
-      url.fields = params.fields;
+      parts.fields = params.fields;
       break;
     case 'object':
       if (_.isArray(params.fields)) {
-        url.fields = params.fields.join(',');
+        parts.fields = params.fields.join(',');
       } else {
         throw new TypeError('Invalid fields: ' + params.fields + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.fields = !!params.fields;
+      parts.fields = !!params.fields;
     }
   }
-  
+
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
+
   if (typeof params.indexing_types !== 'undefined') {
     switch (typeof params.indexing_types) {
     case 'string':
-      url.indexing_types = params.indexing_types;
+      parts.indexing_types = params.indexing_types;
       break;
     case 'object':
       if (_.isArray(params.indexing_types)) {
-        url.indexing_types = params.indexing_types.join(',');
+        parts.indexing_types = params.indexing_types.join(',');
       } else {
         throw new TypeError('Invalid indexing_types: ' + params.indexing_types + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.indexing_types = !!params.indexing_types;
+      parts.indexing_types = !!params.indexing_types;
     }
   }
-  
+
   if (typeof params.metric_family !== 'undefined') {
     if (_.contains(metricFamilyOptions, params.metric_family)) {
-      url.metric_family = params.metric_family;
+      parts.metric_family = params.metric_family;
     } else {
       throw new TypeError(
         'Invalid metric_family: ' + params.metric_family +
@@ -107,33 +107,33 @@ function doIndicesStats(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.search_groups !== 'undefined') {
     switch (typeof params.search_groups) {
     case 'string':
-      url.search_groups = params.search_groups;
+      parts.search_groups = params.search_groups;
       break;
     case 'object':
       if (_.isArray(params.search_groups)) {
-        url.search_groups = params.search_groups.join(',');
+        parts.search_groups = params.search_groups.join(',');
       } else {
         throw new TypeError('Invalid search_groups: ' + params.search_groups + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.search_groups = !!params.search_groups;
+      parts.search_groups = !!params.search_groups;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_stats';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_stats';
   }
   else {
-    request.url = '/_stats';
+    request.path = '/_stats';
   }
-  
+
 
   // build the query string
   if (typeof params.all !== 'undefined') {
@@ -145,7 +145,7 @@ function doIndicesStats(params, callback) {
       query.all = !!params.all;
     }
   }
-  
+
   if (typeof params.clear !== 'undefined') {
     if (params.clear.toLowerCase && (params.clear = params.clear.toLowerCase())
       && (params.clear === 'no' || params.clear === 'off')
@@ -155,7 +155,7 @@ function doIndicesStats(params, callback) {
       query.clear = !!params.clear;
     }
   }
-  
+
   if (typeof params.completion !== 'undefined') {
     if (params.completion.toLowerCase && (params.completion = params.completion.toLowerCase())
       && (params.completion === 'no' || params.completion === 'off')
@@ -165,7 +165,7 @@ function doIndicesStats(params, callback) {
       query.completion = !!params.completion;
     }
   }
-  
+
   if (typeof params.completion_fields !== 'undefined') {
     switch (typeof params.completion_fields) {
     case 'string':
@@ -182,7 +182,7 @@ function doIndicesStats(params, callback) {
       query.completion_fields = !!params.completion_fields;
     }
   }
-  
+
   if (typeof params.docs !== 'undefined') {
     if (params.docs.toLowerCase && (params.docs = params.docs.toLowerCase())
       && (params.docs === 'no' || params.docs === 'off')
@@ -192,7 +192,7 @@ function doIndicesStats(params, callback) {
       query.docs = !!params.docs;
     }
   }
-  
+
   if (typeof params.fielddata !== 'undefined') {
     if (params.fielddata.toLowerCase && (params.fielddata = params.fielddata.toLowerCase())
       && (params.fielddata === 'no' || params.fielddata === 'off')
@@ -202,7 +202,7 @@ function doIndicesStats(params, callback) {
       query.fielddata = !!params.fielddata;
     }
   }
-  
+
   if (typeof params.fielddata_fields !== 'undefined') {
     switch (typeof params.fielddata_fields) {
     case 'string':
@@ -219,7 +219,7 @@ function doIndicesStats(params, callback) {
       query.fielddata_fields = !!params.fielddata_fields;
     }
   }
-  
+
   if (typeof params.fields !== 'undefined') {
     switch (typeof params.fields) {
     case 'string':
@@ -236,7 +236,7 @@ function doIndicesStats(params, callback) {
       query.fields = !!params.fields;
     }
   }
-  
+
   if (typeof params.filter_cache !== 'undefined') {
     if (params.filter_cache.toLowerCase && (params.filter_cache = params.filter_cache.toLowerCase())
       && (params.filter_cache === 'no' || params.filter_cache === 'off')
@@ -246,7 +246,7 @@ function doIndicesStats(params, callback) {
       query.filter_cache = !!params.filter_cache;
     }
   }
-  
+
   if (typeof params.flush !== 'undefined') {
     if (params.flush.toLowerCase && (params.flush = params.flush.toLowerCase())
       && (params.flush === 'no' || params.flush === 'off')
@@ -256,7 +256,7 @@ function doIndicesStats(params, callback) {
       query.flush = !!params.flush;
     }
   }
-  
+
   if (typeof params.get !== 'undefined') {
     if (params.get.toLowerCase && (params.get = params.get.toLowerCase())
       && (params.get === 'no' || params.get === 'off')
@@ -266,7 +266,7 @@ function doIndicesStats(params, callback) {
       query.get = !!params.get;
     }
   }
-  
+
   if (typeof params.groups !== 'undefined') {
     if (params.groups.toLowerCase && (params.groups = params.groups.toLowerCase())
       && (params.groups === 'no' || params.groups === 'off')
@@ -276,7 +276,7 @@ function doIndicesStats(params, callback) {
       query.groups = !!params.groups;
     }
   }
-  
+
   if (typeof params.id_cache !== 'undefined') {
     if (params.id_cache.toLowerCase && (params.id_cache = params.id_cache.toLowerCase())
       && (params.id_cache === 'no' || params.id_cache === 'off')
@@ -286,7 +286,7 @@ function doIndicesStats(params, callback) {
       query.id_cache = !!params.id_cache;
     }
   }
-  
+
   if (typeof params.ignore_indices !== 'undefined') {
     if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
       query.ignore_indices = params.ignore_indices;
@@ -297,7 +297,7 @@ function doIndicesStats(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.indexing !== 'undefined') {
     if (params.indexing.toLowerCase && (params.indexing = params.indexing.toLowerCase())
       && (params.indexing === 'no' || params.indexing === 'off')
@@ -307,7 +307,7 @@ function doIndicesStats(params, callback) {
       query.indexing = !!params.indexing;
     }
   }
-  
+
   if (typeof params.merge !== 'undefined') {
     if (params.merge.toLowerCase && (params.merge = params.merge.toLowerCase())
       && (params.merge === 'no' || params.merge === 'off')
@@ -317,7 +317,7 @@ function doIndicesStats(params, callback) {
       query.merge = !!params.merge;
     }
   }
-  
+
   if (typeof params.refresh !== 'undefined') {
     if (params.refresh.toLowerCase && (params.refresh = params.refresh.toLowerCase())
       && (params.refresh === 'no' || params.refresh === 'off')
@@ -327,7 +327,7 @@ function doIndicesStats(params, callback) {
       query.refresh = !!params.refresh;
     }
   }
-  
+
   if (typeof params.search !== 'undefined') {
     if (params.search.toLowerCase && (params.search = params.search.toLowerCase())
       && (params.search === 'no' || params.search === 'off')
@@ -337,7 +337,7 @@ function doIndicesStats(params, callback) {
       query.search = !!params.search;
     }
   }
-  
+
   if (typeof params.store !== 'undefined') {
     if (params.store.toLowerCase && (params.store = params.store.toLowerCase())
       && (params.store === 'no' || params.store === 'off')
@@ -347,7 +347,7 @@ function doIndicesStats(params, callback) {
       query.store = !!params.store;
     }
   }
-  
+
   if (typeof params.warmer !== 'undefined') {
     if (params.warmer.toLowerCase && (params.warmer = params.warmer.toLowerCase())
       && (params.warmer === 'no' || params.warmer === 'off')
@@ -357,14 +357,10 @@ function doIndicesStats(params, callback) {
       query.warmer = !!params.warmer;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesStats;

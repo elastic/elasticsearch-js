@@ -1,4 +1,4 @@
-var _ = require('../../src/lib/toolbelt')
+var _ = require('../../src/lib/utils')
   , expect = require('expect.js');
 
 describe('Utils', function () {
@@ -46,43 +46,43 @@ describe('Utils', function () {
 
     describe('#isNumeric', function () {
       it('likes Infinity', function () {
-        expect(_.isNumeric(Infinity)).to.eq(true);
+        expect(_.isNumeric(Infinity)).to.be.true;
       });
 
       it('likes strings', function () {
-        expect(_.isNumeric('100')).to.eq(true);
+        expect(_.isNumeric('100')).to.be.true;
       });
 
       it('likes integers', function () {
-        expect(_.isNumeric(100)).to.eq(true);
+        expect(_.isNumeric(100)).to.be.true;
       });
 
       it('likes floats', function () {
-        expect(_.isNumeric(100.1)).to.eq(true);
+        expect(_.isNumeric(100.1)).to.be.true;
       });
 
       it('likes exponentials', function () {
-        expect(_.isNumeric(100e1)).to.eq(true);
+        expect(_.isNumeric(100e1)).to.be.true;
       });
 
       it('likes hexidecimals', function () {
-        expect(_.isNumeric(0x100)).to.eq(true);
+        expect(_.isNumeric(0x100)).to.be.true;
       });
 
       it('likes imaginary numbers', function () {
-        expect(_.isNumeric('yeah right')).to.eq(false);
+        expect(_.isNumeric('yeah right')).to.be.false;
       });
 
       it('dislikes strings with words', function () {
-        expect(_.isNumeric('100heat')).to.eq(false);
+        expect(_.isNumeric('100heat')).to.be.false;
       });
 
       it('dislikes strings with words even if they are seperate', function () {
-        expect(_.isNumeric('100 pasta')).to.eq(false);
+        expect(_.isNumeric('100 pasta')).to.be.false;
       });
 
       it('dislikes null', function () {
-        expect(_.isNumeric(null)).to.eq(false);
+        expect(_.isNumeric(null)).to.be.false;
       });
     });
 
@@ -119,14 +119,14 @@ describe('Utils', function () {
     describe('#map', function () {
       it('returns an object when passed an object', function () {
         var out = _.map({a:1, b:2}, function (val) { return val * 2; });
-        expect(out).to.deep.eq({a:2, b:4});
+        expect(out).to.eql({a:2, b:4});
       });
 
       it('returns an array for anything else', function () {
         var std = _.map([1, 2, 3], function (val) { return val * 2; });
         expect(std)
           .to.be.a('array')
-          .and.to.deep.eq(_.map('123', function (val) { return val * 2; }));
+          .and.to.eql(_.map('123', function (val) { return val * 2; }));
       });
     });
 
@@ -137,41 +137,41 @@ describe('Utils', function () {
 
     describe('#camelCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.camelCase('Neil PatRICK hArris-is_a.dog')).to.eq('neilPatrickHarrisIsADog');
+        expect(_.camelCase('Neil PatRICK hArris-is_a.dog')).to.eql('neilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.camelCase('JSON_parser')).to.eq('jsonParser');
+        expect(_.camelCase('JSON_parser')).to.eql('jsonParser');
       });
     });
 
     describe('#studlyCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.studlyCase('Neil PatRICK hArris-is_a.dog')).to.eq('NeilPatrickHarrisIsADog');
+        expect(_.studlyCase('Neil PatRICK hArris-is_a.dog')).to.eql('NeilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.studlyCase('JSON_parser')).to.eq('JsonParser');
+        expect(_.studlyCase('JSON_parser')).to.eql('JsonParser');
       });
     });
 
     describe('#toLowerString', function () {
       it('transforms normal strings', function () {
-        expect(_.toLowerString('PASTA')).to.eq('pasta');
+        expect(_.toLowerString('PASTA')).to.eql('pasta');
       });
 
       it('ignores long form empty vals (null, false, undef)', function () {
-        expect(_.toLowerString(null)).to.eq('');
-        expect(_.toLowerString(false)).to.eq('');
-        expect(_.toLowerString(void 0)).to.eq('');
+        expect(_.toLowerString(null)).to.eql('');
+        expect(_.toLowerString(false)).to.eql('');
+        expect(_.toLowerString(void 0)).to.eql('');
       });
 
       it('uses the objects own toString', function () {
-        expect(_.toLowerString(['A', 'B'])).to.eq('a,b');
+        expect(_.toLowerString(['A', 'B'])).to.eql('a,b');
       });
 
       it('sorta kinda works on objects', function () {
-        expect(_.toLowerString({a: 'thing'})).to.eq('[object object]');
+        expect(_.toLowerString({a: 'thing'})).to.eql('[object object]');
       });
     });
   });
@@ -183,7 +183,7 @@ describe('Utils', function () {
       var obj = {
         foo:'bar'
       };
-      expect(_.deepMerge(obj, { bar: 'baz' })).to.eq(obj);
+      expect(_.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
     });
 
     it('concats arrays', function () {

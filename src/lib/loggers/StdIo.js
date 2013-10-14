@@ -1,34 +1,38 @@
-var clc = require('cli-color')
-  , LogAbstract = require('./log_abstract')
-  , _ = require('../toolbelt');
-
 /**
  * Special version of the Stream logger, which logs errors and warnings to stderr and all other
  * levels to stdout.
  *
  * @class Loggers.Stdio
+ * @extends LoggerAbstract
  * @constructor
  * @param {Object} config - The configuration for the Logger
  * @param {string} config.level - The highest log level for this logger to output.
  * @param {Log} bridge - The object that triggers logging events, which we will record
  */
+
+module.exports = Stdio;
+
+var clc = require('cli-color'),
+  LoggerAbstract = require('../logger'),
+  _ = require('../utils');
+
 function Stdio(config, bridge) {
-  this._constructSuper(arguments);
+  Stdio.callSuper(this, arguments);
 
   // config/state
   this.color = _.has(config, 'color') ? !!config.color : true;
 }
 
-_.inherits(Stdio, LogAbstract);
+_.inherits(Stdio, LoggerAbstract);
 
 /**
  * Sends output to a stream, does some formatting first
  *
  * @method write
  * @private
- * @param  {WriteableStream} to - The stream that should receive this message
- * @param  {String} label - The text that should be used at the begining of the message
- * @param  {function} colorize - A function that recieves a string and returned a colored version of it
+ * @param  {WritableStream} to - The stream that should receive this message
+ * @param  {String} label - The text that should be used at the beginning the message
+ * @param  {function} colorize - A function that receives a string and returned a colored version of it
  * @param  {*} what - The message to log
  * @return {undefined}
  */
@@ -48,7 +52,7 @@ Stdio.prototype.write = function (to, label, colorize, message) {
  * @return {undefined}
  */
 Stdio.prototype.onError = function (e) {
-  this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, clc.red.bold,  [e.message, '\n\nStack Trace:\n' + e.stack]);
+  this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, clc.red.bold, e.stack);
 };
 
 /**
@@ -92,11 +96,14 @@ Stdio.prototype.onDebug = function (msg) {
  *
  * @method onTrace
  * @private
- * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onTrace = function (method, url, body, responseStatus, responseBody) {
-  var message = '\nHTTP ' + method + ' ' + url + ' -> ';
+Stdio.prototype.onTrace = function (method, url, body, responseBody, responseStatus) {
+  var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
+  if (body) {
+    message += ' -d "' + body.replace(/"/g, '\\"') + '"';
+  }
+  message += '\n<- ';
   if (this.color) {
     if (responseStatus === 200) {
       message += clc.green.bold(responseStatus);
@@ -106,12 +113,7 @@ Stdio.prototype.onTrace = function (method, url, body, responseStatus, responseB
   } else {
     message += responseStatus;
   }
-  message += '\n' + responseBody + '\n\n';
-  message += 'curl "' + url.replace('"', '\\"') + '" -X' + method.toUpperCase();
-  if (body) {
-    message += ' -d ' + JSON.stringify(JSON.stringify(body));
-  }
-  this.write(process.stdout, 'TRACE', clc.cyanBright.bold, message + '\n\n');
-};
+  message += '\n' + responseBody;
 
-module.exports = Stdio;
+  this.write(process.stdout, 'TRACE', clc.cyanBright.bold, message);
+};

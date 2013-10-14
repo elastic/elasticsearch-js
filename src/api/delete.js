@@ -1,11 +1,11 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 var consistencyOptions = ['one', 'quorum', 'all'];
 var replicationOptions = ['sync', 'async'];
 var versionTypeOptions = ['internal', 'external'];
-
-
 
 /**
  * Perform an elasticsearch [delete](http://elasticsearch.org/guide/reference/api/delete/) request
@@ -22,46 +22,46 @@ var versionTypeOptions = ['internal', 'external'];
  * @param {number} params.version - Explicit version number for concurrency control
  * @param {String} params.version_type - Specific version type
  */
-function doDelete(params, callback) {
+function doDelete(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'delete';
 
-  // find the url's params
+  request.method = 'DELETE';
+
+  // find the paths's params
   if (typeof params.id !== 'object' && params.id) {
-    url.id = '' + params.id;
+    parts.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
-  
+
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'object' && params.type) {
-    url.type = '' + params.type;
+    parts.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type') && parts.hasOwnProperty('id')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/' + encodeURIComponent(parts.id) + '';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.consistency !== 'undefined') {
@@ -74,7 +74,7 @@ function doDelete(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.parent !== 'undefined') {
     if (typeof params.parent !== 'object' && params.parent) {
       query.parent = '' + params.parent;
@@ -82,7 +82,7 @@ function doDelete(params, callback) {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
     }
   }
-  
+
   if (typeof params.refresh !== 'undefined') {
     if (params.refresh.toLowerCase && (params.refresh = params.refresh.toLowerCase())
       && (params.refresh === 'no' || params.refresh === 'off')
@@ -92,7 +92,7 @@ function doDelete(params, callback) {
       query.refresh = !!params.refresh;
     }
   }
-  
+
   if (typeof params.replication !== 'undefined') {
     if (_.contains(replicationOptions, params.replication)) {
       query.replication = params.replication;
@@ -103,7 +103,7 @@ function doDelete(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
@@ -111,7 +111,7 @@ function doDelete(params, callback) {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
     }
   }
-  
+
   if (typeof params.timeout !== 'undefined') {
     if (params.timeout instanceof Date) {
       query.timeout = params.timeout.getTime();
@@ -121,7 +121,7 @@ function doDelete(params, callback) {
       throw new TypeError('Invalid timeout: ' + params.timeout + ' should be be some sort of time.');
     }
   }
-  
+
   if (typeof params.version !== 'undefined') {
     if (_.isNumeric(params.version)) {
       query.version = params.version * 1;
@@ -129,7 +129,7 @@ function doDelete(params, callback) {
       throw new TypeError('Invalid version: ' + params.version + ' should be a number.');
     }
   }
-  
+
   if (typeof params.version_type !== 'undefined') {
     if (_.contains(versionTypeOptions, params.version_type)) {
       query.version_type = params.version_type;
@@ -140,14 +140,10 @@ function doDelete(params, callback) {
       );
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doDelete;

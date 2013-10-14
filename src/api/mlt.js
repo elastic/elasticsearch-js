@@ -1,7 +1,7 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
-
-
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 /**
  * Perform an elasticsearch [mlt](http://elasticsearch.org/guide/reference/api/more-like-this/) request
@@ -29,55 +29,55 @@ var _ = require('../lib/toolbelt')
  * @param {String|ArrayOfStrings|Boolean} params.search_types - A comma-separated list of types to perform the query against (default: the same type as the document)
  * @param {String|ArrayOfStrings|Boolean} params.stop_words - A list of stop words to be ignored
  */
-function doMlt(params, callback) {
+function doMlt(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.id !== 'object' && params.id) {
-    url.id = '' + params.id;
+    parts.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
-  
+
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'object' && params.type) {
-    url.type = '' + params.type;
+    parts.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '/_mlt';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type') && parts.hasOwnProperty('id')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/' + encodeURIComponent(parts.id) + '/_mlt';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.boost_terms !== 'undefined') {
@@ -87,7 +87,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid boost_terms: ' + params.boost_terms + ' should be a number.');
     }
   }
-  
+
   if (typeof params.max_doc_freq !== 'undefined') {
     if (_.isNumeric(params.max_doc_freq)) {
       query.max_doc_freq = params.max_doc_freq * 1;
@@ -95,7 +95,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid max_doc_freq: ' + params.max_doc_freq + ' should be a number.');
     }
   }
-  
+
   if (typeof params.max_query_terms !== 'undefined') {
     if (_.isNumeric(params.max_query_terms)) {
       query.max_query_terms = params.max_query_terms * 1;
@@ -103,7 +103,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid max_query_terms: ' + params.max_query_terms + ' should be a number.');
     }
   }
-  
+
   if (typeof params.max_word_len !== 'undefined') {
     if (_.isNumeric(params.max_word_len)) {
       query.max_word_len = params.max_word_len * 1;
@@ -111,7 +111,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid max_word_len: ' + params.max_word_len + ' should be a number.');
     }
   }
-  
+
   if (typeof params.min_doc_freq !== 'undefined') {
     if (_.isNumeric(params.min_doc_freq)) {
       query.min_doc_freq = params.min_doc_freq * 1;
@@ -119,7 +119,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid min_doc_freq: ' + params.min_doc_freq + ' should be a number.');
     }
   }
-  
+
   if (typeof params.min_term_freq !== 'undefined') {
     if (_.isNumeric(params.min_term_freq)) {
       query.min_term_freq = params.min_term_freq * 1;
@@ -127,7 +127,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid min_term_freq: ' + params.min_term_freq + ' should be a number.');
     }
   }
-  
+
   if (typeof params.min_word_len !== 'undefined') {
     if (_.isNumeric(params.min_word_len)) {
       query.min_word_len = params.min_word_len * 1;
@@ -135,7 +135,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid min_word_len: ' + params.min_word_len + ' should be a number.');
     }
   }
-  
+
   if (typeof params.mlt_fields !== 'undefined') {
     switch (typeof params.mlt_fields) {
     case 'string':
@@ -152,7 +152,7 @@ function doMlt(params, callback) {
       query.mlt_fields = !!params.mlt_fields;
     }
   }
-  
+
   if (typeof params.percent_terms_to_match !== 'undefined') {
     if (_.isNumeric(params.percent_terms_to_match)) {
       query.percent_terms_to_match = params.percent_terms_to_match * 1;
@@ -160,7 +160,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid percent_terms_to_match: ' + params.percent_terms_to_match + ' should be a number.');
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
@@ -168,7 +168,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
     }
   }
-  
+
   if (typeof params.search_from !== 'undefined') {
     if (_.isNumeric(params.search_from)) {
       query.search_from = params.search_from * 1;
@@ -176,7 +176,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_from: ' + params.search_from + ' should be a number.');
     }
   }
-  
+
   if (typeof params.search_indices !== 'undefined') {
     switch (typeof params.search_indices) {
     case 'string':
@@ -193,7 +193,7 @@ function doMlt(params, callback) {
       query.search_indices = !!params.search_indices;
     }
   }
-  
+
   if (typeof params.search_query_hint !== 'undefined') {
     if (typeof params.search_query_hint !== 'object' && params.search_query_hint) {
       query.search_query_hint = '' + params.search_query_hint;
@@ -201,7 +201,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_query_hint: ' + params.search_query_hint + ' should be a string.');
     }
   }
-  
+
   if (typeof params.search_scroll !== 'undefined') {
     if (typeof params.search_scroll !== 'object' && params.search_scroll) {
       query.search_scroll = '' + params.search_scroll;
@@ -209,7 +209,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_scroll: ' + params.search_scroll + ' should be a string.');
     }
   }
-  
+
   if (typeof params.search_size !== 'undefined') {
     if (_.isNumeric(params.search_size)) {
       query.search_size = params.search_size * 1;
@@ -217,7 +217,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_size: ' + params.search_size + ' should be a number.');
     }
   }
-  
+
   if (typeof params.search_source !== 'undefined') {
     if (typeof params.search_source !== 'object' && params.search_source) {
       query.search_source = '' + params.search_source;
@@ -225,7 +225,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_source: ' + params.search_source + ' should be a string.');
     }
   }
-  
+
   if (typeof params.search_type !== 'undefined') {
     if (typeof params.search_type !== 'object' && params.search_type) {
       query.search_type = '' + params.search_type;
@@ -233,7 +233,7 @@ function doMlt(params, callback) {
       throw new TypeError('Invalid search_type: ' + params.search_type + ' should be a string.');
     }
   }
-  
+
   if (typeof params.search_types !== 'undefined') {
     switch (typeof params.search_types) {
     case 'string':
@@ -250,7 +250,7 @@ function doMlt(params, callback) {
       query.search_types = !!params.search_types;
     }
   }
-  
+
   if (typeof params.stop_words !== 'undefined') {
     switch (typeof params.stop_words) {
     case 'string':
@@ -267,14 +267,10 @@ function doMlt(params, callback) {
       query.stop_words = !!params.stop_words;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doMlt;

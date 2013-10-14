@@ -1,5 +1,7 @@
-var _ = require('<%= path2lib %>toolbelt')
-  , paramHelper = require('<%= path2lib %>param_helper');<%
+var _ = require('<%= path2lib %>utils'),
+  paramHelper = require('<%= path2lib %>param_helper'),
+  errors = require('<%= path2lib %>errors'),
+  q = require('q');<%
 
 
 if (_.keys(enumOptions).length) {
@@ -9,9 +11,6 @@ if (_.keys(enumOptions).length) {
 var <%= name %>Options = <%= stringify(options) %>;<%
   });
 }
-%>
-
-<%= notes ? notes + '\n' : ''
 %>
 
 /**
@@ -24,7 +23,7 @@ var <%= name %>Options = <%= stringify(options) %>;<%
 })
 %>
  */
-function do<%= _.studlyCase(name) %>(params, callback) {
+function do<%= _.studlyCase(name) %>(params, cb) {
   params = params || {};
 
   var request = {<%
@@ -39,22 +38,22 @@ function do<%= _.studlyCase(name) %>(params, callback) {
       body: params.body || null<%
       } }%>
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
     <%
 
 if (methods.length > 1) { %>
-  if (params.method = _.toLowerString(params.method)) {
+  if (params.method = _.toUpperString(params.method)) {
     if (<%= _.map(methods, function (method) { return 'params.method === ' + stringify(method) }).join(' || ') %>) {
       request.method = params.method;
     } else {
       throw new TypeError('Invalid method: should be one of <%= methods.join(', ') %>');
     }
   } else {<%
-    if (_.contains(methods, 'get')) {
-    var nonGet = _.find(methods, function (m) {return m !== 'get'; });%>
-    request.method = params.body ? <%= stringify(nonGet) %> : 'get';<%
+    if (_.contains(methods, 'GET')) {
+    var nonGet = _.find(methods, function (m) {return m !== 'GET'; });%>
+    request.method = params.body ? <%= stringify(nonGet) %> : 'GET';<%
     } else {%>
     request.method = <%= stringify(methods[0]) %>;<%
     }%>
@@ -64,21 +63,17 @@ if (methods.length > 1) { %>
 }
 %>
 
-  // find the url's params
-<%= writeParams(2, urlParts, 'url.') %>
+  // find the paths's params
+<%= writeParams(2, urlParts, 'parts.') %>
 
-  // build the url
+  // build the path
 <%= writeUrls(2, urls, urlParts, params) %>
 
   // build the query string
 <%= writeParams(2, params, 'query.') %>
-  request.url = request.url + _.makeQueryString(query);
+  request.path = request.path + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+<%= returnStatement(2, name) %>
 }
 
 module.exports = do<%= _.studlyCase(name) %>;

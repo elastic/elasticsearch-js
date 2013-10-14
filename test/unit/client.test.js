@@ -1,22 +1,16 @@
-/* node transport function tests */
-'use strict';
+var es = require('../../src/elasticsearch'),
+    api = require('../../src/lib/utils').requireDir(module, '../../src/api'),
+    expect = require('expect.js');
 
-var Client = require('../../src/lib/client')
-  , _ = require('../../src/lib/toolbelt')
-  , api = _.requireDir(module, '../../src/api')
-  , c;
+describe('Client instances creation', function () {
+  var client;
 
-exports['Client instances creation'] = {
+  beforeEach(function () {
+    client = new es.Client();
+  });
 
-  'setUp': function (done) {
-    c = new Client();
-    done();
-  },
-
-  'api is inherited': function(test) {
-    test.equals(c.bulk, api.bulk);
-    test.equals(c.cluster.node_stats, api.cluster.node_stats);
-    test.done();
-  }
-
-};
+  it('inherits the api', function () {
+    client.bulk.should.be.exactly(api.bulk);
+    client.cluster.nodeStats.should.be.exactly(api.cluster.node_stats);
+  });
+});

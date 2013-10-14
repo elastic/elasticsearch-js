@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-
-
 
 /**
  * Perform an elasticsearch [indices.flush](http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/) request
@@ -16,53 +16,53 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
  * @param {boolean} params.refresh - Refresh the index after performing the operation
  */
-function doIndicesFlush(params, callback) {
+function doIndicesFlush(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'post' || params.method === 'get') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'POST' || params.method === 'GET') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of post, get');
+      throw new TypeError('Invalid method: should be one of POST, GET');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_flush';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_flush';
   }
   else {
-    request.url = '/_flush';
+    request.path = '/_flush';
   }
-  
+
 
   // build the query string
   if (typeof params.force !== 'undefined') {
@@ -74,7 +74,7 @@ function doIndicesFlush(params, callback) {
       query.force = !!params.force;
     }
   }
-  
+
   if (typeof params.full !== 'undefined') {
     if (params.full.toLowerCase && (params.full = params.full.toLowerCase())
       && (params.full === 'no' || params.full === 'off')
@@ -84,7 +84,7 @@ function doIndicesFlush(params, callback) {
       query.full = !!params.full;
     }
   }
-  
+
   if (typeof params.ignore_indices !== 'undefined') {
     if (_.contains(ignoreIndicesOptions, params.ignore_indices)) {
       query.ignore_indices = params.ignore_indices;
@@ -95,7 +95,7 @@ function doIndicesFlush(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.refresh !== 'undefined') {
     if (params.refresh.toLowerCase && (params.refresh = params.refresh.toLowerCase())
       && (params.refresh === 'no' || params.refresh === 'off')
@@ -105,14 +105,10 @@ function doIndicesFlush(params, callback) {
       query.refresh = !!params.refresh;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesFlush;

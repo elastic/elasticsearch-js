@@ -1,6 +1,10 @@
-/* JSON serializer */
+/**
+ * Simple JSON serializer
+ * @type {[type]}
+ */
+module.exports = Json;
 
-var _ = require('../toolbelt');
+var _ = require('../utils');
 
 function Json(client) {
   this.client = client;
@@ -11,13 +15,21 @@ Json.prototype.serialize = function (val, replacer, spaces) {
     return null;
   }
   else if (typeof val === 'string') {
-    this.client.log.info('body is already a string, not encoding');
     return val;
   } else {
     return JSON.stringify(val, replacer, spaces);
   }
 };
 
-Json.prototype.unserialize = _.bind(JSON.parse, JSON);
-
-module.exports = Json;
+Json.prototype.unserialize = function (str) {
+  if (typeof str === 'string') {
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      this.client.log.error(new Error('unable to parse', str));
+      return null;
+    }
+  } else {
+    return str;
+  }
+};

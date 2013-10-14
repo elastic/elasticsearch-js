@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-
-
 
 /**
  * Perform an elasticsearch [indices.segments](http://elasticsearch.org/guide/reference/api/admin-indices-segments/) request
@@ -14,45 +14,45 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
  * @param {*} params.operation_threading - TODO: ?
  */
-function doIndicesSegments(params, callback) {
+function doIndicesSegments(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_segments';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_segments';
   }
   else {
-    request.url = '/_segments';
+    request.path = '/_segments';
   }
-  
+
 
   // build the query string
   if (typeof params.ignore_indices !== 'undefined') {
@@ -65,18 +65,14 @@ function doIndicesSegments(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.operation_threading !== 'undefined') {
     query.operation_threading = params.operation_threading;
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesSegments;

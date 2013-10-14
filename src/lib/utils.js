@@ -1,13 +1,14 @@
-var path = require('path')
-  , _ = require('lodash')
-  , fs = require('fs')
-  , requireDir = require('require-directory')
-  , qs = require('qs')
-  , nodeUtils = require('util');
+var path = require('path'),
+  _ = require('lodash'),
+  fs = require('fs'),
+  requireDir = require('require-directory'),
+  qs = require('qs'),
+  url = require('url'),
+  nodeUtils = require('util');
 
 /**
  * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
- * [node.uitls](http://nodejs.org/api/util.html#util_util) that doesn't use mixins to prevent
+ * [node.utils](http://nodejs.org/api/util.html#util_util) that doesn't use mixins to prevent
  * confusion when requiring lodash itself.
  *
  * @class utils
@@ -33,11 +34,11 @@ utils.inspect = function (thing, opts) {
 utils.joinPath = path.join;
 
 /**
- * Extends lodash's map function so that objects can be passed to map and will be retuned as an object with
- * each value transformed by the itterator.
+ * Extends lodash's map function so that objects can be passed to map and will be returned as an object with
+ * each value transformed by the iterator.
  *
  * @method utils.map
- * @param [Iterable] obj - the thing to iterate over
+ * @param [Collection] obj - the thing to iterate over
  * @param [Function] mapper - the function to call for each element in obj
  * @param [*] context - the this context to use for each call to mapper
  */
@@ -53,7 +54,7 @@ utils.map = function (obj, mapper, context) {
  * Require all of the modules in a directory
  *
  * @method requireDir
- * @param {Module} module - The module object which will own the required modules.
+ * @param {Function} module - The module object which will own the required modules.
  * @param {String} path - Path to the directory which will be traversed (can be relative to module)
  * @return {Object} - An object with each required files
  */
@@ -67,9 +68,9 @@ utils.requireDir = function (module, dirPath) {
 /**
  * Requires all of the files in a directory, then transforms the filenames into
  * StudlyCase -- one level deep for now.
- * @param {Module} module - The module object which will own the required modules.
- * @param {String} path - Path to the directory which will be traversed (can be relative to module)
- * @return {Object} - An object with each required files, keys will be the StudlyCase version of the filesnames.
+ * @param {Function} module - The module object which will own the required modules.
+ * @param {String} dirPath - Path to the directory which will be traversed (can be relative to module)
+ * @return {Object} - An object with each required files, keys will be the StudlyCase version of the filenames.
  */
 utils.requireClasses = function (module, dirPath) {
   return utils.reKey(utils.requireDir(module, dirPath), utils.studlyCase, false);
@@ -79,7 +80,7 @@ utils.requireClasses = function (module, dirPath) {
  * Recursively re-key an object, applying "transform" to each key
  * @param  {Object} obj - The object to re-key
  * @param  {Function} transform - The transformation function to apply to each key
- * @param  {Boolean} recursive - Should this act recursively?
+ * @param  {Boolean} [recursive=false] - Should this act recursively?
  * @param  {Object} out - used primarily for recursion, allows you to specify the object which new keys will be written to
  * @return {Object}
  */
@@ -102,11 +103,11 @@ utils.reKey = function (obj, transform, recursive) {
 };
 
 /**
- * Recursively merge two objects, walking into each object and concating arrays.
- * If both to and from have a value at a key, but the values' types don't match
- * to's value is left unmodified. Only Array and Object values are merged - that
+ * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
+ * key, but the values' types don't match to's value is left unmodified. Only Array and Object values are merged - that
  * it to say values with a typeof "object"
- * @param  {Obejct} to - Object to merge into (no cloning, the original object
+ *
+ * @param  {Object} to - Object to merge into (no cloning, the original object
  *   is modified)
  * @param  {Object} from - Object to pull changed from
  * @return {Object} - returns the modified to value
@@ -132,18 +133,16 @@ utils.deepMerge = function (to, from) {
 /**
  * Test if a value is an array and it's contents are of a specific type
  *
- * @method isArrayOf<Strings|Objects|Arrays|Finites|Functions|RegExps>
+ * @method isArrayOf<Strings|Object|Array|Finite|Function|RegExp>s
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
 'String Object PlainObject Array Finite Function RegExp'.split(' ').forEach(function (type) {
-  var check = _.bind(_['is' + type], _)
-    // used to find the first value that isn't of the sub type specified
-    , checkForNotType = function (val) { return !check(val); };
+  var check = _.bind(_['is' + type], _);
 
   utils['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
-    return _.isArray(arr) && !_.find(arr.slice(0, 10), checkForNotType);
+    return _.isArray(arr) && _.every(arr.slice(0, 10), check);
   };
 });
 
@@ -175,7 +174,7 @@ utils.studlyCase = function (string) {
 };
 
 /**
- * Transfor a string into camelCase
+ * Transform a string into camelCase
  *
  * @todo Tests
  * @method cameCase
@@ -192,6 +191,13 @@ utils.camelCase = function (string) {
   }).join('');
 };
 
+/**
+ * Lower-case a string, and return an empty string if any is not a string
+ *
+ * @todo Tests
+ * @param any {*} - Something or nothing
+ * @returns {string}
+ */
 utils.toLowerString = function (any) {
   if (any) {
     if (typeof any !== 'string') {
@@ -204,9 +210,27 @@ utils.toLowerString = function (any) {
 };
 
 /**
+ * Upper-case the string, return an empty string if any is not a string
+ *
+ * @todo Tests
+ * @param any {*} - Something or nothing
+ * @returns {string}
+ */
+utils.toUpperString = function (any) {
+  if (any) {
+    if (typeof any !== 'string') {
+      any = any.toString();
+    }
+  } else {
+    any = '';
+  }
+  return any.toUpperCase();
+};
+
+/**
  * Test if a value is "numeric" meaning that it can be transformed into something besides NaN
  *
- * @todo Test
+ * @todo Tests
  * @method isNumeric
  * @param  {*} val
  * @return {Boolean}
@@ -257,11 +281,37 @@ utils.makeQueryString = function (obj, start) {
   return (start === false || str === '') ? str : '?' + str;
 };
 
+/**
+ * Override node's util.inherits function to also supply a callSuper function on the child class that can be called
+ * with the instance and the arguments passed to the child's constructor. This should only be called from within the
+ * constructor of the child class and should be removed from the code once the constructor is "done".
+ *
+ * @param constructor {Function} - the constructor that should subClass superConstructor
+ * @param superConstructor {Function} - The parent constructor
+ */
 utils.inherits = function (constructor, superConstructor) {
   nodeUtils.inherits(constructor, superConstructor);
-  constructor.prototype._constructSuper = function (args) {
-    constructor.super_.apply(this, _.toArray(args));
+  constructor.callSuper = function (inst, args) {
+    if (args) {
+      if (_.isArguments(args)) {
+        utils.applyArgs(superConstructor, inst, args);
+      } else {
+        utils.applyArgs(superConstructor, inst, arguments, 1);
+      }
+    } else {
+      superConstructor.call(inst);
+    }
   };
+};
+
+/**
+ * Remove leading/trailing spaces from a string
+ *
+ * @param str {String} - Any string
+ * @returns {String}
+ */
+utils.trim = function (str) {
+  return typeof str !== 'string' ? str.replace(/^\s+|\s+$/g, '') : '';
 };
 
 utils.collectMatches = function (text, regExp) {
@@ -275,5 +325,87 @@ utils.collectMatches = function (text, regExp) {
   }
   return matches;
 };
+
+var startsWithProtocolRE = /^([a-z]+:)?\/\//;
+
+/**
+ * Runs a string through node's url.parse, removing the return value's host property and insuring the text has a
+ * protocol first
+ *
+ * @todo Tests
+ * @param urlString {String} - a url of some sort
+ * @returns {Object} - an object containing 'hostname', 'port', 'protocol', 'path', and a few other keys
+ */
+utils.parseUrl = function (urlString) {
+  if (!startsWithProtocolRE.text(urlString)) {
+    urlString = 'http://' + urlString;
+  }
+  var info = url.parse(urlString);
+  delete info.host;
+  return info;
+};
+
+/**
+ * Formats a urlinfo object, sort of juggling the 'host' and 'hostname' keys based on the presense of the port and
+ * including http: as the default protocol.
+ *
+ * @todo Tests,
+ * @todo add checking for ':' at the end of the protocol
+ * @param urlInfo {Object} - An object, similar to that returned from _.parseUrl
+ * @returns {String}
+ */
+utils.formatUrl = function (urlInfo) {
+  var info = _.clone(urlInfo);
+  if (info.port && info.host && !info.hostname) {
+    info.hostname = info.host;
+    delete info.host;
+  }
+  if (!info.protocol) {
+    info.protocol = 'http:';
+  }
+  return url.format(info);
+};
+
+/**
+ * Call a function, applying the arguments object to it in an optimized way, rather than always turning it into an array
+ *
+ * @param func {Function} - The function to execute
+ * @param context {*} - The context the function will be executed with
+ * @param args {Arguments} - The arguments to send to func
+ * @param [sliceIndex=0] {Integer} - The index that args should be sliced at, before feeding args to func
+ * @returns {*} - the return value of func
+ */
+utils.applyArgs = function (func, context, args, sliceIndex) {
+  sliceIndex = sliceIndex || 0;
+  switch (args.length - sliceIndex) {
+  case 0:
+    return func.call(context);
+  case 1:
+    return func.call(context, args[0 + sliceIndex]);
+  case 2:
+    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex]);
+  case 3:
+    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex]);
+  case 4:
+    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex], args[3 + sliceIndex]);
+  case 5:
+    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex],
+      args[2 + sliceIndex], args[3 + sliceIndex], args[4 + sliceIndex]);
+  default:
+    return func.apply(context, Array.prototype.slice.call(args, sliceIndex));
+  }
+};
+
+/**
+ * Schedule a function to be called on the next tick, and supply it with these arguments
+ * when it is called.
+ * @return {[type]} [description]
+ */
+utils.nextTick = function (cb) {
+  // bind the function and schedule it
+  process.nextTick(utils.bindKey(utils, 'applyArgs', cb, null, arguments, 1));
+};
+
+utils.noop = function () {};
 
 module.exports = utils;

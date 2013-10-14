@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var formatOptions = ['detailed', 'text'];
-
-
 
 /**
  * Perform an elasticsearch [indices.analyze](http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/) request
@@ -20,46 +20,46 @@ var formatOptions = ['detailed', 'text'];
  * @param {string} params.tokenizer - The name of the tokenizer to use for the analysis
  * @param {String} [params.format=detailed] - Format of the output
  */
-function doIndicesAnalyze(params, callback) {
+function doIndicesAnalyze(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     if (typeof params.index !== 'object' && params.index) {
-      url.index = '' + params.index;
+      parts.index = '' + params.index;
     } else {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_analyze';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_analyze';
     delete params.index;
   }
   else {
-    request.url = '/_analyze';
+    request.path = '/_analyze';
   }
-  
+
 
   // build the query string
   if (typeof params.analyzer !== 'undefined') {
@@ -69,7 +69,7 @@ function doIndicesAnalyze(params, callback) {
       throw new TypeError('Invalid analyzer: ' + params.analyzer + ' should be a string.');
     }
   }
-  
+
   if (typeof params.field !== 'undefined') {
     if (typeof params.field !== 'object' && params.field) {
       query.field = '' + params.field;
@@ -77,7 +77,7 @@ function doIndicesAnalyze(params, callback) {
       throw new TypeError('Invalid field: ' + params.field + ' should be a string.');
     }
   }
-  
+
   if (typeof params.filters !== 'undefined') {
     switch (typeof params.filters) {
     case 'string':
@@ -94,7 +94,7 @@ function doIndicesAnalyze(params, callback) {
       query.filters = !!params.filters;
     }
   }
-  
+
   if (typeof params.index !== 'undefined') {
     if (typeof params.index !== 'object' && params.index) {
       query.index = '' + params.index;
@@ -102,7 +102,7 @@ function doIndicesAnalyze(params, callback) {
       throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
     }
   }
-  
+
   if (typeof params.prefer_local !== 'undefined') {
     if (params.prefer_local.toLowerCase && (params.prefer_local = params.prefer_local.toLowerCase())
       && (params.prefer_local === 'no' || params.prefer_local === 'off')
@@ -112,7 +112,7 @@ function doIndicesAnalyze(params, callback) {
       query.prefer_local = !!params.prefer_local;
     }
   }
-  
+
   if (typeof params.text !== 'undefined') {
     if (typeof params.text !== 'object' && params.text) {
       query.text = '' + params.text;
@@ -120,7 +120,7 @@ function doIndicesAnalyze(params, callback) {
       throw new TypeError('Invalid text: ' + params.text + ' should be a string.');
     }
   }
-  
+
   if (typeof params.tokenizer !== 'undefined') {
     if (typeof params.tokenizer !== 'object' && params.tokenizer) {
       query.tokenizer = '' + params.tokenizer;
@@ -128,7 +128,7 @@ function doIndicesAnalyze(params, callback) {
       throw new TypeError('Invalid tokenizer: ' + params.tokenizer + ' should be a string.');
     }
   }
-  
+
   if (typeof params.format !== 'undefined') {
     if (_.contains(formatOptions, params.format)) {
       query.format = params.format;
@@ -139,14 +139,10 @@ function doIndicesAnalyze(params, callback) {
       );
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesAnalyze;

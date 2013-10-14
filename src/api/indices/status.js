@@ -1,9 +1,9 @@
-var _ = require('../../lib/toolbelt')
-  , paramHelper = require('../../lib/param_helper');
+var _ = require('../../lib/utils'),
+  paramHelper = require('../../lib/param_helper'),
+  errors = require('../../lib/errors'),
+  q = require('q');
 
 var ignoreIndicesOptions = ['none', 'missing'];
-
-
 
 /**
  * Perform an elasticsearch [indices.status](http://elasticsearch.org/guide/reference/api/admin-indices-status/) request
@@ -16,45 +16,45 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {boolean} params.recovery - Return information about shard recovery
  * @param {boolean} params.snapshot - TODO: ?
  */
-function doIndicesStatus(params, callback) {
+function doIndicesStatus(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  request.method = 'get';
 
-  // find the url's params
+  request.method = 'GET';
+
+  // find the paths's params
   if (typeof params.index !== 'undefined') {
     switch (typeof params.index) {
     case 'string':
-      url.index = params.index;
+      parts.index = params.index;
       break;
     case 'object':
       if (_.isArray(params.index)) {
-        url.index = params.index.join(',');
+        parts.index = params.index.join(',');
       } else {
         throw new TypeError('Invalid index: ' + params.index + ' should be a comma seperated list, array, or boolean.');
       }
       break;
     default:
-      url.index = !!params.index;
+      parts.index = !!params.index;
     }
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/_status';
+
+  // build the path
+  if (parts.hasOwnProperty('index')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/_status';
   }
   else {
-    request.url = '/_status';
+    request.path = '/_status';
   }
-  
+
 
   // build the query string
   if (typeof params.ignore_indices !== 'undefined') {
@@ -67,11 +67,11 @@ function doIndicesStatus(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.operation_threading !== 'undefined') {
     query.operation_threading = params.operation_threading;
   }
-  
+
   if (typeof params.recovery !== 'undefined') {
     if (params.recovery.toLowerCase && (params.recovery = params.recovery.toLowerCase())
       && (params.recovery === 'no' || params.recovery === 'off')
@@ -81,7 +81,7 @@ function doIndicesStatus(params, callback) {
       query.recovery = !!params.recovery;
     }
   }
-  
+
   if (typeof params.snapshot !== 'undefined') {
     if (params.snapshot.toLowerCase && (params.snapshot = params.snapshot.toLowerCase())
       && (params.snapshot === 'no' || params.snapshot === 'off')
@@ -91,14 +91,10 @@ function doIndicesStatus(params, callback) {
       query.snapshot = !!params.snapshot;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doIndicesStatus;

@@ -1,9 +1,9 @@
-var _ = require('../lib/toolbelt')
-  , paramHelper = require('../lib/param_helper');
+var _ = require('../lib/utils'),
+  paramHelper = require('../lib/param_helper'),
+  errors = require('../lib/errors'),
+  q = require('q');
 
 var defaultOperatorOptions = ['AND', 'OR'];
-
-
 
 /**
  * Perform an elasticsearch [explain](http://elasticsearch.org/guide/reference/api/explain/) request
@@ -27,55 +27,55 @@ var defaultOperatorOptions = ['AND', 'OR'];
  * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
  * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
  */
-function doExplain(params, callback) {
+function doExplain(params, cb) {
   params = params || {};
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
     }
-    , url = {}
+    , parts = {}
     , query = {}
     , responseOpts = {};
-    
-  if (params.method = _.toLowerString(params.method)) {
-    if (params.method === 'get' || params.method === 'post') {
+
+  if (params.method = _.toUpperString(params.method)) {
+    if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;
     } else {
-      throw new TypeError('Invalid method: should be one of get, post');
+      throw new TypeError('Invalid method: should be one of GET, POST');
     }
   } else {
-    request.method = params.body ? 'post' : 'get';
+    request.method = params.body ? 'POST' : 'GET';
   }
 
-  // find the url's params
+  // find the paths's params
   if (typeof params.id !== 'object' && params.id) {
-    url.id = '' + params.id;
+    parts.id = '' + params.id;
   } else {
     throw new TypeError('Invalid id: ' + params.id + ' should be a string.');
   }
-  
+
   if (typeof params.index !== 'object' && params.index) {
-    url.index = '' + params.index;
+    parts.index = '' + params.index;
   } else {
     throw new TypeError('Invalid index: ' + params.index + ' should be a string.');
   }
-  
+
   if (typeof params.type !== 'object' && params.type) {
-    url.type = '' + params.type;
+    parts.type = '' + params.type;
   } else {
     throw new TypeError('Invalid type: ' + params.type + ' should be a string.');
   }
-  
 
-  // build the url
-  if (url.hasOwnProperty('index') && url.hasOwnProperty('type') && url.hasOwnProperty('id')) {
-    request.url = '/' + encodeURIComponent(url.index) + '/' + encodeURIComponent(url.type) + '/' + encodeURIComponent(url.id) + '/_explain';
+
+  // build the path
+  if (parts.hasOwnProperty('index') && parts.hasOwnProperty('type') && parts.hasOwnProperty('id')) {
+    request.path = '/' + encodeURIComponent(parts.index) + '/' + encodeURIComponent(parts.type) + '/' + encodeURIComponent(parts.id) + '/_explain';
   }
   else {
-    throw new TypeError('Unable to build a url with those params. Supply at least [object Object], [object Object], [object Object]');
+    throw new TypeError('Unable to build a path with those params. Supply at least [object Object], [object Object], [object Object]');
   }
-  
+
 
   // build the query string
   if (typeof params.analyze_wildcard !== 'undefined') {
@@ -87,7 +87,7 @@ function doExplain(params, callback) {
       query.analyze_wildcard = !!params.analyze_wildcard;
     }
   }
-  
+
   if (typeof params.analyzer !== 'undefined') {
     if (typeof params.analyzer !== 'object' && params.analyzer) {
       query.analyzer = '' + params.analyzer;
@@ -95,7 +95,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid analyzer: ' + params.analyzer + ' should be a string.');
     }
   }
-  
+
   if (typeof params.default_operator !== 'undefined') {
     if (_.contains(defaultOperatorOptions, params.default_operator)) {
       query.default_operator = params.default_operator;
@@ -106,7 +106,7 @@ function doExplain(params, callback) {
       );
     }
   }
-  
+
   if (typeof params.df !== 'undefined') {
     if (typeof params.df !== 'object' && params.df) {
       query.df = '' + params.df;
@@ -114,7 +114,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid df: ' + params.df + ' should be a string.');
     }
   }
-  
+
   if (typeof params.fields !== 'undefined') {
     switch (typeof params.fields) {
     case 'string':
@@ -131,7 +131,7 @@ function doExplain(params, callback) {
       query.fields = !!params.fields;
     }
   }
-  
+
   if (typeof params.lenient !== 'undefined') {
     if (params.lenient.toLowerCase && (params.lenient = params.lenient.toLowerCase())
       && (params.lenient === 'no' || params.lenient === 'off')
@@ -141,7 +141,7 @@ function doExplain(params, callback) {
       query.lenient = !!params.lenient;
     }
   }
-  
+
   if (typeof params.lowercase_expanded_terms !== 'undefined') {
     if (params.lowercase_expanded_terms.toLowerCase && (params.lowercase_expanded_terms = params.lowercase_expanded_terms.toLowerCase())
       && (params.lowercase_expanded_terms === 'no' || params.lowercase_expanded_terms === 'off')
@@ -151,7 +151,7 @@ function doExplain(params, callback) {
       query.lowercase_expanded_terms = !!params.lowercase_expanded_terms;
     }
   }
-  
+
   if (typeof params.parent !== 'undefined') {
     if (typeof params.parent !== 'object' && params.parent) {
       query.parent = '' + params.parent;
@@ -159,7 +159,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid parent: ' + params.parent + ' should be a string.');
     }
   }
-  
+
   if (typeof params.preference !== 'undefined') {
     if (typeof params.preference !== 'object' && params.preference) {
       query.preference = '' + params.preference;
@@ -167,7 +167,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid preference: ' + params.preference + ' should be a string.');
     }
   }
-  
+
   if (typeof params.q !== 'undefined') {
     if (typeof params.q !== 'object' && params.q) {
       query.q = '' + params.q;
@@ -175,7 +175,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid q: ' + params.q + ' should be a string.');
     }
   }
-  
+
   if (typeof params.routing !== 'undefined') {
     if (typeof params.routing !== 'object' && params.routing) {
       query.routing = '' + params.routing;
@@ -183,7 +183,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid routing: ' + params.routing + ' should be a string.');
     }
   }
-  
+
   if (typeof params.source !== 'undefined') {
     if (typeof params.source !== 'object' && params.source) {
       query.source = '' + params.source;
@@ -191,7 +191,7 @@ function doExplain(params, callback) {
       throw new TypeError('Invalid source: ' + params.source + ' should be a string.');
     }
   }
-  
+
   if (typeof params._source !== 'undefined') {
     switch (typeof params._source) {
     case 'string':
@@ -208,7 +208,7 @@ function doExplain(params, callback) {
       query._source = !!params._source;
     }
   }
-  
+
   if (typeof params._source_exclude !== 'undefined') {
     switch (typeof params._source_exclude) {
     case 'string':
@@ -225,7 +225,7 @@ function doExplain(params, callback) {
       query._source_exclude = !!params._source_exclude;
     }
   }
-  
+
   if (typeof params._source_include !== 'undefined') {
     switch (typeof params._source_include) {
     case 'string':
@@ -242,14 +242,10 @@ function doExplain(params, callback) {
       query._source_include = !!params._source_include;
     }
   }
-  
-  request.url = request.url + _.makeQueryString(query);
 
-  var reqPromise = this.client.request(request);
-  if (callback) {
-    reqPromise.then(_.bind(callback, null, null), callback);
-  }
-  return reqPromise;
+  request.path = request.path + _.makeQueryString(query);
+
+  this.client.request(request, cb);
 }
 
 module.exports = doExplain;
