@@ -50,7 +50,7 @@ fillIndecies(function () {
     }
 
     event['@message'] = event.ip + ' - - [' + date.toISOString() + '] "GET ' + event.request + ' HTTP/1.1" ' +
-        event.respCode + ' ' + event.respSize + ' "-" "' + event.agent + '"';
+        event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
     event.src = JSON.stringify(event, null, '  ');
 
     actions.push({
