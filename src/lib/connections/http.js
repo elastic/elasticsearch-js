@@ -86,6 +86,7 @@ HttpConnection.prototype.request = function (params, cb) {
   request.on('response', function (incoming) {
     status = incoming.statusCode;
     incoming.setEncoding('utf8');
+    response = '';
 
     incoming.on('data', function (d) {
       response += d;

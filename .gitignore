@@ -1,2 +1,3 @@
 node_modules
 scripts/scratch.js
+test/integration-test.log
