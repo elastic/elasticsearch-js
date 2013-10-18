@@ -22,69 +22,71 @@ var _ = require('./utils'),
   ConnectionPool = require('./connection_pool'),
   errors = require('./errors');
 
-function Transport(client) {
-  this.client = client;
+function Transport(config) {
+  this.config = config;
 }
 
 
 Transport.prototype.sniff = function (cb) {
+  var self = this;
+
+  // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
 
-  var connectionPool = this.client.connectionPool,
-    nodesToHostCallback = _.bind(this.client.config.nodesToHostCallback, this);
-
-  this.client.request({
-    path: '/_cluster/nodes'
+  self.request({
+    path: '/_cluster/nodes',
+    method: 'GET'
   }, function (err, resp) {
     if (!err && resp && resp.nodes) {
-      connectionPool.setHosts(nodesToHostCallback(resp.nodes));
+      self.createConnections(self.config.nodesToHostCallback(resp.nodes));
     }
     cb(err, resp);
   });
 };
 
+Transport.prototype.createConnections = function (hosts) {
+  for (var i = 0; i < hosts.length; i++) {
+    this.config.connectionPool.add(new this.config.connectionConstructor(
+      this.config,
+      hosts[i]
+    ));
+  }
+};
 
 Transport.prototype.request = function (params, cb) {
   cb = typeof cb === 'function' ? cb : _.noop;
 
-  var client = this.client,
-    remainingRetries = client.config.maxRetries,
-    connection;
+  var connectionPool = this.config.connectionPool;
+  var log = this.config.log;
+  var remainingRetries = this.config.maxRetries;
+  var connection;
 
-  // serialize the body
-  params.body = client.serializer.serialize(params.body);
-
-  function sendRequestWithConnection(err, c) {
+  function sendRequestWithConnection(err, _connection) {
     if (err) {
       cb(err);
-    } else if (c) {
-      connection = c;
+    } else if (_connection) {
+      connection = _connection;
       connection.request(params, checkRespForFailure);
     } else {
-      cb(new errors.ConnectionError('No active nodes at this time.'));
+      cb(new errors.ConnectionFault('No active connections.'));
     }
   }
 
-  function checkRespForFailure(err, body, status) {
-    // check for posotive response
+  function checkRespForFailure(err, reqParams, body, status) {
+    connection.setStatus(err ? 'dead' : 'alive');
+
     if (err) {
-      client.connectionPool.setStatus(connection, 'dead');
-      checkForRetry(err, null, status);
-    } else {
-      client.connectionPool.setStatus(connection, 'alive');
-      return cb(null, client.serializer.unserialize(body), status);
+      log.error(err);
     }
-  }
 
-  function checkForRetry(err, resp) {
-    client.connectionPool.setStatus(connection, 'dead');
-    if (remainingRetries) {
+    if (err && remainingRetries) {
       remainingRetries--;
-      client.connectionPool.select(sendRequestWithConnection);
+      log.info('Retrying request after connection error');
+      connectionPool.select(sendRequestWithConnection);
     } else {
-      return cb(err, null);
+      cb(err, reqParams, body, status);
     }
   }
 
-  client.connectionPool.select(sendRequestWithConnection);
+  connectionPool.select(sendRequestWithConnection);
 };

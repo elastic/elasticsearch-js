@@ -1,6 +1,31 @@
 // args
-var count = parseInt(process.argv[2] || 14000, 10),
-  days = parseInt(process.argv[3] || 7, 10);
+var argv = require('optimist')
+  .usage('node scripts/generate/logs [-h|--host localhost:9200] [-c|--count 14000] [-d|--days 7]')
+  .options({
+    count: {
+      alias: 'c',
+      type: 'number',
+      default: 14000
+    },
+    days: {
+      alias: 'c',
+      type: 'number',
+      required: true
+    },
+    host: {
+      alias: 'h',
+      default: 'localhost:9200'
+    }
+  })
+  .argv;
+
+// Error.stackTraceLimit = Infinity;
+
+// console.log(argv);
+// process.exit();
+
+var count = parseInt(argv._[0] || 14000, 10),
+  days = parseInt(argv._[1] || 7, 10);
 
 var es = require('../../../src/elasticsearch'),
   _ = require('../../../src/lib/utils'),
@@ -10,11 +35,22 @@ var es = require('../../../src/elasticsearch'),
   makeSamples = require('./samples').make,
   startingMoment = moment().startOf('day').subtract('days', days),
   endingMoment = moment().endOf('day').add('days', days),
-  client = new es.Client({
-    log: 'info'
-  });
+  clientConfig = {
+    log: {
+      level: ['info', 'error']
+    }
+  };
 
-client.log.info('Generating', count, 'events across ±', days, 'days');
+if (argv.host) {
+  clientConfig.hosts = argv.host;
+} else if (argv.hosts) {
+  clientConfig.hosts = JSON.parse(argv.hosts);
+}
+
+var client = new es.Client(clientConfig);
+var log = client.config.log;
+
+log.info('Generating', count, 'events across ±', days, 'days');
 
 fillIndecies(function () {
   var actions = [],
@@ -63,7 +99,7 @@ fillIndecies(function () {
     actions.push(event);
 
     if (actions.length === 3000 || i === count - 1) {
-      client.log.info('writing', actions.length / 2, 'documents');
+      client.config.log.info('writing', actions.length / 2, 'documents');
       client.bulk({
         body: actions
       }, done);
@@ -142,12 +178,12 @@ function fillIndecies(cb) {
     movingDate.add('day', 1);
   }
 
-  async.parallel(indexPushActions, function (err, responses) {
+  async.parralel(indexPushActions, function (err, responses) {
     if (err) {
-      client.log.error(err);
+      client.config.log.error(err.message = 'Unable to create indicies: ' + err.message);
     } else {
       _.each(_.groupBy(responses), function (list, did) {
-        client.log.info(list.length, 'indicies', did);
+        client.config.log.info(list.length, 'indicies', did);
       });
       cb();
     }

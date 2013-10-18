@@ -1,5 +1,4 @@
 var _ = require('../../lib/utils'),
-  paramHelper = require('../../lib/param_helper'),
   errors = require('../../lib/errors'),
   q = require('q');
 
@@ -13,17 +12,23 @@ var _ = require('../../lib/utils'),
  * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
 function doIndicesUpdateAliases(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore,
-      body: params.body || null
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+      body: params.body || null,
+      method: 'POST'
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
-  request.method = 'POST';
 
   // find the paths's params
   if (typeof params.index !== 'undefined') {

@@ -1,5 +1,4 @@
 var _ = require('../lib/utils'),
-  paramHelper = require('../lib/param_helper'),
   errors = require('../lib/errors'),
   q = require('q');
 
@@ -26,17 +25,23 @@ var replicationOptions = ['sync', 'async'];
  * @param {Date|Number} params.timeout - Explicit operation timeout
  */
 function doDeleteByQuery(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore,
-      body: params.body || null
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+      body: params.body || null,
+      method: 'DELETE'
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
-  request.method = 'DELETE';
 
   // find the paths's params
   switch (typeof params.index) {

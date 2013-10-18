@@ -16,11 +16,11 @@ var _ = require('./utils'),
  * @param {string} output.level - One of the keys in Log.levels (error, warning, etc.)
  * @param {string} output.type - The name of the logger to use for this output
  */
-function Log(client) {
-  this.client = client;
+function Log(config) {
+  this.config = config;
 
   var i;
-  var output = client.config.log || 2;
+  var output = config.log || 2;
 
   if (_.isString(output) || _.isFinite(output)) {
     output = [
@@ -160,7 +160,7 @@ Log.join = function (arrayish) {
 Log.prototype.addOutput = function (config) {
   var levels = Log.parseLevels(config.levels || config.level || 'warning');
 
-  _.defaults(config, {
+  _.defaults(config || {}, {
     type: 'stdio',
   });
 
@@ -241,10 +241,7 @@ Log.prototype.debug = function (/* ...msg */) {
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (EventEmitter.listenerCount(this, 'trace')) {
     if (typeof requestUrl === 'object') {
-      if (!requestUrl.protocol) {
-        requestUrl.protocol = 'http';
-      }
-      requestUrl = url.format(requestUrl);
+      requestUrl = _.formatUrl(requestUrl);
     }
     return this.emit('trace', method, requestUrl, body, responseBody, responseStatus);
   }

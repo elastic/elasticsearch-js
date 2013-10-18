@@ -3,7 +3,7 @@ var childProc = require('child_process'),
   q = require('q'),
   path = require('path'),
   fs = require('fs'),
-  _ = require('../../src/lib/utils');
+  _ = require('../../../src/lib/utils');
 
 exports.start = function (params, cb) {
 

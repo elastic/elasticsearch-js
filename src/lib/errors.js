@@ -13,11 +13,11 @@ _.inherits(ErrorAbstract, Error);
  * Connection Error
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
-errors.ConnectionError = function ConnectionError(msg) {
+errors.ConnectionFault = function ConnectionFault(msg) {
   return new Error(msg || 'Connection Failure');
   ErrorAbstract.call(this, msg || 'Connection Failure');
 };
-_.inherits(errors.ConnectionError, ErrorAbstract);
+_.inherits(errors.ConnectionFault, ErrorAbstract);
 
 /**
  * Generic Error
@@ -36,6 +36,16 @@ _.inherits(errors.Generic, ErrorAbstract);
 errors.RequestTimeout = function RequestTimeout(msg) {
   return new Error(msg || 'RequestTimeout');
   ErrorAbstract.call(this, msg || 'Request Timeout');
+};
+_.inherits(errors.RequestTimeout, ErrorAbstract);
+
+/**
+ * Request Body could not be parsed
+ * @param {String} [msg] - An error message that will probably end up in a log.
+ */
+errors.Serialization = function RequestTimeout(msg) {
+  return new Error(msg || 'ParseError');
+  ErrorAbstract.call(this, msg || 'Unable to parse response body');
 };
 _.inherits(errors.RequestTimeout, ErrorAbstract);
 

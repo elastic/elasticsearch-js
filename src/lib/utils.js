@@ -138,7 +138,7 @@ utils.deepMerge = function (to, from) {
  * @return {Boolean}
  */
 'String Object PlainObject Array Finite Function RegExp'.split(' ').forEach(function (type) {
-  var check = _.bind(_['is' + type], _);
+  var check = _.bindKey(_, 'is' + type);
 
   utils['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
@@ -341,7 +341,6 @@ utils.parseUrl = function (urlString) {
     urlString = 'http://' + urlString;
   }
   var info = url.parse(urlString);
-  delete info.host;
   return info;
 };
 
@@ -355,9 +354,9 @@ utils.parseUrl = function (urlString) {
  * @returns {String}
  */
 utils.formatUrl = function (urlInfo) {
-  var info = _.clone(urlInfo);
-  if (info.port && info.host && !info.hostname) {
-    info.hostname = info.host;
+  var info = _.pick(urlInfo, ['protocol', 'hostname', 'port']);
+  if (info.port && urlInfo.host && !info.hostname) {
+    info.hostname = urlInfo.host;
     delete info.host;
   }
   if (!info.protocol) {
@@ -404,6 +403,62 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
 utils.nextTick = function (cb) {
   // bind the function and schedule it
   process.nextTick(utils.bindKey(utils, 'applyArgs', cb, null, arguments, 1));
+};
+
+/**
+ * Marks a method as a handler. Currently this just makes a property on the method
+ * flagging it to be bound to the object at object creation when "makeBoundMethods" is called
+ *
+ * ```
+ * ClassName.prototype.methodName = _.handler(function () {
+ *   // this will always be bound when called via classInstance.bound.methodName
+ *   this === classInstance
+ * });
+ * ```
+ *
+ * @alias utils.scheduled
+ * @param  {Function} func - The method that is being defined
+ * @return {Function}
+ */
+utils.handler = function (func) {
+  func._provideBound = true;
+  return func;
+};
+utils.scheduled = utils.handler;
+
+/**
+ * Creates an "bound" property on an object, which all or a subset of methods from
+ * the object which are bound to the original object.
+ *
+ * ```
+ * var obj = {
+ *   onEvent: function () {}
+ * };
+ *
+ * _.makeBoundMethods(obj);
+ *
+ * obj.bound.onEvent() // is bound to obj, and can safely be used as an event handler.
+ * ```
+ *
+ * @param {Object} obj - The object to bind the methods to
+ * @param {Array} [methods] - The methods to bind, false values === bind them all
+ */
+utils.makeBoundMethods = function (obj, methods) {
+  obj.bound = {};
+  if (!methods) {
+    methods = [];
+    for (var prop in obj) {
+      // dearest maintainer, we want to look through the prototype
+      if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
+        console.log('binding', prop);
+        obj.bound[prop] = utils.bind(obj[prop], obj);
+      }
+    }
+  } else {
+    _.each(methods, function (method) {
+      obj.bound[method] = utils.bindKey(obj, method);
+    });
+  }
 };
 
 utils.noop = function () {};

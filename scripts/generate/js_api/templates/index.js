@@ -13,7 +13,10 @@ var _ = require('../../../../src/lib/utils')
 function lines(i) {
 
   function l(line) {
-    if (typeof line !== 'undefined') {
+    if (line === '') {
+      // no indent on empty lines
+      l.lines.push('');
+    } else if (typeof line !== 'undefined') {
       l.lines.push(_.repeat(' ', l.indent) + line);
     }
     return l;
@@ -154,6 +157,33 @@ var templateGlobals = {
       }
     });
     l('');
+
+    return l.toString();
+  },
+
+  writeRequestObjectBody: function (indent, name, body, methods) {
+    var parts = [], l = lines(indent);
+    if (~name.indexOf('exists')) {
+      parts.push('ignore: _.union([404], params.ignore)');
+    } else {
+      parts.push('ignore: params.ignore');
+    }
+
+    if (body) {
+      if (_.contains(['bulk', 'msearch'], name)) {
+        parts.push('body: this.client.config.serializer.bulkBody(params.body || null)');
+      } else {
+        parts.push('body: params.body || null');
+      }
+    }
+
+    if (methods.length === 1) {
+      parts.push('method: ' + stringify(methods[0]));
+    }
+
+    _.each(parts, function (part, i) {
+      l(part + (i < parts.length - 1 ? ',' : ''));
+    });
 
     return l.toString();
   },

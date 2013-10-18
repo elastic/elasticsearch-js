@@ -1,5 +1,4 @@
 var _ = require('../lib/utils'),
-  paramHelper = require('../lib/param_helper'),
   errors = require('../lib/errors'),
   q = require('q');
 
@@ -45,16 +44,23 @@ var suggestModeOptions = ['missing', 'popular', 'always'];
  * @param {boolean} params.version - Specify whether to return document version as part of a hit
  */
 function doSearch(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
+  // figure out the method
   if (params.method = _.toUpperString(params.method)) {
     if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;

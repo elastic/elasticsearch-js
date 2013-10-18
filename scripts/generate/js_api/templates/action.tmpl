@@ -1,5 +1,4 @@
 var _ = require('<%= path2lib %>utils'),
-  paramHelper = require('<%= path2lib %>param_helper'),
   errors = require('<%= path2lib %>errors'),
   q = require('q');<%
 
@@ -24,26 +23,24 @@ var <%= name %>Options = <%= stringify(options) %>;<%
 %>
  */
 function do<%= _.studlyCase(name) %>(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
-  var request = {<%
-      if (~name.indexOf('exists')) {%>
-      ignore: _.union([404], params.ignore)<%
-      } else {%>
-      ignore: params.ignore<%
-      }
-      if (body) { if (_.contains(['bulk', 'msearch'], name)) {%>,
-      body: paramHelper.bulkBody(params.body, this.client.serializer) || null<%
-      } else { %>,
-      body: params.body || null<%
-      } }%>
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
-    <%
+  var request = {
+<%= writeRequestObjectBody(6, name, body, methods) %>
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
+<%
 
 if (methods.length > 1) { %>
+  // figure out the method
   if (params.method = _.toUpperString(params.method)) {
     if (<%= _.map(methods, function (method) { return 'params.method === ' + stringify(method) }).join(' || ') %>) {
       request.method = params.method;
@@ -58,8 +55,6 @@ if (methods.length > 1) { %>
     request.method = <%= stringify(methods[0]) %>;<%
     }%>
   }<%
-} else {%>
-  request.method = <%= stringify(methods[0]) %>;<%
 }
 %>
 

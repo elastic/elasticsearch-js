@@ -1,5 +1,4 @@
 var _ = require('../lib/utils'),
-  paramHelper = require('../lib/param_helper'),
   errors = require('../lib/errors'),
   q = require('q');
 
@@ -30,16 +29,23 @@ var _ = require('../lib/utils'),
  * @param {String|ArrayOfStrings|Boolean} params.stop_words - A list of stop words to be ignored
  */
 function doMlt(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore,
       body: params.body || null
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
+  // figure out the method
   if (params.method = _.toUpperString(params.method)) {
     if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;

@@ -12,13 +12,14 @@ var _ = require('./utils'),
  * @class ConnectionAbstract
  * @constructor
  */
-function ConnectionAbstract(client, config, id) {
+function ConnectionAbstract(config) {
   EventEmitter.call(this);
-  this.client = client;
-  this.id = id;
+  this.config = config;
   this.hostname = config.hostname || 'localhost';
   this.port = config.port || 9200;
   this.timeout = config.timeout || 10000;
+
+  _.makeBoundMethods(this);
 }
 _.inherits(ConnectionAbstract, EventEmitter);
 
@@ -43,3 +44,32 @@ ConnectionAbstract.prototype.ping = function () {
     timeout: '100'
   });
 };
+
+ConnectionAbstract.prototype.setStatus = function (status) {
+  var origStatus = this.status;
+
+  this.status = status;
+
+  if (status === 'dead') {
+    if (this.__deadTimeout) {
+      clearTimeout(this.__deadTimeout);
+    }
+    this.__deadTimeout = setTimeout(this.bound.resuscitate, this.config.deadTimeout);
+  }
+
+  this.emit('status changed', status, origStatus, this);
+};
+
+ConnectionAbstract.prototype.resuscitate = _.scheduled(function () {
+  var self = this;
+
+  if (self.status === 'dead') {
+    self.ping(function (err) {
+      if (!err) {
+        self.setStatus('alive');
+      } else {
+        self.emit('dead');
+      }
+    });
+  }
+});

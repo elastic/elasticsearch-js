@@ -1,5 +1,4 @@
 var _ = require('../../lib/utils'),
-  paramHelper = require('../../lib/param_helper'),
   errors = require('../../lib/errors'),
   q = require('q');
 
@@ -17,15 +16,22 @@ var ignoreIndicesOptions = ['none', 'missing'];
  * @param {boolean} params.refresh - Refresh the index after performing the operation
  */
 function doIndicesFlush(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
+  // figure out the method
   if (params.method = _.toUpperString(params.method)) {
     if (params.method === 'POST' || params.method === 'GET') {
       request.method = params.method;

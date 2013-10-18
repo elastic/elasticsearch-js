@@ -1,5 +1,4 @@
 var _ = require('../lib/utils'),
-  paramHelper = require('../lib/param_helper'),
   errors = require('../lib/errors'),
   q = require('q');
 
@@ -23,16 +22,22 @@ var versionTypeOptions = ['internal', 'external'];
  * @param {String} params.version_type - Specific version type
  */
 function doDelete(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
-      ignore: params.ignore
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+      ignore: params.ignore,
+      method: 'DELETE'
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
-  request.method = 'DELETE';
 
   // find the paths's params
   if (typeof params.id !== 'object' && params.id) {

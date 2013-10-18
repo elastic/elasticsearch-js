@@ -11,14 +11,12 @@ function LoggerAbstract(config, bridge) {
   this.bridge = bridge;
   this.listeningLevels = [];
 
-  // bound copies of the event handlers
-  this.handlers = _.reduce(Log.levels, function (handlers, name) {
-    handlers[name] = _.bindKey(this, 'on' + _.studlyCase(name));
-    return handlers;
-  }, {}, this);
+  _.makeBoundMethods(this);
 
-  // then the bridge closes, remove our event listeners
-  this.bridge.on('closing', _.bindKey(this, 'cleanUpListeners'));
+  console.log(this.bound);
+
+  // when the bridge closes, remove our event listeners
+  this.bridge.on('closing', this.bound.cleanUpListeners);
 
   this.setupListeners(config.levels);
 }
@@ -71,7 +69,12 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
   this.listeningLevels = levels;
 
   _.each(this.listeningLevels, function (level) {
-    this.bridge.on(level, this.handlers[level]);
+    var fnName = 'on' + _.ucfirst(level);
+    if (this.bound[fnName]) {
+      this.bridge.on(level, this.bound[fnName]);
+    } else {
+      throw new Error(fnName + ' is not a function');
+    }
   }, this);
 };
 
@@ -82,11 +85,11 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  * @private
  * @return {undefined}
  */
-LoggerAbstract.prototype.cleanUpListeners = function () {
+LoggerAbstract.prototype.cleanUpListeners = _.handler(function () {
   _.each(this.listeningLevels, function (level) {
     this.bridge.removeListener(level, this.handlers[level]);
   }, this);
-};
+});
 
 /**
  * Handler for the bridges "error" event
@@ -96,9 +99,9 @@ LoggerAbstract.prototype.cleanUpListeners = function () {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-LoggerAbstract.prototype.onError = function (e) {
+LoggerAbstract.prototype.onError = _.handler(function (e) {
   this.write((e.name === 'Error' ? 'ERROR' : e.name), e.stack);
-};
+});
 
 /**
  * Handler for the bridges "warning" event
@@ -108,9 +111,9 @@ LoggerAbstract.prototype.onError = function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onWarning = function (msg) {
+LoggerAbstract.prototype.onWarning = _.handler(function (msg) {
   this.write('WARNING', msg);
-};
+});
 
 /**
  * Handler for the bridges "info" event
@@ -120,9 +123,9 @@ LoggerAbstract.prototype.onWarning = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onInfo = function (msg) {
+LoggerAbstract.prototype.onInfo = _.handler(function (msg) {
   this.write('INFO', msg);
-};
+});
 
 /**
  * Handler for the bridges "debug" event
@@ -132,9 +135,9 @@ LoggerAbstract.prototype.onInfo = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onDebug = function (msg) {
+LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
   this.write('DEBUG', msg);
-};
+});
 
 /**
  * Handler for the bridges "trace" event
@@ -144,14 +147,14 @@ LoggerAbstract.prototype.onDebug = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = function (method, url, body, responseBody, responseStatus) {
+LoggerAbstract.prototype.onTrace = _.handler(function (method, url, body, responseBody, responseStatus) {
   var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
   if (body) {
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
   }
   message += '\n<- ' + responseStatus + '\n' + responseBody;
   this.write('TRACE', message);
-};
+});
 
 
 module.exports = LoggerAbstract;

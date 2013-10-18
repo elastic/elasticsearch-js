@@ -18,8 +18,8 @@ var http = require('http'),
   };
 
 
-function HttpConnection(client, config) {
-  ConnectionAbstract.call(this, client, config);
+function HttpConnection(config) {
+  ConnectionAbstract.call(this, config);
 
   this.protocol = config.protocol || 'http:';
   if (this.protocol[this.protocol.length - 1] !== ':') {
@@ -30,16 +30,25 @@ function HttpConnection(client, config) {
     keepAlive: true,
     // delay between the last data packet received and the first keepalive probe
     keepAliveMsecs: 1000,
-    maxSockets: this.client.config.maxSockets,
-    maxFreeSockets: this.client.config.maxFreeSockets
+    maxSockets: 1,
+    maxFreeSockets: this.config.maxFreeSockets
   });
 
-  this.on('closed', function () {
-    this.agent.destroy();
-    this.removeAllListeners();
-  });
+  this.on('closed', this.bound.onClosed);
+  this.once('alive', this.bound.onAlive);
+
 }
 _.inherits(HttpConnection, ConnectionAbstract);
+
+HttpConnection.prototype.onClosed = _.handler(function () {
+  this.agent.destroy();
+  this.removeAllListeners();
+});
+
+HttpConnection.prototype.onAlive = _.handler(function () {
+  // only set the agents max agents config once the connection is verified to be alive
+  this.agent.maxSockets = this.config.maxSockets;
+});
 
 HttpConnection.prototype.request = function (params, cb) {
   var request,
@@ -47,7 +56,7 @@ HttpConnection.prototype.request = function (params, cb) {
     status = 0,
     timeout = params.timeout || this.timeout,
     timeoutId,
-    log = this.client.log;
+    log = this.config.log;
 
   var reqParams = _.defaults({
     protocol: this.protocol,
@@ -62,15 +71,11 @@ HttpConnection.prototype.request = function (params, cb) {
   var cleanUp = function (err) {
     cleanUp = _.noop;
 
-    if (err) {
-      log.error(err);
-    }
-
     clearTimeout(timeoutId);
     if (request) {
       request.removeAllListeners();
     }
-    _.nextTick(cb, err, response, status);
+    _.nextTick(cb, err, reqParams, response, status);
   };
 
   // ensure that "get" isn't being used with a request body
@@ -92,14 +97,8 @@ HttpConnection.prototype.request = function (params, cb) {
       response += d;
     });
 
-    incoming.on('close', function (err) {
-      console.log('closed');
-      cleanUp(err);
-    });
-
     incoming.on('end', function requestComplete() {
       incoming.removeAllListeners();
-      log.trace(reqParams.method, reqParams, params.body, response, status);
       cleanUp();
     });
   });

@@ -6,18 +6,23 @@
  */
 module.exports = ClientConfig;
 
-var url = require('url'),
-    _ = require('./utils'),
-    selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase),
-    connections = _.requireClasses(module, './connections'),
-    extractHostPartsRE = /\[([^:]+):(\d+)]/,
-    hostProtocolRE = /^([a-z]+:)?\/\//;
+var url = require('url');
+var _ = require('./utils');
+var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
+var connections = _.requireClasses(module, './connections');
+var serializers = _.requireClasses(module, './serializers');
+var Transport = require('./transport');
+var ConnectionPool = require('./connection_pool');
+var Log = require('./log');
+
+var extractHostPartsRE = /\[([^:]+):(\d+)]/;
+var hostProtocolRE = /^([a-z]+:)?\/\//;
 
 var defaultConfig = {
   hosts: [
     {
       protocol: 'http:',
-      host: 'localhost',
+      hostname: 'localhost',
       port: 9200
     }
   ],
@@ -51,7 +56,38 @@ function ClientConfig(config) {
     this.hosts = [this.hosts];
   }
 
+  // validate connectionConstructor
+  if (typeof this.connectionConstructor !== 'function') {
+    if (_.has(connections, this.connectionConstructor)) {
+      this.connectionConstructor = connections[this.connectionConstructor];
+    } else {
+      throw new TypeError('Invalid connectionConstructor ' + this.connectionConstructor +
+        ', specify a function or one of ' + _.keys(connections).join(', '));
+    }
+  }
+
+  // validate selector
+  if (typeof this.selector !== 'function') {
+    if (_.has(selectors, this.selector)) {
+      this.selector = selectors[this.selector];
+    } else {
+      throw new TypeError('Invalid Selector ' + this.selector + '. specify a function or one of ' + _.keys(selectors).join(', '));
+    }
+  }
+
+  this.serializer = new serializers.Json(this);
   this.hosts = _.map(this.hosts, this.transformHost);
+
+  this.log = new Log(this);
+  this.transport = new Transport(this);
+  this.connectionPool = new ConnectionPool(this);
+
+  this.transport.createConnections(this.hosts);
+
+  if (this.randomizeHosts) {
+    this.connectionPool.connections.alive = _.shuffle(this.connectionPool.connections.alive);
+  }
+
 }
 
 ClientConfig.prototype.transformHost = function (host) {

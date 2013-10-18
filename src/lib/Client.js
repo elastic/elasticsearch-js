@@ -4,7 +4,7 @@
  * Initializing a client might look something like:
  *
  * ```
- * var client = new Elasticsearch.Client({
+ * var client = new es.Client({
  *   hosts: [
  *     'es1.net:9200',
  *     {
@@ -30,33 +30,32 @@
 
 module.exports = Client;
 
-var _ = require('./utils'),
-    ClientConfig = require('./client_config'),
-    api = _.reKey(_.requireDir(module, '../api'), _.camelCase),
-    q = require('q'),
-    Transport = require('./transport'),
-    ConnectionPool = require('./connection_pool'),
-    Log = require('./log'),
-    serializers = _.requireClasses(module, './serializers'),
-    errors = require('./errors');
+var _ = require('./utils');
+var ClientConfig = require('./client_config');
+var api = _.reKey(_.requireDir(module, '../api'), _.camelCase);
+var q = require('q');
+var errors = require('./errors');
 
-// Many API commands are namespaced, like cluster.node_stats. The names of these namespaces will be
+// Many API commands are namespaced, like cluster.nodeStats. The names of these namespaces will be
 // tracked here and the namespace objects will be instantiated by reading the values from this
 // array
 var namespaces = [];
 
 function Client(config) {
   this.client = this;
-  this.config = !config || _.isPlainObject(config) ? new ClientConfig(config) : config;
+
+  // setup the config.. this config will be passed EVERYWHERE so for good measure it is locked down
+  Object.defineProperty(this, 'config', {
+    configurable: false,
+    enumerable: false,
+    writable: false,
+    value: !config || _.isPlainObject(config) ? new ClientConfig(config) : config,
+  });
+  this.config.client = this;
 
   for (var i = 0; i < namespaces.length; i++) {
     this[namespaces[i]] = new this[namespaces[i]](this);
   }
-
-  this.log = new Log(this);
-  this.transport = new Transport(this);
-  this.serializer = new serializers.Json(this);
-  this.connectionPool = new ConnectionPool(this);
 }
 
 /**
@@ -73,9 +72,10 @@ function Client(config) {
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
  */
 Client.prototype.request = function (params, cb) {
-  if (typeof cb !== 'function') {
-    cb = _.noop;
-  }
+  var serializer = this.config.serializer;
+
+  // in cb isn't a function make it one
+  cb = typeof cb === 'function' ? cb : _.noop;
 
   // get ignore and ensure that it's an array
   var ignore = params.ignore;
@@ -83,20 +83,34 @@ Client.prototype.request = function (params, cb) {
     ignore = [ignore];
   }
 
-  this.transport.request(params, function (err, body, status) {
+  // serialize the body
+  if (params.body) {
+    params.body = serializer.serialize(params.body);
+  }
+
+  this.config.transport.request(params, function (err, reqParams, body, status) {
+
+    var parsedBody = null;
+    if (!err) {
+      if (body) {
+        parsedBody = serializer.unserialize(body);
+        if (!parsedBody) {
+          err = new errors.ParseError();
+        }
+      } else if (reqParams.method === 'HEAD') {
+        parsedBody = (status === 200);
+      }
+    }
+
     if (err) {
-      return cb(err, body, status);
+      return cb(err, parsedBody, status);
     } else if ((status >= 200 && status < 300) || ignore && _.contains(ignore, status)) {
-      return cb(void 0, body, status);
+      return cb(void 0, parsedBody, status);
     } else {
       if (errors[status]) {
-        return cb(new errors[status](body.error), body, status);
+        return cb(new errors[status](parsedBody.error), parsedBody, status);
       } else {
-        console.log({
-          status: status,
-          body: body
-        });
-        return cb(new errors.Generic('unknown error'), body, status);
+        return cb(new errors.Generic('unknown error'), parsedBody, status);
       }
     }
   });
@@ -109,7 +123,7 @@ Client.prototype.request = function (params, cb) {
  * @param {Function} cb - callback
  */
 Client.prototype.ping = function (params, cb) {
-  this.transport.request({
+  this.config.transport.request({
     method: 'HEAD',
     path: '/'
   }, cb);

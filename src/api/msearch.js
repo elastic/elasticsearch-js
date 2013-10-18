@@ -1,5 +1,4 @@
 var _ = require('../lib/utils'),
-  paramHelper = require('../lib/param_helper'),
   errors = require('../lib/errors'),
   q = require('q');
 
@@ -14,16 +13,23 @@ var searchTypeOptions = ['query_then_fetch', 'query_and_fetch', 'dfs_query_then_
  * @param {String} params.search_type - Search operation type
  */
 function doMsearch(params, cb) {
-  params = params || {};
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  } else {
+    params = params || {};
+    cb = typeof cb === 'function' ? cb : _.noop;
+  }
 
   var request = {
       ignore: params.ignore,
-      body: paramHelper.bulkBody(params.body, this.client.serializer) || null
-    }
-    , parts = {}
-    , query = {}
-    , responseOpts = {};
+      body: this.client.config.serializer.bulkBody(params.body || null)
+    },
+    parts = {},
+    query = {},
+    responseOpts = {};
 
+  // figure out the method
   if (params.method = _.toUpperString(params.method)) {
     if (params.method === 'GET' || params.method === 'POST') {
       request.method = params.method;

@@ -5,12 +5,13 @@ var es = require('../../src/elasticsearch'),
     expect = require('expect.js');
 
 describe('Stdio Logger listening to levels warning and error', function () {
-  var client, logger;
+  var client, log, logger;
 
   before(function () {
     client = new es.Client({
       log: []
     });
+    log = client.config.log;
   });
 
   beforeEach(function () {
@@ -21,7 +22,7 @@ describe('Stdio Logger listening to levels warning and error', function () {
     // new logger in warning mode
     logger = new Stdio({
       levels: ['error', 'warning']
-    }, client.log);
+    }, log);
   });
 
   it('logs error messages', function (done) {
@@ -32,7 +33,7 @@ describe('Stdio Logger listening to levels warning and error', function () {
       done();
     };
 
-    client.log.error('Test Error Message');
+    log.error('Test Error Message');
   });
 
   it('logs warning messages', function (done) {
@@ -42,23 +43,23 @@ describe('Stdio Logger listening to levels warning and error', function () {
       done();
     };
 
-    client.log.warning('Test Warning', 'Message');
+    log.warning('Test Warning', 'Message');
   });
 
   it('does not log info messages', function () {
-    if (client.log.info('Info')) {
+    if (log.info('Info')) {
       throw new Error('There shouldn\'t be listeners for info logs');
     }
   });
 
   it('does not log debug messages', function () {
-    if (client.log.debug('Debug')) {
+    if (log.debug('Debug')) {
       throw new Error('There shouldn\'t be listeners for debug logs');
     }
   });
 
   it('does not log trace messages', function () {
-    if (client.log.trace('curl "http://localhost:9200" -d "{ \"query\": ... }"')) {
+    if (log.trace('curl "http://localhost:9200" -d "{ \"query\": ... }"')) {
       throw new Error('There shouldn\'t be listeners for trace logs');
     }
   });
