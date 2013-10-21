@@ -16,6 +16,8 @@ var StreamLogger = require('./stream'),
   fs = require('fs');
 
 function File(config, bridge) {
+  this.path = config.path;
+
   config.stream = fs.createWriteStream(config.path, {
     flags: 'a',
     encoding: 'utf8'
@@ -24,3 +26,15 @@ function File(config, bridge) {
   File.callSuper(this, arguments);
 }
 _.inherits(File, StreamLogger);
+
+File.prototype.onProcessExit = _.handler(function () {
+  // flush the write buffer to disk
+  var writeBuffer = this.stream._writableState.buffer;
+  var out = '';
+  if (writeBuffer) {
+    writeBuffer.forEach(function (buffered) {
+      out += buffered.chunk.toString();
+    });
+    fs.appendFileSync(this.path, out);
+  }
+});

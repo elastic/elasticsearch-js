@@ -12,12 +12,11 @@ var _ = require('./utils'),
  * @class ConnectionAbstract
  * @constructor
  */
-function ConnectionAbstract(config) {
+function ConnectionAbstract(config, nodeInfo) {
   EventEmitter.call(this);
   this.config = config;
-  this.hostname = config.hostname || 'localhost';
-  this.port = config.port || 9200;
-  this.timeout = config.timeout || 10000;
+  this.hostname = nodeInfo.hostname || 'localhost';
+  this.port = nodeInfo.port || 9200;
 
   _.makeBoundMethods(this);
 }
@@ -37,12 +36,17 @@ ConnectionAbstract.prototype.request = function () {
   throw new Error('Connection#request must be overwritten by the Connector');
 };
 
-ConnectionAbstract.prototype.ping = function () {
+ConnectionAbstract.prototype.ping = function (params, cb) {
+  if (typeof params === 'function') {
+    cb = params;
+  } else if (typeof cb !== 'function') {
+    throw new TypeError('Callback must be a function');
+  }
   return this.request({
     path: '/',
     method: 'HEAD',
     timeout: '100'
-  });
+  }, cb);
 };
 
 ConnectionAbstract.prototype.setStatus = function (status) {

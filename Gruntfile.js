@@ -3,6 +3,8 @@
 
 module.exports = function (grunt) {
 
+  var argv = require('optimist').argv;
+
   var pre = [
     'src/pre.js',
     'src/shared.js',
@@ -34,15 +36,17 @@ module.exports = function (grunt) {
         dest: 'dist/elasticsearch-node.js'
       }
     },
-    simplemocha: {
+    mochaTest: {
       unit: [
-        'test/unit/*.test.js'
+        'test/unit/**/*.test.js'
       ],
-      integration: [
-        'test/integration/*.test.js'
+      'yaml-suite': [
+        'test/integration/yaml-suite/index.js'
       ],
       options: {
-        reporter: 'spec'
+        colors: true,
+        require: 'should',
+        reporter: 'dot'
       }
     },
     jshint: {
@@ -50,18 +54,11 @@ module.exports = function (grunt) {
         src: [
           'Gruntfile.js',
           'src/**/*.js',
-        ],
-        options: {
-          jshintrc: 'src/.jshintrc'
-        }
-      },
-      tests: {
-        src: [
           'test/**/*.js'
-        ],
-        options: {
-          jshintrc: 'test/.jshintrc'
-        }
+        ]
+      },
+      options: {
+        jshintrc: true
       }
     },
     yuidoc: {
@@ -84,13 +81,11 @@ module.exports = function (grunt) {
   });
 
   // load plugins
-  grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'simple-mocha']);
-  grunt.registerTask('test', ['simplemocha:integration']);
-
+  grunt.registerTask('default', ['jshint', 'mochaTest']);
 };

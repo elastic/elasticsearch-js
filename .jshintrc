@@ -1,6 +1,5 @@
 {
   "node": true,
-
   "white": true,
 
   "bitwise": false,
@@ -9,7 +8,7 @@
   "eqeqeq": true,
   "forin": true,
   "immed": true,
-  "expr": false,
+  "expr": true,
   "indent": 2,
   "latedef": "nofunc",
   "newcap": true,
@@ -24,5 +23,6 @@
   "laxcomma": true,
   "validthis": true,
   "sub": true,
-  "maxlen": 140
+  "maxlen": 140,
+  "-W084": true
 }

@@ -222,7 +222,7 @@ Log.prototype.info = function (/* ...msg */) {
  */
 Log.prototype.debug = function (/* ...msg */) {
   if (EventEmitter.listenerCount(this, 'debug')) {
-    return this.emit('debug', Log.join(arguments));
+    return this.emit('debug', Log.join(arguments) + _.getStackTrace(Log.prototype.debug));
   }
 };
 

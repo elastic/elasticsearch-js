@@ -18,10 +18,10 @@ var http = require('http'),
   };
 
 
-function HttpConnection(config) {
-  ConnectionAbstract.call(this, config);
+function HttpConnection(config, nodeInfo) {
+  ConnectionAbstract.call(this, config, nodeInfo);
 
-  this.protocol = config.protocol || 'http:';
+  this.protocol = nodeInfo.protocol || 'http:';
   if (this.protocol[this.protocol.length - 1] !== ':') {
     this.protocol = this.protocol + ':';
   }
@@ -36,7 +36,7 @@ function HttpConnection(config) {
 
   this.on('closed', this.bound.onClosed);
   this.once('alive', this.bound.onAlive);
-
+  this.requestCount = 0;
 }
 _.inherits(HttpConnection, ConnectionAbstract);
 
@@ -51,12 +51,15 @@ HttpConnection.prototype.onAlive = _.handler(function () {
 });
 
 HttpConnection.prototype.request = function (params, cb) {
-  var request,
-    response,
-    status = 0,
-    timeout = params.timeout || this.timeout,
-    timeoutId,
-    log = this.config.log;
+  var incoming;
+  var timeoutId;
+  var log = this.config.log;
+  var request;
+  var requestId = this.requestCount;
+  var response;
+  var responseStarted = false;
+  var status = 0;
+  var timeout = params.timeout || this.config.timeout;
 
   var reqParams = _.defaults({
     protocol: this.protocol,
@@ -67,15 +70,20 @@ HttpConnection.prototype.request = function (params, cb) {
     headers: _.defaults(params.headers || {}, defaultHeaders)
   });
 
+  log.debug('starting request', requestId);
+
   // general clean-up procedure to run after the request, can only run once
   var cleanUp = function (err) {
-    cleanUp = _.noop;
-
     clearTimeout(timeoutId);
-    if (request) {
-      request.removeAllListeners();
-    }
+
+    request && request.removeAllListeners();
+    incoming && incoming.removeAllListeners();
+
+    log.debug('calling back request', requestId, err ? 'with error "' + err.message + '"' : '');
     _.nextTick(cb, err, reqParams, response, status);
+
+    // override so this doesn't get called again
+    cleanUp = _.noop;
   };
 
   // ensure that "get" isn't being used with a request body
@@ -88,7 +96,8 @@ HttpConnection.prototype.request = function (params, cb) {
 
   request = http.request(reqParams);
 
-  request.on('response', function (incoming) {
+  request.on('response', function (_incoming) {
+    incoming = _incoming;
     status = incoming.statusCode;
     incoming.setEncoding('utf8');
     response = '';
@@ -98,7 +107,6 @@ HttpConnection.prototype.request = function (params, cb) {
     });
 
     incoming.on('end', function requestComplete() {
-      incoming.removeAllListeners();
       cleanUp();
     });
   });
@@ -113,5 +121,9 @@ HttpConnection.prototype.request = function (params, cb) {
     request.emit('error', new errors.RequestTimeout('Request timed out at ' + timeout + 'ms'));
   }, timeout);
 
+  request.setNoDelay(true);
+  request.setSocketKeepAlive(true);
+
   request.end(params.body);
+  this.requestCount++;
 };

@@ -13,8 +13,6 @@ function LoggerAbstract(config, bridge) {
 
   _.makeBoundMethods(this);
 
-  console.log(this.bound);
-
   // when the bridge closes, remove our event listeners
   this.bridge.on('closing', this.bound.cleanUpListeners);
 

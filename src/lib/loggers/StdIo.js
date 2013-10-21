@@ -51,9 +51,9 @@ Stdio.prototype.write = function (to, label, colorize, message) {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-Stdio.prototype.onError = function (e) {
+Stdio.prototype.onError = _.handler(function (e) {
   this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, clc.red.bold, e.stack);
-};
+});
 
 /**
  * Handler for the bridges "warning" event
@@ -63,9 +63,9 @@ Stdio.prototype.onError = function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onWarning = function (msg) {
+Stdio.prototype.onWarning = _.handler(function (msg) {
   this.write(process.stderr, 'WARNING', clc.yellow.bold, msg);
-};
+});
 
 /**
  * Handler for the bridges "info" event
@@ -75,9 +75,9 @@ Stdio.prototype.onWarning = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onInfo = function (msg) {
+Stdio.prototype.onInfo = _.handler(function (msg) {
   this.write(process.stdout, 'INFO', clc.cyan.bold, msg);
-};
+});
 
 /**
  * Handler for the bridges "debug" event
@@ -87,9 +87,9 @@ Stdio.prototype.onInfo = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onDebug = function (msg) {
+Stdio.prototype.onDebug = _.handler(function (msg) {
   this.write(process.stdout, 'DEBUG', clc.magentaBright.bold, msg);
-};
+});
 
 /**
  * Handler for the bridges "trace" event
@@ -98,7 +98,7 @@ Stdio.prototype.onDebug = function (msg) {
  * @private
  * @return {undefined}
  */
-Stdio.prototype.onTrace = function (method, url, body, responseBody, responseStatus) {
+Stdio.prototype.onTrace = _.handler(function (method, url, body, responseBody, responseStatus) {
   var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
   if (body) {
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
@@ -116,4 +116,4 @@ Stdio.prototype.onTrace = function (method, url, body, responseBody, responseSta
   message += '\n' + responseBody;
 
   this.write(process.stdout, 'TRACE', clc.cyanBright.bold, message);
-};
+});

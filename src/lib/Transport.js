@@ -63,12 +63,15 @@ Transport.prototype.request = function (params, cb) {
 
   function sendRequestWithConnection(err, _connection) {
     if (err) {
+      log.error(err);
       cb(err);
     } else if (_connection) {
       connection = _connection;
+      log.info('Selected', _connection.status, 'Connection, making request');
       connection.request(params, checkRespForFailure);
     } else {
-      cb(new errors.ConnectionFault('No active connections.'));
+      log.warning('No living connections');
+      cb(new errors.ConnectionFault('No living connections.'));
     }
   }
 
@@ -81,9 +84,10 @@ Transport.prototype.request = function (params, cb) {
 
     if (err && remainingRetries) {
       remainingRetries--;
-      log.info('Retrying request after connection error');
+      log.info('connection error, retrying');
       connectionPool.select(sendRequestWithConnection);
     } else {
+      log.info('Request complete');
       cb(err, reqParams, body, status);
     }
   }

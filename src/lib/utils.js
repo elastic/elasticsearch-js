@@ -450,7 +450,6 @@ utils.makeBoundMethods = function (obj, methods) {
     for (var prop in obj) {
       // dearest maintainer, we want to look through the prototype
       if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
-        console.log('binding', prop);
         obj.bound[prop] = utils.bind(obj[prop], obj);
       }
     }
@@ -462,5 +461,11 @@ utils.makeBoundMethods = function (obj, methods) {
 };
 
 utils.noop = function () {};
+
+utils.getStackTrace = function (callee) {
+  var e = {};
+  Error.captureStackTrace(e, callee || utils.getStackTrace);
+  return '\n' + e.stack.split('\n').slice(1).join('\n');
+};
 
 module.exports = utils;

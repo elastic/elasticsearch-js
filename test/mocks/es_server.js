@@ -30,12 +30,7 @@ var pingResp = JSON.stringify({
   'tagline': 'You Know, for Search'
 });
 
-function EsServer(config) {
-  this.config = _.defaults(config || {}, {
-    port: 0,
-    data: '/'
-  });
-
+function EsServer() {
   var self = this;
   var server = http.createServer();
 
@@ -77,7 +72,7 @@ function EsServer(config) {
   };
 
   process.nextTick(function () {
-    server.listen(self.config.port, function () {
+    server.listen(0, function () {
       self.emit('online', server.address().port);
     });
   });

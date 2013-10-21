@@ -46,7 +46,9 @@ var defaultConfig = {
   sniffOnStart: false,
   sniffAfterRequests: null,
   sniffOnConnectionFail: false,
-  maxRetries: 3
+  maxRetries: 3,
+  timeout: 10000,
+  deadTimeout: 60000
 };
 
 function ClientConfig(config) {

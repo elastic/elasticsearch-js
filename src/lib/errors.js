@@ -1,11 +1,11 @@
 var _ = require('./utils'),
   errors = module.exports;
 
-function ErrorAbstract(msg) {
-  Error.call(this, msg);
-  Error.captureStackTrace(this, this.constructor);
-
+function ErrorAbstract(msg, constructor) {
   this.message = msg;
+
+  Error.call(this, this.message);
+  Error.captureStackTrace(this, constructor);
 }
 _.inherits(ErrorAbstract, Error);
 
@@ -14,8 +14,7 @@ _.inherits(ErrorAbstract, Error);
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.ConnectionFault = function ConnectionFault(msg) {
-  return new Error(msg || 'Connection Failure');
-  ErrorAbstract.call(this, msg || 'Connection Failure');
+  ErrorAbstract.call(this, msg || 'Connection Failure', errors.ConnectionFault);
 };
 _.inherits(errors.ConnectionFault, ErrorAbstract);
 
@@ -24,8 +23,7 @@ _.inherits(errors.ConnectionFault, ErrorAbstract);
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.Generic = function Generic(msg) {
-  return new Error(msg || 'Generic Error');
-  ErrorAbstract.call(this, msg || 'Generic Error');
+  ErrorAbstract.call(this, msg || 'Generic Error', errors.Generic);
 };
 _.inherits(errors.Generic, ErrorAbstract);
 
@@ -34,8 +32,7 @@ _.inherits(errors.Generic, ErrorAbstract);
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.RequestTimeout = function RequestTimeout(msg) {
-  return new Error(msg || 'RequestTimeout');
-  ErrorAbstract.call(this, msg || 'Request Timeout');
+  ErrorAbstract.call(this, msg || 'Request Timeout', errors.RequestTimeout);
 };
 _.inherits(errors.RequestTimeout, ErrorAbstract);
 
@@ -44,8 +41,7 @@ _.inherits(errors.RequestTimeout, ErrorAbstract);
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.Serialization = function RequestTimeout(msg) {
-  return new Error(msg || 'ParseError');
-  ErrorAbstract.call(this, msg || 'Unable to parse response body');
+  ErrorAbstract.call(this, msg || 'Unable to parse response body', errors.RequestTimeout);
 };
 _.inherits(errors.RequestTimeout, ErrorAbstract);
 
@@ -105,8 +101,7 @@ _.each(statusCodes, function (name, status) {
   var className = _.studlyCase(name);
 
   function StatusCodeError(msg) {
-    return new Error(msg || name);
-    ErrorAbstract.call(this, msg || name);
+    ErrorAbstract.call(this, msg || name, errors.StatusCodeError);
   }
 
   _.inherits(StatusCodeError, ErrorAbstract);

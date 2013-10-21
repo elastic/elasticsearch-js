@@ -13,10 +13,9 @@ var argv = require('optimist')
   .default('dataPath', '/tmp/yaml-test-runner')
   .argv;
 
-
-if (argv.hostname || argv.port) {
-  console.log('working with ES instance at ' + argv.hostname + ':' + argv.port);
-}
+// if (argv.hostname || argv.port) {
+//   console.log('working with ES instance at ' + argv.hostname + ':' + argv.port);
+// }
 
 // Where do the tests live?
 var TEST_DIR = path.resolve(__dirname, '../../../es_api_spec/test/');
@@ -31,7 +30,7 @@ var esServer = null;
 var client = null;
 
 // location that the logger will write to
-var logFile = path.resolve(__dirname, '../integration-test.log');
+var logFile = path.resolve(__dirname, './log');
 
 // empty all of the indices in ES please
 function clearIndices (done) {
@@ -67,6 +66,7 @@ before(function (done) {
 });
 
 before(function () {
+  Error.stackTraceLimit = Infinity;
   // create the client
   client = new es.Client({
     hosts: [
@@ -77,7 +77,7 @@ before(function () {
     ],
     log: {
       type: 'file',
-      level: ['error', 'debug', 'trace'],
+      level: ['error', 'warning', 'trace'],
       path: logFile
     }
   });
@@ -391,7 +391,7 @@ ActionRunner.prototype = {
     rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
       if (match) {
         this.skipping = true;
-        console.log('skipping the rest of these actions' + (args.reason ? ' because ' + args.reason : ''));
+        // console.log('skipping the rest of these actions' + (args.reason ? ' because ' + args.reason : ''));
       } else {
         this.skipping = false;
       }

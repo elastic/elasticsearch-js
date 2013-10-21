@@ -20,8 +20,6 @@ var argv = require('optimist')
   .argv;
 
 // Error.stackTraceLimit = Infinity;
-
-// console.log(argv);
 // process.exit();
 
 var count = parseInt(argv._[0] || 14000, 10),

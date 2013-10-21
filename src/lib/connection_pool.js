@@ -30,10 +30,14 @@ ConnectionPool.prototype.select = function (cb) {
     if (this.config.selector.length > 1) {
       this.config.selector(this.connections.alive, cb);
     } else {
-      cb(null, this.config.selector(this.connections.alive));
+      try {
+        cb(null, this.config.selector(this.connections.alive));
+      } catch (e) {
+        cb(e);
+      }
     }
   } else {
-    cb(new errors.ConnectionFault('No active connections'));
+    cb();
   }
 };
 
@@ -46,10 +50,10 @@ ConnectionPool.prototype.empty = function () {
   });
 };
 
-ConnectionPool.prototype.setStatus = _.handler(function (status, oldStatus, connection) {
-  var origStatus = connection.status, from, to, index;
+ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus, connection) {
+  var from, to, index;
 
-  if (origStatus === status) {
+  if (oldStatus === status) {
     return true;
   } else {
     this.config.log.info('connection to', _.formatUrl(connection), 'is', status);
@@ -65,8 +69,8 @@ ConnectionPool.prototype.setStatus = _.handler(function (status, oldStatus, conn
     to = this.connections.dead;
     break;
   case 'closed':
-    from = this.connections[origStatus];
-    connection.removeListener('status changed', this.bound.setStatus);
+    from = this.connections[oldStatus];
+    connection.removeListener('status changed', this.bound.onStatusChanged);
     break;
   }
 
@@ -88,7 +92,7 @@ ConnectionPool.prototype.setStatus = _.handler(function (status, oldStatus, conn
 ConnectionPool.prototype.add = function (connection) {
   if (!~this.connections.alive.indexOf(connection) && !~this.connections.dead.indexOf(connection)) {
     connection.status = 'alive';
-    connection.on('status changed', this.bound.setStatus);
+    connection.on('status changed', this.bound.onStatusChanged);
     this.connections.alive.push(connection);
   }
 };
