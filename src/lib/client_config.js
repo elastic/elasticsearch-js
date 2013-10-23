@@ -27,6 +27,12 @@ var defaultConfig = {
   ],
   connectionConstructor: 'Http',
   selector: selectors.roundRobin,
+  sniffOnStart: false,
+  sniffAfterRequests: null,
+  sniffOnConnectionFail: false,
+  maxRetries: 3,
+  timeout: 10000,
+  deadTimeout: 60000,
   nodesToHostCallback: function (nodes) {
     var hosts = [];
     _.each(nodes, function (node, id) {
@@ -41,13 +47,7 @@ var defaultConfig = {
       });
     });
     return hosts;
-  },
-  sniffOnStart: false,
-  sniffAfterRequests: null,
-  sniffOnConnectionFail: false,
-  maxRetries: 3,
-  timeout: 10000,
-  deadTimeout: 60000
+  }
 };
 
 function ClientConfig(config) {
