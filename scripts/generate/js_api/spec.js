@@ -1,48 +1,85 @@
 var _ = require('../../../src/lib/utils')
 
-var docs = _.requireDir(module, '../../../es_api_spec/api');
+var EventEmitter = require('events').EventEmitter;
 var aliases = require('./aliases');
+var https = require('https');
+var unzip = require('unzip');
 
 var castNotFoundRE = /exists/;
 var usesBulkBodyRE = /^(bulk|msearch)$/;
 
-var defs = [];
+var specCount = 0;
+var doneParsing = false;
 
-// itterate all of the found docs
-Object.keys(docs).forEach(function (filename) {
-  Object.keys(docs[filename]).forEach(function (name) {
-    var def = docs[filename][name];
-    def.name = name;
-    defs.push(def);
+https.get('https://codeload.github.com/elasticsearch/elasticsearch-rest-api-spec/zip/master', function (incoming) {
+  incoming.pipe(unzip.Parse())
+  .on('entry', function (entry) {
+    if (entry.type === 'File' && entry.path.match(/(^|\/)api\/.*\.json$/)) {
+      specCount++;
+      return collectEntry(entry);
+    } else {
+      entry.autodrain();
+    }
   })
-});
+  .on('close', function () {
+    doneParsing = true;
+    if (specs.length === specCount) {
+      module.exports.emit('ready', specs);
+    }
+  });
+})
 
-module.exports = _.map(defs, function (def) {
-  var name = def.name;
-  var steps = name.split('.');
+var specs = [];
 
-  var spec = {
-    name: name,
-    methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
-    docUrl: def.documentation,
-    urlParts: def.url.parts,
-    params: def.url.params,
-    urls: _.difference(def.url.paths, aliases[name]),
-    body: def.body || null,
-    path2lib: _.repeat('../', steps.length + 1) + 'lib/'
-  };
+function collectEntry(entry) {
+  var file = '';
 
-  if (def.body && def.body.requires) {
-    spec.needBody = true;
+  function onData (chunk) {
+    file+= chunk;
   }
 
-  if (usesBulkBodyRE.test(name)) {
-    spec.bulkBody = true;
+  function onEnd () {
+    entry.removeListener('data', onData);
+    entry.removeListener('end', onEnd);
+    process.nextTick(function () {
+      transformFile(file);
+    });
   }
 
-  if (castNotFoundRE.test(name)) {
-    spec.castNotFound = true;
-  }
+  entry.on('data', onData)
+  entry.on('end', onEnd);
+}
 
-  return spec;
-});
+function transformFile(file) {
+  // itterate all of the specs within the file, should only be one
+  _.each(JSON.parse(file), function (def, name) {
+    var steps = name.split('.');
+    var spec = {
+      name: name,
+      methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
+      docUrl: def.documentation,
+      urlParts: def.url.parts,
+      params: def.url.params,
+      urls: _.difference(def.url.paths, aliases[name]),
+      body: def.body || null,
+      path2lib: _.repeat('../', steps.length + 1) + 'lib/'
+    };
+
+    if (def.body && def.body.requires) {
+      spec.needBody = true;
+    }
+
+    if (usesBulkBodyRE.test(name)) {
+      spec.bulkBody = true;
+    }
+
+    if (castNotFoundRE.test(name)) {
+      spec.castNotFound = true;
+    }
+    if (specs.push(spec) === specCount && doneParsing) {
+      module.exports.emit('ready', specs);
+    }
+  })
+}
+
+module.exports = new EventEmitter();

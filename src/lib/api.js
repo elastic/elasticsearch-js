@@ -1082,8 +1082,8 @@ api.get = ca({
  * Perform a [](http://elasticsearch.org/guide/reference/api/get/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String|ArrayOfStrings|Boolean} params._source_exclude
- * @param {String|ArrayOfStrings|Boolean} params._source_include
+ * @param {String|ArrayOfStrings|Boolean} params.exclude
+ * @param {String|ArrayOfStrings|Boolean} params.include
  * @param {String} params.parent
  * @param {String} params.preference
  * @param {Boolean} params.realtime
@@ -1095,10 +1095,10 @@ api.getSource = ca({
     'GET'
   ],
   params: {
-    _source_exclude: {
+    exclude: {
       type: 'list'
     },
-    _source_include: {
+    include: {
       type: 'list'
     },
     parent: {

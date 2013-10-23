@@ -17,9 +17,7 @@ exports.start = function (params, cb) {
       '-f',
       '-Des.cluster.name=' + params.clusterName,
       '-Des.path.data=' + params.dataPath,
-      '-Des.logger.level=DEBUG',
-      '-Des.gateway.type=none',
-      '-Des.index.store.type=memory',
+      // '-Des.logger.level=DEBUG',
       '-Des.discovery.zen.ping.multicast.enabled=false',
     ],
     {
@@ -33,7 +31,7 @@ exports.start = function (params, cb) {
     }
   );
 
-  server.stdout.on('data', function (line) {
+  server.stdout.on('data', function onProcessData(line) {
     line = _.trim(line.toString());
     var match;
     if (match = line.match(/bound_address \{inet\[\/?([^:]+):(\d+)\]\}/)) {
@@ -43,8 +41,8 @@ exports.start = function (params, cb) {
 
     if (line.match(/started\s*$/m)) {
       console.log('Personal ES Server started at', server.__hostname + ':' + server.__port);
-      server.stdout.removeAllListeners();
-      server.stderr.removeAllListeners();
+      server.stdout.removeListener('data', onProcessData);
+      server.stdout.on('data', _.noop);
       cb(null, server);
     }
   });
@@ -53,9 +51,11 @@ exports.start = function (params, cb) {
     console.error(_.trim(line.toString()));
   });
 
-  server.on('exit', function (code) {
+  server.on('close', function (code) {
+    server.stdout.removeAllListeners();
+    server.stderr.removeAllListeners();
     console.log('Personal ES Server Shutdown with exit code', code);
-  })
+  });
 
   process.on('exit', function () {
     server.kill();

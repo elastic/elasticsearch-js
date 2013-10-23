@@ -106,7 +106,7 @@ HttpConnection.prototype.request = function (params, cb) {
     cleanUp(err);
   });
 
-  // timeout for the entire request, req.setTimeout only set the socket level timeout
+  // timeout for the entire request.
   timeoutId = setTimeout(function () {
     request.emit('error', new errors.RequestTimeout('Request timed out at ' + timeout + 'ms'));
   }, timeout);

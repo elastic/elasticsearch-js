@@ -7,7 +7,6 @@ var mkdirp = require('mkdirp');
 var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
 
 var templates = require('./templates');
-var specs = require('./spec');
 
 // completely delete the output directory
 var clean = (function () {
@@ -41,7 +40,7 @@ var clean = (function () {
 
 })();
 
-exports.run = function () {
+require('./spec').on('ready', function (specs) {
   var defs = [];
   var namespaces = [];
 
@@ -123,6 +122,6 @@ exports.run = function () {
     actions: actions,
     namespaces: _.unique(namespaces.sort(), true)
   }));
-};
+});
 
-exports.run();
+
