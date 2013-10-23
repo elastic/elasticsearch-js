@@ -103,6 +103,7 @@ module.exports = function (grunt) {
 
   // Default task.
   // grunt.registerTask('docs', ['docular']);
-  grunt.registerTask('default', ['jshint', 'mochaTest']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'mochaTest:unit']);
 
 };
