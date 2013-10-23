@@ -54,11 +54,13 @@ ConnectionAbstract.prototype.setStatus = function (status) {
 
   this.status = status;
 
-  if (status === 'dead') {
+  if (status === 'dead' || status === 'closed') {
     if (this.__deadTimeout) {
       clearTimeout(this.__deadTimeout);
     }
-    this.__deadTimeout = setTimeout(this.bound.resuscitate, this.config.deadTimeout);
+    if (status === 'dead') {
+      this.__deadTimeout = setTimeout(this.bound.resuscitate, this.config.deadTimeout);
+    }
   }
 
   this.emit('status changed', status, origStatus, this);

@@ -2,10 +2,10 @@
  * Constructs a function that can be called to make a request to ES
  * @type {[type]}
  */
-module.exports = function clientAction(spec) {
+exports.create = function clientAction(spec) {
   return function (params, cb) {
     return exec(this.client, spec, params, cb);
-  }
+  };
 };
 
 var errors = require('./errors');
@@ -75,8 +75,8 @@ var castType = {
   }
 };
 
-function resolveUrl (url, params) {
-  var vars = {}, name, i, key;
+function resolveUrl(url, params) {
+  var vars = {}, i, key;
 
   if (url.req) {
     // url has required params
@@ -128,7 +128,7 @@ function resolveUrl (url, params) {
     // remove it from the params so that it isn't sent to the final request
     delete params[name];
   }, {}));
-};
+}
 
 function exec(client, spec, params, cb) {
   if (typeof params === 'function') {
@@ -139,20 +139,25 @@ function exec(client, spec, params, cb) {
     cb = typeof cb === 'function' ? cb : _.noop;
   }
 
-  var request = {
-    ignore: params.ignore
-  };
+  var request = {};
   var parts = {};
   var query = {};
   var i;
 
   if (spec.needsBody && !params.body) {
-    return _.nextTick(cb, new TyperError(spec.name + ' requires a request body.'));
+    return _.nextTick(cb, new TypeError('A request body is required.'));
   }
 
   if (params.body) {
     request.body = params.body;
-    request.bulkBody = spec.bulkBody;
+  }
+
+  if (spec.bulkBody) {
+    request.bulkBody = true;
+  }
+
+  if (params.ignore) {
+    request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore];
   }
 
   if (spec.methods.length === 1) {
@@ -238,4 +243,4 @@ function exec(client, spec, params, cb) {
   } else {
     client.request(request, cb);
   }
-};
+}

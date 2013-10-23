@@ -51,6 +51,15 @@ function Log(config) {
 }
 _.inherits(Log, EventEmitter);
 
+
+Log.prototype.close = function () {
+  this.emit('closing');
+  if (EventEmitter.listenerCount(this)) {
+    console.error('Something is still listening for log events, but the logger is closing.');
+    this.clearAllListeners();
+  }
+}
+
 /**
  * Levels observed by the loggers, ordered by rank
  *

@@ -32,9 +32,10 @@ module.exports = Client;
 
 var _ = require('./utils');
 var ClientConfig = require('./client_config');
-// var api = _.reKey(_.requireDir(module, '../api'), _.camelCase);
+var ca = require('./client_action').create;
 var q = require('q');
 var errors = require('./errors');
+var api = require('./api.js');
 
 function Client(config) {
   this.client = this;
@@ -48,10 +49,12 @@ function Client(config) {
   });
   this.config.client = this;
 
-  for (var i = 0; i < _namespaces.length; i++) {
-    this[_namespaces[i]] = new this[_namespaces[i]](this);
+  for (var i = 0; i < this._namespaces.length; i++) {
+    this[this._namespaces[i]] = new this[this._namespaces[i]](this);
   }
 }
+
+Client.prototype = api;
 
 /**
  * Perform a request with the client's transport
@@ -91,7 +94,7 @@ Client.prototype.request = function (params, cb) {
   }
 
   if (params.body && params.method === 'GET') {
-    _.nextTick(cb, new TypeError('Body can not be sent with method "GET"'));
+    respond(new TypeError('Body can not be sent with method "GET"'));
     return;
   }
 
@@ -164,12 +167,13 @@ Client.prototype.request = function (params, cb) {
  * @param {Object} params - Currently just a placeholder, no params used at this time
  * @param {Function} cb - callback
  */
-Client.prototype.ping = function (params, cb) {
-  this.request({
-    method: 'HEAD',
-    path: '/'
-  }, cb);
-};
+Client.prototype.ping = ca({
+    methods: ['HEAD'],
+    params: {},
+    url: {
+      fmt: '/'
+    }
+  });
 
 /**
  * Ask an ES node for a list of all the nodes, add/remove nodes from the connection
@@ -193,26 +197,14 @@ Client.prototype.sniff = function (cb) {
     }
     cb(err, resp);
   });
-}
-
-var _namespaces = [];
-
-/**
- * These names of the properties that hold namespace objects in the Client prototype
- * @type {Array}
- */
-Client.namespace = function (namespace) {
-  var steps = namespace.split('.');
-  var path = [];
-  var on = Client;
-  var i;
-  for (i = 0; i < steps.length; i ++) {
-    path.push(steps[i]);
-    _namespaces.push(path.join('.'));
-    on.prototype[steps[i]] = function ClientActionNamespace(client) {
-      this.client = client;
-    };
-  }
 };
 
-require('./api.js').attach(Client);
+
+/**
+ * Shutdown the connections, log outputs, and clear timers
+ */
+Client.prototype.close = function () {
+  this.config.log.close();
+  this.config.connectionPool.close();
+};
+

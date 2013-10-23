@@ -295,7 +295,7 @@ utils.inherits = function (constructor, superConstructor) {
  * @returns {String}
  */
 utils.trim = function (str) {
-  return typeof str !== 'string' ? str.replace(/^\s+|\s+$/g, '') : '';
+  return typeof str === 'string' ? str.replace(/^\s+|\s+$/g, '') : '';
 };
 
 utils.collectMatches = function (text, regExp) {
@@ -385,8 +385,13 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
  * @return {[type]} [description]
  */
 _.nextTick = function (cb) {
+  console.log('tick');
+  var args = Array.prototype.slice.call(arguments, 1);
   // bind the function and schedule it
-  process.nextTick(_.bindKey(_, 'applyArgs', cb, null, arguments, 1));
+  process.nextTick(function () {
+    console.log('tock');
+    cb.apply(null, args);
+  });
 };
 
 /**

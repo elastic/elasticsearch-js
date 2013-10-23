@@ -70,8 +70,6 @@ HttpConnection.prototype.request = function (params, cb) {
     headers: _.defaults(params.headers || {}, defaultHeaders)
   });
 
-  log.debug('starting request', requestId);
-
   // general clean-up procedure to run after the request, can only run once
   var cleanUp = function (err) {
     clearTimeout(timeoutId);
@@ -80,7 +78,7 @@ HttpConnection.prototype.request = function (params, cb) {
     incoming && incoming.removeAllListeners();
 
     log.debug('calling back request', requestId, err ? 'with error "' + err.message + '"' : '');
-    _.nextTick(cb, err, reqParams, response, status);
+    cb(err, reqParams, response, status);
 
     // override so this doesn't get called again
     cleanUp = _.noop;
@@ -88,9 +86,7 @@ HttpConnection.prototype.request = function (params, cb) {
 
   reqParams.agent = this.agent;
 
-  request = http.request(reqParams);
-
-  request.on('response', function (_incoming) {
+  request = http.request(reqParams, function (_incoming) {
     incoming = _incoming;
     status = incoming.statusCode;
     incoming.setEncoding('utf8');

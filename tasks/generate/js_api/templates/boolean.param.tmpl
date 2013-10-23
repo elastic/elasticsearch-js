@@ -1,7 +1,0 @@
-if (<%= get %>.toLowerCase && (<%= get %> = <%= get %>.toLowerCase())
-  && (<%= get %> === 'no' || <%= get %> === 'off')
-) {
-  <%= set %> = false;
-} else {
-  <%= set %> = !!<%= get %>;
-}

@@ -1,5 +1,5 @@
 var es = require('../../src/elasticsearch'),
-    api = require('../../src/lib/utils').requireDir(module, '../../src/api'),
+    api = require('../../src/lib/api'),
     expect = require('expect.js');
 
 describe('Client instances creation', function () {
@@ -10,7 +10,7 @@ describe('Client instances creation', function () {
   });
 
   it('inherits the api', function () {
-    client.bulk.should.be.exactly(api.bulk);
-    client.cluster.nodeStats.should.be.exactly(api.cluster.node_stats);
+    client.bulk.should.eql(api.bulk);
+    client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);
   });
 });

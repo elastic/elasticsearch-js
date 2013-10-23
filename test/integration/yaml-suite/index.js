@@ -5,23 +5,25 @@ var path = require('path'),
   expect = require('expect.js'),
   server = require('./server'),
   _ = require('../../../src/lib/utils'),
-  es = require('../../../src/elasticsearch');
+  es = require('../../../src/elasticsearch'),
+  Minimatch = require('minimatch').Minimatch;
 
 var argv = require('optimist')
   .default('executable', path.join(process.env.ES_HOME, './bin/elasticsearch'))
   .default('clusterName', 'yaml-test-runner')
   .default('dataPath', '/tmp/yaml-test-runner')
+  .default('hostname', 'localhost')
+  .default('port', '9200')
+  .default('match', '**')
+  .boolean('createServer')
   .argv;
 
-// if (argv.hostname || argv.port) {
-//   console.log('working with ES instance at ' + argv.hostname + ':' + argv.port);
-// }
+Error.stackTraceLimit = Infinity;
 
 // Where do the tests live?
 var TEST_DIR = path.resolve(__dirname, '../../../es_api_spec/test/');
 
-// test names matching this will be run
-var doRE = /(^|\/)(.*)\/.*/;
+var doPattern = new Minimatch(argv.match);
 
 // a reference to a personal instance of ES Server
 var esServer = null;
@@ -40,17 +42,49 @@ function clearIndices(done) {
   }, done);
 }
 
+function createClient() {
+  if (client) {
+    client.close();
+  }
+
+  client = new es.Client({
+    hosts: [
+      {
+        hostname: esServer ? esServer.__hostname : argv.hostname,
+        port: esServer ? esServer.__port : argv.port
+      }
+    ],
+    // log: null
+    log: {
+      type: 'file',
+      level: 'trace',
+      path: logFile
+    }
+  });
+}
+
+function createServer(done) {
+  server.start(argv, function (err, server) {
+    esServer = server;
+    done(err);
+  });
+}
+
 // before running any tests...
 before(function (done) {
   // start our personal ES Server
   this.timeout(null);
-  if (argv.hostname) {
-    done();
+  if (argv.createServer) {
+    createServer(done);
   } else {
-    server.start(argv, function (err, server) {
-      esServer = server;
-      done(err);
-    });
+    createClient();
+    client.ping(function (err) {
+      if (err) {
+        createServer(done);
+      } else {
+        done();
+      }
+    })
   }
 });
 
@@ -66,22 +100,7 @@ before(function (done) {
 });
 
 before(function () {
-  Error.stackTraceLimit = Infinity;
-  // create the client
-  client = new es.Client({
-    hosts: [
-      {
-        hostname: esServer ? esServer.__hostname : argv.hostname,
-        port: esServer ? esServer.__port : argv.port
-      }
-    ],
-    log: null
-    // log: {
-    //   type: 'file',
-    //   level: ['error', 'warning', 'trace'],
-    //   path: logFile
-    // }
-  });
+  createClient();
 });
 
 before(clearIndices);
@@ -97,7 +116,7 @@ function loadDir(dir) {
       var location = path.join(dir, fileName),
           stat = fs.statSync(location);
 
-      if (stat.isFile() && fileName.match(/\.yaml$/) && location.match(doRE)) {
+      if (stat.isFile() && fileName.match(/\.yaml$/) && doPattern.match(path.relative(TEST_DIR, location))) {
         loadFile(location);
       }
       else if (stat.isDirectory()) {
@@ -188,25 +207,21 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 }
 
 /**
- * read the file's contents, parse the yaml, pass to makeTest
+ * read the file's contents, parse the yaml, pass to makeTestFromYamlDoc
  *
  * @param  {String} path - Full path to yaml file
  * @return {undefined}
  */
 function loadFile(location) {
-  var docsInFile = [];
-
   jsYaml.loadAll(
     fs.readFileSync(location, { encoding: 'utf8' }),
-    function (testConfig) {
-      docsInFile.push(testConfig);
+    function (doc) {
+      makeTestFromYamlDoc(doc);
     },
     {
       filename: location
     }
   );
-
-  _.each(docsInFile, makeTest);
 }
 
 /**
@@ -217,15 +232,15 @@ function loadFile(location) {
  * @param  {Object} testConfigs - The yaml document
  * @return {undefined}
  */
-function makeTest(testConfig, count) {
+function makeTestFromYamlDoc(yamlDoc, count) {
   var setup;
-  if (_.has(testConfig, 'setup')) {
-    (new ActionRunner(testConfig.setup)).each(function (action, name) {
+  if (_.has(yamlDoc, 'setup')) {
+    (new ActionRunner(yamlDoc.setup)).each(function (action, name) {
       before(action);
     });
-    delete testConfig.setup;
+    delete yamlDoc.setup;
   }
-  _.forOwn(testConfig, function (test, description) {
+  _.forOwn(yamlDoc, function (test, description) {
     describe(description, function () {
       var actions = new ActionRunner(test);
       actions.each(function (action, name) {
@@ -462,21 +477,23 @@ ActionRunner.prototype = {
             if (catcher instanceof RegExp) {
               // error message should match the regexp
               expect(error.message).to.match(catcher);
+              error = null;
             } else if (typeof catcher === 'function') {
               // error should be an instance of
               expect(error).to.be.a(catcher);
+              error = null;
             } else {
-              throw new Error('Invalid catcher ' + catcher);
+              return done(new Error('Invalid catcher ' + catcher));
             }
           } else {
-            throw error;
+            return done(error);
           }
         }
 
-        done();
+        done(error);
       }, this));
     } else {
-      throw new Error('stepped in do_do, did not find a function');
+      done(new Error('stepped in do_do, did not find a function'));
     }
 
   },

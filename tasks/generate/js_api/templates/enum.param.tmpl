@@ -1,8 +1,0 @@
-if (_.contains(<%= _.camelCase(name) %>Options, <%= get %>)) {
-  <%= set %> = <%= get %>;
-} else {
-  throw new TypeError(
-    'Invalid <%= name %>: ' + <%= get %> +
-    ' should be one of ' + <%= _.camelCase(name) %>Options.join(', ') + '.'
-  );
-}

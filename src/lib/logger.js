@@ -85,7 +85,7 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  */
 LoggerAbstract.prototype.cleanUpListeners = _.handler(function () {
   _.each(this.listeningLevels, function (level) {
-    this.bridge.removeListener(level, this.handlers[level]);
+    this.bridge.removeListener(level, this.bound['on' + _.ucfirst(level)]);
   }, this);
 });
 

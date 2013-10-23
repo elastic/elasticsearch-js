@@ -24,7 +24,8 @@
     "grunt-contrib-watch": "~0.5.3",
     "expect.js": "~0.2.0",
     "async": "~0.2.9",
-    "optimist": "~0.6.0"
+    "optimist": "~0.6.0",
+    "minimatch": "~0.2.12"
   },
   "license": "Apache License",
   "dependencies": {

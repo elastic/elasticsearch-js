@@ -4,30 +4,48 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
-var outputDir = _.joinPath(__dirname, '../../../src/api/');
+var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
 
 var templates = require('./templates');
-var specs = require('./spec')(outputDir);
+var specs = require('./spec');
 
 // completely delete the output directory
-function clean(path) {
-  if (fs.existsSync(path)) {
+var clean = (function () {
+  function rmDirRecursive(path) {
     fs.readdirSync(path).forEach(function (file, index) {
       var curPath = path + '/' + file;
       if (fs.statSync(curPath).isDirectory()) { // recurse
-        clean(curPath);
+        rmDirRecursive(curPath);
       } else { // delete file
         fs.unlinkSync(curPath);
       }
     });
     fs.rmdirSync(path);
   }
-}
+
+  return function (path) {
+    try {
+      var stats = fs.statSync(path);
+      if (stats && stats.isDirectory()) {
+        console.log('removing', path, 'directory recursively');
+        rmDirRecursive(path);
+      } else {
+        console.log('removing', path);
+        fs.unlinkSync(path);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+})();
 
 exports.run = function () {
   var defs = [];
   var namespaces = [];
 
+  clean(outputPath);
   var actions = _.map(specs, function (spec) {
     spec.urls = _.map(
       _.sortBy(
@@ -67,9 +85,9 @@ exports.run = function () {
     });
 
     var docUrl = spec.docUrl;
+    var location = _.map(spec.name.split('.'), _.camelCase).join('.');
 
     spec = _.pick(spec, [
-      'name',
       'methods',
       'params',
       'urls',
@@ -85,7 +103,6 @@ exports.run = function () {
       ]);
     }, {});
 
-    var location = _.map(spec.name.split('.'), _.camelCase).join('.');
     if (~location.indexOf('.')) {
       var steps = location.split('.');
       namespaces.push(steps.slice(0, -1).join('.'));
@@ -94,27 +111,18 @@ exports.run = function () {
 
     // escape method names with "special" keywords
     location = location.replace(/(^|\.)(delete|default)(\.|$)/g, '[\'$2\']');
-
-    return templates.clientAction({spec: spec, location: location, docUrl: docUrl });
+    return {
+      spec: spec,
+      location: location,
+      docUrl: docUrl
+    };
   });
 
-  namespaces = _.map(_.unique(namespaces.sort(), true), function (namespace) {
-    return templates.clientActionNamespace({
-      get: namespace,
-      set: namespace.replace(/\./g, '.prototype.'),
-    });
-  })
-
-
-  var l = templates.lines(0);
-  l('var ClientAction = require(\'./client_action\');');
-  l('var errors = require(\'./errors\');');
-  l('');
-  l('exports.attach = function (Client) {').in();
-  l.split(namespaces.join('') + '\n' + actions.join('\n'));
-  l.out('};');
-
-  fs.writeFileSync(_.joinPath(__dirname, '../../../src/lib/api.js'), l.toString());
+  console.log('writing', actions.length, 'api actions to', outputPath);
+  fs.writeFileSync(outputPath, templates.apiFile({
+    actions: actions,
+    namespaces: _.unique(namespaces.sort(), true)
+  }));
 };
 
 exports.run();

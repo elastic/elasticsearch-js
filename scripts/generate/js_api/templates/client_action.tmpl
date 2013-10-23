@@ -9,4 +9,4 @@ _.each(spec.params, function(param, paramName) { %>
   }
 %><% }) %>
  */
-Client.prototype<%= (location[0] === '[' ? '' : '.') + location %> = ClientAction(<%= stringify(spec, true) %>);
+api<%= (location[0] === '[' ? '' : '.') + location %> = ca(<%= stringify(spec, true) %>);

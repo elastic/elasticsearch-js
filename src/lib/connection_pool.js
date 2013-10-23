@@ -93,13 +93,15 @@ ConnectionPool.prototype._remove = function (connection) {
     connection.setStatus('closed');
     connection.removeListener('status changed', this.bound.onStatusChanged);
   }
-}
+};
 
 ConnectionPool.prototype.setNodes = function (nodeConfigs) {
-  var i;
   var connection;
+  var i;
+  var id;
   var node;
   var toRemove = _.clone(this.index);
+
   for (i = 0; i < nodeConfigs.length; i++) {
     node = nodeConfigs[i];
     if (node.hostname && node.port) {
@@ -115,9 +117,9 @@ ConnectionPool.prototype.setNodes = function (nodeConfigs) {
   }
 
   _.each(toRemove, this._remove, this);
-}
+};
 
-
-ConnectionPool.prototype.empty = function () {
+ConnectionPool.prototype.close = function () {
   this.setNodes([]);
 };
+ConnectionPool.prototype.empty = ConnectionPool.prototype.close;

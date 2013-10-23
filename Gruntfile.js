@@ -23,19 +23,28 @@ module.exports = function (grunt) {
       options: {
         colors: true,
         require: 'should',
-        reporter: 'dot'
+        reporter: 'dot',
+        bail: true,
+        timeout: 11000
       }
     },
     jshint: {
       source: {
         src: [
           'src/**/*.js',
-          'test/**/*.js',
           'Gruntfile.js'
-        ]
+        ],
+        options: {
+          jshintrc: '.jshintrc'
+        }
       },
-      options: {
-        jshintrc: true
+      tests: {
+        src: [
+          'test/**/*.js'
+        ],
+        options: {
+          jshintrc: 'test/.jshintrc'
+        }
       }
     },
     watch: {
@@ -51,6 +60,14 @@ module.exports = function (grunt) {
       },
       options: {
         interupt: true
+      }
+    },
+    run: {
+      generate_js_api: {
+        cmd: 'node',
+        args: [
+          'scripts/generate/js_api/index.js'
+        ]
       }
     }//,
     // docular: {
@@ -100,10 +117,27 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-
   // Default task.
   // grunt.registerTask('docs', ['docular']);
   grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('default', ['jshint', 'mochaTest:unit']);
+
+  grunt.task.registerMultiTask('run', 'used to run arbitrary commands', function () {
+    var done = this.async();
+    var proc = require('child_process').spawn(
+      this.data.cmd,
+      this.data.args,
+      {
+        stdio: ['ignore', 'pipe', 'pipe']
+      }
+    );
+
+    proc.stdout.on('data', grunt.log.write);
+    proc.stderr.on('data', grunt.log.error);
+
+    proc.on('close', function (exitCode) {
+      done(!exitCode);
+    });
+  });
 
 };

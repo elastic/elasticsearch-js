@@ -268,7 +268,9 @@ var templateGlobals = {
       l('this.client.request(request, cb);');
     }
     return l.toString();
-  }
+  },
+
+  partials: templates
 };
 
 fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
@@ -288,9 +290,6 @@ fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
 templates.text = templates.string;
 
 module.exports = {
-  lines: lines,
-  action: templates.action,
-  clientAction: templates.client_action,
-  clientActionNamespace: templates.client_action_namespace,
+  apiFile: templates.api_file,
   urlParamRE: urlParamRE
 };

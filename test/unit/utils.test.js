@@ -114,25 +114,6 @@ describe('Utils', function () {
   });
 
 
-  describe('Lodash Modifications', function () {
-
-    describe('#map', function () {
-      it('returns an object when passed an object', function () {
-        var out = _.map({a: 1, b: 2}, function (val) { return val * 2; });
-        expect(out).to.eql({a: 2, b: 4});
-      });
-
-      it('returns an array for anything else', function () {
-        var std = _.map([1, 2, 3], function (val) { return val * 2; });
-        expect(std)
-          .to.be.a('array')
-          .and.to.eql(_.map('123', function (val) { return val * 2; }));
-      });
-    });
-
-  });
-
-
   describe('String Transformers', function () {
 
     describe('#camelCase', function () {

@@ -15,12 +15,12 @@ exports.start = function (params, cb) {
     params.executable,
     [
       '-f',
-      '-D es.cluster.name=' + params.clusterName,
-      params.port ? '-D es.http.port=' + params.port : undefined,
-      '-D es.path.data=' + params.dataPath,
-      '-D es.gateway.type=none',
-      '-D es.index.store.type=memory',
-      '-D es.discovery.zen.ping.multicast.enabled=false',
+      '-Des.cluster.name=' + params.clusterName,
+      '-Des.path.data=' + params.dataPath,
+      '-Des.logger.level=DEBUG',
+      '-Des.gateway.type=none',
+      '-Des.index.store.type=memory',
+      '-Des.discovery.zen.ping.multicast.enabled=false',
     ],
     {
       cwd: undefined,
@@ -34,15 +34,14 @@ exports.start = function (params, cb) {
   );
 
   server.stdout.on('data', function (line) {
-    line = line.toString();
+    line = _.trim(line.toString());
     var match;
-    // console.log(_.trim(line));
-    if (!params.port && (match = line.match(/bound_address \{inet\[\/?([^:]+):(\d+)\]\}/))) {
+    if (match = line.match(/bound_address \{inet\[\/?([^:]+):(\d+)\]\}/)) {
       server.__hostname = match[1];
       server.__port = match[2];
     }
 
-    if (line.match(/started\s*$/)) {
+    if (line.match(/started\s*$/m)) {
       console.log('Personal ES Server started at', server.__hostname + ':' + server.__port);
       server.stdout.removeAllListeners();
       server.stderr.removeAllListeners();
@@ -51,8 +50,12 @@ exports.start = function (params, cb) {
   });
 
   server.stderr.on('data', function (line) {
-    console.error(_.trim(line));
+    console.error(_.trim(line.toString()));
   });
+
+  server.on('exit', function (code) {
+    console.log('Personal ES Server Shutdown with exit code', code);
+  })
 
   process.on('exit', function () {
     server.kill();

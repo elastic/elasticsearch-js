@@ -94,7 +94,7 @@ ClientConfig.prototype.prepareHosts = function (hosts) {
     hosts = [hosts];
   }
 
-  for(i = 0; i < hosts.length; i++) {
+  for (i = 0; i < hosts.length; i++) {
     host = hosts[i];
     if (typeof host === 'object') {
       if (host.protocol) {
