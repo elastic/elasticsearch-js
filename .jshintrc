@@ -1,7 +1,6 @@
 {
   "node": true,
   "white": true,
-
   "bitwise": false,
   "curly": true,
   "eqnull": true,
@@ -24,5 +23,6 @@
   "validthis": true,
   "sub": true,
   "maxlen": 140,
-  "-W084": true
+  "-W084": true,
+  "maxerr": 10
 }

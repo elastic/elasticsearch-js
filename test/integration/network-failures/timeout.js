@@ -21,7 +21,7 @@ describe('overall timeout for the network connections', function () {
 
       res.writeHead(200);
 
-      res.on('close', function() {
+      res.on('close', function () {
         clearInterval(dataInterval);
         clearTimeout(finTimeout);
       });

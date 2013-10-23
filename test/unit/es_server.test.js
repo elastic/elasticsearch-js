@@ -18,7 +18,7 @@ describe('EsServer Mock', function () {
     var port;
 
     function makeRequest(opts, respCb) {
-      opts = _.defaults(opts || {},{
+      opts = _.defaults(opts || {}, {
         hostname: 'localhost',
         port: port
       });
@@ -28,7 +28,7 @@ describe('EsServer Mock', function () {
         response = '';
 
         incomming.on('data', function (chunk) {
-          response+= chunk;
+          response += chunk;
         });
 
         incomming.on('end', function () {

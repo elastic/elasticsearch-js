@@ -33,7 +33,7 @@ var client = null;
 var logFile = path.resolve(__dirname, './log');
 
 // empty all of the indices in ES please
-function clearIndices (done) {
+function clearIndices(done) {
   client.indices.delete({
     index: '*',
     ignore: 404
@@ -75,11 +75,12 @@ before(function () {
         port: esServer ? esServer.__port : argv.port
       }
     ],
-    log: {
-      type: 'file',
-      level: ['error', 'warning', 'trace'],
-      path: logFile
-    }
+    log: null
+    // log: {
+    //   type: 'file',
+    //   level: ['error', 'warning', 'trace'],
+    //   path: logFile
+    // }
   });
 });
 
@@ -155,7 +156,7 @@ function versionToComparableString(version) {
     return (new Array(4 - part.length)).join('0') + part;
   });
 
-  while(parts.length < 3) {
+  while (parts.length < 3) {
     parts.push('000');
   }
 
@@ -196,7 +197,7 @@ function loadFile(location) {
   var docsInFile = [];
 
   jsYaml.loadAll(
-    fs.readFileSync(location, { encoding:'utf8' }),
+    fs.readFileSync(location, { encoding: 'utf8' }),
     function (testConfig) {
       docsInFile.push(testConfig);
     },
@@ -305,7 +306,7 @@ ActionRunner.prototype = {
 
     // do a single level flatten, merge=ing the nested arrays from step one
     // into a master array, creating an array of action objects
-    return _.reduce(actionSets, function(note, set) {
+    return _.reduce(actionSets, function (note, set) {
       return note.concat(set);
     }, []);
   },
@@ -318,7 +319,7 @@ ActionRunner.prototype = {
    */
   each: function (ittr) {
     var action;
-    while(action = this._actions.shift()) {
+    while (action = this._actions.shift()) {
       if (ittr(action.testable, action.name) === false) {
         break;
       }
@@ -350,7 +351,7 @@ ActionRunner.prototype = {
   get: function (path, from) {
 
     var i
-      , log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {} ;
+      , log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {};
 
     if (!from) {
       if (path[0] === '$') {
@@ -410,7 +411,7 @@ ActionRunner.prototype = {
     var catcher;
 
     // resolve the catch arg to a value used for matching once the request is complete
-    switch(args.catch) {
+    switch (args.catch) {
     case void 0:
       catcher = null;
       break;
@@ -441,14 +442,11 @@ ActionRunner.prototype = {
     var action = Object.keys(args).pop()
       , clientActionName = _.map(action.split('.'), _.camelCase).join('.')
       , clientAction = this.get(clientActionName, client)
-      , params = _.map(args[action], function (val, name) {
-        if (typeof val === 'string' && val[0] === '$') {
-          return this.get(val);
-        }
-        return val;
-      }, this);
+      , params = _.transform(args[action], function (note, val, name) {
+        note[name] = (typeof val === 'string' && val[0] === '$') ? this.get(val) : val;
+      }, {}, this);
 
-    expect(clientAction, clientActionName).to.be.a('function');
+    expect(clientAction || clientActionName).to.be.a('function');
 
     if (typeof clientAction === 'function') {
       if (_.isNumeric(catcher)) {
@@ -459,7 +457,7 @@ ActionRunner.prototype = {
       clientAction.call(client, params, _.bind(function (error, body, status) {
         this._last_requests_response = body;
 
-        if (error){
+        if (error) {
           if (catcher) {
             if (catcher instanceof RegExp) {
               // error message should match the regexp

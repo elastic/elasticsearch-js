@@ -87,7 +87,7 @@ exports.make = function (startingMoment, endingMoment) {
     'apache': 4
   });
 
-  return _.map(sets, function (set, name) {
-    return _.bindKey(set, 'get');
-  });
+  return _.transform(sets, function (note, set, name) {
+    note[name] = _.bindKey(set, 'get');
+  }, {});
 };

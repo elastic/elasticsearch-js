@@ -41,15 +41,6 @@ ConnectionPool.prototype.select = function (cb) {
   }
 };
 
-ConnectionPool.prototype.empty = function () {
-  _.each(this.connection.dead, function (connection) {
-    connection.setStatus('closed');
-  });
-  _.each(this.connection.alive, function (connection) {
-    connection.setStatus('closed');
-  });
-};
-
 ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus, connection) {
   var from, to, index;
 
@@ -70,7 +61,6 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
     break;
   case 'closed':
     from = this.connections[oldStatus];
-    connection.removeListener('status changed', this.bound.onStatusChanged);
     break;
   }
 
@@ -89,10 +79,45 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
   }
 });
 
-ConnectionPool.prototype.add = function (connection) {
-  if (!~this.connections.alive.indexOf(connection) && !~this.connections.dead.indexOf(connection)) {
-    connection.status = 'alive';
+ConnectionPool.prototype._add = function (connection) {
+  if (!this.index[connection.__id]) {
+    this.index[connection.__id] = connection;
     connection.on('status changed', this.bound.onStatusChanged);
-    this.connections.alive.push(connection);
+    connection.setStatus('alive');
   }
+};
+
+ConnectionPool.prototype._remove = function (connection) {
+  if (this.index[connection.__id]) {
+    delete this.index[connection.__id];
+    connection.setStatus('closed');
+    connection.removeListener('status changed', this.bound.onStatusChanged);
+  }
+}
+
+ConnectionPool.prototype.setNodes = function (nodeConfigs) {
+  var i;
+  var connection;
+  var node;
+  var toRemove = _.clone(this.index);
+  for (i = 0; i < nodeConfigs.length; i++) {
+    node = nodeConfigs[i];
+    if (node.hostname && node.port) {
+      id = node.hostname + ':' + node.port;
+      if (this.index[id]) {
+        delete toRemove[id];
+      } else {
+        connection = new this.config.connectionConstructor(this.config, nodeConfigs[i]);
+        connection.__id = id;
+        this._add(connection);
+      }
+    }
+  }
+
+  _.each(toRemove, this._remove, this);
+}
+
+
+ConnectionPool.prototype.empty = function () {
+  this.setNodes([]);
 };

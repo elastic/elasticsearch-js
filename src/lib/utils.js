@@ -15,6 +15,7 @@ var path = require('path'),
  * @static
  */
 var utils = _.extend({}, _, nodeUtils);
+_ = utils;
 
 utils.inspect = function (thing, opts) {
   return nodeUtils.inspect(thing, _.defaults(opts || {}, {
@@ -32,23 +33,6 @@ utils.inspect = function (thing, opts) {
  * @type {function}
  */
 utils.joinPath = path.join;
-
-/**
- * Extends lodash's map function so that objects can be passed to map and will be returned as an object with
- * each value transformed by the iterator.
- *
- * @method utils.map
- * @param [Collection] obj - the thing to iterate over
- * @param [Function] mapper - the function to call for each element in obj
- * @param [*] context - the this context to use for each call to mapper
- */
-utils.map = function (obj, mapper, context) {
-  if (_.isPlainObject(obj)) {
-    return _.reduce(obj, function (note, val, key) { note[key] = mapper.call(context, val, key); return note; }, {});
-  } else {
-    return _.map(obj, mapper, context);
-  }
-};
 
 /**
  * Require all of the modules in a directory
@@ -400,9 +384,9 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
  * when it is called.
  * @return {[type]} [description]
  */
-utils.nextTick = function (cb) {
+_.nextTick = function (cb) {
   // bind the function and schedule it
-  process.nextTick(utils.bindKey(utils, 'applyArgs', cb, null, arguments, 1));
+  process.nextTick(_.bindKey(_, 'applyArgs', cb, null, arguments, 1));
 };
 
 /**
@@ -416,15 +400,15 @@ utils.nextTick = function (cb) {
  * });
  * ```
  *
- * @alias utils.scheduled
+ * @alias _.scheduled
  * @param  {Function} func - The method that is being defined
  * @return {Function}
  */
-utils.handler = function (func) {
+_.handler = function (func) {
   func._provideBound = true;
   return func;
 };
-utils.scheduled = utils.handler;
+_.scheduled = _.handler;
 
 /**
  * Creates an "bound" property on an object, which all or a subset of methods from
@@ -443,28 +427,28 @@ utils.scheduled = utils.handler;
  * @param {Object} obj - The object to bind the methods to
  * @param {Array} [methods] - The methods to bind, false values === bind them all
  */
-utils.makeBoundMethods = function (obj, methods) {
+_.makeBoundMethods = function (obj, methods) {
   obj.bound = {};
   if (!methods) {
     methods = [];
     for (var prop in obj) {
       // dearest maintainer, we want to look through the prototype
       if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
-        obj.bound[prop] = utils.bind(obj[prop], obj);
+        obj.bound[prop] = _.bind(obj[prop], obj);
       }
     }
   } else {
     _.each(methods, function (method) {
-      obj.bound[method] = utils.bindKey(obj, method);
+      obj.bound[method] = _.bindKey(obj, method);
     });
   }
 };
 
-utils.noop = function () {};
+_.noop = function () {};
 
-utils.getStackTrace = function (callee) {
+_.getStackTrace = function (callee) {
   var e = {};
-  Error.captureStackTrace(e, callee || utils.getStackTrace);
+  Error.captureStackTrace(e, callee || _.getStackTrace);
   return '\n' + e.stack.split('\n').slice(1).join('\n');
 };
 

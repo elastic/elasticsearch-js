@@ -32,14 +32,9 @@ module.exports = Client;
 
 var _ = require('./utils');
 var ClientConfig = require('./client_config');
-var api = _.reKey(_.requireDir(module, '../api'), _.camelCase);
+// var api = _.reKey(_.requireDir(module, '../api'), _.camelCase);
 var q = require('q');
 var errors = require('./errors');
-
-// Many API commands are namespaced, like cluster.nodeStats. The names of these namespaces will be
-// tracked here and the namespace objects will be instantiated by reading the values from this
-// array
-var namespaces = [];
 
 function Client(config) {
   this.client = this;
@@ -53,8 +48,8 @@ function Client(config) {
   });
   this.config.client = this;
 
-  for (var i = 0; i < namespaces.length; i++) {
-    this[namespaces[i]] = new this[namespaces[i]](this);
+  for (var i = 0; i < _namespaces.length; i++) {
+    this[_namespaces[i]] = new this[_namespaces[i]](this);
   }
 }
 
@@ -77,6 +72,13 @@ Client.prototype.request = function (params, cb) {
   // in cb isn't a function make it one
   cb = typeof cb === 'function' ? cb : _.noop;
 
+  var connectionPool = this.config.connectionPool;
+  var log = this.config.log;
+  var remainingRetries = this.config.maxRetries;
+  var connection;
+
+  log.debug('starting request', params);
+
   // get ignore and ensure that it's an array
   var ignore = params.ignore;
   if (ignore && !_.isArray(ignore)) {
@@ -85,12 +87,50 @@ Client.prototype.request = function (params, cb) {
 
   // serialize the body
   if (params.body) {
-    params.body = serializer.serialize(params.body);
+    params.body = params.bulkBody ? serializer.bulkBody(params.body) : serializer.serialize(params.body);
   }
 
-  this.config.transport.request(params, function (err, reqParams, body, status) {
+  if (params.body && params.method === 'GET') {
+    _.nextTick(cb, new TypeError('Body can not be sent with method "GET"'));
+    return;
+  }
 
+  function sendRequestWithConnection(err, _connection) {
+    if (err) {
+      log.error(err);
+      respond(err);
+    } else if (_connection) {
+      connection = _connection;
+      log.info('Selected', _connection.status, 'Connection, making request');
+      connection.request(params, checkRespForFailure);
+    } else {
+      log.warning('No living connections');
+      respond(new errors.ConnectionFault('No living connections.'));
+    }
+  }
+
+  function checkRespForFailure(err, reqParams, body, status) {
+    connection.setStatus(err ? 'dead' : 'alive');
+
+    if (err) {
+      log.error(err);
+    }
+
+    if (err && remainingRetries) {
+      remainingRetries--;
+      log.info('Connection error, retrying');
+      connectionPool.select(sendRequestWithConnection);
+    } else {
+      log.info('Request complete');
+      respond(err, reqParams, body, status);
+    }
+  }
+
+  function respond(err, reqParams, body, status) {
     var parsedBody = null;
+    if (reqParams) {
+      log.trace(reqParams.method, reqParams, params.body, body, status);
+    }
     if (!err) {
       if (body) {
         parsedBody = serializer.unserialize(body);
@@ -103,17 +143,19 @@ Client.prototype.request = function (params, cb) {
     }
 
     if (err) {
-      return cb(err, parsedBody, status);
+      cb(err, parsedBody, status);
     } else if ((status >= 200 && status < 300) || ignore && _.contains(ignore, status)) {
-      return cb(void 0, parsedBody, status);
+      cb(void 0, parsedBody, status);
     } else {
       if (errors[status]) {
-        return cb(new errors[status](parsedBody.error), parsedBody, status);
+        cb(new errors[status](parsedBody.error), parsedBody, status);
       } else {
-        return cb(new errors.Generic('unknown error'), parsedBody, status);
+        cb(new errors.Generic('unknown error'), parsedBody, status);
       }
     }
-  });
+  }
+
+  connectionPool.select(sendRequestWithConnection);
 };
 
 /**
@@ -123,41 +165,54 @@ Client.prototype.request = function (params, cb) {
  * @param {Function} cb - callback
  */
 Client.prototype.ping = function (params, cb) {
-  this.config.transport.request({
+  this.request({
     method: 'HEAD',
     path: '/'
   }, cb);
 };
 
 /**
+ * Ask an ES node for a list of all the nodes, add/remove nodes from the connection
+ * pool as appropriate
+ *
+ * @param  {Function} cb - Function to call back once complete
+ */
+Client.prototype.sniff = function (cb) {
+  var config = this.config;
+
+  // make cb a function if it isn't
+  cb = typeof cb === 'function' ? cb : _.noop;
+
+  this.request({
+    path: '/_cluster/nodes',
+    method: 'GET'
+  }, function (err, resp) {
+    if (!err && resp && resp.nodes) {
+      var nodes = config.nodesToHostCallback(resp.nodes);
+      config.connectionPool.setNodes(nodes);
+    }
+    cb(err, resp);
+  });
+}
+
+var _namespaces = [];
+
+/**
  * These names of the properties that hold namespace objects in the Client prototype
  * @type {Array}
  */
-Client.namespaces = [];
-
-/**
- * Creates a namespace, who's prototype offers the actions within that namespace and this context
- * provides the API actions and a link back to the client they were intended to operate on.
- * @param {Object} actions - An object to use as the prototype for the namespace
- */
-function makeNamespaceConstructor(actions) {
-
-  function Namespace(client) {
-    this.client = client;
+Client.namespace = function (namespace) {
+  var steps = namespace.split('.');
+  var path = [];
+  var on = Client;
+  var i;
+  for (i = 0; i < steps.length; i ++) {
+    path.push(steps[i]);
+    _namespaces.push(path.join('.'));
+    on.prototype[steps[i]] = function ClientActionNamespace(client) {
+      this.client = client;
+    };
   }
+};
 
-  Namespace.prototype = actions;
-
-  return Namespace;
-}
-
-// Extend the Client prototype with the top level API actions and the namespaces for other API actions
-_.extend(Client.prototype, _.map(api, function (action, name) {
-  switch (typeof action) {
-  case 'function':
-    return action;
-  case 'object':
-    namespaces.push(name);
-    return makeNamespaceConstructor(action);
-  }
-}));
+require('./api.js').attach(Client);

@@ -118,8 +118,8 @@ describe('Utils', function () {
 
     describe('#map', function () {
       it('returns an object when passed an object', function () {
-        var out = _.map({a:1, b:2}, function (val) { return val * 2; });
-        expect(out).to.eql({a:2, b:4});
+        var out = _.map({a: 1, b: 2}, function (val) { return val * 2; });
+        expect(out).to.eql({a: 2, b: 4});
       });
 
       it('returns an array for anything else', function () {
@@ -181,7 +181,7 @@ describe('Utils', function () {
 
     it('returns the same object that was passed', function () {
       var obj = {
-        foo:'bar'
+        foo: 'bar'
       };
       expect(_.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
     });
@@ -204,7 +204,7 @@ describe('Utils', function () {
 
     it('works recursively', function () {
       var obj = {
-        foo:'bar',
+        foo: 'bar',
         bax: {
           foo: ['bax', 'boz']
         }

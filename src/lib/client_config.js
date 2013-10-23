@@ -11,7 +11,6 @@ var _ = require('./utils');
 var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
 var connections = _.requireClasses(module, './connections');
 var serializers = _.requireClasses(module, './serializers');
-var Transport = require('./transport');
 var ConnectionPool = require('./connection_pool');
 var Log = require('./log');
 
@@ -54,10 +53,6 @@ var defaultConfig = {
 function ClientConfig(config) {
   _.extend(this, defaultConfig, config);
 
-  if (typeof this.hosts !== 'object') {
-    this.hosts = [this.hosts];
-  }
-
   // validate connectionConstructor
   if (typeof this.connectionConstructor !== 'function') {
     if (_.has(connections, this.connectionConstructor)) {
@@ -73,52 +68,76 @@ function ClientConfig(config) {
     if (_.has(selectors, this.selector)) {
       this.selector = selectors[this.selector];
     } else {
-      throw new TypeError('Invalid Selector ' + this.selector + '. specify a function or one of ' + _.keys(selectors).join(', '));
+      throw new TypeError('Invalid Selector ' + this.selector + '. ' +
+        'Expected a function or one of ' + _.keys(selectors).join(', '));
     }
   }
 
-  this.serializer = new serializers.Json(this);
-  this.hosts = _.map(this.hosts, this.transformHost);
-
+  // currently not configurable because!
   this.log = new Log(this);
-  this.transport = new Transport(this);
   this.connectionPool = new ConnectionPool(this);
+  this.serializer = new serializers.Json(this);
 
-  this.transport.createConnections(this.hosts);
+  // populate the connection pool
+  this.connectionPool.setNodes(this.prepareHosts(this.hosts));
 
-  if (this.randomizeHosts) {
-    this.connectionPool.connections.alive = _.shuffle(this.connectionPool.connections.alive);
-  }
-
+  // nodes are completely managed by the connection pool, remove traces of the config
+  // value to prevent confusion
+  delete this.hosts;
 }
 
-ClientConfig.prototype.transformHost = function (host) {
-  if (typeof host === 'object') {
-    if (host.protocol) {
-      // the protocol must end in a color
-      if (host.protocol[host.protocol.length - 1] !== ':') {
-        host.protocol = host.protocol + ':';
+ClientConfig.prototype.prepareHosts = function (hosts) {
+  var host;
+  var i;
+
+  if (_.isArray(hosts)) {
+    hosts = [hosts];
+  }
+
+  for(i = 0; i < hosts.length; i++) {
+    host = hosts[i];
+    if (typeof host === 'object') {
+      if (host.protocol) {
+        // the protocol must end in a color
+        if (host.protocol[host.protocol.length - 1] !== ':') {
+          host.protocol = host.protocol + ':';
+        }
+      } else {
+        host.protocol = 'http:';
+      }
+
+      if (host.host && !host.hostname) {
+        // utl.format && url.parse uses "hostname" to represent just the name of the host, "host" is "hostname + port"
+        host.hostname = host.host;
+        delete host.host;
+      }
+
+      if (!host.hostname) {
+        host.hostname = 'localhost';
+      }
+
+      if (!host.port) {
+        host.port = 9200;
       }
     } else {
-      host.protocol = 'http:';
-    }
+      // assume it is a string.
 
-    if (host.host && !host.hostname) {
-      // utl.format && url.parse uses "hostname" to represent just the name of the host, "host" is "hostname + port"
-      host.hostname = host.host;
-      delete host.host;
-    }
+      if (!hostProtocolRE.test(host)) {
+        // add a defaul protocol
+        host = 'http://' + host;
+      }
 
-    return host;
+      // parse the url please, node
+      var urlInfo = url.parse(host, false, true);
+
+      // override the host value
+      hosts[i] = {
+        protocol: urlInfo.protocol || 'http:',
+        hostname: urlInfo.hostname || 'localhost',
+        port: urlInfo.port || 9200
+      };
+    }
   }
 
-  if (!hostProtocolRE.test(host)) {
-    host = 'http://' + host;
-  }
-  var urlInfo = url.parse(host, false, true);
-  return {
-    protocol: urlInfo.protocol,
-    hostname: urlInfo.hostname,
-    port: urlInfo.port
-  };
+  return hosts;
 };

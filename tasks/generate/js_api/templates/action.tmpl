@@ -1,6 +1,6 @@
-var _ = require('<%= path2lib %>utils'),
-  errors = require('<%= path2lib %>errors'),
-  q = require('q');<%
+var _ = require('<%= path2lib %>utils');
+var errors = require('<%= path2lib %>errors');
+var q = require('q');<%
 
 
 if (_.keys(enumOptions).length) {
@@ -32,11 +32,11 @@ function do<%= _.studlyCase(name) %>(params, cb) {
   }
 
   var request = {
-<%= writeRequestObjectBody(6, name, body, methods) %>
-    },
-    parts = {},
-    query = {},
-    responseOpts = {};
+<%= writeRequestObjectBody(4, name, body, methods) %>
+  };
+  var parts = {};
+  var query = {};
+  var responseOpts = {};
 <%
 
 if (methods.length > 1) { %>

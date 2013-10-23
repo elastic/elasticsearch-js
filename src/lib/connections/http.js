@@ -86,12 +86,6 @@ HttpConnection.prototype.request = function (params, cb) {
     cleanUp = _.noop;
   };
 
-  // ensure that "get" isn't being used with a request body
-  if (params.body && reqParams.method === 'GET') {
-    cleanUp(new TypeError('HTTP Method GET can not have a body'));
-    return;
-  }
-
   reqParams.agent = this.agent;
 
   request = http.request(reqParams);

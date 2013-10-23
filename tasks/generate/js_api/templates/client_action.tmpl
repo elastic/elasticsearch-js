@@ -1,0 +1,12 @@
+/**
+ * Perform a [<%= spec.name %>](<%= docUrl %>) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action<%
+_.each(spec.params, function(param, paramName) { %>
+ * @param {<%= paramType(param.type) %>} <%= paramWithDefault('params.' + paramName, param.default) %><%
+ if (param.description) {
+  %> - <%= param.description %><%
+  }
+%><% }) %>
+ */
+Client.prototype<%= (location[0] === '[' ? '' : '.') + location %> = ClientAction(<%= stringify(spec, true) %>);

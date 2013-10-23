@@ -26,7 +26,7 @@ function lines(i) {
   l.indent = i || 0;
 
   l.split = function (toSplit) {
-    _.each(_.filter(toSplit.split(/\r|\n/)), l);
+    _.each(toSplit.split(/\r?\n/), l);
     return l;
   };
 
@@ -47,15 +47,26 @@ function lines(i) {
   return l;
 }
 
-function stringify(thing) {
-  return JSON.stringify(thing)
-    .replace('\'', '\\\'')
+/**
+ * we want strings in code to use single-quotes, so this will JSON encode vars, but then
+ * modify them to follow our code standards.
+ *
+ * @param  {*} thing - Any thing
+ * @return {String}  - our pretty string
+ */
+function stringify(thing, pretty) {
+  return (pretty ? JSON.stringify(thing, null, '  ') : JSON.stringify(thing))
+    .replace(/\'/g, '\\\'')
     .replace(/\\?"/g, function (quote) {
       // replace external (unescaped) double quotes with single quotes
       return quote === '\\"' ? '"' : '\'';
     })
-    // inject a space between array parts
-    .replace(/([^\\])','/g, '$1\', \'');
+    // inject a space between STRING array parts
+    .replace(/([^\\])','/g, '$1\', \'')
+    // remove quotes around key names that are only made up of letters
+    .replace(/^( +)'([a-zA-Z_]+)':/gm, '$1$2:')
+    // requote "special" key names
+    .replace(/^( +)(default):/gm, '$1\'$2\':')
 }
 
 /**
@@ -87,6 +98,34 @@ var templateGlobals = {
       if (!param.required) {
         l.out();
         l('}');
+      }
+      l('');
+    });
+
+    return l.toString();
+  },
+
+  writeBrowserParams: function (indent, params, namespace) {
+    var l = lines(indent);
+
+    _.each(params, function (param, name) {
+      if (!param.required) {
+        l('if (_.has(params, ' + stringify(name) + ')) {').in();
+      }
+      switch (param.type) {
+      case 'enum':
+        l(
+          namespace + name + ' = _.' +
+          (param.type || 'any') + 'Param(params.' + name + ', ' + stringify(param.options) +
+          ');'
+        );
+        break;
+      default:
+        l(namespace + name + ' = _.' + (param.type || 'any') + 'Param(params.' + name + ');');
+        break;
+      }
+      if (!param.required) {
+        l.out('}');
       }
       l('');
     });
@@ -136,7 +175,7 @@ var templateGlobals = {
         var requiredVars = _.filter(vars, urlVarIsRequired);
 
         var condition = _.map(requiredVars, function (v) {
-          return 'parts.hasOwnProperty(\'' + v.name + '\')';
+          return 'parts.' + v.name + ')';
         }).join(' && ');
 
         l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : '') + '{')
@@ -188,13 +227,6 @@ var templateGlobals = {
     return l.toString();
   },
 
-  /**
-   * we want strings in code to use single-quotes, so this will JSON encode vars, but then
-   * modify them to follow our code standards.
-   *
-   * @param  {*} thing - Any thing
-   * @return {String}  - our pretty string
-   */
   stringify: stringify,
 
   _: _,
@@ -210,7 +242,7 @@ var templateGlobals = {
     case 'list':
       return 'String|ArrayOfStrings|Boolean';
     default:
-      return type;
+      return _.ucfirst(type);
     }
   },
 
@@ -256,6 +288,9 @@ fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
 templates.text = templates.string;
 
 module.exports = {
+  lines: lines,
   action: templates.action,
+  clientAction: templates.client_action,
+  clientActionNamespace: templates.client_action_namespace,
   urlParamRE: urlParamRE
 };

@@ -20,17 +20,20 @@
     "moment": "~2.2.1",
     "should": "~2.0.1",
     "sinon": "~1.7.3",
-    "grunt-mocha-test": "~0.7.0"
+    "grunt-mocha-test": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "expect.js": "~0.2.0",
+    "async": "~0.2.9",
+    "optimist": "~0.6.0"
   },
   "license": "Apache License",
   "dependencies": {
-    "lodash": "~2.0.0",
     "require-directory": "git://github.com/spenceralger/node-require-directory.git#master",
     "cli-color": "~0.2.3",
     "qs": "~0.6.5",
-    "expect.js": "~0.2.0",
-    "q": "~0.9.7",
-    "async": "~0.2.9",
-    "optimist": "~0.6.0"
+    "lodash": "~2.2.1"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }
