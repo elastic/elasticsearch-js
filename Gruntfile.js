@@ -94,7 +94,7 @@ module.exports = function (grunt) {
   });
 
   // load plugins
-  grunt.loadNpmTasks('grunt-docular');
+  // grunt.loadNpmTasks('grunt-docular');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -102,7 +102,7 @@ module.exports = function (grunt) {
 
 
   // Default task.
-  grunt.registerTask('docs', ['docular']);
+  // grunt.registerTask('docs', ['docular']);
   grunt.registerTask('default', ['jshint', 'mochaTest']);
 
 };
