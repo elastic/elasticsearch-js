@@ -6,3 +6,5 @@ node_js:
   - "0.6"
 services:
   - elasticsearch
+before_script:
+  - npm install -g grunt-cli
