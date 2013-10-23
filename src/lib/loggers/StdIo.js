@@ -105,7 +105,7 @@ Stdio.prototype.onTrace = _.handler(function (method, url, body, responseBody, r
   }
   message += '\n<- ';
   if (this.color) {
-    if (responseStatus === 200) {
+    if (responseStatus >= 200 && responseStatus < 300) {
       message += clc.green.bold(responseStatus);
     } else {
       message += clc.red.bold(responseStatus);

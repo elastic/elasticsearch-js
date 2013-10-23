@@ -90,7 +90,7 @@ ClientConfig.prototype.prepareHosts = function (hosts) {
   var host;
   var i;
 
-  if (_.isArray(hosts)) {
+  if (!_.isArray(hosts)) {
     hosts = [hosts];
   }
 
@@ -138,6 +138,5 @@ ClientConfig.prototype.prepareHosts = function (hosts) {
       };
     }
   }
-
   return hosts;
 };
