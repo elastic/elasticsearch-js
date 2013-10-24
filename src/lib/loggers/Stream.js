@@ -12,7 +12,7 @@
 
 module.exports = Stream;
 
-var LoggerAbstract = require('../Logger'),
+var LoggerAbstract = require('../logger'),
   nodeStreams = require('stream'),
   _ = require('../utils'),
   fs = require('fs');

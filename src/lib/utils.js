@@ -2,7 +2,7 @@ var path = require('path'),
   _ = require('lodash'),
   fs = require('fs'),
   requireDir = require('require-directory'),
-  qs = require('qs'),
+  qs = require('querystring'),
   url = require('url'),
   nodeUtils = require('util');
 
