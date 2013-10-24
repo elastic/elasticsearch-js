@@ -27,7 +27,6 @@ var count = parseInt(argv._[0] || 14000, 10),
 
 var es = require('../../../src/elasticsearch'),
   _ = require('../../../src/lib/utils'),
-  q = require('q'),
   async = require('async'),
   moment = require('moment'),
   makeSamples = require('./samples').make,

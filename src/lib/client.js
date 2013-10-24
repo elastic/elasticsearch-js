@@ -33,7 +33,6 @@ module.exports = Client;
 var _ = require('./utils');
 var ClientConfig = require('./client_config');
 var ca = require('./client_action').create;
-var q = require('q');
 var errors = require('./errors');
 var api = require('./api.js');
 

@@ -12,7 +12,6 @@ var _ = require('./utils'),
   selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase),
   connectors = _.reKey(_.requireDir(module, './connections'), _.studlyCase),
   EventEmitter = require('events').EventEmitter,
-  q = require('q'),
   errors = require('./errors');
 
 function ConnectionPool(config) {

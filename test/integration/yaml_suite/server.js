@@ -1,6 +1,5 @@
 var childProc = require('child_process'),
   events = require('events'),
-  q = require('q'),
   path = require('path'),
   fs = require('fs'),
   _ = require('../../../src/lib/utils');

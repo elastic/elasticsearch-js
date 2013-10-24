@@ -10,7 +10,6 @@ module.exports = HttpConnection;
 
 var http = require('http'),
   _ = require('../utils'),
-  q = require('q'),
   errors = require('../errors'),
   ConnectionAbstract = require('../connection'),
   defaultHeaders = {
