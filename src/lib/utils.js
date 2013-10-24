@@ -385,13 +385,8 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
  * @return {[type]} [description]
  */
 _.nextTick = function (cb) {
-  console.log('tick');
-  var args = Array.prototype.slice.call(arguments, 1);
   // bind the function and schedule it
-  process.nextTick(function () {
-    console.log('tock');
-    cb.apply(null, args);
-  });
+  process.nextTick(_.bindKey(_, 'applyArgs', cb, null, arguments, 1));
 };
 
 /**

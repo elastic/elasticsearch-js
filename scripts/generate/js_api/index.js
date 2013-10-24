@@ -1,44 +1,13 @@
+var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
+
 var _ = require('../../../src/lib/utils');
 var asset = require('assert');
 var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-
-var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
-
 var templates = require('./templates');
-
-// completely delete the output directory
-var clean = (function () {
-  function rmDirRecursive(path) {
-    fs.readdirSync(path).forEach(function (file, index) {
-      var curPath = path + '/' + file;
-      if (fs.statSync(curPath).isDirectory()) { // recurse
-        rmDirRecursive(curPath);
-      } else { // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
-  }
-
-  return function (path) {
-    try {
-      var stats = fs.statSync(path);
-      if (stats && stats.isDirectory()) {
-        console.log('removing', path, 'directory recursively');
-        rmDirRecursive(path);
-      } else {
-        console.log('removing', path);
-        fs.unlinkSync(path);
-      }
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-})();
+var clean = require('../../clean');
+var urlParamRE = /\{(\w+)\}/g;
 
 require('./spec').on('ready', function (specs) {
   var defs = [];
@@ -53,7 +22,6 @@ require('./spec').on('ready', function (specs) {
           var requiredVars = {};
           var param;
           var target;
-          var urlParamRE = /\{(\w+)\}/g;
 
           if (url.charAt(0) !== '/') {
             url = '/' + url;

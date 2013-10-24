@@ -2,8 +2,6 @@ var _ = require('../../../src/lib/utils')
 
 var EventEmitter = require('events').EventEmitter;
 var aliases = require('./aliases');
-var https = require('https');
-var unzip = require('unzip');
 
 var castNotFoundRE = /exists/;
 var usesBulkBodyRE = /^(bulk|msearch)$/;
@@ -11,46 +9,22 @@ var usesBulkBodyRE = /^(bulk|msearch)$/;
 var specCount = 0;
 var doneParsing = false;
 
-https.get('https://codeload.github.com/elasticsearch/elasticsearch-rest-api-spec/zip/master', function (incoming) {
-  incoming.pipe(unzip.Parse())
-  .on('entry', function (entry) {
-    if (entry.type === 'File' && entry.path.match(/(^|\/)api\/.*\.json$/)) {
-      specCount++;
-      return collectEntry(entry);
-    } else {
-      entry.autodrain();
-    }
-  })
-  .on('close', function () {
+require('../../get_spec')
+  .get('api/*.json')
+  .on('entry', transformFile)
+  .on('end', function () {
     doneParsing = true;
     if (specs.length === specCount) {
       module.exports.emit('ready', specs);
     }
-  });
-})
+  })
 
 var specs = [];
 
-function collectEntry(entry) {
-  var file = '';
+function transformFile(entry) {
+  specCount++;
 
-  function onData (chunk) {
-    file+= chunk;
-  }
-
-  function onEnd () {
-    entry.removeListener('data', onData);
-    entry.removeListener('end', onEnd);
-    process.nextTick(function () {
-      transformFile(file);
-    });
-  }
-
-  entry.on('data', onData)
-  entry.on('end', onEnd);
-}
-
-function transformFile(file) {
+  var file = entry.data;
   // itterate all of the specs within the file, should only be one
   _.each(JSON.parse(file), function (def, name) {
     var steps = name.split('.');

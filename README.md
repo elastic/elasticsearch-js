@@ -1,4 +1,5 @@
 elasticsearch-js
+[![Build Status](https://travis-ci.org/spenceralger/elasticsearch-js.png)](https://travis-ci.org/spenceralger/elasticsearch-js)
 =================
 Official *low-level* client for Elasticsearch.
 

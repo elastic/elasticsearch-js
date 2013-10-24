@@ -20,8 +20,7 @@ var argv = require('optimist')
 
 Error.stackTraceLimit = Infinity;
 
-// Where do the tests live?
-var TEST_DIR = path.resolve(__dirname, '../../../es_api_spec/test/');
+var testDir = path.resolve(__dirname, './tests');
 
 var doPattern = new Minimatch(argv.match);
 
@@ -84,7 +83,7 @@ before(function (done) {
       } else {
         done();
       }
-    })
+    });
   }
 });
 
@@ -104,27 +103,6 @@ before(function () {
 });
 
 before(clearIndices);
-
-/**
- * recursively crawl the directory, looking for yaml files which will be passed to loadFile
- * @param  {String} dir - The directory to crawl
- * @return {undefined}
- */
-function loadDir(dir) {
-  fs.readdirSync(dir).forEach(function (fileName) {
-    describe(fileName, function () {
-      var location = path.join(dir, fileName),
-          stat = fs.statSync(location);
-
-      if (stat.isFile() && fileName.match(/\.yaml$/) && doPattern.match(path.relative(TEST_DIR, location))) {
-        loadFile(location);
-      }
-      else if (stat.isDirectory()) {
-        loadDir(location);
-      }
-    });
-  });
-}
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
@@ -204,24 +182,6 @@ function rangeMatchesCurrentVersion(rangeString, done) {
   } else {
     doWork();
   }
-}
-
-/**
- * read the file's contents, parse the yaml, pass to makeTestFromYamlDoc
- *
- * @param  {String} path - Full path to yaml file
- * @return {undefined}
- */
-function loadFile(location) {
-  jsYaml.loadAll(
-    fs.readFileSync(location, { encoding: 'utf8' }),
-    function (doc) {
-      makeTestFromYamlDoc(doc);
-    },
-    {
-      filename: location
-    }
-  );
 }
 
 /**
@@ -589,4 +549,46 @@ ActionRunner.prototype = {
   }
 };
 
-loadDir(TEST_DIR);
+/**
+ * recursively crawl the directory, looking for yaml files which will be passed to loadFile
+ * @param  {String} dir - The directory to crawl
+ * @return {undefined}
+ */
+(function () {
+
+  /**
+   * read the file's contents, parse the yaml, pass to makeTestFromYamlDoc
+   *
+   * @param  {String} path - Full path to yaml file
+   * @return {undefined}
+   */
+  function loadFile(location) {
+    jsYaml.loadAll(
+      fs.readFileSync(location, { encoding: 'utf8' }),
+      function (doc) {
+        makeTestFromYamlDoc(doc);
+      },
+      {
+        filename: location
+      }
+    );
+  }
+
+  function loadDir(dir) {
+    fs.readdirSync(dir).forEach(function (fileName) {
+      describe(fileName, function () {
+        var location = path.join(dir, fileName),
+            stat = fs.statSync(location);
+
+        if (stat.isFile() && fileName.match(/\.yaml$/) && doPattern.match(path.relative(testDir, location))) {
+          loadFile(location);
+        }
+        else if (stat.isDirectory()) {
+          loadDir(location);
+        }
+      });
+    });
+  }
+
+  loadDir(testDir);
+})();

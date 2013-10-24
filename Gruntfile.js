@@ -17,8 +17,8 @@ module.exports = function (grunt) {
       unit: [
         'test/unit/**/*.test.js'
       ],
-      'yaml-suite': [
-        'test/integration/yaml-suite/index.js'
+      yaml_suite: [
+        'test/integration/yaml_suite/index.js'
       ],
       options: {
         colors: true,
@@ -32,6 +32,7 @@ module.exports = function (grunt) {
       source: {
         src: [
           'src/**/*.js',
+          'scripts/**/*.js',
           'Gruntfile.js'
         ],
         options: {
@@ -62,11 +63,17 @@ module.exports = function (grunt) {
         interupt: true
       }
     },
-    run: {
-      generate_js_api: {
+    generate: {
+      js_api: {
         cmd: 'node',
         args: [
-          'scripts/generate/js_api/index.js'
+          'scripts/generate/js_api'
+        ]
+      },
+      yaml_suite: {
+        cmd: 'node',
+        args: [
+          'scripts/generate/yaml_tests'
         ]
       }
     }//,
@@ -119,10 +126,14 @@ module.exports = function (grunt) {
 
   // Default task.
   // grunt.registerTask('docs', ['docular']);
-  grunt.registerTask('test', ['jshint', 'mochaTest']);
-  grunt.registerTask('default', ['jshint', 'mochaTest:unit']);
+  grunt.registerTask('default', [
+    'jshint',
+    'mochaTest:unit',
+    'generate:yaml_suite',
+    'mochaTest:yaml_suite'
+  ]);
 
-  grunt.task.registerMultiTask('run', 'used to run arbitrary commands', function () {
+  grunt.task.registerMultiTask('generate', 'used to generate things', function () {
     var done = this.async();
     var proc = require('child_process').spawn(
       this.data.cmd,

@@ -58,7 +58,7 @@ Log.prototype.close = function () {
     console.error('Something is still listening for log events, but the logger is closing.');
     this.clearAllListeners();
   }
-}
+};
 
 /**
  * Levels observed by the loggers, ordered by rank

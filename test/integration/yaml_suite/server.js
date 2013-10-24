@@ -42,7 +42,7 @@ exports.start = function (params, cb) {
     if (line.match(/started\s*$/m)) {
       console.log('Personal ES Server started at', server.__hostname + ':' + server.__port);
       server.stdout.removeListener('data', onProcessData);
-      server.stdout.on('data', _.noop);
+      server.stdout.resume();
       cb(null, server);
     }
   });

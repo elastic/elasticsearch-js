@@ -1960,6 +1960,9 @@ api.indices.prototype.getTemplate = ca({
           type: 'string'
         }
       }
+    },
+    {
+      fmt: '/_template'
     }
   ]
 });
