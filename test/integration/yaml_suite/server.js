@@ -6,8 +6,9 @@ var childProc = require('child_process'),
 
 exports.start = function (params, cb) {
 
-  if (!fs.existsSync(params.executable)) {
-    return cb(new Error('unable to find elasticsearch executable'));
+  if (!params.executable || !fs.existsSync(params.executable)) {
+    return cb(new Error('unable to find elasticsearch executable, ' +
+      'set ES_HOME env var to the instalation path of elasticsearch'));
   }
 
   var server = childProc.spawn(

@@ -9,7 +9,7 @@ var path = require('path'),
   Minimatch = require('minimatch').Minimatch;
 
 var argv = require('optimist')
-  .default('executable', path.join(process.env.ES_HOME, './bin/elasticsearch'))
+  .default('executable', process.env.ES_HOME ? path.join(process.env.ES_HOME, './bin/elasticsearch') : null)
   .default('clusterName', 'yaml-test-runner')
   .default('dataPath', '/tmp/yaml-test-runner')
   .default('hostname', 'localhost')
