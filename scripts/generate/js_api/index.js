@@ -1,5 +1,3 @@
-var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
-
 var _ = require('../../../src/lib/utils');
 var asset = require('assert');
 var path = require('path');
@@ -8,6 +6,8 @@ var mkdirp = require('mkdirp');
 var templates = require('./templates');
 var clean = require('../../clean');
 var urlParamRE = /\{(\w+)\}/g;
+
+var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
 
 require('./spec').on('ready', function (specs) {
   var defs = [];
@@ -22,6 +22,7 @@ require('./spec').on('ready', function (specs) {
           var requiredVars = {};
           var param;
           var target;
+          var match;
 
           if (url.charAt(0) !== '/') {
             url = '/' + url;
@@ -36,8 +37,8 @@ require('./spec').on('ready', function (specs) {
           [requiredVars, optionalVars].forEach(function (vars) {
             _.each(vars, function (v, name) {
               vars[name] = _.omit(v, 'description');
-            })
-          })
+            });
+          });
 
           note.push(_.omit({
             fmt: url.replace(urlParamRE, '<%=$1%>'),

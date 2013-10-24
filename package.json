@@ -36,6 +36,6 @@
     "tar": "~0.1.18"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt"
   }
 }

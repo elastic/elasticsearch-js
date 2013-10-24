@@ -66,7 +66,7 @@ function stringify(thing, pretty) {
     // remove quotes around key names that are only made up of letters
     .replace(/^( +)'([a-zA-Z_]+)':/gm, '$1$2:')
     // requote "special" key names
-    .replace(/^( +)(default):/gm, '$1\'$2\':')
+    .replace(/^( +)(default):/gm, '$1\'$2\':');
 }
 
 /**

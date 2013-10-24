@@ -1,4 +1,4 @@
-
+var fs = require('fs');
 /**
  * Stupid simple recursive file/directory clearing. Nothing serious.
  *

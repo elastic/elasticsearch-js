@@ -33,6 +33,7 @@ var defaultConfig = {
   maxRetries: 3,
   timeout: 10000,
   deadTimeout: 60000,
+  maxSockets: 10,
   nodesToHostCallback: function (nodes) {
     var hosts = [];
     _.each(nodes, function (node, id) {

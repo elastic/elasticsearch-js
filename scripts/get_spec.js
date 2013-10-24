@@ -12,7 +12,7 @@ exports.get = function (pattern) {
   var stream = new EventEmitter();
   var matcher = new Minimatch(pattern);
 
-  var req = https.get(tarUrl, function receiveZip (incoming) {
+  var req = https.get(tarUrl, function receiveTarBall(incoming) {
     if (incoming.statusCode !== 200) {
       req.abort();
       if (incoming.headers.location) {
@@ -21,10 +21,10 @@ exports.get = function (pattern) {
             url.parse(tarUrl),
             url.parse(incoming.headers.location)
           ),
-          receiveZip
+          receiveTarBall
         );
       } else {
-        console.error('request failed', incoming.statusCode, incoming.headers)
+        console.error('request failed', incoming.statusCode, incoming.headers);
       }
     } else {
       incoming.pipe(zlib.createGunzip()).pipe(tar.Parse())
@@ -45,14 +45,14 @@ exports.get = function (pattern) {
   function collectData(entry) {
     entry.data = '';
 
-    entry.on('data', onData)
+    entry.on('data', onData);
     entry.on('end', onEnd);
 
-    function onData (chunk) {
+    function onData(chunk) {
       entry.data += chunk;
     }
 
-    function onEnd () {
+    function onEnd() {
       entry.removeListener('data', onData);
       entry.removeListener('end', onEnd);
       stream.emit('entry', entry);

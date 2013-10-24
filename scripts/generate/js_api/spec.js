@@ -1,4 +1,4 @@
-var _ = require('../../../src/lib/utils')
+var _ = require('../../../src/lib/utils');
 
 var EventEmitter = require('events').EventEmitter;
 var aliases = require('./aliases');
@@ -7,6 +7,7 @@ var castNotFoundRE = /exists/;
 var usesBulkBodyRE = /^(bulk|msearch)$/;
 
 var specCount = 0;
+var completedSpecs = [];
 var doneParsing = false;
 
 require('../../get_spec')
@@ -14,12 +15,10 @@ require('../../get_spec')
   .on('entry', transformFile)
   .on('end', function () {
     doneParsing = true;
-    if (specs.length === specCount) {
-      module.exports.emit('ready', specs);
+    if (completedSpecs.length === specCount) {
+      module.exports.emit('ready', completedSpecs);
     }
-  })
-
-var specs = [];
+  });
 
 function transformFile(entry) {
   specCount++;
@@ -50,10 +49,10 @@ function transformFile(entry) {
     if (castNotFoundRE.test(name)) {
       spec.castNotFound = true;
     }
-    if (specs.push(spec) === specCount && doneParsing) {
-      module.exports.emit('ready', specs);
+    if (completedSpecs.push(spec) === specCount && doneParsing) {
+      module.exports.emit('ready', completedSpecs);
     }
-  })
+  });
 }
 
 module.exports = new EventEmitter();

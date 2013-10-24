@@ -1,3 +1,4 @@
+/*jshint maxlen:false, white:false, -W116:false, quotmark:false, -W018:false, -W064:false */
 (function() {
   var Set, Stochator, callFunctions, floatGenerator, integerGenerator, inverseNormalCumulativeDistribution, isType, randomBoundedFloat, randomBoundedInteger, randomCharacter, randomColor, randomNormallyDistributedFloat, randomSetMember, randomSetMemberWithoutReplacement, randomWeightedSetMember, setGenerator, shuffleSet,
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
