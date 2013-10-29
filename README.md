@@ -1,6 +1,8 @@
 elasticsearch-js
-[![Build Status](https://travis-ci.org/spenceralger/elasticsearch-js.png)](https://travis-ci.org/spenceralger/elasticsearch-js)
 =================
+
+[![Build Status](https://magnum.travis-ci.com/spenceralger/elasticsearch-js.png?token=tsFxSKHtVKG8EZavSjXY)](https://magnum.travis-ci.com/spenceralger/elasticsearch-js)
+
 Official *low-level* client for Elasticsearch.
 
 This project's goal it to give the JavaScript community a solif foundation for all Elasticsearch-related code. It features a complete API, provides a module for use in Node.js as well as several different build for use in the browser. We have tried to be opinion-free and very plugable.
