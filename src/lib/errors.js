@@ -36,14 +36,15 @@ errors.RequestTimeout = function RequestTimeout(msg) {
 };
 _.inherits(errors.RequestTimeout, ErrorAbstract);
 
+
 /**
  * Request Body could not be parsed
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
-errors.Serialization = function RequestTimeout(msg) {
-  ErrorAbstract.call(this, msg || 'Unable to parse response body', errors.RequestTimeout);
+errors.Serialization = function Serialization(msg) {
+  ErrorAbstract.call(this, msg || 'Unable to parse/serialize body', errors.Serialization);
 };
-_.inherits(errors.RequestTimeout, ErrorAbstract);
+_.inherits(errors.Serialization, ErrorAbstract);
 
 
 var statusCodes = {

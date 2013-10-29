@@ -1,4 +1,4 @@
-var ca = require('./client_action').create;
+var ca = require('./client_action');
 var errors = require('./errors');
 
 var api = module.exports = {};
@@ -6,13 +6,14 @@ var api = module.exports = {};
 api._namespaces = ['cluster', 'indices'];
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/bulk/) request
+ * Perform a [bulk](http://elasticsearch.org/guide/reference/api/bulk/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency
- * @param {Boolean} params.refresh
- * @param {String} [params.replication=sync]
- * @param {String} params.type
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Explicitely set the replication type
+ * @param {String} params.type - Default document type for items which don't provide one
+ * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
   methods: [
@@ -72,9 +73,10 @@ api.bulk = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
+ * Perform a [clear_scroll](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String|ArrayOfStrings|Boolean} params.scroll_id - A comma-separated list of scroll IDs to clear
  */
 api.clearScroll = ca({
   methods: [
@@ -103,7 +105,7 @@ api.cluster = function ClusterNS(client) {
 };
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
+ * Perform a [cluster.get_settings](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -121,17 +123,18 @@ api.cluster.prototype.getSettings = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-health/) request
+ * Perform a [cluster.health](http://elasticsearch.org/guide/reference/api/admin-cluster-health/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.level=cluster]
- * @param {Boolean} params.local
- * @param {Date|Number} params.master_timeout
- * @param {Date|Number} params.timeout
- * @param {Number} params.wait_for_active_shards
- * @param {String} params.wait_for_nodes
- * @param {Number} params.wait_for_relocating_shards
- * @param {String} params.wait_for_status
+ * @param {String} [params.level=cluster] - Specify the level of detail for returned information
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date|Number} params.master_timeout - Explicit operation timeout for connection to master node
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Number} params.wait_for_active_shards - Wait until the specified number of shards is active
+ * @param {String} params.wait_for_nodes - Wait until the specified number of nodes is available
+ * @param {Number} params.wait_for_relocating_shards - Wait until the specified number of relocating shards is finished
+ * @param {String} params.wait_for_status - Wait until cluster is in a specific state
+ * @param {String} params.index - Limit the information returned to a specific index
  */
 api.cluster.prototype.health = ca({
   methods: [
@@ -192,13 +195,14 @@ api.cluster.prototype.health = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/) request
+ * Perform a [cluster.node_hot_threads](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.interval
- * @param {Number} params.snapshots
- * @param {Number} params.threads
- * @param {String} params.type
+ * @param {Date|Number} params.interval - The interval for the second sampling of threads
+ * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
+ * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
+ * @param {String} params.type - The type to sample (default: cpu)
+ * @param {String|ArrayOfStrings|Boolean} params.node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeHotThreads = ca({
   methods: [
@@ -240,21 +244,22 @@ api.cluster.prototype.nodeHotThreads = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/) request
+ * Perform a [cluster.node_info](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.all
- * @param {Boolean} params.clear
- * @param {Boolean} params.http
- * @param {Boolean} params.jvm
- * @param {Boolean} params.network
- * @param {Boolean} params.os
- * @param {Boolean} params.plugin
- * @param {Boolean} params.process
- * @param {Boolean} params.settings
- * @param {Boolean} params.thread_pool
- * @param {Date|Number} params.timeout
- * @param {Boolean} params.transport
+ * @param {Boolean} params.all - Return all available information
+ * @param {Boolean} params.clear - Reset the default settings
+ * @param {Boolean} params.http - Return information about HTTP
+ * @param {Boolean} params.jvm - Return information about the JVM
+ * @param {Boolean} params.network - Return information about network
+ * @param {Boolean} params.os - Return information about the operating system
+ * @param {Boolean} params.plugin - Return information about plugins
+ * @param {Boolean} params.process - Return information about the Elasticsearch process
+ * @param {Boolean} params.settings - Return information about node settings
+ * @param {Boolean} params.thread_pool - Return information about the thread pool
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.transport - Return information about transport
+ * @param {String|ArrayOfStrings|Boolean} params.node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeInfo = ca({
   methods: [
@@ -315,11 +320,12 @@ api.cluster.prototype.nodeInfo = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/) request
+ * Perform a [cluster.node_shutdown](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.delay
- * @param {Boolean} params.exit
+ * @param {Date|Number} params.delay - Set the delay for the operation (default: 1s)
+ * @param {Boolean} params.exit - Exit the JVM as well (default: true)
+ * @param {String|ArrayOfStrings|Boolean} params.node_id - A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
  */
 api.cluster.prototype.nodeShutdown = ca({
   methods: [
@@ -350,21 +356,24 @@ api.cluster.prototype.nodeShutdown = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/) request
+ * Perform a [cluster.node_stats](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.all
- * @param {Boolean} params.clear
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {Boolean} params.fs
- * @param {Boolean} params.http
- * @param {Boolean} params.indices
- * @param {Boolean} params.jvm
- * @param {Boolean} params.network
- * @param {Boolean} params.os
- * @param {Boolean} params.process
- * @param {Boolean} params.thread_pool
- * @param {Boolean} params.transport
+ * @param {Boolean} params.all - Return all available information
+ * @param {Boolean} params.clear - Reset the default level of detail
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return detailed information for, when returning the `indices` metric family (supports wildcards)
+ * @param {Boolean} params.fs - Return information about the filesystem
+ * @param {Boolean} params.http - Return information about HTTP
+ * @param {Boolean} params.indices - Return information about indices
+ * @param {Boolean} params.jvm - Return information about the JVM
+ * @param {Boolean} params.network - Return information about network
+ * @param {Boolean} params.os - Return information about the operating system
+ * @param {Boolean} params.process - Return information about the Elasticsearch process
+ * @param {Boolean} params.thread_pool - Return information about the thread pool
+ * @param {Boolean} params.transport - Return information about transport
+ * @param {String} params.metric_family - Limit the information returned to a certain metric family
+ * @param {String} params.metric - Limit the information returned for `indices` family to a specific metric
+ * @param {String|ArrayOfStrings|Boolean} params.node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeStats = ca({
   methods: [
@@ -425,7 +434,7 @@ api.cluster.prototype.nodeStats = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
+ * Perform a [cluster.put_settings](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -443,11 +452,11 @@ api.cluster.prototype.putSettings = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/) request
+ * Perform a [cluster.reroute](http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.dry_run
- * @param {Boolean} params.filter_metadata
+ * @param {Boolean} params.dry_run - Simulate the operation only and return the resulting state
+ * @param {Boolean} params.filter_metadata - Don't return cluster state metadata (default: false)
  */
 api.cluster.prototype.reroute = ca({
   methods: [
@@ -470,17 +479,17 @@ api.cluster.prototype.reroute = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-cluster-state/) request
+ * Perform a [cluster.state](http://elasticsearch.org/guide/reference/api/admin-cluster-state/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.filter_blocks
- * @param {Boolean} params.filter_index_templates
- * @param {String|ArrayOfStrings|Boolean} params.filter_indices
- * @param {Boolean} params.filter_metadata
- * @param {Boolean} params.filter_nodes
- * @param {Boolean} params.filter_routing_table
- * @param {Boolean} params.local
- * @param {Date|Number} params.master_timeout
+ * @param {Boolean} params.filter_blocks - Do not return information about blocks
+ * @param {Boolean} params.filter_index_templates - Do not return information about index templates
+ * @param {String|ArrayOfStrings|Boolean} params.filter_indices - Limit returned metadata information to specific indices
+ * @param {Boolean} params.filter_metadata - Do not return information about indices metadata
+ * @param {Boolean} params.filter_nodes - Do not return information about nodes
+ * @param {Boolean} params.filter_routing_table - Do not return information about shard allocation (`routing_table` and `routing_nodes`)
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
  */
 api.cluster.prototype.state = ca({
   methods: [
@@ -521,14 +530,16 @@ api.cluster.prototype.state = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/count/) request
+ * Perform a [count](http://elasticsearch.org/guide/reference/api/count/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
- * @param {Number} params.min_score
- * @param {String} params.preference
- * @param {String} params.routing
- * @param {String} params.source
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Number} params.min_score - Include only documents with a specific `_score` value in the result
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of indices to restrict the results
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of types to restrict the results
  */
 api.count = ca({
   methods: [
@@ -585,21 +596,23 @@ api.count = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/index_/) request
+ * Perform a [create](http://elasticsearch.org/guide/reference/api/index_/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency
- * @param {String} params.id
- * @param {String} params.parent
- * @param {String} params.percolate
- * @param {Boolean} params.refresh
- * @param {String} [params.replication=sync]
- * @param {String} params.routing
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.timestamp
- * @param {Duration} params.ttl
- * @param {Number} params.version
- * @param {String} params.version_type
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.id - Document ID
+ * @param {String} params.parent - ID of the parent document
+ * @param {String} params.percolate - Percolator queries to execute while indexing the document
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {String} params.routing - Specific routing value
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.timestamp - Explicit timestamp for the document
+ * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.version_type - Specific version type
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api.create = ca({
   methods: [
@@ -689,17 +702,20 @@ api.create = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/delete/) request
+ * Perform a [delete](http://elasticsearch.org/guide/reference/api/delete/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency
- * @param {String} params.parent
- * @param {Boolean} params.refresh
- * @param {String} [params.replication=sync]
- * @param {String} params.routing
- * @param {Date|Number} params.timeout
- * @param {Number} params.version
- * @param {String} params.version_type
+ * @param {String} params.consistency - Specific write consistency setting for the operation
+ * @param {String} params.parent - ID of parent document
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {String} params.routing - Specific routing value
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.version_type - Specific version type
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api['delete'] = ca({
   methods: [
@@ -765,19 +781,21 @@ api['delete'] = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/delete-by-query/) request
+ * Perform a [delete_by_query](http://www.elasticsearch.org/guide/reference/api/delete-by-query/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.analyzer
- * @param {String} params.consistency
- * @param {String} [params.default_operator=OR]
- * @param {String} params.df
- * @param {String} [params.ignore_indices=none]
- * @param {String} [params.replication=sync]
- * @param {String} params.q
- * @param {String} params.routing
- * @param {String} params.source
- * @param {Date|Number} params.timeout
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {String} params.consistency - Specific write consistency setting for the operation
+ * @param {String} [params.default_operator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of indices to restrict the operation; use `_all` to perform the operation on all indices
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of types to restrict the operation
  */
 api.deleteByQuery = ca({
   methods: [
@@ -860,14 +878,17 @@ api.deleteByQuery = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/get/) request
+ * Perform a [exists](http://elasticsearch.org/guide/reference/api/get/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.parent
- * @param {String} params.preference
- * @param {Boolean} params.realtime
- * @param {Boolean} params.refresh
- * @param {String} params.routing
+ * @param {String} params.parent - The ID of the parent document
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
+ * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.exists = ca({
   methods: [
@@ -909,29 +930,32 @@ api.exists = ca({
       }
     }
   ],
-  castNotFound: true
+  castExists: true
 });
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/explain/) request
+ * Perform a [explain](http://elasticsearch.org/guide/reference/api/explain/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.analyze_wildcard
- * @param {String} params.analyzer
- * @param {String} [params.default_operator=OR]
- * @param {String} params.df
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {Boolean} params.lenient
- * @param {Boolean} params.lowercase_expanded_terms
- * @param {String} params.parent
- * @param {String} params.preference
- * @param {String} params.q
- * @param {String} params.routing
- * @param {String} params.source
- * @param {String|ArrayOfStrings|Boolean} params._source
- * @param {String|ArrayOfStrings|Boolean} params._source_exclude
- * @param {String|ArrayOfStrings|Boolean} params._source_include
+ * @param {Boolean} params.analyze_wildcard - Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
+ * @param {String} params.analyzer - The analyzer for the query string query
+ * @param {String} [params.default_operator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The default field for query string query (default: _all)
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return in the response
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercase_expanded_terms - Specify whether query terms should be lowercased
+ * @param {String} params.parent - The ID of the parent document
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api.explain = ca({
   methods: [
@@ -1010,18 +1034,21 @@ api.explain = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/get/) request
+ * Perform a [get](http://elasticsearch.org/guide/reference/api/get/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {String} params.parent
- * @param {String} params.preference
- * @param {Boolean} params.realtime
- * @param {Boolean} params.refresh
- * @param {String} params.routing
- * @param {String|ArrayOfStrings|Boolean} params._source
- * @param {String|ArrayOfStrings|Boolean} params._source_exclude
- * @param {String|ArrayOfStrings|Boolean} params._source_include
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return in the response
+ * @param {String} params.parent - The ID of the parent document
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
+ * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
+ * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.get = ca({
   methods: [
@@ -1079,16 +1106,19 @@ api.get = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/get/) request
+ * Perform a [get_source](http://elasticsearch.org/guide/reference/api/get/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String|ArrayOfStrings|Boolean} params.exclude
- * @param {String|ArrayOfStrings|Boolean} params.include
- * @param {String} params.parent
- * @param {String} params.preference
- * @param {Boolean} params.realtime
- * @param {Boolean} params.refresh
- * @param {String} params.routing
+ * @param {String|ArrayOfStrings|Boolean} params.exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.include - A list of fields to extract and return from the _source field
+ * @param {String} params.parent - The ID of the parent document
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
+ * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} [params.type=_all] - The type of the document; use `_all` to fetch the first document matching the ID across all types
  */
 api.getSource = ca({
   methods: [
@@ -1140,21 +1170,24 @@ api.getSource = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/index_/) request
+ * Perform a [index](http://elasticsearch.org/guide/reference/api/index_/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency
- * @param {String} [params.op_type=index]
- * @param {String} params.parent
- * @param {String} params.percolate
- * @param {Boolean} params.refresh
- * @param {String} [params.replication=sync]
- * @param {String} params.routing
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.timestamp
- * @param {Duration} params.ttl
- * @param {Number} params.version
- * @param {String} params.version_type
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} [params.op_type=index] - Explicit operation type
+ * @param {String} params.parent - ID of the parent document
+ * @param {String} params.percolate - Percolator queries to execute while indexing the document
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {String} params.routing - Specific routing value
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.timestamp - Explicit timestamp for the document
+ * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.version_type - Specific version type
+ * @param {String} params.id - Document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api.index = ca({
   methods: [
@@ -1257,17 +1290,17 @@ api.indices = function IndicesNS(client) {
 };
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/) request
+ * Perform a [indices.analyze](http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.analyzer
- * @param {String} params.field
- * @param {String|ArrayOfStrings|Boolean} params.filters
- * @param {String} params.index
- * @param {Boolean} params.prefer_local
- * @param {String} params.text
- * @param {String} params.tokenizer
- * @param {String} [params.format=detailed]
+ * @param {String} params.analyzer - The name of the analyzer to use
+ * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
+ * @param {String|ArrayOfStrings|Boolean} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {String} params.index - The name of the index to scope the operation
+ * @param {Boolean} params.prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+ * @param {String} params.text - The text on which the analysis should be performed (when request body is not used)
+ * @param {String} params.tokenizer - The name of the tokenizer to use for the analysis
+ * @param {String} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
   methods: [
@@ -1322,20 +1355,20 @@ api.indices.prototype.analyze = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/) request
+ * Perform a [indices.clear_cache](http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.field_data
- * @param {Boolean} params.fielddata
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {Boolean} params.filter
- * @param {Boolean} params.filter_cache
- * @param {Boolean} params.filter_keys
- * @param {Boolean} params.id
- * @param {Boolean} params.id_cache
- * @param {String} [params.ignore_indices=none]
- * @param {String|ArrayOfStrings|Boolean} params.index
- * @param {Boolean} params.recycler
+ * @param {Boolean} params.field_data - Clear field data
+ * @param {Boolean} params.fielddata - Clear field data
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
+ * @param {Boolean} params.filter - Clear filter caches
+ * @param {Boolean} params.filter_cache - Clear filter caches
+ * @param {Boolean} params.filter_keys - A comma-separated list of keys to clear when using the `filter_cache` parameter (default: all)
+ * @param {Boolean} params.id - Clear ID caches for parent/child
+ * @param {Boolean} params.id_cache - Clear ID caches for parent/child
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index name to limit the operation
+ * @param {Boolean} params.recycler - Clear the recycler cache
  */
 api.indices.prototype.clearCache = ca({
   methods: [
@@ -1399,11 +1432,12 @@ api.indices.prototype.clearCache = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
+ * Perform a [indices.close](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the index
  */
 api.indices.prototype.close = ca({
   methods: [
@@ -1431,11 +1465,12 @@ api.indices.prototype.close = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/) request
+ * Perform a [indices.create](http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the index
  */
 api.indices.prototype.create = ca({
   methods: [
@@ -1464,11 +1499,12 @@ api.indices.prototype.create = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/) request
+ * Perform a [indices.delete](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
  */
 api.indices.prototype['delete'] = ca({
   methods: [
@@ -1499,11 +1535,13 @@ api.indices.prototype['delete'] = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.delete_alias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit timestamp for the document
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the index with an alias
+ * @param {String} params.name - The name of the alias to be deleted
  */
 api.indices.prototype.deleteAlias = ca({
   methods: [
@@ -1534,10 +1572,12 @@ api.indices.prototype.deleteAlias = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-mapping/) request
+ * Perform a [indices.delete_mapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-mapping/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` for all indices
+ * @param {String} params.type - The name of the document type to delete
  */
 api.indices.prototype.deleteMapping = ca({
   methods: [
@@ -1565,11 +1605,12 @@ api.indices.prototype.deleteMapping = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
+ * Perform a [indices.delete_template](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.name - The name of the template
  */
 api.indices.prototype.deleteTemplate = ca({
   methods: [
@@ -1597,10 +1638,13 @@ api.indices.prototype.deleteTemplate = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
+ * Perform a [indices.delete_warmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to delete all warmers
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
  */
 api.indices.prototype.deleteWarmer = ca({
   methods: [
@@ -1650,9 +1694,10 @@ api.indices.prototype.deleteWarmer = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/) request
+ * Perform a [indices.exists](http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of indices to check
  */
 api.indices.prototype.exists = ca({
   methods: [
@@ -1669,15 +1714,17 @@ api.indices.prototype.exists = ca({
       }
     }
   ],
-  castNotFound: true
+  castExists: true
 });
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.exists_alias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to filter aliases
+ * @param {String|ArrayOfStrings|Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.existsAlias = ca({
   methods: [
@@ -1714,15 +1761,17 @@ api.indices.prototype.existsAlias = ca({
       }
     }
   ],
-  castNotFound: true
+  castExists: true
 });
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/) request
+ * Perform a [indices.exists_type](http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` to check the types across all indices
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to check
  */
 api.indices.prototype.existsType = ca({
   methods: [
@@ -1751,18 +1800,19 @@ api.indices.prototype.existsType = ca({
       }
     }
   ],
-  castNotFound: true
+  castExists: true
 });
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/) request
+ * Perform a [indices.flush](http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.force
- * @param {Boolean} params.full
- * @param {String} [params.ignore_indices=none]
- * @param {Boolean} params.refresh
+ * @param {Boolean} params.force - TODO: ?
+ * @param {Boolean} params.full - TODO: ?
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
 api.indices.prototype.flush = ca({
   methods: [
@@ -1805,10 +1855,12 @@ api.indices.prototype.flush = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.get_alias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to filter aliases
+ * @param {String|ArrayOfStrings|Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.getAlias = ca({
   methods: [
@@ -1849,10 +1901,11 @@ api.indices.prototype.getAlias = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.get_aliases](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.getAliases = ca({
   methods: [
@@ -1880,9 +1933,11 @@ api.indices.prototype.getAliases = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-mapping/) request
+ * Perform a [indices.get_mapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-mapping/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types
  */
 api.indices.prototype.getMapping = ca({
   methods: [
@@ -1917,9 +1972,10 @@ api.indices.prototype.getMapping = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-settings/) request
+ * Perform a [indices.get_settings](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-settings/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.getSettings = ca({
   methods: [
@@ -1943,9 +1999,10 @@ api.indices.prototype.getSettings = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
+ * Perform a [indices.get_template](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.name - The name of the template
  */
 api.indices.prototype.getTemplate = ca({
   methods: [
@@ -1969,9 +2026,12 @@ api.indices.prototype.getTemplate = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
+ * Perform a [indices.get_warmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
+ * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to get all warmers
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.getWarmer = ca({
   methods: [
@@ -2017,11 +2077,12 @@ api.indices.prototype.getWarmer = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
+ * Perform a [indices.open](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the index
  */
 api.indices.prototype.open = ca({
   methods: [
@@ -2049,16 +2110,17 @@ api.indices.prototype.open = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/) request
+ * Perform a [indices.optimize](http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.flush
- * @param {String} [params.ignore_indices=none]
- * @param {Number} params.max_num_segments
- * @param {Boolean} params.only_expunge_deletes
- * @param {*} params.operation_threading
- * @param {Boolean} params.refresh
- * @param {Boolean} params.wait_for_merge
+ * @param {Boolean} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Number} params.max_num_segments - The number of segments the index should be merged into (default: dynamic)
+ * @param {Boolean} params.only_expunge_deletes - Specify whether the operation should only expunge deleted documents
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {Boolean} params.refresh - Specify whether the index should be refreshed after performing the operation (default: true)
+ * @param {Boolean} params.wait_for_merge - Specify whether the request should block until the merge process is finished (default: true)
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.optimize = ca({
   methods: [
@@ -2108,11 +2170,13 @@ api.indices.prototype.optimize = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.put_alias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Explicit timestamp for the document
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the index with an alias
+ * @param {String} params.name - The name of the alias to be created or updated
  */
 api.indices.prototype.putAlias = ca({
   methods: [
@@ -2162,12 +2226,14 @@ api.indices.prototype.putAlias = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/) request
+ * Perform a [indices.put_mapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.ignore_conflicts
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Boolean} params.ignore_conflicts - Specify whether to ignore conflicts while updating the mapping (default: false)
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` to perform the operation on all indices
+ * @param {String} params.type - The name of the document type
  */
 api.indices.prototype.putMapping = ca({
   methods: [
@@ -2202,10 +2268,11 @@ api.indices.prototype.putMapping = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings/) request
+ * Perform a [indices.put_settings](http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.putSettings = ca({
   methods: [
@@ -2233,12 +2300,13 @@ api.indices.prototype.putSettings = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
+ * Perform a [indices.put_template](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.order
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String} params.name - The name of the template
  */
 api.indices.prototype.putTemplate = ca({
   methods: [
@@ -2270,10 +2338,13 @@ api.indices.prototype.putTemplate = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
+ * Perform a [indices.put_warmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.name - The name of the warmer
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
  */
 api.indices.prototype.putWarmer = ca({
   methods: [
@@ -2315,11 +2386,12 @@ api.indices.prototype.putWarmer = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh/) request
+ * Perform a [indices.refresh](http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
- * @param {*} params.operation_threading
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.refresh = ca({
   methods: [
@@ -2354,11 +2426,12 @@ api.indices.prototype.refresh = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-indices-segments/) request
+ * Perform a [indices.segments](http://elasticsearch.org/guide/reference/api/admin-indices-segments/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
- * @param {*} params.operation_threading
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.segments = ca({
   methods: [
@@ -2392,10 +2465,11 @@ api.indices.prototype.segments = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-gateway-snapshot/) request
+ * Perform a [indices.snapshot_index](http://www.elasticsearch.org/guide/reference/api/admin-indices-gateway-snapshot/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
 api.indices.prototype.snapshotIndex = ca({
   methods: [
@@ -2428,29 +2502,33 @@ api.indices.prototype.snapshotIndex = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-indices-stats/) request
+ * Perform a [indices.stats](http://elasticsearch.org/guide/reference/api/admin-indices-stats/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.all
- * @param {Boolean} params.clear
- * @param {Boolean} params.completion
- * @param {String|ArrayOfStrings|Boolean} params.completion_fields
- * @param {Boolean} params.docs
- * @param {Boolean} params.fielddata
- * @param {String|ArrayOfStrings|Boolean} params.fielddata_fields
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {Boolean} params.filter_cache
- * @param {Boolean} params.flush
- * @param {Boolean} params.get
- * @param {Boolean} params.groups
- * @param {Boolean} params.id_cache
- * @param {String} [params.ignore_indices=none]
- * @param {Boolean} params.indexing
- * @param {Boolean} params.merge
- * @param {Boolean} params.refresh
- * @param {Boolean} params.search
- * @param {Boolean} params.store
- * @param {Boolean} params.warmer
+ * @param {Boolean} params.all - Return all available information
+ * @param {Boolean} params.clear - Reset the default level of detail
+ * @param {Boolean} params.completion - Return information about completion suggester stats
+ * @param {String|ArrayOfStrings|Boolean} params.completion_fields - A comma-separated list of fields for `completion` metric (supports wildcards)
+ * @param {Boolean} params.docs - Return information about indexed and deleted documents
+ * @param {Boolean} params.fielddata - Return information about field data
+ * @param {String|ArrayOfStrings|Boolean} params.fielddata_fields - A comma-separated list of fields for `fielddata` metric (supports wildcards)
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return detailed information for, when returning the `search` statistics
+ * @param {Boolean} params.filter_cache - Return information about filter cache
+ * @param {Boolean} params.flush - Return information about flush operations
+ * @param {Boolean} params.get - Return information about get operations
+ * @param {Boolean} params.groups - A comma-separated list of search groups for `search` statistics
+ * @param {Boolean} params.id_cache - Return information about ID cache
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.indexing - Return information about indexing operations
+ * @param {Boolean} params.merge - Return information about merge operations
+ * @param {Boolean} params.refresh - Return information about refresh operations
+ * @param {Boolean} params.search - Return information about search operations; use the `groups` parameter to include information for specific search groups
+ * @param {Boolean} params.store - Return information about the size of the index
+ * @param {Boolean} params.warmer - Return information about warmers
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String|ArrayOfStrings|Boolean} params.indexing_types - A comma-separated list of document types to include in the `indexing` statistics
+ * @param {String} params.metric_family - Limit the information returned to a specific metric
+ * @param {String|ArrayOfStrings|Boolean} params.search_groups - A comma-separated list of search groups to include in the `search` statistics
  */
 api.indices.prototype.stats = ca({
   methods: [
@@ -2540,13 +2618,14 @@ api.indices.prototype.stats = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/admin-indices-status/) request
+ * Perform a [indices.status](http://elasticsearch.org/guide/reference/api/admin-indices-status/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
- * @param {*} params.operation_threading
- * @param {Boolean} params.recovery
- * @param {Boolean} params.snapshot
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {Boolean} params.recovery - Return information about shard recovery
+ * @param {Boolean} params.snapshot - TODO: ?
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.status = ca({
   methods: [
@@ -2586,11 +2665,12 @@ api.indices.prototype.status = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
+ * Perform a [indices.update_aliases](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.master_timeout
+ * @param {Date|Number} params.timeout - Request timeout
+ * @param {Date|Number} params.master_timeout - Specify timeout for connection to master
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.updateAliases = ca({
   methods: [
@@ -2613,14 +2693,16 @@ api.indices.prototype.updateAliases = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/validate/) request
+ * Perform a [indices.validate_query](http://www.elasticsearch.org/guide/reference/api/validate/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.explain
- * @param {String} [params.ignore_indices=none]
- * @param {*} params.operation_threading
- * @param {String} params.source
- * @param {String} params.q
+ * @param {Boolean} params.explain - Return detailed information about the error
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {*} params.operation_threading - TODO: ?
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.validateQuery = ca({
   methods: [
@@ -2675,7 +2757,7 @@ api.indices.prototype.validateQuery = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/) request
+ * Perform a [info](http://elasticsearch.org/guide/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -2694,16 +2776,18 @@ api.info = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/multi-get/) request
+ * Perform a [mget](http://elasticsearch.org/guide/reference/api/multi-get/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {String} params.preference
- * @param {Boolean} params.realtime
- * @param {Boolean} params.refresh
- * @param {String|ArrayOfStrings|Boolean} params._source
- * @param {String|ArrayOfStrings|Boolean} params._source_exclude
- * @param {String|ArrayOfStrings|Boolean} params._source_include
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return in the response
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
+ * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api.mget = ca({
   methods: [
@@ -2761,28 +2845,31 @@ api.mget = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/more-like-this/) request
+ * Perform a [mlt](http://elasticsearch.org/guide/reference/api/more-like-this/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.boost_terms
- * @param {Number} params.max_doc_freq
- * @param {Number} params.max_query_terms
- * @param {Number} params.max_word_len
- * @param {Number} params.min_doc_freq
- * @param {Number} params.min_term_freq
- * @param {Number} params.min_word_len
- * @param {String|ArrayOfStrings|Boolean} params.mlt_fields
- * @param {Number} params.percent_terms_to_match
- * @param {String} params.routing
- * @param {Number} params.search_from
- * @param {String|ArrayOfStrings|Boolean} params.search_indices
- * @param {String} params.search_query_hint
- * @param {String} params.search_scroll
- * @param {Number} params.search_size
- * @param {String} params.search_source
- * @param {String} params.search_type
- * @param {String|ArrayOfStrings|Boolean} params.search_types
- * @param {String|ArrayOfStrings|Boolean} params.stop_words
+ * @param {Number} params.boost_terms - The boost factor
+ * @param {Number} params.max_doc_freq - The word occurrence frequency as count: words with higher occurrence in the corpus will be ignored
+ * @param {Number} params.max_query_terms - The maximum query terms to be included in the generated query
+ * @param {Number} params.max_word_len - The minimum length of the word: longer words will be ignored
+ * @param {Number} params.min_doc_freq - The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
+ * @param {Number} params.min_term_freq - The term frequency as percent: terms with lower occurence in the source document will be ignored
+ * @param {Number} params.min_word_len - The minimum length of the word: shorter words will be ignored
+ * @param {String|ArrayOfStrings|Boolean} params.mlt_fields - Specific fields to perform the query against
+ * @param {Number} params.percent_terms_to_match - How many terms have to match in order to consider the document a match (default: 0.3)
+ * @param {String} params.routing - Specific routing value
+ * @param {Number} params.search_from - The offset from which to return results
+ * @param {String|ArrayOfStrings|Boolean} params.search_indices - A comma-separated list of indices to perform the query against (default: the index containing the document)
+ * @param {String} params.search_query_hint - The search query hint
+ * @param {String} params.search_scroll - A scroll search request definition
+ * @param {Number} params.search_size - The number of documents to return (default: 10)
+ * @param {String} params.search_source - A specific search request definition (instead of using the request body)
+ * @param {String} params.search_type - Specific search type (eg. `dfs_then_fetch`, `count`, etc)
+ * @param {String|ArrayOfStrings|Boolean} params.search_types - A comma-separated list of types to perform the query against (default: the same type as the document)
+ * @param {String|ArrayOfStrings|Boolean} params.stop_words - A list of stop words to be ignored
+ * @param {String} params.id - The document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.mlt = ca({
   methods: [
@@ -2868,10 +2955,12 @@ api.mlt = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/multi-search/) request
+ * Perform a [msearch](http://www.elasticsearch.org/guide/reference/api/multi-search/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.search_type
+ * @param {String} params.search_type - Search operation type
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to use as default
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to use as default
  */
 api.msearch = ca({
   methods: [
@@ -2920,10 +3009,12 @@ api.msearch = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/percolate/) request
+ * Perform a [percolate](http://elasticsearch.org/guide/reference/api/percolate/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.prefer_local
+ * @param {Boolean} params.prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+ * @param {String} params.index - The name of the index with a registered percolator query
+ * @param {String} params.type - The document type
  */
 api.percolate = ca({
   methods: [
@@ -2952,11 +3043,11 @@ api.percolate = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
+ * Perform a [scroll](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Duration} params.scroll
- * @param {String} params.scroll_id
+ * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {String} params.scroll_id - The scroll ID
  */
 api.scroll = ca({
   methods: [
@@ -2988,38 +3079,40 @@ api.scroll = ca({
 
 
 /**
- * Perform a [](http://www.elasticsearch.org/guide/reference/api/search/) request
+ * Perform a [search](http://www.elasticsearch.org/guide/reference/api/search/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.analyzer
- * @param {Boolean} params.analyze_wildcard
- * @param {String} [params.default_operator=OR]
- * @param {String} params.df
- * @param {Boolean} params.explain
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {Number} params.from
- * @param {String} [params.ignore_indices=none]
- * @param {String|ArrayOfStrings|Boolean} params.indices_boost
- * @param {Boolean} params.lenient
- * @param {Boolean} params.lowercase_expanded_terms
- * @param {String} params.preference
- * @param {String} params.q
- * @param {String|ArrayOfStrings|Boolean} params.routing
- * @param {Duration} params.scroll
- * @param {String} params.search_type
- * @param {Number} params.size
- * @param {String|ArrayOfStrings|Boolean} params.sort
- * @param {String} params.source
- * @param {String|ArrayOfStrings|Boolean} params._source
- * @param {String|ArrayOfStrings|Boolean} params._source_exclude
- * @param {String|ArrayOfStrings|Boolean} params._source_include
- * @param {String|ArrayOfStrings|Boolean} params.stats
- * @param {String} params.suggest_field
- * @param {String} [params.suggest_mode=missing]
- * @param {Number} params.suggest_size
- * @param {Text} params.suggest_text
- * @param {Date|Number} params.timeout
- * @param {Boolean} params.version
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {Boolean} params.analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
+ * @param {String} [params.default_operator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return as part of a hit
+ * @param {Number} params.from - Starting offset (default: 0)
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String|ArrayOfStrings|Boolean} params.indices_boost - Comma-separated list of index boosts
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercase_expanded_terms - Specify whether query terms should be lowercased
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String|ArrayOfStrings|Boolean} params.routing - A comma-separated list of specific routing values
+ * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {String} params.search_type - Search operation type
+ * @param {Number} params.size - Number of hits to return (default: 10)
+ * @param {String|ArrayOfStrings|Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
+ * @param {String} params.source - The URL-encoded request definition using the Query DSL (instead of using request body)
+ * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params._source_exclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params._source_include - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
+ * @param {String} params.suggest_field - Specify which field to use for suggestions
+ * @param {String} [params.suggest_mode=missing] - Specify suggest mode
+ * @param {Number} params.suggest_size - How many suggestions to return in response
+ * @param {Text} params.suggest_text - The source text for which the suggestions should be returned
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.version - Specify whether to return document version as part of a hit
+ * @param {String|ArrayOfStrings|Boolean} [params.index=_all] - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
 api.search = ca({
   methods: [
@@ -3168,13 +3261,14 @@ api.search = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/search/suggest/) request
+ * Perform a [suggest](http://elasticsearch.org/guide/reference/api/search/suggest/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignore_indices=none]
- * @param {String} params.preference
- * @param {String} params.routing
- * @param {String} params.source
+ * @param {String} [params.ignore_indices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.source - The URL-encoded request definition (instead of using request body)
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
  */
 api.suggest = ca({
   methods: [
@@ -3217,24 +3311,27 @@ api.suggest = ca({
 
 
 /**
- * Perform a [](http://elasticsearch.org/guide/reference/api/update/) request
+ * Perform a [update](http://elasticsearch.org/guide/reference/api/update/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency
- * @param {String|ArrayOfStrings|Boolean} params.fields
- * @param {String} params.lang
- * @param {String} params.parent
- * @param {String} params.percolate
- * @param {Boolean} params.refresh
- * @param {String} [params.replication=sync]
- * @param {Number} params.retry_on_conflict
- * @param {String} params.routing
- * @param {*} params.script
- * @param {Date|Number} params.timeout
- * @param {Date|Number} params.timestamp
- * @param {Duration} params.ttl
- * @param {Number} params.version
- * @param {Number} params.version_type
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String|ArrayOfStrings|Boolean} params.fields - A comma-separated list of fields to return in the response
+ * @param {String} params.lang - The script language (default: mvel)
+ * @param {String} params.parent - ID of the parent document
+ * @param {String} params.percolate - Perform percolation during the operation; use specific registered query name, attribute, or wildcard
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {Number} params.retry_on_conflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
+ * @param {String} params.routing - Specific routing value
+ * @param {*} params.script - The URL-encoded script definition (instead of using request body)
+ * @param {Date|Number} params.timeout - Explicit operation timeout
+ * @param {Date|Number} params.timestamp - Explicit timestamp for the document
+ * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {Number} params.version_type - Explicit version number for concurrency control
+ * @param {String} params.id - Document ID
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
  */
 api.update = ca({
   methods: [

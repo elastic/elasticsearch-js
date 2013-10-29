@@ -8,24 +8,30 @@ module.exports = ClientConfig;
 
 var url = require('url');
 var _ = require('./utils');
+var Host = require('./host');
 var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
 var connections = _.requireClasses(module, './connections');
 var serializers = _.requireClasses(module, './serializers');
-var ConnectionPool = require('./connection_pool');
-var Log = require('./log');
 
 var extractHostPartsRE = /\[([^:]+):(\d+)]/;
 var hostProtocolRE = /^([a-z]+:)?\/\//;
 
+var defaultClasses = {
+  log: require('./log'),
+  serializer: serializers.Json,
+  connectionPool: require('./connection_pool'),
+  transport: require('./transport'),
+};
+
 var defaultConfig = {
   hosts: [
     {
-      protocol: 'http:',
-      hostname: 'localhost',
-      port: 9200
+      host: 'localhost',
+      port: 9200,
+      protocol: 'http'
     }
   ],
-  connectionConstructor: 'Http',
+  connectionClass: connections.Http,
   selector: selectors.roundRobin,
   sniffOnStart: false,
   sniffAfterRequests: null,
@@ -37,14 +43,16 @@ var defaultConfig = {
   nodesToHostCallback: function (nodes) {
     var hosts = [];
     _.each(nodes, function (node, id) {
-      var hostnameMatches = extractHostPartsRE.exec(node.hostname);
+      var hostnameMatches = extractHostPartsRE.exec(node.host);
       hosts.push({
-        hostname: hostnameMatches[1],
+        host: hostnameMatches[1],
         port: hostnameMatches[2],
-        id: id,
-        name: node.name,
-        servername: node.hostname,
-        version: node.version
+        _meta: {
+          id: id,
+          name: node.name,
+          servername: node.host,
+          version: node.version
+        }
       });
     });
     return hosts;
@@ -54,13 +62,13 @@ var defaultConfig = {
 function ClientConfig(config) {
   _.extend(this, defaultConfig, config);
 
-  // validate connectionConstructor
-  if (typeof this.connectionConstructor !== 'function') {
-    if (_.has(connections, this.connectionConstructor)) {
-      this.connectionConstructor = connections[this.connectionConstructor];
+  // validate connectionClass
+  if (typeof this.connectionClass !== 'function') {
+    if (typeof connections[this.connectionClass] === 'function') {
+      this.connectionClass = connections[this.connectionClass];
     } else {
-      throw new TypeError('Invalid connectionConstructor ' + this.connectionConstructor +
-        ', specify a function or one of ' + _.keys(connections).join(', '));
+      throw new TypeError('Invalid connectionClass ' + this.connectionClass + '. ' +
+        'Expected a constructor or one of ' + _.keys(connections).join(', '));
     }
   }
 
@@ -74,10 +82,9 @@ function ClientConfig(config) {
     }
   }
 
-  // currently not configurable because!
-  this.log = new Log(this);
-  this.connectionPool = new ConnectionPool(this);
-  this.serializer = new serializers.Json(this);
+  _.each(defaultClasses, function (DefaultClass, prop) {
+    this[prop] = typeof this[prop] === 'function' ? new this[prop](this) : new DefaultClass(this);
+  }, this);
 
   // populate the connection pool
   this.connectionPool.setNodes(this.prepareHosts(this.hosts));
@@ -95,49 +102,15 @@ ClientConfig.prototype.prepareHosts = function (hosts) {
     hosts = [hosts];
   }
 
-  for (i = 0; i < hosts.length; i++) {
-    host = hosts[i];
-    if (typeof host === 'object') {
-      if (host.protocol) {
-        // the protocol must end in a color
-        if (host.protocol[host.protocol.length - 1] !== ':') {
-          host.protocol = host.protocol + ':';
-        }
-      } else {
-        host.protocol = 'http:';
-      }
+  return _.map(hosts, function (host) {
+    return new Host(host);
+  });
+};
 
-      if (host.host && !host.hostname) {
-        // utl.format && url.parse uses "hostname" to represent just the name of the host, "host" is "hostname + port"
-        host.hostname = host.host;
-        delete host.host;
-      }
-
-      if (!host.hostname) {
-        host.hostname = 'localhost';
-      }
-
-      if (!host.port) {
-        host.port = 9200;
-      }
-    } else {
-      // assume it is a string.
-
-      if (!hostProtocolRE.test(host)) {
-        // add a defaul protocol
-        host = 'http://' + host;
-      }
-
-      // parse the url please, node
-      var urlInfo = url.parse(host, false, true);
-
-      // override the host value
-      hosts[i] = {
-        protocol: urlInfo.protocol || 'http:',
-        hostname: urlInfo.hostname || 'localhost',
-        port: urlInfo.port || 9200
-      };
-    }
-  }
-  return hosts;
+/**
+ * Shutdown the connections, log outputs, and clear timers
+ */
+ClientConfig.prototype.close = function () {
+  this.log.close();
+  this.connectionPool.close();
 };

@@ -19,7 +19,7 @@ describe('EsServer Mock', function () {
 
     function makeRequest(opts, respCb) {
       opts = _.defaults(opts || {}, {
-        hostname: 'localhost',
+        host: 'localhost',
         port: port
       });
 

@@ -12,16 +12,16 @@ var client = new es.Client({
   maxSockets: 100
 });
 
-console.log('clearing existing "test-docs" indices');
-
 async.series([
   function (done) {
+    console.log('clearing existing "test-docs" indices');
     client.indices.delete({
       index: 'test-docs',
       ignore: 404
     }, done);
   },
   function (done) {
+    console.log('waiting for cluster');
     client.cluster.health({
       wait_for_status: 'yellow'
     }, done);
@@ -43,4 +43,6 @@ async.series([
       }
     });
   }
-]);
+], function (err) {
+  if (err) console.error(err);
+});

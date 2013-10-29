@@ -1,8 +1,7 @@
 
-var _ = require('../../../../src/lib/utils')
-  , fs = require('fs')
-  , path = require('path')
-  , urlParamRE = /\{(\w+)\}/g;
+var _ = require('../../../../src/lib/utils');
+var fs = require('fs');
+var path = require('path');
 
 
 /**
@@ -16,7 +15,7 @@ function lines(i) {
     if (line === '') {
       // no indent on empty lines
       l.lines.push('');
-    } else if (typeof line !== 'undefined') {
+    } else if (line === void 0) {
       l.lines.push(_.repeat(' ', l.indent) + line);
     }
     return l;
@@ -81,152 +80,6 @@ var templates = {};
  */
 var templateGlobals = {
 
-  writeParams: function (indent, params, namespace) {
-    var l = lines(indent);
-
-    _.each(params, function (param, name) {
-      if (!param.required) {
-        l('if (typeof params.' + name + ' !== \'undefined\') {').in();
-      }
-
-      l.split(templates[param.type || 'any']({
-        get: 'params.' + name,
-        set: namespace + name,
-        name: name
-      }));
-
-      if (!param.required) {
-        l.out();
-        l('}');
-      }
-      l('');
-    });
-
-    return l.toString();
-  },
-
-  writeBrowserParams: function (indent, params, namespace) {
-    var l = lines(indent);
-
-    _.each(params, function (param, name) {
-      if (!param.required) {
-        l('if (_.has(params, ' + stringify(name) + ')) {').in();
-      }
-      switch (param.type) {
-      case 'enum':
-        l(
-          namespace + name + ' = _.' +
-          (param.type || 'any') + 'Param(params.' + name + ', ' + stringify(param.options) +
-          ');'
-        );
-        break;
-      default:
-        l(namespace + name + ' = _.' + (param.type || 'any') + 'Param(params.' + name + ');');
-        break;
-      }
-      if (!param.required) {
-        l.out('}');
-      }
-      l('');
-    });
-
-    return l.toString();
-  },
-
-  writeUrls: function (indent, urls, urlParams, queryStringParams) {
-    var l = lines(indent);
-
-    function urlVarIsRequired(varDetails) {
-      varDetails = typeof varDetails === 'string' ? urlParams[varDetails] : varDetails;
-      return varDetails && (varDetails.required || !varDetails.default);
-    }
-
-    // turn a url string into an object describing the url, then sort them in decending order by how many args they have
-    urls = _.sortBy(urls, function (url) {
-      var requiredVars = _.filter(_.collectMatches(url, urlParamRE), function (match) {
-        return urlVarIsRequired(urlParams[match[1]]);
-      });
-      return requiredVars ? requiredVars.length * -1 : 0;
-    });
-
-    _.each(urls, function (url, urlIndex) {
-      // collect the vars from the url and replace them to form the js that will build the url
-      var makeL = lines(), vars = [];
-
-      makeL('request.path = \'' + url.replace(urlParamRE, function (match, varName) {
-        var varDetails = urlParams[varName];
-        varDetails.name = varName;
-        vars.push(varDetails);
-        if (urlVarIsRequired(varDetails)) {
-          return '\' + encodeURIComponent(parts.' + varName + ') + \'';
-        } else {
-          return '\' + encodeURIComponent(parts.' + varName + ' || ' + stringify(varDetails.default) + ') + \'';
-        }
-      }) + '\';');
-
-      makeL(_.filter(_.map(vars, function (v, i) {
-        if (_.has(queryStringParams, v.name)) {
-          // delete the param so that it's not used later on in the queryString
-          return 'delete params.' + v.name + ';';
-        }
-      })).join(' '));
-
-      if (vars.length || urlIndex) {
-        var requiredVars = _.filter(vars, urlVarIsRequired);
-
-        var condition = _.map(requiredVars, function (v) {
-          return 'parts.' + v.name + ')';
-        }).join(' && ');
-
-        l((urlIndex > 0 ? 'else ' : '') + (condition ? 'if (' + condition + ') ' : '') + '{')
-          .in()
-            .split(makeL.toString())
-          .out('}');
-
-        if (urlIndex === urls.length - 1 && condition) {
-          l('else {')
-            .in('throw new TypeError(\'Unable to build a path with those params. Supply at least ' +
-              vars.join(', ') + '\');'
-            )
-          .out('}');
-        }
-
-      } else {
-        l.split(makeL.toString());
-      }
-    });
-    l('');
-
-    return l.toString();
-  },
-
-  writeRequestObjectBody: function (indent, name, body, methods) {
-    var parts = [], l = lines(indent);
-    if (~name.indexOf('exists')) {
-      parts.push('ignore: _.union([404], params.ignore)');
-    } else {
-      parts.push('ignore: params.ignore');
-    }
-
-    if (body) {
-      if (_.contains(['bulk', 'msearch'], name)) {
-        parts.push('body: this.client.config.serializer.bulkBody(params.body || null)');
-      } else {
-        parts.push('body: params.body || null');
-      }
-    }
-
-    if (methods.length === 1) {
-      parts.push('method: ' + stringify(methods[0]));
-    }
-
-    _.each(parts, function (part, i) {
-      l(part + (i < parts.length - 1 ? ',' : ''));
-    });
-
-    return l.toString();
-  },
-
   stringify: stringify,
 
   _: _,
@@ -254,22 +107,6 @@ var templateGlobals = {
     }
   },
 
-  returnStatement: function (indent, name) {
-    var l = lines(indent);
-    if (name.match(/(^|\.)exists/)) {
-      l('this.client.request(request, function (err, response) {')
-        .in('if (err instanceof errors.NotFound) {')
-          .in('cb(err, false);')
-        .out('} else {')
-          .in('cb(err, true);')
-        .out('}')
-      .out('});');
-    } else {
-      l('this.client.request(request, cb);');
-    }
-    return l.toString();
-  },
-
   partials: templates
 };
 
@@ -290,6 +127,5 @@ fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
 templates.text = templates.string;
 
 module.exports = {
-  apiFile: templates.api_file,
-  urlParamRE: urlParamRE
+  apiFile: templates.api_file
 };

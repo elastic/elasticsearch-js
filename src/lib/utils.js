@@ -2,8 +2,6 @@ var path = require('path'),
   _ = require('lodash'),
   fs = require('fs'),
   requireDir = require('require-directory'),
-  qs = require('querystring'),
-  url = require('url'),
   nodeUtils = require('util');
 
 /**
@@ -70,7 +68,7 @@ utils.requireClasses = function (module, dirPath) {
  */
 utils.reKey = function (obj, transform, recursive) {
   // defaults
-  if (typeof recursive === 'undefined') { recursive = true; }
+  if (recursive === void 0) { recursive = true; }
   if (typeof transform !== 'function') { throw new TypeError('invalid transform function'); }
 
   var out = {};
@@ -253,19 +251,6 @@ utils.repeat = function (what, times) {
 };
 
 /**
- * Convert an object into a query string
- *
- * @method  makeQueryString
- * @param  {Object} obj - The object to convert
- * @param  {Boolean} [start=true] - Should the query string start with a '?'
- * @return {String}
- */
-utils.makeQueryString = function (obj, start) {
-  var str = qs.stringify(obj);
-  return (start === false || str === '') ? str : '?' + str;
-};
-
-/**
  * Override node's util.inherits function to also supply a callSuper function on the child class that can be called
  * with the instance and the arguments passed to the child's constructor. This should only be called from within the
  * constructor of the child class and should be removed from the code once the constructor is "done".
@@ -308,45 +293,6 @@ utils.collectMatches = function (text, regExp) {
     }
   }
   return matches;
-};
-
-var startsWithProtocolRE = /^([a-z]+:)?\/\//;
-
-/**
- * Runs a string through node's url.parse, removing the return value's host property and insuring the text has a
- * protocol first
- *
- * @todo Tests
- * @param urlString {String} - a url of some sort
- * @returns {Object} - an object containing 'hostname', 'port', 'protocol', 'path', and a few other keys
- */
-utils.parseUrl = function (urlString) {
-  if (!startsWithProtocolRE.text(urlString)) {
-    urlString = 'http://' + urlString;
-  }
-  var info = url.parse(urlString);
-  return info;
-};
-
-/**
- * Formats a urlinfo object, sort of juggling the 'host' and 'hostname' keys based on the presense of the port and
- * including http: as the default protocol.
- *
- * @todo Tests,
- * @todo add checking for ':' at the end of the protocol
- * @param urlInfo {Object} - An object, similar to that returned from _.parseUrl
- * @returns {String}
- */
-utils.formatUrl = function (urlInfo) {
-  var info = _.pick(urlInfo, ['protocol', 'hostname', 'port']);
-  if (info.port && urlInfo.host && !info.hostname) {
-    info.hostname = urlInfo.host;
-    delete info.host;
-  }
-  if (!info.protocol) {
-    info.protocol = 'http:';
-  }
-  return url.format(info);
 };
 
 /**
@@ -425,7 +371,7 @@ _.scheduled = _.handler;
  * ```
  *
  * @param {Object} obj - The object to bind the methods to
- * @param {Array} [methods] - The methods to bind, false values === bind them all
+ * @param {Array} [methods] - The methods to bind, false values === bind all flagged with _provideBound
  */
 _.makeBoundMethods = function (obj, methods) {
   obj.bound = {};

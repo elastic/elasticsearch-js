@@ -8,11 +8,12 @@
 
 module.exports = ConnectionPool;
 
-var _ = require('./utils'),
-  selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase),
-  connectors = _.reKey(_.requireDir(module, './connections'), _.studlyCase),
-  EventEmitter = require('events').EventEmitter,
-  errors = require('./errors');
+var _ = require('./utils');
+var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
+var connectors = _.reKey(_.requireDir(module, './connections'), _.studlyCase);
+var EventEmitter = require('events').EventEmitter;
+var errors = require('./errors');
+var Host = require('./host');
 
 function ConnectionPool(config) {
   _.makeBoundMethods(this);
@@ -32,6 +33,7 @@ ConnectionPool.prototype.select = function (cb) {
       try {
         cb(null, this.config.selector(this.connections.alive));
       } catch (e) {
+        this.config.log.error(e);
         cb(e);
       }
     }
@@ -46,7 +48,7 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
   if (oldStatus === status) {
     return true;
   } else {
-    this.config.log.info('connection to', _.formatUrl(connection), 'is', status);
+    this.config.log.info('connection id:', connection.__id, 'is', status);
   }
 
   switch (status) {
@@ -103,12 +105,12 @@ ConnectionPool.prototype.setNodes = function (nodeConfigs) {
 
   for (i = 0; i < nodeConfigs.length; i++) {
     node = nodeConfigs[i];
-    if (node.hostname && node.port) {
-      id = node.hostname + ':' + node.port;
+    if (node instanceof Host) {
+      id = node.toString();
       if (this.index[id]) {
         delete toRemove[id];
       } else {
-        connection = new this.config.connectionConstructor(this.config, nodeConfigs[i]);
+        connection = new this.config.connectionClass(node, this.config);
         connection.__id = id;
         this._add(connection);
       }

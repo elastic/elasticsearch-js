@@ -5,18 +5,18 @@ var _ = require('./utils'),
 
 /**
  * Abstract class used for Connection classes
- * @param client {Client} - The client that this connection belongs to
- * @param config {Object} - a map of configuration details for this connection
- * @param [config.hostname=localhost] {String} - The hostname for the node this connection connects to
- * @param [config.port=9200] {Integer} - The port on the server that ES is listening to
  * @class ConnectionAbstract
  * @constructor
  */
-function ConnectionAbstract(config, nodeInfo) {
+function ConnectionAbstract(host, config) {
   EventEmitter.call(this);
   this.config = config;
-  this.hostname = nodeInfo.hostname || 'localhost';
-  this.port = nodeInfo.port || 9200;
+  this.host = host;
+  this.requestCount = 0;
+
+  if (!this.host) {
+    throw new Error('Missing host config');
+  }
 
   _.makeBoundMethods(this);
 }

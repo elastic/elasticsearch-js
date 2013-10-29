@@ -12,7 +12,7 @@ var argv = require('optimist')
   .default('executable', process.env.ES_HOME ? path.join(process.env.ES_HOME, './bin/elasticsearch') : null)
   .default('clusterName', 'yaml-test-runner')
   .default('dataPath', '/tmp/yaml-test-runner')
-  .default('hostname', 'localhost')
+  .default('host', 'localhost')
   .default('port', '9200')
   .default('match', '**')
   .boolean('createServer')
@@ -49,7 +49,7 @@ function createClient() {
   client = new es.Client({
     hosts: [
       {
-        hostname: esServer ? esServer.__hostname : argv.hostname,
+        host: esServer ? esServer.__hostname : argv.host,
         port: esServer ? esServer.__port : argv.port
       }
     ],
@@ -343,7 +343,7 @@ ActionRunner.prototype = {
       , remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i++) {
-      if (typeof from[steps[i]] === 'undefined') {
+      if (from[steps[i]] === void 0) {
         remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
         from = from[remainingSteps];
         break;
@@ -429,7 +429,7 @@ ActionRunner.prototype = {
         catcher = null;
       }
 
-      clientAction.call(client, params, _.bind(function (error, body, status) {
+      var cb =  _.bind(function (error, body, status) {
         this._last_requests_response = body;
 
         if (error) {
@@ -451,7 +451,23 @@ ActionRunner.prototype = {
         }
 
         done(error);
-      }, this));
+      }, this);
+
+      // switch (Math.round(Math.random() * 100) % 3) {
+      // case 0:
+      //   clientAction.call(client, params).then(function (resp) {
+      //     cb(void 0, resp.body, resp.status);
+      //   }, function (err) {
+      //     cb(err);
+      //   });
+      //   break;
+      // case 1:
+      //   clientAction.call(client, params).once('done', cb);
+      //   break;
+      // case 2:
+      clientAction.call(client, params, cb);
+        // break;
+      // }
     } else {
       done(new Error('stepped in do_do, did not find a function'));
     }

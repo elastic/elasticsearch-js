@@ -17,7 +17,7 @@ var _ = require('./utils'),
  * @param {string} output.type - The name of the logger to use for this output
  */
 function Log(config) {
-  this.config = config;
+  this.config = config || {};
 
   var i;
   var output = config.log || 2;
@@ -250,7 +250,7 @@ Log.prototype.debug = function (/* ...msg */) {
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (EventEmitter.listenerCount(this, 'trace')) {
     if (typeof requestUrl === 'object') {
-      requestUrl = _.formatUrl(requestUrl);
+      requestUrl = url.format(requestUrl);
     }
     return this.emit('trace', method, requestUrl, body, responseBody, responseStatus);
   }

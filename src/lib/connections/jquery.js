@@ -1,9 +1,16 @@
+/* jshint browser: true, jquery: true */
+
+/**
+ * Simple connection class for using the XHR object in browsers
+ *
+ * @class {XhrConnection}
+ */
 module.exports = JqueryConnection;
 
-var _ = require('../utils'),
-  ConnectionAbstract = require('../connection');
+function JqueryConnection() {}
 
-function JqueryConnection() {
+JqueryConnection.prototype.request = function (params, cb) {
+  var $xhr = jQuery.ajax(params).done(cb);
+};
 
-}
-_.inherits(JqueryConnection, ConnectionAbstract);
+

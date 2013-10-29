@@ -21,7 +21,7 @@ exports.start = function (params, cb) {
       '-Des.discovery.zen.ping.multicast.enabled=false',
     ],
     {
-      cwd: undefined,
+      cwd: void 0,
       env: process.env,
       stdio: [
         'ignore',

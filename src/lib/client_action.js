@@ -2,14 +2,13 @@
  * Constructs a function that can be called to make a request to ES
  * @type {[type]}
  */
-exports.create = function clientAction(spec) {
+module.exports = function ClientAction(spec, client) {
   return function (params, cb) {
-    return exec(this.client, spec, params, cb);
+    return exec((client || this.client).config.transport, spec, params, cb);
   };
 };
 
 var errors = require('./errors');
-
 var _ = require('./utils');
 var urlParamRE = /\{(\w+)\}/g;
 
@@ -130,7 +129,7 @@ function resolveUrl(url, params) {
   }, {}));
 }
 
-function exec(client, spec, params, cb) {
+function exec(transport, spec, params, cb) {
   if (typeof params === 'function') {
     cb = params;
     params = {};
@@ -148,17 +147,13 @@ function exec(client, spec, params, cb) {
     return _.nextTick(cb, new TypeError('A request body is required.'));
   }
 
-  if (params.body) {
-    request.body = params.body;
-  }
+  params.body && (request.body = params.body);
+  params.ignore && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
+  params.timeout && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
 
-  if (spec.bulkBody) {
-    request.bulkBody = true;
-  }
-
-  if (params.ignore) {
-    request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore];
-  }
+  // copy over some properties from the spec
+  spec.bulkBody && (request.bulkBody = true);
+  spec.castExists && (request.castExists = true);
 
   if (spec.methods.length === 1) {
     request.method = spec.methods[0];
@@ -230,17 +225,7 @@ function exec(client, spec, params, cb) {
     }
   }
 
-  request.path = request.path + _.makeQueryString(query);
+  request.query = query;
 
-  if (spec.castNotFound) {
-    client.request(request, function (err, response) {
-      if (err instanceof errors.NotFound) {
-        cb(null, false);
-      } else {
-        cb(err, !err);
-      }
-    });
-  } else {
-    client.request(request, cb);
-  }
+  transport.request(request, cb);
 }
