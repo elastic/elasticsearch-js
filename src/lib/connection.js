@@ -1,7 +1,7 @@
 module.exports = ConnectionAbstract;
 
-var _ = require('./utils'),
-    EventEmitter = require('events').EventEmitter;
+var _ = require('./utils');
+var EventEmitter = require('events').EventEmitter;
 
 /**
  * Abstract class used for Connection classes

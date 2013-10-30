@@ -33,8 +33,9 @@ var es = require('../../../src/elasticsearch'),
   startingMoment = moment().startOf('day').subtract('days', days),
   endingMoment = moment().endOf('day').add('days', days),
   clientConfig = {
+    maxSockets: 1000,
     log: {
-      level: ['info', 'error']
+      level: 'error'
     }
   };
 
@@ -47,13 +48,13 @@ if (argv.host) {
 var client = new es.Client(clientConfig);
 var log = client.config.log;
 
-log.info('Generating', count, 'events across ±', days, 'days');
+console.log('Generating', count, 'events across ±', days, 'days');
 
 fillIndecies(function () {
   var actions = [],
     samples = makeSamples(startingMoment, endingMoment);
 
-  async.timesSeries(count, function (i, done) {
+  async.times(count, function (i, done) {
     // random date, plus less random time
     var date = moment(samples.randomMsInDayRange())
       .utc()
@@ -175,7 +176,7 @@ function fillIndecies(cb) {
     movingDate.add('day', 1);
   }
 
-  async.parralel(indexPushActions, function (err, responses) {
+  async.parallel(indexPushActions, function (err, responses) {
     if (err) {
       client.config.log.error(err.message = 'Unable to create indicies: ' + err.message);
     } else {

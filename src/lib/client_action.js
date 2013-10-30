@@ -149,7 +149,11 @@ function exec(transport, spec, params, cb) {
 
   params.body && (request.body = params.body);
   params.ignore && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
-  params.timeout && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
+  if (params.timeout === void 0) {
+    request.timeout = 10000;
+  } else {
+    request.timeout = params.timeout;
+  }
 
   // copy over some properties from the spec
   spec.bulkBody && (request.bulkBody = true);
@@ -227,5 +231,5 @@ function exec(transport, spec, params, cb) {
 
   request.query = query;
 
-  transport.request(request, cb);
+  return transport.request(request, cb);
 }

@@ -9,11 +9,11 @@ module.exports = XhrConnection;
 
 var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
-var ConnectionError = require('../errors').ConnectionError;
-var TimeoutError = require('../errors').TimeoutError;
+var ConnectionFault = require('../errors').ConnectionFault;
+var TimeoutError = require('../errors').RequestTimeout;
 
-function XhrConnection(config, nodeInfo) {
-  ConnectionAbstract.call(this, config, nodeInfo);
+function XhrConnection(host, config) {
+  ConnectionAbstract.call(this, host, config);
 }
 _.inherits(XhrConnection, ConnectionAbstract);
 
@@ -49,17 +49,17 @@ if (!getXhr) {
 XhrConnection.prototype.request = function (params, cb) {
   var xhr = getXhr();
   var timeoutId;
-
+  var url = this.host.makeUrl(params);
   if (params.auth) {
-    xhr.open(params.method, params.url, true, params.auth.user, params.auth.pass);
+    xhr.open(params.method, url, true, params.auth.user, params.auth.pass);
   } else {
-    xhr.open(params.method, params.url, true);
+    xhr.open(params.method, url, true);
   }
 
   xhr.onreadystatechange = function (e) {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
-      cb(xhr.status ? null : new ConnectionError(), xhr.responseText, xhr.status);
+      cb(xhr.status ? null : new ConnectionFault(), xhr.responseText, xhr.status);
     }
   };
 

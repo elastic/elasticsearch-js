@@ -45,6 +45,7 @@ TransportRequest.prototype._startRequest = function () {
   }
 
   params.req = {
+    timeout: params.timeout,
     path: params.path,
     query: params.query,
     method: params.method,

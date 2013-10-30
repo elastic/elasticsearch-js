@@ -9,9 +9,26 @@ module.exports = ClientConfig;
 var url = require('url');
 var _ = require('./utils');
 var Host = require('./host');
-var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
-var connections = _.requireClasses(module, './connections');
-var serializers = _.requireClasses(module, './serializers');
+var selectors = require('./selectors');
+
+var connectors = {};
+if (process.browser) {
+  connectors.Xhr = require('./connectors/xhr');
+  connectors.Angular = require('./connectors/angular');
+  connectors.jQuery = require('./connectors/jquery');
+} else {
+  connectors.Http = require('./connectors/http');
+}
+
+_.each(connectors, function (conn, name) {
+  if (typeof conn !== 'function') {
+    delete connectors[name];
+  }
+});
+
+var serializers = {
+  Json: require('./serializers/json')
+};
 
 var extractHostPartsRE = /\[([^:]+):(\d+)]/;
 var hostProtocolRE = /^([a-z]+:)?\/\//;
@@ -31,7 +48,7 @@ var defaultConfig = {
       protocol: 'http'
     }
   ],
-  connectionClass: connections.Http,
+  connectionClass: process.browser ? connectors.Xhr : connectors.Http,
   selector: selectors.roundRobin,
   sniffOnStart: false,
   sniffAfterRequests: null,
@@ -59,16 +76,23 @@ var defaultConfig = {
   }
 };
 
+// remove connector classes that were not included in the build
+connectors = _.transform(connectors, function (note, connector, name) {
+  if (connector) {
+    note[name] = connector;
+  }
+}, {});
+
 function ClientConfig(config) {
   _.extend(this, defaultConfig, config);
 
   // validate connectionClass
   if (typeof this.connectionClass !== 'function') {
-    if (typeof connections[this.connectionClass] === 'function') {
-      this.connectionClass = connections[this.connectionClass];
+    if (typeof connectors[this.connectionClass] === 'function') {
+      this.connectionClass = connectors[this.connectionClass];
     } else {
-      throw new TypeError('Invalid connectionClass ' + this.connectionClass + '. ' +
-        'Expected a constructor or one of ' + _.keys(connections).join(', '));
+      throw new TypeError('Invalid connectionClass "' + this.connectionClass + '". ' +
+        'Expected a constructor or one of ' + _.keys(connectors).join(', '));
     }
   }
 
@@ -77,7 +101,7 @@ function ClientConfig(config) {
     if (_.has(selectors, this.selector)) {
       this.selector = selectors[this.selector];
     } else {
-      throw new TypeError('Invalid Selector ' + this.selector + '. ' +
+      throw new TypeError('Invalid Selector "' + this.selector + '". ' +
         'Expected a function or one of ' + _.keys(selectors).join(', '));
     }
   }
@@ -108,7 +132,7 @@ ClientConfig.prototype.prepareHosts = function (hosts) {
 };
 
 /**
- * Shutdown the connections, log outputs, and clear timers
+ * Shutdown the connectionPool, log outputs, and clear timers
  */
 ClientConfig.prototype.close = function () {
   this.log.close();

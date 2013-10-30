@@ -1,6 +1,17 @@
-var _ = require('./utils'),
-  url = require('url'),
-  EventEmitter = require('events').EventEmitter;
+var _ = require('./utils');
+var url = require('url');
+var EventEmitter = require('events').EventEmitter;
+if (process.browser) {
+  var loggers = {
+    Console: require('./loggers/console')
+  };
+} else {
+  var loggers = {
+    File: require('./loggers/file'),
+    Stream: require('./loggers/file'),
+    Stdio: require('./loggers/stdio')
+  };
+}
 
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -20,7 +31,7 @@ function Log(config) {
   this.config = config || {};
 
   var i;
-  var output = config.log || 2;
+  var output = _.isPlainObject(config.log) ? config.log : 'warning';
 
   if (_.isString(output) || _.isFinite(output)) {
     output = [
@@ -170,15 +181,19 @@ Log.prototype.addOutput = function (config) {
   var levels = Log.parseLevels(config.levels || config.level || 'warning');
 
   _.defaults(config || {}, {
-    type: 'stdio',
+    type: process.browser ? 'Console' : 'Stdio',
   });
 
   // force the levels config
   delete config.level;
   config.levels = levels;
 
-  var Logger = require('./loggers/' + config.type);
-  return new Logger(config, this);
+  var Logger = loggers[config.type];
+  if (Logger) {
+    return new Logger(config, this);
+  } else {
+    throw new Error('Invalid logger type "' + config.type + '". Expected one of ' + _.keys(loggers).join(', '));
+  }
 };
 
 /**

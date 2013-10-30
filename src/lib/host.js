@@ -49,17 +49,48 @@ Host.prototype = {
   port: 9200,
   auth: '',
   path: '',
-  query: {}
+  query: false
 };
 
-Host.prototype.toUrl = function (path, query) {
-  if (query) {
-    query = '?' + qs.stringify(_.defaults(typeof query === 'string' ? qs.parse(query) : query, this.query));
-  } else {
-    query = '';
+Host.prototype.makeUrl = function (params) {
+  params = params || {};
+  // build the port
+  var port = '';
+  if (this.port !== defaultPort[this.protocol]) {
+    // add an actual port
+    port = ':' + this.port;
   }
 
-  return this.protocol + '://' +
-    this.host + (this.port !== defaultPort[this.protocol] ? ':' + this.port : '') +
-    '/' + this.path + (path || '') + query;
+  // build the path
+  var path = '';
+  // add the path prefix if set
+  if (this.path) {
+    path += this.path;
+  }
+  // then the path from the params
+  if (params.path) {
+    path += params.path;
+  }
+  // if we still have a path, and it doesn't start with '/' add it.
+  if (path && path.charAt(0) !== '/') {
+    path = '/' + path;
+  }
+
+  // build the query string
+  var query = '';
+  if (params.query) {
+    // if the user passed in a query, merge it with the defaults from the host
+    query = qs.stringify(
+      _.defaults(typeof params.query === 'string' ? qs.parse(params.query) : params.query, this.query)
+    );
+  } else if (this.query) {
+    // just stringify the hosts query
+    query = qs.stringify(this.query);
+  }
+  // prepend the ? if there is actually a valid query string
+  if (query) {
+    query = '?' + query;
+  }
+
+  return this.protocol + '://' + this.host + port + path + query;
 };

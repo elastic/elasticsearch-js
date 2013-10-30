@@ -118,21 +118,43 @@ describe('Utils', function () {
 
     describe('#camelCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.camelCase('Neil PatRICK hArris-is_a.dog')).to.eql('neilPatrickHarrisIsADog');
+        expect(_.camelCase('Neil Patrick.Harris-is_a.dog')).to.eql('neilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.camelCase('JSON_parser')).to.eql('jsonParser');
+        expect(_.camelCase('Json_parser')).to.eql('jsonParser');
+      });
+
+      it('handles trailing _', function () {
+        expect(_.camelCase('_thing_one_')).to.eql('thingOne');
       });
     });
 
     describe('#studlyCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.studlyCase('Neil PatRICK hArris-is_a.dog')).to.eql('NeilPatrickHarrisIsADog');
+        expect(_.studlyCase('Neil Patrick.Harris-is_a.dog')).to.eql('NeilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.studlyCase('JSON_parser')).to.eql('JsonParser');
+        expect(_.studlyCase('Json_parser')).to.eql('JsonParser');
+      });
+
+      it('handles trailing _', function () {
+        expect(_.studlyCase('_thing_one_')).to.eql('ThingOne');
+      });
+    });
+
+    describe('#snakeCase', function () {
+      it('find spaces, underscores, and other natural word breaks', function () {
+        expect(_.snakeCase('Neil Patrick.Harris-is_a.dog')).to.eql('neil_patrick_harris_is_a_dog');
+      });
+
+      it('ignores abreviations', function () {
+        expect(_.snakeCase('Json_parser')).to.eql('json_parser');
+      });
+
+      it('handles trailing _', function () {
+        expect(_.snakeCase('_thing_one_')).to.eql('thing_one');
       });
     });
 

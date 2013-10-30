@@ -3,8 +3,18 @@
 
 module.exports = function (grunt) {
 
+  var _ = require('lodash');
+  var sharedBrowserfyExclusions = [
+    'src/lib/connectors/http.js',
+    'src/lib/loggers/file.js',
+    'src/lib/loggers/stdio.js',
+    'src/lib/loggers/stream.js',
+    'src/lib/loggers/stream.js'
+  ];
+
   // Project configuration.
   grunt.initConfig({
+    distDir: 'dist',
     pkg: grunt.file.readJSON('package.json'),
     meta: {
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -12,6 +22,11 @@ module.exports = function (grunt) {
         '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
         ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= pkg.license %> */\n\n'
+    },
+    clean: {
+      dist: {
+        src: ['<%= distDir %>']
+      }
     },
     mochaTest: {
       unit: [
@@ -76,6 +91,49 @@ module.exports = function (grunt) {
           'scripts/generate/yaml_tests'
         ]
       }
+    },
+    browserify: {
+      generic: {
+        files: {
+          '<%= distDir %>/elasticsearch.js': 'src/elasticsearch.js'
+        },
+        options: {
+          standalone: 'true',
+          ignore: _.union(sharedBrowserfyExclusions, [
+            'src/lib/connectors/jquery.js',
+            'src/lib/connectors/angular.js'
+          ])
+        }
+      },
+      angular: {
+        files: {
+          '<%= distDir %>/elasticsearch.angular.js': ['src/elasticsearch.angular.js']
+        },
+        options: {
+          standalone: 'true',
+          ignore: _.union(sharedBrowserfyExclusions, [
+            'src/lib/connectors/jquery.js',
+            'src/lib/connectors/xhr.js'
+          ])
+        }
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          '<%= distDir %>/elasticsearch.min.js': '<%= distDir %>/elasticsearch.js',
+          '<%= distDir %>/elasticsearch.angular.min.js': '<%= distDir %>/elasticsearch.angular.js'
+        },
+        options: {
+          report: 'min',
+          banner: '<%= meta.banner %>'
+        },
+        global_defs: {
+          process: {
+            browser: true
+          }
+        }
+      }
     }//,
     // docular: {
     //   groups: [
@@ -119,8 +177,11 @@ module.exports = function (grunt) {
 
   // load plugins
   // grunt.loadNpmTasks('grunt-docular');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Default task.
@@ -129,6 +190,12 @@ module.exports = function (grunt) {
     'mochaTest:unit',
     'generate:yaml_suite',
     'mochaTest:yaml_suite'
+  ]);
+
+  grunt.registerTask('build', [
+    'clean:dist',
+    'browserify',
+    'uglify:dist'
   ]);
 
   grunt.task.registerMultiTask('generate', 'used to generate things', function () {

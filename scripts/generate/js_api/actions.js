@@ -26,7 +26,25 @@ function transformFile(entry) {
 
   // itterate all of the specs within the file, should only be one
   _.each(JSON.parse(entry.data), function (def, name) {
+    //camelcase the name
+    name = _.map(name.split('.'), _.camelCase).join('.');
+
     var steps = name.split('.');
+
+    function transformParamKeys(note, param, key) {
+      var cmlKey = _.camelCase(key);
+      if (cmlKey !== key) {
+        param.name = key;
+        if (key.charAt(0) === '_') {
+          cmlKey = '_' + cmlKey;
+        }
+      }
+      note[cmlKey] = param;
+    }
+
+    def.url.params = _.transform(def.url.params, transformParamKeys, {});
+    def.url.parts = _.transform(def.url.parts, transformParamKeys, {});
+
     var allParams = _.extend({}, def.url.params, def.url.parts);
     var spec = {
       name: name,
@@ -53,6 +71,7 @@ function transformFile(entry) {
       var optionalVars = {};
       var requiredVars = {};
       var param;
+      var name;
       var target;
       var match;
 
@@ -61,19 +80,16 @@ function transformFile(entry) {
       }
 
       while (match = urlParamRE.exec(url)) {
-        param = def.url.parts[match[1]] || {};
+        name = _.camelCase(match[1]);
+        param = def.url.parts[name] || {};
         target = (param.required || !param.default) ? requiredVars : optionalVars;
-        target[match[1]] = _.omit(param, 'required');
+        target[name] = _.omit(param, 'required', 'description', 'name');
       }
 
-      [requiredVars, optionalVars].forEach(function (vars) {
-        _.each(vars, function (v, name) {
-          vars[name] = _.omit(v, 'description');
-        });
-      });
-
       return _.omit({
-        fmt: url.replace(urlParamRE, '<%=$1%>'),
+        fmt: url.replace(urlParamRE, function (full, match) {
+          return '<%=' + _.camelCase(match) + '%>';
+        }),
         opt: _.size(optionalVars) ? optionalVars : null,
         req: _.size(requiredVars) ? requiredVars : null,
         sortOrder: _.size(requiredVars) * -1
@@ -87,15 +103,14 @@ function transformFile(entry) {
     });
 
     spec.params = _.transform(spec.params, function (note, param, name) {
-      param.name = name;
+      // param.name = name;
       note[name] = _.pick(param, [
-        'type', 'default', 'options', 'required'
+        'type', 'default', 'options', 'required', 'name'
       ]);
     }, {});
 
     // escape method names with "special" keywords
-    var location = _.map(spec.name.split('.'), _.camelCase)
-      .join('.prototype.')
+    var location = spec.name.split('.').join('.prototype.')
       .replace(/(^|\.)(delete|default)(\.|$)/g, '[\'$2\']');
 
     var action = {

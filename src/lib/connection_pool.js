@@ -9,8 +9,7 @@
 module.exports = ConnectionPool;
 
 var _ = require('./utils');
-var selectors = _.reKey(_.requireDir(module, './selectors'), _.camelCase);
-var connectors = _.reKey(_.requireDir(module, './connections'), _.studlyCase);
+var selectors = require('./selectors');
 var EventEmitter = require('events').EventEmitter;
 var errors = require('./errors');
 var Host = require('./host');
@@ -31,7 +30,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.config.selector(this.connections.alive, cb);
     } else {
       try {
-        cb(null, this.config.selector(this.connections.alive));
+        _.nextTick(cb, null, this.config.selector(this.connections.alive));
       } catch (e) {
         this.config.log.error(e);
         cb(e);

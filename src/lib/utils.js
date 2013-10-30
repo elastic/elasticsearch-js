@@ -1,7 +1,5 @@
 var path = require('path'),
   _ = require('lodash'),
-  fs = require('fs'),
-  requireDir = require('require-directory'),
   nodeUtils = require('util');
 
 /**
@@ -33,36 +31,10 @@ utils.inspect = function (thing, opts) {
 utils.joinPath = path.join;
 
 /**
- * Require all of the modules in a directory
- *
- * @method requireDir
- * @param {Function} module - The module object which will own the required modules.
- * @param {String} path - Path to the directory which will be traversed (can be relative to module)
- * @return {Object} - An object with each required files
- */
-utils.requireDir = function (module, dirPath) {
-  if (dirPath && dirPath[0] === '.') {
-    dirPath = path.join(path.dirname(module.filename), dirPath);
-  }
-  return requireDir(module, dirPath);
-};
-
-/**
- * Requires all of the files in a directory, then transforms the filenames into
- * StudlyCase -- one level deep for now.
- * @param {Function} module - The module object which will own the required modules.
- * @param {String} dirPath - Path to the directory which will be traversed (can be relative to module)
- * @return {Object} - An object with each required files, keys will be the StudlyCase version of the filenames.
- */
-utils.requireClasses = function (module, dirPath) {
-  return utils.reKey(utils.requireDir(module, dirPath), utils.studlyCase, false);
-};
-
-/**
  * Recursively re-key an object, applying "transform" to each key
  * @param  {Object} obj - The object to re-key
  * @param  {Function} transform - The transformation function to apply to each key
- * @param  {Boolean} [recursive=false] - Should this act recursively?
+ * @param  {Boolean} [recursive=true] - Should this act recursively?
  * @param  {Object} out - used primarily for recursion, allows you to specify the object which new keys will be written to
  * @return {Object}
  */
@@ -142,6 +114,53 @@ utils.ucfirst = function (word) {
 };
 
 /**
+ * Base algo for studlyCase and camelCase
+ * @param  {boolean} firstWordCap - Should the first character of the first word be capitalized
+ * @return {Function}
+ */
+function adjustWordCase(firstWordCap, otherWordsCap, sep) {
+  return function (string) {
+    var inWord = false;
+    var i = 0;
+    var words = [];
+    var word = '';
+    var code, c, upper, lower;
+
+    for (; i < string.length; i++) {
+      code = string.charCodeAt(i);
+      c = string.charAt(i);
+      lower = code >= 97 && code <= 122;
+      upper = code >= 65 && code <= 90;
+
+      if (upper || !lower) {
+        // new word
+        if (word.length) {
+          words.push(word);
+        }
+        word = '';
+      }
+
+      if (upper || lower) {
+        if (lower && word.length) {
+          word += c;
+        } else {
+          if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
+            word = c.toUpperCase();
+          }
+          else {
+            word = c.toLowerCase();
+          }
+        }
+      }
+    }
+    if (word.length) {
+      words.push(word);
+    }
+    return words.join(sep);
+  };
+}
+
+/**
  * Transform a string into StudlyCase
  *
  * @todo Tests
@@ -149,29 +168,27 @@ utils.ucfirst = function (word) {
  * @param  {String} string
  * @return {String}
  */
-utils.studlyCase = function (string) {
-  return _.map(string.split(/\b|_/), function (word, i) {
-    return word.match(/^[a-z]+$/i) ? utils.ucfirst(word) : '';
-  }).join('');
-};
+utils.studlyCase = adjustWordCase(true, true, '');
 
 /**
  * Transform a string into camelCase
  *
  * @todo Tests
- * @method cameCase
+ * @method camelCase
  * @param  {String} string
  * @return {String}
  */
-utils.camelCase = function (string) {
-  return _.map(string.split(/\b|_/), function (word, i) {
-    if (word.match(/^[a-z]+$/i)) {
-      return i === 0 ? word.toLowerCase() : utils.ucfirst(word);
-    } else {
-      return '';
-    }
-  }).join('');
-};
+utils.camelCase = adjustWordCase(false, true, '');
+
+/**
+ * Transform a string into snakeCase
+ *
+ * @todo Tests
+ * @method snakeCase
+ * @param  {String} string
+ * @return {String}
+ */
+utils.snakeCase = adjustWordCase(false, false, '_');
 
 /**
  * Lower-case a string, and return an empty string if any is not a string
