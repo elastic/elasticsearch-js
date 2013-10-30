@@ -31,7 +31,7 @@ function Log(config) {
   this.config = config || {};
 
   var i;
-  var output = _.isPlainObject(config.log) ? config.log : 'warning';
+  var output = config.loggers ? config.loggers : 'warning';
 
   if (_.isString(output) || _.isFinite(output)) {
     output = [
@@ -188,7 +188,7 @@ Log.prototype.addOutput = function (config) {
   delete config.level;
   config.levels = levels;
 
-  var Logger = loggers[config.type];
+  var Logger = loggers[_.studlyCase(config.type)];
   if (Logger) {
     return new Logger(config, this);
   } else {

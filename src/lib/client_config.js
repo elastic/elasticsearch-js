@@ -41,6 +41,11 @@ var defaultClasses = {
 };
 
 var defaultConfig = {
+  loggers: [
+    {
+      level: 'warning'
+    }
+  ],
   hosts: [
     {
       host: 'localhost',
@@ -86,24 +91,28 @@ connectors = _.transform(connectors, function (note, connector, name) {
 function ClientConfig(config) {
   _.extend(this, defaultConfig, config);
 
+  if (this.log) {
+    // treat log as an alias for loggers in the config.
+    this.loggers = this.log;
+    delete this.log;
+  }
+
   // validate connectionClass
+  if (typeof this.connectionClass === 'string') {
+    this.connectionClass = connectors[_.studlyCase(this.connectionClass)];
+  }
   if (typeof this.connectionClass !== 'function') {
-    if (typeof connectors[this.connectionClass] === 'function') {
-      this.connectionClass = connectors[this.connectionClass];
-    } else {
-      throw new TypeError('Invalid connectionClass "' + this.connectionClass + '". ' +
+    throw new TypeError('Invalid connectionClass "' + this.connectionClass + '". ' +
         'Expected a constructor or one of ' + _.keys(connectors).join(', '));
-    }
   }
 
   // validate selector
+  if (typeof this.selector === 'string') {
+    this.selector = selectors[_.camelCase(this.selector)];
+  }
   if (typeof this.selector !== 'function') {
-    if (_.has(selectors, this.selector)) {
-      this.selector = selectors[this.selector];
-    } else {
-      throw new TypeError('Invalid Selector "' + this.selector + '". ' +
+    throw new TypeError('Invalid Selector "' + this.selector + '". ' +
         'Expected a function or one of ' + _.keys(selectors).join(', '));
-    }
   }
 
   _.each(defaultClasses, function (DefaultClass, prop) {
