@@ -5,11 +5,11 @@
  *
  * @class {XhrConnection}
  */
-module.exports = JqueryConnection;
+module.exports = JqueryConnector;
 
-function JqueryConnection() {}
+function JqueryConnector() {}
 
-JqueryConnection.prototype.request = function (params, cb) {
+JqueryConnector.prototype.request = function (params, cb) {
   var $xhr = jQuery.ajax(params).done(cb);
 };
 

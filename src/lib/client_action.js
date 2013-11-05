@@ -64,10 +64,10 @@ var castType = {
     }
   },
   time: function (param, val, name) {
-    if (val instanceof Date) {
-      return val.getTime();
-    } else if (_.isNumeric(val)) {
+    if (typeof val === 'string' || _.isNumeric(val)) {
       return val;
+    } else if (val instanceof Date) {
+      return val.getTime();
     } else {
       throw new TypeError('Invalid ' + name + ': expected some sort of time.');
     }
@@ -211,15 +211,17 @@ function exec(transport, spec, params, cb) {
     // build a key list on demand
     spec.paramKeys = _.keys(spec.params);
   }
-  var key, param;
+  var key, param, name;
   for (i = 0; i < spec.paramKeys.length; i++) {
     key = spec.paramKeys[i];
     param = spec.params[key];
+    // param keys don't always match the param name, in those cases it's stored in the param def as "name"
+    name = param.name || key;
     try {
       if (params[key] != null) {
-        query[key] = castType[param.type] ? castType[param.type](param, params[key], key) : params[key];
-        if (param['default'] && query[key] === param['default']) {
-          delete query[key];
+        query[name] = castType[param.type] ? castType[param.type](param, params[key], key) : params[key];
+        if (param['default'] && query[name] === param['default']) {
+          delete query[name];
         }
       } else if (param.required) {
         throw new TypeError('Missing required parameter ' + key);

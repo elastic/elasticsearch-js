@@ -1,4 +1,9 @@
-!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.true=e():"undefined"!=typeof global?global.true=e():"undefined"!=typeof self&&(self.true=e())}(function(){var define,module,exports;
+/*! elasticsearch-js - v0.0.1 - 2013-11-05
+ * https://github.com/elasticsearch/elasticsearch-js
+ * Copyright (c) 2013 Spencer Alger; Licensed Apache License */
+ // built using browserify
+
+!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.elasticsearch=e():"undefined"!=typeof global?global.elasticsearch=e():"undefined"!=typeof self&&(self.elasticsearch=e())}(function(){var define,module,exports;
 return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 },{}],2:[function(require,module,exports){
@@ -11175,10 +11180,9 @@ api.exists = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
- * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -11231,17 +11235,14 @@ api.explain = ca({
       type: 'string'
     },
     source: {
-      type: 'string'
-    },
-    _source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -11275,9 +11276,9 @@ api.explain = ca({
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {String} params.routing - Specific routing value
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
@@ -11305,15 +11306,15 @@ api.get = ca({
     routing: {
       type: 'string'
     },
-    _source: {
+    source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -12181,6 +12182,63 @@ api.indices.prototype.getAliases = ca({
     },
     {
       fmt: '/_aliases'
+    }
+  ]
+});
+
+
+/**
+ * Perform a [indices.getFieldMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.includeDefaults - Whether the default mapping values should be returned as well
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types
+ * @param {String|ArrayOfStrings|Boolean} params.field - A comma-separated list of fields
+ */
+api.indices.prototype.getFieldMapping = ca({
+  methods: [
+    'GET'
+  ],
+  params: {
+    includeDefaults: {
+      type: 'boolean',
+      name: 'include_defaults'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_mapping/field/<%=field%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        },
+        field: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mapping/field/<%=field%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        field: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_mapping/field/<%=field%>',
+      req: {
+        field: {
+          type: 'list'
+        }
+      }
     }
   ]
 });
@@ -13069,9 +13127,9 @@ api.info = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
@@ -13093,15 +13151,15 @@ api.mget = ca({
     refresh: {
       type: 'boolean'
     },
-    _source: {
+    source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -13410,10 +13468,9 @@ api.scroll = ca({
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String|ArrayOfStrings|Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
- * @param {String} params.source - The URL-encoded request definition using the Query DSL (instead of using request body)
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String|ArrayOfStrings|Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
@@ -13509,17 +13566,14 @@ api.search = ca({
       type: 'list'
     },
     source: {
-      type: 'string'
-    },
-    _source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     },
@@ -13652,7 +13706,7 @@ api.suggest = ca({
  * @param {Date|Number} params.timestamp - Explicit timestamp for the document
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
- * @param {Number} params.versionType - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -13714,7 +13768,11 @@ api.update = ca({
       type: 'number'
     },
     versionType: {
-      type: 'number',
+      type: 'enum',
+      options: [
+        'internal',
+        'external'
+      ],
       name: 'version_type'
     }
   },
@@ -13883,10 +13941,10 @@ var castType = {
     }
   },
   time: function (param, val, name) {
-    if (val instanceof Date) {
-      return val.getTime();
-    } else if (_.isNumeric(val)) {
+    if (typeof val === 'string' || _.isNumeric(val)) {
       return val;
+    } else if (val instanceof Date) {
+      return val.getTime();
     } else {
       throw new TypeError('Invalid ' + name + ': expected some sort of time.');
     }
@@ -14030,15 +14088,17 @@ function exec(transport, spec, params, cb) {
     // build a key list on demand
     spec.paramKeys = _.keys(spec.params);
   }
-  var key, param;
+  var key, param, name;
   for (i = 0; i < spec.paramKeys.length; i++) {
     key = spec.paramKeys[i];
     param = spec.params[key];
+    // param keys don't always match the param name, in those cases it's stored in the param def as "name"
+    name = param.name || key;
     try {
       if (params[key] != null) {
-        query[key] = castType[param.type] ? castType[param.type](param, params[key], key) : params[key];
-        if (param['default'] && query[key] === param['default']) {
-          delete query[key];
+        query[name] = castType[param.type] ? castType[param.type](param, params[key], key) : params[key];
+        if (param['default'] && query[name] === param['default']) {
+          delete query[name];
         }
       } else if (param.required) {
         throw new TypeError('Missing required parameter ' + key);
@@ -14097,6 +14157,11 @@ var defaultClasses = {
 };
 
 var defaultConfig = {
+  loggers: [
+    {
+      level: 'warning'
+    }
+  ],
   hosts: [
     {
       host: 'localhost',
@@ -14142,24 +14207,28 @@ connectors = _.transform(connectors, function (note, connector, name) {
 function ClientConfig(config) {
   _.extend(this, defaultConfig, config);
 
+  if (this.log) {
+    // treat log as an alias for loggers in the config.
+    this.loggers = this.log;
+    delete this.log;
+  }
+
   // validate connectionClass
+  if (typeof this.connectionClass === 'string') {
+    this.connectionClass = connectors[_.studlyCase(this.connectionClass)];
+  }
   if (typeof this.connectionClass !== 'function') {
-    if (typeof connectors[this.connectionClass] === 'function') {
-      this.connectionClass = connectors[this.connectionClass];
-    } else {
-      throw new TypeError('Invalid connectionClass "' + this.connectionClass + '". ' +
+    throw new TypeError('Invalid connectionClass "' + this.connectionClass + '". ' +
         'Expected a constructor or one of ' + _.keys(connectors).join(', '));
-    }
   }
 
   // validate selector
+  if (typeof this.selector === 'string') {
+    this.selector = selectors[_.camelCase(this.selector)];
+  }
   if (typeof this.selector !== 'function') {
-    if (_.has(selectors, this.selector)) {
-      this.selector = selectors[this.selector];
-    } else {
-      throw new TypeError('Invalid Selector "' + this.selector + '". ' +
+    throw new TypeError('Invalid Selector "' + this.selector + '". ' +
         'Expected a function or one of ' + _.keys(selectors).join(', '));
-    }
   }
 
   _.each(defaultClasses, function (DefaultClass, prop) {
@@ -14411,7 +14480,7 @@ ConnectionPool.prototype.empty = ConnectionPool.prototype.close;
  *
  * @class  connections.Xhr
  */
-module.exports = XhrConnection;
+module.exports = XhrConnector;
 
 /* jshint browser:true */
 
@@ -14419,11 +14488,12 @@ var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 var TimeoutError = require('../errors').RequestTimeout;
+var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 
-function XhrConnection(host, config) {
+function XhrConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_.inherits(XhrConnection, ConnectionAbstract);
+_.inherits(XhrConnector, ConnectionAbstract);
 
 /**
  * Simply returns an XHR object cross browser
@@ -14454,43 +14524,53 @@ if (!getXhr) {
   throw new Error('getXhr(): XMLHttpRequest not available');
 }
 
-XhrConnection.prototype.request = function (params, cb) {
+XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
+  var timeout = params.timeout ? params.timeout : 10000;
   var timeoutId;
   var url = this.host.makeUrl(params);
+  var log = this.config.log;
+  var async = params.async === false ? false : asyncDefault;
+
   if (params.auth) {
-    xhr.open(params.method, url, true, params.auth.user, params.auth.pass);
+    xhr.open(params.method, url, async, params.auth.user, params.auth.pass);
   } else {
-    xhr.open(params.method, url, true);
+    xhr.open(params.method, url, async);
   }
 
   xhr.onreadystatechange = function (e) {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
-      cb(xhr.status ? null : new ConnectionFault(), xhr.responseText, xhr.status);
+      log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
+      var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
+      cb(err, xhr.responseText, xhr.status);
     }
   };
 
-  if (params.timeout !== Infinity) {
+  if (timeout !== Infinity) {
     timeoutId = setTimeout(function () {
       xhr.onreadystatechange = _.noop;
       xhr.abort();
       cb(new TimeoutError());
-    }, params.timeout);
+    }, timeout);
   }
 
-  xhr.send(params.body || null);
+  xhr.send(params.body || void 0);
 };
 
 },{"../connection":19,"../errors":22,"../utils":33}],22:[function(require,module,exports){
-var _ = require('./utils'),
+var process=require("__browserify_process");var _ = require('./utils'),
   errors = module.exports;
 
 function ErrorAbstract(msg, constructor) {
   this.message = msg;
 
   Error.call(this, this.message);
-  Error.captureStackTrace(this, constructor);
+  if (process.browser) {
+    this.stack = '';
+  } else {
+    Error.captureStackTrace(this, constructor);
+  }
 }
 _.inherits(ErrorAbstract, Error);
 
@@ -14595,7 +14675,7 @@ _.each(statusCodes, function (name, status) {
   errors[status] = StatusCodeError;
 });
 
-},{"./utils":33}],23:[function(require,module,exports){
+},{"./utils":33,"__browserify_process":12}],23:[function(require,module,exports){
 /**
  * Class to wrap URLS, formatting them and maintaining their seperate details
  * @type {[type]}
@@ -14685,12 +14765,8 @@ Host.prototype.makeUrl = function (params) {
     // just stringify the hosts query
     query = qs.stringify(this.query);
   }
-  // prepend the ? if there is actually a valid query string
-  if (query) {
-    query = '?' + query;
-  }
 
-  return this.protocol + '://' + this.host + port + path + query;
+  return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
 };
 
 },{"./utils":33,"querystring":6,"url":7}],24:[function(require,module,exports){
@@ -14727,7 +14803,7 @@ function Log(config) {
   this.config = config || {};
 
   var i;
-  var output = _.isPlainObject(config.log) ? config.log : 'warning';
+  var output = config.loggers ? config.loggers : 'warning';
 
   if (_.isString(output) || _.isFinite(output)) {
     output = [
@@ -14884,7 +14960,7 @@ Log.prototype.addOutput = function (config) {
   delete config.level;
   config.levels = levels;
 
-  var Logger = loggers[config.type];
+  var Logger = loggers[_.studlyCase(config.type)];
   if (Logger) {
     return new Logger(config, this);
   } else {
@@ -14942,7 +15018,7 @@ Log.prototype.info = function (/* ...msg */) {
  */
 Log.prototype.debug = function (/* ...msg */) {
   if (EventEmitter.listenerCount(this, 'debug')) {
-    return this.emit('debug', Log.join(arguments) + _.getStackTrace(Log.prototype.debug));
+    return this.emit('debug', Log.join(arguments) /*+ _.getStackTrace(Log.prototype.debug)*/);
   }
 };
 
@@ -14960,10 +15036,17 @@ Log.prototype.debug = function (/* ...msg */) {
  */
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (EventEmitter.listenerCount(this, 'trace')) {
-    if (typeof requestUrl === 'object') {
-      requestUrl = url.format(requestUrl);
+    if (typeof requestUrl === 'string') {
+      requestUrl = url.parse(requestUrl, true, true);
     }
-    return this.emit('trace', method, requestUrl, body, responseBody, responseStatus);
+    requestUrl = _.defaults({
+      host: 'localhost:9200',
+      query: _.defaults({
+        pretty: true
+      }, requestUrl.query)
+    }, requestUrl);
+    delete requestUrl.auth;
+    return this.emit('trace', method, url.format(requestUrl), body, responseBody, responseStatus);
   }
 };
 
@@ -15181,10 +15264,9 @@ Console.prototype.setupListeners = function (levels) {
  */
 Console.prototype.onError = _.handler(function (e) {
   if (console.error && console.trace) {
-    console.error(e.name === 'Error' ? 'ERROR' : e.name);
-    console.trace();
+    console.error(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   } else {
-    console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack);
+    console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   }
 });
 
@@ -15196,7 +15278,7 @@ Console.prototype.onError = _.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = console[console.warn ? 'warn' : 'log'].bind(console, 'WARNING');
+Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 'WARNING');
 
 /**
  * Handler for the bridges "info" event
@@ -15206,7 +15288,7 @@ Console.prototype.onWarning = console[console.warn ? 'warn' : 'log'].bind(consol
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = console[console.info ? 'info' : 'log'].bind(console, 'INFO');
+Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'INFO');
 
 /**
  * Handler for the bridges "debug" event
@@ -15216,7 +15298,7 @@ Console.prototype.onInfo = console[console.info ? 'info' : 'log'].bind(console, 
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = console[console.debug ? 'debug' : 'log'].bind(console, 'DEBUG');
+Console.prototype.onDebug = _.bindKey(console, console.debug ? 'debug' : 'log', 'DEBUG');
 
 /**
  * Handler for the bridges "trace" event
@@ -15231,7 +15313,7 @@ Console.prototype.onTrace = _.handler(function (method, url, body, responseBody,
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
   }
   message += '\n<- ' + responseStatus + '\n' + responseBody;
-  console.log('TRACE', message);
+  console.log('TRACE:\n' + message + '\n\n');
 });
 
 },{"../logger":25,"../utils":33}],27:[function(require,module,exports){
@@ -15446,7 +15528,7 @@ TransportRequest.prototype._sendReqWithCon = _.handler(function (err, con) {
 TransportRequest.prototype._checkRespForFail = _.handler(function (err, body, status) {
   if (err && this._remainingRetries) {
     this._remainingRetries--;
-    this._log.info('Connection error, retrying');
+    this._log.error(err.message, '-- retrying');
     this._connectionPool.select(this.bound._sendReqWithCon);
   } else {
     this._log.info('Request complete');
@@ -15680,6 +15762,10 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     }
     if (word.length) {
       words.push(word);
+    }
+    // add the leading underscore back to strings the had it originally
+    if (words.lenth && string.charAt(0) === '_') {
+      words[0] = '_' + words[0];
     }
     return words.join(sep);
   };
@@ -15934,11 +16020,16 @@ _.makeBoundMethods = function (obj, methods) {
 
 _.noop = function () {};
 
-_.getStackTrace = function (callee) {
-  var e = {};
-  Error.captureStackTrace(e, callee || _.getStackTrace);
-  return '\n' + e.stack.split('\n').slice(1).join('\n');
-};
+// _.getStackTrace = function (callee) {
+//   var e = {};
+//   if (typeof Error.captureStackTrace === 'function') {
+//     Error.captureStackTrace(e, callee || _.getStackTrace);
+//   } else {
+//     e.stack = (new Error()).stack;
+//     console.log(e.stack);
+//   }
+//   return '\n' + e.stack.split('\n').slice(1).join('\n');
+// };
 
 module.exports = utils;
 

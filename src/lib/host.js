@@ -87,10 +87,6 @@ Host.prototype.makeUrl = function (params) {
     // just stringify the hosts query
     query = qs.stringify(this.query);
   }
-  // prepend the ? if there is actually a valid query string
-  if (query) {
-    query = '?' + query;
-  }
 
-  return this.protocol + '://' + this.host + port + path + query;
+  return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
 };

@@ -71,7 +71,7 @@ TransportRequest.prototype._sendReqWithCon = _.handler(function (err, con) {
 TransportRequest.prototype._checkRespForFail = _.handler(function (err, body, status) {
   if (err && this._remainingRetries) {
     this._remainingRetries--;
-    this._log.info('Connection error, retrying');
+    this._log.error(err.message, '-- retrying');
     this._connectionPool.select(this.bound._sendReqWithCon);
   } else {
     this._log.info('Request complete');

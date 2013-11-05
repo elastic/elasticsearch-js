@@ -33,7 +33,6 @@ var es = require('../../../src/elasticsearch'),
   startingMoment = moment().startOf('day').subtract('days', days),
   endingMoment = moment().endOf('day').add('days', days),
   clientConfig = {
-    maxSockets: 1000,
     log: {
       level: 'error'
     }

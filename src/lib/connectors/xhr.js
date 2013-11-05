@@ -3,7 +3,7 @@
  *
  * @class  connections.Xhr
  */
-module.exports = XhrConnection;
+module.exports = XhrConnector;
 
 /* jshint browser:true */
 
@@ -11,11 +11,12 @@ var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 var TimeoutError = require('../errors').RequestTimeout;
+var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 
-function XhrConnection(host, config) {
+function XhrConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_.inherits(XhrConnection, ConnectionAbstract);
+_.inherits(XhrConnector, ConnectionAbstract);
 
 /**
  * Simply returns an XHR object cross browser
@@ -46,30 +47,36 @@ if (!getXhr) {
   throw new Error('getXhr(): XMLHttpRequest not available');
 }
 
-XhrConnection.prototype.request = function (params, cb) {
+XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
+  var timeout = params.timeout ? params.timeout : 10000;
   var timeoutId;
   var url = this.host.makeUrl(params);
+  var log = this.config.log;
+  var async = params.async === false ? false : asyncDefault;
+
   if (params.auth) {
-    xhr.open(params.method, url, true, params.auth.user, params.auth.pass);
+    xhr.open(params.method, url, async, params.auth.user, params.auth.pass);
   } else {
-    xhr.open(params.method, url, true);
+    xhr.open(params.method, url, async);
   }
 
   xhr.onreadystatechange = function (e) {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
-      cb(xhr.status ? null : new ConnectionFault(), xhr.responseText, xhr.status);
+      log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
+      var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
+      cb(err, xhr.responseText, xhr.status);
     }
   };
 
-  if (params.timeout !== Infinity) {
+  if (timeout !== Infinity) {
     timeoutId = setTimeout(function () {
       xhr.onreadystatechange = _.noop;
       xhr.abort();
       cb(new TimeoutError());
-    }, params.timeout);
+    }, timeout);
   }
 
-  xhr.send(params.body || null);
+  xhr.send(params.body || void 0);
 };

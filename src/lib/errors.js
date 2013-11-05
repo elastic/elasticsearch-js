@@ -5,7 +5,11 @@ function ErrorAbstract(msg, constructor) {
   this.message = msg;
 
   Error.call(this, this.message);
-  Error.captureStackTrace(this, constructor);
+  if (process.browser) {
+    this.stack = '';
+  } else {
+    Error.captureStackTrace(this, constructor);
+  }
 }
 _.inherits(ErrorAbstract, Error);
 

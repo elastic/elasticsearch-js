@@ -4,48 +4,48 @@
  * @param client {Client} - The Client that this class belongs to
  * @param config {Object} - Configuration options
  * @param [config.protocol=http:] {String} - The HTTP protocol that this connection will use, can be set to https:
- * @class HttpConnection
+ * @class HttpConnector
  */
-module.exports = HttpConnection;
+module.exports = HttpConnector;
 
 var http = require('http');
 var https = require('https');
 var _ = require('../utils');
 var errors = require('../errors');
 var qs = require('querystring');
+var KeepAliveAgent = require('agentkeepalive/lib/agent');
 var ConnectionAbstract = require('../connection');
 var defaultHeaders = {
   'connection': 'keep-alive'
 };
 
 
-function HttpConnection(host, config) {
+function HttpConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 
-  this.agent = new http.Agent({
-    keepAlive: true,
-    // delay between the last data packet received and the first keepalive probe
-    keepAliveMsecs: 1000,
+  this.hand = require(this.host.protocol);
+  this.agent = new KeepAliveAgent({
     maxSockets: 1,
-    maxFreeSockets: this.config.maxFreeSockets
+    maxKeepAliveRequests: 0, // max requests per keepalive socket, default is 0, no limit.
+    maxKeepAliveTime: 30000 // keepalive for 30 seconds
   });
 
   this.on('closed', this.bound.onClosed);
-  this.once('alive', this.bound.onAlive);
+  this.on('alive', this.bound.onAlive);
 }
-_.inherits(HttpConnection, ConnectionAbstract);
+_.inherits(HttpConnector, ConnectionAbstract);
 
-HttpConnection.prototype.onClosed = _.handler(function () {
+HttpConnector.prototype.onClosed = _.handler(function () {
   this.agent.destroy();
   this.removeAllListeners();
 });
 
-HttpConnection.prototype.onAlive = _.handler(function () {
+HttpConnector.prototype.onAlive = _.handler(function () {
   // only set the agents max agents config once the connection is verified to be alive
   this.agent.maxSockets = this.config.maxSockets;
 });
 
-HttpConnection.prototype.makeReqParams = function (params) {
+HttpConnector.prototype.makeReqParams = function (params) {
   var reqParams = {
     method: params.method,
     protocol: this.host.protocol + ':',
@@ -56,14 +56,31 @@ HttpConnection.prototype.makeReqParams = function (params) {
     headers: this.host.headers,
     agent: this.agent
   };
+  var query = this.host.query ? this.host.query : null;
+  var queryStr;
+  if (typeof query === 'string') {
+    query = qs.parse(query);
+  }
 
-  var query = qs.stringify(this.host.query ? _.defaults(params.query, this.host.query) : params.query);
-  reqParams.path += query ? '?' + query : '';
+  if (params.query) {
+    query = _.defaults({},
+      typeof params.query === 'string' ? qs.parse(params.query) : params.query,
+      query || {}
+    );
+  }
+
+  if (query) {
+    queryStr = qs.stringify(query);
+  }
+
+  if (queryStr) {
+    reqParams.path = reqParams.path + '?' + queryStr;
+  }
 
   return reqParams;
 };
 
-HttpConnection.prototype.request = function (params, cb) {
+HttpConnector.prototype.request = function (params, cb) {
   var incoming;
   var timeoutId;
   var request;
@@ -78,7 +95,7 @@ HttpConnection.prototype.request = function (params, cb) {
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  var cleanUp = function (err) {
+  var cleanUp = _.bind(function (err) {
     clearTimeout(timeoutId);
 
     request && request.removeAllListeners();
@@ -88,22 +105,14 @@ HttpConnection.prototype.request = function (params, cb) {
       err = void 0;
     } else {
       log.error(err);
-
-      if (err instanceof errors.RequestTimeout) {
-        request.on('error', function catchAbortError() {
-          request.removeListener('error', catchAbortError);
-        });
-      } else {
-        this.setStatus('dead');
-      }
+      this.setStatus('dead');
     }
 
     log.trace(params.method, reqParams, params.body, response, status);
     cb(err, response, status);
-  };
+  }, this);
 
-
-  request = http.request(reqParams, function (_incoming) {
+  request = this.hand.request(reqParams, function (_incoming) {
     incoming = _incoming;
     status = incoming.statusCode;
     incoming.setEncoding('utf8');

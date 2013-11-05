@@ -4,29 +4,35 @@
  */
 var fs = require('fs');
 var path = require('path');
-var mkdirp = require('mkdirp');
+var jsYaml = require('js-yaml');
 var spec = require('../../get_spec');
 var clean = require('../../clean');
+var _ = require('../../../src/lib/utils');
 
-var testDir = path.resolve(__dirname, '../../../test/integration/yaml_suite/tests');
+var testFile = path.resolve(__dirname, '../../../test/integration/yaml_suite/yaml_tests.json');
 
 function download() {
 
-  clean(testDir);
+  var tests = {};
+
+  clean(testFile);
   spec.get('test/**/*.yaml')
     .on('entry', function (entry) {
-      entry.path = path.resolve(testDir, path.relative('test', entry.path));
-      mkdirp.sync(path.dirname(entry.path));
-      fs.writeFileSync(entry.path, entry.data, 'utf8');
+      var filename = path.relative('test', entry.path);
+      var file = tests[filename] = [];
+      jsYaml.loadAll(entry.data, function (doc) {
+        file.push(doc);
+      });
     })
     .on('end', function () {
-      console.log('download yaml tests to', testDir);
+      fs.writeFileSync(testFile, JSON.stringify(tests, null, ' '), 'utf8');
+      console.log('download yaml tests to', testFile);
     });
 }
 
 try {
-  var stat = fs.statSync(testDir);
-  if (!stat.isDirectory() || stat.ctime < Date.now() - 86400000) {
+  var stat = fs.statSync(testFile);
+  if (!stat.isFile() || stat.ctime < Date.now() - 86400000) {
     download();
   }
 } catch (e) {

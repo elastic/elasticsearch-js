@@ -34,6 +34,7 @@
     "before": true,
     "after": true,
     "it": true,
-    "beforeEach": true
+    "beforeEach": true,
+    "afterEach": true
   }
 }

@@ -1,22 +1,23 @@
-var childProc = require('child_process'),
-  events = require('events'),
-  path = require('path'),
-  fs = require('fs'),
-  _ = require('../../../src/lib/utils');
+var childProc = require('child_process');
+var events = require('events');
+var path = require('path');
+var fs = require('fs');
+var _ = require('../../../src/lib/utils');
+var argv = require('./argv');
 
-exports.start = function (params, cb) {
+exports.start = function (cb) {
 
-  if (!params.executable || !fs.existsSync(params.executable)) {
+  if (!argv.executable || !fs.existsSync(argv.executable)) {
     return cb(new Error('unable to find elasticsearch executable, ' +
       'set ES_HOME env var to the instalation path of elasticsearch'));
   }
 
   var server = childProc.spawn(
-    params.executable,
+    argv.executable,
     [
       '-f',
-      '-Des.cluster.name=' + params.clusterName,
-      '-Des.path.data=' + params.dataPath,
+      '-Des.cluster.name=' + argv.clusterName,
+      '-Des.path.data=' + argv.dataPath,
       // '-Des.logger.level=DEBUG',
       '-Des.discovery.zen.ping.multicast.enabled=false',
     ],
@@ -34,7 +35,7 @@ exports.start = function (params, cb) {
   server.stdout.on('data', function onProcessData(line) {
     line = _.trim(line.toString());
     var match;
-    if (match = line.match(/bound_address \{inet\[\/?([^:]+):(\d+)\]\}/)) {
+    if (match = line.match(/\{inet\[\/?([^:]+):(\d+)\]\}/)) {
       server.__hostname = match[1];
       server.__port = match[2];
     }

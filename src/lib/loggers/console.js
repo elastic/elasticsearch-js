@@ -49,10 +49,9 @@ Console.prototype.setupListeners = function (levels) {
  */
 Console.prototype.onError = _.handler(function (e) {
   if (console.error && console.trace) {
-    console.error(e.name === 'Error' ? 'ERROR' : e.name);
-    console.trace();
+    console.error(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   } else {
-    console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack);
+    console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   }
 });
 
@@ -64,7 +63,7 @@ Console.prototype.onError = _.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = console[console.warn ? 'warn' : 'log'].bind(console, 'WARNING');
+Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 'WARNING');
 
 /**
  * Handler for the bridges "info" event
@@ -74,7 +73,7 @@ Console.prototype.onWarning = console[console.warn ? 'warn' : 'log'].bind(consol
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = console[console.info ? 'info' : 'log'].bind(console, 'INFO');
+Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'INFO');
 
 /**
  * Handler for the bridges "debug" event
@@ -84,7 +83,7 @@ Console.prototype.onInfo = console[console.info ? 'info' : 'log'].bind(console, 
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = console[console.debug ? 'debug' : 'log'].bind(console, 'DEBUG');
+Console.prototype.onDebug = _.bindKey(console, console.debug ? 'debug' : 'log', 'DEBUG');
 
 /**
  * Handler for the bridges "trace" event
@@ -99,5 +98,5 @@ Console.prototype.onTrace = _.handler(function (method, url, body, responseBody,
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
   }
   message += '\n<- ' + responseStatus + '\n' + responseBody;
-  console.log('TRACE', message);
+  console.log('TRACE:\n' + message + '\n\n');
 });

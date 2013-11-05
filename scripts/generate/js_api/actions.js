@@ -35,9 +35,6 @@ function transformFile(entry) {
       var cmlKey = _.camelCase(key);
       if (cmlKey !== key) {
         param.name = key;
-        if (key.charAt(0) === '_') {
-          cmlKey = '_' + cmlKey;
-        }
       }
       note[cmlKey] = param;
     }

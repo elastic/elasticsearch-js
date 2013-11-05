@@ -973,10 +973,9 @@ api.exists = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
- * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -1029,17 +1028,14 @@ api.explain = ca({
       type: 'string'
     },
     source: {
-      type: 'string'
-    },
-    _source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -1073,9 +1069,9 @@ api.explain = ca({
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {String} params.routing - Specific routing value
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
@@ -1103,15 +1099,15 @@ api.get = ca({
     routing: {
       type: 'string'
     },
-    _source: {
+    source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -1979,6 +1975,63 @@ api.indices.prototype.getAliases = ca({
     },
     {
       fmt: '/_aliases'
+    }
+  ]
+});
+
+
+/**
+ * Perform a [indices.getFieldMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.includeDefaults - Whether the default mapping values should be returned as well
+ * @param {String|ArrayOfStrings|Boolean} params.index - A comma-separated list of index names
+ * @param {String|ArrayOfStrings|Boolean} params.type - A comma-separated list of document types
+ * @param {String|ArrayOfStrings|Boolean} params.field - A comma-separated list of fields
+ */
+api.indices.prototype.getFieldMapping = ca({
+  methods: [
+    'GET'
+  ],
+  params: {
+    includeDefaults: {
+      type: 'boolean',
+      name: 'include_defaults'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_mapping/field/<%=field%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        },
+        field: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mapping/field/<%=field%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        field: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_mapping/field/<%=field%>',
+      req: {
+        field: {
+          type: 'list'
+        }
+      }
     }
   ]
 });
@@ -2867,9 +2920,9 @@ api.info = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
@@ -2891,15 +2944,15 @@ api.mget = ca({
     refresh: {
       type: 'boolean'
     },
-    _source: {
+    source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -3208,10 +3261,9 @@ api.scroll = ca({
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String|ArrayOfStrings|Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
- * @param {String} params.source - The URL-encoded request definition using the Query DSL (instead of using request body)
- * @param {String|ArrayOfStrings|Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {String|ArrayOfStrings|Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String|ArrayOfStrings|Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String|ArrayOfStrings|Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String|ArrayOfStrings|Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String|ArrayOfStrings|Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
  * @param {String|ArrayOfStrings|Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
@@ -3307,17 +3359,14 @@ api.search = ca({
       type: 'list'
     },
     source: {
-      type: 'string'
-    },
-    _source: {
       type: 'list',
       name: '_source'
     },
-    _sourceExclude: {
+    sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    _sourceInclude: {
+    sourceInclude: {
       type: 'list',
       name: '_source_include'
     },
@@ -3450,7 +3499,7 @@ api.suggest = ca({
  * @param {Date|Number} params.timestamp - Explicit timestamp for the document
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
- * @param {Number} params.versionType - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -3512,7 +3561,11 @@ api.update = ca({
       type: 'number'
     },
     versionType: {
-      type: 'number',
+      type: 'enum',
+      options: [
+        'internal',
+        'external'
+      ],
       name: 'version_type'
     }
   },

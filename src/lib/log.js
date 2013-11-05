@@ -246,7 +246,7 @@ Log.prototype.info = function (/* ...msg */) {
  */
 Log.prototype.debug = function (/* ...msg */) {
   if (EventEmitter.listenerCount(this, 'debug')) {
-    return this.emit('debug', Log.join(arguments) + _.getStackTrace(Log.prototype.debug));
+    return this.emit('debug', Log.join(arguments) /*+ _.getStackTrace(Log.prototype.debug)*/);
   }
 };
 
@@ -264,10 +264,17 @@ Log.prototype.debug = function (/* ...msg */) {
  */
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (EventEmitter.listenerCount(this, 'trace')) {
-    if (typeof requestUrl === 'object') {
-      requestUrl = url.format(requestUrl);
+    if (typeof requestUrl === 'string') {
+      requestUrl = url.parse(requestUrl, true, true);
     }
-    return this.emit('trace', method, requestUrl, body, responseBody, responseStatus);
+    requestUrl = _.defaults({
+      host: 'localhost:9200',
+      query: _.defaults({
+        pretty: true
+      }, requestUrl.query)
+    }, requestUrl);
+    delete requestUrl.auth;
+    return this.emit('trace', method, url.format(requestUrl), body, responseBody, responseStatus);
   }
 };
 

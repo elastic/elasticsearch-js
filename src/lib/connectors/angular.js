@@ -4,7 +4,7 @@
  *
  * @class connections.Angular
  */
-module.exports = AngularConnection;
+module.exports = AngularConnector;
 
 var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
@@ -12,12 +12,12 @@ var ConnectionFault = require('../errors').ConnectionFault;
 
 /* global angular */
 
-function AngularConnection(host, config) {
+function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_.inherits(AngularConnection, ConnectionAbstract);
+_.inherits(AngularConnector, ConnectionAbstract);
 
-AngularConnection.prototype.request = function (params, cb) {
+AngularConnector.prototype.request = function (params, cb) {
   var timeoutId;
 
   this.$http({
@@ -35,4 +35,4 @@ AngularConnection.prototype.request = function (params, cb) {
 };
 
 // must be overwritten before this connection can be used
-AngularConnection.prototype.$http = null;
+AngularConnector.prototype.$http = null;

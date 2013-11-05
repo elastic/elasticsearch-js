@@ -156,6 +156,10 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     if (word.length) {
       words.push(word);
     }
+    // add the leading underscore back to strings the had it originally
+    if (words.lenth && string.charAt(0) === '_') {
+      words[0] = '_' + words[0];
+    }
     return words.join(sep);
   };
 }
@@ -409,10 +413,15 @@ _.makeBoundMethods = function (obj, methods) {
 
 _.noop = function () {};
 
-_.getStackTrace = function (callee) {
-  var e = {};
-  Error.captureStackTrace(e, callee || _.getStackTrace);
-  return '\n' + e.stack.split('\n').slice(1).join('\n');
-};
+// _.getStackTrace = function (callee) {
+//   var e = {};
+//   if (typeof Error.captureStackTrace === 'function') {
+//     Error.captureStackTrace(e, callee || _.getStackTrace);
+//   } else {
+//     e.stack = (new Error()).stack;
+//     console.log(e.stack);
+//   }
+//   return '\n' + e.stack.split('\n').slice(1).join('\n');
+// };
 
 module.exports = utils;
