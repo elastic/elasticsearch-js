@@ -188,7 +188,7 @@ module.exports = function (grunt) {
     'mochaTest:unit',
     'build',
     'mochaTest:yaml_suite',
-    'start:integration_server',
+    // 'start:integration_server',
     // 'mocha:yaml_suite' -- this will fail because of the way that PhantomJS handle's DELETE requests with body's
   ]);
 
