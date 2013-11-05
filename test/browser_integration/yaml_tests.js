@@ -33299,6 +33299,8 @@ if (process.browser) {
   };
 }
 
+
+
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
  * that sends events to one or more outputs/loggers. Setup these loggers by
@@ -33351,9 +33353,18 @@ _.inherits(Log, EventEmitter);
 
 Log.prototype.close = function () {
   this.emit('closing');
-  if (EventEmitter.listenerCount(this)) {
+  if (this.listenerCount()) {
     console.error('Something is still listening for log events, but the logger is closing.');
     this.clearAllListeners();
+  }
+};
+
+Log.prototype.listenerCount = function (event) {
+  // compatability for node < 0.10
+  if (EventEmitter.listenerCount) {
+    return EventEmitter.listenerCount(this, event);
+  } else {
+    return this.listeners(event).length;
   }
 };
 
@@ -33490,7 +33501,7 @@ Log.prototype.addOutput = function (config) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.error = function (e) {
-  if (EventEmitter.listenerCount(this, 'error')) {
+  if (this.listenerCount('error')) {
     return this.emit('error', e instanceof Error ? e : new Error(e));
   }
 };
@@ -33504,7 +33515,7 @@ Log.prototype.error = function (e) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.warning = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'warning')) {
+  if (this.listenerCount('warning')) {
     return this.emit('warning', Log.join(arguments));
   }
 };
@@ -33518,7 +33529,7 @@ Log.prototype.warning = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.info = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'info')) {
+  if (this.listenerCount('info')) {
     return this.emit('info', Log.join(arguments));
   }
 };
@@ -33531,7 +33542,7 @@ Log.prototype.info = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.debug = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'debug')) {
+  if (this.listenerCount('debug')) {
     return this.emit('debug', Log.join(arguments) /*+ _.getStackTrace(Log.prototype.debug)*/);
   }
 };
@@ -33549,7 +33560,7 @@ Log.prototype.debug = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
-  if (EventEmitter.listenerCount(this, 'trace')) {
+  if (this.listenerCount('trace')) {
     if (typeof requestUrl === 'string') {
       requestUrl = url.parse(requestUrl, true, true);
     }
@@ -34013,22 +34024,37 @@ var LoggerAbstract = require('../logger'),
   _ = require('../utils'),
   fs = require('fs');
 
+// var = lessThanZeroTen (function () {
+//   var numbs = _.map(process.versions.node.split('.'), function (num) {
+//     return _.parseInt(num);
+//   });
+//   return numbs[0] === 0 && numbs[1] < 10;
+// }());
+
 function Stream(config, bridge) {
+  // if (lessThanZeroTen) {
+  //   throw new Error('The stream logger is only compatible with node 0.10 and greater');
+  // }
+
   Stream.callSuper(this, arguments);
   _.makeBoundMethods(this);
 
-  if (config.stream instanceof nodeStreams.Writable) {
+  if (config.stream.write && config.stream.end) {
     this.stream = config.stream;
   } else {
     throw new TypeError('Invalid stream, use an instance of stream.Writeable');
   }
 
-  process.on('exit', this.bound.onProcessExit);
+  if (this.stream._writableState && this.stream._writableState.buffer) {
+    process.on('exit', this.bound.onProcessExit);
+  }
+  // else you should probably flush your stream
 }
 _.inherits(Stream, LoggerAbstract);
 
 // flush the write buffer to stderr synchronously
 Stream.prototype.onProcessExit = _.handler(function () {
+  // process is dying, lets manually flush the buffer synchronously to stderr.
   var writeBuffer = this.stream._writableState.buffer;
   if (writeBuffer && writeBuffer.length) {
     console.error('Log stream did not get to finish writing. Flushing to stderr');

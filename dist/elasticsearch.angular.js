@@ -14781,6 +14781,8 @@ if (process.browser) {
   };
 }
 
+
+
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
  * that sends events to one or more outputs/loggers. Setup these loggers by
@@ -14833,9 +14835,18 @@ _.inherits(Log, EventEmitter);
 
 Log.prototype.close = function () {
   this.emit('closing');
-  if (EventEmitter.listenerCount(this)) {
+  if (this.listenerCount()) {
     console.error('Something is still listening for log events, but the logger is closing.');
     this.clearAllListeners();
+  }
+};
+
+Log.prototype.listenerCount = function (event) {
+  // compatability for node < 0.10
+  if (EventEmitter.listenerCount) {
+    return EventEmitter.listenerCount(this, event);
+  } else {
+    return this.listeners(event).length;
   }
 };
 
@@ -14972,7 +14983,7 @@ Log.prototype.addOutput = function (config) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.error = function (e) {
-  if (EventEmitter.listenerCount(this, 'error')) {
+  if (this.listenerCount('error')) {
     return this.emit('error', e instanceof Error ? e : new Error(e));
   }
 };
@@ -14986,7 +14997,7 @@ Log.prototype.error = function (e) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.warning = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'warning')) {
+  if (this.listenerCount('warning')) {
     return this.emit('warning', Log.join(arguments));
   }
 };
@@ -15000,7 +15011,7 @@ Log.prototype.warning = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.info = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'info')) {
+  if (this.listenerCount('info')) {
     return this.emit('info', Log.join(arguments));
   }
 };
@@ -15013,7 +15024,7 @@ Log.prototype.info = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.debug = function (/* ...msg */) {
-  if (EventEmitter.listenerCount(this, 'debug')) {
+  if (this.listenerCount('debug')) {
     return this.emit('debug', Log.join(arguments) /*+ _.getStackTrace(Log.prototype.debug)*/);
   }
 };
@@ -15031,7 +15042,7 @@ Log.prototype.debug = function (/* ...msg */) {
  * @return {Boolean} - True if any outputs accepted the message
  */
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
-  if (EventEmitter.listenerCount(this, 'trace')) {
+  if (this.listenerCount('trace')) {
     if (typeof requestUrl === 'string') {
       requestUrl = url.parse(requestUrl, true, true);
     }
