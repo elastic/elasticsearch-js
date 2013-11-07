@@ -12,15 +12,41 @@
 
 module.exports = Stdio;
 
-var clc = require('cli-color'),
-  LoggerAbstract = require('../logger'),
-  _ = require('../utils');
+var chalk = require('chalk');
+// let the user define if they want color in the client config.
+chalk.enabled = true;
+
+var LoggerAbstract = require('../logger');
+var _ = require('../utils');
+
+var defaultColors = {
+  error: function (txt) {
+    return chalk.red.bold(txt);
+  },
+  warning: function (txt) {
+    return chalk.yellow.bold(txt);
+  },
+  info: function (txt) {
+    return chalk.cyan.bold(txt);
+  },
+  debug: function (txt) {
+    return chalk.magenta.bold(txt);
+  },
+  trace: function (txt) {
+    return chalk.white.bold(txt);
+  },
+  traceStatus: function (status) {
+    return chalk[status >= 200 && status < 300 ? 'green' : 'red'].bold(status);
+  }
+};
 
 function Stdio(config, bridge) {
   Stdio.callSuper(this, arguments);
 
   // config/state
-  this.color = _.has(config, 'color') ? !!config.color : true;
+  this.color = Boolean(_.has(config, 'color') ? config.color : chalk.supportsColor);
+
+  this.colors = _.defaults(config.colors || {}, defaultColors);
 }
 
 _.inherits(Stdio, LoggerAbstract);
@@ -52,7 +78,7 @@ Stdio.prototype.write = function (to, label, colorize, message) {
  * @return {undefined}
  */
 Stdio.prototype.onError = _.handler(function (e) {
-  this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, clc.red.bold, e.stack);
+  this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, this.colors.error, e.stack);
 });
 
 /**
@@ -64,7 +90,7 @@ Stdio.prototype.onError = _.handler(function (e) {
  * @return {undefined}
  */
 Stdio.prototype.onWarning = _.handler(function (msg) {
-  this.write(process.stderr, 'WARNING', clc.yellow.bold, msg);
+  this.write(process.stderr, 'WARNING', this.colors.warning, msg);
 });
 
 /**
@@ -76,7 +102,7 @@ Stdio.prototype.onWarning = _.handler(function (msg) {
  * @return {undefined}
  */
 Stdio.prototype.onInfo = _.handler(function (msg) {
-  this.write(process.stdout, 'INFO', clc.cyan.bold, msg);
+  this.write(process.stdout, 'INFO', this.colors.info, msg);
 });
 
 /**
@@ -88,7 +114,7 @@ Stdio.prototype.onInfo = _.handler(function (msg) {
  * @return {undefined}
  */
 Stdio.prototype.onDebug = _.handler(function (msg) {
-  this.write(process.stdout, 'DEBUG', clc.magentaBright.bold, msg);
+  this.write(process.stdout, 'DEBUG', this.colors.debug, msg);
 });
 
 /**
@@ -98,22 +124,18 @@ Stdio.prototype.onDebug = _.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Stdio.prototype.onTrace = _.handler(function (method, url, body, responseBody, responseStatus) {
+Stdio.prototype.onTrace = _.handler(function (method, url, body, resp, status) {
   var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
   if (body) {
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
   }
   message += '\n<- ';
   if (this.color) {
-    if (responseStatus >= 200 && responseStatus < 300) {
-      message += clc.green.bold(responseStatus);
-    } else {
-      message += clc.red.bold(responseStatus);
-    }
+    message += this.colors.traceStatus(status);
   } else {
-    message += responseStatus;
+    message += status;
   }
-  message += '\n' + responseBody;
+  message += '\n' + resp;
 
-  this.write(process.stdout, 'TRACE', clc.cyanBright.bold, message);
+  this.write(process.stdout, 'TRACE', this.colors.trace, message);
 });

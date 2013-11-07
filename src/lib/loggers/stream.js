@@ -17,18 +17,7 @@ var LoggerAbstract = require('../logger'),
   _ = require('../utils'),
   fs = require('fs');
 
-// var = lessThanZeroTen (function () {
-//   var numbs = _.map(process.versions.node.split('.'), function (num) {
-//     return _.parseInt(num);
-//   });
-//   return numbs[0] === 0 && numbs[1] < 10;
-// }());
-
 function Stream(config, bridge) {
-  // if (lessThanZeroTen) {
-  //   throw new Error('The stream logger is only compatible with node 0.10 and greater');
-  // }
-
   Stream.callSuper(this, arguments);
   _.makeBoundMethods(this);
 

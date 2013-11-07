@@ -4,6 +4,7 @@
 module.exports = function (grunt) {
 
   var _ = require('lodash');
+  var child_process = require('child_process');
   var sharedBrowserfyExclusions = [
     'src/lib/connectors/http.js',
     'src/lib/loggers/file.js',
@@ -72,26 +73,25 @@ module.exports = function (grunt) {
         interupt: true
       }
     },
-    generate: {
+    run: {
       js_api: {
-        cmd: 'node',
         args: [
           'scripts/generate/js_api'
         ]
       },
       yaml_tests: {
-        cmd: 'node',
         args: [
           'scripts/generate/yaml_tests'
         ]
-      }
-    },
-    start: {
+      },
       integration_server: {
-        cmd: 'node',
         args: [
           'test/browser_integration/server.js'
-        ]
+        ],
+        options: {
+          wait: false,
+          ready: /server listening/
+        }
       }
     },
     browserify: {
@@ -168,10 +168,18 @@ module.exports = function (grunt) {
           '--web-security': false
         }
       }
+    },
+    open: {
+      yaml_suite: {
+        path: 'http://localhost:8888',
+        app: 'Google Chrome'
+      }
     }
   });
 
   // load plugins
+  grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-mocha-test');
@@ -197,73 +205,14 @@ module.exports = function (grunt) {
     'browserify',
     'uglify:dist',
     'concat:dist_banners',
-    'generate:yaml_tests',
-    'generate:js_api'
+    'run:yaml_tests',
+    'run:js_api'
   ]);
 
-  grunt.task.registerMultiTask('generate', 'used to generate things', function () {
-    var done = this.async();
-    var proc = require('child_process').spawn(
-      this.data.cmd,
-      this.data.args,
-      {
-        stdio: ['ignore', 'pipe', 'pipe']
-      }
-    );
-
-    proc.stdout.on('data', grunt.log.write);
-    proc.stderr.on('data', grunt.log.error);
-
-    proc.on('close', function (exitCode) {
-      done(!exitCode);
-    });
-  });
-
-  var runningProcs = {};
-
-  process.on('exit', function () {
-    _.each(runningProcs, function (proc) {
-      proc.kill();
-    });
-  });
-
-  grunt.task.registerMultiTask('start', 'used to start external processes (like servers)', function () {
-    var self = this;
-
-
-    var proc = require('child_process').spawn(
-      self.data.cmd,
-      self.data.args,
-      {
-        stdio: ['ignore', 'pipe', 'pipe']
-      }
-    );
-
-    proc.stdout.on('data', grunt.log.write);
-    proc.stderr.on('data', function (chunk) {
-      grunt.log.error(chunk);
-      proc.kill();
-      self.ansyc()(new Error('Error output received'));
-      clearTimeout(timeoutId);
-    });
-
-    runningProcs[self.nameArgs] = proc;
-
-    proc.on('close', function (exitCode) {
-      delete runningProcs[self.nameArgs];
-    });
-
-    // operates asyncronously to give the processes a moment to start up, not sure if there is a signal for "I'm ready"
-    var timeoutId = setTimeout(self.async(), 1000);
-  });
-
-  grunt.task.registerMultiTask('stop', 'used to stop external processes (like servers)', function () {
-    var proc = runningProcs[this.nameArgs.replace(/^start:/, 'stop:')];
-    if (proc) {
-      proc.kill();
-    } else {
-      grunt.log.error(this.nameArgs + ' failed to find active process');
-    }
-  });
+  grunt.registerTask('browser', [
+    'run:integration_server',
+    'open:yaml_suite',
+    'wait:integration_server'
+  ]);
 
 };
