@@ -23,6 +23,15 @@ errors.ConnectionFault = function ConnectionFault(msg) {
 _.inherits(errors.ConnectionFault, ErrorAbstract);
 
 /**
+ * No Living Connections
+ * @param {String} [msg] - An error message that will probably end up in a log.
+ */
+errors.NoConnections = function NoConnections(msg) {
+  ErrorAbstract.call(this, msg || 'No Living connections', errors.NoConnections);
+};
+_.inherits(errors.NoConnections, ErrorAbstract);
+
+/**
  * Generic Error
  * @param {String} [msg] - An error message that will probably end up in a log.
  */

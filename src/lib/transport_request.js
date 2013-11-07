@@ -64,7 +64,7 @@ TransportRequest.prototype._sendReqWithCon = _.handler(function (err, con) {
     this._request = con.request(this._params.req, this.bound._checkRespForFail);
   } else {
     this._log.warning('No living connections');
-    this._respond(new errors.ConnectionFault('No living connections.'));
+    this._respond(new errors.NoConnections());
   }
 });
 

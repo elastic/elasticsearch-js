@@ -68,7 +68,8 @@ Client.prototype.ping = function (params, cb) {
 
   this.config.transport.request({
     method: 'HEAD',
-    path: '/'
+    path: '/',
+    timeout: 100,
   }, cb);
 };
 

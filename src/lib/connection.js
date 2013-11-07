@@ -45,7 +45,7 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
   return this.request({
     path: '/',
     method: 'HEAD',
-    timeout: '100'
+    timeout: 100
   }, cb);
 };
 
