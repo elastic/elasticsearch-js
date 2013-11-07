@@ -33,7 +33,7 @@ npm install --save elasticsearch
 
 Download one of these browser-ready builds, or install them with `bower`
 
-NOTE: The entire API is compatible with IE 10+, Chrome, Firefox, Safari, and Opera. **IE 8 & 9** only support GET and POST requests cross-domain which is how the `'XhrConnection'` class makes it's requests.
+NOTE: The entire API is compatible with IE 10+, Chrome, Firefox, Safari, and Opera. **IE 8 & 9** only support GET and POST requests cross-domain which is how the `XhrConnection` class makes it's requests.
 
  - [elasticsearch.js](dist/elasticsearch.min.js) - [dev](dist/elasticsearch.js)
    - uses the browser's native XMLHttpRequest object
@@ -53,7 +53,7 @@ bower install elasticsearch-angular
 
  - [elasticsearch.jquery.js](dist/elasticsearch.jquery.min.js) - [dev](dist/elasticsearch.jquery.js)
    - Uses jQuery's .ajax() method
-   - Returns jQuery deferred objects (Adds an abort() method)
+   - Returns jQuery promises (Adds an `abort()` method)
 
 ```
 bower install elasticsearch-jquery
@@ -68,6 +68,7 @@ var elasticsearch = require('elasticsearch');
 var es = new elasticsearch.Client({
   ...
 });
+```
 
 ### hosts
 Type: `String`, `String[]` or `Object[]`
