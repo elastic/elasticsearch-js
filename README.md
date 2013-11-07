@@ -8,11 +8,11 @@ Official *low-level* client for Elasticsearch.
  - Generalized, pluggable architecture. See [replacing core components](TODO: details the peices that are replaceable)
  - Configurable, automatic discovery of cluster nodes
  - Persistent, Keep-Alive connections
- - Load balancing (with pluggable selection strategy) across all availible nodes.
+ - Load balancing (with pluggable selection strategy) across all available nodes.
 
 ## Node and the browser
 
-elasticsearch.js works great in node, as well as modern browsers (many thanks to [browserify](https://github.com/substack/browserify)!!).
+elasticsearch.js works great in node, as well as modern browsers (many thanks to [browserify](https://github.com/substack/node-browserify)!!).
 
  - Node:
 
@@ -33,10 +33,10 @@ npm install --save elasticsearch
 
 Download one of these browser-ready builds, or install them with `bower`
 
+NOTE: The entire API is compatible with IE 10+, Chrome, Firefox, Safari, and Opera. **IE 8 & 9** only support GET and POST requests cross-domain which is how the `'XhrConnection'` class makes it's requests.
+
  - [elasticsearch.js](dist/elasticsearch.min.js) - [dev](dist/elasticsearch.js)
    - uses the browser's native XMLHttpRequest object
-   - Fully Compatible with IE 10+, Chrome, Firefox, Safari, Opera
-   - Only GET and POST requests available in IE 8 & 9
    - Node style callbacks or promises provided by [when.js](https://github.com/cujojs/when)
 
 ```
@@ -44,11 +44,19 @@ bower install elasticsearch
 ```
 
  - [elasticsearch.angular.js](dist/elasticsearch.angular.min.js) - [dev](dist/elasticsearch.angular.js)
-   - Uses angular's $http servive
-   - Returns promisses using angular's $q servive (Adds an `abort()` method)
+   - Uses Angular's $http service
+   - Returns promises using Angular's $q service (Adds an `abort()` method)
 
 ```
 bower install elasticsearch-angular
+```
+
+ - [elasticsearch.jquery.js](dist/elasticsearch.jquery.min.js) - [dev](dist/elasticsearch.jquery.js)
+   - Uses jQuery's .ajax() method
+   - Returns jQuery deferred objects (Adds an abort() method)
+
+```
+bower install elasticsearch-jquery
 ```
 
 ## Configuration
@@ -95,12 +103,9 @@ Default:
  - Node: `'http'`
  - Browser: `'xhr'`
  - Angular Build: `'angular'`
+ - jQuery Build: `'jquery'`
 
-Options:
- - Node: `'http'`
- - Browser: based on bundle, `'xhr'`, `'angular'`, and `'jquery'` are currently available
-
-Defines the class that will be created once for each node/host that the client communicates with. If you are looking to implement a special protocol you will probably start by writing a Connection class and specifying it here.
+Defines the class that will be created once for each node/host that the client communicates with. If you are looking to implement a protocol besides HTTP you will probably start by writing a Connection class and specifying it here.
 
 ### selector
 Type: `String`, `Function`
@@ -111,23 +116,23 @@ Options:
   - `'roundRobin'`
   - `'random'`
 
-Defined a function that will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as prefering connections in a certain rack, or datacenter.
+This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
 
-To make this function asynchronous, accept a second argument which will be the callback which should be called as a Node style callback with a possible error: `cb(err, selectedConnection)`.
+To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style, a possible error like `cb(err, selectedConnection)`.
 
 ### sniffOnStart
 Type: `Boolean`
 
 Default: `false`
 
-Should the client attempt to detect the rest of the cluster when it is first instanciated?
+Should the client attempt to detect the rest of the cluster when it is first instantiated?
 
 ### sniffAfterRequests
 Type: `Number` or `false`
 
 Default: `false`
 
-After `n` requests, perform a sniff operation and ensure out list of nodes is up to date
+After `n` requests, perform a sniff operation and ensure out list of nodes is up to date.
 
 
 ### sniffOnConnectionFail
@@ -149,7 +154,7 @@ Type: `Number`
 
 Default: 10000
 
-How many milliseconds can the connection take before the request is aboorted and retried. (TODO: timeout errors shouldn't cause a retry).
+How many milliseconds can the connection take before the request is aborted and retried. (TODO: timeout errors shouldn't cause a retry).
 
 ### deadTimeout
 Type: `Number`
@@ -170,7 +175,7 @@ Type: `Function`
 
 Default: simple, not much going on [here](src/lib/client_config.js#L65).
 
-This function will receive a list of nodes received durring a sniff. The list of nodes should be transformed into an array of objects which will be fed to the [Host](src/lib/host.js) class. (TODO: allow this function to be async).
+This function will receive a list of nodes received during a sniff. The list of nodes should be transformed into an array of objects which will be fed to the [Host](src/lib/host.js) class. (TODO: allow this function to be async).
 
 ## API
 
