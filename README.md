@@ -106,7 +106,7 @@ Default:
  - Angular Build: `'angular'`
  - jQuery Build: `'jquery'`
 
-Defines the class that will be created once for each node/host that the client communicates with. If you are looking to implement a protocol besides HTTP you will probably start by writing a Connection class and specifying it here.
+Defines the class that will be used to create connections. If you are looking to implement a protocol besides HTTP you will probably start by writing a Connection class and specifying it here.
 
 ### selector
 Type: `String`, `Function`
@@ -119,7 +119,7 @@ Options:
 
 This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
 
-To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style, a possible error like `cb(err, selectedConnection)`.
+To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style, with a possible error like `cb(err, selectedConnection)`.
 
 ### sniffOnStart
 Type: `Boolean`
@@ -133,7 +133,7 @@ Type: `Number` or `false`
 
 Default: `false`
 
-After `n` requests, perform a sniff operation and ensure out list of nodes is up to date.
+After `n` requests, perform a sniff operation and ensure our list of nodes is up to date.
 
 
 ### sniffOnConnectionFail
@@ -162,25 +162,25 @@ Type: `Number`
 
 Default: 30000
 
-How many milliseconds should a dead a connection/node sit and wait before it is ping-ed? (see [node death](#node-death))
+How many milliseconds should a dead connection/node sit and wait before it is ping-ed? (see [node death](#node-death))
 
 ### maxSockets
 Type: `Number`
 
 Default: 10
 
-How many sockets should a connection/node keep to the server? These sockets are currently kept alive ***forever*** (not like nodes current "keep alive" sockets).
+How many sockets should a connection keep to it's corresponding Elasticsearch node? These sockets are currently kept alive ***forever*** (not like nodes current "keep alive" sockets).
 
 ### nodesToHostCallback
 Type: `Function`
 
 Default: simple, not much going on [here](src/lib/client_config.js#L65).
 
-This function will receive a list of nodes received during a sniff. The list of nodes should be transformed into an array of objects which will be fed to the [Host](src/lib/host.js) class. (TODO: allow this function to be async).
+This function will receive a list of nodes received during a sniff. The list of nodes should be transformed into an array of objects which will each be used to create [Host](src/lib/host.js) objects. (TODO: allow this function to be async).
 
 ## API
 
-To maintain consistency across all the low-level clients ([PHP](https://github.com/elasticsearch/elasticsearch-php), [Python](https://github.com/elasticsearch/elasticsearch-ph), [Ruby](https://github.com/elasticsearch/elasticsearch-ruby), [Perl](https://github.com/elasticsearch/elasticsearch-perl)), all API methods accept an object with parameters and a callback. If you don't pass the callback, the functions will return a promise.
+To maintain consistency across all the low-level clients ([PHP](https://github.com/elasticsearch/elasticsearch-php), [Python](https://github.com/elasticsearch/elasticsearch-ph), [Ruby](https://github.com/elasticsearch/elasticsearch-ruby), [Perl](https://github.com/elasticsearch/elasticsearch-perl)) all API methods accept an object with parameters and a callback. If you don't pass the callback, the functions will return a promise.
 
 ### Generic Params
 
@@ -268,4 +268,4 @@ es.search({
 ### dead nodes
 Q: When is a connection/node considered dead?
 
-A; A connection is considered dead when a request to it does not complete properly. If the server responds with any status, even 500, it is not considered dead.
+A: A connection is considered dead when a request to it does not complete properly. If the server responds with any status, even 500, it is not considered dead.
