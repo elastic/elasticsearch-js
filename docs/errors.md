@@ -1,0 +1,39 @@
+# Errors
+
+These are the standard Error types which may be passed back from the client. To access the constructors access the errors module via `require('elasticsearch').errors`.
+
+## ConnectionFault
+The connection was unable to initiate or complete a request with the Elasticsearch node.
+
+## NoConnections
+All of the connections in the ConnectionPool are dead.
+
+## RequestTimeout
+The request timed-out.
+
+## Serialization
+The response received from Elasticsearch could not be deserilaized.
+
+## 503 or ServiceUnavailable
+Elasticsearch responded with a 503 status.
+
+## 500 or InternalServerError
+Elasticsearch responded with a 500 status.
+
+## 412 or PreconditionFailed
+Elasticsearch responded with a 412 status.
+
+## 409 or Conflict
+Elasticsearch responded with a 409 status.
+
+## 403 or Forbidden
+Elasticsearch responded with a 403 status.
+
+## 404 or NotFound
+Elasticsearch responded with a 404 status.
+
+## 400 or BadRequest
+Elasticsearch responded with a 400 status.
+
+## Generic
+Elasticsearch responded with a status that does not map to it's own error type.

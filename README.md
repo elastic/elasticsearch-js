@@ -5,7 +5,7 @@ Official *low-level* client for Elasticsearch.
 ## Features
 
  - One-to-one mapping with REST API and other language clients
- - Generalized, pluggable architecture. See [replacing core components](TODO: details the peices that are replaceable)
+ - Generalized, pluggable architecture. See [replacing core components](docs/replacing_core_components.md)
  - Configurable, automatic discovery of cluster nodes
  - Persistent, Keep-Alive connections
  - Load balancing (with pluggable selection strategy) across all available nodes.
@@ -59,6 +59,14 @@ bower install elasticsearch-angular
 bower install elasticsearch-jquery
 ```
 
+## Docs
+ - [Configuration](#configuration)
+ - [API](docs/api.md)
+ - [Replacing Core Components](docs/replacing_core_components.md)
+ - [Errors](docs/errors.md)
+ - [Setting Up Logging](docs/setting_up_logging.md)
+ - [FAQ](#faq)
+
 ## Configuration
 
 The `Client` constructor accepts a single object as it's argument, and the following keys can be used to configure that client instance:
@@ -95,7 +103,7 @@ log: {
 }
 ```
 
-Unless a constructor is specified, this sets the output settings for the bundled logger. See [setting up logging](TODO: detail logging why) for more information.
+Unless a constructor is specified, this sets the output settings for the bundled logger. See [setting up logging](docs/setting_up_logging.md) for more information.
 
 ### connectionClass
 Type: `String`, `Constructor`
@@ -148,7 +156,7 @@ Type: `Number`
 
 Defailt: `3`
 
-How many times should the client try to connect to other nodes before returning a [ConnectionFault](TODO: error types) error. (see [node death](#node-death))
+How many times should the client try to connect to other nodes before returning a [ConnectionFault](docs/error.md#connectionfault) error. (see [node death](#node-death))
 
 ### timeout
 Type: `Number`
@@ -202,7 +210,7 @@ The number of milliseconds this request has to complete. It defaults to the time
 
 ### Methods
 
-All the methods can be seen [here](TODO: api docs), or take a look at [api.js](src/lib/api.js).
+All the methods can be seen [here](docs/api.md), or take a look at [api.js](src/lib/api.js).
 
 ### Examples
 

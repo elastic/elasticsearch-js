@@ -158,24 +158,12 @@ module.exports = function (grunt) {
           }
         }
       }
-    },
-    mocha: {
-      yaml_suite: {
-        options: {
-          // log: true,
-          run: true,
-          urls: [ 'http://localhost:8888' ],
-          timeout: 10e3,
-          '--web-security': false
-        }
-      }
     }
   });
 
   // load plugins
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-open');
-  grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -188,11 +176,9 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     /*jshint scripturl:true*/
     'jshint',
-    'mochaTest:unit',
     'build',
-    'mochaTest:yaml_suite',
-    // 'start:integration_server',
-    // 'mocha:yaml_suite' -- this will fail because of the way that PhantomJS handle's DELETE requests with body's
+    'mochaTest:unit',
+    'mochaTest:yaml_suite'
   ]);
 
   grunt.registerTask('build', [
@@ -227,6 +213,11 @@ module.exports = function (grunt) {
 
     var taskData = this.data;
 
+    /**
+     * You must always run the build task first, to ensure that the lastest API and yaml tests are available.
+     * This is run in the default and browser_tests:{{browser}} tests.
+     */
+    grunt.task.requires('build');
     grunt.task.requires('run:integration_server');
 
     grunt.config.set('open.yaml_suite_' + this.target, {

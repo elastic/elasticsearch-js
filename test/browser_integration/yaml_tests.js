@@ -1,337 +1,12 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// copy from https://github.com/joyent/node/blob/master/lib/_http_agent.js
-
-var net = require('net');
-var url = require('url');
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-// var ClientRequest = require('_http_client').ClientRequest;
-// var debug = util.debuglog('http');
-var ClientRequest = require('http').ClientRequest;
-var debug;
-if (process.env.NODE_DEBUG && /agentkeepalive/.test(process.env.NODE_DEBUG)) {
-  debug = function (x) {
-    console.error.apply(console, arguments);
-  };
-} else {
-  debug = function () { };
-}
-
-// New Agent code.
-
-// The largest departure from the previous implementation is that
-// an Agent instance holds connections for a variable number of host:ports.
-// Surprisingly, this is still API compatible as far as third parties are
-// concerned. The only code that really notices the difference is the
-// request object.
-
-// Another departure is that all code related to HTTP parsing is in
-// ClientRequest.onSocket(). The Agent is now *strictly*
-// concerned with managing a connection pool.
-
-function Agent(options) {
-  if (!(this instanceof Agent))
-    return new Agent(options);
-
-  EventEmitter.call(this);
-
-  var self = this;
-
-  self.defaultPort = 80;
-  self.protocol = 'http:';
-
-  self.options = util._extend({}, options);
-
-  // don't confuse net and make it think that we're connecting to a pipe
-  self.options.path = null;
-  self.requests = {};
-  self.sockets = {};
-  self.freeSockets = {};
-  self.keepAliveMsecs = self.options.keepAliveMsecs || 1000;
-  self.keepAlive = self.options.keepAlive || false;
-  self.maxSockets = self.options.maxSockets || Agent.defaultMaxSockets;
-  self.maxFreeSockets = self.options.maxFreeSockets || 256;
-
-  self.on('free', function(socket, options) {
-    var name = self.getName(options);
-    debug('agent.on(free)', name);
-
-    if (!socket.destroyed &&
-        self.requests[name] && self.requests[name].length) {
-      self.requests[name].shift().onSocket(socket);
-      if (self.requests[name].length === 0) {
-        // don't leak
-        delete self.requests[name];
-      }
-    } else {
-      // If there are no pending requests, then put it in
-      // the freeSockets pool, but only if we're allowed to do so.
-      var req = socket._httpMessage;
-      if (req &&
-          req.shouldKeepAlive &&
-          !socket.destroyed &&
-          self.options.keepAlive) {
-        var freeSockets = self.freeSockets[name];
-        var freeLen = freeSockets ? freeSockets.length : 0;
-        var count = freeLen;
-        if (self.sockets[name])
-          count += self.sockets[name].length;
-
-        if (count >= self.maxSockets || freeLen >= self.maxFreeSockets) {
-          self.removeSocket(socket, options);
-          socket.destroy();
-        } else {
-          freeSockets = freeSockets || [];
-          self.freeSockets[name] = freeSockets;
-          socket.setKeepAlive(true, self.keepAliveMsecs);
-          socket.unref && socket.unref();
-          socket._httpMessage = null;
-          self.removeSocket(socket, options);
-          freeSockets.push(socket);
-        }
-      } else {
-        self.removeSocket(socket, options);
-        socket.destroy();
-      }
-    }
-  });
-}
-
-util.inherits(Agent, EventEmitter);
-exports.Agent = Agent;
-
-Agent.defaultMaxSockets = Infinity;
-
-Agent.prototype.createConnection = net.createConnection;
-
-// Get the key for a given set of request options
-Agent.prototype.getName = function(options) {
-  var name = '';
-
-  if (options.host)
-    name += options.host;
-  else
-    name += 'localhost';
-
-  name += ':';
-  if (options.port)
-    name += options.port;
-  name += ':';
-  if (options.localAddress)
-    name += options.localAddress;
-  name += ':';
-  return name;
-};
-
-Agent.prototype.addRequest = function(req, options) {
-  // Legacy API: addRequest(req, host, port, path)
-  if (typeof options === 'string') {
-    options = {
-      host: options,
-      port: arguments[2],
-      path: arguments[3]
-    };
-  }
-
-  var name = this.getName(options);
-  if (!this.sockets[name]) {
-    this.sockets[name] = [];
-  }
-
-  var freeLen = this.freeSockets[name] ? this.freeSockets[name].length : 0;
-  var sockLen = freeLen + this.sockets[name].length;
-
-  if (freeLen) {
-    // we have a free socket, so use that.
-    var socket = this.freeSockets[name].shift();
-    debug('have free socket');
-
-    // don't leak
-    if (!this.freeSockets[name].length)
-      delete this.freeSockets[name];
-
-    socket.ref && socket.ref();
-    req.onSocket(socket);
-    this.sockets[name].push(socket);
-  } else if (sockLen < this.maxSockets) {
-    debug('call onSocket', sockLen, freeLen);
-    // If we are under maxSockets create a new one.
-    req.onSocket(this.createSocket(req, options));
-  } else {
-    debug('wait for socket');
-    // We are over limit so we'll add it to the queue.
-    if (!this.requests[name]) {
-      this.requests[name] = [];
-    }
-    this.requests[name].push(req);
-  }
-};
-
-Agent.prototype.createSocket = function(req, options) {
-  var self = this;
-  options = util._extend({}, options);
-  options = util._extend(options, self.options);
-
-  options.servername = options.host;
-  if (req) {
-    var hostHeader = req.getHeader('host');
-    if (hostHeader) {
-      options.servername = hostHeader.replace(/:.*$/, '');
-    }
-  }
-
-  var name = self.getName(options);
-
-  debug('createConnection', name, options);
-  var s = self.createConnection(options);
-  if (!self.sockets[name]) {
-    self.sockets[name] = [];
-  }
-  this.sockets[name].push(s);
-  debug('sockets', name, this.sockets[name].length);
-
-  function onFree() {
-    self.emit('free', s, options);
-  }
-  s.on('free', onFree);
-
-  function onClose(err) {
-    debug('CLIENT socket onClose');
-    // This is the only place where sockets get removed from the Agent.
-    // If you want to remove a socket from the pool, just close it.
-    // All socket errors end in a close event anyway.
-    self.removeSocket(s, options);
-  }
-  s.on('close', onClose);
-
-  function onRemove() {
-    // We need this function for cases like HTTP 'upgrade'
-    // (defined by WebSockets) where we need to remove a socket from the
-    // pool because it'll be locked up indefinitely
-    debug('CLIENT socket onRemove');
-    self.removeSocket(s, options, 'agentRemove');
-    s.removeListener('close', onClose);
-    s.removeListener('free', onFree);
-    s.removeListener('agentRemove', onRemove);
-  }
-  s.on('agentRemove', onRemove);
-  return s;
-};
-
-Agent.prototype.removeSocket = function(s, options) {
-  var name = this.getName(options);
-  debug('removeSocket', name, 'destroyed:', s.destroyed);
-  var sets = [this.sockets];
-  if (s.destroyed) {
-    // If the socket was destroyed, we need to remove it from the free buffers.
-    sets.push(this.freeSockets);
-  }
-  sets.forEach(function(sockets) {
-    if (sockets[name]) {
-      var index = sockets[name].indexOf(s);
-      if (index !== -1) {
-        sockets[name].splice(index, 1);
-        if (sockets[name].length === 0) {
-          // don't leak
-          delete sockets[name];
-        }
-      }
-    }
-  });
-  if (this.requests[name] && this.requests[name].length) {
-    debug('removeSocket, have a request, make a socket');
-    var req = this.requests[name][0];
-    // If we have pending requests and a socket gets closed make a new one
-    this.createSocket(req, options).emit('free');
-  }
-};
-
-Agent.prototype.destroy = function() {
-  var sets = [this.freeSockets, this.sockets];
-  sets.forEach(function(set) {
-    Object.keys(set).forEach(function(name) {
-      set[name].forEach(function(socket) {
-        socket.destroy();
-      });
-    });
-  });
-};
-
-Agent.prototype.request = function(options, cb) {
-  // if (util.isString(options)) {
-  //   options = url.parse(options);
-  // }
-  if (typeof options === 'string') {
-    options = url.parse(options);
-  }
-  // don't try to do dns lookups of foo.com:8080, just foo.com
-  if (options.hostname) {
-    options.host = options.hostname;
-  }
-
-  if (options && options.path && / /.test(options.path)) {
-    // The actual regex is more like /[^A-Za-z0-9\-._~!$&'()*+,;=/:@]/
-    // with an additional rule for ignoring percentage-escaped characters
-    // but that's a) hard to capture in a regular expression that performs
-    // well, and b) possibly too restrictive for real-world usage. That's
-    // why it only scans for spaces because those are guaranteed to create
-    // an invalid request.
-    throw new TypeError('Request path contains unescaped characters.');
-  } else if (options.protocol && options.protocol !== this.protocol) {
-    throw new Error('Protocol:' + options.protocol + ' not supported.');
-  }
-
-  options = util._extend({
-    agent: this,
-    keepAlive: this.keepAlive
-  }, options);
-
-  // if it's false, then make a new one, just like this one.
-  if (options.agent === false)
-    options.agent = new this.constructor();
-
-  debug('agent.request', options);
-  return new ClientRequest(options, cb);
-};
-
-Agent.prototype.get = function(options, cb) {
-  var req = this.request(options, cb);
-  req.end();
-  return req;
-};
-
-exports.globalAgent = new Agent();
-},{"__browserify_process":45,"events":12,"http":26,"net":15,"url":21,"util":22}],2:[function(require,module,exports){
-/*!
+var process=require("__browserify_process");/*!
  * agentkeepalive - lib/agent.js
  *
  * refer: 
  *   * @atimb "Real keep-alive HTTP agent": https://gist.github.com/2963672
  *   * https://github.com/joyent/node/blob/master/lib/http.js
- *   * https://github.com/joyent/node/blob/master/lib/_http_agent.js
  * 
- * Copyright(c) 2012 - 2013 fengmk2 <fengmk2@gmail.com>
+ * Copyright(c) 2012 fengmk2 <fengmk2@gmail.com>
  * MIT Licensed
  */
 
@@ -345,58 +20,137 @@ var http = require('http');
 var https = require('https');
 var util = require('util');
 
-if (typeof http.Agent.request === 'function') {
-  // node >= 0.11, default Agent is keepavlie
-  module.exports = http.Agent;
-  module.exports.HttpsAgent = https.Agent;
-  return;
+var debug;
+if (process.env.NODE_DEBUG && /agentkeepalive/.test(process.env.NODE_DEBUG)) {
+  debug = function (x) {
+    console.error('agentkeepalive:', x);
+  };
+} else {
+  debug = function () { };
 }
 
+function Agent(options) {
+  options = options || {};
+  http.Agent.call(this, options);
 
-var Agent = require('./_http_agent').Agent;
+  var self = this;
+  // max requests per keepalive socket, default is 0, no limit.
+  self.maxKeepAliveRequests = parseInt(options.maxKeepAliveRequests, 10) || 0;
+  // max keep alive time, default 60 seconds.
+  // if set `maxKeepAliveTime = 0`, will disable keepalive feature.
+  self.maxKeepAliveTime = parseInt(options.maxKeepAliveTime, 10);
+  if (isNaN(self.maxKeepAliveTime)) {
+    self.maxKeepAliveTime = 60000;
+  }
+  self.unusedSockets = {};
+  self.createSocketCount = 0;
+  self.timeoutSocketCount = 0;
+  self.requestFinishedCount = 0;
+
+  // override the `free` event listener
+  self.removeAllListeners('free');
+  self.on('free', function (socket, host, port, localAddress) {
+    self.requestFinishedCount++;
+    socket._requestCount++;
+    var name = host + ':' + port;
+    if (localAddress) {
+      name += ':' + localAddress;
+    }
+    if (self.requests[name] && self.requests[name].length > 0) {
+      self.requests[name].shift().onSocket(socket);
+      if (self.requests[name].length === 0) {
+        // don't leak
+        delete self.requests[name];
+      }
+    } else {
+      // If there are no pending requests just destroy the
+      // socket and it will get removed from the pool. This
+      // gets us out of timeout issues and allows us to
+      // default to Connection:keep-alive.
+      // socket.destroy();
+      if (self.maxKeepAliveTime === 0 ||
+          (self.maxKeepAliveRequests && socket._requestCount >= self.maxKeepAliveRequests)) {
+        socket.destroy();
+        return;
+      }
+
+      // Avoid duplicitive timeout events by removing timeout listeners set on
+      // socket by previous requests. node does not do this normally because it
+      // assumes sockets are too short-lived for it to matter. It becomes a
+      // problem when sockets are being reused. Steps are being taken to fix
+      // this issue upstream in node v0.10.0.
+      //
+      // See https://github.com/joyent/node/commit/451ff1540ab536237e8d751d241d7fc3391a4087
+      if (self.maxKeepAliveTime && socket._events && Array.isArray(socket._events.timeout)) {
+        socket.removeAllListeners('timeout');
+        // Restore the socket's setTimeout() that was remove as collateral
+        // damage.
+        socket.setTimeout(self.maxKeepAliveTime, socket._maxKeepAliveTimeout);
+      }
+      // keepalive
+      if (!self.unusedSockets[name]) {
+        self.unusedSockets[name] = [];
+      }
+      self.unusedSockets[name].push(socket);
+    }
+  });
+}
+
+util.inherits(Agent, http.Agent);
 module.exports = Agent;
+
+Agent.prototype.addRequest = function (req, host, port, localAddress) {
+  var name = host + ':' + port;
+  if (localAddress) {
+    name += ':' + localAddress;
+  }
+  if (this.unusedSockets[name] && this.unusedSockets[name].length > 0) {
+    return req.onSocket(this.unusedSockets[name].shift());
+  }
+  return http.Agent.prototype.addRequest.call(this, req, host, port, localAddress);
+};
+
+Agent.prototype.createSocket = function (name, host, port, localAddress, req) {
+  var self = this;
+  var socket = http.Agent.prototype.createSocket.call(this, name, host, port, localAddress, req);
+  socket._requestCount = 0;
+  if (self.maxKeepAliveTime) {
+    socket._maxKeepAliveTimeout = function () {
+      socket.destroy();
+      self.timeoutSocketCount++;
+    };
+    socket.setTimeout(self.maxKeepAliveTime, socket._maxKeepAliveTimeout);
+    // Disable Nagle's algorithm: http://blog.caustik.com/2012/04/08/scaling-node-js-to-100k-concurrent-connections/
+    socket.setNoDelay(true);
+  }
+  this.createSocketCount++;
+  return socket;
+};
+
+Agent.prototype.removeSocket = function (socket, name, host, port, localAddress) {
+  if (this.unusedSockets[name]) {
+    var unusedIndex = this.unusedSockets[name].indexOf(socket);
+    if (unusedIndex !== -1) {
+      this.unusedSockets[name].splice(unusedIndex, 1);
+      if (this.unusedSockets[name].length === 0) {
+        // don't leak
+        delete this.unusedSockets[name];
+      }
+    }
+  }
+  return http.Agent.prototype.removeSocket.call(this, socket, name, host, port, localAddress);
+};
 
 function HttpsAgent(options) {
   Agent.call(this, options);
-  this.defaultPort = 443;
-  this.protocol = 'https:';
+  this.createConnection = https.globalAgent.createConnection;
 }
 util.inherits(HttpsAgent, Agent);
-HttpsAgent.prototype.createConnection = https.globalAgent.createConnection;
-
-HttpsAgent.prototype.getName = function(options) {
-  var name = Agent.prototype.getName.call(this, options);
-
-  name += ':';
-  if (options.ca)
-    name += options.ca;
-
-  name += ':';
-  if (options.cert)
-    name += options.cert;
-
-  name += ':';
-  if (options.ciphers)
-    name += options.ciphers;
-
-  name += ':';
-  if (options.key)
-    name += options.key;
-
-  name += ':';
-  if (options.pfx)
-    name += options.pfx;
-
-  name += ':';
-  if (options.rejectUnauthorized !== undefined)
-    name += options.rejectUnauthorized;
-
-  return name;
-};
+HttpsAgent.prototype.defaultPort = 443;
 
 Agent.HttpsAgent = HttpsAgent;
 
-},{"./_http_agent":1,"http":26,"https":14,"util":22}],3:[function(require,module,exports){
+},{"__browserify_process":43,"http":24,"https":13,"util":20}],2:[function(require,module,exports){
 var process=require("__browserify_process");/*global setImmediate: false, setTimeout: false, console: false */
 (function () {
 
@@ -1353,7 +1107,7 @@ var process=require("__browserify_process");/*global setImmediate: false, setTim
 
 }());
 
-},{"__browserify_process":45}],4:[function(require,module,exports){
+},{"__browserify_process":43}],3:[function(require,module,exports){
 
 
 //
@@ -1571,7 +1325,7 @@ if (typeof Object.getOwnPropertyDescriptor === 'function') {
   exports.getOwnPropertyDescriptor = valueObject;
 }
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1644,7 +1398,7 @@ function onend() {
   timers.setImmediate(shims.bind(this.end, this));
 }
 
-},{"_shims":4,"_stream_readable":7,"_stream_writable":9,"timers":20,"util":22}],6:[function(require,module,exports){
+},{"_shims":3,"_stream_readable":6,"_stream_writable":8,"timers":18,"util":20}],5:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1687,7 +1441,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"_stream_transform":8,"util":22}],7:[function(require,module,exports){
+},{"_stream_transform":7,"util":20}],6:[function(require,module,exports){
 var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2608,7 +2362,7 @@ function endReadable(stream) {
   }
 }
 
-},{"__browserify_process":45,"_shims":4,"buffer":24,"events":12,"stream":18,"string_decoder":19,"timers":20,"util":22}],8:[function(require,module,exports){
+},{"__browserify_process":43,"_shims":3,"buffer":22,"events":11,"stream":16,"string_decoder":17,"timers":18,"util":20}],7:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2814,7 +2568,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"_stream_duplex":5,"util":22}],9:[function(require,module,exports){
+},{"_stream_duplex":4,"util":20}],8:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3184,7 +2938,7 @@ function endWritable(stream, state, cb) {
   state.ended = true;
 }
 
-},{"buffer":24,"stream":18,"timers":20,"util":22}],10:[function(require,module,exports){
+},{"buffer":22,"stream":16,"timers":18,"util":20}],9:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3501,13 +3255,13 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 };
 
 assert.ifError = function(err) { if (err) {throw err;}};
-},{"_shims":4,"util":22}],11:[function(require,module,exports){
+},{"_shims":3,"util":20}],10:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3788,9 +3542,9 @@ EventEmitter.listenerCount = function(emitter, type) {
     ret = emitter._events[type].length;
   return ret;
 };
-},{"util":22}],13:[function(require,module,exports){
-module.exports=require(11)
-},{}],14:[function(require,module,exports){
+},{"util":20}],12:[function(require,module,exports){
+module.exports=require(10)
+},{}],13:[function(require,module,exports){
 var http = require('http');
 
 var https = module.exports;
@@ -3804,9 +3558,7 @@ https.request = function (params, cb) {
     params.scheme = 'https';
     return http.request.call(this, params, cb);
 }
-},{"http":26}],15:[function(require,module,exports){
-module.exports=require(11)
-},{}],16:[function(require,module,exports){
+},{"http":24}],14:[function(require,module,exports){
 var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4017,7 +3769,7 @@ exports.extname = function(path) {
   return splitPath(path)[3];
 };
 
-},{"__browserify_process":45,"_shims":4,"util":22}],17:[function(require,module,exports){
+},{"__browserify_process":43,"_shims":3,"util":20}],15:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4228,7 +3980,7 @@ QueryString.parse = QueryString.decode = function(qs, sep, eq, options) {
 
   return obj;
 };
-},{"_shims":4,"buffer":24,"util":22}],18:[function(require,module,exports){
+},{"_shims":3,"buffer":22,"util":20}],16:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4357,7 +4109,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"_stream_duplex":5,"_stream_passthrough":6,"_stream_readable":7,"_stream_transform":8,"_stream_writable":9,"events":12,"util":22}],19:[function(require,module,exports){
+},{"_stream_duplex":4,"_stream_passthrough":5,"_stream_readable":6,"_stream_transform":7,"_stream_writable":8,"events":11,"util":20}],17:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4550,7 +4302,7 @@ function base64DetectIncompleteChar(buffer) {
   return incomplete;
 }
 
-},{"buffer":24}],20:[function(require,module,exports){
+},{"buffer":22}],18:[function(require,module,exports){
 try {
     // Old IE browsers that do not curry arguments
     if (!setTimeout.call) {
@@ -4669,7 +4421,7 @@ if (!exports.setImmediate) {
   };
 }
 
-},{}],21:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5364,7 +5116,7 @@ Url.prototype.parseHost = function() {
   }
   if (host) this.hostname = host;
 };
-},{"_shims":4,"querystring":17,"util":22}],22:[function(require,module,exports){
+},{"_shims":3,"querystring":15,"util":20}],20:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5909,7 +5661,7 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-},{"_shims":4}],23:[function(require,module,exports){
+},{"_shims":3}],21:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -5995,7 +5747,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var assert;
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -7121,7 +6873,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":23,"assert":10,"base64-js":25}],25:[function(require,module,exports){
+},{"./buffer_ieee754":21,"assert":9,"base64-js":23}],23:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -7207,15 +6959,18 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],26:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
 
 http.request = function (params, cb) {
     if (!params) params = {};
-    if (!params.host) params.host = window.location.host.split(':')[0];
-    if (!params.port) params.port = window.location.port;
+    if (!params.host && !params.port) {
+        params.port = parseInt(window.location.port, 10);
+    }
+    if (!params.host) params.host = window.location.hostname;
+    if (!params.port) params.port = 80;
     if (!params.scheme) params.scheme = window.location.protocol.split(':')[0];
     
     var req = new Request(new xhrHttp, params);
@@ -7269,7 +7024,7 @@ var xhrHttp = (function () {
     }
 })();
 
-},{"./lib/request":27,"events":12}],27:[function(require,module,exports){
+},{"./lib/request":25,"events":11}],25:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var concatStream = require('concat-stream');
@@ -7403,7 +7158,7 @@ var indexOf = function (xs, x) {
     return -1;
 };
 
-},{"./response":28,"Base64":29,"concat-stream":30,"stream":18,"util":22}],28:[function(require,module,exports){
+},{"./response":26,"Base64":27,"concat-stream":28,"stream":16,"util":20}],26:[function(require,module,exports){
 var Stream = require('stream');
 var util = require('util');
 
@@ -7525,7 +7280,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":18,"util":22}],29:[function(require,module,exports){
+},{"stream":16,"util":20}],27:[function(require,module,exports){
 ;(function () {
 
   var
@@ -7582,7 +7337,7 @@ var isArray = Array.isArray || function (xs) {
 
 }());
 
-},{}],30:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 var stream = require('stream')
 var bops = require('bops')
 var util = require('util')
@@ -7633,7 +7388,7 @@ module.exports = function(cb) {
 
 module.exports.ConcatStream = ConcatStream
 
-},{"bops":31,"stream":18,"util":22}],31:[function(require,module,exports){
+},{"bops":29,"stream":16,"util":20}],29:[function(require,module,exports){
 var proto = {}
 module.exports = proto
 
@@ -7654,9 +7409,9 @@ function mix(from, into) {
   }
 }
 
-},{"./copy.js":34,"./create.js":35,"./from.js":36,"./is.js":37,"./join.js":38,"./read.js":40,"./subarray.js":41,"./to.js":42,"./write.js":43}],32:[function(require,module,exports){
-module.exports=require(25)
-},{}],33:[function(require,module,exports){
+},{"./copy.js":32,"./create.js":33,"./from.js":34,"./is.js":35,"./join.js":36,"./read.js":38,"./subarray.js":39,"./to.js":40,"./write.js":41}],30:[function(require,module,exports){
+module.exports=require(23)
+},{}],31:[function(require,module,exports){
 module.exports = to_utf8
 
 var out = []
@@ -7731,7 +7486,7 @@ function reduced(list) {
   return out
 }
 
-},{}],34:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = copy
 
 var slice = [].slice
@@ -7785,12 +7540,12 @@ function slow_copy(from, to, j, i, jend) {
   }
 }
 
-},{}],35:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports = function(size) {
   return new Uint8Array(size)
 }
 
-},{}],36:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 module.exports = from
 
 var base64 = require('base64-js')
@@ -7850,13 +7605,13 @@ function from_base64(str) {
   return new Uint8Array(base64.toByteArray(str)) 
 }
 
-},{"base64-js":32}],37:[function(require,module,exports){
+},{"base64-js":30}],35:[function(require,module,exports){
 
 module.exports = function(buffer) {
   return buffer instanceof Uint8Array;
 }
 
-},{}],38:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports = join
 
 function join(targets, hint) {
@@ -7894,7 +7649,7 @@ function get_length(targets) {
   return size
 }
 
-},{}],39:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var proto
   , map
 
@@ -7916,7 +7671,7 @@ function get(target) {
   return out
 }
 
-},{}],40:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = {
     readUInt8:      read_uint8
   , readInt8:       read_int8
@@ -8005,14 +7760,14 @@ function read_double_be(target, at) {
   return dv.getFloat64(at + target.byteOffset, false)
 }
 
-},{"./mapped.js":39}],41:[function(require,module,exports){
+},{"./mapped.js":37}],39:[function(require,module,exports){
 module.exports = subarray
 
 function subarray(buf, from, to) {
   return buf.subarray(from || 0, to || buf.length)
 }
 
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = to
 
 var base64 = require('base64-js')
@@ -8050,7 +7805,7 @@ function to_base64(buf) {
 }
 
 
-},{"base64-js":32,"to-utf8":33}],43:[function(require,module,exports){
+},{"base64-js":30,"to-utf8":31}],41:[function(require,module,exports){
 module.exports = {
     writeUInt8:      write_uint8
   , writeInt8:       write_int8
@@ -8138,7 +7893,7 @@ function write_double_be(target, value, at) {
   return dv.setFloat64(at + target.byteOffset, value, false)
 }
 
-},{"./mapped.js":39}],44:[function(require,module,exports){
+},{"./mapped.js":37}],42:[function(require,module,exports){
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
@@ -10518,7 +10273,7 @@ function hasOwnProperty(obj, prop) {
 },{"_shims":5}]},{},[])
 ;;module.exports=require("buffer-browserify")
 
-},{}],45:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -10572,7 +10327,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],46:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 'use strict';
 var ansi = require('ansi-styles');
 var defineProps = Object.defineProperties;
@@ -10638,7 +10393,7 @@ if (chalk.enabled === undefined) {
 	chalk.enabled = chalk.supportsColor;
 }
 
-},{"ansi-styles":47,"has-color":48}],47:[function(require,module,exports){
+},{"ansi-styles":45,"has-color":46}],45:[function(require,module,exports){
 'use strict';
 module.exports = {
 	reset: ['\x1b[0m', '\x1b[0m'],
@@ -10669,7 +10424,7 @@ module.exports = {
 	bgWhite: ['\x1b[47m', '\x1b[49m']
 };
 
-},{}],48:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 var process=require("__browserify_process");'use strict';
 module.exports = (function () {
 	var term;
@@ -10705,7 +10460,7 @@ module.exports = (function () {
 	return term.indexOf('color') !== -1 || term === 'xterm' || term === 'linux';
 })();
 
-},{"__browserify_process":45}],49:[function(require,module,exports){
+},{"__browserify_process":43}],47:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;
 (function (global, module) {
 
@@ -11960,10 +11715,10 @@ var Buffer=require("__browserify_Buffer").Buffer;
   , 'undefined' != typeof exports ? exports : {}
 );
 
-},{"__browserify_Buffer":44}],50:[function(require,module,exports){
+},{"__browserify_Buffer":42}],48:[function(require,module,exports){
 module.exports = require('./lib/js-yaml.js');
 
-},{"./lib/js-yaml.js":51}],51:[function(require,module,exports){
+},{"./lib/js-yaml.js":49}],49:[function(require,module,exports){
 'use strict';
 
 
@@ -12008,7 +11763,7 @@ module.exports.addConstructor = deprecated('addConstructor');
 
 require('./js-yaml/require');
 
-},{"./js-yaml/common":52,"./js-yaml/dumper":53,"./js-yaml/exception":54,"./js-yaml/loader":55,"./js-yaml/require":57,"./js-yaml/schema":58,"./js-yaml/schema/core":59,"./js-yaml/schema/default_full":60,"./js-yaml/schema/default_safe":61,"./js-yaml/schema/failsafe":62,"./js-yaml/schema/json":63,"./js-yaml/type":64}],52:[function(require,module,exports){
+},{"./js-yaml/common":50,"./js-yaml/dumper":51,"./js-yaml/exception":52,"./js-yaml/loader":53,"./js-yaml/require":55,"./js-yaml/schema":56,"./js-yaml/schema/core":57,"./js-yaml/schema/default_full":58,"./js-yaml/schema/default_safe":59,"./js-yaml/schema/failsafe":60,"./js-yaml/schema/json":61,"./js-yaml/type":62}],50:[function(require,module,exports){
 'use strict';
 
 
@@ -12070,7 +11825,7 @@ module.exports.toArray    = toArray;
 module.exports.repeat     = repeat;
 module.exports.extend     = extend;
 
-},{}],53:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 'use strict';
 
 
@@ -12557,7 +12312,7 @@ function safeDump(input, options) {
 module.exports.dump     = dump;
 module.exports.safeDump = safeDump;
 
-},{"./common":52,"./exception":54,"./schema/default_full":60,"./schema/default_safe":61}],54:[function(require,module,exports){
+},{"./common":50,"./exception":52,"./schema/default_full":58,"./schema/default_safe":59}],52:[function(require,module,exports){
 'use strict';
 
 
@@ -12584,7 +12339,7 @@ YAMLException.prototype.toString = function toString(compact) {
 
 module.exports = YAMLException;
 
-},{}],55:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 'use strict';
 
 
@@ -14171,7 +13926,7 @@ module.exports.load        = load;
 module.exports.safeLoadAll = safeLoadAll;
 module.exports.safeLoad    = safeLoad;
 
-},{"./common":52,"./exception":54,"./mark":56,"./schema/default_full":60,"./schema/default_safe":61}],56:[function(require,module,exports){
+},{"./common":50,"./exception":52,"./mark":54,"./schema/default_full":58,"./schema/default_safe":59}],54:[function(require,module,exports){
 'use strict';
 
 
@@ -14251,7 +14006,7 @@ Mark.prototype.toString = function toString(compact) {
 
 module.exports = Mark;
 
-},{"./common":52}],57:[function(require,module,exports){
+},{"./common":50}],55:[function(require,module,exports){
 'use strict';
 
 
@@ -14276,7 +14031,7 @@ if (undefined !== require.extensions) {
 
 module.exports = require;
 
-},{"./loader":55,"fs":13}],58:[function(require,module,exports){
+},{"./loader":53,"fs":12}],56:[function(require,module,exports){
 'use strict';
 
 
@@ -14381,7 +14136,7 @@ Schema.create = function createSchema() {
 
 module.exports = Schema;
 
-},{"./common":52,"./exception":54,"./type":64}],59:[function(require,module,exports){
+},{"./common":50,"./exception":52,"./type":62}],57:[function(require,module,exports){
 // Standard YAML's Core schema.
 // http://www.yaml.org/spec/1.2/spec.html#id2804923
 //
@@ -14401,7 +14156,7 @@ module.exports = new Schema({
   ]
 });
 
-},{"../schema":58,"./json":63}],60:[function(require,module,exports){
+},{"../schema":56,"./json":61}],58:[function(require,module,exports){
 // JS-YAML's default schema for `load` function.
 // It is not described in the YAML specification.
 //
@@ -14428,7 +14183,7 @@ module.exports = Schema.DEFAULT = new Schema({
   ]
 });
 
-},{"../schema":58,"../type/js/function":69,"../type/js/regexp":70,"../type/js/undefined":71,"./default_safe":61}],61:[function(require,module,exports){
+},{"../schema":56,"../type/js/function":67,"../type/js/regexp":68,"../type/js/undefined":69,"./default_safe":59}],59:[function(require,module,exports){
 // JS-YAML's default schema for `safeLoad` function.
 // It is not described in the YAML specification.
 //
@@ -14458,7 +14213,7 @@ module.exports = new Schema({
   ]
 });
 
-},{"../schema":58,"../type/binary":65,"../type/merge":73,"../type/omap":75,"../type/pairs":76,"../type/set":78,"../type/timestamp":80,"./core":59}],62:[function(require,module,exports){
+},{"../schema":56,"../type/binary":63,"../type/merge":71,"../type/omap":73,"../type/pairs":74,"../type/set":76,"../type/timestamp":78,"./core":57}],60:[function(require,module,exports){
 // Standard YAML's Failsafe schema.
 // http://www.yaml.org/spec/1.2/spec.html#id2802346
 
@@ -14477,7 +14232,7 @@ module.exports = new Schema({
   ]
 });
 
-},{"../schema":58,"../type/map":72,"../type/seq":77,"../type/str":79}],63:[function(require,module,exports){
+},{"../schema":56,"../type/map":70,"../type/seq":75,"../type/str":77}],61:[function(require,module,exports){
 // Standard YAML's JSON schema.
 // http://www.yaml.org/spec/1.2/spec.html#id2803231
 //
@@ -14504,7 +14259,7 @@ module.exports = new Schema({
   ]
 });
 
-},{"../schema":58,"../type/bool":66,"../type/float":67,"../type/int":68,"../type/null":74,"./failsafe":62}],64:[function(require,module,exports){
+},{"../schema":56,"../type/bool":64,"../type/float":65,"../type/int":66,"../type/null":72,"./failsafe":60}],62:[function(require,module,exports){
 'use strict';
 
 
@@ -14588,7 +14343,7 @@ Type.Dumper = function TypeDumper(options) {
 
 module.exports = Type;
 
-},{"./exception":54}],65:[function(require,module,exports){
+},{"./exception":52}],63:[function(require,module,exports){
 // Modified from:
 // https://raw.github.com/kanaka/noVNC/d890e8640f20fba3215ba7be8e0ff145aeb8c17c/include/base64.js
 
@@ -14708,7 +14463,7 @@ module.exports = new Type('tag:yaml.org,2002:binary', {
   }
 });
 
-},{"../common":52,"../type":64,"buffer":24}],66:[function(require,module,exports){
+},{"../common":50,"../type":62,"buffer":22}],64:[function(require,module,exports){
 'use strict';
 
 
@@ -14784,7 +14539,7 @@ module.exports = new Type('tag:yaml.org,2002:bool', {
   }
 });
 
-},{"../common":52,"../type":64}],67:[function(require,module,exports){
+},{"../common":50,"../type":62}],65:[function(require,module,exports){
 'use strict';
 
 
@@ -14888,7 +14643,7 @@ module.exports = new Type('tag:yaml.org,2002:float', {
   }
 });
 
-},{"../common":52,"../type":64}],68:[function(require,module,exports){
+},{"../common":50,"../type":62}],66:[function(require,module,exports){
 'use strict';
 
 
@@ -14975,7 +14730,7 @@ module.exports = new Type('tag:yaml.org,2002:int', {
   }
 });
 
-},{"../common":52,"../type":64}],69:[function(require,module,exports){
+},{"../common":50,"../type":62}],67:[function(require,module,exports){
 'use strict';
 
 
@@ -15033,7 +14788,7 @@ module.exports = new Type('tag:yaml.org,2002:js/function', {
   }
 });
 
-},{"../../common":52,"../../type":64,"esprima":81}],70:[function(require,module,exports){
+},{"../../common":50,"../../type":62,"esprima":79}],68:[function(require,module,exports){
 'use strict';
 
 
@@ -15091,7 +14846,7 @@ module.exports = new Type('tag:yaml.org,2002:js/regexp', {
   }
 });
 
-},{"../../common":52,"../../type":64}],71:[function(require,module,exports){
+},{"../../common":50,"../../type":62}],69:[function(require,module,exports){
 'use strict';
 
 
@@ -15121,7 +14876,7 @@ module.exports = new Type('tag:yaml.org,2002:js/undefined', {
   }
 });
 
-},{"../../type":64}],72:[function(require,module,exports){
+},{"../../type":62}],70:[function(require,module,exports){
 'use strict';
 
 
@@ -15134,7 +14889,7 @@ module.exports = new Type('tag:yaml.org,2002:map', {
   }
 });
 
-},{"../type":64}],73:[function(require,module,exports){
+},{"../type":62}],71:[function(require,module,exports){
 'use strict';
 
 
@@ -15154,7 +14909,7 @@ module.exports = new Type('tag:yaml.org,2002:merge', {
   }
 });
 
-},{"../common":52,"../type":64}],74:[function(require,module,exports){
+},{"../common":50,"../type":62}],72:[function(require,module,exports){
 'use strict';
 
 
@@ -15192,7 +14947,7 @@ module.exports = new Type('tag:yaml.org,2002:null', {
   }
 });
 
-},{"../common":52,"../type":64}],75:[function(require,module,exports){
+},{"../common":50,"../type":62}],73:[function(require,module,exports){
 'use strict';
 
 
@@ -15247,7 +15002,7 @@ module.exports = new Type('tag:yaml.org,2002:omap', {
   }
 });
 
-},{"../common":52,"../type":64}],76:[function(require,module,exports){
+},{"../common":50,"../type":62}],74:[function(require,module,exports){
 'use strict';
 
 
@@ -15290,7 +15045,7 @@ module.exports = new Type('tag:yaml.org,2002:pairs', {
   }
 });
 
-},{"../common":52,"../type":64}],77:[function(require,module,exports){
+},{"../common":50,"../type":62}],75:[function(require,module,exports){
 'use strict';
 
 
@@ -15303,7 +15058,7 @@ module.exports = new Type('tag:yaml.org,2002:seq', {
   }
 });
 
-},{"../type":64}],78:[function(require,module,exports){
+},{"../type":62}],76:[function(require,module,exports){
 'use strict';
 
 
@@ -15336,7 +15091,7 @@ module.exports = new Type('tag:yaml.org,2002:set', {
   }
 });
 
-},{"../common":52,"../type":64}],79:[function(require,module,exports){
+},{"../common":50,"../type":62}],77:[function(require,module,exports){
 'use strict';
 
 
@@ -15349,7 +15104,7 @@ module.exports = new Type('tag:yaml.org,2002:str', {
   }
 });
 
-},{"../type":64}],80:[function(require,module,exports){
+},{"../type":62}],78:[function(require,module,exports){
 'use strict';
 
 
@@ -15442,7 +15197,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
   }
 });
 
-},{"../common":52,"../type":64}],81:[function(require,module,exports){
+},{"../common":50,"../type":62}],79:[function(require,module,exports){
 /*
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2012 Mathias Bynens <mathias@qiwi.be>
@@ -19352,10 +19107,10 @@ parseStatement: true, parseSourceElement: true */
 }));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{}],82:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/**
  * @license
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.3.0 (Custom Build) <http://lodash.com/>
  * Build: `lodash modern -o ./dist/lodash.js`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -19410,7 +19165,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   var reFlags = /\w*$/;
 
   /** Used to detected named functions */
-  var reFuncName = /^function[ \n\r\t]+\w/;
+  var reFuncName = /^\s*function[ \n\r\t]+\w/;
 
   /** Used to match "interpolate" template delimiters */
   var reInterpolate = /<%=([\s\S]+?)%>/g;
@@ -19709,15 +19464,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 
   /**
-   * A no-operation function.
-   *
-   * @private
-   */
-  function noop() {
-    // no operation performed
-  }
-
-  /**
    * Releases the given array back to the array pool.
    *
    * @private
@@ -19819,11 +19565,14 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     /** Used to restore the original `_` reference in `noConflict` */
     var oldDash = context._;
 
+    /** Used to resolve the internal [[Class]] of values */
+    var toString = objectProto.toString;
+
     /** Used to detect if a method is native */
     var reNative = RegExp('^' +
-      String(objectProto.valueOf)
+      String(toString)
         .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        .replace(/valueOf|for [^\]]+/g, '.+?') + '$'
+        .replace(/toString| for [^\]]+/g, '.*?') + '$'
     );
 
     /** Native method shortcuts */
@@ -19835,13 +19584,16 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         hasOwnProperty = objectProto.hasOwnProperty,
         now = reNative.test(now = Date.now) && now || function() { return +new Date; },
         push = arrayRef.push,
-        setImmediate = context.setImmediate,
         setTimeout = context.setTimeout,
-        splice = arrayRef.splice,
-        toString = objectProto.toString,
-        unshift = arrayRef.unshift;
+        splice = arrayRef.splice;
 
+    /** Used to detect `setImmediate` in Node.js */
+    var setImmediate = typeof (setImmediate = freeGlobal && moduleExports && freeGlobal.setImmediate) == 'function' &&
+      !reNative.test(setImmediate) && setImmediate;
+
+    /** Used to set meta data on functions */
     var defineProperty = (function() {
+      // IE 8 only accepts DOM elements
       try {
         var o = {},
             func = reNative.test(func = Object.defineProperty) && func,
@@ -19851,8 +19603,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }());
 
     /* Native method shortcuts for methods with the same name as other `lodash` methods */
-    var nativeBind = reNative.test(nativeBind = toString.bind) && nativeBind,
-        nativeCreate = reNative.test(nativeCreate = Object.create) && nativeCreate,
+    var nativeCreate = reNative.test(nativeCreate = Object.create) && nativeCreate,
         nativeIsArray = reNative.test(nativeIsArray = Array.isArray) && nativeIsArray,
         nativeIsFinite = context.isFinite,
         nativeIsNaN = context.isNaN,
@@ -19860,12 +19611,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         nativeMax = Math.max,
         nativeMin = Math.min,
         nativeParseInt = context.parseInt,
-        nativeRandom = Math.random,
-        nativeSlice = arrayRef.slice;
-
-    /** Detect various environments */
-    var isIeOpera = reNative.test(context.attachEvent),
-        isV8 = nativeBind && !/\n|true/.test(nativeBind + isIeOpera);
+        nativeRandom = Math.random;
 
     /** Used to lookup a built-in constructor by [[Class]] */
     var ctorByClass = {};
@@ -19893,15 +19639,16 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * The chainable wrapper functions are:
      * `after`, `assign`, `bind`, `bindAll`, `bindKey`, `chain`, `compact`,
-     * `compose`, `concat`, `countBy`, `createCallback`, `curry`, `debounce`,
-     * `defaults`, `defer`, `delay`, `difference`, `filter`, `flatten`, `forEach`,
-     * `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `functions`,
-     * `groupBy`, `indexBy`, `initial`, `intersection`, `invert`, `invoke`, `keys`,
-     * `map`, `max`, `memoize`, `merge`, `min`, `object`, `omit`, `once`, `pairs`,
-     * `partial`, `partialRight`, `pick`, `pluck`, `pull`, `push`, `range`, `reject`,
-     * `remove`, `rest`, `reverse`, `shuffle`, `slice`, `sort`, `sortBy`, `splice`,
-     * `tap`, `throttle`, `times`, `toArray`, `transform`, `union`, `uniq`, `unshift`,
-     * `unzip`, `values`, `where`, `without`, `wrap`, and `zip`
+     * `compose`, `concat`, `countBy`, `create`, `createCallback`, `curry`,
+     * `debounce`, `defaults`, `defer`, `delay`, `difference`, `filter`, `flatten`,
+     * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
+     * `functions`, `groupBy`, `indexBy`, `initial`, `intersection`, `invert`,
+     * `invoke`, `keys`, `map`, `max`, `memoize`, `merge`, `min`, `object`, `omit`,
+     * `once`, `pairs`, `partial`, `partialRight`, `pick`, `pluck`, `pull`, `push`,
+     * `range`, `reject`, `remove`, `rest`, `reverse`, `shuffle`, `slice`, `sort`,
+     * `sortBy`, `splice`, `tap`, `throttle`, `times`, `toArray`, `transform`,
+     * `union`, `uniq`, `unshift`, `unzip`, `values`, `where`, `without`, `wrap`,
+     * and `zip`
      *
      * The non-chainable wrapper functions are:
      * `clone`, `cloneDeep`, `contains`, `escape`, `every`, `find`, `findIndex`,
@@ -19974,14 +19721,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @type Object
      */
     var support = lodash.support = {};
-
-    /**
-     * Detect if `Function#bind` exists and is inferred to be fast (all but V8).
-     *
-     * @memberOf _.support
-     * @type boolean
-     */
-    support.fastBind = nativeBind && !isV8;
 
     /**
      * Detect if functions can be decompiled by `Function#toString`
@@ -20064,18 +19803,52 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     /*--------------------------------------------------------------------------*/
 
     /**
+     * The base implementation of `_.bind` that creates the bound function and
+     * sets its meta data.
+     *
+     * @private
+     * @param {Array} bindData The bind data array.
+     * @returns {Function} Returns the new bound function.
+     */
+    function baseBind(bindData) {
+      var func = bindData[0],
+          partialArgs = bindData[2],
+          thisArg = bindData[4];
+
+      function bound() {
+        // `Function#bind` spec
+        // http://es5.github.io/#x15.3.4.5
+        if (partialArgs) {
+          var args = partialArgs.slice();
+          push.apply(args, arguments);
+        }
+        // mimic the constructor's `return` behavior
+        // http://es5.github.io/#x13.2.2
+        if (this instanceof bound) {
+          // ensure `new bound` is an instance of `func`
+          var thisBinding = baseCreate(func.prototype),
+              result = func.apply(thisBinding, args || arguments);
+          return isObject(result) ? result : thisBinding;
+        }
+        return func.apply(thisArg, args || arguments);
+      }
+      setBindData(bound, bindData);
+      return bound;
+    }
+
+    /**
      * The base implementation of `_.clone` without argument juggling or support
      * for `thisArg` binding.
      *
      * @private
      * @param {*} value The value to clone.
-     * @param {boolean} [deep=false] Specify a deep clone.
+     * @param {boolean} [isDeep=false] Specify a deep clone.
      * @param {Function} [callback] The function to customize cloning values.
      * @param {Array} [stackA=[]] Tracks traversed source objects.
      * @param {Array} [stackB=[]] Associates clones with source counterparts.
      * @returns {*} Returns the cloned value.
      */
-    function baseClone(value, deep, callback, stackA, stackB) {
+    function baseClone(value, isDeep, callback, stackA, stackB) {
       if (callback) {
         var result = callback(value);
         if (typeof result != 'undefined') {
@@ -20108,7 +19881,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         return value;
       }
       var isArr = isArray(value);
-      if (deep) {
+      if (isDeep) {
         // check for circular references and return corresponding clone
         var initedStack = !stackA;
         stackA || (stackA = getArray());
@@ -20135,7 +19908,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         }
       }
       // exit for shallow clone
-      if (!deep) {
+      if (!isDeep) {
         return result;
       }
       // add the source value to the stack of traversed objects
@@ -20145,7 +19918,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
       // recursively populate clone (susceptible to call stack limits)
       (isArr ? forEach : forOwn)(value, function(objValue, key) {
-        result[key] = baseClone(objValue, deep, callback, stackA, stackB);
+        result[key] = baseClone(objValue, isDeep, callback, stackA, stackB);
       });
 
       if (initedStack) {
@@ -20153,6 +19926,32 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         releaseArray(stackB);
       }
       return result;
+    }
+
+    /**
+     * The base implementation of `_.create` without support for assigning
+     * properties to the created object.
+     *
+     * @private
+     * @param {Object} prototype The object to inherit from.
+     * @returns {Object} Returns the new object.
+     */
+    function baseCreate(prototype, properties) {
+      return isObject(prototype) ? nativeCreate(prototype) : {};
+    }
+    // fallback for browsers without `Object.create`
+    if (!nativeCreate) {
+      baseCreate = (function() {
+        function Object() {}
+        return function(prototype) {
+          if (isObject(prototype)) {
+            Object.prototype = prototype;
+            var result = new Object;
+            Object.prototype = null;
+          }
+          return result || context.Object();
+        };
+      }());
     }
 
     /**
@@ -20169,24 +19968,30 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       if (typeof func != 'function') {
         return identity;
       }
-      // exit early if there is no `thisArg`
-      if (typeof thisArg == 'undefined') {
+      // exit early for no `thisArg` or already bound by `Function#bind`
+      if (typeof thisArg == 'undefined' || !('prototype' in func)) {
         return func;
       }
-      var bindData = func.__bindData__ || (support.funcNames && !func.name);
+      var bindData = func.__bindData__;
       if (typeof bindData == 'undefined') {
-        var source = reThis && fnToString.call(func);
-        if (!support.funcNames && source && !reFuncName.test(source)) {
-          bindData = true;
+        if (support.funcNames) {
+          bindData = !func.name;
         }
-        if (support.funcNames || !bindData) {
-          // checks if `func` references the `this` keyword and stores the result
-          bindData = !support.funcDecomp || reThis.test(source);
-          setBindData(func, bindData);
+        bindData = bindData || !support.funcDecomp;
+        if (!bindData) {
+          var source = fnToString.call(func);
+          if (!support.funcNames) {
+            bindData = !reFuncName.test(source);
+          }
+          if (!bindData) {
+            // checks if `func` references the `this` keyword and stores the result
+            bindData = reThis.test(source);
+            setBindData(func, bindData);
+          }
         }
       }
       // exit early if there are no `this` references or `func` is bound
-      if (bindData !== true && (bindData && bindData[1] & 1)) {
+      if (bindData === false || (bindData !== true && bindData[1] & 1)) {
         return func;
       }
       switch (argCount) {
@@ -20207,17 +20012,107 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }
 
     /**
+     * The base implementation of `createWrapper` that creates the wrapper and
+     * sets its meta data.
+     *
+     * @private
+     * @param {Array} bindData The bind data array.
+     * @returns {Function} Returns the new function.
+     */
+    function baseCreateWrapper(bindData) {
+      var func = bindData[0],
+          bitmask = bindData[1],
+          partialArgs = bindData[2],
+          partialRightArgs = bindData[3],
+          thisArg = bindData[4],
+          arity = bindData[5];
+
+      var isBind = bitmask & 1,
+          isBindKey = bitmask & 2,
+          isCurry = bitmask & 4,
+          isCurryBound = bitmask & 8,
+          key = func;
+
+      function bound() {
+        var thisBinding = isBind ? thisArg : this;
+        if (partialArgs) {
+          var args = partialArgs.slice();
+          push.apply(args, arguments);
+        }
+        if (partialRightArgs || isCurry) {
+          args || (args = slice(arguments));
+          if (partialRightArgs) {
+            push.apply(args, partialRightArgs);
+          }
+          if (isCurry && args.length < arity) {
+            bitmask |= 16 & ~32;
+            return baseCreateWrapper([func, (isCurryBound ? bitmask : bitmask & ~3), args, null, thisArg, arity]);
+          }
+        }
+        args || (args = arguments);
+        if (isBindKey) {
+          func = thisBinding[key];
+        }
+        if (this instanceof bound) {
+          thisBinding = baseCreate(func.prototype);
+          var result = func.apply(thisBinding, args);
+          return isObject(result) ? result : thisBinding;
+        }
+        return func.apply(thisBinding, args);
+      }
+      setBindData(bound, bindData);
+      return bound;
+    }
+
+    /**
+     * The base implementation of `_.difference` that accepts a single array
+     * of values to exclude.
+     *
+     * @private
+     * @param {Array} array The array to process.
+     * @param {Array} [values] The array of values to exclude.
+     * @returns {Array} Returns a new array of filtered values.
+     */
+    function baseDifference(array, values) {
+      var index = -1,
+          indexOf = getIndexOf(),
+          length = array ? array.length : 0,
+          isLarge = length >= largeArraySize && indexOf === baseIndexOf,
+          result = [];
+
+      if (isLarge) {
+        var cache = createCache(values);
+        if (cache) {
+          indexOf = cacheIndexOf;
+          values = cache;
+        } else {
+          isLarge = false;
+        }
+      }
+      while (++index < length) {
+        var value = array[index];
+        if (indexOf(values, value) < 0) {
+          result.push(value);
+        }
+      }
+      if (isLarge) {
+        releaseObject(values);
+      }
+      return result;
+    }
+
+    /**
      * The base implementation of `_.flatten` without support for callback
      * shorthands or `thisArg` binding.
      *
      * @private
      * @param {Array} array The array to flatten.
      * @param {boolean} [isShallow=false] A flag to restrict flattening to a single level.
-     * @param {boolean} [isArgArrays=false] A flag to restrict flattening to arrays and `arguments` objects.
+     * @param {boolean} [isStrict=false] A flag to restrict flattening to arrays and `arguments` objects.
      * @param {number} [fromIndex=0] The index to start from.
      * @returns {Array} Returns a new flattened array.
      */
-    function baseFlatten(array, isShallow, isArgArrays, fromIndex) {
+    function baseFlatten(array, isShallow, isStrict, fromIndex) {
       var index = (fromIndex || 0) - 1,
           length = array ? array.length : 0,
           result = [];
@@ -20229,7 +20124,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
             && (isArray(value) || isArguments(value))) {
           // recursively flatten arrays (susceptible to call stack limits)
           if (!isShallow) {
-            value = baseFlatten(value, isShallow, isArgArrays);
+            value = baseFlatten(value, isShallow, isStrict);
           }
           var valIndex = -1,
               valLength = value.length,
@@ -20239,7 +20134,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           while (++valIndex < valLength) {
             result[resIndex++] = value[valIndex];
           }
-        } else if (!isArgArrays) {
+        } else if (!isStrict) {
           result.push(value);
         }
       }
@@ -20322,8 +20217,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       var isArr = className == arrayClass;
       if (!isArr) {
         // unwrap any `lodash` wrapped values
-        if (hasOwnProperty.call(a, '__wrapped__ ') || hasOwnProperty.call(b, '__wrapped__')) {
-          return baseIsEqual(a.__wrapped__ || a, b.__wrapped__ || b, callback, isWhere, stackA, stackB);
+        var aWrapped = hasOwnProperty.call(a, '__wrapped__'),
+            bWrapped = hasOwnProperty.call(b, '__wrapped__');
+
+        if (aWrapped || bWrapped) {
+          return baseIsEqual(aWrapped ? a.__wrapped__ : a, bWrapped ? b.__wrapped__ : b, callback, isWhere, stackA, stackB);
         }
         // exit for functions and DOM nodes
         if (className != objectClass) {
@@ -20334,10 +20232,10 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
             ctorB = b.constructor;
 
         // non `Object` object instances with different constructors are not equal
-        if (ctorA != ctorB && !(
-              isFunction(ctorA) && ctorA instanceof ctorA &&
-              isFunction(ctorB) && ctorB instanceof ctorB
-            )) {
+        if (ctorA != ctorB &&
+              !(isFunction(ctorA) && ctorA instanceof ctorA && isFunction(ctorB) && ctorB instanceof ctorB) &&
+              ('constructor' in a && 'constructor' in b)
+            ) {
           return false;
         }
       }
@@ -20481,6 +20379,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }
 
     /**
+     * The base implementation of `_.random` without argument juggling or support
+     * for returning floating-point numbers.
+     *
+     * @private
+     * @param {number} min The minimum possible value.
+     * @param {number} max The maximum possible value.
+     * @returns {number} Returns a random number.
+     */
+    function baseRandom(min, max) {
+      return min + floor(nativeRandom() * (max - min + 1));
+    }
+
+    /**
      * The base implementation of `_.uniq` without support for callback shorthands
      * or `thisArg` binding.
      *
@@ -20584,16 +20495,15 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *  provided to the new function.
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {number} [arity] The arity of `func`.
-     * @returns {Function} Returns the new bound function.
+     * @returns {Function} Returns the new function.
      */
-    function createBound(func, bitmask, partialArgs, partialRightArgs, thisArg, arity) {
+    function createWrapper(func, bitmask, partialArgs, partialRightArgs, thisArg, arity) {
       var isBind = bitmask & 1,
           isBindKey = bitmask & 2,
           isCurry = bitmask & 4,
           isCurryBound = bitmask & 8,
           isPartial = bitmask & 16,
-          isPartialRight = bitmask & 32,
-          key = func;
+          isPartialRight = bitmask & 32;
 
       if (!isBindKey && !isFunction(func)) {
         throw new TypeError;
@@ -20607,96 +20517,36 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         isPartialRight = partialRightArgs = false;
       }
       var bindData = func && func.__bindData__;
-      if (bindData) {
+      if (bindData && bindData !== true) {
+        bindData = bindData.slice();
+
+        // set `thisBinding` is not previously bound
         if (isBind && !(bindData[1] & 1)) {
           bindData[4] = thisArg;
         }
+        // set if previously bound but not currently (subsequent curried functions)
         if (!isBind && bindData[1] & 1) {
           bitmask |= 8;
         }
+        // set curried arity if not yet set
         if (isCurry && !(bindData[1] & 4)) {
           bindData[5] = arity;
         }
+        // append partial left arguments
         if (isPartial) {
           push.apply(bindData[2] || (bindData[2] = []), partialArgs);
         }
+        // append partial right arguments
         if (isPartialRight) {
           push.apply(bindData[3] || (bindData[3] = []), partialRightArgs);
         }
+        // merge flags
         bindData[1] |= bitmask;
-        return createBound.apply(null, bindData);
+        return createWrapper.apply(null, bindData);
       }
-      // use `Function#bind` if it exists and is fast
-      // (in V8 `Function#bind` is slower except when partially applied)
-      if (isBind && !(isBindKey || isCurry || isPartialRight) &&
-          (support.fastBind || (nativeBind && isPartial))) {
-        if (isPartial) {
-          var args = [thisArg];
-          push.apply(args, partialArgs);
-        }
-        var bound = isPartial
-          ? nativeBind.apply(func, args)
-          : nativeBind.call(func, thisArg);
-      }
-      else {
-        bound = function() {
-          // `Function#bind` spec
-          // http://es5.github.io/#x15.3.4.5
-          var args = arguments,
-              thisBinding = isBind ? thisArg : this;
-
-          if (isCurry || isPartial || isPartialRight) {
-            args = nativeSlice.call(args);
-            if (isPartial) {
-              unshift.apply(args, partialArgs);
-            }
-            if (isPartialRight) {
-              push.apply(args, partialRightArgs);
-            }
-            if (isCurry && args.length < arity) {
-              bitmask |= 16 & ~32;
-              return createBound(func, (isCurryBound ? bitmask : bitmask & ~3), args, null, thisArg, arity);
-            }
-          }
-          if (isBindKey) {
-            func = thisBinding[key];
-          }
-          if (this instanceof bound) {
-            // ensure `new bound` is an instance of `func`
-            thisBinding = createObject(func.prototype);
-
-            // mimic the constructor's `return` behavior
-            // http://es5.github.io/#x13.2.2
-            var result = func.apply(thisBinding, args);
-            return isObject(result) ? result : thisBinding;
-          }
-          return func.apply(thisBinding, args);
-        };
-      }
-      setBindData(bound, nativeSlice.call(arguments));
-      return bound;
-    }
-
-    /**
-     * Creates a new object with the specified `prototype`.
-     *
-     * @private
-     * @param {Object} prototype The prototype object.
-     * @returns {Object} Returns the new object.
-     */
-    function createObject(prototype) {
-      return isObject(prototype) ? nativeCreate(prototype) : {};
-    }
-    // fallback for browsers without `Object.create`
-    if (!nativeCreate) {
-      createObject = function(prototype) {
-        if (isObject(prototype)) {
-          noop.prototype = prototype;
-          var result = new noop;
-          noop.prototype = null;
-        }
-        return result || {};
-      };
+      // fast path for `_.bind`
+      var creater = (bitmask == 1 || bitmask === 17) ? baseBind : baseCreateWrapper;
+      return creater([func, bitmask, partialArgs, partialRightArgs, thisArg, arity]);
     }
 
     /**
@@ -20728,7 +20578,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * @private
      * @param {Function} func The function to set data on.
-     * @param {*} value The value to set.
+     * @param {Array} value The data array to set.
      */
     var setBindData = !defineProperty ? noop : function(func, value) {
       descriptor.value = value;
@@ -20904,16 +20754,16 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns the destination object.
      * @example
      *
-     * _.assign({ 'name': 'moe' }, { 'age': 40 });
-     * // => { 'name': 'moe', 'age': 40 }
+     * _.assign({ 'name': 'fred' }, { 'employer': 'slate' });
+     * // => { 'name': 'fred', 'employer': 'slate' }
      *
      * var defaults = _.partialRight(_.assign, function(a, b) {
      *   return typeof a == 'undefined' ? b : a;
      * });
      *
-     * var food = { 'name': 'apple' };
-     * defaults(food, { 'name': 'banana', 'type': 'fruit' });
-     * // => { 'name': 'apple', 'type': 'fruit' }
+     * var object = { 'name': 'barney' };
+     * defaults(object, { 'name': 'fred', 'employer': 'slate' });
+     * // => { 'name': 'barney', 'employer': 'slate' }
      */
     var assign = function(object, source, guard) {
       var index, iterable = object, result = iterable;
@@ -20943,7 +20793,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     };
 
     /**
-     * Creates a clone of `value`. If `deep` is `true` nested objects will also
+     * Creates a clone of `value`. If `isDeep` is `true` nested objects will also
      * be cloned, otherwise they will be assigned by reference. If a callback
      * is provided it will be executed to produce the cloned values. If the
      * callback returns `undefined` cloning will be handled by the method instead.
@@ -20953,23 +20803,23 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @memberOf _
      * @category Objects
      * @param {*} value The value to clone.
-     * @param {boolean} [deep=false] Specify a deep clone.
+     * @param {boolean} [isDeep=false] Specify a deep clone.
      * @param {Function} [callback] The function to customize cloning values.
      * @param {*} [thisArg] The `this` binding of `callback`.
      * @returns {*} Returns the cloned value.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
-     * var shallow = _.clone(stooges);
-     * shallow[0] === stooges[0];
+     * var shallow = _.clone(characters);
+     * shallow[0] === characters[0];
      * // => true
      *
-     * var deep = _.clone(stooges, true);
-     * deep[0] === stooges[0];
+     * var deep = _.clone(characters, true);
+     * deep[0] === characters[0];
      * // => false
      *
      * _.mixin({
@@ -20982,15 +20832,15 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * clone.childNodes.length;
      * // => 0
      */
-    function clone(value, deep, callback, thisArg) {
+    function clone(value, isDeep, callback, thisArg) {
       // allows working with "Collections" methods without using their `index`
-      // and `collection` arguments for `deep` and `callback`
-      if (typeof deep != 'boolean' && deep != null) {
+      // and `collection` arguments for `isDeep` and `callback`
+      if (typeof isDeep != 'boolean' && isDeep != null) {
         thisArg = callback;
-        callback = deep;
-        deep = false;
+        callback = isDeep;
+        isDeep = false;
       }
-      return baseClone(value, deep, typeof callback == 'function' && baseCreateCallback(callback, thisArg, 1));
+      return baseClone(value, isDeep, typeof callback == 'function' && baseCreateCallback(callback, thisArg, 1));
     }
 
     /**
@@ -21013,13 +20863,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {*} Returns the deep cloned value.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
-     * var deep = _.cloneDeep(stooges);
-     * deep[0] === stooges[0];
+     * var deep = _.cloneDeep(characters);
+     * deep[0] === characters[0];
      * // => false
      *
      * var view = {
@@ -21039,6 +20889,42 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }
 
     /**
+     * Creates an object that inherits from the given `prototype` object. If a
+     * `properties` object is provided its own enumerable properties are assigned
+     * to the created object.
+     *
+     * @static
+     * @memberOf _
+     * @category Objects
+     * @param {Object} prototype The object to inherit from.
+     * @param {Object} [properties] The properties to assign to the object.
+     * @returns {Object} Returns the new object.
+     * @example
+     *
+     * function Shape() {
+     *   this.x = 0;
+     *   this.y = 0;
+     * }
+     *
+     * function Circle() {
+     *   Shape.call(this);
+     * }
+     *
+     * Circle.prototype = _.create(Shape.prototype, { 'constructor': Circle });
+     *
+     * var circle = new Circle;
+     * circle instanceof Circle;
+     * // => true
+     *
+     * circle instanceof Shape;
+     * // => true
+     */
+    function create(prototype, properties) {
+      var result = baseCreate(prototype);
+      return properties ? assign(result, properties) : result;
+    }
+
+    /**
      * Assigns own enumerable properties of source object(s) to the destination
      * object for all destination properties that resolve to `undefined`. Once a
      * property is set, additional defaults of the same property will be ignored.
@@ -21054,9 +20940,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns the destination object.
      * @example
      *
-     * var food = { 'name': 'apple' };
-     * _.defaults(food, { 'name': 'banana', 'type': 'fruit' });
-     * // => { 'name': 'apple', 'type': 'fruit' }
+     * var object = { 'name': 'barney' };
+     * _.defaults(object, { 'name': 'fred', 'employer': 'slate' });
+     * // => { 'name': 'barney', 'employer': 'slate' }
      */
     var defaults = function(object, source, guard) {
       var index, iterable = object, result = iterable;
@@ -21084,6 +20970,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * This method is like `_.findIndex` except that it returns the key of the
      * first element that passes the callback check, instead of the element itself.
      *
+     * If a property name is provided for `callback` the created "_.pluck" style
+     * callback will return the property value of the given element.
+     *
+     * If an object is provided for `callback` the created "_.where" style callback
+     * will return `true` for elements that have the properties of the given object,
+     * else `false`.
+     *
      * @static
      * @memberOf _
      * @category Objects
@@ -21095,10 +20988,24 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {string|undefined} Returns the key of the found element, else `undefined`.
      * @example
      *
-     * _.findKey({ 'a': 1, 'b': 2, 'c': 3, 'd': 4 }, function(num) {
-     *   return num % 2 == 0;
+     * var characters = {
+     *   'barney': {  'age': 36, 'blocked': false },
+     *   'fred': {    'age': 40, 'blocked': true },
+     *   'pebbles': { 'age': 1,  'blocked': false }
+     * };
+     *
+     * _.findKey(characters, function(chr) {
+     *   return chr.age < 40;
      * });
-     * // => 'b' (property order is not guaranteed across environments)
+     * // => 'barney' (property order is not guaranteed across environments)
+     *
+     * // using "_.where" callback shorthand
+     * _.findKey(characters, { 'age': 1 });
+     * // => 'pebbles'
+     *
+     * // using "_.pluck" callback shorthand
+     * _.findKey(characters, 'blocked');
+     * // => 'fred'
      */
     function findKey(object, callback, thisArg) {
       var result;
@@ -21116,6 +21023,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * This method is like `_.findKey` except that it iterates over elements
      * of a `collection` in the opposite order.
      *
+     * If a property name is provided for `callback` the created "_.pluck" style
+     * callback will return the property value of the given element.
+     *
+     * If an object is provided for `callback` the created "_.where" style callback
+     * will return `true` for elements that have the properties of the given object,
+     * else `false`.
+     *
      * @static
      * @memberOf _
      * @category Objects
@@ -21127,10 +21041,24 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {string|undefined} Returns the key of the found element, else `undefined`.
      * @example
      *
-     * _.findLastKey({ 'a': 1, 'b': 2, 'c': 3, 'd': 4 }, function(num) {
-     *   return num % 2 == 1;
+     * var characters = {
+     *   'barney': {  'age': 36, 'blocked': true },
+     *   'fred': {    'age': 40, 'blocked': false },
+     *   'pebbles': { 'age': 1,  'blocked': true }
+     * };
+     *
+     * _.findLastKey(characters, function(chr) {
+     *   return chr.age < 40;
      * });
-     * // => returns `c`, assuming `_.findKey` returns `a`
+     * // => returns `pebbles`, assuming `_.findKey` returns `barney`
+     *
+     * // using "_.where" callback shorthand
+     * _.findLastKey(characters, { 'age': 40 });
+     * // => 'fred'
+     *
+     * // using "_.pluck" callback shorthand
+     * _.findLastKey(characters, 'blocked');
+     * // => 'pebbles'
      */
     function findLastKey(object, callback, thisArg) {
       var result;
@@ -21160,18 +21088,20 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns `object`.
      * @example
      *
-     * function Dog(name) {
-     *   this.name = name;
+     * function Shape() {
+     *   this.x = 0;
+     *   this.y = 0;
      * }
      *
-     * Dog.prototype.bark = function() {
-     *   console.log('Woof, woof!');
+     * Shape.prototype.move = function(x, y) {
+     *   this.x += x;
+     *   this.y += y;
      * };
      *
-     * _.forIn(new Dog('Dagny'), function(value, key) {
+     * _.forIn(new Shape, function(value, key) {
      *   console.log(key);
      * });
-     * // => logs 'bark' and 'name' (property order is not guaranteed across environments)
+     * // => logs 'x', 'y', and 'move' (property order is not guaranteed across environments)
      */
     var forIn = function(collection, callback, thisArg) {
       var index, iterable = collection, result = iterable;
@@ -21197,18 +21127,20 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns `object`.
      * @example
      *
-     * function Dog(name) {
-     *   this.name = name;
+     * function Shape() {
+     *   this.x = 0;
+     *   this.y = 0;
      * }
      *
-     * Dog.prototype.bark = function() {
-     *   console.log('Woof, woof!');
+     * Shape.prototype.move = function(x, y) {
+     *   this.x += x;
+     *   this.y += y;
      * };
      *
-     * _.forInRight(new Dog('Dagny'), function(value, key) {
+     * _.forInRight(new Shape, function(value, key) {
      *   console.log(key);
      * });
-     * // => logs 'name' and 'bark' assuming `_.forIn ` logs 'bark' and 'name'
+     * // => logs 'move', 'y', and 'x' assuming `_.forIn ` logs 'x', 'y', and 'move'
      */
     function forInRight(object, callback, thisArg) {
       var pairs = [];
@@ -21350,8 +21282,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns the created inverted object.
      * @example
      *
-     *  _.invert({ 'first': 'moe', 'second': 'larry' });
-     * // => { 'moe': 'first', 'larry': 'second' }
+     *  _.invert({ 'first': 'fred', 'second': 'barney' });
+     * // => { 'fred': 'first', 'barney': 'second' }
      */
     function invert(object) {
       var index = -1,
@@ -21380,7 +21312,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => false
      */
     function isBoolean(value) {
-      return value === true || value === false || toString.call(value) == boolClass;
+      return value === true || value === false ||
+        value && typeof value == 'object' && toString.call(value) == boolClass || false;
     }
 
     /**
@@ -21397,7 +21330,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => true
      */
     function isDate(value) {
-      return value ? (typeof value == 'object' && toString.call(value) == dateClass) : false;
+      return value && typeof value == 'object' && toString.call(value) == dateClass || false;
     }
 
     /**
@@ -21414,7 +21347,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => true
      */
     function isElement(value) {
-      return value ? value.nodeType === 1 : false;
+      return value && value.nodeType === 1 || false;
     }
 
     /**
@@ -21473,13 +21406,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      * @example
      *
-     * var moe = { 'name': 'moe', 'age': 40 };
-     * var copy = { 'name': 'moe', 'age': 40 };
+     * var object = { 'name': 'fred' };
+     * var copy = { 'name': 'fred' };
      *
-     * moe == copy;
+     * object == copy;
      * // => false
      *
-     * _.isEqual(moe, copy);
+     * _.isEqual(object, copy);
      * // => true
      *
      * var words = ['hello', 'goodbye'];
@@ -21642,7 +21575,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => true
      */
     function isNumber(value) {
-      return typeof value == 'number' || toString.call(value) == numberClass;
+      return typeof value == 'number' ||
+        value && typeof value == 'object' && toString.call(value) == numberClass || false;
     }
 
     /**
@@ -21655,18 +21589,18 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
      * @example
      *
-     * function Stooge(name, age) {
-     *   this.name = name;
-     *   this.age = age;
+     * function Shape() {
+     *   this.x = 0;
+     *   this.y = 0;
      * }
      *
-     * _.isPlainObject(new Stooge('moe', 40));
+     * _.isPlainObject(new Shape);
      * // => false
      *
      * _.isPlainObject([1, 2, 3]);
      * // => false
      *
-     * _.isPlainObject({ 'name': 'moe', 'age': 40 });
+     * _.isPlainObject({ 'x': 0, 'y': 0 });
      * // => true
      */
     var isPlainObject = function(value) {
@@ -21691,11 +21625,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {boolean} Returns `true` if the `value` is a regular expression, else `false`.
      * @example
      *
-     * _.isRegExp(/moe/);
+     * _.isRegExp(/fred/);
      * // => true
      */
     function isRegExp(value) {
-      return value ? (typeof value == 'object' && toString.call(value) == regexpClass) : false;
+      return value && typeof value == 'object' && toString.call(value) == regexpClass || false;
     }
 
     /**
@@ -21708,11 +21642,12 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {boolean} Returns `true` if the `value` is a string, else `false`.
      * @example
      *
-     * _.isString('moe');
+     * _.isString('fred');
      * // => true
      */
     function isString(value) {
-      return typeof value == 'string' || toString.call(value) == stringClass;
+      return typeof value == 'string' ||
+        value && typeof value == 'object' && toString.call(value) == stringClass || false;
     }
 
     /**
@@ -21752,21 +21687,21 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @example
      *
      * var names = {
-     *   'stooges': [
-     *     { 'name': 'moe' },
-     *     { 'name': 'larry' }
+     *   'characters': [
+     *     { 'name': 'barney' },
+     *     { 'name': 'fred' }
      *   ]
      * };
      *
      * var ages = {
-     *   'stooges': [
-     *     { 'age': 40 },
-     *     { 'age': 50 }
+     *   'characters': [
+     *     { 'age': 36 },
+     *     { 'age': 40 }
      *   ]
      * };
      *
      * _.merge(names, ages);
-     * // => { 'stooges': [{ 'name': 'moe', 'age': 40 }, { 'name': 'larry', 'age': 50 }] }
+     * // => { 'characters': [{ 'name': 'barney', 'age': 36 }, { 'name': 'fred', 'age': 40 }] }
      *
      * var food = {
      *   'fruits': ['apple'],
@@ -21790,6 +21725,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       if (!isObject(object)) {
         return object;
       }
+
       // allows working with `_.reduce` and `_.reduceRight` without using
       // their `index` and `collection` arguments
       if (typeof args[2] != 'number') {
@@ -21800,7 +21736,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       } else if (length > 2 && typeof args[length - 1] == 'function') {
         callback = args[--length];
       }
-      var sources = nativeSlice.call(arguments, 1, length),
+      var sources = slice(arguments, 1, length),
           index = -1,
           stackA = getArray(),
           stackB = getArray();
@@ -21831,32 +21767,38 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns an object without the omitted properties.
      * @example
      *
-     * _.omit({ 'name': 'moe', 'age': 40 }, 'age');
-     * // => { 'name': 'moe' }
+     * _.omit({ 'name': 'fred', 'age': 40 }, 'age');
+     * // => { 'name': 'fred' }
      *
-     * _.omit({ 'name': 'moe', 'age': 40 }, function(value) {
+     * _.omit({ 'name': 'fred', 'age': 40 }, function(value) {
      *   return typeof value == 'number';
      * });
-     * // => { 'name': 'moe' }
+     * // => { 'name': 'fred' }
      */
     function omit(object, callback, thisArg) {
-      var indexOf = getIndexOf(),
-          isFunc = typeof callback == 'function',
-          result = {};
+      var result = {};
+      if (typeof callback != 'function') {
+        var props = [];
+        forIn(object, function(value, key) {
+          props.push(key);
+        });
+        props = baseDifference(props, baseFlatten(arguments, true, false, 1));
 
-      if (isFunc) {
-        callback = lodash.createCallback(callback, thisArg, 3);
-      } else {
-        var props = baseFlatten(arguments, true, false, 1);
-      }
-      forIn(object, function(value, key, object) {
-        if (isFunc
-              ? !callback(value, key, object)
-              : indexOf(props, key) < 0
-            ) {
-          result[key] = value;
+        var index = -1,
+            length = props.length;
+
+        while (++index < length) {
+          var key = props[index];
+          result[key] = object[key];
         }
-      });
+      } else {
+        callback = lodash.createCallback(callback, thisArg, 3);
+        forIn(object, function(value, key, object) {
+          if (!callback(value, key, object)) {
+            result[key] = value;
+          }
+        });
+      }
       return result;
     }
 
@@ -21871,8 +21813,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Array} Returns new array of key-value pairs.
      * @example
      *
-     * _.pairs({ 'moe': 30, 'larry': 40 });
-     * // => [['moe', 30], ['larry', 40]] (property order is not guaranteed across environments)
+     * _.pairs({ 'barney': 36, 'fred': 40 });
+     * // => [['barney', 36], ['fred', 40]] (property order is not guaranteed across environments)
      */
     function pairs(object) {
       var index = -1,
@@ -21906,13 +21848,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns an object composed of the picked properties.
      * @example
      *
-     * _.pick({ 'name': 'moe', '_userid': 'moe1' }, 'name');
-     * // => { 'name': 'moe' }
+     * _.pick({ 'name': 'fred', '_userid': 'fred1' }, 'name');
+     * // => { 'name': 'fred' }
      *
-     * _.pick({ 'name': 'moe', '_userid': 'moe1' }, function(value, key) {
+     * _.pick({ 'name': 'fred', '_userid': 'fred1' }, function(value, key) {
      *   return key.charAt(0) != '_';
      * });
-     * // => { 'name': 'moe' }
+     * // => { 'name': 'fred' }
      */
     function pick(object, callback, thisArg) {
       var result = {};
@@ -21949,7 +21891,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @static
      * @memberOf _
      * @category Objects
-     * @param {Array|Object} collection The collection to iterate over.
+     * @param {Array|Object} object The object to iterate over.
      * @param {Function} [callback=identity] The function called per iteration.
      * @param {*} [accumulator] The custom accumulator value.
      * @param {*} [thisArg] The `this` binding of `callback`.
@@ -21971,8 +21913,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      */
     function transform(object, callback, accumulator, thisArg) {
       var isArr = isArray(object);
-      callback = baseCreateCallback(callback, thisArg, 4);
-
       if (accumulator == null) {
         if (isArr) {
           accumulator = [];
@@ -21980,12 +21920,15 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           var ctor = object && object.constructor,
               proto = ctor && ctor.prototype;
 
-          accumulator = createObject(proto);
+          accumulator = baseCreate(proto);
         }
       }
-      (isArr ? forEach : forOwn)(object, function(value, index, object) {
-        return callback(accumulator, value, index, object);
-      });
+      if (callback) {
+        callback = lodash.createCallback(callback, thisArg, 4);
+        (isArr ? forEach : forOwn)(object, function(value, index, object) {
+          return callback(accumulator, value, index, object);
+        });
+      }
       return accumulator;
     }
 
@@ -22034,8 +21977,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.at(['a', 'b', 'c', 'd', 'e'], [0, 2, 4]);
      * // => ['a', 'c', 'e']
      *
-     * _.at(['moe', 'larry', 'curly'], 0, 2);
-     * // => ['moe', 'curly']
+     * _.at(['fred', 'barney', 'pebbles'], 0, 2);
+     * // => ['fred', 'pebbles']
      */
     function at(collection) {
       var args = arguments,
@@ -22071,10 +22014,10 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.contains([1, 2, 3], 1, 2);
      * // => false
      *
-     * _.contains({ 'name': 'moe', 'age': 40 }, 'moe');
+     * _.contains({ 'name': 'fred', 'age': 40 }, 'fred');
      * // => true
      *
-     * _.contains('curly', 'ur');
+     * _.contains('pebbles', 'eb');
      * // => true
      */
     function contains(collection, target, fromIndex) {
@@ -22161,20 +22104,20 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *  else `false`.
      * @example
      *
-     * _.every([true, 1, null, 'yes'], Boolean);
+     * _.every([true, 1, null, 'yes']);
      * // => false
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.every(stooges, 'age');
+     * _.every(characters, 'age');
      * // => true
      *
      * // using "_.where" callback shorthand
-     * _.every(stooges, { 'age': 50 });
+     * _.every(characters, { 'age': 36 });
      * // => false
      */
     function every(collection, callback, thisArg) {
@@ -22225,18 +22168,18 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * var evens = _.filter([1, 2, 3, 4, 5, 6], function(num) { return num % 2 == 0; });
      * // => [2, 4, 6]
      *
-     * var food = [
-     *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-     *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36, 'blocked': false },
+     *   { 'name': 'fred',   'age': 40, 'blocked': true }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.filter(food, 'organic');
-     * // => [{ 'name': 'carrot', 'organic': true, 'type': 'vegetable' }]
+     * _.filter(characters, 'blocked');
+     * // => [{ 'name': 'fred', 'age': 40, 'blocked': true }]
      *
      * // using "_.where" callback shorthand
-     * _.filter(food, { 'type': 'fruit' });
-     * // => [{ 'name': 'apple', 'organic': false, 'type': 'fruit' }]
+     * _.filter(characters, { 'age': 36 });
+     * // => [{ 'name': 'barney', 'age': 36, 'blocked': false }]
      */
     function filter(collection, callback, thisArg) {
       var result = [];
@@ -22286,24 +22229,24 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {*} Returns the found element, else `undefined`.
      * @example
      *
-     * _.find([1, 2, 3, 4], function(num) {
-     *   return num % 2 == 0;
-     * });
-     * // => 2
-     *
-     * var food = [
-     *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-     *   { 'name': 'banana', 'organic': true,  'type': 'fruit' },
-     *   { 'name': 'beet',   'organic': false, 'type': 'vegetable' }
+     * var characters = [
+     *   { 'name': 'barney',  'age': 36, 'blocked': false },
+     *   { 'name': 'fred',    'age': 40, 'blocked': true },
+     *   { 'name': 'pebbles', 'age': 1,  'blocked': false }
      * ];
      *
+     * _.find(characters, function(chr) {
+     *   return chr.age < 40;
+     * });
+     * // => { 'name': 'barney', 'age': 36, 'blocked': false }
+     *
      * // using "_.where" callback shorthand
-     * _.find(food, { 'type': 'vegetable' });
-     * // => { 'name': 'beet', 'organic': false, 'type': 'vegetable' }
+     * _.find(characters, { 'age': 1 });
+     * // =>  { 'name': 'pebbles', 'age': 1, 'blocked': false }
      *
      * // using "_.pluck" callback shorthand
-     * _.find(food, 'organic');
-     * // => { 'name': 'banana', 'organic': true, 'type': 'fruit' }
+     * _.find(characters, 'blocked');
+     * // => { 'name': 'fred', 'age': 40, 'blocked': true }
      */
     function find(collection, callback, thisArg) {
       callback = lodash.createCallback(callback, thisArg, 3);
@@ -22367,6 +22310,10 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * element. The callback is bound to `thisArg` and invoked with three arguments;
      * (value, index|key, collection). Callbacks may exit iteration early by
      * explicitly returning `false`.
+     *
+     * Note: As with other "Collections" methods, objects with a `length` property
+     * are iterated like arrays. To avoid this behavior `_.forIn` or `_.forOwn`
+     * may be used for object iteration.
      *
      * @static
      * @memberOf _
@@ -22513,7 +22460,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.indexBy(keys, function(key) { return String.fromCharCode(key.code); });
      * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
      *
-     * _.indexBy(stooges, function(key) { this.fromCharCode(key.code); }, String);
+     * _.indexBy(characters, function(key) { this.fromCharCode(key.code); }, String);
      * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
      */
     var indexBy = createAggregator(function(result, value, key) {
@@ -22543,7 +22490,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => [['1', '2', '3'], ['4', '5', '6']]
      */
     function invoke(collection, methodName) {
-      var args = nativeSlice.call(arguments, 2),
+      var args = slice(arguments, 2),
           index = -1,
           isFunc = typeof methodName == 'function',
           length = collection ? collection.length : 0,
@@ -22585,14 +22532,14 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.map({ 'one': 1, 'two': 2, 'three': 3 }, function(num) { return num * 3; });
      * // => [3, 6, 9] (property order is not guaranteed across environments)
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.map(stooges, 'name');
-     * // => ['moe', 'larry']
+     * _.map(characters, 'name');
+     * // => ['barney', 'fred']
      */
     function map(collection, callback, thisArg) {
       var index = -1,
@@ -22641,23 +22588,28 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.max([4, 2, 8, 6]);
      * // => 8
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
-     * _.max(stooges, function(stooge) { return stooge.age; });
-     * // => { 'name': 'larry', 'age': 50 };
+     * _.max(characters, function(chr) { return chr.age; });
+     * // => { 'name': 'fred', 'age': 40 };
      *
      * // using "_.pluck" callback shorthand
-     * _.max(stooges, 'age');
-     * // => { 'name': 'larry', 'age': 50 };
+     * _.max(characters, 'age');
+     * // => { 'name': 'fred', 'age': 40 };
      */
     function max(collection, callback, thisArg) {
       var computed = -Infinity,
           result = computed;
 
-      if (!callback && isArray(collection)) {
+      // allows working with functions like `_.map` without using
+      // their `index` argument as a callback
+      if (typeof callback != 'function' && thisArg && thisArg[callback] === collection) {
+        callback = null;
+      }
+      if (callback == null && isArray(collection)) {
         var index = -1,
             length = collection.length;
 
@@ -22668,7 +22620,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           }
         }
       } else {
-        callback = (!callback && isString(collection))
+        callback = (callback == null && isString(collection))
           ? charAtCallback
           : lodash.createCallback(callback, thisArg, 3);
 
@@ -22711,23 +22663,28 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.min([4, 2, 8, 6]);
      * // => 2
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
-     * _.min(stooges, function(stooge) { return stooge.age; });
-     * // => { 'name': 'moe', 'age': 40 };
+     * _.min(characters, function(chr) { return chr.age; });
+     * // => { 'name': 'barney', 'age': 36 };
      *
      * // using "_.pluck" callback shorthand
-     * _.min(stooges, 'age');
-     * // => { 'name': 'moe', 'age': 40 };
+     * _.min(characters, 'age');
+     * // => { 'name': 'barney', 'age': 36 };
      */
     function min(collection, callback, thisArg) {
       var computed = Infinity,
           result = computed;
 
-      if (!callback && isArray(collection)) {
+      // allows working with functions like `_.map` without using
+      // their `index` argument as a callback
+      if (typeof callback != 'function' && thisArg && thisArg[callback] === collection) {
+        callback = null;
+      }
+      if (callback == null && isArray(collection)) {
         var index = -1,
             length = collection.length;
 
@@ -22738,7 +22695,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           }
         }
       } else {
-        callback = (!callback && isString(collection))
+        callback = (callback == null && isString(collection))
           ? charAtCallback
           : lodash.createCallback(callback, thisArg, 3);
 
@@ -22754,7 +22711,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }
 
     /**
-     * Retrieves the value of a specified property from all elements in the `collection`.
+     * Retrieves the value of a specified property from all elements in the collection.
      *
      * @static
      * @memberOf _
@@ -22765,13 +22722,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Array} Returns a new array of property values.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
-     * _.pluck(stooges, 'name');
-     * // => ['moe', 'larry']
+     * _.pluck(characters, 'name');
+     * // => ['barney', 'fred']
      */
     function pluck(collection, property) {
       var index = -1,
@@ -22819,7 +22776,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     function reduce(collection, callback, accumulator, thisArg) {
       if (!collection) return accumulator;
       var noaccum = arguments.length < 3;
-      callback = baseCreateCallback(callback, thisArg, 4);
+      callback = lodash.createCallback(callback, thisArg, 4);
 
       var index = -1,
           length = collection.length;
@@ -22862,7 +22819,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      */
     function reduceRight(collection, callback, accumulator, thisArg) {
       var noaccum = arguments.length < 3;
-      callback = baseCreateCallback(callback, thisArg, 4);
+      callback = lodash.createCallback(callback, thisArg, 4);
       forEachRight(collection, function(value, index, collection) {
         accumulator = noaccum
           ? (noaccum = false, value)
@@ -22896,18 +22853,18 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * var odds = _.reject([1, 2, 3, 4, 5, 6], function(num) { return num % 2 == 0; });
      * // => [1, 3, 5]
      *
-     * var food = [
-     *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-     *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36, 'blocked': false },
+     *   { 'name': 'fred',   'age': 40, 'blocked': true }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.reject(food, 'organic');
-     * // => [{ 'name': 'apple', 'organic': false, 'type': 'fruit' }]
+     * _.reject(characters, 'blocked');
+     * // => [{ 'name': 'barney', 'age': 36, 'blocked': false }]
      *
      * // using "_.where" callback shorthand
-     * _.reject(food, { 'type': 'fruit' });
-     * // => [{ 'name': 'carrot', 'organic': true, 'type': 'vegetable' }]
+     * _.reject(characters, { 'age': 36 });
+     * // => [{ 'name': 'fred', 'age': 40, 'blocked': true }]
      */
     function reject(collection, callback, thisArg) {
       callback = lodash.createCallback(callback, thisArg, 3);
@@ -22924,8 +22881,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @category Collections
      * @param {Array|Object|string} collection The collection to sample.
      * @param {number} [n] The number of elements to sample.
-     * @param- {Object} [guard] Allows working with functions, like `_.map`,
-     *  without using their `key` and `object` arguments as sources.
+     * @param- {Object} [guard] Allows working with functions like `_.map`
+     *  without using their `index` arguments as `n`.
      * @returns {Array} Returns the random sample(s) of `collection`.
      * @example
      *
@@ -22936,12 +22893,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => [3, 1]
      */
     function sample(collection, n, guard) {
-      var length = collection ? collection.length : 0;
-      if (typeof length != 'number') {
+      if (collection && typeof collection.length != 'number') {
         collection = values(collection);
       }
       if (n == null || guard) {
-        return collection ? collection[random(length - 1)] : undefined;
+        return collection ? collection[baseRandom(0, collection.length - 1)] : undefined;
       }
       var result = shuffle(collection);
       result.length = nativeMin(nativeMax(0, n), result.length);
@@ -22968,7 +22924,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           result = Array(typeof length == 'number' ? length : 0);
 
       forEach(collection, function(value) {
-        var rand = random(++index);
+        var rand = baseRandom(0, ++index);
         result[index] = result[rand];
         result[rand] = value;
       });
@@ -22992,7 +22948,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.size({ 'one': 1, 'two': 2, 'three': 3 });
      * // => 3
      *
-     * _.size('curly');
+     * _.size('pebbles');
      * // => 5
      */
     function size(collection) {
@@ -23029,17 +22985,17 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.some([null, 0, 'yes', false], Boolean);
      * // => true
      *
-     * var food = [
-     *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-     *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36, 'blocked': false },
+     *   { 'name': 'fred',   'age': 40, 'blocked': true }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.some(food, 'organic');
+     * _.some(characters, 'blocked');
      * // => true
      *
      * // using "_.where" callback shorthand
-     * _.some(food, { 'type': 'meat' });
+     * _.some(characters, { 'age': 1 });
      * // => false
      */
     function some(collection, callback, thisArg) {
@@ -23155,16 +23111,16 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Array} Returns a new array of elements that have the given properties.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'curly', 'age': 30, 'quotes': ['Oh, a wise guy, eh?', 'Poifect!'] },
-     *   { 'name': 'moe', 'age': 40, 'quotes': ['Spread out!', 'You knucklehead!'] }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36, 'pets': ['hoppy'] },
+     *   { 'name': 'fred',   'age': 40, 'pets': ['baby puss', 'dino'] }
      * ];
      *
-     * _.where(stooges, { 'age': 40 });
-     * // => [{ 'name': 'moe', 'age': 40, 'quotes': ['Spread out!', 'You knucklehead!'] }]
+     * _.where(characters, { 'age': 36 });
+     * // => [{ 'name': 'barney', 'age': 36, 'pets': ['hoppy'] }]
      *
-     * _.where(stooges, { 'quotes': ['Poifect!'] });
-     * // => [{ 'name': 'curly', 'age': 30, 'quotes': ['Oh, a wise guy, eh?', 'Poifect!'] }]
+     * _.where(characters, { 'pets': ['dino'] });
+     * // => [{ 'name': 'fred', 'age': 40, 'pets': ['baby puss', 'dino'] }]
      */
     var where = filter;
 
@@ -23206,7 +23162,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @memberOf _
      * @category Arrays
      * @param {Array} array The array to process.
-     * @param {...Array} [array] The arrays of values to exclude.
+     * @param {...Array} [values] The arrays of values to exclude.
      * @returns {Array} Returns a new array of filtered values.
      * @example
      *
@@ -23214,38 +23170,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => [1, 3, 4]
      */
     function difference(array) {
-      var index = -1,
-          indexOf = getIndexOf(),
-          length = array ? array.length : 0,
-          seen = baseFlatten(arguments, true, true, 1),
-          result = [];
-
-      var isLarge = length >= largeArraySize && indexOf === baseIndexOf;
-
-      if (isLarge) {
-        var cache = createCache(seen);
-        if (cache) {
-          indexOf = cacheIndexOf;
-          seen = cache;
-        } else {
-          isLarge = false;
-        }
-      }
-      while (++index < length) {
-        var value = array[index];
-        if (indexOf(seen, value) < 0) {
-          result.push(value);
-        }
-      }
-      if (isLarge) {
-        releaseObject(seen);
-      }
-      return result;
+      return baseDifference(array, baseFlatten(arguments, true, true, 1));
     }
 
     /**
      * This method is like `_.find` except that it returns the index of the first
      * element that passes the callback check, instead of the element itself.
+     *
+     * If a property name is provided for `callback` the created "_.pluck" style
+     * callback will return the property value of the given element.
+     *
+     * If an object is provided for `callback` the created "_.where" style callback
+     * will return `true` for elements that have the properties of the given object,
+     * else `false`.
      *
      * @static
      * @memberOf _
@@ -23258,9 +23195,23 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {number} Returns the index of the found element, else `-1`.
      * @example
      *
-     * _.findIndex(['apple', 'banana', 'beet'], function(food) {
-     *   return /^b/.test(food);
+     * var characters = [
+     *   { 'name': 'barney',  'age': 36, 'blocked': false },
+     *   { 'name': 'fred',    'age': 40, 'blocked': true },
+     *   { 'name': 'pebbles', 'age': 1,  'blocked': false }
+     * ];
+     *
+     * _.findIndex(characters, function(chr) {
+     *   return chr.age < 20;
      * });
+     * // => 2
+     *
+     * // using "_.where" callback shorthand
+     * _.findIndex(characters, { 'age': 36 });
+     * // => 0
+     *
+     * // using "_.pluck" callback shorthand
+     * _.findIndex(characters, 'blocked');
      * // => 1
      */
     function findIndex(array, callback, thisArg) {
@@ -23280,6 +23231,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * This method is like `_.findIndex` except that it iterates over elements
      * of a `collection` from right to left.
      *
+     * If a property name is provided for `callback` the created "_.pluck" style
+     * callback will return the property value of the given element.
+     *
+     * If an object is provided for `callback` the created "_.where" style callback
+     * will return `true` for elements that have the properties of the given object,
+     * else `false`.
+     *
      * @static
      * @memberOf _
      * @category Arrays
@@ -23291,9 +23249,23 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {number} Returns the index of the found element, else `-1`.
      * @example
      *
-     * _.findLastIndex(['apple', 'banana', 'beet'], function(food) {
-     *   return /^b/.test(food);
+     * var characters = [
+     *   { 'name': 'barney',  'age': 36, 'blocked': true },
+     *   { 'name': 'fred',    'age': 40, 'blocked': false },
+     *   { 'name': 'pebbles', 'age': 1,  'blocked': true }
+     * ];
+     *
+     * _.findLastIndex(characters, function(chr) {
+     *   return chr.age > 30;
      * });
+     * // => 1
+     *
+     * // using "_.where" callback shorthand
+     * _.findLastIndex(characters, { 'age': 36 });
+     * // => 0
+     *
+     * // using "_.pluck" callback shorthand
+     * _.findLastIndex(characters, 'blocked');
      * // => 2
      */
     function findLastIndex(array, callback, thisArg) {
@@ -23344,24 +23316,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * });
      * // => [1, 2]
      *
-     * var food = [
-     *   { 'name': 'banana', 'organic': true },
-     *   { 'name': 'beet',   'organic': false },
+     * var characters = [
+     *   { 'name': 'barney',  'blocked': true,  'employer': 'slate' },
+     *   { 'name': 'fred',    'blocked': false, 'employer': 'slate' },
+     *   { 'name': 'pebbles', 'blocked': true,  'employer': 'na' }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.first(food, 'organic');
-     * // => [{ 'name': 'banana', 'organic': true }]
-     *
-     * var food = [
-     *   { 'name': 'apple',  'type': 'fruit' },
-     *   { 'name': 'banana', 'type': 'fruit' },
-     *   { 'name': 'beet',   'type': 'vegetable' }
-     * ];
+     * _.first(characters, 'blocked');
+     * // => [{ 'name': 'barney', 'blocked': true, 'employer': 'slate' }]
      *
      * // using "_.where" callback shorthand
-     * _.first(food, { 'type': 'fruit' });
-     * // => [{ 'name': 'apple', 'type': 'fruit' }, { 'name': 'banana', 'type': 'fruit' }]
+     * _.pluck(_.first(characters, { 'employer': 'slate' }), 'name');
+     * // => ['barney', 'fred']
      */
     function first(array, callback, thisArg) {
       var n = 0,
@@ -23414,20 +23381,20 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * _.flatten([1, [2], [3, [[4]]]], true);
      * // => [1, 2, 3, [[4]]];
      *
-     * var stooges = [
-     *   { 'name': 'curly', 'quotes': ['Oh, a wise guy, eh?', 'Poifect!'] },
-     *   { 'name': 'moe', 'quotes': ['Spread out!', 'You knucklehead!'] }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 30, 'pets': ['hoppy'] },
+     *   { 'name': 'fred',   'age': 40, 'pets': ['baby puss', 'dino'] }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.flatten(stooges, 'quotes');
-     * // => ['Oh, a wise guy, eh?', 'Poifect!', 'Spread out!', 'You knucklehead!']
+     * _.flatten(characters, 'pets');
+     * // => ['hoppy', 'baby puss', 'dino']
      */
     function flatten(array, isShallow, callback, thisArg) {
       // juggle arguments
       if (typeof isShallow != 'boolean' && isShallow != null) {
         thisArg = callback;
-        callback = !(thisArg && thisArg[isShallow] === array) ? isShallow : null;
+        callback = (typeof isShallow != 'function' && thisArg && thisArg[isShallow] === array) ? null : isShallow;
         isShallow = false;
       }
       if (callback != null) {
@@ -23507,24 +23474,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * });
      * // => [1]
      *
-     * var food = [
-     *   { 'name': 'beet',   'organic': false },
-     *   { 'name': 'carrot', 'organic': true }
+     * var characters = [
+     *   { 'name': 'barney',  'blocked': false, 'employer': 'slate' },
+     *   { 'name': 'fred',    'blocked': true,  'employer': 'slate' },
+     *   { 'name': 'pebbles', 'blocked': true,  'employer': 'na' }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.initial(food, 'organic');
-     * // => [{ 'name': 'beet',   'organic': false }]
-     *
-     * var food = [
-     *   { 'name': 'banana', 'type': 'fruit' },
-     *   { 'name': 'beet',   'type': 'vegetable' },
-     *   { 'name': 'carrot', 'type': 'vegetable' }
-     * ];
+     * _.initial(characters, 'blocked');
+     * // => [{ 'name': 'barney',  'blocked': false, 'employer': 'slate' }]
      *
      * // using "_.where" callback shorthand
-     * _.initial(food, { 'type': 'vegetable' });
-     * // => [{ 'name': 'banana', 'type': 'fruit' }]
+     * _.pluck(_.initial(characters, { 'employer': 'na' }), 'name');
+     * // => ['barney', 'fred']
      */
     function initial(array, callback, thisArg) {
       var n = 0,
@@ -23637,24 +23599,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * });
      * // => [2, 3]
      *
-     * var food = [
-     *   { 'name': 'beet',   'organic': false },
-     *   { 'name': 'carrot', 'organic': true }
+     * var characters = [
+     *   { 'name': 'barney',  'blocked': false, 'employer': 'slate' },
+     *   { 'name': 'fred',    'blocked': true,  'employer': 'slate' },
+     *   { 'name': 'pebbles', 'blocked': true,  'employer': 'na' }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.last(food, 'organic');
-     * // => [{ 'name': 'carrot', 'organic': true }]
-     *
-     * var food = [
-     *   { 'name': 'banana', 'type': 'fruit' },
-     *   { 'name': 'beet',   'type': 'vegetable' },
-     *   { 'name': 'carrot', 'type': 'vegetable' }
-     * ];
+     * _.pluck(_.last(characters, 'blocked'), 'name');
+     * // => ['fred', 'pebbles']
      *
      * // using "_.where" callback shorthand
-     * _.last(food, { 'type': 'vegetable' });
-     * // => [{ 'name': 'beet', 'type': 'vegetable' }, { 'name': 'carrot', 'type': 'vegetable' }]
+     * _.last(characters, { 'employer': 'na' });
+     * // => [{ 'name': 'pebbles', 'blocked': true, 'employer': 'na' }]
      */
     function last(array, callback, thisArg) {
       var n = 0,
@@ -23679,6 +23636,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * Gets the index at which the last occurrence of `value` is found using strict
      * equality for comparisons, i.e. `===`. If `fromIndex` is negative, it is used
      * as the offset from the end of the collection.
+     *
+     * If a property name is provided for `callback` the created "_.pluck" style
+     * callback will return the property value of the given element.
+     *
+     * If an object is provided for `callback` the created "_.where" style callback
+     * will return `true` for elements that have the properties of the given object,
+     * else `false`.
      *
      * @static
      * @memberOf _
@@ -23758,17 +23722,17 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Array} Returns a new range array.
      * @example
      *
-     * _.range(10);
-     * // => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+     * _.range(4);
+     * // => [0, 1, 2, 3]
      *
-     * _.range(1, 11);
-     * // => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+     * _.range(1, 5);
+     * // => [1, 2, 3, 4]
      *
-     * _.range(0, 30, 5);
-     * // => [0, 5, 10, 15, 20, 25]
+     * _.range(0, 20, 5);
+     * // => [0, 5, 10, 15]
      *
-     * _.range(0, -10, -1);
-     * // => [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+     * _.range(0, -4, -1);
+     * // => [0, -1, -2, -3]
      *
      * _.range(1, 4, 0);
      * // => [1, 1, 1]
@@ -23784,7 +23748,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         end = start;
         start = 0;
       }
-      // use `Array(length)` so engines, like Chakra and V8, avoid slower modes
+      // use `Array(length)` so engines like Chakra and V8 avoid slower modes
       // http://youtu.be/XAqIpGU8ZZk#t=17m25s
       var index = -1,
           length = nativeMax(0, ceil((end - start) / (step || 1))),
@@ -23884,24 +23848,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * });
      * // => [3]
      *
-     * var food = [
-     *   { 'name': 'banana', 'organic': true },
-     *   { 'name': 'beet',   'organic': false },
+     * var characters = [
+     *   { 'name': 'barney',  'blocked': true,  'employer': 'slate' },
+     *   { 'name': 'fred',    'blocked': false,  'employer': 'slate' },
+     *   { 'name': 'pebbles', 'blocked': true, 'employer': 'na' }
      * ];
      *
      * // using "_.pluck" callback shorthand
-     * _.rest(food, 'organic');
-     * // => [{ 'name': 'beet', 'organic': false }]
-     *
-     * var food = [
-     *   { 'name': 'apple',  'type': 'fruit' },
-     *   { 'name': 'banana', 'type': 'fruit' },
-     *   { 'name': 'beet',   'type': 'vegetable' }
-     * ];
+     * _.pluck(_.rest(characters, 'blocked'), 'name');
+     * // => ['fred', 'pebbles']
      *
      * // using "_.where" callback shorthand
-     * _.rest(food, { 'type': 'fruit' });
-     * // => [{ 'name': 'beet', 'type': 'vegetable' }]
+     * _.rest(characters, { 'employer': 'slate' });
+     * // => [{ 'name': 'pebbles', 'blocked': true, 'employer': 'na' }]
      */
     function rest(array, callback, thisArg) {
       if (typeof callback != 'number' && callback != null) {
@@ -24050,7 +24009,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       // juggle arguments
       if (typeof isSorted != 'boolean' && isSorted != null) {
         thisArg = callback;
-        callback = !(thisArg && thisArg[isSorted] === array) ? isSorted : null;
+        callback = (typeof isSorted != 'function' && thisArg && thisArg[isSorted] === array) ? null : isSorted;
         isSorted = false;
       }
       if (callback != null) {
@@ -24075,7 +24034,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => [2, 3, 4]
      */
     function without(array) {
-      return difference(array, nativeSlice.call(arguments, 1));
+      return baseDifference(array, slice(arguments, 1));
     }
 
     /**
@@ -24091,8 +24050,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Array} Returns a new array of grouped elements.
      * @example
      *
-     * _.zip(['moe', 'larry'], [30, 40], [true, false]);
-     * // => [['moe', 30, true], ['larry', 40, false]]
+     * _.zip(['fred', 'barney'], [30, 40], [true, false]);
+     * // => [['fred', 30, true], ['barney', 40, false]]
      */
     function zip() {
       var array = arguments.length > 1 ? arguments : arguments[0],
@@ -24121,8 +24080,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *  corresponding values.
      * @example
      *
-     * _.zipObject(['moe', 'larry'], [30, 40]);
-     * // => { 'moe': 30, 'larry': 40 }
+     * _.zipObject(['fred', 'barney'], [30, 40]);
+     * // => { 'fred': 30, 'barney': 40 }
      */
     function zipObject(keys, values) {
       var index = -1,
@@ -24195,14 +24154,14 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *   return greeting + ' ' + this.name;
      * };
      *
-     * func = _.bind(func, { 'name': 'moe' }, 'hi');
+     * func = _.bind(func, { 'name': 'fred' }, 'hi');
      * func();
-     * // => 'hi moe'
+     * // => 'hi fred'
      */
     function bind(func, thisArg) {
       return arguments.length > 2
-        ? createBound(func, 17, nativeSlice.call(arguments, 2), null, thisArg)
-        : createBound(func, 1, null, null, thisArg);
+        ? createWrapper(func, 17, slice(arguments, 2), null, thisArg)
+        : createWrapper(func, 1, null, null, thisArg);
     }
 
     /**
@@ -24236,7 +24195,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
       while (++index < length) {
         var key = funcs[index];
-        object[key] = createBound(object[key], 1, null, null, object);
+        object[key] = createWrapper(object[key], 1, null, null, object);
       }
       return object;
     }
@@ -24258,7 +24217,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @example
      *
      * var object = {
-     *   'name': 'moe',
+     *   'name': 'fred',
      *   'greet': function(greeting) {
      *     return greeting + ' ' + this.name;
      *   }
@@ -24266,19 +24225,19 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * var func = _.bindKey(object, 'greet', 'hi');
      * func();
-     * // => 'hi moe'
+     * // => 'hi fred'
      *
      * object.greet = function(greeting) {
-     *   return greeting + ', ' + this.name + '!';
+     *   return greeting + 'ya ' + this.name + '!';
      * };
      *
      * func();
-     * // => 'hi, moe!'
+     * // => 'hiya fred!'
      */
     function bindKey(object, key) {
       return arguments.length > 2
-        ? createBound(key, 19, nativeSlice.call(arguments, 2), null, object)
-        : createBound(key, 3, null, null, object);
+        ? createWrapper(key, 19, slice(arguments, 2), null, object)
+        : createWrapper(key, 3, null, null, object);
     }
 
     /**
@@ -24295,7 +24254,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @example
      *
      * var realNameMap = {
-     *   'curly': 'jerome'
+     *   'pebbles': 'penelope'
      * };
      *
      * var format = function(name) {
@@ -24308,8 +24267,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * };
      *
      * var welcome = _.compose(greet, format);
-     * welcome('curly');
-     * // => 'Hiya Jerome!'
+     * welcome('pebbles');
+     * // => 'Hiya Penelope!'
      */
     function compose() {
       var funcs = arguments,
@@ -24346,9 +24305,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Function} Returns a callback function.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
      * // wrap to create custom callback shorthands
@@ -24359,8 +24318,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *   };
      * });
      *
-     * _.filter(stooges, 'age__gt45');
-     * // => [{ 'name': 'larry', 'age': 50 }]
+     * _.filter(characters, 'age__gt38');
+     * // => [{ 'name': 'fred', 'age': 40 }]
      */
     function createCallback(func, thisArg, argCount) {
       var type = typeof func;
@@ -24429,7 +24388,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      */
     function curry(func, arity) {
       arity = typeof arity == 'number' ? arity : (+arity || func.length);
-      return createBound(func, 4, null, null, null, arity);
+      return createWrapper(func, 4, null, null, null, arity);
     }
 
     /**
@@ -24506,6 +24465,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           if (isCalled) {
             lastCalled = now();
             result = func.apply(thisArg, args);
+            if (!timeoutId && !maxTimeoutId) {
+              args = thisArg = null;
+            }
           }
         } else {
           timeoutId = setTimeout(delayed, remaining);
@@ -24520,6 +24482,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
         if (trailing || (maxWait !== wait)) {
           lastCalled = now();
           result = func.apply(thisArg, args);
+          if (!timeoutId && !maxTimeoutId) {
+            args = thisArg = null;
+          }
         }
       };
 
@@ -24535,8 +24500,10 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
           if (!maxTimeoutId && !leading) {
             lastCalled = stamp;
           }
-          var remaining = maxWait - (stamp - lastCalled);
-          if (remaining <= 0) {
+          var remaining = maxWait - (stamp - lastCalled),
+              isCalled = remaining <= 0;
+
+          if (isCalled) {
             if (maxTimeoutId) {
               maxTimeoutId = clearTimeout(maxTimeoutId);
             }
@@ -24547,11 +24514,18 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
             maxTimeoutId = setTimeout(maxDelayed, remaining);
           }
         }
-        if (!timeoutId && wait !== maxWait) {
+        if (isCalled && timeoutId) {
+          timeoutId = clearTimeout(timeoutId);
+        }
+        else if (!timeoutId && wait !== maxWait) {
           timeoutId = setTimeout(delayed, wait);
         }
         if (leadingCall) {
+          isCalled = true;
           result = func.apply(thisArg, args);
+        }
+        if (isCalled && !timeoutId && !maxTimeoutId) {
+          args = thisArg = null;
         }
         return result;
       };
@@ -24576,11 +24550,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       if (!isFunction(func)) {
         throw new TypeError;
       }
-      var args = nativeSlice.call(arguments, 1);
+      var args = slice(arguments, 1);
       return setTimeout(function() { func.apply(undefined, args); }, 1);
     }
     // use `setImmediate` if available in Node.js
-    if (isV8 && moduleExports && typeof setImmediate == 'function') {
+    if (setImmediate) {
       defer = function(func) {
         if (!isFunction(func)) {
           throw new TypeError;
@@ -24610,7 +24584,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       if (!isFunction(func)) {
         throw new TypeError;
       }
-      var args = nativeSlice.call(arguments, 2);
+      var args = slice(arguments, 2);
       return setTimeout(function() { func.apply(undefined, args); }, wait);
     }
 
@@ -24634,19 +24608,22 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *   return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
      * });
      *
+     * fibonacci(9)
+     * // => 34
+     *
      * var data = {
-     *   'moe': { 'name': 'moe', 'age': 40 },
-     *   'curly': { 'name': 'curly', 'age': 60 }
+     *   'fred': { 'name': 'fred', 'age': 40 },
+     *   'pebbles': { 'name': 'pebbles', 'age': 1 }
      * };
      *
      * // modifying the result cache
-     * var stooge = _.memoize(function(name) { return data[name]; }, _.identity);
-     * stooge('curly');
-     * // => { 'name': 'curly', 'age': 60 }
+     * var get = _.memoize(function(name) { return data[name]; }, _.identity);
+     * get('pebbles');
+     * // => { 'name': 'pebbles', 'age': 1 }
      *
-     * stooge.cache.curly.name = 'jerome';
-     * stooge('curly');
-     * // => { 'name': 'jerome', 'age': 60 }
+     * get.cache.pebbles.name = 'penelope';
+     * get('pebbles');
+     * // => { 'name': 'penelope', 'age': 1 }
      */
     function memoize(func, resolver) {
       if (!isFunction(func)) {
@@ -24716,11 +24693,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * var greet = function(greeting, name) { return greeting + ' ' + name; };
      * var hi = _.partial(greet, 'hi');
-     * hi('moe');
-     * // => 'hi moe'
+     * hi('fred');
+     * // => 'hi fred'
      */
     function partial(func) {
-      return createBound(func, 16, nativeSlice.call(arguments, 1));
+      return createWrapper(func, 16, slice(arguments, 1));
     }
 
     /**
@@ -24751,7 +24728,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => { '_': _, 'jq': $ }
      */
     function partialRight(func) {
-      return createBound(func, 32, null, nativeSlice.call(arguments, 1));
+      return createWrapper(func, 32, null, slice(arguments, 1));
     }
 
     /**
@@ -24802,8 +24779,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       debounceOptions.maxWait = wait;
       debounceOptions.trailing = trailing;
 
-      var result = debounce(func, wait, debounceOptions);
-      return result;
+      return debounce(func, wait, debounceOptions);
     }
 
     /**
@@ -24820,22 +24796,15 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Function} Returns the new function.
      * @example
      *
-     * var hello = function(name) { return 'hello ' + name; };
-     * hello = _.wrap(hello, function(func) {
-     *   return 'before, ' + func('moe') + ', after';
+     * var p = _.wrap(_.escape, function(func, text) {
+     *   return '<p>' + func(text) + '</p>';
      * });
-     * hello();
-     * // => 'before, hello moe, after'
+     *
+     * p('Fred, Wilma, & Pebbles');
+     * // => '<p>Fred, Wilma, &amp; Pebbles</p>'
      */
     function wrap(value, wrapper) {
-      if (!isFunction(wrapper)) {
-        throw new TypeError;
-      }
-      return function() {
-        var args = [value];
-        push.apply(args, arguments);
-        return wrapper.apply(this, args);
-      };
+      return createWrapper(wrapper, 16, [value]);
     }
 
     /*--------------------------------------------------------------------------*/
@@ -24851,8 +24820,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {string} Returns the escaped string.
      * @example
      *
-     * _.escape('Moe, Larry & Curly');
-     * // => 'Moe, Larry &amp; Curly'
+     * _.escape('Fred, Wilma, & Pebbles');
+     * // => 'Fred, Wilma, &amp; Pebbles'
      */
     function escape(string) {
       return string == null ? '' : String(string).replace(reUnescapedHtml, escapeHtmlChar);
@@ -24868,8 +24837,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {*} Returns `value`.
      * @example
      *
-     * var moe = { 'name': 'moe' };
-     * moe === _.identity(moe);
+     * var object = { 'name': 'fred' };
+     * _.identity(object) === object;
      * // => true
      */
     function identity(value) {
@@ -24893,11 +24862,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *   }
      * });
      *
-     * _.capitalize('moe');
-     * // => 'Moe'
+     * _.capitalize('fred');
+     * // => 'Fred'
      *
-     * _('moe').capitalize();
-     * // => 'Moe'
+     * _('fred').capitalize();
+     * // => 'Fred'
      */
     function mixin(object, source) {
       var ctor = object,
@@ -24946,6 +24915,22 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     }
 
     /**
+     * A no-operation function.
+     *
+     * @static
+     * @memberOf _
+     * @category Utilities
+     * @example
+     *
+     * var object = { 'name': 'fred' };
+     * _.noop(object) === undefined;
+     * // => true
+     */
+    function noop() {
+      // no operation performed
+    }
+
+    /**
      * Converts the given value into an integer of the specified radix.
      * If `radix` is `undefined` or `0` a `radix` of `10` is used unless the
      * `value` is a hexadecimal, in which case a `radix` of `16` is used.
@@ -24965,7 +24950,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * // => 8
      */
     var parseInt = nativeParseInt(whitespace + '08') == 8 ? nativeParseInt : function(value, radix) {
-      // Firefox and Opera still follow the ES3 specified implementation of `parseInt`
+      // Firefox < 21 and Opera < 15 follow the ES3 specified implementation of `parseInt`
       return nativeParseInt(isString(value) ? value.replace(reLeadingSpacesAndZeros, '') : value, radix || 0);
     };
 
@@ -25020,10 +25005,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       } else {
         max = +max || 0;
       }
-      var rand = nativeRandom();
-      return (floating || min % 1 || max % 1)
-        ? nativeMin(min + (rand * (max - min + parseFloat('1e-' + ((rand +'').length - 1)))), max)
-        : min + floor(rand * (max - min + 1));
+      if (floating || min % 1 || max % 1) {
+        var rand = nativeRandom();
+        return nativeMin(min + (rand * (max - min + parseFloat('1e-' + ((rand +'').length - 1)))), max);
+      }
+      return baseRandom(min, max);
     }
 
     /**
@@ -25068,7 +25054,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * debugging. See http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl
      *
      * For more information on precompiling templates see:
-     * http://lodash.com/#custom-builds
+     * http://lodash.com/custom-builds
      *
      * For more information on Chrome extension sandboxes see:
      * http://developer.chrome.com/stable/extensions/sandboxingEval.html
@@ -25091,8 +25077,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * // using the "interpolate" delimiter to create a compiled template
      * var compiled = _.template('hello <%= name %>');
-     * compiled({ 'name': 'moe' });
-     * // => 'hello moe'
+     * compiled({ 'name': 'fred' });
+     * // => 'hello fred'
      *
      * // using the "escape" delimiter to escape HTML in data property values
      * _.template('<b><%- value %></b>', { 'value': '<script>' });
@@ -25100,16 +25086,16 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * // using the "evaluate" delimiter to generate HTML
      * var list = '<% _.forEach(people, function(name) { %><li><%- name %></li><% }); %>';
-     * _.template(list, { 'people': ['moe', 'larry'] });
-     * // => '<li>moe</li><li>larry</li>'
+     * _.template(list, { 'people': ['fred', 'barney'] });
+     * // => '<li>fred</li><li>barney</li>'
      *
      * // using the ES6 delimiter as an alternative to the default "interpolate" delimiter
-     * _.template('hello ${ name }', { 'name': 'curly' });
-     * // => 'hello curly'
+     * _.template('hello ${ name }', { 'name': 'pebbles' });
+     * // => 'hello pebbles'
      *
      * // using the internal `print` function in "evaluate" delimiters
-     * _.template('<% print("hello " + name); %>!', { 'name': 'larry' });
-     * // => 'hello larry!'
+     * _.template('<% print("hello " + name); %>!', { 'name': 'barney' });
+     * // => 'hello barney!'
      *
      * // using a custom template delimiters
      * _.templateSettings = {
@@ -25121,8 +25107,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      *
      * // using the `imports` option to import jQuery
      * var list = '<% $.each(people, function(name) { %><li><%- name %></li><% }); %>';
-     * _.template(list, { 'people': ['moe', 'larry'] }, { 'imports': { '$': jQuery } });
-     * // => '<li>moe</li><li>larry</li>'
+     * _.template(list, { 'people': ['fred', 'barney'] }, { 'imports': { '$': jQuery } });
+     * // => '<li>fred</li><li>barney</li>'
      *
      * // using the `sourceURL` option to specify a custom sourceURL for the template
      * var compiled = _.template('hello <%= name %>', null, { 'sourceURL': '/basic/greeting.jst' });
@@ -25152,7 +25138,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
       // and Laura Doktorova's doT.js
       // https://github.com/olado/doT
       var settings = lodash.templateSettings;
-      text || (text = '');
+      text = String(text || '');
 
       // avoid missing dependencies when `iteratorTemplate` is not defined
       options = defaults({}, options, settings);
@@ -25293,8 +25279,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {string} Returns the unescaped string.
      * @example
      *
-     * _.unescape('Moe, Larry &amp; Curly');
-     * // => 'Moe, Larry & Curly'
+     * _.unescape('Fred, Barney &amp; Pebbles');
+     * // => 'Fred, Barney & Pebbles'
      */
     function unescape(string) {
       return string == null ? '' : String(string).replace(reEscapedHtml, unescapeHtmlChar);
@@ -25334,18 +25320,18 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {Object} Returns the wrapper object.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 },
-     *   { 'name': 'curly', 'age': 60 }
+     * var characters = [
+     *   { 'name': 'barney',  'age': 36 },
+     *   { 'name': 'fred',    'age': 40 },
+     *   { 'name': 'pebbles', 'age': 1 }
      * ];
      *
-     * var youngest = _.chain(stooges)
+     * var youngest = _.chain(characters)
      *     .sortBy('age')
-     *     .map(function(stooge) { return stooge.name + ' is ' + stooge.age; })
+     *     .map(function(chr) { return chr.name + ' is ' + chr.age; })
      *     .first()
      *     .value();
-     * // => 'moe is 40'
+     * // => 'pebbles is 1'
      */
     function chain(value) {
       value = new lodashWrapper(value);
@@ -25368,12 +25354,10 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @example
      *
      * _([1, 2, 3, 4])
-     *  .filter(function(num) { return num % 2 == 0; })
-     *  .tap(function(array) { console.log(array); })
-     *  .map(function(num) { return num * num; })
+     *  .tap(function(array) { array.pop(); })
+     *  .reverse()
      *  .value();
-     * // => // [2, 4] (logged)
-     * // => [4, 16]
+     * // => [3, 2, 1]
      */
     function tap(value, interceptor) {
       interceptor(value);
@@ -25389,21 +25373,21 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @returns {*} Returns the wrapper object.
      * @example
      *
-     * var stooges = [
-     *   { 'name': 'moe', 'age': 40 },
-     *   { 'name': 'larry', 'age': 50 }
+     * var characters = [
+     *   { 'name': 'barney', 'age': 36 },
+     *   { 'name': 'fred',   'age': 40 }
      * ];
      *
      * // without explicit chaining
-     * _(stooges).first();
-     * // => { 'name': 'moe', 'age': 40 }
+     * _(characters).first();
+     * // => { 'name': 'barney', 'age': 36 }
      *
      * // with explicit chaining
-     * _(stooges).chain()
+     * _(characters).chain()
      *   .first()
      *   .pick('age')
      *   .value()
-     * // => { 'age': 40 }
+     * // => { 'age': 36 }
      */
     function wrapperChain() {
       this.__chain__ = true;
@@ -25456,6 +25440,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     lodash.compact = compact;
     lodash.compose = compose;
     lodash.countBy = countBy;
+    lodash.create = create;
     lodash.createCallback = createCallback;
     lodash.curry = curry;
     lodash.debounce = debounce;
@@ -25565,6 +25550,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
     lodash.lastIndexOf = lastIndexOf;
     lodash.mixin = mixin;
     lodash.noConflict = noConflict;
+    lodash.noop = noop;
     lodash.parseInt = parseInt;
     lodash.random = random;
     lodash.reduce = reduce;
@@ -25637,7 +25623,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
      * @memberOf _
      * @type string
      */
-    lodash.VERSION = '2.2.1';
+    lodash.VERSION = '2.3.0';
 
     // add "Chaining" functions to the wrapper
     lodash.prototype.chain = wrapperChain;
@@ -25683,7 +25669,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   // expose Lo-Dash
   var _ = runInContext();
 
-  // some AMD build optimizers, like r.js, check for condition patterns like the following:
+  // some AMD build optimizers like r.js check for condition patterns like the following:
   if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
     // Expose Lo-Dash to the global object even when an AMD loader is present in
     // case Lo-Dash was injected by a third-party script and not intended to be
@@ -25714,7 +25700,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }.call(this));
 
-},{}],83:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var process=require("__browserify_process");;(function (require, exports, module, platform) {
 
 if (module) module.exports = minimatch
@@ -26795,7 +26781,7 @@ function regExpEscape (s) {
     typeof process === "object" ? process.platform : "win32"
   )
 
-},{"__browserify_process":45,"lru-cache":84,"path":16,"sigmund":85}],84:[function(require,module,exports){
+},{"__browserify_process":43,"lru-cache":82,"path":14,"sigmund":83}],82:[function(require,module,exports){
 ;(function () { // closure for web browsers
 
 if (typeof module === 'object' && module.exports) {
@@ -27060,7 +27046,7 @@ function Entry (key, value, mru, len, age) {
 
 })()
 
-},{}],85:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 module.exports = sigmund
 function sigmund (subject, maxSessions) {
     maxSessions = maxSessions || 10;
@@ -27101,13 +27087,13 @@ function sigmund (subject, maxSessions) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{}],86:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 var es = {
   Client: require('./lib/client')
 };
 
 module.exports = es;
-},{"./lib/client":88}],87:[function(require,module,exports){
+},{"./lib/client":86}],85:[function(require,module,exports){
 /* jshint maxlen: false */
 
 var ca = require('./client_action');
@@ -30698,7 +30684,7 @@ api.update = ca({
 });
 
 
-},{"./client_action":89,"./errors":97}],88:[function(require,module,exports){
+},{"./client_action":87,"./errors":95}],86:[function(require,module,exports){
 /**
  * A client that makes requests to Elasticsearch via a {{#crossLink "Transport"}}Transport{{/crossLink}}
  *
@@ -30778,7 +30764,7 @@ Client.prototype.close = function () {
   this.config.close();
 };
 
-},{"./api.js":87,"./client_config":90,"./utils":111}],89:[function(require,module,exports){
+},{"./api.js":85,"./client_config":88,"./utils":109}],87:[function(require,module,exports){
 /**
  * Constructs a function that can be called to make a request to ES
  * @type {[type]}
@@ -31017,7 +31003,7 @@ function exec(transport, spec, params, cb) {
   return transport.request(request, cb);
 }
 
-},{"./errors":97,"./utils":111}],90:[function(require,module,exports){
+},{"./errors":95,"./utils":109}],88:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * Manages the configuration of the client.
  *
@@ -31168,7 +31154,7 @@ ClientConfig.prototype.close = function () {
   this.connectionPool.close();
 };
 
-},{"./connection_pool":92,"./connectors/angular":93,"./connectors/http":94,"./connectors/jquery":95,"./connectors/xhr":96,"./host":98,"./log":99,"./selectors":105,"./serializers/json":108,"./transport":109,"./utils":111,"__browserify_process":45,"url":21}],91:[function(require,module,exports){
+},{"./connection_pool":90,"./connectors/angular":91,"./connectors/http":92,"./connectors/jquery":93,"./connectors/xhr":94,"./host":96,"./log":97,"./selectors":103,"./serializers/json":106,"./transport":107,"./utils":109,"__browserify_process":43,"url":19}],89:[function(require,module,exports){
 module.exports = ConnectionAbstract;
 
 var _ = require('./utils');
@@ -31251,7 +31237,7 @@ ConnectionAbstract.prototype.resuscitate = _.scheduled(function () {
   }
 });
 
-},{"./utils":111,"events":12}],92:[function(require,module,exports){
+},{"./utils":109,"events":11}],90:[function(require,module,exports){
 /**
  * Manager of connections to a node(s), capable of ensuring that connections are clear and living
  * before providing them to the application
@@ -31378,7 +31364,7 @@ ConnectionPool.prototype.close = function () {
 };
 ConnectionPool.prototype.empty = ConnectionPool.prototype.close;
 
-},{"./errors":97,"./host":98,"./selectors":105,"./utils":111,"events":12}],93:[function(require,module,exports){
+},{"./errors":95,"./host":96,"./selectors":103,"./utils":109,"events":11}],91:[function(require,module,exports){
 /**
  * Connection that registers a module with angular, using angular's $http service
  * to communicate with ES.
@@ -31418,7 +31404,7 @@ AngularConnector.prototype.request = function (params, cb) {
 // must be overwritten before this connection can be used
 AngularConnector.prototype.$http = null;
 
-},{"../connection":91,"../errors":97,"../utils":111}],94:[function(require,module,exports){
+},{"../connection":89,"../errors":95,"../utils":109}],92:[function(require,module,exports){
 /**
  * A Connection that operates using Node's http module
  *
@@ -31473,12 +31459,14 @@ HttpConnector.prototype.makeReqParams = function (params) {
     auth: this.host.auth,
     hostname: this.host.host,
     port: this.host.port,
-    path: this.host.path + params.path,
+    pathname: this.host.path + params.path,
     headers: this.host.headers,
     agent: this.agent
   };
+
   var query = this.host.query ? this.host.query : null;
   var queryStr;
+
   if (typeof query === 'string') {
     query = qs.parse(query);
   }
@@ -31491,11 +31479,10 @@ HttpConnector.prototype.makeReqParams = function (params) {
   }
 
   if (query) {
-    queryStr = qs.stringify(query);
-  }
-
-  if (queryStr) {
-    reqParams.path = reqParams.path + '?' + queryStr;
+    reqParams.query = query;
+    reqParams.path = reqParams.pathname + '?' + qs.stringify(query);
+  } else {
+    reqParams.path = reqParams.pathname;
   }
 
   return reqParams;
@@ -31564,7 +31551,7 @@ HttpConnector.prototype.request = function (params, cb) {
   this.requestCount++;
 };
 
-},{"../connection":91,"../errors":97,"../utils":111,"agentkeepalive/lib/agent":2,"http":26,"https":14,"querystring":17}],95:[function(require,module,exports){
+},{"../connection":89,"../errors":95,"../utils":109,"agentkeepalive/lib/agent":1,"http":24,"https":13,"querystring":15}],93:[function(require,module,exports){
 /* jshint browser: true, jquery: true */
 
 /**
@@ -31582,7 +31569,7 @@ JqueryConnector.prototype.request = function (params, cb) {
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 /**
  * Generic Transport for the browser, using the XmlHttpRequest object
  *
@@ -31666,7 +31653,7 @@ XhrConnector.prototype.request = function (params, cb) {
   xhr.send(params.body || void 0);
 };
 
-},{"../connection":91,"../errors":97,"../utils":111}],97:[function(require,module,exports){
+},{"../connection":89,"../errors":95,"../utils":109}],95:[function(require,module,exports){
 var process=require("__browserify_process");var _ = require('./utils'),
   errors = module.exports;
 
@@ -31792,7 +31779,7 @@ _.each(statusCodes, function (name, status) {
   errors[status] = StatusCodeError;
 });
 
-},{"./utils":111,"__browserify_process":45}],98:[function(require,module,exports){
+},{"./utils":109,"__browserify_process":43}],96:[function(require,module,exports){
 /**
  * Class to wrap URLS, formatting them and maintaining their seperate details
  * @type {[type]}
@@ -31886,7 +31873,7 @@ Host.prototype.makeUrl = function (params) {
   return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
 };
 
-},{"./utils":111,"querystring":17,"url":21}],99:[function(require,module,exports){
+},{"./utils":109,"querystring":15,"url":19}],97:[function(require,module,exports){
 var process=require("__browserify_process");var _ = require('./utils');
 var url = require('url');
 var EventEmitter = require('events').EventEmitter;
@@ -32174,13 +32161,18 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
       }, requestUrl.query)
     }, requestUrl);
     delete requestUrl.auth;
+
+    if (!requestUrl.pathname && requestUrl.path) {
+      requestUrl.pathname = requestUrl.path.split('?').shift();
+    }
+
     return this.emit('trace', method, url.format(requestUrl), body, responseBody, responseStatus);
   }
 };
 
 module.exports = Log;
 
-},{"./loggers/console":101,"./loggers/file":102,"./loggers/stdio":103,"./utils":111,"__browserify_process":45,"events":12,"url":21}],100:[function(require,module,exports){
+},{"./loggers/console":99,"./loggers/file":100,"./loggers/stdio":101,"./utils":109,"__browserify_process":43,"events":11,"url":19}],98:[function(require,module,exports){
 var Log = require('./log'),
   _ = require('./utils');
 
@@ -32340,7 +32332,7 @@ LoggerAbstract.prototype.onTrace = _.handler(function (method, url, body, respon
 
 module.exports = LoggerAbstract;
 
-},{"./log":99,"./utils":111}],101:[function(require,module,exports){
+},{"./log":97,"./utils":109}],99:[function(require,module,exports){
 /**
  * Special version of the Stream logger, which logs errors and warnings to stderr and all other
  * levels to stdout.
@@ -32449,7 +32441,7 @@ Console.prototype.onTrace = _.handler(function (method, url, body, responseBody,
   console.log('TRACE:\n' + message + '\n\n');
 });
 
-},{"../logger":100,"../utils":111}],102:[function(require,module,exports){
+},{"../logger":98,"../utils":109}],100:[function(require,module,exports){
 /**
  * Logger that writes to a file
  *
@@ -32491,7 +32483,7 @@ File.prototype.onProcessExit = _.handler(function () {
   }
 });
 
-},{"../utils":111,"./stream":104,"fs":13}],103:[function(require,module,exports){
+},{"../utils":109,"./stream":102,"fs":12}],101:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * Special version of the Stream logger, which logs errors and warnings to stderr and all other
  * levels to stdout.
@@ -32634,7 +32626,7 @@ Stdio.prototype.onTrace = _.handler(function (method, url, body, resp, status) {
   this.write(process.stdout, 'TRACE', this.colors.trace, message);
 });
 
-},{"../logger":100,"../utils":111,"__browserify_process":45,"chalk":46}],104:[function(require,module,exports){
+},{"../logger":98,"../utils":109,"__browserify_process":43,"chalk":44}],102:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * Logger that writes to a file
  *
@@ -32691,20 +32683,20 @@ Stream.prototype.close = function () {
   this.stream.end();
 };
 
-},{"../logger":100,"../utils":111,"__browserify_process":45,"fs":13,"stream":18}],105:[function(require,module,exports){
+},{"../logger":98,"../utils":109,"__browserify_process":43,"fs":12,"stream":16}],103:[function(require,module,exports){
 module.exports = {
   random: require('./random'),
   roundRobin: require('./round_robin')
 };
 
-},{"./random":106,"./round_robin":107}],106:[function(require,module,exports){
+},{"./random":104,"./round_robin":105}],104:[function(require,module,exports){
 module.exports = RandomSelect;
 
 function RandomSelect(connections) {
   return connections[Math.floor(Math.random() * connections.length)];
 }
 
-},{}],107:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 /**
  * Selects a connection the simplest way possible, Round Robin
  *
@@ -32719,7 +32711,7 @@ function RoundRobinSelect(connections) {
   return connections[0];
 }
 
-},{}],108:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 /**
  * Simple JSON serializer
  * @type {[type]}
@@ -32773,7 +32765,7 @@ Json.prototype.bulkBody = function (val) {
   return body;
 };
 
-},{"../utils":111}],109:[function(require,module,exports){
+},{"../utils":109}],107:[function(require,module,exports){
 /**
  * Class that manages making request, called by all of the API methods.
  * @type {[type]}
@@ -32829,7 +32821,7 @@ Transport.prototype.sniff = function (cb) {
   });
 };
 
-},{"./errors":97,"./transport_request":110,"./utils":111}],110:[function(require,module,exports){
+},{"./errors":95,"./transport_request":108,"./utils":109}],108:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * Constructs a function that can be called to make a request to ES
  * @type {[type]}
@@ -32979,7 +32971,7 @@ TransportRequest.prototype.then = function (callback, errback) {
   }
 };
 
-},{"./errors":97,"./utils":111,"__browserify_process":45,"events":12}],111:[function(require,module,exports){
+},{"./errors":95,"./utils":109,"__browserify_process":43,"events":11}],109:[function(require,module,exports){
 var process=require("__browserify_process");var path = require('path'),
   _ = require('lodash'),
   nodeUtils = require('util');
@@ -33408,7 +33400,7 @@ _.noop = function () {};
 
 module.exports = utils;
 
-},{"__browserify_process":45,"lodash":82,"path":16,"util":22}],112:[function(require,module,exports){
+},{"__browserify_process":43,"lodash":80,"path":14,"util":20}],110:[function(require,module,exports){
 var process=require("__browserify_process");var path = require('path');
 var _ = require('../../../src/lib/utils');
 
@@ -33439,7 +33431,7 @@ if (process.browser) {
     .argv;
 }
 
-},{"../../../src/lib/utils":111,"__browserify_process":45,"optimist":false,"path":16}],113:[function(require,module,exports){
+},{"../../../src/lib/utils":109,"__browserify_process":43,"optimist":false,"path":14}],111:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/";if (process.browser) {
   /* jshint browser: true */
   var es = window.elasticsearch;
@@ -33533,7 +33525,7 @@ module.exports = {
   }
 };
 
-},{"../../../src/elasticsearch":86,"../../../src/lib/utils":111,"./argv":112,"./server":115,"__browserify_process":45,"fs":13,"path":16}],114:[function(require,module,exports){
+},{"../../../src/elasticsearch":84,"../../../src/lib/utils":109,"./argv":110,"./server":113,"__browserify_process":43,"fs":12,"path":14}],112:[function(require,module,exports){
 var __dirname="/";var path = require('path');
 var async = require('async');
 var jsYaml = require('js-yaml');
@@ -33568,7 +33560,7 @@ var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
   }
 });
 
-},{"../../../src/elasticsearch":86,"../../../src/lib/utils":111,"./argv":112,"./client_manager":113,"./yaml_file":117,"./yaml_tests.json":118,"async":3,"expect.js":49,"js-yaml":50,"minimatch":83,"path":16}],115:[function(require,module,exports){
+},{"../../../src/elasticsearch":84,"../../../src/lib/utils":109,"./argv":110,"./client_manager":111,"./yaml_file":115,"./yaml_tests.json":116,"async":2,"expect.js":47,"js-yaml":48,"minimatch":81,"path":14}],113:[function(require,module,exports){
 var process=require("__browserify_process");var childProc = require('child_process');
 var events = require('events');
 var path = require('path');
@@ -33635,7 +33627,7 @@ exports.start = function (cb) {
 
 };
 
-},{"../../../src/lib/utils":111,"./argv":112,"__browserify_process":45,"child_process":11,"events":12,"fs":13,"path":16}],116:[function(require,module,exports){
+},{"../../../src/lib/utils":109,"./argv":110,"__browserify_process":43,"child_process":10,"events":11,"fs":12,"path":14}],114:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * Class to wrap a single document from a yaml test file
  *
@@ -34076,7 +34068,7 @@ YamlDoc.prototype = {
   }
 };
 
-},{"../../../src/lib/utils":111,"./client_manager":113,"__browserify_process":45,"expect.js":49}],117:[function(require,module,exports){
+},{"../../../src/lib/utils":109,"./client_manager":111,"__browserify_process":43,"expect.js":47}],115:[function(require,module,exports){
 /**
  * Class representing a YAML file
  * @type {[type]}
@@ -34121,7 +34113,7 @@ function YamlFile(filename, docs) {
 
 }
 
-},{"../../../src/lib/utils":111,"./client_manager":113,"./yaml_doc":116,"async":3}],118:[function(require,module,exports){
+},{"../../../src/lib/utils":109,"./client_manager":111,"./yaml_doc":114,"async":2}],116:[function(require,module,exports){
 module.exports={
  "bulk/10_basic.yaml": [
   {
@@ -44692,5 +44684,5 @@ module.exports={
   }
  ]
 }
-},{}]},{},[114])
+},{}]},{},[112])
 ;

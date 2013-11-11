@@ -87,13 +87,13 @@ var templateGlobals = {
   paramType: function (type) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
     case 'time':
-      return 'Date|Number';
+      return 'Date or Number';
     case 'any':
       return '*';
     case 'enum':
       return 'String';
     case 'list':
-      return 'String|ArrayOfStrings|Boolean';
+      return 'String or String[] or Boolean';
     default:
       return _.ucfirst(type);
     }
@@ -125,5 +125,6 @@ fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
 templates.text = templates.string;
 
 module.exports = {
-  apiFile: templates.api_file
+  apiFile: templates.api_file,
+  apiDocs: templates.api_docs
 };
