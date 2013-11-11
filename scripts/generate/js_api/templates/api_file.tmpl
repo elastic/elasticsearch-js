@@ -1,0 +1,29 @@
+/* jshint maxlen: false */
+
+var ca = require('./client_action');
+var errors = require('./errors');
+
+var api = module.exports = {};
+
+api._namespaces = <%= stringify(namespaces) %>;<%
+
+_.each(actions, function (action) {
+  var namespace = action.location.split('.').shift();
+  if (_.contains(namespaces, namespace)) {
+    _.pull(namespaces, namespace);
+    var className = _.studlyCase(namespace) + 'NS';
+%>
+
+api.<%= namespace %> = function <%= className %>(client) {
+  if (this instanceof <%= className %>) {
+    this.client = client;
+  } else {
+    return new <%= className %>(client);
+  }
+};<%
+  }
+%>
+
+<%= partials.client_action(action) %><%
+
+}); %>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <!-- libs -->
+  <script type="text/javascript" src="expect.js?_c=<%= ts %>"></script>
+  <script type="text/javascript" src="mocha.js?_c=<%= ts %>"></script>
+  <script type="text/javascript" src="jquery.js?_c=<%= ts %>"></script>
+
+  <!-- ESJS Reporter - sets itself as the reporter -->
+  <link rel="stylesheet" href="esjs_reporter.css?_c=<%= ts %>"/>
+  <script type="text/javascript" src="esjs_reporter.js?_c=<%= ts %>"></script>
+
+  <!-- global vars -->
+  <script>
+    var ES_HOSTNAME = '<%- es_hostname %>';
+    var ES_PORT = <%= es_port %>;
+  </script>
+
+  <!-- test -->
+  <script>mocha.setup('bdd')</script>
+  <script type="text/javascript" src="client.js?_c=<%= ts %>"></script>
+  <script type="text/javascript" src="yaml_tests.js?_c=<%= ts %>"></script>
+
+  <!-- begin -->
+  <script>
+    mocha.checkLeaks();
+    mocha.slow(1000);
+    mocha.timeout(11000);
+    mocha.bail();
+    /PhantomJS/i.test(navigator.userAgent) || mocha.run();
+  </script>
+</body>
+</html>
