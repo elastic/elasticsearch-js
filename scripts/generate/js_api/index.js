@@ -8,6 +8,7 @@ var clean = require('../../clean');
 var urlParamRE = /\{(\w+)\}/g;
 
 var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
+var docOutputPath = _.joinPath(__dirname, '../../../docs/api.md');
 
 function download() {
   require('./actions').on('ready', function (actions) {
@@ -26,6 +27,9 @@ function download() {
     fs.writeFileSync(outputPath, templates.apiFile({
       actions: actions,
       namespaces: _.unique(namespaces.sort(), true)
+    }));
+    fs.writeFileSync(docOutputPath, templates.apiDocs({
+      actions: actions
     }));
   });
 }

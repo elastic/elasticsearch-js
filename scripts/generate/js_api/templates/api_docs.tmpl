@@ -1,0 +1,39 @@
+# API
+
+## Table Of Contents
+
+<%
+
+function esc(str) {
+  return str.replace(/\|/g, '&#124;');
+}
+
+var _paramWithDefault = paramWithDefault;
+paramWithDefault = function (name, _default) {
+  return esc(_paramWithDefault(name, _default));
+};
+
+var _paramType = paramType;
+paramType = function (type) {
+  return esc(_paramType(type));
+};
+
+_.each(actions, function (action) {%>
+  - [<%= action.name %>](#<%= action.name.toLowerCase().replace(/[^\w]/g, '') %>)<%
+})
+
+_.each(actions, function (action) {
+%>
+
+### <%= action.name %>()
+
+<%= action.docUrl %>
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+<%
+  _.each(action.allParams, function(param, paramName) {
+%>|`<%= paramWithDefault(paramName, param.default) %>` | <%= paramType(param.type) %> | <%= esc(param.description || '') %>|
+<% })
+
+}); %>
