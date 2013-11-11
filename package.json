@@ -29,7 +29,8 @@
     "grunt-mocha": "*",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-open": "~0.2.2",
-    "grunt-run": "~0.1.0"
+    "grunt-run": "~0.1.0",
+    "xmlbuilder": "~0.4.3"
   },
   "license": "Apache License",
   "dependencies": {

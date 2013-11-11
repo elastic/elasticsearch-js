@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 
   var _ = require('lodash');
   var child_process = require('child_process');
+
   var sharedBrowserfyExclusions = [
     'src/lib/connectors/http.js',
     'src/lib/loggers/file.js',
@@ -168,12 +169,6 @@ module.exports = function (grunt) {
           '--web-security': false
         }
       }
-    },
-    open: {
-      yaml_suite: {
-        path: 'http://localhost:8888',
-        app: 'Google Chrome'
-      }
     }
   });
 
@@ -202,17 +197,47 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'run:yaml_tests',
+    'run:js_api',
     'browserify',
     'uglify:dist',
-    'concat:dist_banners',
-    'run:yaml_tests',
-    'run:js_api'
+    'concat:dist_banners'
   ]);
 
-  grunt.registerTask('browser', [
-    'run:integration_server',
-    'open:yaml_suite',
-    'wait:integration_server'
-  ]);
+  var browsers = {
+    safari: 'Safari',
+    chrome: 'Google Chrome',
+    firefox: 'Firefox'
+  };
+
+  Object.keys(browsers).forEach(function (browser) {
+    grunt.config.set('open_browser_tests.' + browser, {
+      appName: browsers[browser]
+    });
+    grunt.registerTask('browser_tests:' + browser, [
+      'build',
+      'run:integration_server',
+      'open_browser_tests:' + browser
+    ]);
+  });
+
+  grunt.registerMultiTask('open_browser_tests', function (host, port) {
+    host = host || 'localhost';
+    port = port || 9200;
+
+    var taskData = this.data;
+
+    grunt.task.requires('run:integration_server');
+
+    grunt.config.set('open.yaml_suite_' + this.target, {
+      path: 'http://localhost:8888?es_hostname=' + encodeURIComponent(host) + '&es_port=' + encodeURIComponent(port),
+      app: taskData.appName
+    });
+
+    grunt.task.run([
+      'open:yaml_suite_' + this.target,
+      'wait:integration_server'
+    ]);
+  });
 
 };

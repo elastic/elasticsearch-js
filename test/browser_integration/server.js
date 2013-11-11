@@ -2,12 +2,28 @@ var http = require('http');
 var url = require('url');
 var path = require('path');
 var fs = require('fs');
+var crypto = require('crypto');
+var _ = require('lodash');
+var util = require('util');
+var chalk = require('chalk');
+var moment = require('moment');
+chalk.enabled = true;
+
 var browserify = require('browserify');
 var port = process.argv[2] || 8888;
 
 var middleware = [];
 
 Error.stackTraceLimit = Infinity;
+
+var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function rand(length) {
+  var str = '';
+  while (str.length < length) {
+    str += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return str;
+}
 
 function sendBundle(req, resp, files, opts, extend) {
   resp.setHeader('Content-Type', 'application/javascript');
@@ -30,14 +46,126 @@ function sendBundle(req, resp, files, opts, extend) {
   });
 }
 
+function collectTestResults(req, resp) {
+  var body = '';
+
+  req.on('data', function (chunk) {
+    body += chunk;
+  });
+
+  req.on('error', function (err) {
+    resp.writeHead(500);
+    resp.end(err.message || 'failed to receive request completely');
+  });
+
+  req.on('end', function () {
+    var testDetails;
+    try {
+      testDetails = JSON.parse(body);
+    } catch (e) {
+      resp.writeHead(500);
+      resp.end('encoding failure');
+      return;
+    }
+
+    resp.writeHead(200);
+    resp.end('good work');
+
+    /**
+     * The JUnit xml output desired by Jenkins essentially looks like this:
+     *
+     * testsuites:
+     *   - testsuite: (name, timestamp, hostname, tests, failures, errors, time)
+     *     - testcase: (error or failure, name, classname, time)
+     *
+     * Full XSD avaliable [here](http://windyroad.com.au/dl/Open%20Source/JUnit.xsd)
+     *
+     * from
+     *
+     * {
+     *   stats: {
+     *
+     *   }
+     *   suite: [
+     *     {
+     *       name:
+     *       results: []
+     *       suites: [] // optional
+     *     }
+     *   ]
+     * }
+     */
+
+    var testXml = require('xmlbuilder');
+    var suites = testXml.create('testsuites');
+    var suiteCount = 0;
+
+    _.each(testDetails.suites, function serializeSuite(suiteInfo) {
+
+      var suite = suites.ele('testsuite', {
+        package: 'elasticsearch-js:yaml_tests',
+        id: suiteCount++,
+        name: suiteInfo.name,
+        timestamp: moment(suiteInfo.start).toJSON(),
+        hostname: 'localhost',
+        tests: (suiteInfo.results && suiteInfo.results.length) || 0,
+        failures: _.where(suiteInfo.results, {pass: false}).length,
+        errors: 0,
+        time: suiteInfo.time / 1000
+      });
+
+      _.each(suiteInfo.results, function (testInfo) {
+        var testcase = suite.ele('testcase', {
+          name: testInfo.name,
+          time: (testInfo.time || 0) / 1000,
+          classname: suiteInfo.name
+        });
+
+        if (testInfo.errMsg) {
+          testcase.ele('failure', {
+            message: testInfo.errMsg,
+            type: 'AssertError'
+          });
+        } else if (!testInfo.pass) {
+          testcase.ele('error', {
+            message: 'Unknown Error',
+            type: 'TestError'
+          });
+        }
+      });
+
+      if (suiteInfo.suites) {
+        _.each(suiteInfo.suites, serializeSuite);
+      }
+
+      suite.ele('system-out', {}, suiteInfo.stdout);
+      suite.ele('system-err', {}, suiteInfo.stderr);
+    });
+
+    var filename = path.join(__dirname, 'test-output.xml');
+    fs.writeFile(filename, suites.toString({ pretty: true}), function (err) {
+      if (err) {
+        console.log('unable to save test-output', err.message);
+        console.trace();
+        process.exit(1);
+      } else {
+        console.log('test output written to ', filename);
+        process.exit(testDetails.stats.failures ? 1 : 0);
+      }
+    });
+  });
+}
+
 var server = http.createServer(function (req, resp) {
-  req.uri = url.parse(req.url).pathname;
+  var parsedUrl = url.parse(req.url, true);
+  req.uri = parsedUrl.pathname;
+  req.query = parsedUrl.query;
   req.filename = path.join(__dirname, req.uri);
 
-  resp._end = resp.end;
+  var end = resp.end;
   resp.end = function () {
-    console.log(this.statusCode, req.uri);
-    resp._end.apply(resp, arguments);
+    console.log(chalk[this.statusCode < 300 ? 'green' : 'red'](this.statusCode), req.uri);
+    end.apply(resp, arguments);
   };
 
   var middleIndex = -1;
@@ -57,6 +185,8 @@ var server = http.createServer(function (req, resp) {
 middleware.push(function (req, resp, next) {
   // resolve filenames
   switch (req.uri) {
+  case '/tests-complete':
+    return collectTestResults(req, resp);
   case '/expect.js':
     req.filename = path.join(__dirname, '../../node_modules/expect.js/expect.js');
     break;
@@ -131,13 +261,17 @@ middleware.push(function (req, resp, next) {
       break;
     }
 
-    resp.setHeader('Content-Type', contentType);
-    resp.writeHead(200);
-    resp.end(
-      data
-        .replace(/\{\{ts\}\}/g, Date.now())
-        .replace(/\{\{phantom\}\}/g, req.filename === '/phantom.html' ? '-phantom' : '')
-    );
+    if (contentType === 'text/html') {
+      resp.end(_.template(data, _.defaults(req.query, {
+        es_hostname: 'localhost',
+        es_port: 9200,
+        ts: rand(5)
+      })));
+    } else {
+      resp.end(data);
+    }
+
+
   }
 });
 

@@ -8393,7 +8393,7 @@
      "do": {
       "index": {
        "index": "test_index",
-       "type": "_percolator",
+       "type": ".percolator",
        "id": "test_percolator",
        "body": {
         "query": {
@@ -8919,7 +8919,7 @@
  ],
  "suggest/10_basic.yaml": [
   {
-   "Basic tests for suggest API": [
+   "setup": [
     {
      "skip": {
       "version": "0 - 0.90.2",
@@ -8941,6 +8941,16 @@
     {
      "do": {
       "indices.refresh": {}
+     }
+    }
+   ]
+  },
+  {
+   "Basic tests for suggest API - pre v1": [
+    {
+     "skip": {
+      "version": "1 - 99",
+      "reason": "Standard analyzer uses stopwords"
      }
     },
     {
@@ -8965,6 +8975,40 @@
     {
      "match": {
       "test_suggestion.1.options.0.text": "meetup"
+     }
+    }
+   ]
+  },
+  {
+   "Basic tests for suggest API - post v1": [
+    {
+     "skip": {
+      "version": "0 - 0.90.9",
+      "reason": "Standard analyzer ignores stopwords"
+     }
+    },
+    {
+     "do": {
+      "suggest": {
+       "body": {
+        "test_suggestion": {
+         "text": "The Amsterdma meetpu",
+         "term": {
+          "field": "body"
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "test_suggestion.1.options.0.text": "amsterdam"
+     }
+    },
+    {
+     "match": {
+      "test_suggestion.2.options.0.text": "meetup"
      }
     }
    ]

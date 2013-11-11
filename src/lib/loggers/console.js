@@ -63,7 +63,9 @@ Console.prototype.onError = _.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 'WARNING');
+Console.prototype.onWarning = function (msg) {
+  console[console.warn ? 'warn' : 'log']('WARNING', msg);
+};
 
 /**
  * Handler for the bridges "info" event
@@ -73,7 +75,9 @@ Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'INFO');
+Console.prototype.onInfo = function (msg) {
+  console[console.warn ? 'info' : 'log']('INFO', msg);
+};
 
 /**
  * Handler for the bridges "debug" event
@@ -83,8 +87,9 @@ Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'IN
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = _.bindKey(console, console.debug ? 'debug' : 'log', 'DEBUG');
-
+Console.prototype.onDebug = function (msg) {
+  console[console.debug ? 'debug' : 'log']('DEBUG', msg);
+};
 /**
  * Handler for the bridges "trace" event
  *

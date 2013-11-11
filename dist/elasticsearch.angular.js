@@ -1,4 +1,4 @@
-/*! elasticsearch-js - v0.0.1 - 2013-11-05
+/*! elasticsearch-js - v0.0.1 - 2013-11-11
  * https://github.com/elasticsearch/elasticsearch-js
  * Copyright (c) 2013 Spencer Alger; Licensed Apache License */
  // built using browserify
@@ -13906,7 +13906,8 @@ Client.prototype.ping = function (params, cb) {
 
   this.config.transport.request({
     method: 'HEAD',
-    path: '/'
+    path: '/',
+    timeout: 100,
   }, cb);
 };
 
@@ -14352,7 +14353,7 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
   return this.request({
     path: '/',
     method: 'HEAD',
-    timeout: '100'
+    timeout: 100
   }, cb);
 };
 
@@ -14578,6 +14579,15 @@ errors.ConnectionFault = function ConnectionFault(msg) {
   ErrorAbstract.call(this, msg || 'Connection Failure', errors.ConnectionFault);
 };
 _.inherits(errors.ConnectionFault, ErrorAbstract);
+
+/**
+ * No Living Connections
+ * @param {String} [msg] - An error message that will probably end up in a log.
+ */
+errors.NoConnections = function NoConnections(msg) {
+  ErrorAbstract.call(this, msg || 'No Living connections', errors.NoConnections);
+};
+_.inherits(errors.NoConnections, ErrorAbstract);
 
 /**
  * Generic Error
@@ -15285,7 +15295,9 @@ Console.prototype.onError = _.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 'WARNING');
+Console.prototype.onWarning = function (msg) {
+  console[console.warn ? 'warn' : 'log']('WARNING', msg);
+};
 
 /**
  * Handler for the bridges "info" event
@@ -15295,7 +15307,9 @@ Console.prototype.onWarning = _.bindKey(console, console.warn ? 'warn' : 'log', 
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'INFO');
+Console.prototype.onInfo = function (msg) {
+  console[console.warn ? 'info' : 'log']('INFO', msg);
+};
 
 /**
  * Handler for the bridges "debug" event
@@ -15305,8 +15319,9 @@ Console.prototype.onInfo = _.bindKey(console, console.info ? 'info' : 'log', 'IN
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = _.bindKey(console, console.debug ? 'debug' : 'log', 'DEBUG');
-
+Console.prototype.onDebug = function (msg) {
+  console[console.debug ? 'debug' : 'log']('DEBUG', msg);
+};
 /**
  * Handler for the bridges "trace" event
  *
@@ -15528,7 +15543,7 @@ TransportRequest.prototype._sendReqWithCon = _.handler(function (err, con) {
     this._request = con.request(this._params.req, this.bound._checkRespForFail);
   } else {
     this._log.warning('No living connections');
-    this._respond(new errors.ConnectionFault('No living connections.'));
+    this._respond(new errors.NoConnections());
   }
 });
 

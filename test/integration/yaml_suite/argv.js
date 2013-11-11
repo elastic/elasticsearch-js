@@ -11,6 +11,15 @@ var defaults = {
 };
 
 if (process.browser) {
+  /* jshint browser:true */
+  if (window.ES_HOST) {
+    defaults.host = window.ES_HOST;
+  }
+
+  if (window.ES_PORT) {
+    defaults.port = window.ES_PORT;
+  }
+
   module.exports = defaults;
 } else {
   module.exports = require('optimist')
