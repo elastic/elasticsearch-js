@@ -285,6 +285,11 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
       }, requestUrl.query)
     }, requestUrl);
     delete requestUrl.auth;
+
+    if (!requestUrl.pathname && requestUrl.path) {
+      requestUrl.pathname = requestUrl.path.split('?').shift();
+    }
+
     return this.emit('trace', method, url.format(requestUrl), body, responseBody, responseStatus);
   }
 };

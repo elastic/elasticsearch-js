@@ -52,12 +52,14 @@ HttpConnector.prototype.makeReqParams = function (params) {
     auth: this.host.auth,
     hostname: this.host.host,
     port: this.host.port,
-    path: this.host.path + params.path,
+    pathname: this.host.path + params.path,
     headers: this.host.headers,
     agent: this.agent
   };
+
   var query = this.host.query ? this.host.query : null;
   var queryStr;
+
   if (typeof query === 'string') {
     query = qs.parse(query);
   }
@@ -70,11 +72,10 @@ HttpConnector.prototype.makeReqParams = function (params) {
   }
 
   if (query) {
-    queryStr = qs.stringify(query);
-  }
-
-  if (queryStr) {
-    reqParams.path = reqParams.path + '?' + queryStr;
+    reqParams.query = query;
+    reqParams.path = reqParams.pathname + '?' + qs.stringify(query);
+  } else {
+    reqParams.path = reqParams.pathname;
   }
 
   return reqParams;
