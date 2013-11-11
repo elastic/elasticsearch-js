@@ -16,7 +16,7 @@ elasticsearch.js works great in node, as well as modern browsers (many thanks to
 
  - Node:
 
-  [![Build Status](https://magnum.travis-ci.com/spenceralger/elasticsearch-js.png?token=tsFxSKHtVKG8EZavSjXY)](https://magnum.travis-ci.com/spenceralger/elasticsearch-js)
+  [![Build Status](https://travis-ci.com/elasticsearch/elasticsearch-js)](https://magnum.travis-ci.com/spenceralger/elasticsearch-js)
 
  - Browsers (see [browser builds](#browser-builds)):
 

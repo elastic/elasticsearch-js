@@ -6,7 +6,8 @@ var zlib = require('zlib');
 var path = require('path');
 var _ = require('lodash');
 var url = require('url');
-var tarUrl = 'https://github.com/elasticsearch/elasticsearch-rest-api-spec/archive/master.tar.gz';
+var tarUrl = 'https://github.com/elasticsearch/elasticsearch-rest-api-spec/tarball/master';
+var topDir = null; // remove the lowest directory, which changes with each commit.
 
 exports.get = function (pattern) {
   var stream = new EventEmitter();
@@ -27,9 +28,14 @@ exports.get = function (pattern) {
         console.error('request failed', incoming.statusCode, incoming.headers);
       }
     } else {
-      incoming.pipe(zlib.createGunzip()).pipe(tar.Parse())
+      incoming
+        .pipe(zlib.createGunzip())
+        .pipe(tar.Parse())
         .on('entry', function (entry) {
-          entry.path = path.relative('elasticsearch-rest-api-spec-master', entry.path);
+          if (!topDir) {
+            topDir = entry.path.split('/').shift();
+          }
+          entry.path = path.relative(topDir, entry.path);
           if (matcher.match(entry.path)) {
             collectData(entry);
           } else {

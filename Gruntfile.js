@@ -176,8 +176,8 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     /*jshint scripturl:true*/
     'jshint',
-    'mochaTest:unit',
     'build',
+    'mochaTest:unit',
     'mochaTest:yaml_suite'
   ]);
 
