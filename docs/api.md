@@ -2,70 +2,82 @@
 
 ## Table Of Contents
 
+ - [Generic Params](#generic-params)
+ - [Methods](#methods)
+    - [bulk](#bulk)
+    - [clearScroll](#clearscroll)
+    - [cluster.getSettings](#clustergetsettings)
+    - [cluster.health](#clusterhealth)
+    - [cluster.nodeHotThreads](#clusternodehotthreads)
+    - [cluster.nodeInfo](#clusternodeinfo)
+    - [cluster.nodeShutdown](#clusternodeshutdown)
+    - [cluster.nodeStats](#clusternodestats)
+    - [cluster.putSettings](#clusterputsettings)
+    - [cluster.reroute](#clusterreroute)
+    - [cluster.state](#clusterstate)
+    - [count](#count)
+    - [create](#create)
+    - [delete](#delete)
+    - [deleteByQuery](#deletebyquery)
+    - [exists](#exists)
+    - [explain](#explain)
+    - [get](#get)
+    - [getSource](#getsource)
+    - [index](#index)
+    - [indices.analyze](#indicesanalyze)
+    - [indices.clearCache](#indicesclearcache)
+    - [indices.close](#indicesclose)
+    - [indices.create](#indicescreate)
+    - [indices.delete](#indicesdelete)
+    - [indices.deleteAlias](#indicesdeletealias)
+    - [indices.deleteMapping](#indicesdeletemapping)
+    - [indices.deleteTemplate](#indicesdeletetemplate)
+    - [indices.deleteWarmer](#indicesdeletewarmer)
+    - [indices.exists](#indicesexists)
+    - [indices.existsAlias](#indicesexistsalias)
+    - [indices.existsType](#indicesexiststype)
+    - [indices.flush](#indicesflush)
+    - [indices.getAlias](#indicesgetalias)
+    - [indices.getAliases](#indicesgetaliases)
+    - [indices.getFieldMapping](#indicesgetfieldmapping)
+    - [indices.getMapping](#indicesgetmapping)
+    - [indices.getSettings](#indicesgetsettings)
+    - [indices.getTemplate](#indicesgettemplate)
+    - [indices.getWarmer](#indicesgetwarmer)
+    - [indices.open](#indicesopen)
+    - [indices.optimize](#indicesoptimize)
+    - [indices.putAlias](#indicesputalias)
+    - [indices.putMapping](#indicesputmapping)
+    - [indices.putSettings](#indicesputsettings)
+    - [indices.putTemplate](#indicesputtemplate)
+    - [indices.putWarmer](#indicesputwarmer)
+    - [indices.refresh](#indicesrefresh)
+    - [indices.segments](#indicessegments)
+    - [indices.snapshotIndex](#indicessnapshotindex)
+    - [indices.stats](#indicesstats)
+    - [indices.status](#indicesstatus)
+    - [indices.updateAliases](#indicesupdatealiases)
+    - [indices.validateQuery](#indicesvalidatequery)
+    - [info](#info)
+    - [mget](#mget)
+    - [mlt](#mlt)
+    - [msearch](#msearch)
+    - [percolate](#percolate)
+    - [scroll](#scroll)
+    - [search](#search)
+    - [suggest](#suggest)
+    - [update](#update)
 
-  - [bulk](#bulk)
-  - [clearScroll](#clearscroll)
-  - [cluster.getSettings](#clustergetsettings)
-  - [cluster.health](#clusterhealth)
-  - [cluster.nodeHotThreads](#clusternodehotthreads)
-  - [cluster.nodeInfo](#clusternodeinfo)
-  - [cluster.nodeShutdown](#clusternodeshutdown)
-  - [cluster.nodeStats](#clusternodestats)
-  - [cluster.putSettings](#clusterputsettings)
-  - [cluster.reroute](#clusterreroute)
-  - [cluster.state](#clusterstate)
-  - [count](#count)
-  - [create](#create)
-  - [delete](#delete)
-  - [deleteByQuery](#deletebyquery)
-  - [exists](#exists)
-  - [explain](#explain)
-  - [get](#get)
-  - [getSource](#getsource)
-  - [index](#index)
-  - [indices.analyze](#indicesanalyze)
-  - [indices.clearCache](#indicesclearcache)
-  - [indices.close](#indicesclose)
-  - [indices.create](#indicescreate)
-  - [indices.delete](#indicesdelete)
-  - [indices.deleteAlias](#indicesdeletealias)
-  - [indices.deleteMapping](#indicesdeletemapping)
-  - [indices.deleteTemplate](#indicesdeletetemplate)
-  - [indices.deleteWarmer](#indicesdeletewarmer)
-  - [indices.exists](#indicesexists)
-  - [indices.existsAlias](#indicesexistsalias)
-  - [indices.existsType](#indicesexiststype)
-  - [indices.flush](#indicesflush)
-  - [indices.getAlias](#indicesgetalias)
-  - [indices.getAliases](#indicesgetaliases)
-  - [indices.getFieldMapping](#indicesgetfieldmapping)
-  - [indices.getMapping](#indicesgetmapping)
-  - [indices.getSettings](#indicesgetsettings)
-  - [indices.getTemplate](#indicesgettemplate)
-  - [indices.getWarmer](#indicesgetwarmer)
-  - [indices.open](#indicesopen)
-  - [indices.optimize](#indicesoptimize)
-  - [indices.putAlias](#indicesputalias)
-  - [indices.putMapping](#indicesputmapping)
-  - [indices.putSettings](#indicesputsettings)
-  - [indices.putTemplate](#indicesputtemplate)
-  - [indices.putWarmer](#indicesputwarmer)
-  - [indices.refresh](#indicesrefresh)
-  - [indices.segments](#indicessegments)
-  - [indices.snapshotIndex](#indicessnapshotindex)
-  - [indices.stats](#indicesstats)
-  - [indices.status](#indicesstatus)
-  - [indices.updateAliases](#indicesupdatealiases)
-  - [indices.validateQuery](#indicesvalidatequery)
-  - [info](#info)
-  - [mget](#mget)
-  - [mlt](#mlt)
-  - [msearch](#msearch)
-  - [percolate](#percolate)
-  - [scroll](#scroll)
-  - [search](#search)
-  - [suggest](#suggest)
-  - [update](#update)
+## Generic Params
+
+Several parameters can be passed to any API method, and will control the way that those requests are carried out. These parameters are not listed in each method's param list.
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| `[timeout=10000]` | Number | The number of milliseconds this request has to complete. It defaults to the timeout specified at the client level, which defaults to 10 seconds. |
+| `ignore` | Number or Number[] | Don't treat these HTTP status codes as "errors". Example use cases could be `ignore: 404` or `ignore: [404]` |
+
+## Methods
 
 ### bulk()
 
@@ -93,8 +105,7 @@ http://www.elasticsearch.org/guide/reference/api/search/scroll/
 
 http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+-- none --
 
 
 ### cluster.health()
@@ -186,8 +197,7 @@ http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/
 
 http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+-- none --
 
 
 ### cluster.reroute()
@@ -817,8 +827,7 @@ http://www.elasticsearch.org/guide/reference/api/validate/
 
 http://elasticsearch.org/guide/
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+-- none --
 
 
 ### mget()

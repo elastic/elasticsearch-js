@@ -234,8 +234,8 @@ module.exports = function (grunt) {
    * This is run in the default and browser_tests:{{browser}} tests.
    */
   grunt.registerMultiTask('open_browser_tests', function () {
-    var host = process.env.ES_HOST || 'localhost';
-    var port = process.env.ES_PORT || 9200;
+    var host = grunt.option('host') || 'localhost';
+    var port = grunt.option('port') || 9200;
     var taskData = this.data;
 
     grunt.task.requires([
