@@ -2,7 +2,8 @@
 
 ## Table Of Contents
 
-<%
+ - [Generic Params](#generic-params)
+ - [Methods](#methods)<%
 
 function esc(str) {
   return str.replace(/\|/g, '&#124;');
@@ -19,15 +20,30 @@ paramType = function (type) {
 };
 
 _.each(actions, function (action) {%>
-  - [<%= action.name %>](#<%= action.name.toLowerCase().replace(/[^\w]/g, '') %>)<%
+    - [<%= action.name %>](#<%= action.name.toLowerCase().replace(/[^\w ]/g, '').replace(/ /g, '-') %>)<%
 })
+
+%>
+
+## Generic Params
+
+Several parameters can be passed to any API method, and will control the way that those requests are carried out. These parameters are not listed in each method's param list.
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| `[timeout=10000]` | Number | The number of milliseconds this request has to complete. It defaults to the timeout specified at the client level, which defaults to 10 seconds. |
+| `ignore` | Number or Number[] | Don't treat these HTTP status codes as "errors". Example use cases could be `ignore: 404` or `ignore: [404]` |
+
+## Methods<%
 
 _.each(actions, function (action) {
 %>
 
 ### <%= action.name %>()
 
-<%= action.docUrl %>
+<%= action.docUrl %><%
+
+if (_.size(action.allParams)) { %>
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -35,5 +51,12 @@ _.each(actions, function (action) {
   _.each(action.allParams, function(param, paramName) {
 %>|`<%= paramWithDefault(paramName, param.default) %>` | <%= paramType(param.type) %> | <%= esc(param.description || '') %>|
 <% })
+
+} else {%>
+
+-- none --
+<%
+
+}
 
 }); %>

@@ -190,27 +190,7 @@ This function will receive a list of nodes received during a sniff. The list of 
 
 To maintain consistency across all the low-level clients ([PHP](https://github.com/elasticsearch/elasticsearch-php), [Python](https://github.com/elasticsearch/elasticsearch-ph), [Ruby](https://github.com/elasticsearch/elasticsearch-ruby), [Perl](https://github.com/elasticsearch/elasticsearch-perl)) all API methods accept an object with parameters and a callback. If you don't pass the callback, the functions will return a promise.
 
-### Generic Params
-
-Several parameters work on all API methods, and control the way that those requests are carried out:
-
-### ignore
-Type: `Number` or `Number[]`
-
-Default: `null`
-
-Don't treat these HTTP status codes as "errors". Example use cases could be `ignore: 404` or `ignore: [404]`
-
-### timeout
-Type: `Number`
-
-Default: `client.config.timeout`
-
-The number of milliseconds this request has to complete. It defaults to the timeout specified at the client level, which defaults to 10 seconds.
-
-### Methods
-
-All the methods can be seen [here](docs/api.md), or take a look at [api.js](src/lib/api.js).
+For full details on the API, check out [api.md](docs/api.md).
 
 ### Examples
 

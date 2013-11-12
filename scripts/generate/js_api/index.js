@@ -34,11 +34,15 @@ function download() {
   });
 }
 
-try {
-  var stat = fs.statSync(outputPath);
-  if (!stat.isFile() || stat.ctime < Date.now() - 86400000) {
+if (process.env.FORCE_GEN) {
+  download();
+} else {
+  try {
+    var stat = fs.statSync(outputPath);
+    if (!stat.isFile() || stat.ctime < Date.now() - 86400000) {
+      download();
+    }
+  } catch (e) {
     download();
   }
-} catch (e) {
-  download();
 }
