@@ -38,6 +38,6 @@
     "chalk": "~0.3.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt generate test"
   }
 }

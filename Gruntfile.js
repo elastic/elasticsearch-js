@@ -75,12 +75,12 @@ module.exports = function (grunt) {
       }
     },
     run: {
-      js_api: {
+      generate_js_api: {
         args: [
           'scripts/generate/js_api'
         ]
       },
-      yaml_tests: {
+      generate_yaml_tests: {
         args: [
           'scripts/generate/yaml_tests'
         ]
@@ -174,21 +174,37 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('default', [
-    /*jshint scripturl:true*/
-    'jshint',
-    'build',
-    'mochaTest:unit',
-    'mochaTest:yaml_suite'
+    'generate',
+    'test',
+    'build'
   ]);
 
-  grunt.registerTask('build', [
-    'clean:dist',
-    'run:yaml_tests',
-    'run:js_api',
-    'browserify',
-    'uglify:dist',
-    'concat:dist_banners'
+  // generates the parts of the yaml test suite and api.
+  grunt.registerTask('generate', [
+    'run:generate_yaml_tests',
+    'run:generate_js_api'
   ]);
+
+  // runs the tests, must be run after generate
+  grunt.registerTask('test', function () {
+    grunt.task.requires('generate');
+    grunt.task.run([
+      'jshint',
+      'mochaTest:unit',
+      'mochaTest:yaml_suite'
+    ]);
+  });
+
+  // runs the build process.
+  grunt.registerTask('build', function () {
+    grunt.task.requires('generate');
+    grunt.task.run([
+      'clean:dist',
+      'browserify',
+      'uglify:dist',
+      'concat:dist_banners'
+    ]);
+  });
 
   var browsers = {
     safari: 'Safari',
@@ -196,29 +212,37 @@ module.exports = function (grunt) {
     firefox: 'Firefox'
   };
 
+  // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
   Object.keys(browsers).forEach(function (browser) {
     grunt.config.set('open_browser_tests.' + browser, {
       appName: browsers[browser]
     });
     grunt.registerTask('browser_tests:' + browser, [
+      'generate',
       'build',
       'run:integration_server',
       'open_browser_tests:' + browser
     ]);
   });
 
-  grunt.registerMultiTask('open_browser_tests', function (host, port) {
-    host = host || 'localhost';
-    port = port || 9200;
-
+  /**
+   * USE browser_tests:{{browser}} to run this task
+   *
+   * Change the port/host that the client connects to with the ES_HOST and ES_PORT environment variables
+   *
+   * You must always run the build task first, to ensure that the lastest API and yaml tests are available.
+   * This is run in the default and browser_tests:{{browser}} tests.
+   */
+  grunt.registerMultiTask('open_browser_tests', function () {
+    var host = process.env.ES_HOST || 'localhost';
+    var port = process.env.ES_PORT || 9200;
     var taskData = this.data;
 
-    /**
-     * You must always run the build task first, to ensure that the lastest API and yaml tests are available.
-     * This is run in the default and browser_tests:{{browser}} tests.
-     */
-    grunt.task.requires('build');
-    grunt.task.requires('run:integration_server');
+    grunt.task.requires([
+      'generate',
+      'build',
+      'run:integration_server'
+    ]);
 
     grunt.config.set('open.yaml_suite_' + this.target, {
       path: 'http://localhost:8888?es_hostname=' + encodeURIComponent(host) + '&es_port=' + encodeURIComponent(port),
