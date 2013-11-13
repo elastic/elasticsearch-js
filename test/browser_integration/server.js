@@ -138,8 +138,8 @@ function collectTestResults(req, resp) {
         _.each(suiteInfo.suites, serializeSuite);
       }
 
-      suite.ele('system-out', {}, suiteInfo.stdout);
-      suite.ele('system-err', {}, suiteInfo.stderr);
+      suite.ele('system-out', {}).cdata(suiteInfo.stdout);
+      suite.ele('system-err', {}).cdata(suiteInfo.stderr);
     });
 
     var filename = path.join(__dirname, 'test-output.xml');
@@ -185,6 +185,9 @@ var server = http.createServer(function (req, resp) {
 middleware.push(function (req, resp, next) {
   // resolve filenames
   switch (req.uri) {
+  case '/tests-started':
+    resp.end('OK');
+    return;
   case '/tests-complete':
     return collectTestResults(req, resp);
   case '/expect.js':

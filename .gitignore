@@ -2,3 +2,4 @@ node_modules
 scripts/scratch*
 test/integration/yaml_suite/log
 test/integration/yaml_suite/tests
+test/browser_integration/test-output.xml

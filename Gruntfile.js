@@ -207,15 +207,36 @@ module.exports = function (grunt) {
   });
 
   var browsers = {
-    safari: 'Safari',
-    chrome: 'Google Chrome',
-    firefox: 'firefox'
+    safari: {
+      appName: 'Safari',
+      executable: null
+    },
+    chrome: {
+      appName: 'Google Chrome',
+      executable: 'google-chrome'
+    },
+    chromium: {
+      appName: null,
+      executable: 'chromium-browser'
+    },
+    firefox: {
+      appName: 'Firefox',
+      executable: 'firefox'
+    },
+    opera: {
+      appName: 'Firefox',
+      executable: 'firefox'
+    }
   };
 
   // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
   Object.keys(browsers).forEach(function (browser) {
     grunt.config.set('open_browser_tests.' + browser, {
-      appName: browsers[browser]
+      // on other platforms, grunt-open expects appname to be the name of the executale...
+      appName: browsers[browser][process.platform === 'darwin' || process.platform === 'win32'
+        ? 'appName'
+        : 'executale'
+      ]
     });
     grunt.registerTask('browser_tests:' + browser, [
       'generate',

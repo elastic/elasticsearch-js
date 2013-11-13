@@ -43,6 +43,7 @@
 
     runner.on('suite', function (suite) {
       if (suite.root) {
+        $.post('/tests-started');
         return;
       }
 
@@ -134,7 +135,7 @@
     });
 
     function allTestsDone() {
-      window.testResults = {
+      var testResults = {
         stats: stats,
         suites: $.map(rootSuite.suites, function removeElements(suite) {
           var s = {
@@ -152,7 +153,8 @@
           return s;
         })
       };
-      $.post('/tests-complete', JSON.stringify(window.testResults), function () {
+
+      $.post('/tests-complete', JSON.stringify(testResults), function () {
         // alert('test complete');
         window.close();
       });
