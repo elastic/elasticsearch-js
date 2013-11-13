@@ -33,6 +33,7 @@
     mocha.checkLeaks();
     mocha.slow(1000);
     mocha.timeout(11000);
+    mocha.globals(['console', 'elasticsearch']);
     mocha.bail();
     /PhantomJS/i.test(navigator.userAgent) || mocha.run();
   </script>

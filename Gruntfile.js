@@ -233,7 +233,7 @@ module.exports = function (grunt) {
   // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
   Object.keys(browsers).forEach(function (browser) {
     var appName = browsers[browser][process.platform];
-    // on other platforms, open expects app to be the name of the executable...
+    // on other platforms, open expects app to be the name of the executale...
     if (!appName && process.platform !== 'darwin' && process.platform !== 'win32') {
       appName = browsers[browser].executable;
     }

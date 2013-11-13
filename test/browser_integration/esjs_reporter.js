@@ -34,7 +34,8 @@
     var stats = this.stats;
     var rootSuite = {
       $el: $('<ul id="mocha-report"></ul>'),
-      results: []
+      results: [],
+      suites: []
     };
 
 
