@@ -208,34 +208,35 @@ module.exports = function (grunt) {
 
   var browsers = {
     safari: {
-      appName: 'Safari',
-      executable: null
+      darwin: 'Safari'
     },
     chrome: {
-      appName: 'Google Chrome',
+      darwin: 'Google Chrome',
+      win32: 'Google Chrome',
       executable: 'google-chrome'
     },
     chromium: {
-      appName: null,
-      executable: 'chromium-browser'
+      executable: 'chromium-browser',
     },
     firefox: {
-      appName: 'Firefox',
+      darwin: 'Firefox',
+      win32: 'Firefox',
       executable: 'firefox'
     },
     opera: {
-      appName: 'Opera',
+      darwin: 'Opera',
+      win32: 'Opera',
       executable: 'opera'
     }
   };
 
   // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
   Object.keys(browsers).forEach(function (browser) {
-    // on other platforms, grunt-open expects appname to be the name of the executale...
-    var appName = browsers[browser][process.platform === 'darwin' || process.platform === 'win32'
-      ? 'appName'
-      : 'executale'
-    ];
+    var appName = browsers[browser][process.platform];
+    // on other platforms, open expects app to be the name of the executable...
+    if (!appName && process.platform !== 'darwin' && process.platform !== 'win32') {
+      appName = browsers[browser].executable;
+    }
 
     if (!appName) {
       // this browser doesn't run on this arch
