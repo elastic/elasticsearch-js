@@ -154,10 +154,7 @@
         })
       };
 
-      $.post('/tests-complete', JSON.stringify(testResults), function () {
-        // alert('test complete');
-        window.close();
-      });
+      $.post('/tests-complete', JSON.stringify(testResults));
     }
 
     /** override console to force all output to go to log and err, then we have all the output **/
