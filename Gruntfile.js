@@ -209,7 +209,7 @@ module.exports = function (grunt) {
   var browsers = {
     safari: 'Safari',
     chrome: 'Google Chrome',
-    firefox: 'Firefox'
+    firefox: 'firefox'
   };
 
   // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
