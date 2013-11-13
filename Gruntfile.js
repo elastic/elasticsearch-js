@@ -224,8 +224,8 @@ module.exports = function (grunt) {
       executable: 'firefox'
     },
     opera: {
-      appName: 'Firefox',
-      executable: 'firefox'
+      appName: 'Opera',
+      executable: 'opera'
     }
   };
 
