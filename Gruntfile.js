@@ -231,13 +231,21 @@ module.exports = function (grunt) {
 
   // creates browser_tests:{{browser}} tasks, for the browsers listed directly above
   Object.keys(browsers).forEach(function (browser) {
+    // on other platforms, grunt-open expects appname to be the name of the executale...
+    var appName = browsers[browser][process.platform === 'darwin' || process.platform === 'win32'
+      ? 'appName'
+      : 'executale'
+    ];
+
+    if (!appName) {
+      // this browser doesn't run on this arch
+      return;
+    }
+
     grunt.config.set('open_browser_tests.' + browser, {
-      // on other platforms, grunt-open expects appname to be the name of the executale...
-      appName: browsers[browser][process.platform === 'darwin' || process.platform === 'win32'
-        ? 'appName'
-        : 'executale'
-      ]
+      appName: appName
     });
+
     grunt.registerTask('browser_tests:' + browser, [
       'generate',
       'build',

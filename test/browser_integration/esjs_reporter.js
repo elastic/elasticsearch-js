@@ -189,14 +189,14 @@
       return {
         log: function () {
           if (stack[0]) {
-            stack[0].stdout += argsToString(arguments) + '\n';
+            stack[0].stdout += argsToString(arguments) + '\n\n';
           } else {
             origLog(argsToString(arguments));
           }
         },
         error: function () {
           if (stack[0]) {
-            stack[0].stderr += argsToString(arguments) + '\n';
+            stack[0].stderr += argsToString(arguments) + '\n\n';
           } else {
             origErr(argsToString(arguments));
           }

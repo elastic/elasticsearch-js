@@ -103,5 +103,5 @@ Console.prototype.onTrace = _.handler(function (method, url, body, responseBody,
     message += ' -d "' + body.replace(/"/g, '\\"') + '"';
   }
   message += '\n<- ' + responseStatus + '\n' + responseBody;
-  console.log('TRACE:\n' + message + '\n\n');
+  console.log('TRACE:\n' + message + '\n');
 });
