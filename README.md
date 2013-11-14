@@ -20,7 +20,7 @@ elasticsearch.js works great in node, as well as modern browsers (many thanks to
 
  - Browsers (see [browser builds](#browser-builds)):
 
-  ![current browser support](https://spenceralger.com/jenkins-browser-badge/es_js)
+  [![current browser support](https://spenceralger.com/jenkins-browser-badge/es_js)](http://build.elasticsearch.com/job/es-js_nightly)
 
 
 ## Install in Node
