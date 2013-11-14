@@ -120,7 +120,7 @@ function collectTestResults(req, resp) {
         var testcase = suite.ele('testcase', {
           name: testInfo.name,
           time: (testInfo.time || 0) / 1000,
-          classname: browser + '.' + suiteInfo.name.replace(/\.yaml$/, '').replace(/\//g, '.')
+          classname: browser + '.' + suiteInfo.name.replace(/\.yaml$/, '').replace(/\./g, '_')
         });
 
         if (testInfo.errMsg) {
