@@ -48,7 +48,8 @@ function sendBundle(req, resp, files, opts, extend) {
 
 function collectTestResults(req, resp) {
   var body = '';
-  var logFilename = path.join(__dirname, 'test-output-' + req.query.browser + '.xml');
+  var browser = req.query.browser;
+  var logFilename = path.join(__dirname, 'test-output-' + browser + '.xml');
 
   req.on('data', function (chunk) {
     body += chunk;
@@ -108,7 +109,7 @@ function collectTestResults(req, resp) {
         id: suiteCount++,
         name: suiteInfo.name,
         timestamp: moment(suiteInfo.start).toJSON(),
-        hostname: 'localhost',
+        hostname: browser,
         tests: (suiteInfo.results && suiteInfo.results.length) || 0,
         failures: _.where(suiteInfo.results, {pass: false}).length,
         errors: 0,
@@ -119,7 +120,7 @@ function collectTestResults(req, resp) {
         var testcase = suite.ele('testcase', {
           name: testInfo.name,
           time: (testInfo.time || 0) / 1000,
-          classname: suiteInfo.name
+          classname: browser + '.' + suiteInfo.name.replace(/\.yaml$/, '').replace(/\//g, '.')
         });
 
         if (testInfo.errMsg) {

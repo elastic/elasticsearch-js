@@ -5,10 +5,12 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var templates = require('./templates');
 var clean = require('../../clean');
-var urlParamRE = /\{(\w+)\}/g;
+var restSpecUpdated = require('../../rest_spec_updated');
 
+var urlParamRE = /\{(\w+)\}/g;
 var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
 var docOutputPath = _.joinPath(__dirname, '../../../docs/api.md');
+var lastFetchTmp = path.join(__dirname, './last_fetch.tmp');
 
 function download() {
   require('./actions').on('ready', function (actions) {
@@ -34,15 +36,8 @@ function download() {
   });
 }
 
-if (process.env.FORCE_GEN) {
-  download();
-} else {
-  try {
-    var stat = fs.statSync(outputPath);
-    if (!stat.isFile() || stat.ctime < Date.now() - 86400000) {
-      download();
-    }
-  } catch (e) {
+restSpecUpdated(function (err, updated) {
+  if (process.env.FORCE_GEN || err || updated) {
     download();
   }
-}
+});

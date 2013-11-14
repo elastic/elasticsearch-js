@@ -17,7 +17,6 @@ exports.get = function (pattern) {
     if (incoming.statusCode !== 200) {
       req.abort();
       if (incoming.headers.location) {
-        console.log('redirecting to', incoming.headers.location);
         req = https.get(_.extend(
             url.parse(tarUrl),
             url.parse(incoming.headers.location)

@@ -8,6 +8,7 @@ var jsYaml = require('js-yaml');
 var spec = require('../../get_spec');
 var clean = require('../../clean');
 var _ = require('../../../src/lib/utils');
+var restSpecUpdated = require('../../rest_spec_updated');
 
 var testFile = path.resolve(__dirname, '../../../test/integration/yaml_suite/yaml_tests.json');
 
@@ -30,15 +31,9 @@ function download() {
     });
 }
 
-if (process.env.FORCE_GEN) {
-  download();
-} else {
-  try {
-    var stat = fs.statSync(testFile);
-    if (!stat.isFile() || stat.ctime < Date.now() - 86400000) {
-      download();
-    }
-  } catch (e) {
+
+restSpecUpdated(function (err, updated) {
+  if (process.env.FORCE_GEN || err || updated) {
     download();
   }
-}
+});

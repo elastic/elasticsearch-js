@@ -3,5 +3,6 @@ scripts/scratch*
 test/integration/yaml_suite/log
 
 ## generated files
+scripts/last_rest_spec_update.sha
 test/browser_integration/*.xml
 test/browser_integration/yaml_tests.js
