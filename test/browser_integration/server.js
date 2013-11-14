@@ -117,10 +117,15 @@ function collectTestResults(req, resp) {
       });
 
       _.each(suiteInfo.results, function (testInfo) {
+
+        var parts = suiteInfo.name.replace(/\.yaml$/, '').replace(/\./g, '_').split(/\//);
+        var section = parts.shift();
+        var behavior = parts.join('/');
+
         var testcase = suite.ele('testcase', {
-          name: testInfo.name,
+          name: behavior + ' - ' + testInfo.name,
           time: (testInfo.time || 0) / 1000,
-          classname: browser + '.' + suiteInfo.name.replace(/\.yaml$/, '').replace(/\./g, '_')
+          classname: browser + '.' + section
         });
 
         if (testInfo.errMsg) {
