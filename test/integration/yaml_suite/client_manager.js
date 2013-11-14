@@ -10,9 +10,6 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('../../../src/lib/utils');
 
-// location that the logger will write to
-var logFile = path.resolve(__dirname, './log');
-
 // current client
 var client = null;
 
@@ -58,17 +55,6 @@ module.exports = {
         client.close();
       }
 
-      if (!process.browser) {
-        // delete existing log file
-        try {
-          fs.unlinkSync(logFile);
-        } catch (e) {
-          if (!~e.message.indexOf('ENOENT')) {
-            return _.nextTick(cb, e);
-          }
-        }
-      }
-
       client = new es.Client({
         hosts: [
           {
@@ -77,9 +63,9 @@ module.exports = {
           }
         ],
         log: {
-          type: process.browser ? 'console' : 'file',
+          type: process.browser ? 'console' : 'stdio',
           level: 'trace',
-          path: logFile
+          color: false
         }
       });
 

@@ -129,13 +129,10 @@
           });
           $test.appendTo(stack[0].$results);
         }
-        if (test.type === 'hook' || stats.tests === this.total) {
-          allTestsDone();
-        }
       }
     });
 
-    function allTestsDone() {
+    runner.on('end', function () {
       var testResults = {
         stats: stats,
         suites: $.map(rootSuite.suites, function removeElements(suite) {
@@ -158,7 +155,7 @@
       $.post('/tests-complete?browser=' + BROWSER_NAME, JSON.stringify(testResults), function () {
         window.close();
       });
-    }
+    });
 
     /** override console to force all output to go to log and err, then we have all the output **/
     global.console = (function () {

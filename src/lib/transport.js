@@ -5,8 +5,8 @@
 module.exports = Transport;
 
 var _ = require('./utils');
-var TransportRequest = require('./transport_request');
 var errors = require('./errors');
+var when = require('when');
 
 function Transport(config) {
   this.config = config;
@@ -26,7 +26,125 @@ function Transport(config) {
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
  */
 Transport.prototype.request = function (params, cb) {
-  return new TransportRequest(this.config, params, cb);
+
+  var log = this.config.log;
+  var serializer = this.config.serializer;
+  var connectionPool = this.config.connectionPool;
+  var remainingRetries = this.config.maxRetries;
+  var connection; // set in sendReqWithConnection
+  var connectionReq; // an object with an abort method, set in sendReqWithConnection
+  var request; // the object returned to the user, might be a deferred
+
+  log.debug('starting request', params);
+
+  if (params.body && params.method === 'GET') {
+    _.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
+    return;
+  }
+
+  // serialize the body
+  if (params.body) {
+    params.body = serializer[params.bulkBody ? 'bulkBody' : 'serialize'](params.body);
+  }
+
+  params.req = {
+    timeout: params.timeout,
+    method: params.method,
+    path: params.path,
+    query: params.query,
+    body: params.body,
+  };
+
+  connectionPool.select(sendReqWithConnection);
+
+  function abortRequest() {
+    remainingRetries = 0;
+    connectionReq.abort();
+  }
+
+  function sendReqWithConnection(err, _connection) {
+    if (err) {
+      respond(err);
+    } else if (_connection) {
+      connection = _connection;
+      connectionReq = connection.request(params.req, checkRespForFailure);
+    } else {
+      log.warning('No living connections');
+      respond(new errors.NoConnections());
+    }
+  }
+
+  function checkRespForFailure(err, body, status) {
+    if (err && remainingRetries) {
+      remainingRetries--;
+      log.error(err.message, '-- retrying');
+      connectionPool.select(sendReqWithConnection);
+    } else {
+      log.info('Request complete');
+      respond(err, body, status);
+    }
+  }
+
+  function respond(err, body, status) {
+    var parsedBody;
+
+    if (!err && body) {
+      parsedBody = serializer.unserialize(body);
+      if (parsedBody == null) {
+        err = new errors.Serialization();
+      }
+    }
+
+    if (!err) {
+      // get ignore and ensure that it's an array
+      var ignore = params.ignore;
+      if (ignore && !_.isArray(ignore)) {
+        ignore = [ignore];
+      }
+
+      if ((status < 200 || status >= 300)
+          && (!ignore || !_.contains(ignore, status))
+      ) {
+        if (errors[status]) {
+          err = new errors[status](parsedBody && parsedBody.error);
+        } else {
+          err = new errors.Generic('unknown error');
+        }
+      }
+    }
+
+    if (params.castExists) {
+      if (err && err instanceof errors.NotFound) {
+        parsedBody = false;
+        err = void 0;
+      } else {
+        parsedBody = !err;
+      }
+    }
+
+    if (typeof cb === 'function') {
+      cb(err, parsedBody, status);
+    } else if (err) {
+      request.reject(err);
+    } else {
+      request.resolve({
+        body: parsedBody,
+        status: status
+      });
+    }
+  }
+
+  // determine the API based on the presense of a callback
+  if (typeof cb === 'function') {
+    request = {
+      abort: abortRequest
+    };
+  } else {
+    request = when.defer();
+    request.abort = abortRequest;
+  }
+
+  return request;
 };
 
 /**

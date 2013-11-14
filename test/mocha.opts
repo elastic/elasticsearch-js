@@ -1,3 +1,0 @@
---require should
---reporter dot
---timeout 11000

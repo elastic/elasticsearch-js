@@ -7,6 +7,7 @@ module.exports = function (grunt) {
   var child_process = require('child_process');
 
   var sharedBrowserfyExclusions = [
+    'when',
     'src/lib/connectors/http.js',
     'src/lib/loggers/file.js',
     'src/lib/loggers/stdio.js',
@@ -32,18 +33,18 @@ module.exports = function (grunt) {
       }
     },
     mochaTest: {
-      unit: [
-        'test/unit/**/*.test.js'
-      ],
-      yaml_suite: [
-        'test/integration/yaml_suite/index.js'
-      ],
+      unit: 'test/unit/**/*.test.js',
+      yaml_suite: {
+        src: 'test/integration/yaml_suite/index.js',
+        options: {
+          reporter: require('./test/integration/yaml_suite/reporter')
+        }
+      },
       options: {
-        colors: true,
         require: 'should',
         reporter: 'dot',
         bail: true,
-        timeout: 11000
+        timeout: 11e3
       }
     },
     jshint: {

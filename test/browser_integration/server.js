@@ -7,6 +7,7 @@ var _ = require('lodash');
 var util = require('util');
 var chalk = require('chalk');
 var moment = require('moment');
+var makeJUnitXml = require('../make_j_unit_xml');
 chalk.enabled = true;
 
 var browserify = require('browserify');
@@ -49,7 +50,7 @@ function sendBundle(req, resp, files, opts, extend) {
 function collectTestResults(req, resp) {
   var body = '';
   var browser = req.query.browser;
-  var logFilename = path.join(__dirname, 'test-output-' + browser + '.xml');
+  var logFilename = path.join(__dirname, '../test-output-' + browser + '.xml');
 
   req.on('data', function (chunk) {
     body += chunk;
@@ -73,83 +74,8 @@ function collectTestResults(req, resp) {
     resp.writeHead(200);
     resp.end('good work');
 
-    /**
-     * The JUnit xml output desired by Jenkins essentially looks like this:
-     *
-     * testsuites:
-     *   - testsuite: (name, timestamp, hostname, tests, failures, errors, time)
-     *     - testcase: (error or failure, name, classname, time)
-     *
-     * Full XSD avaliable [here](http://windyroad.com.au/dl/Open%20Source/JUnit.xsd)
-     *
-     * from
-     *
-     * {
-     *   stats: {
-     *
-     *   }
-     *   suite: [
-     *     {
-     *       name:
-     *       results: []
-     *       suites: [] // optional
-     *     }
-     *   ]
-     * }
-     */
-
-    var testXml = require('xmlbuilder');
-    var suites = testXml.create('testsuites');
-    var suiteCount = 0;
-
-    _.each(testDetails.suites, function serializeSuite(suiteInfo) {
-
-      var suite = suites.ele('testsuite', {
-        package: 'elasticsearch-js:yaml_tests',
-        id: suiteCount++,
-        name: suiteInfo.name,
-        timestamp: moment(suiteInfo.start).toJSON(),
-        hostname: browser,
-        tests: (suiteInfo.results && suiteInfo.results.length) || 0,
-        failures: _.where(suiteInfo.results, {pass: false}).length,
-        errors: 0,
-        time: suiteInfo.time / 1000
-      });
-
-      _.each(suiteInfo.results, function (testInfo) {
-
-        var parts = suiteInfo.name.replace(/\.yaml$/, '').replace(/\./g, '_').split(/\//);
-        var section = parts.shift();
-        var behavior = parts.join('/');
-
-        var testcase = suite.ele('testcase', {
-          name: behavior + ' - ' + testInfo.name,
-          time: (testInfo.time || 0) / 1000,
-          classname: browser + '.' + section
-        });
-
-        if (testInfo.errMsg) {
-          testcase.ele('failure', {
-            message: testInfo.errMsg,
-            type: 'AssertError'
-          });
-        } else if (!testInfo.pass) {
-          testcase.ele('error', {
-            message: 'Unknown Error',
-            type: 'TestError'
-          });
-        }
-      });
-
-      if (suiteInfo.suites) {
-        _.each(suiteInfo.suites, serializeSuite);
-      }
-
-      suite.ele('system-out', {}).cdata(suiteInfo.stdout);
-      suite.ele('system-err', {}).cdata(suiteInfo.stderr);
-    });
-
-    fs.writeFile(logFilename, suites.toString({ pretty: true}), function (err) {
+    var xml = makeJUnitXml(browser, testDetails);
+    fs.writeFile(logFilename, xml, function (err) {
       if (err) {
         console.log('unable to save test-output to', err.message);
         console.trace();
