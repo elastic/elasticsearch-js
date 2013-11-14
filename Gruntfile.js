@@ -243,7 +243,7 @@ module.exports = function (grunt) {
       return;
     }
 
-    grunt.config.set('open_browser_tests.' + browser, {
+    grunt.config.set('__open_browser_tests.' + browser, {
       appName: appName
     });
 
@@ -251,7 +251,7 @@ module.exports = function (grunt) {
       'generate',
       'build',
       'run:integration_server',
-      'open_browser_tests:' + browser
+      '__open_browser_tests:' + browser
     ]);
   });
 
@@ -263,7 +263,7 @@ module.exports = function (grunt) {
    * You must always run the build task first, to ensure that the lastest API and yaml tests are available.
    * This is run in the default and browser_tests:{{browser}} tests.
    */
-  grunt.registerMultiTask('open_browser_tests', function () {
+  grunt.registerMultiTask('__open_browser_tests', function () {
     var host = grunt.option('host') || 'localhost';
     var port = grunt.option('port') || 9200;
     var taskData = this.data;
@@ -275,7 +275,9 @@ module.exports = function (grunt) {
     ]);
 
     grunt.config.set('open.yaml_suite_' + this.target, {
-      path: 'http://localhost:8888?es_hostname=' + encodeURIComponent(host) + '&es_port=' + encodeURIComponent(port),
+      path: 'http://localhost:8888?es_hostname=' + encodeURIComponent(host) +
+            '&es_port=' + encodeURIComponent(port) +
+            '&browser=' + encodeURIComponent(this.target),
       app: taskData.appName
     });
 

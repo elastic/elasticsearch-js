@@ -1,6 +1,6 @@
 (function (global) {
   /* jshint browser:true */
-  /* global alert */
+  /* global alert, BROWSER_NAME */
 
   /**
    * Save timer references to avoid Sinon interfering (see GH-237).
@@ -155,7 +155,9 @@
         })
       };
 
-      $.post('/tests-complete', JSON.stringify(testResults));
+      $.post('/tests-complete?browser=' + BROWSER_NAME, JSON.stringify(testResults), function () {
+        window.close();
+      });
     }
 
     /** override console to force all output to go to log and err, then we have all the output **/

@@ -19,8 +19,9 @@
 
   <!-- global vars -->
   <script>
-    var ES_HOSTNAME = '<%- es_hostname %>';
-    var ES_PORT = <%= es_port %>;
+    var ES_HOSTNAME = <%= JSON.stringify(es_hostname) %>;
+    var ES_PORT = <%= JSON.stringify(es_port) %>;
+    var BROWSER_NAME = <%= JSON.stringify(browser) %>;
   </script>
 
   <!-- test -->

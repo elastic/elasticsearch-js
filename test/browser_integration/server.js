@@ -48,6 +48,7 @@ function sendBundle(req, resp, files, opts, extend) {
 
 function collectTestResults(req, resp) {
   var body = '';
+  var logFilename = path.join(__dirname, 'test-output-' + req.query.browser + '.xml');
 
   req.on('data', function (chunk) {
     body += chunk;
@@ -142,14 +143,13 @@ function collectTestResults(req, resp) {
       suite.ele('system-err', {}).cdata(suiteInfo.stderr);
     });
 
-    var filename = path.join(__dirname, 'test-output.xml');
-    fs.writeFile(filename, suites.toString({ pretty: true}), function (err) {
+    fs.writeFile(logFilename, suites.toString({ pretty: true}), function (err) {
       if (err) {
-        console.log('unable to save test-output', err.message);
+        console.log('unable to save test-output to', err.message);
         console.trace();
         process.exit(1);
       } else {
-        console.log('test output written to ', filename);
+        console.log('test output written to', logFilename);
         process.exit(testDetails.stats.failures ? 1 : 0);
       }
     });
@@ -268,6 +268,7 @@ middleware.push(function (req, resp, next) {
       resp.end(_.template(data, _.defaults(req.query, {
         es_hostname: 'localhost',
         es_port: 9200,
+        browser: 'unknown',
         ts: rand(5)
       })));
     } else {
