@@ -4,7 +4,6 @@
 module.exports = function (grunt) {
 
   var _ = require('lodash');
-  var child_process = require('child_process');
 
   var sharedBrowserfyExclusions = [
     'when',
@@ -43,7 +42,6 @@ module.exports = function (grunt) {
       options: {
         require: 'should',
         reporter: 'dot',
-        bail: true,
         timeout: 11e3
       }
     },

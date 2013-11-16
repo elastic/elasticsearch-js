@@ -140,8 +140,9 @@ Transport.prototype.request = function (params, cb) {
       abort: abortRequest
     };
   } else {
-    request = when.defer();
-    request.abort = abortRequest;
+    var defer = when.defer();
+    defer.promise.abort = abortRequest;
+    request = defer.promise;
   }
 
   return request;

@@ -6,7 +6,6 @@
  */
 module.exports = ClientConfig;
 
-var url = require('url');
 var _ = require('./utils');
 var Host = require('./host');
 var selectors = require('./selectors');
@@ -20,6 +19,7 @@ if (process.browser) {
   connectors.Http = require('./connectors/http');
 }
 
+// remove connectors that have been excluded in the build
 _.each(connectors, function (conn, name) {
   if (typeof conn !== 'function') {
     delete connectors[name];
@@ -30,8 +30,7 @@ var serializers = {
   Json: require('./serializers/json')
 };
 
-var extractHostPartsRE = /\[([^:]+):(\d+)]/;
-var hostProtocolRE = /^([a-z]+:)?\/\//;
+var extractHostPartsRE = /\[([^:]+):(\d+)\]/;
 
 var defaultClasses = {
   log: require('./log'),
@@ -62,17 +61,18 @@ var defaultConfig = {
   timeout: 10000,
   deadTimeout: 60000,
   maxSockets: 10,
+  // transforms the response from /_cluster/nodes
   nodesToHostCallback: function (nodes) {
     var hosts = [];
     _.each(nodes, function (node, id) {
-      var hostnameMatches = extractHostPartsRE.exec(node.host);
+      var hostnameMatches = extractHostPartsRE.exec(node.http_address);
       hosts.push({
         host: hostnameMatches[1],
         port: hostnameMatches[2],
         _meta: {
           id: id,
           name: node.name,
-          servername: node.host,
+          hostname: node.hostname,
           version: node.version
         }
       });
@@ -128,9 +128,6 @@ function ClientConfig(config) {
 }
 
 ClientConfig.prototype.prepareHosts = function (hosts) {
-  var host;
-  var i;
-
   if (!_.isArray(hosts)) {
     hosts = [hosts];
   }

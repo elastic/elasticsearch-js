@@ -8,9 +8,7 @@ module.exports = function ClientAction(spec, client) {
   };
 };
 
-var errors = require('./errors');
 var _ = require('./utils');
-var urlParamRE = /\{(\w+)\}/g;
 
 var castType = {
   enum: function (param, val, name) {
@@ -45,7 +43,7 @@ var castType = {
       return !!val;
     }
   },
-  boolean: function (param, val, name) {
+  boolean: function (param, val) {
     val = _.isString(val) ? val.toLowerCase() : val;
     return (val === 'no' || val === 'off') ? false : !!val;
   },
@@ -139,7 +137,6 @@ function exec(transport, spec, params, cb) {
   }
 
   var request = {};
-  var parts = {};
   var query = {};
   var i;
 
@@ -147,8 +144,6 @@ function exec(transport, spec, params, cb) {
     return _.nextTick(cb, new TypeError('A request body is required.'));
   }
 
-  params.body && (request.body = params.body);
-  params.ignore && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
   if (params.timeout === void 0) {
     request.timeout = 10000;
   } else {
@@ -156,6 +151,8 @@ function exec(transport, spec, params, cb) {
   }
 
   // copy over some properties from the spec
+  params.body && (request.body = params.body);
+  params.ignore && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
   spec.bulkBody && (request.bulkBody = true);
   spec.castExists && (request.castExists = true);
 

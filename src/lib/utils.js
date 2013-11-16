@@ -1,6 +1,6 @@
-var path = require('path'),
-  _ = require('lodash'),
-  nodeUtils = require('util');
+var path = require('path');
+var _ = require('lodash');
+var nodeUtils = require('util');
 
 /**
  * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
@@ -120,7 +120,6 @@ utils.ucfirst = function (word) {
  */
 function adjustWordCase(firstWordCap, otherWordsCap, sep) {
   return function (string) {
-    var inWord = false;
     var i = 0;
     var words = [];
     var word = '';

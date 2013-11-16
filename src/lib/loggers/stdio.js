@@ -41,7 +41,8 @@ var defaultColors = {
 };
 
 function Stdio(config, bridge) {
-  Stdio.callSuper(this, arguments);
+  // call my super
+  LoggerAbstract.call(this, config, bridge);
 
   // config/state
   this.color = Boolean(_.has(config, 'color') ? config.color : chalk.supportsColor);
@@ -124,18 +125,6 @@ Stdio.prototype.onDebug = _.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Stdio.prototype.onTrace = _.handler(function (method, url, body, resp, status) {
-  var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
-  if (body) {
-    message += ' -d "' + body.replace(/"/g, '\\"') + '"';
-  }
-  message += '\n<- ';
-  if (this.color) {
-    message += this.colors.traceStatus(status);
-  } else {
-    message += status;
-  }
-  message += '\n' + resp;
-
-  this.write(process.stdout, 'TRACE', this.colors.trace, message);
+Stdio.prototype.onTrace = _.handler(function (message, curlCall) {
+  this.write(process.stdout, 'TRACE', this.colors.trace, curlCall + '\n' + message);
 });

@@ -10,7 +10,7 @@ module.exports = JqueryConnector;
 function JqueryConnector() {}
 
 JqueryConnector.prototype.request = function (params, cb) {
-  var $xhr = jQuery.ajax(params).done(cb);
+  jQuery.ajax(params).done(cb);
 };
 
 

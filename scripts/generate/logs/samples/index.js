@@ -1,10 +1,9 @@
-var _ = require('../../../../src/lib/utils'),
-  WeightedList = require('./weighted_list'),
-  RandomList = require('./random_list'),
-  IpGenerator = require('./ip_generator'),
-  Stochator = require('./stochator'),
-  moment = require('moment'),
-  dayMs = 86400000;
+var _ = require('../../../../src/lib/utils');
+var WeightedList = require('./weighted_list');
+var RandomList = require('./random_list');
+var IpGenerator = require('./ip_generator');
+var Stochator = require('./stochator');
+var dayMs = 86400000;
 
 exports.make = function (startingMoment, endingMoment) {
 

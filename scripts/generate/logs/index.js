@@ -45,7 +45,6 @@ if (argv.host) {
 }
 
 var client = new es.Client(clientConfig);
-var log = client.config.log;
 
 console.log('Generating', count, 'events across ±', days, 'days');
 

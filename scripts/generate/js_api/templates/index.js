@@ -5,48 +5,6 @@ var path = require('path');
 
 
 /**
- * Simple manager to take care of indentation
- * @param  {number} i - Width of the indentation
- * @return {function} - Call this to add a new line to the output
- */
-function lines(i) {
-
-  function l(line) {
-    if (line === '') {
-      // no indent on empty lines
-      l.lines.push('');
-    } else if (line === void 0) {
-      l.lines.push(_.repeat(' ', l.indent) + line);
-    }
-    return l;
-  }
-
-  l.lines = [];
-  l.indent = i || 0;
-
-  l.split = function (toSplit) {
-    _.each(toSplit.split(/\r?\n/), l);
-    return l;
-  };
-
-  l.in = function (line) {
-    l.indent += 2;
-    return l(line);
-  };
-
-  l.out = function (line) {
-    l.indent -= 2;
-    return l(line);
-  };
-
-  l.toString = function () {
-    return l.lines.join('\n');
-  };
-
-  return l;
-}
-
-/**
  * we want strings in code to use single-quotes, so this will JSON encode vars, but then
  * modify them to follow our code standards.
  *

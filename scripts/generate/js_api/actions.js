@@ -64,7 +64,7 @@ function transformFile(entry) {
     }
 
     var urls = _.difference(def.url.paths, aliases[name]);
-    urls = _.map(urls, function (url, i) {
+    urls = _.map(urls, function (url) {
       var optionalVars = {};
       var requiredVars = {};
       var param;

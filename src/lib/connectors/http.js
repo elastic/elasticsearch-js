@@ -8,22 +8,21 @@
  */
 module.exports = HttpConnector;
 
-var http = require('http');
-var https = require('https');
+var handles = {
+  http: require('http'),
+  https: require('https')
+};
 var _ = require('../utils');
 var errors = require('../errors');
 var qs = require('querystring');
 var KeepAliveAgent = require('agentkeepalive/lib/agent');
 var ConnectionAbstract = require('../connection');
-var defaultHeaders = {
-  'connection': 'keep-alive'
-};
 
 
 function HttpConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 
-  this.hand = require(this.host.protocol);
+  this.hand = handles[this.host.protocol];
   this.agent = new KeepAliveAgent({
     maxSockets: 1,
     maxKeepAliveRequests: 0, // max requests per keepalive socket, default is 0, no limit.
@@ -58,7 +57,6 @@ HttpConnector.prototype.makeReqParams = function (params) {
   };
 
   var query = this.host.query ? this.host.query : null;
-  var queryStr;
 
   if (typeof query === 'string') {
     query = qs.parse(query);
@@ -85,9 +83,7 @@ HttpConnector.prototype.request = function (params, cb) {
   var incoming;
   var timeoutId;
   var request;
-  var requestId = this.requestCount;
   var response;
-  var responseStarted = false;
   var status = 0;
   var timeout = params.timeout || this.config.timeout;
   var log = this.config.log;

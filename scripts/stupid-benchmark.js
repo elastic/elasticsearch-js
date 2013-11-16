@@ -1,46 +1,70 @@
 var es = require('../src/elasticsearch');
 var async = require('async');
+var argv = require('optimist').default({
+    indx: 'test-docs',
+    type: 'test-doc',
+    warm: 10000,
+    docs: 100000,
+    sync: false,
+    sock: 100
+  })
+  .boolean('sync')
+  .argv;
 
-function getMs() {
-  var hr = process.hrtime();
-  return (hr[0] * 1e9 + hr[1]) / 1e6;
+function hrtime(start) {
+  var hr = start ? process.hrtime(start) : process.hrtime();
+  return start ? Math.round(((hr[0] * 1e9 + hr[1]) / 1e6) * 100) / 100 : hr;
 }
 
 var client = new es.Client({
   hosts: 'localhost:9200',
   log: null,
-  maxSockets: 100
+  maxSockets: argv.sock
 });
 
 async.series([
   function (done) {
-    console.log('clearing existing "test-docs" indices');
+    console.log('removing existing "%s" index', argv.indx);
     client.indices.delete({
-      index: 'test-docs',
+      index: argv.indx,
       ignore: 404
     }, done);
   },
   function (done) {
-    console.log('waiting for cluster');
-    client.cluster.health({
-      wait_for_status: 'yellow'
+    console.log('creating new "%s" index', argv.indx);
+    client.indices.create({
+      index: argv.indx,
+      body: {}
     }, done);
   },
   function (done) {
-    var times = 1e4;
-    console.log('creating %d docs', times);
-    var start = getMs();
-    async.times(times, function (i, done) {
+    console.log('warnming up index with %d docs', argv.warm);
+    async.times(argv.warm, function (i, done) {
       client.index({
-        index: 'test-docs',
-        type: 'test-doc',
+        index: argv.indx,
+        type: argv.type,
+        body: {}
+      }, done);
+    }, done);
+  },
+  function (done) {
+    console.log('waiting for cluster to go yellow');
+    client.cluster.health({
+      waitForStatus: 'yellow'
+    }, done);
+  },
+  function (done) {
+    console.log('creating %d docs ' + (async.sync ? 'in series' : argv.sock + ' requests at a time'), argv.docs);
+    var start = hrtime();
+    async[argv.sync ? 'timesSeries' : 'times'](argv.docs, function (i, done) {
+      client.index({
+        index: argv.indx,
+        type: argv.type,
         body: {}
       }, done);
     }, function (err) {
-      console.log('complete in', Math.round((getMs() - start) * 100) / 100, 'ms');
-      if (err) {
-        client.config.log.error(err);
-      }
+      console.log('complete in', hrtime(start), 'ms');
+      done(err);
     });
   }
 ], function (err) {

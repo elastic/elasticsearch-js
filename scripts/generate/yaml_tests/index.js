@@ -7,7 +7,6 @@ var path = require('path');
 var jsYaml = require('js-yaml');
 var spec = require('../../get_spec');
 var clean = require('../../clean');
-var _ = require('../../../src/lib/utils');
 var restSpecUpdated = require('../../rest_spec_updated');
 
 var testFile = path.resolve(__dirname, '../../../test/integration/yaml_suite/yaml_tests.json');

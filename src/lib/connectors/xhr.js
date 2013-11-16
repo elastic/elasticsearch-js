@@ -32,6 +32,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
 } else {
   // find the first MS implementation available
   getXhr = _.first(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'], function (appName) {
+    /* jshint unused: false */
     try {
       var test = new window.ActiveXObject(appName);
       return function () {
@@ -61,7 +62,7 @@ XhrConnector.prototype.request = function (params, cb) {
     xhr.open(params.method, url, async);
   }
 
-  xhr.onreadystatechange = function (e) {
+  xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
       log.trace(params.method, url, params.body, xhr.responseText, xhr.status);

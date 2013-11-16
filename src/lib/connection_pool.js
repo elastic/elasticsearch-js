@@ -9,9 +9,6 @@
 module.exports = ConnectionPool;
 
 var _ = require('./utils');
-var selectors = require('./selectors');
-var EventEmitter = require('events').EventEmitter;
-var errors = require('./errors');
 var Host = require('./host');
 
 function ConnectionPool(config) {
@@ -37,7 +34,7 @@ ConnectionPool.prototype.select = function (cb) {
       }
     }
   } else {
-    cb();
+    _.nextTick(cb, null, this.connections.dead[0]);
   }
 };
 
@@ -45,9 +42,14 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
   var from, to, index;
 
   if (oldStatus === status) {
-    return true;
+    if (status === 'dead') {
+      // we want to remove the connection from it's current possition and move it to the end
+      status = 'redead';
+    } else {
+      return true;
+    }
   } else {
-    this.config.log.info('connection id:', connection.__id, 'is', status);
+    this.config.log.info('connection id:', connection.id, 'is', status);
   }
 
   switch (status) {
@@ -57,6 +59,10 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
     break;
   case 'dead':
     from = this.connections.alive;
+    to = this.connections.dead;
+    break;
+  case 'redead':
+    from = this.connections.dead;
     to = this.connections.dead;
     break;
   case 'closed':
@@ -79,17 +85,17 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
   }
 });
 
-ConnectionPool.prototype._add = function (connection) {
-  if (!this.index[connection.__id]) {
-    this.index[connection.__id] = connection;
+ConnectionPool.prototype.addConnection = function (connection) {
+  if (!this.index[connection.id]) {
+    this.index[connection.id] = connection;
     connection.on('status changed', this.bound.onStatusChanged);
     connection.setStatus('alive');
   }
 };
 
-ConnectionPool.prototype._remove = function (connection) {
-  if (this.index[connection.__id]) {
-    delete this.index[connection.__id];
+ConnectionPool.prototype.removeConnection = function (connection) {
+  if (this.index[connection.id]) {
+    delete this.index[connection.id];
     connection.setStatus('closed');
     connection.removeListener('status changed', this.bound.onStatusChanged);
   }
@@ -110,13 +116,13 @@ ConnectionPool.prototype.setNodes = function (nodeConfigs) {
         delete toRemove[id];
       } else {
         connection = new this.config.connectionClass(node, this.config);
-        connection.__id = id;
-        this._add(connection);
+        connection.id = id;
+        this.addConnection(connection);
       }
     }
   }
 
-  _.each(toRemove, this._remove, this);
+  _.each(toRemove, this.removeConnection, this);
 };
 
 ConnectionPool.prototype.close = function () {

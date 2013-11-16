@@ -23,7 +23,7 @@ module.exports = function (path) {
 
 
 function rmDirRecursive(path) {
-  fs.readdirSync(path).forEach(function (file, index) {
+  fs.readdirSync(path).forEach(function (file) {
     var curPath = path + '/' + file;
     if (fs.statSync(curPath).isDirectory()) { // recurse
       rmDirRecursive(curPath);

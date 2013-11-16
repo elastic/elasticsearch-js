@@ -12,14 +12,12 @@
 
 module.exports = Stream;
 
-var LoggerAbstract = require('../logger'),
-  nodeStreams = require('stream'),
-  _ = require('../utils'),
-  fs = require('fs');
+var LoggerAbstract = require('../logger');
+var _ = require('../utils');
 
 function Stream(config, bridge) {
-  Stream.callSuper(this, arguments);
-  _.makeBoundMethods(this);
+  // call my super
+  LoggerAbstract.call(this, config, bridge);
 
   if (config.stream.write && config.stream.end) {
     this.stream = config.stream;

@@ -11,19 +11,20 @@
 
 module.exports = File;
 
-var StreamLogger = require('./stream'),
-  _ = require('../utils'),
-  fs = require('fs');
+var StreamLogger = require('./stream');
+var _ = require('../utils');
+var fs = require('fs');
 
 function File(config, bridge) {
-  this.path = config.path;
-
-  config.stream = fs.createWriteStream(config.path, {
+  // setup the stream before calling the super
+  this.path = config.path || 'elasticsearch.log';
+  config.stream = fs.createWriteStream(this.path, {
     flags: 'a',
     encoding: 'utf8'
   });
 
-  File.callSuper(this, arguments);
+  // call my super
+  StreamLogger.call(this, config, bridge);
 }
 _.inherits(File, StreamLogger);
 

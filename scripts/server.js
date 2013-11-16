@@ -1,5 +1,4 @@
-var http = require('http'),
-    async = require('async');
+var http = require('http');
 
 var server = http.createServer(function (req, resp) {
   var closed, count = 0;

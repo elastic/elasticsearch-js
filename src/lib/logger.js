@@ -1,5 +1,4 @@
-var Log = require('./log'),
-  _ = require('./utils');
+var _ = require('./utils');
 
 /**
  * Abstract class providing common functionality to loggers
@@ -145,12 +144,7 @@ LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = _.handler(function (method, url, body, responseBody, responseStatus) {
-  var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
-  if (body) {
-    message += ' -d "' + body.replace(/"/g, '\\"') + '"';
-  }
-  message += '\n<- ' + responseStatus + '\n' + responseBody;
+LoggerAbstract.prototype.onTrace = _.handler(function (message) {
   this.write('TRACE', message);
 });
 

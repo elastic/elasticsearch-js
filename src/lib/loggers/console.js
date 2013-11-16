@@ -16,6 +16,7 @@ var LoggerAbstract = require('../logger');
 var _ = require('../utils');
 
 function Console(config, bridge) {
+  // call my super
   LoggerAbstract.call(this, config, bridge);
 
   // config/state
@@ -31,9 +32,11 @@ _.inherits(Console, LoggerAbstract);
 Console.prototype.setupListeners = function (levels) {
   // since some of our functions are bound a bit differently (to the console)
   // create some of the bound properties manually
+  this.bound.onError = this.onError;
   this.bound.onWarning = this.onWarning;
   this.bound.onInfo = this.onInfo;
   this.bound.onDebug = this.onDebug;
+  this.bound.onTrace = this.onTrace;
 
   // call the super method
   LoggerAbstract.prototype.setupListeners.call(this, levels);
@@ -47,13 +50,13 @@ Console.prototype.setupListeners = function (levels) {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-Console.prototype.onError = _.handler(function (e) {
+Console.prototype.onError = function (e) {
   if (console.error && console.trace) {
     console.error(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   } else {
     console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
   }
-});
+};
 
 /**
  * Handler for the bridges "warning" event
@@ -97,11 +100,6 @@ Console.prototype.onDebug = function (msg) {
  * @private
  * @return {undefined}
  */
-Console.prototype.onTrace = _.handler(function (method, url, body, responseBody, responseStatus) {
-  var message = 'curl "' + url.replace(/"/g, '\\"') + '" -X' + method.toUpperCase();
-  if (body) {
-    message += ' -d "' + body.replace(/"/g, '\\"') + '"';
-  }
-  message += '\n<- ' + responseStatus + '\n' + responseBody;
-  console.log('TRACE:\n' + message + '\n');
-});
+Console.prototype.onTrace = function (message, curlCall) {
+  console.log('TRACE:\n' + curlCall + '\n' + message);
+};

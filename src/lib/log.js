@@ -9,7 +9,8 @@ if (process.browser) {
   var loggers = {
     File: require('./loggers/file'),
     Stream: require('./loggers/file'),
-    Stdio: require('./loggers/stdio')
+    Stdio: require('./loggers/stdio'),
+    Tracer: require('./loggers/tracer')
   };
 }
 
@@ -290,8 +291,27 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
       requestUrl.pathname = requestUrl.path.split('?').shift();
     }
 
-    return this.emit('trace', method, url.format(requestUrl), body, responseBody, responseStatus);
+    requestUrl = url.format(requestUrl);
+
+    var message = '<- ' + responseStatus + '\n' + prettyJSON(responseBody);
+
+    /* jshint quotmark: double */
+    var curlCall = "curl '" + requestUrl.replace(/'/g, "\\'") + "' -X" + method.toUpperCase();
+    if (body) {
+      curlCall += " -d '" + prettyJSON(body) + "'";
+    }
+    /* jshint quotmark: single */
+
+    return this.emit('trace', message, curlCall);
   }
 };
+
+function prettyJSON(body) {
+  try {
+    return JSON.stringify(JSON.parse(body), null, '  ').replace(/'/g, '\\\'');
+  } catch (e) {
+    return body || '';
+  }
+}
 
 module.exports = Log;

@@ -52,7 +52,7 @@ function Client(config) {
   }
 }
 
-Client.prototype = _.clone(api);
+Client.prototype = api;
 
 /**
  * Ping some node to ensure that the cluster is available in some respect
