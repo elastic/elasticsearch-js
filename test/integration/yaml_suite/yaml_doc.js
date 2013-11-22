@@ -116,7 +116,7 @@ function YamlDoc(doc, file) {
     // check that it's a function
     expect(method).to.be.a('function');
 
-    if (typeof action.args === 'object') {
+    if (_.isPlainObject(action.args)) {
       action.name += ' ' + _.keys(action.args).join(', ');
     } else if (action.args) {
       action.name += ' ' + action.args;

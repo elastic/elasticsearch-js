@@ -16,10 +16,6 @@ api._namespaces = ['cluster', 'indices'];
  * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
-  methods: [
-    'POST',
-    'PUT'
-  ],
   params: {
     consistency: {
       type: 'enum',
@@ -68,7 +64,8 @@ api.bulk = ca({
       fmt: '/_bulk'
     }
   ],
-  bulkBody: true
+  bulkBody: true,
+  method: 'POST'
 });
 
 
@@ -79,29 +76,21 @@ api.bulk = ca({
  * @param {String or String[] or Boolean} params.scrollId - A comma-separated list of scroll IDs to clear
  */
 api.clearScroll = ca({
-  methods: [
-    'DELETE'
-  ],
-  params: {},
-  urls: [
-    {
-      fmt: '/_search/scroll/<%=scrollId%>',
-      req: {
-        scrollId: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/_search/scroll/<%=scrollId%>',
+    req: {
+      scrollId: {
+        type: 'list'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'DELETE'
 });
 
 
-api.cluster = function ClusterNS(client) {
-  if (this instanceof ClusterNS) {
-    this.client = client;
-  } else {
-    return new ClusterNS(client);
-  }
+api.cluster = function ClusterNS(transport) {
+  this.transport = transport;
 };
 
 /**
@@ -110,15 +99,9 @@ api.cluster = function ClusterNS(client) {
  * @param {Object} params - An object with parameters used to carry out this action
  */
 api.cluster.prototype.getSettings = ca({
-  methods: [
-    'GET'
-  ],
-  params: {},
-  urls: [
-    {
-      fmt: '/_cluster/settings'
-    }
-  ]
+  url: {
+    fmt: '/_cluster/settings'
+  }
 });
 
 
@@ -137,9 +120,6 @@ api.cluster.prototype.getSettings = ca({
  * @param {String} params.index - Limit the information returned to a specific index
  */
 api.cluster.prototype.health = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     level: {
       type: 'enum',
@@ -210,9 +190,6 @@ api.cluster.prototype.health = ca({
  * @param {String or String[] or Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeHotThreads = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     interval: {
       type: 'time'
@@ -267,9 +244,6 @@ api.cluster.prototype.nodeHotThreads = ca({
  * @param {String or String[] or Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeInfo = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     all: {
       type: 'boolean'
@@ -334,9 +308,6 @@ api.cluster.prototype.nodeInfo = ca({
  * @param {String or String[] or Boolean} params.nodeId - A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
  */
 api.cluster.prototype.nodeShutdown = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     delay: {
       type: 'time'
@@ -357,7 +328,8 @@ api.cluster.prototype.nodeShutdown = ca({
     {
       fmt: '/_shutdown'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -382,9 +354,6 @@ api.cluster.prototype.nodeShutdown = ca({
  * @param {String or String[] or Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeStats = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     all: {
       type: 'boolean'
@@ -446,15 +415,10 @@ api.cluster.prototype.nodeStats = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  */
 api.cluster.prototype.putSettings = ca({
-  methods: [
-    'PUT'
-  ],
-  params: {},
-  urls: [
-    {
-      fmt: '/_cluster/settings'
-    }
-  ]
+  url: {
+    fmt: '/_cluster/settings'
+  },
+  method: 'PUT'
 });
 
 
@@ -466,9 +430,6 @@ api.cluster.prototype.putSettings = ca({
  * @param {Boolean} params.filterMetadata - Don't return cluster state metadata (default: false)
  */
 api.cluster.prototype.reroute = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     dryRun: {
       type: 'boolean',
@@ -479,11 +440,10 @@ api.cluster.prototype.reroute = ca({
       name: 'filter_metadata'
     }
   },
-  urls: [
-    {
-      fmt: '/_cluster/reroute'
-    }
-  ]
+  url: {
+    fmt: '/_cluster/reroute'
+  },
+  method: 'POST'
 });
 
 
@@ -501,9 +461,6 @@ api.cluster.prototype.reroute = ca({
  * @param {Date or Number} params.masterTimeout - Specify timeout for connection to master
  */
 api.cluster.prototype.state = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     filterBlocks: {
       type: 'boolean',
@@ -537,11 +494,9 @@ api.cluster.prototype.state = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/_cluster/state'
-    }
-  ]
+  url: {
+    fmt: '/_cluster/state'
+  }
 });
 
 
@@ -558,10 +513,6 @@ api.cluster.prototype.state = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of types to restrict the results
  */
 api.count = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -609,114 +560,8 @@ api.count = ca({
     {
       fmt: '/_count'
     }
-  ]
-});
-
-
-/**
- * Perform a [create](http://elasticsearch.org/guide/reference/api/index_/) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {String} params.id - Document ID
- * @param {String} params.parent - ID of the parent document
- * @param {String} params.percolate - Percolator queries to execute while indexing the document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Specific replication type
- * @param {String} params.routing - Specific routing value
- * @param {Date or Number} params.timeout - Explicit operation timeout
- * @param {Date or Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
- * @param {String} params.index - The name of the index
- * @param {String} params.type - The type of the document
- */
-api.create = ca({
-  methods: [
-    'POST',
-    'PUT'
   ],
-  params: {
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
-    },
-    id: {
-      type: 'string'
-    },
-    parent: {
-      type: 'string'
-    },
-    percolate: {
-      type: 'string'
-    },
-    refresh: {
-      type: 'boolean'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
-    },
-    routing: {
-      type: 'string'
-    },
-    timeout: {
-      type: 'time'
-    },
-    timestamp: {
-      type: 'time'
-    },
-    ttl: {
-      type: 'duration'
-    },
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external'
-      ],
-      name: 'version_type'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_create',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/<%=type%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    }
-  ]
+  method: 'POST'
 });
 
 
@@ -737,9 +582,6 @@ api.create = ca({
  * @param {String} params.type - The type of the document
  */
 api['delete'] = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     consistency: {
       type: 'enum',
@@ -781,22 +623,22 @@ api['delete'] = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -3
+  },
+  method: 'DELETE'
 });
 
 
@@ -818,9 +660,6 @@ api['delete'] = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of types to restrict the operation
  */
 api.deleteByQuery = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     analyzer: {
       type: 'string'
@@ -895,7 +734,8 @@ api.deleteByQuery = ca({
         }
       }
     }
-  ]
+  ],
+  method: 'DELETE'
 });
 
 
@@ -913,9 +753,6 @@ api.deleteByQuery = ca({
  * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.exists = ca({
-  methods: [
-    'HEAD'
-  ],
   params: {
     parent: {
       type: 'string'
@@ -933,26 +770,26 @@ api.exists = ca({
       type: 'string'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      opt: {
-        type: {
-          type: 'string',
-          'default': '_all'
-        }
-      },
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>',
+    opt: {
+      type: {
+        type: 'string',
+        'default': '_all'
       }
-    }
-  ],
-  castExists: true
+    },
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  },
+  castExists: true,
+  method: 'HEAD'
 });
 
 
@@ -979,10 +816,6 @@ api.exists = ca({
  * @param {String} params.type - The type of the document
  */
 api.explain = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     analyzeWildcard: {
       type: 'boolean',
@@ -1038,22 +871,22 @@ api.explain = ca({
       name: '_source_include'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_explain',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_explain',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -3
+  },
+  method: 'POST'
 });
 
 
@@ -1075,9 +908,6 @@ api.explain = ca({
  * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.get = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     fields: {
       type: 'list'
@@ -1110,25 +940,24 @@ api.get = ca({
       name: '_source_include'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      opt: {
-        type: {
-          type: 'string',
-          'default': '_all'
-        }
-      },
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>',
+    opt: {
+      type: {
+        type: 'string',
+        'default': '_all'
       }
-    }
-  ]
+    },
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  }
 });
 
 
@@ -1148,9 +977,6 @@ api.get = ca({
  * @param {String} [params.type=_all] - The type of the document; use `_all` to fetch the first document matching the ID across all types
  */
 api.getSource = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     exclude: {
       type: 'list'
@@ -1174,25 +1000,24 @@ api.getSource = ca({
       type: 'string'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_source',
-      opt: {
-        type: {
-          type: 'string',
-          'default': '_all'
-        }
-      },
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_source',
+    opt: {
+      type: {
+        type: 'string',
+        'default': '_all'
       }
-    }
-  ]
+    },
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  }
 });
 
 
@@ -1217,10 +1042,6 @@ api.getSource = ca({
  * @param {String} params.type - The type of the document
  */
 api.index = ca({
-  methods: [
-    'POST',
-    'PUT'
-  ],
   params: {
     consistency: {
       type: 'enum',
@@ -1306,16 +1127,13 @@ api.index = ca({
         }
       }
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
-api.indices = function IndicesNS(client) {
-  if (this instanceof IndicesNS) {
-    this.client = client;
-  } else {
-    return new IndicesNS(client);
-  }
+api.indices = function IndicesNS(transport) {
+  this.transport = transport;
 };
 
 /**
@@ -1332,10 +1150,6 @@ api.indices = function IndicesNS(client) {
  * @param {String} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     analyzer: {
       type: 'string'
@@ -1380,7 +1194,8 @@ api.indices.prototype.analyze = ca({
     {
       fmt: '/_analyze'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -1401,10 +1216,6 @@ api.indices.prototype.analyze = ca({
  * @param {Boolean} params.recycler - Clear the recycler cache
  */
 api.indices.prototype.clearCache = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     fieldData: {
       type: 'boolean',
@@ -1462,7 +1273,8 @@ api.indices.prototype.clearCache = ca({
     {
       fmt: '/_cache/clear'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -1475,9 +1287,6 @@ api.indices.prototype.clearCache = ca({
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.close = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1487,16 +1296,16 @@ api.indices.prototype.close = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_close',
-      req: {
-        index: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_close',
+    req: {
+      index: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'POST'
 });
 
 
@@ -1509,10 +1318,6 @@ api.indices.prototype.close = ca({
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.create = ca({
-  methods: [
-    'PUT',
-    'POST'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1522,16 +1327,16 @@ api.indices.prototype.create = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>',
-      req: {
-        index: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>',
+    req: {
+      index: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'POST'
 });
 
 
@@ -1544,9 +1349,6 @@ api.indices.prototype.create = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
  */
 api.indices.prototype['delete'] = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1568,7 +1370,8 @@ api.indices.prototype['delete'] = ca({
     {
       fmt: '/'
     }
-  ]
+  ],
+  method: 'DELETE'
 });
 
 
@@ -1582,9 +1385,6 @@ api.indices.prototype['delete'] = ca({
  * @param {String} params.name - The name of the alias to be deleted
  */
 api.indices.prototype.deleteAlias = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1594,19 +1394,19 @@ api.indices.prototype.deleteAlias = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_alias/<%=name%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_alias/<%=name%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      name: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -2
+  },
+  method: 'DELETE'
 });
 
 
@@ -1619,28 +1419,25 @@ api.indices.prototype.deleteAlias = ca({
  * @param {String} params.type - The name of the document type to delete
  */
 api.indices.prototype.deleteMapping = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>',
+    req: {
+      index: {
+        type: 'list'
+      },
+      type: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -2
+  },
+  method: 'DELETE'
 });
 
 
@@ -1653,9 +1450,6 @@ api.indices.prototype.deleteMapping = ca({
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.deleteTemplate = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1665,16 +1459,16 @@ api.indices.prototype.deleteTemplate = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/_template/<%=name%>',
-      req: {
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/_template/<%=name%>',
+    req: {
+      name: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'DELETE'
 });
 
 
@@ -1688,9 +1482,6 @@ api.indices.prototype.deleteTemplate = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
  */
 api.indices.prototype.deleteWarmer = ca({
-  methods: [
-    'DELETE'
-  ],
   params: {
     masterTimeout: {
       type: 'time',
@@ -1731,7 +1522,8 @@ api.indices.prototype.deleteWarmer = ca({
         }
       }
     }
-  ]
+  ],
+  method: 'DELETE'
 });
 
 
@@ -1742,21 +1534,17 @@ api.indices.prototype.deleteWarmer = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of indices to check
  */
 api.indices.prototype.exists = ca({
-  methods: [
-    'HEAD'
-  ],
-  params: {},
-  urls: [
-    {
-      fmt: '/<%=index%>',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>',
+    req: {
+      index: {
+        type: 'list'
       }
-    }
-  ],
-  castExists: true
+    },
+    sortOrder: -1
+  },
+  castExists: true,
+  method: 'HEAD'
 });
 
 
@@ -1769,9 +1557,6 @@ api.indices.prototype.exists = ca({
  * @param {String or String[] or Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.existsAlias = ca({
-  methods: [
-    'HEAD'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -1804,7 +1589,8 @@ api.indices.prototype.existsAlias = ca({
       }
     }
   ],
-  castExists: true
+  castExists: true,
+  method: 'HEAD'
 });
 
 
@@ -1817,9 +1603,6 @@ api.indices.prototype.existsAlias = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to check
  */
 api.indices.prototype.existsType = ca({
-  methods: [
-    'HEAD'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -1831,20 +1614,20 @@ api.indices.prototype.existsType = ca({
       name: 'ignore_indices'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>',
+    req: {
+      index: {
+        type: 'list'
+      },
+      type: {
+        type: 'list'
       }
-    }
-  ],
-  castExists: true
+    },
+    sortOrder: -2
+  },
+  castExists: true,
+  method: 'HEAD'
 });
 
 
@@ -1859,10 +1642,6 @@ api.indices.prototype.existsType = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
 api.indices.prototype.flush = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     force: {
       type: 'boolean'
@@ -1895,7 +1674,8 @@ api.indices.prototype.flush = ca({
     {
       fmt: '/_flush'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -1908,9 +1688,6 @@ api.indices.prototype.flush = ca({
  * @param {String or String[] or Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.getAlias = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -1954,9 +1731,6 @@ api.indices.prototype.getAlias = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.getAliases = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -1988,9 +1762,6 @@ api.indices.prototype.getAliases = ca({
  * @param {String or String[] or Boolean} params.field - A comma-separated list of fields
  */
 api.indices.prototype.getFieldMapping = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     includeDefaults: {
       type: 'boolean',
@@ -2043,10 +1814,6 @@ api.indices.prototype.getFieldMapping = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types
  */
 api.indices.prototype.getMapping = ca({
-  methods: [
-    'GET'
-  ],
-  params: {},
   urls: [
     {
       fmt: '/<%=index%>/<%=type%>/_mapping',
@@ -2081,10 +1848,6 @@ api.indices.prototype.getMapping = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.getSettings = ca({
-  methods: [
-    'GET'
-  ],
-  params: {},
   urls: [
     {
       fmt: '/<%=index%>/_settings',
@@ -2108,10 +1871,6 @@ api.indices.prototype.getSettings = ca({
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.getTemplate = ca({
-  methods: [
-    'GET'
-  ],
-  params: {},
   urls: [
     {
       fmt: '/_template/<%=name%>',
@@ -2137,10 +1896,6 @@ api.indices.prototype.getTemplate = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.getWarmer = ca({
-  methods: [
-    'GET'
-  ],
-  params: {},
   urls: [
     {
       fmt: '/<%=index%>/<%=type%>/_warmer/<%=name%>',
@@ -2188,9 +1943,6 @@ api.indices.prototype.getWarmer = ca({
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.open = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -2200,16 +1952,16 @@ api.indices.prototype.open = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_open',
-      req: {
-        index: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_open',
+    req: {
+      index: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'POST'
 });
 
 
@@ -2227,10 +1979,6 @@ api.indices.prototype.open = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.optimize = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     flush: {
       type: 'boolean'
@@ -2275,7 +2023,8 @@ api.indices.prototype.optimize = ca({
     {
       fmt: '/_optimize'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -2289,9 +2038,6 @@ api.indices.prototype.optimize = ca({
  * @param {String} params.name - The name of the alias to be created or updated
  */
 api.indices.prototype.putAlias = ca({
-  methods: [
-    'PUT'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -2332,7 +2078,8 @@ api.indices.prototype.putAlias = ca({
     {
       fmt: '/_alias'
     }
-  ]
+  ],
+  method: 'PUT'
 });
 
 
@@ -2347,10 +2094,6 @@ api.indices.prototype.putAlias = ca({
  * @param {String} params.type - The name of the document type
  */
 api.indices.prototype.putMapping = ca({
-  methods: [
-    'PUT',
-    'POST'
-  ],
   params: {
     ignoreConflicts: {
       type: 'boolean',
@@ -2364,19 +2107,19 @@ api.indices.prototype.putMapping = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_mapping',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/_mapping',
+    req: {
+      index: {
+        type: 'list'
+      },
+      type: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -2
+  },
+  method: 'POST'
 });
 
 
@@ -2388,9 +2131,6 @@ api.indices.prototype.putMapping = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.putSettings = ca({
-  methods: [
-    'PUT'
-  ],
   params: {
     masterTimeout: {
       type: 'time',
@@ -2409,7 +2149,8 @@ api.indices.prototype.putSettings = ca({
     {
       fmt: '/_settings'
     }
-  ]
+  ],
+  method: 'PUT'
 });
 
 
@@ -2423,10 +2164,6 @@ api.indices.prototype.putSettings = ca({
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.putTemplate = ca({
-  methods: [
-    'PUT',
-    'POST'
-  ],
   params: {
     order: {
       type: 'number'
@@ -2439,16 +2176,16 @@ api.indices.prototype.putTemplate = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/_template/<%=name%>',
-      req: {
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/_template/<%=name%>',
+    req: {
+      name: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -1
+  },
+  method: 'POST'
 });
 
 
@@ -2462,9 +2199,6 @@ api.indices.prototype.putTemplate = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
  */
 api.indices.prototype.putWarmer = ca({
-  methods: [
-    'PUT'
-  ],
   params: {
     masterTimeout: {
       type: 'time',
@@ -2497,7 +2231,8 @@ api.indices.prototype.putWarmer = ca({
         }
       }
     }
-  ]
+  ],
+  method: 'PUT'
 });
 
 
@@ -2510,10 +2245,6 @@ api.indices.prototype.putWarmer = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.refresh = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -2540,7 +2271,8 @@ api.indices.prototype.refresh = ca({
     {
       fmt: '/_refresh'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -2553,9 +2285,6 @@ api.indices.prototype.refresh = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.segments = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -2594,9 +2323,6 @@ api.indices.prototype.segments = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
 api.indices.prototype.snapshotIndex = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -2620,7 +2346,8 @@ api.indices.prototype.snapshotIndex = ca({
     {
       fmt: '/_gateway/snapshot'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -2654,9 +2381,6 @@ api.indices.prototype.snapshotIndex = ca({
  * @param {String or String[] or Boolean} params.searchGroups - A comma-separated list of search groups to include in the `search` statistics
  */
 api.indices.prototype.stats = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     all: {
       type: 'boolean'
@@ -2756,9 +2480,6 @@ api.indices.prototype.stats = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.status = ca({
-  methods: [
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -2804,9 +2525,6 @@ api.indices.prototype.status = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.updateAliases = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     timeout: {
       type: 'time'
@@ -2816,11 +2534,10 @@ api.indices.prototype.updateAliases = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/_aliases'
-    }
-  ]
+  url: {
+    fmt: '/_aliases'
+  },
+  method: 'POST'
 });
 
 
@@ -2837,10 +2554,6 @@ api.indices.prototype.updateAliases = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.validateQuery = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     explain: {
       type: 'boolean'
@@ -2887,7 +2600,8 @@ api.indices.prototype.validateQuery = ca({
     {
       fmt: '/_validate/query'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -2897,16 +2611,9 @@ api.indices.prototype.validateQuery = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  */
 api.info = ca({
-  methods: [
-    'GET',
-    'HEAD'
-  ],
-  params: {},
-  urls: [
-    {
-      fmt: '/'
-    }
-  ]
+  url: {
+    fmt: '/'
+  }
 });
 
 
@@ -2925,10 +2632,6 @@ api.info = ca({
  * @param {String} params.type - The type of the document
  */
 api.mget = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     fields: {
       type: 'list'
@@ -2978,7 +2681,8 @@ api.mget = ca({
     {
       fmt: '/_mget'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -3010,10 +2714,6 @@ api.mget = ca({
  * @param {String} params.type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
  */
 api.mlt = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     boostTerms: {
       type: 'number',
@@ -3091,22 +2791,22 @@ api.mlt = ca({
       name: 'stop_words'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_mlt',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_mlt',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -3
+  },
+  method: 'POST'
 });
 
 
@@ -3119,10 +2819,6 @@ api.mlt = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to use as default
  */
 api.msearch = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     searchType: {
       type: 'enum',
@@ -3161,7 +2857,8 @@ api.msearch = ca({
       fmt: '/_msearch'
     }
   ],
-  bulkBody: true
+  bulkBody: true,
+  method: 'POST'
 });
 
 
@@ -3174,29 +2871,25 @@ api.msearch = ca({
  * @param {String} params.type - The document type
  */
 api.percolate = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     preferLocal: {
       type: 'boolean',
       name: 'prefer_local'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_percolate',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/_percolate',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -2
+  },
+  method: 'POST'
 });
 
 
@@ -3208,10 +2901,6 @@ api.percolate = ca({
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     scroll: {
       type: 'duration'
@@ -3233,7 +2922,8 @@ api.scroll = ca({
     {
       fmt: '/_search/scroll'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -3273,10 +2963,6 @@ api.scroll = ca({
  * @param {String or String[] or Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
 api.search = ca({
-  methods: [
-    'GET',
-    'POST'
-  ],
   params: {
     analyzer: {
       type: 'string'
@@ -3424,7 +3110,8 @@ api.search = ca({
         }
       }
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -3439,10 +3126,6 @@ api.search = ca({
  * @param {String or String[] or Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
  */
 api.suggest = ca({
-  methods: [
-    'POST',
-    'GET'
-  ],
   params: {
     ignoreIndices: {
       type: 'enum',
@@ -3475,7 +3158,8 @@ api.suggest = ca({
     {
       fmt: '/_suggest'
     }
-  ]
+  ],
+  method: 'POST'
 });
 
 
@@ -3503,9 +3187,6 @@ api.suggest = ca({
  * @param {String} params.type - The type of the document
  */
 api.update = ca({
-  methods: [
-    'POST'
-  ],
   params: {
     consistency: {
       type: 'enum',
@@ -3567,21 +3248,46 @@ api.update = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_update',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_update',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
-    }
-  ]
+    },
+    sortOrder: -3
+  },
+  method: 'POST'
+});
+
+/**
+ * Perform a [create](http://elasticsearch.org/guide/reference/api/index_/) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.id - Document ID
+ * @param {String} params.parent - ID of the parent document
+ * @param {String} params.percolate - Percolator queries to execute while indexing the document
+ * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} [params.replication=sync] - Specific replication type
+ * @param {String} params.routing - Specific routing value
+ * @param {Date or Number} params.timeout - Explicit operation timeout
+ * @param {Date or Number} params.timestamp - Explicit timestamp for the document
+ * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
+ */
+api.create = ca.proxy(api.index, {
+  transform: function (params) {
+    params.op_type = 'create';
+  }
 });
 

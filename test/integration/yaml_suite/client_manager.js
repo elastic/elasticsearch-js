@@ -37,8 +37,12 @@ module.exports = {
     } else if (externalExists === void 0) {
       doCreateClient(function () {
         client.ping(function (err) {
-          externalExists = !err;
-          create(cb);
+          if (err instanceof es.errors.ConnectionFault) {
+            externalExists = !err;
+            create(done);
+          } else {
+            done(err);
+          }
         });
       });
     } else {

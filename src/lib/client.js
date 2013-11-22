@@ -22,33 +22,20 @@
  *
  * @class Client
  * @constructor
- * @param {Object} [config={}] - Configuration for the transport
- * @param {Object} [config.transport] - Transport settings passed to {{#crossLink "Transport"}}Transport Constructor{{/crossLink}}
- * @param {String|Array<String>} [config.log] - Log output settings {{#crossLink "Log"}}Log Constructor{{/crossLink}}
- * @param {Object} [config.trace=false] - Create a log output to stdio that only tracks trace logs
  */
 
 module.exports = Client;
 
-var _ = require('./utils');
-var ClientConfig = require('./client_config');
 var api = require('./api.js');
+var ca = require('./client_action');
+var Transport = require('./transport');
 
 function Client(config) {
-  this.client = this;
+  this.transport = new Transport(config);
 
-  // setup the config.. this config will be passed EVERYWHERE so for good measure it is locked down
-  Object.defineProperty(this, 'config', {
-    configurable: false,
-    enumerable: false,
-    writable: false,
-    value: !config || _.isPlainObject(config) ? new ClientConfig(config) : config,
-  });
-  this.config.client = this;
-
-  // instansiate the api's namespaces
+  // instantiate the api's namespaces
   for (var i = 0; i < this._namespaces.length; i++) {
-    this[this._namespaces[i]] = new this[this._namespaces[i]](this);
+    this[this._namespaces[i]] = new this[this._namespaces[i]](this.transport);
   }
 }
 
@@ -60,19 +47,14 @@ Client.prototype = api;
  * @param {Object} params - Currently just a placeholder, no params used at this time
  * @param {Function} cb - callback
  */
-Client.prototype.ping = function (params, cb) {
-  if (typeof params === 'function') {
-    cb = params;
-    params = {};
-  }
-
-  this.config.transport.request({
-    method: 'HEAD',
-    path: '/',
-    timeout: 100,
-  }, cb);
-};
+Client.prototype.ping = ca({
+  method: 'HEAD',
+  url: {
+    fmt: '/'
+  },
+  timeout: 100
+});
 
 Client.prototype.close = function () {
-  this.config.close();
+  this.transport.close();
 };

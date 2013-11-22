@@ -1,5 +1,5 @@
 /**
- * Class to wrap URLS, formatting them and maintaining their seperate details
+ * Class to wrap URLS, formatting them and maintaining their separate details
  * @type {[type]}
  */
 module.exports = Host;
@@ -16,41 +16,75 @@ var defaultPort = {
   https: 443
 };
 
+var urlParseFields = [
+  'protocol', 'hostname', 'pathname', 'port', 'auth', 'query'
+];
+
+var simplify = ['host', 'path'];
+
 function Host(config) {
-  if (this instanceof Host) {
-    if (typeof config === 'string') {
-      return Host.fromString(config);
-    } else {
-      _.extend(this, config || {});
+  config = config || {};
+
+  // defaults
+  this.protocol = 'http';
+  this.host = 'localhost';
+  this.port = 9200;
+  this.auth = null;
+  this.query = null;
+
+  if (typeof config === 'string') {
+    if (!startsWithProtocolRE.test(config)) {
+      config = 'http://' + config;
     }
+    config = _.pick(url.parse(config, false, true), urlParseFields);
+  }
+
+  if (_.isObject(config)) {
+    // move hostname/portname to host/port semi-intelligently.
+    _.each(simplify, function (to) {
+      var from = to + 'name';
+      if (config[from] && config[to]) {
+        if (config[to].indexOf(config[from]) === 0) {
+          config[to] = config[from];
+        }
+      } else if (config[from]) {
+        config[to] = config[from];
+      }
+      delete config[from];
+    });
   } else {
-    return new Host(config);
+    config = {};
+  }
+
+  _.assign(this, config);
+
+  // make sure the query string is parsed
+  if (this.query === null) {
+    // majority case
+    this.query = {};
+  } else if (!_.isPlainObject(this.query)) {
+    this.query = qs.parse(this.query);
+  }
+
+  // make sure that the port is a number
+  if (typeof this.port !== 'number') {
+    this.port = parseInt(this.port, 10);
+    if (isNaN(this.port)) {
+      this.port = 9200;
+    }
+  }
+
+  // make sure the path starts with a leading slash
+  // and that empty paths convert to '/'
+  if (!this.path || this.path.charAt(0) !== '/') {
+    this.path = '/' + (this.path || '');
+  }
+
+  // strip trailing ':' on the protocol (when config comes from url.parse)
+  if (this.protocol.substr(-1) === ':') {
+    this.protocol = this.protocol.substring(0, this.protocol.length - 1);
   }
 }
-
-Host.fromString = function (urlString) {
-  if (!startsWithProtocolRE.test(urlString)) {
-    urlString = 'http://' + urlString;
-  }
-  var u = url.parse(urlString, true, true);
-  return new Host({
-    protocol: u.protocol ? u.protocol.substring(0, u.protocol.length - 1) : 'http',
-    host: u.hostname || 'localhost',
-    port: u.port || 9200,
-    auth: u.auth || '',
-    path: u.pathname,
-    query: u.query,
-  });
-};
-
-Host.prototype = {
-  protocol: 'http',
-  host: 'localhost',
-  port: 9200,
-  auth: '',
-  path: '',
-  query: false
-};
 
 Host.prototype.makeUrl = function (params) {
   params = params || {};
@@ -62,17 +96,10 @@ Host.prototype.makeUrl = function (params) {
   }
 
   // build the path
-  var path = '';
-  // add the path prefix if set
-  if (this.path) {
-    path += this.path;
-  }
-  // then the path from the params
-  if (params.path) {
-    path += params.path;
-  }
-  // if we still have a path, and it doesn't start with '/' add it.
-  if (path && path.charAt(0) !== '/') {
+  var path = '' + (this.path || '') + (params.path || '');
+
+  // if path doesn't start with '/' add it.
+  if (path.charAt(0) !== '/') {
     path = '/' + path;
   }
 
@@ -89,4 +116,8 @@ Host.prototype.makeUrl = function (params) {
   }
 
   return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
+};
+
+Host.prototype.toString = function () {
+  return this.makeUrl();
 };

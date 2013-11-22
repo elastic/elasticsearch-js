@@ -15,16 +15,20 @@ var StreamLogger = require('./stream');
 var _ = require('../utils');
 var fs = require('fs');
 
-function File(config, bridge) {
-  // setup the stream before calling the super
+function File(log, config) {
+  config = config || {};
+
+  // we should probably through an error if they don't support a path
   this.path = config.path || 'elasticsearch.log';
+
+  // yahoo!
   config.stream = fs.createWriteStream(this.path, {
     flags: 'a',
     encoding: 'utf8'
   });
 
   // call my super
-  StreamLogger.call(this, config, bridge);
+  StreamLogger.call(this, log, config);
 }
 _.inherits(File, StreamLogger);
 

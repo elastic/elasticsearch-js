@@ -5,40 +5,27 @@
  * It will also instruct the client to use Angular's $http service for it's ajax requests
  */
 var AngularConnector = require('./lib/connectors/angular');
-var Transport = require('./lib/transport');
 var Client = require('./lib/client');
+
+process.angular_build = true;
 
 /* global angular */
 angular.module('elasticsearch.client', [])
   .factory('esFactory', ['$http', '$q', function ($http, $q) {
 
-  AngularConnector.prototype.$http = $http;
+    AngularConnector.prototype.$http = $http;
 
-  // store the original request function
-  Transport.prototype._request = Transport.prototype.request;
+    var factory = function (config) {
+      config = config || {};
+      config.connectionClass = AngularConnector;
+      config.createDefer = function () {
+        return $q.defer();
+      };
+      return new Client(config);
+    };
 
-  // overwrite the request function to return a promise
-  // and support the callback
-  Transport.prototype.request = function (params, cb) {
-    var deferred = $q.defer();
-    this._request(params, function (err, body, status) {
-      if (typeof cb === 'function') {
-        cb(err, body, status);
-      }
+    factory.errors = require('./lib/errors');
+    factory.ConnectionPool = require('./lib/connection_pool');
+    factory.Transport = require('./lib/transport');
 
-      if (err) {
-        deferred.reject(err);
-      } else {
-        deferred.resolve({ body: body, status: status });
-      }
-    });
-
-    return deferred.promise;
-  };
-
-  return function (config) {
-    config = config || {};
-    config.connectionClass = AngularConnector;
-    return new Client(config);
-  };
-}]);
+  }]);

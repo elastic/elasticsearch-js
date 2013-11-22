@@ -12,6 +12,7 @@
   <script type="text/javascript" src="expect.js?_c=<%= ts %>"></script>
   <script type="text/javascript" src="mocha.js?_c=<%= ts %>"></script>
   <script type="text/javascript" src="jquery.js?_c=<%= ts %>"></script>
+  <script type="text/javascript" src="client.js?_c=<%= ts %>"></script>
 
   <!-- ESJS Reporter - sets itself as the reporter -->
   <link rel="stylesheet" href="esjs_reporter.css?_c=<%= ts %>"/>
@@ -24,18 +25,21 @@
     var BROWSER_NAME = <%= JSON.stringify(browser) %>;
   </script>
 
-  <!-- test -->
-  <script>mocha.setup('bdd')</script>
-  <script type="text/javascript" src="client.js?_c=<%= ts %>"></script>
+  <!-- mocha setup -->
+  <script>
+    mocha.setup('bdd')
+    mocha.checkLeaks();
+    mocha.globals(['console', 'elasticsearch']);
+    mocha.slow(1000);
+    mocha.timeout(11000);
+    mocha.bail();
+  </script>
+
+  <!-- include tests -->
   <script type="text/javascript" src="yaml_tests.js?_c=<%= ts %>"></script>
 
   <!-- begin -->
   <script>
-    mocha.checkLeaks();
-    mocha.slow(1000);
-    mocha.timeout(11000);
-    mocha.globals(['console', 'elasticsearch']);
-    mocha.bail();
     /PhantomJS/i.test(navigator.userAgent) || mocha.run();
   </script>
 </body>

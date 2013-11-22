@@ -6,6 +6,10 @@
   "name": "elasticsearch-js",
   "homepage": "https://github.com/elasticsearch/elasticsearch-js",
   "version": "0.0.1",
+  "browser": {
+    "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
+    "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js"
+  },
   "devDependencies": {
     "tar": "~0.1.18",
     "mocha": "~1.14.0",
@@ -25,19 +29,34 @@
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-open": "~0.2.2",
-    "grunt-run": "~0.1.0",
     "xmlbuilder": "~0.4.3",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "coveralls": "~2.3.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "blanket": "~1.1.5",
+    "sinon": "~1.7.3",
+    "nock": "~0.23.0",
+    "open": "0.0.4",
+    "testling": "https://github.com/spenceralger/testling/tarball/master"
   },
   "license": "Apache License",
   "dependencies": {
     "when": "~2.6.0",
     "lodash": "~2.3.0",
     "agentkeepalive": "~0.1",
-    "chalk": "~0.3.0"
+    "chalk": "~0.3.0",
+    "inherits": "~2.0.1"
   },
   "scripts": {
-    "test": "grunt generate test"
+    "test": "node scripts/run_tests.js",
+    "build": "grunt",
+    "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",
+    "blanket": {
+      "pattern": "src"
+    }
+  },
+  "testling": {
+    "harness": "mocha",
+    "files": "test/unit/test_!(http_connection|stdio_logger).js"
   }
 }

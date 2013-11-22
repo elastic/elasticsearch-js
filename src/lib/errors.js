@@ -1,5 +1,5 @@
-var _ = require('./utils'),
-  errors = module.exports;
+var _ = require('./utils');
+var errors = module.exports;
 
 function ErrorAbstract(msg, constructor) {
   this.message = msg;
@@ -11,6 +11,7 @@ function ErrorAbstract(msg, constructor) {
     Error.captureStackTrace(this, constructor);
   }
 }
+errors._Abstract = ErrorAbstract;
 _.inherits(ErrorAbstract, Error);
 
 /**

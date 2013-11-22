@@ -34,8 +34,12 @@
     var stats = this.stats;
     var rootSuite = {
       $el: $('<ul id="mocha-report"></ul>'),
+      name: 'root',
+      start: Date.now(),
       results: [],
-      suites: []
+      suites: [],
+      stdout: '',
+      stderr: '',
     };
 
 
@@ -135,7 +139,7 @@
     runner.on('end', function () {
       var testResults = {
         stats: stats,
-        suites: $.map(rootSuite.suites, function removeElements(suite) {
+        suites: $.map([rootSuite], function removeElements(suite) {
           var s = {
             name: suite.name,
             start: suite.start,

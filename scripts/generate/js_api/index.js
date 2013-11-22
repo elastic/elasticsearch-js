@@ -17,12 +17,21 @@ function download() {
       }
     }));
 
+    // seperate the proxy actions
+    var groups = _.groupBy(actions, function (action) {
+      return action.proxy ? 'proxies' : 'normal';
+    });
+
     clean(outputPath);
+
     console.log('writing', actions.length, 'api actions to', outputPath);
+
     fs.writeFileSync(outputPath, templates.apiFile({
-      actions: actions,
+      actions: groups.normal,
+      proxies: groups.proxies,
       namespaces: _.unique(namespaces.sort(), true)
     }));
+
     fs.writeFileSync(docOutputPath, templates.apiDocs({
       actions: actions
     }));
@@ -30,7 +39,7 @@ function download() {
 }
 
 restSpecUpdated(function (err, updated) {
-  if (process.env.FORCE_GEN || err || updated) {
+  if (process.env.FORCE_GEN || process.env.npm_config_force || err || updated) {
     download();
   }
 });

@@ -2,21 +2,50 @@
  * Constructs a function that can be called to make a request to ES
  * @type {[type]}
  */
-module.exports = function ClientAction(spec, client) {
-  return function (params, cb) {
-    return exec((client || this.client).config.transport, spec, params, cb);
-  };
-};
+module.exports = ClientAction;
 
 var _ = require('./utils');
+var when = require('when');
+
+function ClientAction(spec) {
+  if (!_.isPlainObject(spec.params)) {
+    spec.params = {};
+  }
+
+  if (!spec.method) {
+    spec.method = 'GET';
+  }
+
+  return function (params, cb) {
+    if (typeof params === 'function') {
+      cb = params;
+      params = {};
+    } else {
+      params = params || {};
+      cb = typeof cb === 'function' ? cb : null;
+    }
+
+    try {
+      return exec(this.transport, spec, params, cb);
+    } catch (e) {
+      if (typeof cb === 'function') {
+        _.nextTick(cb, e);
+      } else {
+        return when.reject(e);
+      }
+    }
+  };
+}
 
 var castType = {
   enum: function (param, val, name) {
-    if (_.contains(param.options, val)) {
-      return val;
-    } else {
-      throw new TypeError('Invalid ' + name + ': expected one of ' + param.options.join(','));
+    /* jshint eqeqeq: false */
+    for (var i = 0; i < param.options.length; i++) {
+      if (param.options[i] == val) {
+        return param.options[i];
+      }
     }
+    throw new TypeError('Invalid ' + name + ': expected one of ' + param.options.join(','));
   },
   duration: function (param, val, name) {
     if (_.isNumeric(val) || _.isInterval(val)) {
@@ -30,17 +59,16 @@ var castType = {
   },
   list: function (param, val, name) {
     switch (typeof val) {
+    case 'number':
     case 'string':
       return val;
     case 'object':
       if (_.isArray(val)) {
         return val.join(',');
-      } else {
-        throw new TypeError('Invalid ' + name + ': expected be a comma seperated list, array, or boolean.');
       }
-      break;
+      /* falls through */
     default:
-      return !!val;
+      throw new TypeError('Invalid ' + name + ': expected be a comma seperated list, array, number or string.');
     }
   },
   boolean: function (param, val) {
@@ -55,18 +83,25 @@ var castType = {
     }
   },
   string: function (param, val, name) {
-    if (typeof val !== 'object' && val) {
+    switch (typeof val) {
+    case 'number':
+    case 'string':
       return '' + val;
-    } else {
+    default:
       throw new TypeError('Invalid ' + name + ': expected a string.');
     }
   },
   time: function (param, val, name) {
-    if (typeof val === 'string' || _.isNumeric(val)) {
+    if (typeof val === 'string') {
       return val;
-    } else if (val instanceof Date) {
-      return val.getTime();
-    } else {
+    }
+    else if (_.isNumeric(val)) {
+      return '' + val;
+    }
+    else if (val instanceof Date) {
+      return '' + val.getTime();
+    }
+    else {
       throw new TypeError('Invalid ' + name + ': expected some sort of time.');
     }
   }
@@ -88,8 +123,12 @@ function resolveUrl(url, params) {
         // missing a required param
         return false;
       } else {
-        // copy param vals into vars
-        vars[key] = params[key];
+        // cast of copy required param
+        if (castType[url.req[key].type]) {
+          vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
+        } else {
+          vars[key] = params[key];
+        }
       }
     }
   }
@@ -127,60 +166,27 @@ function resolveUrl(url, params) {
   }, {}));
 }
 
-function exec(transport, spec, params, cb) {
-  if (typeof params === 'function') {
-    cb = params;
-    params = {};
-  } else {
-    params = params || {};
-    cb = typeof cb === 'function' ? cb : _.noop;
-  }
+// export so that we can test this
+ClientAction.resolveUrl = resolveUrl;
 
-  var request = {};
+function exec(transport, spec, params, cb) {
+  var request = {
+    method: spec.method,
+    timeout: spec.timeout || 10000
+  };
   var query = {};
   var i;
 
+  // verify that we have the body if needed
   if (spec.needsBody && !params.body) {
-    return _.nextTick(cb, new TypeError('A request body is required.'));
+    throw new TypeError('A request body is required.');
   }
 
-  if (params.timeout === void 0) {
-    request.timeout = 10000;
-  } else {
-    request.timeout = params.timeout;
-  }
-
-  // copy over some properties from the spec
-  params.body && (request.body = params.body);
-  params.ignore && (request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore]);
+  // control params
   spec.bulkBody && (request.bulkBody = true);
   spec.castExists && (request.castExists = true);
 
-  if (spec.methods.length === 1) {
-    request.method = spec.methods[0];
-  } else {
-    // if set, uppercase the user's choice, other wise returns ""
-    request.method = _.toUpperString(params.method);
-
-    if (request.method) {
-      // use the one specified as long as it's a valid option
-      if (!_.contains(spec.methods, request.method)) {
-        return _.nextTick(cb, new TypeError('Invalid method: should be one of ' + spec.methods.join(', ')));
-      }
-    } else {
-      // pick a method
-      if (request.body) {
-        // first method that isn't "GET"
-        request.method = spec.methodWithBody || (
-          spec.methodWithBody = _.find(spec.methods, function (m) { return m !== 'GET'; })
-        );
-      } else {
-        // just use the first option
-        request.method = spec.methods[0];
-      }
-    }
-  }
-
+  // pick the url
   if (spec.url) {
     // only one url option
     request.path = resolveUrl(spec.url, params);
@@ -194,12 +200,9 @@ function exec(transport, spec, params, cb) {
 
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
-    return _.nextTick(
-      cb,
-      new TypeError(
-        'Unable to build a path with those params. Supply at least ' +
-        _.keys(spec.urls[spec.urls.length - 1].req).join(', ')
-      )
+    throw new TypeError(
+      'Unable to build a path with those params. Supply at least ' +
+      _.keys(spec.urls[spec.urls.length - 1].req).join(', ')
     );
   }
 
@@ -207,24 +210,56 @@ function exec(transport, spec, params, cb) {
   if (!spec.paramKeys) {
     // build a key list on demand
     spec.paramKeys = _.keys(spec.params);
-  }
-  var key, param, name;
-  for (i = 0; i < spec.paramKeys.length; i++) {
-    key = spec.paramKeys[i];
-    param = spec.params[key];
-    // param keys don't always match the param name, in those cases it's stored in the param def as "name"
-    name = param.name || key;
-    try {
-      if (params[key] != null) {
-        query[name] = castType[param.type] ? castType[param.type](param, params[key], key) : params[key];
-        if (param['default'] && query[name] === param['default']) {
-          delete query[name];
-        }
-      } else if (param.required) {
-        throw new TypeError('Missing required parameter ' + key);
+    spec.requireParamKeys = _.transform(spec.params, function (req, param, key) {
+      if (param.required) {
+        req.push(key);
       }
-    } catch (e) {
-      return _.nextTick(cb, e);
+    }, []);
+  }
+
+  var key, paramSpec;
+
+  for (key in params) {
+    if (params.hasOwnProperty(key) && params[key] != null) {
+      switch (key) {
+      case 'body':
+        request.body = params.body;
+        break;
+      case 'ignore':
+        request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore];
+        break;
+      case 'timeout':
+        request.timeout = params.timeout;
+        break;
+      case 'method':
+        request.method = _.toUpperString(params.method);
+        break;
+      default:
+        paramSpec = spec.params[key];
+        if (paramSpec) {
+          // param keys don't always match the param name, in those cases it's stored in the param def as "name"
+          paramSpec.name = paramSpec.name || key;
+          if (params[key] != null) {
+            if (castType[paramSpec.type]) {
+              query[paramSpec.name] = castType[paramSpec.type](paramSpec, params[key], key);
+            } else {
+              query[paramSpec.name] = params[key];
+            }
+
+            if (paramSpec['default'] && query[paramSpec.name] === paramSpec['default']) {
+              delete query[paramSpec.name];
+            }
+          }
+        } else {
+          query[key] = params[key];
+        }
+      }
+    }
+  }
+
+  for (i = 0; i < spec.requireParamKeys.length; i ++) {
+    if (!query.hasOwnProperty(spec.requireParamKeys[i])) {
+      throw new TypeError('Missing required parameter ' + spec.requireParamKeys[i]);
     }
   }
 
@@ -232,3 +267,23 @@ function exec(transport, spec, params, cb) {
 
   return transport.request(request, cb);
 }
+
+
+
+ClientAction.proxy = function (fn, spec) {
+  return function (params, cb) {
+    if (typeof params === 'function') {
+      cb = params;
+      params = {};
+    } else {
+      params = params || {};
+      cb = typeof cb === 'function' ? cb : null;
+    }
+
+    if (spec.transform) {
+      spec.transform(params);
+    }
+
+    return fn.call(this, params, cb);
+  };
+};

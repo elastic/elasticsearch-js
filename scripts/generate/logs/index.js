@@ -34,7 +34,8 @@ var es = require('../../../src/elasticsearch'),
   endingMoment = moment().endOf('day').add('days', days),
   clientConfig = {
     log: {
-      level: 'error'
+      level: 'trace',
+      type: 'stdio'
     }
   };
 
@@ -95,7 +96,7 @@ fillIndecies(function () {
     actions.push(event);
 
     if (actions.length === 3000 || i === count - 1) {
-      client.config.log.info('writing', actions.length / 2, 'documents');
+      console.info('writing', actions.length / 2, 'documents');
       client.bulk({
         body: actions
       }, done);
@@ -176,10 +177,11 @@ function fillIndecies(cb) {
 
   async.parallel(indexPushActions, function (err, responses) {
     if (err) {
-      client.config.log.error(err.message = 'Unable to create indicies: ' + err.message);
+      console.error(err.message = 'Unable to create indicies: ' + err.message);
+      console.error(err.stack);
     } else {
       _.each(_.groupBy(responses), function (list, did) {
-        client.config.log.info(list.length, 'indicies', did);
+        console.info(list.length, 'indicies', did);
       });
       cb();
     }

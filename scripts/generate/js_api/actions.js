@@ -95,9 +95,13 @@ function transformFile(entry) {
       });
     });
 
-    spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function (url) {
-      return _.omit(url, 'sortOrder');
-    });
+    if (urls.length > 1) {
+      spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function (url) {
+        return _.omit(url, 'sortOrder');
+      });
+    } else {
+      spec.url = urls[0];
+    }
 
     spec.params = _.transform(spec.params, function (note, param, name) {
       // param.name = name;
@@ -105,6 +109,10 @@ function transformFile(entry) {
         'type', 'default', 'options', 'required', 'name'
       ]);
     }, {});
+
+    if (_.size(spec.params) === 0) {
+      delete spec.params;
+    }
 
     // escape method names with "special" keywords
     var location = spec.name.split('.').join('.prototype.')
@@ -114,6 +122,7 @@ function transformFile(entry) {
       spec: _.pick(spec, [
         'methods',
         'params',
+        'url',
         'urls',
         'needBody',
         'bulkBody',
@@ -125,6 +134,61 @@ function transformFile(entry) {
       name: spec.name,
       allParams: allParams
     };
+
+    function hasMethod(/* ...methods */) {
+      for (var i = 0; i < arguments.length; i++) {
+        if (~action.spec.methods.indexOf(arguments[i])) {
+          continue;
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
+    function methodsAre(/* ...methods */) {
+      return hasMethod.apply(null, arguments) && arguments.length === action.spec.methods.length;
+    }
+
+    var method;
+
+    if (action.spec.methods.length === 1) {
+      method = action.spec.methods[0];
+    } else {
+      // we need to define what the default method(s) will be
+      if (hasMethod('DELETE', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('DELETE')) {
+        method = 'DELETE';
+      }
+      else if (methodsAre('POST', 'PUT')) {
+        method = 'POST';
+      }
+      else if (methodsAre('GET', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('GET', 'HEAD')) {
+        if (action.spec.castExists) {
+          method = 'HEAD';
+        } else {
+          method = 'GET';
+        }
+      }
+    }
+
+    if (method) {
+      if (method !== 'GET') {
+        action.spec.method = method;
+      }
+      delete action.spec.methods;
+    } else {
+      throw new Error('unable to pick a method for ' + JSON.stringify(action, null, '  '));
+    }
+
+    if (action.name === 'create') {
+      action.proxy = 'index';
+      action.transformBody = 'params.op_type = \'create\';';
+    }
 
     if (actions.push(action) === specCount && doneParsing) {
       module.exports.emit('ready', action);

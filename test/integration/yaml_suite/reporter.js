@@ -10,7 +10,7 @@ var Base = require('mocha/lib/reporters/base');
 var _ = require('lodash');
 var chalk = require('chalk');
 var clientManager = require('./client_manager');
-var makeJUnitXml = require('../../make_j_unit_xml');
+var makeJUnitXml = require('../../../scripts/make_j_unit_xml');
 var fs = require('fs');
 var path = require('path');
 

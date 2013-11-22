@@ -12,55 +12,63 @@ var handles = {
   http: require('http'),
   https: require('https')
 };
+var Log = require('../log');
 var _ = require('../utils');
 var errors = require('../errors');
 var qs = require('querystring');
-var KeepAliveAgent = require('agentkeepalive/lib/agent');
+var KeepAliveAgent = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 
-
+/**
+ * Connector used to talk to an elasticsearch node via HTTP
+ *
+ * @param {Host} host - The host object representing the elasticsearch node we will be talking to
+ * @param {Object} [config] - Configuration options (extends the configuration options for ConnectionAbstract)
+ * @param {Number} [config.maxSockets=10] - the maximum number of sockets that will be opened to this node
+ * @param {Number} [config.maxFreeSockets=10] - this maximum number of sockets that can sit idle to this node
+ * @param {Number} [config.maxKeepAliveTime=300000] - an idle timeout for the connections to this node. If your
+ *  maxSockets is much higher than your average concurrent usage, this timeout will cause sockets to close which
+ *  can be interpreted as "bad" behavior for clients.
+ */
 function HttpConnector(host, config) {
+  config = _.defaults(config || {}, {
+    maxSockets: 10,
+    maxFreeSockets: 10,
+    maxKeepAliveTime: 3e5 // 5 minutes
+  });
   ConnectionAbstract.call(this, host, config);
 
   this.hand = handles[this.host.protocol];
   this.agent = new KeepAliveAgent({
-    maxSockets: 1,
-    maxKeepAliveRequests: 0, // max requests per keepalive socket, default is 0, no limit.
-    maxKeepAliveTime: 30000 // keepalive for 30 seconds
+    keepAlive: true,
+    maxSockets: config.maxSockets,
+    maxFreeSockets: config.maxFreeSockets || this.hand.Agent.defaultMaxSockets,
+    keepAliveMsecs: config.keepAliveMsecs
   });
 
-  this.on('closed', this.bound.onClosed);
-  this.on('alive', this.bound.onAlive);
+  this.log = config.log;
+  if (!_.isObject(this.log)) {
+    this.log = new Log();
+  }
 }
 _.inherits(HttpConnector, ConnectionAbstract);
 
-HttpConnector.prototype.onClosed = _.handler(function () {
-  this.agent.destroy();
-  this.removeAllListeners();
-});
-
-HttpConnector.prototype.onAlive = _.handler(function () {
-  // only set the agents max agents config once the connection is verified to be alive
-  this.agent.maxSockets = this.config.maxSockets;
-});
-
 HttpConnector.prototype.makeReqParams = function (params) {
+  params = params || {};
+  var host = this.host;
+
   var reqParams = {
-    method: params.method,
-    protocol: this.host.protocol + ':',
-    auth: this.host.auth,
-    hostname: this.host.host,
-    port: this.host.port,
-    pathname: this.host.path + params.path,
-    headers: this.host.headers,
+    method: params.method || 'GET',
+    protocol: host.protocol + ':',
+    auth: host.auth,
+    hostname: host.host,
+    port: host.port,
+    path: (host.path || '') + (params.path || ''),
+    headers: host.headers,
     agent: this.agent
   };
 
   var query = this.host.query ? this.host.query : null;
-
-  if (typeof query === 'string') {
-    query = qs.parse(query);
-  }
 
   if (params.query) {
     query = _.defaults({},
@@ -70,10 +78,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
   }
 
   if (query) {
-    reqParams.query = query;
-    reqParams.path = reqParams.pathname + '?' + qs.stringify(query);
-  } else {
-    reqParams.path = reqParams.pathname;
+    reqParams.path = reqParams.path + '?' + qs.stringify(query);
   }
 
   return reqParams;
@@ -86,7 +91,7 @@ HttpConnector.prototype.request = function (params, cb) {
   var response;
   var status = 0;
   var timeout = params.timeout || this.config.timeout;
-  var log = this.config.log;
+  var log = this.log;
 
   var reqParams = this.makeReqParams(params);
 

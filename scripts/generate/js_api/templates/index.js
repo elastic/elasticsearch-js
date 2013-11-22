@@ -42,6 +42,13 @@ var templateGlobals = {
 
   _: _,
 
+  indent: function (block, spaces) {
+    var indent = _.repeat(' ', spaces);
+    return block.split('\n').map(function (line) {
+      return indent + line;
+    }).join('\n');
+  },
+
   paramType: function (type) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
     case 'time':

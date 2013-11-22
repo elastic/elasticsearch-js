@@ -3,33 +3,66 @@
  * before providing them to the application
  *
  * @class ConnectionPool
- * @param {Client} client - The client this pool belongs to
+ * @constructor
+ * @param {Object} config - The config object passed to the transport.
  */
 
 module.exports = ConnectionPool;
 
 var _ = require('./utils');
-var Host = require('./host');
+var Log = require('./log');
 
 function ConnectionPool(config) {
   _.makeBoundMethods(this);
-  this.config = config;
+
+  this.log = config.log;
+  if (!this.log) {
+    this.log = new Log();
+  }
+
+  // get the selector config var
+  this.selector = _.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelectors);
+  // get the connection class
+  this.Connection = _.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
+    ConnectionPool.defaultConnectionClass);
+
+  // a map of connections to their "id" property, used when sniffing
   this.index = {};
+
   this.connections = {
     alive: [],
     dead: []
   };
 }
 
+// selector options
+ConnectionPool.selectors = require('./selectors');
+ConnectionPool.defaultSelectors = 'round_robin';
+
+// get the connection options
+ConnectionPool.connectionClasses = require('./connectors');
+ConnectionPool.defaultConnectionClass = ConnectionPool.connectionClasses._default;
+delete ConnectionPool.connectionClasses._default;
+
+/**
+ * Selects a connection from the list using the this.selector
+ * Features:
+ *  - detects if the selector is async or not
+ *  - sync selectors should still return asynchronously
+ *  - catches errors in sync selectors
+ *  - automatically selects the first dead connection when there no living connections
+ *
+ * @param  {Function} cb [description]
+ * @return {[type]}      [description]
+ */
 ConnectionPool.prototype.select = function (cb) {
   if (this.connections.alive.length) {
-    if (this.config.selector.length > 1) {
-      this.config.selector(this.connections.alive, cb);
+    if (this.selector.length > 1) {
+      this.selector(this.connections.alive, cb);
     } else {
       try {
-        _.nextTick(cb, null, this.config.selector(this.connections.alive));
+        _.nextTick(cb, null, this.selector(this.connections.alive));
       } catch (e) {
-        this.config.log.error(e);
         cb(e);
       }
     }
@@ -38,7 +71,7 @@ ConnectionPool.prototype.select = function (cb) {
   }
 };
 
-ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus, connection) {
+ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, connection) {
   var from, to, index;
 
   if (oldStatus === status) {
@@ -48,8 +81,6 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
     } else {
       return true;
     }
-  } else {
-    this.config.log.info('connection id:', connection.id, 'is', status);
   }
 
   switch (status) {
@@ -86,46 +117,56 @@ ConnectionPool.prototype.onStatusChanged = _.handler(function (status, oldStatus
 });
 
 ConnectionPool.prototype.addConnection = function (connection) {
+  if (!connection.id) {
+    connection.id = connection.host.toString();
+  }
+
   if (!this.index[connection.id]) {
+    this.log.info('Adding connection to', connection.id);
     this.index[connection.id] = connection;
-    connection.on('status changed', this.bound.onStatusChanged);
+    connection.on('status set', this.bound.onStatusSet);
     connection.setStatus('alive');
   }
 };
 
 ConnectionPool.prototype.removeConnection = function (connection) {
+  if (!connection.id) {
+    connection.id = connection.host.toString();
+  }
+
   if (this.index[connection.id]) {
     delete this.index[connection.id];
     connection.setStatus('closed');
-    connection.removeListener('status changed', this.bound.onStatusChanged);
+    connection.removeListener('status set', this.bound.onStatusSet);
   }
 };
 
-ConnectionPool.prototype.setNodes = function (nodeConfigs) {
+ConnectionPool.prototype.setHosts = function (hosts) {
   var connection;
   var i;
   var id;
-  var node;
+  var host;
   var toRemove = _.clone(this.index);
 
-  for (i = 0; i < nodeConfigs.length; i++) {
-    node = nodeConfigs[i];
-    if (node instanceof Host) {
-      id = node.toString();
-      if (this.index[id]) {
-        delete toRemove[id];
-      } else {
-        connection = new this.config.connectionClass(node, this.config);
-        connection.id = id;
-        this.addConnection(connection);
-      }
+  for (i = 0; i < hosts.length; i++) {
+    host = hosts[i];
+    id = host.toString();
+    if (this.index[id]) {
+      delete toRemove[id];
+    } else {
+      connection = new this.Connection(host);
+      connection.id = id;
+      this.addConnection(connection);
     }
   }
 
-  _.each(toRemove, this.removeConnection, this);
+  var removeIds = _.keys(toRemove);
+  for (i = 0; i < removeIds.length; i++) {
+    this.removeConnection(this.index[removeIds[i]]);
+  }
 };
 
 ConnectionPool.prototype.close = function () {
-  this.setNodes([]);
+  this.setHosts([]);
 };
 ConnectionPool.prototype.empty = ConnectionPool.prototype.close;

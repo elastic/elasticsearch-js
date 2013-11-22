@@ -12,16 +12,16 @@ _.each(actions, function (action) {
     var className = _.studlyCase(namespace) + 'NS';
 %>
 
-api.<%= namespace %> = function <%= className %>(client) {
-  if (this instanceof <%= className %>) {
-    this.client = client;
-  } else {
-    return new <%= className %>(client);
-  }
+api.<%= namespace %> = function <%= className %>(transport) {
+  this.transport = transport;
 };<%
-  }
-%>
+  }%>
 
 <%= partials.client_action(action) %><%
 
-}); %>
+});
+
+_.each(proxies, function (action) {%>
+<%= partials.client_action_proxy(action) %><%
+});
+%>

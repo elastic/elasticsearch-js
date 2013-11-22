@@ -15,9 +15,9 @@ module.exports = Tracer;
 var FileLogger = require('./file');
 var _ = require('../utils');
 
-function Tracer(config, bridge) {
+function Tracer(log, config) {
   // call my super
-  FileLogger.call(this, config, bridge);
+  FileLogger.call(this, log, config);
 }
 _.inherits(Tracer, FileLogger);
 

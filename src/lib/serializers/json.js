@@ -6,13 +6,11 @@ module.exports = Json;
 
 var _ = require('../utils');
 
-function Json(client) {
-  this.client = client;
-}
+function Json() {}
 
 Json.prototype.serialize = function (val, replacer, spaces) {
   if (val == null) {
-    return null;
+    return;
   }
   else if (typeof val === 'string') {
     return val;
@@ -26,8 +24,7 @@ Json.prototype.unserialize = function (str) {
     try {
       return JSON.parse(str);
     } catch (e) {
-      this.client.log.error(new Error('unable to parse', str));
-      return null;
+      return;
     }
   } else {
     return str;

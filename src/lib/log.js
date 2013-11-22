@@ -1,20 +1,6 @@
 var _ = require('./utils');
 var url = require('url');
 var EventEmitter = require('events').EventEmitter;
-if (process.browser) {
-  var loggers = {
-    Console: require('./loggers/console')
-  };
-} else {
-  var loggers = {
-    File: require('./loggers/file'),
-    Stream: require('./loggers/file'),
-    Stdio: require('./loggers/stdio'),
-    Tracer: require('./loggers/tracer')
-  };
-}
-
-
 
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -31,40 +17,42 @@ if (process.browser) {
  * @param {string} output.type - The name of the logger to use for this output
  */
 function Log(config) {
-  this.config = config || {};
+  config = config || {};
 
   var i;
-  var output = config.loggers ? config.loggers : 'warning';
+  var outputs;
 
-  if (_.isString(output) || _.isFinite(output)) {
-    output = [
-      {
-        level: output
-      }
-    ];
-  } else if (_.isPlainObject(output)) {
-    output = [output];
-  } else if (_.isArray(output)) {
-    for (i = 0; i < output.length; i++) {
-      if (_.isString(output[i])) {
-        output[i] = {
-          level: output[i]
-        };
-      }
+  if (config.log) {
+    if (_.isArrayOfStrings(config.log)) {
+      outputs = [{
+        levels: config.log
+      }];
+    } else {
+      outputs = _.createArray(config.log, function (val) {
+        if (_.isPlainObject(val)) {
+          return val;
+        }
+        if (typeof val === 'string') {
+          return {
+            level: val
+          };
+        }
+      });
+    }
+
+    if (!outputs) {
+      throw new TypeError('Invalid logging output config. Expected either a log level, array of log levels, ' +
+        'a logger config object, or an array of logger config objects.');
+    }
+
+    for (i = 0; i < outputs.length; i++) {
+      this.addOutput(outputs[i]);
     }
   }
-
-  if (!_.isArrayOfPlainObjects(output)) {
-    throw new TypeError('Invalid Logging output config');
-  }
-
-  for (i = 0; i < output.length; i++) {
-    this.addOutput(output[i]);
-  }
-
 }
 _.inherits(Log, EventEmitter);
 
+Log.loggers = require('./loggers');
 
 Log.prototype.close = function () {
   this.emit('closing');
@@ -149,11 +137,24 @@ Log.levels = [
  * @return {Array} -
  */
 Log.parseLevels = function (input) {
-  if (_.isString(input)) {
-    return Log.levels.slice(0, _.indexOf(Log.levels, input) + 1);
-  }
-  else if (_.isArray(input)) {
-    return _.intersection(input, Log.levels);
+  switch (typeof input) {
+  case 'string':
+    var i = _.indexOf(Log.levels, input);
+    if (i >= 0) {
+      return Log.levels.slice(0, i + 1);
+    }
+    /* fall through */
+  case 'object':
+    if (_.isArray(input)) {
+      var valid = _.intersection(input, Log.levels);
+      if (valid.length === input.length) {
+        return valid;
+      }
+    }
+    /* fall through */
+  default:
+    throw new TypeError('invalid logging level ' + input + '. Expected zero or more of these options: ' +
+      Log.levels.join(', '));
   }
 };
 
@@ -190,22 +191,14 @@ Log.join = function (arrayish) {
  * @return {Logger}
  */
 Log.prototype.addOutput = function (config) {
-  var levels = Log.parseLevels(config.levels || config.level || 'warning');
+  config = config || {};
 
-  _.defaults(config || {}, {
-    type: process.browser ? 'Console' : 'Stdio',
-  });
-
-  // force the levels config
+  // force "levels" key
+  config.levels = Log.parseLevels(config.levels || config.level || 'warning');
   delete config.level;
-  config.levels = levels;
 
-  var Logger = loggers[_.studlyCase(config.type)];
-  if (Logger) {
-    return new Logger(config, this);
-  } else {
-    throw new Error('Invalid logger type "' + config.type + '". Expected one of ' + _.keys(loggers).join(', '));
-  }
+  var Logger = _.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
+  return new Logger(this, config);
 };
 
 /**

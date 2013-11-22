@@ -9,13 +9,19 @@ var EventEmitter = require('events').EventEmitter;
  * @constructor
  */
 function ConnectionAbstract(host, config) {
+  config = _.defaults(config || {}, {
+    deadTimeout: 30000
+  });
   EventEmitter.call(this);
-  this.config = config;
-  this.host = host;
+  this.deadTimeout = config.deadTimeout;
   this.requestCount = 0;
 
-  if (!this.host) {
-    throw new Error('Missing host config');
+  if (!host) {
+    throw new TypeError('Missing host');
+  } else if (host.makeUrl) {
+    this.host = host;
+  } else {
+    throw new TypeError('Invalid host');
   }
 
   _.makeBoundMethods(this);
@@ -36,12 +42,11 @@ ConnectionAbstract.prototype.request = function () {
   throw new Error('Connection#request must be overwritten by the Connector');
 };
 
-ConnectionAbstract.prototype.ping = function (params, cb) {
-  if (typeof params === 'function') {
-    cb = params;
-  } else if (typeof cb !== 'function') {
+ConnectionAbstract.prototype.ping = function (cb) {
+  if (typeof cb !== 'function') {
     throw new TypeError('Callback must be a function');
   }
+
   return this.request({
     path: '/',
     method: 'HEAD',
@@ -54,16 +59,20 @@ ConnectionAbstract.prototype.setStatus = function (status) {
 
   this.status = status;
 
-  if (status === 'dead' || status === 'closed') {
-    if (this.__deadTimeout) {
-      clearTimeout(this.__deadTimeout);
-    }
-    if (status === 'dead') {
-      this.__deadTimeout = setTimeout(this.bound.resuscitate, this.config.deadTimeout);
-    }
+  if (this._deadTimeoutId) {
+    clearTimeout(this._deadTimeoutId);
+    this._deadTimeoutId = null;
   }
 
-  this.emit('status changed', status, origStatus, this);
+  if (status === 'dead') {
+    this._deadTimeoutId = setTimeout(this.bound.resuscitate, this.deadTimeout);
+  }
+
+  this.emit('status set', status, origStatus, this);
+
+  if (status === 'closed') {
+    this.removeAllListeners();
+  }
 };
 
 ConnectionAbstract.prototype.resuscitate = _.scheduled(function () {
@@ -74,7 +83,7 @@ ConnectionAbstract.prototype.resuscitate = _.scheduled(function () {
       if (!err) {
         self.setStatus('alive');
       } else {
-        self.emit('dead');
+        self.setStatus('dead');
       }
     });
   }

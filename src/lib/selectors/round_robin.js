@@ -1,13 +1,13 @@
 /**
  * Selects a connection the simplest way possible, Round Robin
  *
- * @class selector.roundRobin
- * @constructor
+ * @module selectors
  * @type {Function}
+ * @param {Array} connections - The list of connections that this selector needs to choose from
+ * @return {Connection} - The selected connection
  */
-module.exports = RoundRobinSelect;
-
-function RoundRobinSelect(connections) {
-  connections.unshift(connections.pop());
-  return connections[0];
-}
+module.exports = function (connections) {
+  var connection = connections[0];
+  connections.push(connections.shift());
+  return connection;
+};

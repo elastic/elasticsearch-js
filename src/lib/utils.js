@@ -13,15 +13,6 @@ var nodeUtils = require('util');
 var utils = _.extend({}, _, nodeUtils);
 _ = utils;
 
-utils.inspect = function (thing, opts) {
-  return nodeUtils.inspect(thing, _.defaults(opts || {}, {
-    showHidden: true,
-    depth: null,
-    color: true
-  }));
-};
-
-
 /**
  * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
  *
@@ -46,7 +37,7 @@ utils.reKey = function (obj, transform, recursive) {
   var out = {};
 
   _.each(obj, function (prop, name) {
-    if (recursive && typeof prop === 'object') {
+    if (recursive && _.isPlainObject(prop)) {
       out[transform(name)] = utils.reKey(prop, transform, recursive);
     } else {
       out[transform(name)] = prop;
@@ -104,7 +95,6 @@ utils.deepMerge = function (to, from) {
 /**
  * Capitalize the first letter of a word
  *
- * @todo Tests
  * @method  ucfirst
  * @param  {string} word - The word to transform
  * @return {string}
@@ -166,7 +156,6 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
 /**
  * Transform a string into StudlyCase
  *
- * @todo Tests
  * @method studlyCase
  * @param  {String} string
  * @return {String}
@@ -176,7 +165,6 @@ utils.studlyCase = adjustWordCase(true, true, '');
 /**
  * Transform a string into camelCase
  *
- * @todo Tests
  * @method camelCase
  * @param  {String} string
  * @return {String}
@@ -186,7 +174,6 @@ utils.camelCase = adjustWordCase(false, true, '');
 /**
  * Transform a string into snakeCase
  *
- * @todo Tests
  * @method snakeCase
  * @param  {String} string
  * @return {String}
@@ -196,7 +183,6 @@ utils.snakeCase = adjustWordCase(false, false, '_');
 /**
  * Lower-case a string, and return an empty string if any is not a string
  *
- * @todo Tests
  * @param any {*} - Something or nothing
  * @returns {string}
  */
@@ -214,7 +200,6 @@ utils.toLowerString = function (any) {
 /**
  * Upper-case the string, return an empty string if any is not a string
  *
- * @todo Tests
  * @param any {*} - Something or nothing
  * @returns {string}
  */
@@ -232,13 +217,12 @@ utils.toUpperString = function (any) {
 /**
  * Test if a value is "numeric" meaning that it can be transformed into something besides NaN
  *
- * @todo Tests
  * @method isNumeric
  * @param  {*} val
  * @return {Boolean}
  */
 utils.isNumeric = function (val) {
-  return !isNaN(val === null ? NaN : val * 1);
+  return typeof val !== 'object' && val - parseFloat(val) >= 0;
 };
 
 // regexp to test for intervals
@@ -247,7 +231,6 @@ var intervalRE = /^(\d+(?:\.\d+)?)([Mwdhmsy])$/;
 /**
  * Test if a string represents an interval (eg. 1m, 2Y)
  *
- * @todo Test
  * @method isInterval
  * @param {String} val
  * @return {Boolean}
@@ -259,7 +242,6 @@ utils.isInterval = function (val) {
 /**
  * Repeat a string n times
  *
- * @todo Test
  * @todo TestPerformance
  * @method repeat
  * @param {String} what - The string to repeat
@@ -271,27 +253,18 @@ utils.repeat = function (what, times) {
 };
 
 /**
- * Override node's util.inherits function to also supply a callSuper function on the child class that can be called
- * with the instance and the arguments passed to the child's constructor. This should only be called from within the
- * constructor of the child class and should be removed from the code once the constructor is "done".
+ * Override node's util.inherits function, providing a browser safe version thanks to lodash
  *
  * @param constructor {Function} - the constructor that should subClass superConstructor
  * @param superConstructor {Function} - The parent constructor
  */
-utils.inherits = function (constructor, superConstructor) {
-  nodeUtils.inherits(constructor, superConstructor);
-  constructor.callSuper = function (inst, args) {
-    if (args) {
-      if (_.isArguments(args)) {
-        utils.applyArgs(superConstructor, inst, args);
-      } else {
-        utils.applyArgs(superConstructor, inst, arguments, 1);
-      }
-    } else {
-      superConstructor.call(inst);
-    }
-  };
-};
+if (process.browser) {
+  utils.inherits = require('inherits');
+}
+
+/**
+ *
+ */
 
 /**
  * Remove leading/trailing spaces from a string
@@ -412,15 +385,59 @@ _.makeBoundMethods = function (obj, methods) {
 
 _.noop = function () {};
 
-// _.getStackTrace = function (callee) {
-//   var e = {};
-//   if (typeof Error.captureStackTrace === 'function') {
-//     Error.captureStackTrace(e, callee || _.getStackTrace);
-//   } else {
-//     e.stack = (new Error()).stack;
-//     console.log(e.stack);
-//   }
-//   return '\n' + e.stack.split('\n').slice(1).join('\n');
-// };
+/**
+ * Implements the standard "string or constructor" check that I was copy/pasting everywhere
+ * @param  {String|Function} val - the value that the user passed in
+ * @param  {Object} opts - a map of the options
+ * @return {Function|undefined} - If a valid option was specified, then the constructor is returned
+ */
+_.funcEnum = function (config, name, opts, def) {
+  var val = config[name];
+  switch (typeof val) {
+  case 'undefined':
+    return opts[def];
+  case 'function':
+    return val;
+  case 'string':
+    if (opts[val]) {
+      return opts[val];
+    }
+    /* falls through */
+  default:
+    throw new TypeError('Invalid ' + name + ' "' + val + '", expected a function or one of ' +
+      _.keys(opts).join(', '));
+  }
+};
+
+/**
+ * Accepts any object and attempts to convert it into an array. If the object passed in is not
+ * an array it will be wrapped in one. Then the transform/map function will be called for each element
+ * and create a new array that is returned. If the map function fails to return something, the loop is
+ * halted and false is returned instead of an array.
+ *
+ * @param  {*} input - The value to convert
+ * @param  {Function} transform - A function called for each element of the resulting array
+ * @return {Array|false} - an array on success, or false on failure.
+ */
+_.createArray = function (input, transform) {
+  transform = typeof transform === 'function' ? transform : _.identity;
+  var output = [];
+  var item;
+  var i;
+
+  if (!_.isArray(input)) {
+    input = [input];
+  }
+
+  for (i = 0; i < input.length; i++) {
+    item = transform(input[i]);
+    if (item === void 0) {
+      return false;
+    } else {
+      output.push(item);
+    }
+  }
+  return output;
+};
 
 module.exports = utils;

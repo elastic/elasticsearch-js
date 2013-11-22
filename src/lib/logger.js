@@ -2,18 +2,17 @@ var _ = require('./utils');
 
 /**
  * Abstract class providing common functionality to loggers
+ * @param {[type]} log [description]
  * @param {[type]} config [description]
- * @param {[type]} bridge [description]
  */
-function LoggerAbstract(config, bridge) {
-
-  this.bridge = bridge;
+function LoggerAbstract(log, config) {
+  this.log = log;
   this.listeningLevels = [];
 
   _.makeBoundMethods(this);
 
-  // when the bridge closes, remove our event listeners
-  this.bridge.on('closing', this.bound.cleanUpListeners);
+  // when the log closes, remove our event listeners
+  this.log.on('closing', this.bound.cleanUpListeners);
 
   this.setupListeners(config.levels);
 }
@@ -68,7 +67,7 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
   _.each(this.listeningLevels, function (level) {
     var fnName = 'on' + _.ucfirst(level);
     if (this.bound[fnName]) {
-      this.bridge.on(level, this.bound[fnName]);
+      this.log.on(level, this.bound[fnName]);
     } else {
       throw new Error(fnName + ' is not a function');
     }
@@ -84,12 +83,12 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  */
 LoggerAbstract.prototype.cleanUpListeners = _.handler(function () {
   _.each(this.listeningLevels, function (level) {
-    this.bridge.removeListener(level, this.bound['on' + _.ucfirst(level)]);
+    this.log.removeListener(level, this.bound['on' + _.ucfirst(level)]);
   }, this);
 });
 
 /**
- * Handler for the bridges "error" event
+ * Handler for the logs "error" event
  *
  * @method onError
  * @private
@@ -101,7 +100,7 @@ LoggerAbstract.prototype.onError = _.handler(function (e) {
 });
 
 /**
- * Handler for the bridges "warning" event
+ * Handler for the logs "warning" event
  *
  * @method onWarning
  * @private
@@ -113,7 +112,7 @@ LoggerAbstract.prototype.onWarning = _.handler(function (msg) {
 });
 
 /**
- * Handler for the bridges "info" event
+ * Handler for the logs "info" event
  *
  * @method onInfo
  * @private
@@ -125,7 +124,7 @@ LoggerAbstract.prototype.onInfo = _.handler(function (msg) {
 });
 
 /**
- * Handler for the bridges "debug" event
+ * Handler for the logs "debug" event
  *
  * @method onDebug
  * @private
@@ -137,7 +136,7 @@ LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
 });
 
 /**
- * Handler for the bridges "trace" event
+ * Handler for the logs "trace" event
  *
  * @method onTrace
  * @private

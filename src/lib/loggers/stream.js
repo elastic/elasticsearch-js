@@ -15,11 +15,11 @@ module.exports = Stream;
 var LoggerAbstract = require('../logger');
 var _ = require('../utils');
 
-function Stream(config, bridge) {
+function Stream(log, config) {
   // call my super
-  LoggerAbstract.call(this, config, bridge);
+  LoggerAbstract.call(this, log, config);
 
-  if (config.stream.write && config.stream.end) {
+  if (config.stream && config.stream.write && config.stream.end) {
     this.stream = config.stream;
   } else {
     throw new TypeError('Invalid stream, use an instance of stream.Writeable');

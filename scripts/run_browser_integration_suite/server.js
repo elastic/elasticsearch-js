@@ -2,22 +2,43 @@ var http = require('http');
 var url = require('url');
 var path = require('path');
 var fs = require('fs');
-var crypto = require('crypto');
 var _ = require('lodash');
-var util = require('util');
 var chalk = require('chalk');
-var moment = require('moment');
 var makeJUnitXml = require('../make_j_unit_xml');
 chalk.enabled = true;
-
-var browserify = require('browserify');
-var port = process.argv[2] || 8888;
 
 var middleware = [];
 
 Error.stackTraceLimit = Infinity;
 
-var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var chars = 'abcdefghijklmnopqrstuvwxyz';
+
+var server = http.createServer(function (req, resp) {
+  var parsedUrl = url.parse(req.url, true);
+  req.uri = parsedUrl.pathname;
+  req.query = parsedUrl.query;
+  req.filename = path.join(__dirname, '../../test/browser_integration/', req.uri);
+
+  var end = resp.end;
+  resp.end = function () {
+    console.log(chalk[this.statusCode < 300 ? 'green' : 'red'](this.statusCode), req.uri);
+    end.apply(resp, arguments);
+  };
+
+  var middleIndex = -1;
+
+  function next() {
+    middleIndex++;
+    if (middleIndex < middleware.length) {
+      middleware[middleIndex](req, resp, next);
+    } else {
+      resp.writeHead(500);
+      resp.end('500 Bad Gateway\n');
+    }
+  }
+  next();
+});
+
 function rand(length) {
   var str = '';
   while (str.length < length) {
@@ -26,31 +47,10 @@ function rand(length) {
   return str;
 }
 
-function sendBundle(req, resp, files, opts, extend) {
-  resp.setHeader('Content-Type', 'application/javascript');
-  resp.writeHead(200);
-
-  var b = browserify(files);
-
-  if (typeof extend === 'function') {
-    extend(b);
-  }
-
-  var out = b.bundle(opts);
-
-  out.on('data', function (chunk) {
-    resp.write(chunk);
-  });
-
-  out.on('end', function () {
-    resp.end();
-  });
-}
-
 function collectTestResults(req, resp) {
   var body = '';
   var browser = req.query.browser;
-  var logFilename = path.join(__dirname, '../test-output-' + browser + '.xml');
+  var logFilename = path.join(__dirname, '../../test-output-' + browser + '.xml');
 
   req.on('data', function (chunk) {
     body += chunk;
@@ -79,40 +79,15 @@ function collectTestResults(req, resp) {
       if (err) {
         console.log('unable to save test-output to', err.message);
         console.trace();
-        process.exit(1);
+        server.emit('tests done', false);
       } else {
         console.log('test output written to', logFilename);
-        process.exit(testDetails.stats.failures ? 1 : 0);
+        server.emit('tests done', !testDetails.stats.failures);
       }
     });
   });
 }
 
-var server = http.createServer(function (req, resp) {
-  var parsedUrl = url.parse(req.url, true);
-  req.uri = parsedUrl.pathname;
-  req.query = parsedUrl.query;
-  req.filename = path.join(__dirname, req.uri);
-
-  var end = resp.end;
-  resp.end = function () {
-    console.log(chalk[this.statusCode < 300 ? 'green' : 'red'](this.statusCode), req.uri);
-    end.apply(resp, arguments);
-  };
-
-  var middleIndex = -1;
-
-  function next() {
-    middleIndex++;
-    if (middleIndex < middleware.length) {
-      middleware[middleIndex](req, resp, next);
-    } else {
-      resp.writeHead(500);
-      resp.end('500 Bad Gateway\n');
-    }
-  }
-  next();
-});
 
 middleware.push(function (req, resp, next) {
   // resolve filenames
@@ -145,14 +120,14 @@ middleware.push(function (req, resp, next) {
       resp.end();
     } else {
       if (stats.isDirectory()) {
-        req.filename = path.join(req.filename, './index.html');
+        req.filename = path.join(req.filename, '../../test/browser_integration/index.html');
       }
       next();
     }
   });
 });
 
-middleware.push(function (req, resp, next) {
+middleware.push(function (req, resp) {
   // static files
   var reader = fs.createReadStream(req.filename);
   var data = '';
@@ -201,7 +176,7 @@ middleware.push(function (req, resp, next) {
         es_hostname: 'localhost',
         es_port: 9200,
         browser: 'unknown',
-        ts: rand(5)
+        ts: 'no'//rand(5)
       })));
     } else {
       resp.end(data);
@@ -211,6 +186,5 @@ middleware.push(function (req, resp, next) {
   }
 });
 
-server.listen(parseInt(port, 10), function () {
-  console.log('server listening on port', server.address().port);
-});
+
+module.exports = server;

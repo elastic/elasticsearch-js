@@ -15,9 +15,9 @@ module.exports = Console;
 var LoggerAbstract = require('../logger');
 var _ = require('../utils');
 
-function Console(config, bridge) {
+function Console(log, config) {
   // call my super
-  LoggerAbstract.call(this, config, bridge);
+  LoggerAbstract.call(this, log, config);
 
   // config/state
   this.color = _.has(config, 'color') ? !!config.color : true;

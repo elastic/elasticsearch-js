@@ -40,12 +40,12 @@ var defaultColors = {
   }
 };
 
-function Stdio(config, bridge) {
+function Stdio(log, config) {
   // call my super
-  LoggerAbstract.call(this, config, bridge);
+  LoggerAbstract.call(this, log, config);
 
   // config/state
-  this.color = Boolean(_.has(config, 'color') ? config.color : chalk.supportsColor);
+  this.color = !!(_.has(config, 'color') ? config.color : chalk.supportsColor);
 
   this.colors = _.defaults(config.colors || {}, defaultColors);
 }

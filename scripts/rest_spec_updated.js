@@ -1,5 +1,11 @@
 var https = require('https');
-var lastCommitUrl = 'https://api.github.com/repos/elasticsearch/elasticsearch-rest-api-spec/commits/HEAD';
+var request = {
+  hostname: 'api.github.com',
+  path: '/repos/elasticsearch/elasticsearch-rest-api-spec/commits/HEAD',
+  headers: {
+    'User-Agent': 'spenceralger'
+  }
+};
 var fs = require('fs');
 
 var lastRestSpecUpdateFile = __dirname + '/last_rest_spec_update.sha';
@@ -10,7 +16,7 @@ if (fs.existsSync(lastRestSpecUpdateFile)) {
   lastRestSpecUpdate = fs.readFileSync(lastRestSpecUpdateFile, 'utf8');
 }
 
-var req = https.get(lastCommitUrl, function (incoming) {
+var req = https.get(request, function (incoming) {
   if (incoming.statusCode !== 200) {
     req.abort();
     console.error('request for last commit failed', incoming.statusCode, incoming.headers);
