@@ -51,6 +51,7 @@
     "test": "node scripts/run_tests.js",
     "build": "grunt",
     "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",
+    "export_client": "node scripts/export_client.js",
     "blanket": {
       "pattern": "src"
     }
