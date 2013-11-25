@@ -119,8 +119,8 @@ function transformFile(entry) {
       .replace(/(^|\.)(delete|default)(\.|$)/g, '[\'$2\']');
 
     var action = {
+      _methods: spec.methods,
       spec: _.pick(spec, [
-        'methods',
         'params',
         'url',
         'urls',
@@ -137,7 +137,7 @@ function transformFile(entry) {
 
     function hasMethod(/* ...methods */) {
       for (var i = 0; i < arguments.length; i++) {
-        if (~action.spec.methods.indexOf(arguments[i])) {
+        if (~action._methods.indexOf(arguments[i])) {
           continue;
         } else {
           return false;
@@ -146,13 +146,13 @@ function transformFile(entry) {
       return true;
     }
     function methodsAre(/* ...methods */) {
-      return hasMethod.apply(null, arguments) && arguments.length === action.spec.methods.length;
+      return hasMethod.apply(null, arguments) && arguments.length === action._methods.length;
     }
 
     var method;
 
-    if (action.spec.methods.length === 1) {
-      method = action.spec.methods[0];
+    if (action._methods.length === 1) {
+      method = action._methods[0];
     } else {
       // we need to define what the default method(s) will be
       if (hasMethod('DELETE', 'POST')) {
@@ -162,7 +162,7 @@ function transformFile(entry) {
         method = 'DELETE';
       }
       else if (methodsAre('POST', 'PUT')) {
-        method = 'POST';
+        method = action.name.match(/put/i) ? 'PUT' : 'POST';
       }
       else if (methodsAre('GET', 'POST')) {
         method = 'POST';
@@ -180,7 +180,6 @@ function transformFile(entry) {
       if (method !== 'GET') {
         action.spec.method = method;
       }
-      delete action.spec.methods;
     } else {
       throw new Error('unable to pick a method for ' + JSON.stringify(action, null, '  '));
     }
@@ -191,9 +190,32 @@ function transformFile(entry) {
     }
 
     if (actions.push(action) === specCount && doneParsing) {
-      module.exports.emit('ready', action);
+      module.exports.emit('ready', actions);
     }
   });
 }
 
-module.exports = new EventEmitter();
+/**
+ * un-comment to print out the default method for any action that has multiple options
+ */
+// module.exports = new EventEmitter();
+// module.exports.on('ready', function (actions) {
+//   var longestName = 0;
+//   var lines = [];
+//   actions.forEach(function (action) {
+//     // console.log(action);
+//     if (action._methods.length > 1) {
+//       var name = action.name + ' (' + action._methods.join('/') + ')';
+//       longestName = Math.max(name.length, longestName);
+//       lines.push([name, action.spec.method || 'GET', action.docUrl]);
+//     }
+//   });
+
+//   lines.forEach(function (line) {
+//     var name = line[0];
+//     var def = line[1];
+//     var docUrl = line[2];
+//     var spacing = (new Array(longestName - name.length + 1)).join(' ');
+//     console.log(name + spacing + ' [' + def + (def.length === 3 ? ' ' : '') + ']  ->  ' + docUrl);
+//   });
+// });

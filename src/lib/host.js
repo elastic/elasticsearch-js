@@ -28,6 +28,7 @@ function Host(config) {
   // defaults
   this.protocol = 'http';
   this.host = 'localhost';
+  this.path = '';
   this.port = 9200;
   this.auth = null;
   this.query = null;
@@ -75,8 +76,7 @@ function Host(config) {
   }
 
   // make sure the path starts with a leading slash
-  // and that empty paths convert to '/'
-  if (!this.path || this.path.charAt(0) !== '/') {
+  if (this.path && this.path.charAt(0) !== '/') {
     this.path = '/' + (this.path || '');
   }
 

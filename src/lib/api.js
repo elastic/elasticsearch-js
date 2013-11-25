@@ -13,6 +13,7 @@ api._namespaces = ['cluster', 'indices'];
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Explicitely set the replication type
  * @param {String} params.type - Default document type for items which don't provide one
+ * @param {Date or Number} params.timeout - Explicit operation timeout
  * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
@@ -38,6 +39,9 @@ api.bulk = ca({
     },
     type: {
       type: 'string'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -2119,7 +2123,7 @@ api.indices.prototype.putMapping = ca({
     },
     sortOrder: -2
   },
-  method: 'POST'
+  method: 'PUT'
 });
 
 
@@ -2185,7 +2189,7 @@ api.indices.prototype.putTemplate = ca({
     },
     sortOrder: -1
   },
-  method: 'POST'
+  method: 'PUT'
 });
 
 

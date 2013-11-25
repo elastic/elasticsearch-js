@@ -19,6 +19,8 @@ var qs = require('querystring');
 var KeepAliveAgent = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 
+var log = _.bindKey(process.stdout, 'write');
+
 /**
  * Connector used to talk to an elasticsearch node via HTTP
  *

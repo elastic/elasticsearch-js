@@ -1,6 +1,7 @@
 var async = require('async');
 var cp = require('child_process');
 var chalk = require('chalk');
+var path = require('path');
 var argv = require('optimist')
   .usage([
     'Runner for the Elasticsearch.js unit and integration tests in both node and the browser.',
@@ -13,6 +14,7 @@ var argv = require('optimist')
     integration: false,
     host: 'localhost',
     port: 9200,
+    'xml-output': true,
     'check-upstream': false
   })
   .describe({
@@ -24,6 +26,7 @@ var argv = require('optimist')
     i: 'integration',
     b: 'browser',
     s: 'server',
+    x: 'xml-output'
   });
 
 if (process.argv.indexOf('help') + process.argv.indexOf('--help') + process.argv.indexOf('-h') !== -3) {
@@ -65,10 +68,11 @@ if (argv.integration) {
       'mocha',
       'test/integration/yaml_suite/index.js',
       '-b',
-      '--require=should',
-      '--host=' + argv.host,
-      '--port=' + argv.port
-    ]);
+      '--require', 'should',
+      argv.x ? '--reporter' : '', argv.x ? path.join(__dirname, '../test/integration/yaml_suite/reporter.js') : '',
+      '--host', argv.host,
+      '--port', argv.port
+    ].filter(Boolean));
   }
   if (argv.browser) {
     commands.push(['node', 'scripts/run_browser_integration_suite/index.js']);

@@ -89,6 +89,7 @@ http://elasticsearch.org/guide/reference/api/bulk/
 |`refresh` | Boolean | Refresh the index after performing the operation|
 |`[replication=sync]` | String | Explicitely set the replication type|
 |`type` | String | Default document type for items which don't provide one|
+|`timeout` | Date or Number | Explicit operation timeout|
 |`index` | String | Default index for items which don't provide one|
 
 

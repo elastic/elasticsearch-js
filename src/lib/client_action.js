@@ -65,7 +65,8 @@ var castType = {
     switch (typeof val) {
     case 'number':
     case 'string':
-      return val;
+    case 'boolean':
+      return '' + val;
     case 'object':
       if (_.isArray(val)) {
         return val.join(',');

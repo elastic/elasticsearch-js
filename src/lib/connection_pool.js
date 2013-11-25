@@ -20,8 +20,11 @@ function ConnectionPool(config) {
     this.log = new Log();
   }
 
+  this._config = config;
+
   // get the selector config var
-  this.selector = _.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelectors);
+  this.selector = _.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
+
   // get the connection class
   this.Connection = _.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
     ConnectionPool.defaultConnectionClass);
@@ -37,7 +40,7 @@ function ConnectionPool(config) {
 
 // selector options
 ConnectionPool.selectors = require('./selectors');
-ConnectionPool.defaultSelectors = 'round_robin';
+ConnectionPool.defaultSelector = 'roundRobin';
 
 // get the connection options
 ConnectionPool.connectionClasses = require('./connectors');
@@ -154,7 +157,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
     if (this.index[id]) {
       delete toRemove[id];
     } else {
-      connection = new this.Connection(host);
+      connection = new this.Connection(host, this._config);
       connection.id = id;
       this.addConnection(connection);
     }

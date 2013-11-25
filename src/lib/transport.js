@@ -28,6 +28,9 @@ function Transport(config) {
   var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
   this.serializer = new Serializer(config);
 
+  // setup max retries
+  this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
+
   if (config.hosts) {
     var hostsConfig = _.createArray(config.hosts, function (val) {
       if (_.isPlainObject(val) || _.isString(val)) {
@@ -130,7 +133,7 @@ Transport.prototype.request = function (params, cb) {
       self.connectionPool.select(sendReqWithConnection);
     } else {
       self.log.info('Request complete');
-      respond(err, body, status);
+      respond(err ? new errors.ConnectionFault() : void 0, body, status);
     }
   }
 

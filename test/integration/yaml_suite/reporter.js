@@ -112,7 +112,7 @@ function EsjsReporter(runner) {
 
   runner.on('end', function () {
     restoreStdio();
-    var outputFilename = path.join(__dirname, '../../test-output-node-yaml.xml');
+    var outputFilename = path.join(__dirname, '../../../test-output-node-yaml.xml');
     var xml = makeJUnitXml('node ' + process.version + ' yaml tests', {
       stats: stats,
       suites: _.map(rootSuite.suites, function removeElements(suite) {

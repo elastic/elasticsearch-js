@@ -6,8 +6,8 @@ if (process.browser) {
 }
 var argv = require('./argv');
 var server = require('./server');
-var path = require('path');
-var fs = require('fs');
+// var path = require('path');
+// var fs = require('fs');
 var _ = require('../../../src/lib/utils');
 
 // current client
@@ -38,7 +38,7 @@ module.exports = {
       doCreateClient(function () {
         client.ping(function (err) {
           if (err instanceof es.errors.ConnectionFault) {
-            externalExists = !err;
+            externalExists = false;
             create(done);
           } else {
             done(err);
