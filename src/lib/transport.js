@@ -7,25 +7,12 @@ module.exports = Transport;
 var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
-var Log = require('./log');
 var when = require('when');
 
 function Transport(config) {
   config = config || {};
 
-  var LogClass;
-  // setup the log
-  switch (typeof config.log) {
-  case 'function':
-    LogClass = config.log;
-    break;
-  case 'undefined':
-    config.log = 'warning';
-    /* fall through */
-  default:
-    LogClass = Log;
-  }
-
+  var LogClass = _.funcEnum(config, 'logClass', Transport.logs, 'main');
   config.log = this.log = new LogClass(config);
 
   // overwrite the createDefer method if a new implementation is provided
@@ -37,25 +24,31 @@ function Transport(config) {
   var ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
   this.connectionPool = new ConnectionPool(config);
 
+  // setup the serializer
+  var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
+  this.serializer = new Serializer(config);
+
   if (config.hosts) {
-    var hosts = _.createArray(config.hosts, function (val) {
+    var hostsConfig = _.createArray(config.hosts, function (val) {
       if (_.isPlainObject(val) || _.isString(val)) {
         return val;
       }
     });
-    if (!hosts) {
+    if (!hostsConfig) {
       throw new Error('Invalid hosts config. Expected a URL, an array of urls, a host config object, or an array of ' +
         'host config objects.');
     }
 
-    this.connectionPool.setHosts(_.map(hosts, function (conf) {
+    var hosts = _.map(hostsConfig, function (conf) {
       return new Host(conf);
-    }));
-  }
+    });
 
-  // setup the serializer
-  var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
-  this.serializer = new Serializer(config);
+    if (config.randomizeHosts) {
+      hosts = _.shuffle(hosts);
+    }
+
+    this.connectionPool.setHosts(hosts);
+  }
 }
 
 Transport.connectionPools = {
@@ -64,6 +57,10 @@ Transport.connectionPools = {
 
 Transport.serializers = {
   json: require('./serializers/json')
+};
+
+Transport.logs = {
+  main: require('./log')
 };
 
 /**

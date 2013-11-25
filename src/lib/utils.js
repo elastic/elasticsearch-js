@@ -399,13 +399,23 @@ _.funcEnum = function (config, name, opts, def) {
   case 'function':
     return val;
   case 'string':
-    if (opts[val]) {
+    if (opts.hasOwnProperty(val)) {
       return opts[val];
     }
     /* falls through */
   default:
-    throw new TypeError('Invalid ' + name + ' "' + val + '", expected a function or one of ' +
-      _.keys(opts).join(', '));
+    var err = 'Invalid ' + name + ' "' + val + '", expected a function';
+    switch (_.size(opts)) {
+    case 0:
+      break;
+    case 1:
+      err += 'or ' + _.keys(opts)[0];
+      break;
+    default:
+      err += 'or one of ' + _.keys(opts).join(', ');
+      break;
+    }
+    throw new TypeError(err);
   }
 };
 

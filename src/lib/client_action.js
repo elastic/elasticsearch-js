@@ -45,7 +45,11 @@ var castType = {
         return param.options[i];
       }
     }
-    throw new TypeError('Invalid ' + name + ': expected one of ' + param.options.join(','));
+    throw new TypeError('Invalid ' + name + ': expected ' + (
+      param.options.length > 1
+      ? 'one of ' + param.options.join(',')
+      : param.options[0]
+    ));
   },
   duration: function (param, val, name) {
     if (_.isNumeric(val) || _.isInterval(val)) {

@@ -291,4 +291,39 @@ describe('Utils', function () {
       }).should.be.exactly(false);
     });
   });
+
+  describe('#funcEnum', function () {
+    /*
+     * _.funcEnum(object, key, opts, default);
+     */
+    it('tests if the value at key in object is a function, returns it if so', function () {
+      var config = {
+        func: function () {}
+      };
+      _.funcEnum(config, 'func', {}, 'toString')
+        .should.be.exactly(config.func);
+    });
+    it('tests if the value at key in object is undefined, returns the option at key default if so', function () {
+      var config = {
+        func: undefined
+      };
+      _.funcEnum(config, 'func', {}, 'toString')
+        .should.be.exactly(Object.prototype.toString);
+    });
+    it('tests if the value at key in object is a string, returns the option at that key if so', function () {
+      var config = {
+        'config key name': 'toString'
+      };
+      _.funcEnum(config, 'config key name', { toString: 'pizza' }, 'toJSON')
+        .should.be.exactly('pizza');
+    });
+    it('throws an error if the selection if invalid', function () {
+      var config = {
+        'config': 'val'
+      };
+      (function () {
+        _.funcEnum(config, 'config', { main: 'default' }, 'main');
+      }).should.throw(/invalid config/i);
+    });
+  });
 });

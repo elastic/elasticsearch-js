@@ -31,6 +31,13 @@ var ca = require('./client_action');
 var Transport = require('./transport');
 
 function Client(config) {
+  config = config || {};
+
+  // our client will log minimally by default
+  if (!config.hasOwnProperty('log')) {
+    config.log = 'warning';
+  }
+
   this.transport = new Transport(config);
 
   // instantiate the api's namespaces
