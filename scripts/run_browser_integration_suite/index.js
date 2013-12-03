@@ -88,7 +88,7 @@ async.series([
       }
 
       console.log('generating client with "grunt build"');
-      child_process.spawn('grunt', ['build'], {
+      child_process.spawn('npm', ['run', 'build_clients'], {
         stdio: 'inherit'
       }).on('close', function (status) {
         done(status && 'grunt closed with a status code of ' + status + '. aborting.');
