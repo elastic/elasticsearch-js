@@ -35,7 +35,7 @@ var outputFile = path.join(argv.outputDir, 'elasticsearch.js');
 var minifiedOutputFile = path.join(argv.outputDir, 'elasticsearch.min.js');
 
 var steps = [
-  [runInModule, 'npm', ['run', 'build']],
+  [runInModule, 'npm', ['run', 'build_clients']],
   [copy, buildFile, outputFile],
   [copy, minifiedBuildFile, minifiedOutputFile]
 ];

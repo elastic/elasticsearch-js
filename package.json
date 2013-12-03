@@ -49,7 +49,7 @@
   "scripts": {
     "test": "node scripts/run_tests.js",
     "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
-    "build": "grunt",
+    "build_clients": "grunt",
     "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",
     "blanket": {
       "pattern": "src"
