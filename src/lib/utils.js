@@ -253,16 +253,6 @@ utils.repeat = function (what, times) {
 };
 
 /**
- * Override node's util.inherits function, providing a browser safe version thanks to lodash
- *
- * @param constructor {Function} - the constructor that should subClass superConstructor
- * @param superConstructor {Function} - The parent constructor
- */
-if (process.browser) {
-  utils.inherits = require('inherits');
-}
-
-/**
  *
  */
 
