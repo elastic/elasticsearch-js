@@ -50,10 +50,10 @@ if (!getXhr) {
 
 XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
-  var timeout = params.timeout ? params.timeout : 10000;
+  var requestTimeout = _.has(params, 'requestTimeout') ? this.requestTimeout : 10000;
   var timeoutId;
   var url = this.host.makeUrl(params);
-  var log = this.config.log;
+  var log = this.log;
   var async = params.async === false ? false : asyncDefault;
 
   if (params.auth) {
@@ -71,12 +71,12 @@ XhrConnector.prototype.request = function (params, cb) {
     }
   };
 
-  if (timeout !== Infinity) {
+  if (requestTimeout) {
     timeoutId = setTimeout(function () {
       xhr.onreadystatechange = _.noop;
       xhr.abort();
       cb(new TimeoutError());
-    }, timeout);
+    }, requestTimeout);
   }
 
   xhr.send(params.body || void 0);

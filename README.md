@@ -60,9 +60,9 @@ bower install elasticsearch-jquery
 ```
 
 ## Docs
- - [Configuration](docs/configuration.md)
- - [Examples](docs/examples.md)
- - [API](docs/api.md)
- - [Replacing Core Components](docs/replacing_core_components.md)
- - [Errors](docs/errors.md)
- - [Customize Logging](docs/customize_logging.md)
+ - [Quick Start](http://spenceralger.github.io/elasticsearch-js/index.html#quick-start)
+ - [API](http://spenceralger.github.io/elasticsearch-js/api.html)
+ - [Configuration](http://spenceralger.github.io/elasticsearch-js/index.html#configuration)
+ - [Extending Core Components](http://spenceralger.github.io/elasticsearch-js/index.html#extending)
+ - [Logging](http://spenceralger.github.io/elasticsearch-js/index.html#logging)
+ - [Contributing](http://spenceralger.github.io/elasticsearch-js/index.html#contributing)

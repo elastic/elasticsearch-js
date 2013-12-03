@@ -1,0 +1,40 @@
+<%
+_.each(actions, function (action) {
+var actionId = action.name.toLowerCase().replace(/[^\w]+/g, '-');
+
+%>
+
+h3#<%= actionId %>.fn
+  span.name <%= action.name %>
+  span.args (params, [callback])
+a.perma(href="api.html#<%= actionId %>", title="Permalink")
+a.esdoc(href="<%= action.docUrl %>", title="Endpoint Docs")
+//
+  h4 Spec:
+    pre
+      code <%= JSON.stringify(action, null, '  ').split('\n').map(function (line, i) {
+    return (i > 0 ? '      | ' : '') + line;
+  }).join('\n') %>
+
+h4 Params:
+ul.params.api
+<% _.each(action.allParams, function (param, paramName) { %>
+  li
+    code.name <%= paramWithDefault(paramName, param.default) %>
+    <%=
+      _.map(
+        ('<span class="types">' + paramType(param.type) + '</span> ' + (param.description || '')).split('\n'),
+        function (line) {
+          return '|  ' + line + '\n';
+        }
+      ).join('\n')
+    %>
+<% }); %>
+  li <a href="#api-conventions-params">the usual</a>
+
+h4 Method: <code><%= action.spec.method || 'GET' %></code>
+
+h4 Returns:
+p: a(href="#api-conventions-return") the usual<%
+});
+%>

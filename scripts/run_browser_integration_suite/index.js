@@ -5,69 +5,84 @@ var open = require('open');
 var fs = require('fs');
 var path = require('path');
 var async = require('async');
+var chalk = require('chalk');
 
 var yamlTestSourceFile = path.join(__dirname, '../../test/integration/yaml_suite/index.js');
-var yamlTestBundleFile = path.join(__dirname, '../../test/browser_integration/yaml_tests.js');
+var yamlTestBundleFile = path.join(__dirname, '../../test/integration/browser_yaml_suite/yaml_tests.js');
 var clientEntryFile = path.join(__dirname, '../../src/elasticsearch.js');
 
-var browsers = _.transform({
+var browserAppNames = _.transform({
   safari: {
     darwin: 'Safari'
   },
   chrome: {
     darwin: 'Google Chrome',
     win32: 'Google Chrome',
-    executable: 'google-chrome'
+    linux: 'google-chrome'
   },
   chromium: {
-
-    executable: 'chromium-browser',
+    linux: 'chromium-browser',
   },
   firefox: {
     darwin: 'Firefox',
     win32: 'Firefox',
-    executable: 'firefox'
+    linux: 'firefox'
   },
   opera: {
     darwin: 'Opera',
     win32: 'Opera',
-    executable: 'opera'
+    linux: 'opera'
   }
-}, function (browsers, config, name) {
+}, function (browserAppNames, config, name) {
   if (config[process.platform]) {
-    browsers[name] = config[process.platform];
+    browserAppNames[name] = config[process.platform];
     return;
   }
 
-  if (process.platform !== 'darwin' && process.platform !== 'win32' && config.executable) {
-    browsers[name] = config.executable;
+  if (process.platform !== 'darwin' && process.platform !== 'win32' && config.linux) {
+    browserAppNames[name] = config.executable;
     return;
   }
 }, {});
 
 var argv = require('optimist')
-  .default('browser', 'chrome')
-  .default('force_gen', false)
-  .boolean('force_gen')
-  .alias('f', 'force_gen')
-  .default('host', 'localhost')
-  .default('port', 9200)
+  .default({
+    browsers: '*',
+    forceGen: false,
+    host: 'localhost',
+    port: 9200
+  })
+  .boolean('forceGen')
+  .alias({
+    f: 'forceGen',
+    b: 'browsers',
+    h: 'host',
+    p: 'port'
+  })
   .argv;
 
-var browserAppName;
+server.browsers = [];
+
+if (argv.browsers === '*') {
+  server.browsers = _.keys(browserAppNames);
+} else {
+  argv.browsers.split(',').forEach(function (browser) {
+    server.browsers.push(browser);
+  });
+}
+
+var badKeys = _.difference(server.browsers, _.keys(browserAppNames));
+if (badKeys.length) {
+  console.error('Invalid keys: ' + badKeys.join(', '));
+  process.exit();
+} else {
+  console.log('opening browser suite in', server.browsers);
+}
 
 async.series([
   function (done) {
-    if (browsers.hasOwnProperty(argv.browser)) {
-      browserAppName = browsers[argv.browser];
-      done();
-    } else {
-      done('--browser must be set to one of ' + _.keys(browsers).join(', ') + ' on this platform');
-    }
-  },
-  function (done) {
     fs.exists('dist', function (yes) {
-      if (!argv.force_gen && yes) {
+      if (!argv.forceGen && yes) {
         done();
         return;
       }
@@ -82,7 +97,7 @@ async.series([
   },
   function (done) {
     fs.exists(yamlTestBundleFile, function (yes) {
-      if (!argv.force_gen && yes) {
+      if (!argv.forceGen && yes) {
         done();
         return;
       }
@@ -131,13 +146,32 @@ async.series([
       var port = server.address().port;
       console.log('server listening on port', port);
 
-      open('http://localhost:' + port + '?es_hostname=' + encodeURIComponent(argv.host) +
-           '&es_port=' + encodeURIComponent(argv.port) +
-           '&browser=' + encodeURIComponent(argv.browser), browserAppName);
+      async.eachSeries(_.clone(server.browsers), function (browser, done) {
+        open('http://localhost:' + port +
+          '?es_hostname=' + encodeURIComponent(argv.host) +
+          '&es_port=' + encodeURIComponent(argv.port) +
+          '&browser=' + encodeURIComponent(browser), browserAppNames[browser]);
+
+        server.once('browser complete', function () {
+          done();
+        });
+      });
     });
 
-    server.on('tests done', function (success) {
-      console.log('test completed', success ? 'successfully' : 'but failed');
+    server.on('tests done', function (report) {
+      var reports = [];
+      var success = true;
+      _.each(report, function (testSucceeded, browser) {
+        var msg = browser + ':' + (success ? '✔︎' : '⚑');
+        if (testSucceeded) {
+          msg = chalk.green(msg);
+        } else {
+          msg = chalk.red(msg);
+          success = false;
+        }
+        reports.push(' - ' + msg);
+      });
+      console.log('test completed!\n', reports.join('\n'));
       process.exit(success ? 0 : 1);
     });
   }

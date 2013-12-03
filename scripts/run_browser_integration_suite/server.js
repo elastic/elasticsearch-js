@@ -5,6 +5,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var chalk = require('chalk');
 var makeJUnitXml = require('../make_j_unit_xml');
+var docRoot = path.join(__dirname, '../../test/integration/browser_yaml_suite');
 chalk.enabled = true;
 
 var middleware = [];
@@ -17,7 +18,7 @@ var server = http.createServer(function (req, resp) {
   var parsedUrl = url.parse(req.url, true);
   req.uri = parsedUrl.pathname;
   req.query = parsedUrl.query;
-  req.filename = path.join(__dirname, '../../test/browser_integration/', req.uri);
+  req.filename = path.join(docRoot, req.uri);
 
   var end = resp.end;
   resp.end = function () {
@@ -39,6 +40,11 @@ var server = http.createServer(function (req, resp) {
   next();
 });
 
+server.browsers = [
+  // browsers will go here, and will be removed once they call tests-complete
+  // once gone, we will emit "tests done"
+];
+
 function rand(length) {
   var str = '';
   while (str.length < length) {
@@ -50,7 +56,7 @@ function rand(length) {
 function collectTestResults(req, resp) {
   var body = '';
   var browser = req.query.browser;
-  var logFilename = path.join(__dirname, '../../test-output-' + browser + '.xml');
+  var logFilename = 'test-output-' + browser + '.xml';
 
   req.on('data', function (chunk) {
     body += chunk;
@@ -79,13 +85,31 @@ function collectTestResults(req, resp) {
       if (err) {
         console.log('unable to save test-output to', err.message);
         console.trace();
-        server.emit('tests done', false);
+        browserComplete(browser);
       } else {
         console.log('test output written to', logFilename);
-        server.emit('tests done', !testDetails.stats.failures);
+        browserComplete(browser, true);
       }
     });
   });
+}
+
+var report = {};
+
+function browserComplete(browser, success) {
+  var i = server.browsers.indexOf(browser);
+  report[browser] = success;
+  server.emit('browser complete', browser, success);
+  if (i >= 0) {
+    server.browsers.splice(i, 1);
+    if (server.browsers.length) {
+      console.log('waiting for', server.browsers.length, 'browsers');
+    } else {
+      server.emit('tests done', report);
+    }
+  } else {
+    console.error('invalid browser', browser);
+  }
 }
 
 
@@ -120,7 +144,7 @@ middleware.push(function (req, resp, next) {
       resp.end();
     } else {
       if (stats.isDirectory()) {
-        req.filename = path.join(req.filename, '../../test/browser_integration/index.html');
+        req.filename = path.join(docRoot, 'index.html');
       }
       next();
     }
@@ -176,7 +200,7 @@ middleware.push(function (req, resp) {
         es_hostname: 'localhost',
         es_port: 9200,
         browser: 'unknown',
-        ts: 'no'//rand(5)
+        ts: rand(5)
       })));
     } else {
       resp.end(data);

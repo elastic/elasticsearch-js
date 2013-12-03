@@ -2,6 +2,13 @@ module.exports = ConnectionAbstract;
 
 var _ = require('./utils');
 var EventEmitter = require('events').EventEmitter;
+var Log = require('./log');
+var Host = require('./host');
+
+var defaults = {
+  deadTimeout: 30000,
+  requestTimeout: 10000
+};
 
 /**
  * Abstract class used for Connection classes
@@ -9,16 +16,19 @@ var EventEmitter = require('events').EventEmitter;
  * @constructor
  */
 function ConnectionAbstract(host, config) {
-  config = _.defaults(config || {}, {
-    deadTimeout: 30000
-  });
   EventEmitter.call(this);
+
+  config = _.defaults(config || {}, defaults);
+
   this.deadTimeout = config.deadTimeout;
+  this.requestTimeout = config.requestTimeout;
   this.requestCount = 0;
+
+  this.log = config.log || new Log();
 
   if (!host) {
     throw new TypeError('Missing host');
-  } else if (host.makeUrl) {
+  } else if (host instanceof Host) {
     this.host = host;
   } else {
     throw new TypeError('Invalid host');
@@ -35,7 +45,7 @@ _.inherits(ConnectionAbstract, EventEmitter);
  * @param [params] {Object} - The parameters for the request
  * @param params.path {String} - The path for which you are requesting
  * @param params.method {String} - The HTTP method for the request (GET, HEAD, etc.)
- * @param params.timeout {Integer} - The amount of time in milliseconds that this request should be allowed to run for.
+ * @param params.requestTimeout {Integer} - The amount of time in milliseconds that this request should be allowed to run for.
  * @param cb {Function} - A callback to be called once with `cb(err, responseBody, responseStatus)`
  */
 ConnectionAbstract.prototype.request = function () {
@@ -50,7 +60,7 @@ ConnectionAbstract.prototype.ping = function (cb) {
   return this.request({
     path: '/',
     method: 'HEAD',
-    timeout: 100
+    requestTimeout: 100
   }, cb);
 };
 

@@ -12,14 +12,11 @@ var handles = {
   http: require('http'),
   https: require('https')
 };
-var Log = require('../log');
 var _ = require('../utils');
 var errors = require('../errors');
 var qs = require('querystring');
 var KeepAliveAgent = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
-
-var log = _.bindKey(process.stdout, 'write');
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -29,29 +26,31 @@ var log = _.bindKey(process.stdout, 'write');
  * @param {Number} [config.maxSockets=10] - the maximum number of sockets that will be opened to this node
  * @param {Number} [config.maxFreeSockets=10] - this maximum number of sockets that can sit idle to this node
  * @param {Number} [config.maxKeepAliveTime=300000] - an idle timeout for the connections to this node. If your
+ * @param {Number} [config.timeout=10000] - an idle timeout for the connections to this node. If your
  *  maxSockets is much higher than your average concurrent usage, this timeout will cause sockets to close which
  *  can be interpreted as "bad" behavior for clients.
  */
 function HttpConnector(host, config) {
-  config = _.defaults(config || {}, {
-    maxSockets: 10,
-    maxFreeSockets: 10,
-    maxKeepAliveTime: 3e5 // 5 minutes
-  });
   ConnectionAbstract.call(this, host, config);
 
   this.hand = handles[this.host.protocol];
+  if (!this.hand) {
+    throw new TypeError('Invalid protocol "' + this.host.protocol +
+      '", expected one of ' + _.keys(handles).join(', '));
+  }
+
+  config = _.defaults(config || {}, {
+    maxSockets: 10,
+    maxFreeSockets: this.hand.Agent.defaultMaxSockets,
+    maxKeepAliveTime: 3e5 // 5 minutes
+  });
+
   this.agent = new KeepAliveAgent({
     keepAlive: true,
     maxSockets: config.maxSockets,
-    maxFreeSockets: config.maxFreeSockets || this.hand.Agent.defaultMaxSockets,
+    maxFreeSockets: config.maxFreeSockets,
     keepAliveMsecs: config.keepAliveMsecs
   });
-
-  this.log = config.log;
-  if (!_.isObject(this.log)) {
-    this.log = new Log();
-  }
 }
 _.inherits(HttpConnector, ConnectionAbstract);
 
@@ -70,16 +69,13 @@ HttpConnector.prototype.makeReqParams = function (params) {
     agent: this.agent
   };
 
-  var query = this.host.query ? this.host.query : null;
+  var query = this.host.query ? _.clone(this.host.query) : {};
 
   if (params.query) {
-    query = _.defaults({},
-      typeof params.query === 'string' ? qs.parse(params.query) : params.query,
-      query || {}
-    );
+    _.extend(query, typeof params.query === 'string' ? qs.parse(params.query) : params.query);
   }
 
-  if (query) {
+  if (_.size(query)) {
     reqParams.path = reqParams.path + '?' + qs.stringify(query);
   }
 
@@ -92,7 +88,7 @@ HttpConnector.prototype.request = function (params, cb) {
   var request;
   var response;
   var status = 0;
-  var timeout = params.timeout || this.config.timeout;
+  var requestTimeout = _.has(params, 'requestTimeout') ? this.requestTimeout : 10000;
   var log = this.log;
 
   var reqParams = this.makeReqParams(params);
@@ -132,17 +128,23 @@ HttpConnector.prototype.request = function (params, cb) {
 
   request.on('error', cleanUp);
 
-  if (timeout !== Infinity) {
+  if (requestTimeout) {
     // timeout for the entire request.
     timeoutId = setTimeout(function () {
       request.abort();
-      request.emit('error', new errors.RequestTimeout('Request timed out at ' + timeout + 'ms'));
-    }, timeout);
+      request.emit('error', new errors.RequestTimeout('Request timed out at ' + requestTimeout + 'ms'));
+    }, requestTimeout);
   }
 
   request.setNoDelay(true);
   request.setSocketKeepAlive(true);
+  request.chunkedEncoding = false;
 
-  request.end(params.body);
+  if (params.body) {
+    request.setHeader('Content-Length', params.body.length);
+    request.end(params.body);
+  } else {
+    request.end();
+  }
   this.requestCount++;
 };

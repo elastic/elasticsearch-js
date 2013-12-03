@@ -176,11 +176,15 @@ ClientAction.resolveUrl = resolveUrl;
 
 function exec(transport, spec, params, cb) {
   var request = {
-    method: spec.method,
-    timeout: spec.timeout || 10000
+    method: spec.method
   };
   var query = {};
   var i;
+
+  // pass the timeout from the spec
+  if (spec.requestTimeout) {
+    request.requestTimeout = spec.requestTimeout;
+  }
 
   // verify that we have the body if needed
   if (spec.needsBody && !params.body) {
@@ -228,16 +232,16 @@ function exec(transport, spec, params, cb) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
       case 'body':
-        request.body = params.body;
+        request.body = params[key];
         break;
       case 'ignore':
-        request.ignore = _.isArray(params.ignore) ? params.ignore : [params.ignore];
+        request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
         break;
-      case 'timeout':
-        request.timeout = params.timeout;
+      case 'requestTimeout':
+        request.requestTimeout = params[key];
         break;
       case 'method':
-        request.method = _.toUpperString(params.method);
+        request.method = _.toUpperString(params[key]);
         break;
       default:
         paramSpec = spec.params[key];

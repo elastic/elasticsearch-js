@@ -52,13 +52,13 @@ var templateGlobals = {
   paramType: function (type) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
     case 'time':
-      return 'Date or Number';
+      return 'Date, Number';
     case 'any':
-      return '*';
+      return 'Anything';
     case 'enum':
       return 'String';
     case 'list':
-      return 'String or String[] or Boolean';
+      return 'String, String[], Boolean';
     default:
       return _.ucfirst(type);
     }
@@ -91,5 +91,6 @@ templates.text = templates.string;
 
 module.exports = {
   apiFile: templates.api_file,
-  apiDocs: templates.api_docs
+  apiMethodList: templates.api_method_list,
+  apiMethods: templates.api_methods
 };

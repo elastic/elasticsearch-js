@@ -143,8 +143,8 @@ LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = _.handler(function (message) {
-  this.write('TRACE', message);
+LoggerAbstract.prototype.onTrace = _.handler(function (message, curlCall) {
+  this.write('TRACE', message + '\n' + curlCall);
 });
 
 

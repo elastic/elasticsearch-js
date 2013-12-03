@@ -5,7 +5,7 @@ var clean = require('../../clean');
 var restSpecUpdated = require('../../rest_spec_updated');
 
 var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
-var docOutputPath = _.joinPath(__dirname, '../../../docs/api.md');
+var docOutputDir = _.joinPath(__dirname, '../../../docs/');
 
 function download() {
   require('./actions').on('ready', function (actions) {
@@ -32,14 +32,22 @@ function download() {
       namespaces: _.unique(namespaces.sort(), true)
     }));
 
-    fs.writeFileSync(docOutputPath, templates.apiDocs({
+    if (!fs.existsSync(docOutputDir)) {
+      fs.mkdirSync(docOutputDir);
+    }
+
+    fs.writeFileSync(docOutputDir + '_method_list.jade', templates.apiMethodList({
+      actions: actions
+    }));
+
+    fs.writeFileSync(docOutputDir + '_methods.jade', templates.apiMethods({
       actions: actions
     }));
   });
 }
 
 restSpecUpdated(function (err, updated) {
-  if (process.env.FORCE_GEN || process.env.npm_config_force || err || updated) {
+  if (err || updated) {
     download();
   }
 });

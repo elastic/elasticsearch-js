@@ -8,7 +8,7 @@ var argv = require('optimist')
       default: 14000
     },
     days: {
-      alias: 'c',
+      alias: 'd',
       type: 'number',
       required: true
     },
@@ -22,22 +22,21 @@ var argv = require('optimist')
 // Error.stackTraceLimit = Infinity;
 // process.exit();
 
-var count = parseInt(argv._[0] || 14000, 10),
-  days = parseInt(argv._[1] || 7, 10);
-
-var es = require('../../../src/elasticsearch'),
-  _ = require('../../../src/lib/utils'),
-  async = require('async'),
-  moment = require('moment'),
-  makeSamples = require('./samples').make,
-  startingMoment = moment().startOf('day').subtract('days', days),
-  endingMoment = moment().endOf('day').add('days', days),
-  clientConfig = {
-    log: {
-      level: 'trace',
-      type: 'stdio'
-    }
-  };
+var es = require('../../../src/elasticsearch');
+var _ = require('../../../src/lib/utils');
+var async = require('async');
+var path = require('path');
+var moment = require('moment');
+var makeSamples = require('./samples').make;
+var startingMoment = moment().startOf('day').subtract('days', argv.days);
+var endingMoment = moment().endOf('day').add('days', argv.days);
+var clientConfig = {
+  log: {
+    level: 'trace',
+    type: 'file',
+    path: path.join(__dirname, '../../../log')
+  }
+};
 
 if (argv.host) {
   clientConfig.hosts = argv.host;
@@ -47,13 +46,13 @@ if (argv.host) {
 
 var client = new es.Client(clientConfig);
 
-console.log('Generating', count, 'events across ±', days, 'days');
+console.log('Generating', argv.count, 'events across ±', argv.days, 'days');
 
 fillIndecies(function () {
-  var actions = [],
-    samples = makeSamples(startingMoment, endingMoment);
+  var actions = [];
+  var samples = makeSamples(startingMoment, endingMoment);
 
-  async.times(count, function (i, done) {
+  async.times(argv.count, function (i, done) {
     // random date, plus less random time
     var date = moment(samples.randomMsInDayRange())
       .utc()
@@ -84,7 +83,6 @@ fillIndecies(function () {
 
     event['@message'] = event.ip + ' - - [' + date.toISOString() + '] "GET ' + event.request + ' HTTP/1.1" ' +
         event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
-    event.src = JSON.stringify(event, null, '  ');
 
     actions.push({
       index: {
@@ -95,7 +93,7 @@ fillIndecies(function () {
     });
     actions.push(event);
 
-    if (actions.length === 3000 || i === count - 1) {
+    if (actions.length === 3000 || i === argv.count - 1) {
       console.info('writing', actions.length / 2, 'documents');
       client.bulk({
         body: actions
@@ -109,6 +107,7 @@ fillIndecies(function () {
       throw err;
     } else {
       console.log('Done!');
+      process.exit();
     }
   });
 });

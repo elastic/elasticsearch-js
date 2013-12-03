@@ -59,7 +59,7 @@ Client.prototype.ping = ca({
   url: {
     fmt: '/'
   },
-  timeout: 100
+  requestTimeout: 100
 });
 
 Client.prototype.close = function () {

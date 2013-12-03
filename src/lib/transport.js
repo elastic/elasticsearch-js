@@ -66,6 +66,10 @@ Transport.logs = {
   main: require('./log')
 };
 
+Transport.nodesToHostCallbacks = {
+  main: require('./nodes_to_host')
+};
+
 /**
  * Perform a request with the client's transport
  *
@@ -100,7 +104,7 @@ Transport.prototype.request = function (params, cb) {
   }
 
   params.req = {
-    timeout: params.timeout,
+    requestTimeout: params.requestTimeout,
     method: params.method,
     path: params.path,
     query: params.query,

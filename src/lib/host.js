@@ -10,17 +10,18 @@ var _ = require('./utils');
 
 var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 
-// simple reference used when formatting as a url
-var defaultPort = {
-  http: 80,
-  https: 443
-};
-
 var urlParseFields = [
   'protocol', 'hostname', 'pathname', 'port', 'auth', 'query'
 ];
 
 var simplify = ['host', 'path'];
+
+// simple reference used when formatting as a url
+// and defines when parsing from a string
+Host.defaultPorts = {
+  http: 80,
+  https: 443
+};
 
 function Host(config) {
   config = config || {};
@@ -38,6 +39,17 @@ function Host(config) {
       config = 'http://' + config;
     }
     config = _.pick(url.parse(config, false, true), urlParseFields);
+    // default logic for the port is to use 9200 for the default. When a string is specified though,
+    // we will use the default from the protocol of the string.
+    if (!config.port) {
+      var proto = config.protocol || 'http';
+      if (proto.charAt(proto.length - 1) === ':') {
+        proto = proto.substring(0, proto.length - 1);
+      }
+      if (Host.defaultPorts[proto]) {
+        config.port = Host.defaultPorts[proto];
+      }
+    }
   }
 
   if (_.isObject(config)) {
@@ -68,15 +80,16 @@ function Host(config) {
   }
 
   // make sure that the port is a number
-  if (typeof this.port !== 'number') {
+  if (_.isNumeric(this.port)) {
     this.port = parseInt(this.port, 10);
-    if (isNaN(this.port)) {
-      this.port = 9200;
-    }
+  } else {
+    this.port = 9200;
   }
 
   // make sure the path starts with a leading slash
-  if (this.path && this.path.charAt(0) !== '/') {
+  if (this.path === '/') {
+    this.path = '';
+  } else if (this.path && this.path.charAt(0) !== '/') {
     this.path = '/' + (this.path || '');
   }
 
@@ -90,7 +103,7 @@ Host.prototype.makeUrl = function (params) {
   params = params || {};
   // build the port
   var port = '';
-  if (this.port !== defaultPort[this.protocol]) {
+  if (this.port !== Host.defaultPorts[this.protocol]) {
     // add an actual port
     port = ':' + this.port;
   }

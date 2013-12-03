@@ -32,7 +32,7 @@ function download() {
 
 
 restSpecUpdated(function (err, updated) {
-  if (process.env.FORCE_GEN || process.env.npm_config_force || err || updated) {
+  if (err || updated) {
     download();
   }
 });

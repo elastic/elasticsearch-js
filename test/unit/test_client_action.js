@@ -79,7 +79,6 @@ describe('Client Action runner', function () {
       (function () {
         action({}, function () {});
       }).should.throw('proxy function called');
-
     });
 
     it('provides the proper context', function (done) {
@@ -630,34 +629,34 @@ describe('Client Action runner', function () {
     });
   });
 
-  describe('passing of timeout', function () {
-    it('passes the timeout', function (done) {
+  describe('passing requestTimeout', function () {
+    it('passes passes the spec value by default', function (done) {
       var action = makeClientAction({
-        timeout: 100
+        requestTimeout: 100
       });
 
       action({}, function (err, params) {
-        params.timeout.should.be.exactly(100);
+        params.requestTimeout.should.be.exactly(100);
         done();
       });
     });
 
-    it('passes the provided value for timeout', function (done) {
+    it('passes the provided value', function (done) {
       var action = makeClientAction({
-        timeout: 100
+        requestTimeout: 100
       });
 
-      action({ timeout: 3000 }, function (err, params) {
-        params.timeout.should.be.exactly(3000);
+      action({ requestTimeout: 3000 }, function (err, params) {
+        params.requestTimeout.should.be.exactly(3000);
         done();
       });
     });
 
-    it('uses 10000 as the default timeout', function (done) {
+    it('passes nothing be default', function (done) {
       var action = makeClientAction({});
 
       action({}, function (err, params) {
-        params.timeout.should.be.exactly(10000);
+        should(params.requestTimeout).be.exactly(void 0);
         done();
       });
     });
@@ -787,7 +786,7 @@ describe('Client Action runner', function () {
         b: '3w',
         q: 'beep',
         body: '{ "mmm": "json" }',
-        timeout: 1000,
+        requestTimeout: 1000,
         method: 'head',
         ignore: 201
       },

@@ -198,24 +198,43 @@ function transformFile(entry) {
 /**
  * un-comment to print out the default method for any action that has multiple options
  */
-// module.exports = new EventEmitter();
+module.exports = new EventEmitter();
 // module.exports.on('ready', function (actions) {
 //   var longestName = 0;
-//   var lines = [];
+//   var reports = {
+//     multi_methods: [],
+//     get_with_body: []
+//   };
 //   actions.forEach(function (action) {
+//     var name;
+
 //     // console.log(action);
 //     if (action._methods.length > 1) {
-//       var name = action.name + ' (' + action._methods.join('/') + ')';
+//       name = action.name + ' (' + action._methods.join('/') + ')';
 //       longestName = Math.max(name.length, longestName);
-//       lines.push([name, action.spec.method || 'GET', action.docUrl]);
+//       reports.multi_methods.push([name, action.spec.method || 'GET', action.docUrl]);
+//     }
+
+//     if (action._methods.length === 1 && action._methods[0] === 'GET' && action.body) {
+//       name = action.name + ' (' + action._methods.join('/') + ')';
+//       longestName = Math.max(name.length, longestName);
+//       reports.get_with_body.push([name, action.spec.method || 'GET', action.docUrl]);
 //     }
 //   });
 
-//   lines.forEach(function (line) {
-//     var name = line[0];
-//     var def = line[1];
-//     var docUrl = line[2];
-//     var spacing = (new Array(longestName - name.length + 1)).join(' ');
-//     console.log(name + spacing + ' [' + def + (def.length === 3 ? ' ' : '') + ']  ->  ' + docUrl);
+//   Object.keys(reports).forEach(function (key) {
+//     console.log('\n' + key);
+//     if (reports[key].length) {
+//       reports[key].forEach(function (line) {
+//         var name = line[0];
+//         var def = line[1];
+//         var docUrl = line[2];
+//         var spacing = (new Array(longestName - name.length + 1)).join(' ');
+//         console.log(name + spacing + ' [' + def + (def.length === 3 ? ' ' : '') + ']  ->  ' + docUrl);
+//       });
+//     } else {
+//       console.log('--nada--');
+//     }
+//     console.log('\n');
 //   });
 // });

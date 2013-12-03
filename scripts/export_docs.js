@@ -5,39 +5,27 @@ var cp = require('child_process');
 
 var argv = require('optimist')
   .default({
-    buildName: '',
     outputDir: '.',
     verbose: false
   })
   .alias({
-    b: 'buildName',
     o: 'outputDir',
     v: 'verbose'
   })
   .argv;
 
-switch (argv.buildName) {
-case 'jquery':
-  var buildFile = './dist/elasticsearch.jquery.js';
-  var minifiedBuildFile = './dist/elasticsearch.jquery.min.js';
-  break;
-case 'angular':
-  var buildFile = './dist/elasticsearch.angular.js';
-  var minifiedBuildFile = './dist/elasticsearch.angular.min.js';
-  break;
-default:
-  var buildFile = './dist/elasticsearch.js';
-  var minifiedBuildFile = './dist/elasticsearch.min.js';
-  break;
-}
-
-var outputFile = path.join(argv.outputDir, 'elasticsearch.js');
-var minifiedOutputFile = path.join(argv.outputDir, 'elasticsearch.min.js');
-
 var steps = [
-  [runInModule, 'npm', ['run', 'build']],
-  [copy, buildFile, outputFile],
-  [copy, minifiedBuildFile, minifiedOutputFile]
+  [runInModule, 'node', [path.join(__dirname, './generate/js_api'), '--force']],
+  [
+    copy,
+    path.join(__dirname, '../docs/_methods.jade'),
+    path.join(argv.outputDir, '_methods.jade')
+  ],
+  [
+    copy,
+    path.join(__dirname, '../docs/_method_list.jade'),
+    path.join(argv.outputDir, '_method_list.jade')
+  ]
 ];
 
 (function next() {

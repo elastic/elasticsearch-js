@@ -9,13 +9,13 @@ var argv = require('optimist')
   ].join('\n'))
   .default({
     server: true,
-    browser: true,
     unit: true,
     integration: false,
     host: 'localhost',
     port: 9200,
     'xml-output': true,
-    'check-upstream': false
+    'check-upstream': false,
+    'browsers': '*'
   })
   .describe({
     host: 'hostname for elasticsearch instance used in integration tests',
@@ -24,7 +24,7 @@ var argv = require('optimist')
   .alias({
     u: 'unit',
     i: 'integration',
-    b: 'browser',
+    b: 'browsers',
     s: 'server',
     x: 'xml-output'
   });
@@ -46,7 +46,7 @@ var commands = [];
 
 if (argv['just-browser']) {
   argv.server = false;
-  argv.browser = true;
+  argv.browsers = '*';
 }
 
 if (argv['check-upstream']) {
@@ -57,7 +57,7 @@ if (argv.unit) {
   if (argv.server) {
     commands.push(['mocha', 'test/unit/test_*.js', '--require=should']);
   }
-  if (argv.browser) {
+  if (argv.browsers) {
     commands.push(['testling', '.']);
   }
 }
@@ -74,8 +74,13 @@ if (argv.integration) {
       '--port', argv.port
     ].filter(Boolean));
   }
-  if (argv.browser) {
-    commands.push(['node', 'scripts/run_browser_integration_suite/index.js']);
+  if (argv.browsers) {
+    commands.push([
+      'node',
+      'scripts/run_browser_integration_suite/index.js',
+      '--browsers',
+      argv.browsers
+    ]);
   }
 }
 

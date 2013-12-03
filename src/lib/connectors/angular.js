@@ -21,7 +21,7 @@ AngularConnector.prototype.request = function (params, cb) {
     url: this.host.makeUrl(params),
     data: params.body,
     cache: false,
-    timeout: params.timeout !== Infinity ? params.timeout : 0
+    timeout: _.has(params, 'requestTimeout') ? this.requestTimeout : 10000
   }).then(function (response) {
     cb(null, response.data, response.status);
   }, function (err) {

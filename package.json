@@ -44,21 +44,19 @@
     "when": "~2.6.0",
     "lodash": "~2.3.0",
     "agentkeepalive": "~0.1",
-    "chalk": "~0.3.0",
-    "inherits": "~2.0.1"
+    "chalk": "~0.3.0"
   },
   "scripts": {
     "test": "node scripts/run_tests.js",
     "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
     "build": "grunt",
     "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",
-    "export_client": "node scripts/export_client.js",
     "blanket": {
       "pattern": "src"
     }
   },
   "testling": {
     "harness": "mocha",
-    "files": "test/unit/test_!(http_connection|stdio_logger).js"
+    "files": "test/unit/test_!(http_connector|stdio_logger).js"
   }
 }

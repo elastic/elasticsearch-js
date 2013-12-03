@@ -10,7 +10,7 @@ describe('Host class', function () {
         protocol: 'http',
         host: 'localhost',
         port: 9200,
-        path: '/',
+        path: '',
         auth: null,
         query: {}
       });
@@ -31,18 +31,35 @@ describe('Host class', function () {
       host.headers.should.be.exactly(headers);
     });
 
-    it('accepts a string for the entire url', function () {
-      var host = new Host('john:dude@pizza.com:420/pizza/cheese?shrooms=true');
+    describe('from a string', function () {
+      it('accepts a string for the entire url', function () {
+        var host = new Host('john:dude@pizza.com:420/pizza/cheese?shrooms=true');
 
-      host.should.eql({
-        protocol: 'http',
-        host: 'pizza.com',
-        port: 420,
-        path: '/pizza/cheese',
-        auth: 'john:dude',
-        query: {
-          shrooms: 'true'
-        }
+        host.should.eql({
+          protocol: 'http',
+          host: 'pizza.com',
+          port: 420,
+          path: '/pizza/cheese',
+          auth: 'john:dude',
+          query: {
+            shrooms: 'true'
+          }
+        });
+      });
+
+      it('uses the default port based on the protocol', function () {
+        var host;
+
+        host = new Host('https://google.com');
+        host.port.should.eql(443);
+
+        host = new Host('http://google.com');
+        host.port.should.eql(80);
+
+        Host.defaultPorts.trift = 9300;
+        host = new Host('thrift://google.com');
+        host.port.should.eql(9200);
+        delete Host.defaultPorts.trift;
       });
     });
 
@@ -85,7 +102,7 @@ describe('Host class', function () {
         protocol: 'http',
         host: 'localhost',
         port: 9200,
-        path: '/',
+        path: '',
         auth: null,
         query: {}
       });
@@ -123,12 +140,21 @@ describe('Host class', function () {
       host.makeUrl({ path: '/this and that'})
         .should.eql('http://localhost:9200/prefix//this and that');
     });
+
+    it('creates proper url without any params', function () {
+      var host = new Host({});
+      host.makeUrl().should.eql('http://localhost:9200/');
+
+      host = new Host({ host: 'john', port: 80 });
+      host.makeUrl().should.eql('http://john/');
+
+      host = new Host({ host: 'italy', path: '/pie' });
+      host.makeUrl().should.eql('http://italy:9200/pie');
+    });
   });
 
   describe('#toString', function () {
-    it('just calls makeUrl with no parameters', function () {
-
-    });
+    // just calls makeUrl without any params
   });
 
 });

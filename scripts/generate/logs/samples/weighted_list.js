@@ -8,8 +8,11 @@ module.exports = WeightedList;
 var _ = require('../../../../src/lib/utils');
 
 function WeightedList(list) {
-  WeightedList.callSuper(this, arguments);
+  Array.call(this);
+
   _.forEach(list, _.bindKey(this, 'push'));
+
+  console.log(this);
 }
 _.inherits(WeightedList, Array);
 
