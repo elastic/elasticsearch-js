@@ -141,7 +141,7 @@ HttpConnector.prototype.request = function (params, cb) {
   request.chunkedEncoding = false;
 
   if (params.body) {
-    request.setHeader('Content-Length', params.body.length);
+    request.setHeader('Content-Length', Buffer.byteLength(params.body, 'utf8'));
     request.end(params.body);
   } else {
     request.end();
