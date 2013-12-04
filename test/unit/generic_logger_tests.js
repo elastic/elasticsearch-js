@@ -1,5 +1,6 @@
 var Log = require('../../src/lib/log');
 var LoggerAbstract = require('../../src/lib/logger');
+var TracerLogger = require('../../src/lib/loggers/tracer');
 var now = new Date('2013-03-01T00:00:00Z');
 var sinon = require('sinon');
 
@@ -234,12 +235,16 @@ module.exports = function (makeLogger) {
 
     it('joins the message and curl call with a newline', function () {
       var logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
-        msg.should.eql('curlcall\nmessage');
-      });
 
-      logger.onTrace('message', 'curlcall');
-      logger.write.callCount.should.eql(1);
+      // tracer logger has custom trace logic...
+      if (!(logger instanceof TracerLogger)) {
+        stub(logger, 'write', function (label, msg) {
+          msg.should.eql('curlcall\nmessage');
+        });
+
+        logger.onTrace('message', 'curlcall');
+        logger.write.callCount.should.eql(1);
+      }
     });
   });
 };

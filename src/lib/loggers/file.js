@@ -32,13 +32,8 @@ function File(log, config) {
 _.inherits(File, StreamLogger);
 
 File.prototype.onProcessExit = _.handler(function () {
-  // flush the write buffer to disk
-  var writeBuffer = this.stream._writableState.buffer;
-  var out = '';
-  if (writeBuffer) {
-    writeBuffer.forEach(function (buffered) {
-      out += buffered.chunk.toString();
-    });
-    fs.appendFileSync(this.path, out);
+  var toWrite = _.getUnwrittenFromStream(this.stream);
+  if (toWrite) {
+    fs.appendFileSync(this.path, toWrite);
   }
 });

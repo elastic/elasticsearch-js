@@ -3,7 +3,6 @@ var StreamLogger = require('../../src/lib/loggers/stream');
 var MockWritableStream = require('../mocks/writable_stream');
 var MockOldWritableStream = require('../mocks/old_writable_stream');
 var once = require('events').EventEmitter.prototype.once;
-var write = require('stream').Writable.prototype.write;
 var sinon = require('sinon');
 var stream = new MockWritableStream();
 var _ = require('lodash');
@@ -14,6 +13,10 @@ var stub = require('./auto_release_stub').make();
 
 beforeEach(function () {
   parentLog = new Log();
+  if (stream._writableState.buffer.length) {
+    // empty the buffer manually
+    stream._writableState.buffer.splice(0);
+  }
   stub(stream, 'write');
   stub(stream, 'end');
 });
@@ -34,37 +37,36 @@ function makeLogger(parent, levels) {
 describe('Stream Logger', function () {
   describe('buffer flushing', function () {
     it('writes everything in the buffer to console.error', function () {
-      var onExitCallback;
-      sinon.stub(process, 'once', function (evName, cb) {
-        if (evName === 'exit') {
-          onExitCallback = cb;
-          process.once.restore();
-        } else {
-          once.call(process, evName, cb);
-        }
-      });
-
       var logger = makeLogger();
-      var line = 'This string is repeated 10 times to create buffered output.\n';
+      var line = 'This string is writte 10 times to create buffered output.\n';
 
+      // get the last handler for process's "exit" event
+      var exitHandlers = process._events.exit;
+      var exitHandler = _.isArray(exitHandlers) ? _.last(exitHandlers) : exitHandlers;
+
+      // allow the logger to acctually write to the stream
+      stream.write.restore();
+
+      // write the line 10 times
       _.times(10, function () {
-        write.call(stream, line);
+        logger.onDebug(line);
       });
 
+      // collect everything that is written to console.error
       var flushedOutput = '';
-      sinon.stub(console, 'error', function (str) {
+      stub(console, 'error', function (str) {
         flushedOutput += str;
       });
-      onExitCallback();
-      console.error.restore();
-      // empty the buffer manually
-      stream._writableState.buffer.splice(0);
 
-      // the first line is stuck "in writing" and there is nothing we can do about that
+      // call the event handler
+      exitHandler.call(process);
+
+      // restore console.error asap.
+      console.error.restore();
+
+      // the first line is sent immediately to _write and there is nothing we are not going to worry about it
       flushedOutput.match(new RegExp(line, 'g')).length.should.eql(9);
     });
-
-    it('works with older streams');
   });
 
 

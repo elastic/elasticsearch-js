@@ -1,5 +1,5 @@
 /**
- * Just a buffer really, but one that implements the Writeable class
+ * Just a buffer really, but one that implements the Writable class
  * @type {Constuctor}
  */
 module.exports = MockWritableStream;

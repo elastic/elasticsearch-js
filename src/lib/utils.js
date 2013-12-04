@@ -227,32 +227,6 @@ utils.repeat = function (what, times) {
 };
 
 /**
- *
- */
-
-/**
- * Remove leading/trailing spaces from a string
- *
- * @param str {String} - Any string
- * @returns {String}
- */
-utils.trim = function (str) {
-  return typeof str === 'string' ? str.replace(/^\s+|\s+$/g, '') : '';
-};
-
-utils.collectMatches = function (text, regExp) {
-  var matches = [], match;
-  while (match = regExp.exec(text)) {
-    matches.push(match);
-    if (regExp.global !== true) {
-      // would loop forever if not true
-      break;
-    }
-  }
-  return matches;
-};
-
-/**
  * Call a function, applying the arguments object to it in an optimized way, rather than always turning it into an array
  *
  * @param func {Function} - The function to execute
@@ -328,22 +302,14 @@ _.scheduled = _.handler;
  * ```
  *
  * @param {Object} obj - The object to bind the methods to
- * @param {Array} [methods] - The methods to bind, false values === bind all flagged with _provideBound
  */
-_.makeBoundMethods = function (obj, methods) {
+_.makeBoundMethods = function (obj) {
   obj.bound = {};
-  if (!methods) {
-    methods = [];
-    for (var prop in obj) {
-      // dearest maintainer, we want to look through the prototype
-      if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
-        obj.bound[prop] = _.bind(obj[prop], obj);
-      }
+  for (var prop in obj) {
+    // dearest maintainer, we want to look through the prototype
+    if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
+      obj.bound[prop] = _.bind(obj[prop], obj);
     }
-  } else {
-    _.each(methods, function (method) {
-      obj.bound[method] = _.bindKey(obj, method);
-    });
   }
 };
 
@@ -412,6 +378,28 @@ _.createArray = function (input, transform) {
     }
   }
   return output;
+};
+
+/**
+ * Takes a WritableStream, and returns the chunks that have not successfully written, returning them as a string.
+ *
+ * ONLY WORKS FOR TEXT STREAMS
+ *
+ * @param  {WritableStream} stream - an instance of stream.Writable
+ * @return {string} - the remaining test to be written to the stream
+ */
+_.getUnwrittenFromStream = function (stream) {
+  if (stream && stream._writableState && stream._writableState.buffer) {
+    // flush the write buffer to disk
+    var writeBuffer = stream._writableState.buffer;
+    var out = '';
+    if (writeBuffer.length) {
+      writeBuffer.forEach(function (buffered) {
+        out += buffered.chunk.toString();
+      });
+    }
+    return out;
+  }
 };
 
 module.exports = utils;

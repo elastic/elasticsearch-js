@@ -21,7 +21,7 @@ function Stream(log, config) {
   if (config.stream && config.stream.write && config.stream.end) {
     this.stream = config.stream;
   } else {
-    throw new TypeError('Invalid stream, use an instance of stream.Writeable');
+    throw new TypeError('Invalid stream, use an instance of stream.Writable');
   }
 
   process.once('exit', this.bound.onProcessExit);
@@ -36,14 +36,10 @@ Stream.prototype.cleanUpListeners = _.handler(function () {
 // flush the write buffer to stderr synchronously
 Stream.prototype.onProcessExit = _.handler(function () {
   // process is dying, lets manually flush the buffer synchronously to stderr.
-  if (this.stream._writableState && this.stream._writableState.buffer) {
-    var writeBuffer = this.stream._writableState.buffer;
-    if (writeBuffer.length) {
-      console.error('Log stream did not get to finish writing. Flushing to stderr');
-      writeBuffer.forEach(function (buffered) {
-        console.error(buffered.chunk.toString());
-      });
-    }
+  var unwritten = _.getUnwrittenFromStream(this.stream);
+  if (unwritten) {
+    console.error('Log stream did not get to finish writing. Flushing to stderr');
+    console.error(unwritten);
   }
 });
 

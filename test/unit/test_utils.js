@@ -1,6 +1,8 @@
 var _ = require('../../src/lib/utils');
 var should = require('should');
 
+var stub = require('./auto_release_stub').make();
+
 describe('Utils', function () {
 
   describe('Additional Type Checkers', function () {
@@ -30,7 +32,6 @@ describe('Utils', function () {
       }
     },
     function (thing, name) {
-
       describe('#isArrayOf' + name, function (test) {
         it('likes arrays of ' + name, function () {
           should(_['isArrayOf' + name + 's'](thing.is)).be.ok;
@@ -335,4 +336,68 @@ describe('Utils', function () {
       }).should.throw(/expected a function or one of main, other/i);
     });
   });
+
+  describe('#applyArgs', function () {
+    _.times(10, function (i) {
+      var method = i > 5 ? 'apply' : 'call';
+      var argCount = i + 1;
+      var slice = 1;
+
+      it('uses ' + method + ' with ' + i + ' args', function () {
+        var func = function () {};
+        stub(func, method);
+
+        var args = _.map(new Array(i), function (val, i) { return i; });
+        _.applyArgs(func, null, args);
+
+        func[method].callCount.should.eql(1);
+        if (method === 'apply') {
+          func.apply.lastCall.args[1].should.eql(args);
+        } else {
+          func.call.lastCall.args.splice(1).should.eql(args);
+        }
+      });
+
+      it('slices the arguments properly before calling ' + method + ' with ' + argCount + ' args sliced at ' + slice,
+      function () {
+        var func = function () {};
+        stub(func, method);
+
+        var args = _.map(new Array(argCount), function (val, i) { return i; });
+        var expected = args.slice(slice);
+        _.applyArgs(func, null, args, slice);
+
+        func[method].callCount.should.eql(1);
+        if (method === 'apply') {
+          func.apply.lastCall.args[1].should.eql(expected);
+        } else {
+          func.call.lastCall.args.splice(1).should.eql(expected);
+        }
+      });
+    });
+  });
+
+  describe('#getUnwrittenFromStream', function () {
+    it('ignores things that do not have writableState', function () {
+      should.not.exist(_.getUnwrittenFromStream());
+      should.not.exist(_.getUnwrittenFromStream(false));
+      should.not.exist(_.getUnwrittenFromStream([]));
+      should.not.exist(_.getUnwrittenFromStream({}));
+    });
+
+    var MockWritableStream = require('../mocks/writable_stream');
+
+    it('ignores empty stream', function () {
+      var stream = new MockWritableStream();
+      _.getUnwrittenFromStream(stream).should.be.exactly('');
+    });
+
+    it('returns only what is in the buffer', function () {
+      var stream = new MockWritableStream();
+      stream.write('hot');
+      stream.write('dog');
+      _.getUnwrittenFromStream(stream).should.be.exactly('dog');
+    });
+  });
+
 });

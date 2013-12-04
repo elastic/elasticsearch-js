@@ -33,7 +33,7 @@ exports.start = function (cb) {
   );
 
   server.stdout.on('data', function onProcessData(line) {
-    line = _.trim(line.toString());
+    line = line.toString().trim();
     var match;
     if (match = line.match(/\{inet\[\/?([^:]+):(\d+)\]\}/)) {
       server.__hostname = match[1];
@@ -49,7 +49,7 @@ exports.start = function (cb) {
   });
 
   server.stderr.on('data', function (line) {
-    console.error(_.trim(line.toString()));
+    console.error(line.toString().trim());
   });
 
   server.on('close', function (code) {
