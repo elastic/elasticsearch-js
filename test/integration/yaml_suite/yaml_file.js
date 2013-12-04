@@ -20,19 +20,16 @@ function YamlFile(filename, docs) {
       doc =  new YamlDoc(doc, file);
       if (doc.description === 'setup') {
         beforeEach(/* doc */function (done) {
-          console.log('setting up:', filename);
           async.series(_.pluck(doc._actions, 'testable'), done);
         });
       } else {
         it(doc.description, function (done) {
-          console.log('test doc');
           async.series(_.pluck(doc._actions, 'testable'), done);
         });
       }
     });
 
     afterEach(/* doc */function (done) {
-      console.log('clearing indices');
       clientManager.get().indices.delete({
         index: '*',
         ignore: 404

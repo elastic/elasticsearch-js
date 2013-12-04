@@ -1,6 +1,6 @@
 /**
  * Just a buffer really, but one that implements the Writeable class
- * @type {WritableStream}
+ * @type {Constuctor}
  */
 module.exports = MockWritableStream;
 
@@ -10,9 +10,7 @@ var util = require('util');
 function MockWritableStream(opts) {
   Writable.call(this, opts);
 
-  this._write = function (chunk, encoding, cb) {
-
-  };
+  this._write = function (chunk, encoding, cb) {};
 }
 
 util.inherits(MockWritableStream, Writable);

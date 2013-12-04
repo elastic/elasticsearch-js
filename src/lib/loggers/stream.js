@@ -28,6 +28,11 @@ function Stream(log, config) {
 }
 _.inherits(Stream, LoggerAbstract);
 
+Stream.prototype.cleanUpListeners = _.handler(function () {
+  process.removeListener('exit', this.bound.onProcessExit);
+  LoggerAbstract.prototype.cleanUpListeners.call(this);
+});
+
 // flush the write buffer to stderr synchronously
 Stream.prototype.onProcessExit = _.handler(function () {
   // process is dying, lets manually flush the buffer synchronously to stderr.

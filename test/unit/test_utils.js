@@ -134,8 +134,8 @@ describe('Utils', function () {
         _.camelCase('Json_parser').should.eql('jsonParser');
       });
 
-      it('handles trailing _', function () {
-        _.camelCase('_thing_one_').should.eql('thingOne');
+      it('handles leading _', function () {
+        _.camelCase('_thing_one_').should.eql('_thingOne');
       });
     });
 
@@ -148,8 +148,8 @@ describe('Utils', function () {
         _.studlyCase('Json_parser').should.eql('JsonParser');
       });
 
-      it('handles trailing _', function () {
-        _.studlyCase('_thing_one_').should.eql('ThingOne');
+      it('handles leading _', function () {
+        _.studlyCase('_thing_one_').should.eql('_ThingOne');
       });
     });
 
@@ -162,8 +162,8 @@ describe('Utils', function () {
         _.snakeCase('Json_parser').should.eql('json_parser');
       });
 
-      it('handles trailing _', function () {
-        _.snakeCase('_thing_one_').should.eql('thing_one');
+      it('handles leading _', function () {
+        _.snakeCase('_thing_one_').should.eql('_thing_one');
       });
     });
 
@@ -317,13 +317,22 @@ describe('Utils', function () {
       _.funcEnum(config, 'config key name', { toString: 'pizza' }, 'toJSON')
         .should.be.exactly('pizza');
     });
-    it('throws an error if the selection if invalid', function () {
+    it('throws an informative error if the selection if invalid', function () {
       var config = {
         'config': 'val'
       };
+
+      (function () {
+        _.funcEnum(config, 'config', {});
+      }).should.throw(/expected a function/i);
+
       (function () {
         _.funcEnum(config, 'config', { main: 'default' }, 'main');
-      }).should.throw(/invalid config/i);
+      }).should.throw(/expected a function or main/i);
+
+      (function () {
+        _.funcEnum(config, 'config', { main: 'default', other: 'default' }, 'main');
+      }).should.throw(/expected a function or one of main, other/i);
     });
   });
 });

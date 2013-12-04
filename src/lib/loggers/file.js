@@ -27,7 +27,6 @@ function File(log, config) {
     encoding: 'utf8'
   });
 
-  // call my super
   StreamLogger.call(this, log, config);
 }
 _.inherits(File, StreamLogger);

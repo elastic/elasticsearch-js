@@ -47,7 +47,7 @@
     "chalk": "~0.3.0"
   },
   "scripts": {
-    "test": "node scripts/run_tests.js",
+    "test": "node scripts/run_tests.js --integration --unit --browsers=chrome,safari,firefox,opera",
     "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
     "build_clients": "grunt",
     "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",

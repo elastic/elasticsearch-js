@@ -515,7 +515,7 @@ describe('Client Action runner', function () {
           params.query.two.should.equal('-69');
           params.query.three.should.equal('15');
           params.query.four.should.equal('' + now.getTime());
-          params.query.five.should.equal('-11162941200000');
+          params.query.five.should.equal('-11162948400000');
           done();
         });
       });

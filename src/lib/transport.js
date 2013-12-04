@@ -148,7 +148,7 @@ Transport.prototype.request = function (params, cb) {
     var parsedBody;
 
     if (!err && body) {
-      parsedBody = self.serializer.unserialize(body);
+      parsedBody = self.serializer.deserialize(body);
       if (parsedBody == null) {
         err = new errors.Serialization();
       }

@@ -16,7 +16,6 @@ var LoggerAbstract = require('../logger');
 var _ = require('../utils');
 
 function Console(log, config) {
-  // call my super
   LoggerAbstract.call(this, log, config);
 
   // config/state
@@ -30,16 +29,15 @@ _.inherits(Console, LoggerAbstract);
  * @param  {Array} levels - The levels that we should be listeneing for
  */
 Console.prototype.setupListeners = function (levels) {
-  // since some of our functions are bound a bit differently (to the console)
-  // create some of the bound properties manually
-  this.bound.onError = this.onError;
-  this.bound.onWarning = this.onWarning;
-  this.bound.onInfo = this.onInfo;
-  this.bound.onDebug = this.onDebug;
-  this.bound.onTrace = this.onTrace;
-
   // call the super method
   LoggerAbstract.prototype.setupListeners.call(this, levels);
+};
+
+Console.prototype.write = function (label, message, to) {
+  /* jshint browser:true */
+  if (window.console && window.console[to]) {
+    window.console[to](this.format(label, message));
+  }
 };
 
 /**
@@ -50,13 +48,10 @@ Console.prototype.setupListeners = function (levels) {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-Console.prototype.onError = function (e) {
-  if (console.error && console.trace) {
-    console.error(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
-  } else {
-    console.log(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message);
-  }
-};
+Console.prototype.onError = _.handler(function (e) {
+  var to = console.error ? 'error' : 'log';
+  this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message, to);
+});
 
 /**
  * Handler for the bridges "warning" event
@@ -66,9 +61,9 @@ Console.prototype.onError = function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = function (msg) {
-  console[console.warn ? 'warn' : 'log']('WARNING', msg);
-};
+Console.prototype.onWarning = _.handler(function (msg) {
+  this.write('WARNING', msg, console.warn ? 'warn' : 'log');
+});
 
 /**
  * Handler for the bridges "info" event
@@ -78,9 +73,9 @@ Console.prototype.onWarning = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = function (msg) {
-  console[console.warn ? 'info' : 'log']('INFO', msg);
-};
+Console.prototype.onInfo = _.handler(function (msg) {
+  this.write('INFO', msg, console.info ? 'info' : 'log');
+});
 
 /**
  * Handler for the bridges "debug" event
@@ -90,9 +85,9 @@ Console.prototype.onInfo = function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = function (msg) {
-  console[console.debug ? 'debug' : 'log']('DEBUG', msg);
-};
+Console.prototype.onDebug = _.handler(function (msg) {
+  this.write('DEBUG', msg, console.debug ? 'debug' : 'log');
+});
 /**
  * Handler for the bridges "trace" event
  *
@@ -100,6 +95,6 @@ Console.prototype.onDebug = function (msg) {
  * @private
  * @return {undefined}
  */
-Console.prototype.onTrace = function (message, curlCall) {
-  console.log('TRACE:\n' + curlCall + '\n' + message);
-};
+Console.prototype.onTrace = _.handler(function (msg, curlCall) {
+  this.write('TRACE', curlCall + '\n' + msg, 'log');
+});

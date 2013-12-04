@@ -17,14 +17,7 @@ describe('Http Connector', function () {
 
   nock.disableNetConnect();
 
-  afterEach(function () {
-    if (http.request.restore) {
-      http.request.restore();
-    }
-    if (https.request.restore) {
-      https.request.restore();
-    }
-  });
+  var stub = require('./auto_release_stub').make();
 
   function makeStubReqMethod(prep) {
     return function (params, cb) {
@@ -195,8 +188,8 @@ describe('Http Connector', function () {
 
   describe('#request', function () {
     beforeEach(function () {
-      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies()));
-      sinon.stub(https, 'request', makeStubReqMethod(whereReqDies()));
+      stub(http, 'request', makeStubReqMethod(whereReqDies()));
+      stub(https, 'request', makeStubReqMethod(whereReqDies()));
     });
 
     it('calls http based on the host', function (done) {
@@ -220,10 +213,14 @@ describe('Http Connector', function () {
     it('logs error events, and sets the connection to dead when an error occurs', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
 
-      sinon.stub(con.log);
+      stub(con.log, 'error');
+      stub(con.log, 'trace');
+      stub(con.log, 'info');
+      stub(con.log, 'warning');
+      stub(con.log, 'debug');
 
       http.request.restore();
-      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies(new Error('actual error'))));
+      stub(http, 'request', makeStubReqMethod(whereReqDies(new Error('actual error'))));
 
       con.request({}, function (err) {
         // error should have been sent to the
@@ -246,10 +243,9 @@ describe('Http Connector', function () {
     it('logs error events, and sets the connection to dead', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
 
-      sinon.stub(con.log);
+      stub(con.log, 'error');
 
-      http.request.restore();
-      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies(new Error('actual error'))));
+      http.request.func = makeStubReqMethod(whereReqDies(new Error('actual error')));
 
       con.request({}, function (err) {
         // error should have been sent to the
@@ -274,8 +270,8 @@ describe('Http Connector', function () {
 
     it('logs error event', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
-      sinon.stub(con.log, 'error');
-      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+      stub(con.log, 'error');
+      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
         con.log.error.callCount.should.eql(1);
@@ -285,7 +281,7 @@ describe('Http Connector', function () {
 
     it('and sets the connection to dead', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
-      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
         con.status.should.eql('dead');
@@ -295,7 +291,7 @@ describe('Http Connector', function () {
 
     it('passes the original error on', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
-      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
+      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
 
       con.request({}, function (err, resp, status) {
         should.exist(err);
@@ -306,7 +302,7 @@ describe('Http Connector', function () {
 
     it('does not pass the partial body along', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
-      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
         should.not.exist(resp);
@@ -316,7 +312,7 @@ describe('Http Connector', function () {
 
     it('does not pass the status code along', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
-      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
         should.not.exist(status);

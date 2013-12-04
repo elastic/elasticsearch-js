@@ -1,79 +1,65 @@
-describe('Logger Abstract', function () {
+var Log = require('../../src/lib/log');
+var LoggerAbstract = require('../../src/lib/logger');
+var now = new Date('2013-03-01T00:00:00Z');
+var sinon = require('sinon');
 
-  var sinon = require('sinon');
-  var now = new Date('2013-03-01T00:00:00Z');
-  var Log = require('../../src/lib/log');
-  var LoggerAbstract = require('../../src/lib/logger');
-
-  var parentLog;
-  var stubs = [];
-
-  function stub() {
-    stubs.push(sinon.stub.apply(sinon, arguments));
-  }
-
-  function makeLogger(levels) {
-    return new LoggerAbstract(parentLog, {
-      levels: levels || []
-    });
-  }
-
-  beforeEach(function () {
-    parentLog = new Log();
-  });
+module.exports = function (makeLogger) {
+  var stub = require('./auto_release_stub').make();
+  var parent = new Log();
 
   afterEach(function () {
-    var stub;
-    while (stub = stubs.pop()) {
-      stub.restore();
-    }
-
-    parentLog.close();
+    parent.close();
   });
 
   describe('Constuctor', function () {
-    it('calls setupListeners', function () {
-      stub(LoggerAbstract.prototype, 'setupListeners');
-      var logger = makeLogger();
+    it('calls setupListeners, passes its new levels', function () {
+      var logger = makeLogger(parent);
+      stub(logger.constructor.prototype, 'setupListeners');
+      parent.close();
+
+      logger = makeLogger(parent);
       logger.setupListeners.callCount.should.eql(1);
     });
 
     it('listens for the loggers\' "closing" event', function () {
-      var logger = makeLogger();
-      parentLog.listenerCount('closing').should.eql(1);
+      var logger = makeLogger(parent);
+      parent.listenerCount('closing').should.eql(1);
     });
   });
 
-  describe('#setupListeners', function () {
-    it('calls cleanUpListeners', function () {
+  describe('listening levels', function () {
+    it('calls cleanUpListeners when the listeners are being setup', function () {
       var logger = makeLogger();
       stub(logger, 'cleanUpListeners');
       logger.setupListeners([]);
       logger.cleanUpListeners.callCount.should.eql(1);
     });
 
-    it('explicitly listens for the events specified', function () {
-      var logger = makeLogger();
-      logger.setupListeners(['error']);
-      parentLog.listenerCount('error').should.eql(1);
-      parentLog.listenerCount('warning').should.eql(0);
-      parentLog.listenerCount('info').should.eql(0);
-      parentLog.listenerCount('debug').should.eql(0);
-      parentLog.listenerCount('trace').should.eql(0);
+    it('listens to just error when log is explicitly error', function () {
+      var logger = makeLogger(parent, 'error');
+      parent.listenerCount('error').should.eql(1);
+      parent.listenerCount('warning').should.eql(0);
+      parent.listenerCount('info').should.eql(0);
+      parent.listenerCount('debug').should.eql(0);
+      parent.listenerCount('trace').should.eql(0);
+    });
 
-      logger.setupListeners(['warning', 'trace']);
-      parentLog.listenerCount('error').should.eql(0);
-      parentLog.listenerCount('warning').should.eql(1);
-      parentLog.listenerCount('info').should.eql(0);
-      parentLog.listenerCount('debug').should.eql(0);
-      parentLog.listenerCount('trace').should.eql(1);
+    it('listens for all the events when level is "trace"', function () {
+      var logger = makeLogger(parent, 'trace');
+      parent.listenerCount('error').should.eql(1);
+      parent.listenerCount('warning').should.eql(1);
+      parent.listenerCount('info').should.eql(1);
+      parent.listenerCount('debug').should.eql(1);
+      parent.listenerCount('trace').should.eql(1);
+    });
 
-      logger.setupListeners(['debug', 'debug']);
-      parentLog.listenerCount('error').should.eql(0);
-      parentLog.listenerCount('warning').should.eql(0);
-      parentLog.listenerCount('info').should.eql(0);
-      parentLog.listenerCount('debug').should.eql(2);
-      parentLog.listenerCount('trace').should.eql(0);
+    it('listens for specific events when level is an array', function () {
+      var logger = makeLogger(parent, ['error', 'trace']);
+      parent.listenerCount('error').should.eql(1);
+      parent.listenerCount('warning').should.eql(0);
+      parent.listenerCount('info').should.eql(0);
+      parent.listenerCount('debug').should.eql(0);
+      parent.listenerCount('trace').should.eql(1);
     });
 
     it('sets the logLevel property to the new levels', function () {
@@ -86,7 +72,6 @@ describe('Logger Abstract', function () {
       logger.setupListeners(levels);
       logger.listeningLevels.should.eql(levels).and.not.be.exactly(levels);
 
-
       levels = ['debug', 'debug'];
       logger.setupListeners(levels);
       logger.listeningLevels.should.eql(levels).and.not.be.exactly(levels);
@@ -98,19 +83,39 @@ describe('Logger Abstract', function () {
         logger.setupListeners(['scream']);
       }).should.throw(/unable to listen/i);
     });
+
+    it('emits events because something is listening', function () {
+      var logger = makeLogger(parent, 'trace');
+      stub(parent, 'emit');
+
+      parent.error(new Error('error message'));
+      parent.emit.lastCall.args[0].should.eql('error');
+
+      parent.warning('warning');
+      parent.emit.lastCall.args[0].should.eql('warning');
+
+      parent.info('info');
+      parent.emit.lastCall.args[0].should.eql('info');
+
+      parent.debug('debug');
+      parent.emit.lastCall.args[0].should.eql('debug');
+
+      parent.trace('GET', {}, '', '', 200);
+      parent.emit.lastCall.args[0].should.eql('trace');
+    });
   });
 
   describe('#timestamp', function () {
     it('returns in the right format', function () {
-      stubs.push(sinon.useFakeTimers(now.getTime()));
+      stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       logger.timestamp().should.eql('2013-03-01T00:00:00Z');
     });
   });
 
-  describe('#formate', function () {
+  describe('#format', function () {
     it('returns a single string with the message indented', function () {
-      stubs.push(sinon.useFakeTimers(now.getTime()));
+      stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       logger.format('LABEL', 'MSG').should.eql(
         'LABEL: 2013-03-01T00:00:00Z\n' +
@@ -120,7 +125,7 @@ describe('Logger Abstract', function () {
     });
 
     it('properly indents multi-line messages', function () {
-      stubs.push(sinon.useFakeTimers(now.getTime()));
+      stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       logger.format('LABEL', 'MSG\nwith\nseveral lines').should.eql(
         'LABEL: 2013-03-01T00:00:00Z\n' +
@@ -129,15 +134,6 @@ describe('Logger Abstract', function () {
         '  several lines\n' +
         '\n'
       );
-    });
-  });
-
-  describe('#write', function () {
-    it('requires that it is overwritten', function () {
-      (function () {
-        var logger = makeLogger();
-        logger.write();
-      }).should.throw(/overwritten/);
     });
   });
 
@@ -246,5 +242,4 @@ describe('Logger Abstract', function () {
       logger.write.callCount.should.eql(1);
     });
   });
-
-});
+};

@@ -4,17 +4,7 @@ var Host = require('../../src/lib/host');
 var sinon = require('sinon');
 var nodeList = require('../fixtures/short_node_list.json');
 
-var stubs = [];
-function stub() {
-  stubs.push(sinon.stub.apply(sinon, arguments));
-}
-afterEach(function () {
-  var stub;
-  while (stub = stubs.pop()) {
-    stub.restore();
-  }
-});
-
+var stub = require('./auto_release_stub').make();
 
 describe('Transport Class', function () {
 

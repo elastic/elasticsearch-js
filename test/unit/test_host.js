@@ -154,7 +154,14 @@ describe('Host class', function () {
   });
 
   describe('#toString', function () {
-    // just calls makeUrl without any params
+    it('produces the same output as makeUrl when it is called without params', function () {
+      var host = new Host({
+        path: '/pasta',
+        host: 'google.com'
+      });
+
+      host.toString().should.eql(host.makeUrl());
+    });
   });
 
 });

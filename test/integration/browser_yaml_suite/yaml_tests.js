@@ -3553,7 +3553,7 @@ function Buffer(subject, encoding, offset) {
   if (encoding == "base64" && typeof subject == "string") {
     subject = stringtrim(subject);
     while (subject.length % 4 != 0) {
-      subject = subject + "="; 
+      subject = subject + "=";
     }
   }
 
@@ -4661,7 +4661,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 
 	function b64ToByteArray(b64) {
 		var i, j, l, tmp, placeHolders, arr;
-	
+
 		if (b64.length % 4 > 0) {
 			throw 'Invalid string. Length must be a multiple of 4';
 		}
@@ -4852,7 +4852,7 @@ function Buffer(subject, encoding, offset) {
   if (encoding == "base64" && typeof subject == "string") {
     subject = stringtrim(subject);
     while (subject.length % 4 != 0) {
-      subject = subject + "="; 
+      subject = subject + "=";
     }
   }
 
@@ -5962,7 +5962,7 @@ module.exports=require('q9TxCC');
 
 	function b64ToByteArray(b64) {
 		var i, j, l, tmp, placeHolders, arr;
-	
+
 		if (b64.length % 4 > 0) {
 			throw 'Invalid string. Length must be a multiple of 4';
 		}
@@ -23436,7 +23436,7 @@ Minimatch.prototype.matchOne = function (file, pattern, partial) {
       }
       // no match was found.
       // However, in partial mode, we can't say this is necessarily over.
-      // If there's more *pattern* left, then 
+      // If there's more *pattern* left, then
       if (partial) {
         // ran out of file
         // console.error("\n>>> no match, partial?", file, fr, pattern, pr)
@@ -23838,7 +23838,7 @@ var exports = module.exports = Argv;
 function Argv (processArgs, cwd) {
     var self = {};
     if (!cwd) cwd = process.cwd();
-    
+
     self.$0 = process.argv
         .slice(0,2)
         .map(function (x) {
@@ -23848,30 +23848,30 @@ function Argv (processArgs, cwd) {
         })
         .join(' ')
     ;
-    
+
     if (process.env._ != undefined && process.argv[1] == process.env._) {
         self.$0 = process.env._.replace(
             path.dirname(process.execPath) + '/', ''
         );
     }
-    
+
     var options = {
         boolean: [],
         string: [],
         alias: {},
         default: []
     };
-    
+
     self.boolean = function (bools) {
         options.boolean.push.apply(options.boolean, [].concat(bools));
         return self;
     };
-    
+
     self.string = function (strings) {
         options.string.push.apply(options.string, [].concat(strings));
         return self;
     };
-    
+
     self.default = function (key, value) {
         if (typeof key === 'object') {
             Object.keys(key).forEach(function (k) {
@@ -23883,7 +23883,7 @@ function Argv (processArgs, cwd) {
         }
         return self;
     };
-    
+
     self.alias = function (x, y) {
         if (typeof x === 'object') {
             Object.keys(x).forEach(function (key) {
@@ -23895,7 +23895,7 @@ function Argv (processArgs, cwd) {
         }
         return self;
     };
-    
+
     var demanded = {};
     self.demand = function (keys) {
         if (typeof keys == 'number') {
@@ -23910,36 +23910,36 @@ function Argv (processArgs, cwd) {
         else {
             demanded[keys] = true;
         }
-        
+
         return self;
     };
-    
+
     var usage;
     self.usage = function (msg, opts) {
         if (!opts && typeof msg === 'object') {
             opts = msg;
             msg = null;
         }
-        
+
         usage = msg;
-        
+
         if (opts) self.options(opts);
-        
+
         return self;
     };
-    
+
     function fail (msg) {
         self.showHelp();
         if (msg) console.error(msg);
         process.exit(1);
     }
-    
+
     var checks = [];
     self.check = function (f) {
         checks.push(f);
         return self;
     };
-    
+
     var descriptions = {};
     self.describe = function (key, desc) {
         if (typeof key === 'object') {
@@ -23952,11 +23952,11 @@ function Argv (processArgs, cwd) {
         }
         return self;
     };
-    
+
     self.parse = function (args) {
         return parseArgs(args);
     };
-    
+
     self.option = self.options = function (key, opt) {
         if (typeof key === 'object') {
             Object.keys(key).forEach(function (k) {
@@ -23969,34 +23969,34 @@ function Argv (processArgs, cwd) {
             if (typeof opt.default !== 'undefined') {
                 self.default(key, opt.default);
             }
-            
+
             if (opt.boolean || opt.type === 'boolean') {
                 self.boolean(key);
             }
             if (opt.string || opt.type === 'string') {
                 self.string(key);
             }
-            
+
             var desc = opt.describe || opt.description || opt.desc;
             if (desc) {
                 self.describe(key, desc);
             }
         }
-        
+
         return self;
     };
-    
+
     var wrap = null;
     self.wrap = function (cols) {
         wrap = cols;
         return self;
     };
-    
+
     self.showHelp = function (fn) {
         if (!fn) fn = console.error;
         fn(self.help());
     };
-    
+
     self.help = function () {
         var keys = Object.keys(
             Object.keys(descriptions)
@@ -24007,13 +24007,13 @@ function Argv (processArgs, cwd) {
                 return acc;
             }, {})
         );
-        
+
         var help = keys.length ? [ 'Options:' ] : [];
-        
+
         if (usage) {
             help.unshift(usage.replace(/\$0/g, self.$0), '');
         }
-        
+
         var switches = keys.reduce(function (acc, key) {
             acc[key] = [ key ].concat(options.alias[key] || [])
                 .map(function (sw) {
@@ -24023,42 +24023,42 @@ function Argv (processArgs, cwd) {
             ;
             return acc;
         }, {});
-        
+
         var switchlen = longest(Object.keys(switches).map(function (s) {
             return switches[s] || '';
         }));
-        
-        var desclen = longest(Object.keys(descriptions).map(function (d) { 
+
+        var desclen = longest(Object.keys(descriptions).map(function (d) {
             return descriptions[d] || '';
         }));
-        
+
         keys.forEach(function (key) {
             var kswitch = switches[key];
             var desc = descriptions[key] || '';
-            
+
             if (wrap) {
                 desc = wordwrap(switchlen + 4, wrap)(desc)
                     .slice(switchlen + 4)
                 ;
             }
-            
+
             var spadding = new Array(
                 Math.max(switchlen - kswitch.length + 3, 0)
             ).join(' ');
-            
+
             var dpadding = new Array(
                 Math.max(desclen - desc.length + 1, 0)
             ).join(' ');
-            
+
             var type = null;
-            
+
             if (options.boolean[key]) type = '[boolean]';
             if (options.string[key]) type = '[string]';
-            
+
             if (!wrap && dpadding.length > 0) {
                 desc += dpadding;
             }
-            
+
             var prelude = '  ' + kswitch + spadding;
             var extra = [
                 type,
@@ -24071,14 +24071,14 @@ function Argv (processArgs, cwd) {
                     : null
                 ,
             ].filter(Boolean).join('  ');
-            
+
             var body = [ desc, extra ].filter(Boolean).join('  ');
-            
+
             if (wrap) {
                 var dlines = desc.split('\n');
                 var dlen = dlines.slice(-1)[0].length
                     + (dlines.length === 1 ? prelude.length : 0)
-                
+
                 body = desc + (dlen + extra.length > wrap - 2
                     ? '\n'
                         + new Array(wrap - extra.length + 1).join(' ')
@@ -24087,38 +24087,38 @@ function Argv (processArgs, cwd) {
                         + extra
                 );
             }
-            
+
             help.push(prelude + body);
         });
-        
+
         help.push('');
         return help.join('\n');
     };
-    
+
     Object.defineProperty(self, 'argv', {
         get : function () { return parseArgs(processArgs) },
         enumerable : true,
     });
-    
+
     function parseArgs (args) {
         var argv = minimist(args, options);
         argv.$0 = self.$0;
-        
+
         if (demanded._ && argv._.length < demanded._) {
             fail('Not enough non-option arguments: got '
                 + argv._.length + ', need at least ' + demanded._
             );
         }
-        
+
         var missing = [];
         Object.keys(demanded).forEach(function (key) {
             if (!argv[key]) missing.push(key);
         });
-        
+
         if (missing.length) {
             fail('Missing required arguments: ' + missing.join(', '));
         }
-        
+
         checks.forEach(function (f) {
             try {
                 if (f(argv) === false) {
@@ -24129,17 +24129,17 @@ function Argv (processArgs, cwd) {
                 fail(err)
             }
         });
-        
+
         return argv;
     }
-    
+
     function longest (xs) {
         return Math.max.apply(
             null,
             xs.map(function (x) { return x.length })
         );
     }
-    
+
     return self;
 };
 
@@ -24149,10 +24149,10 @@ exports.rebase = rebase;
 function rebase (base, dir) {
     var ds = path.normalize(dir).split('/').slice(1);
     var bs = path.normalize(base).split('/').slice(1);
-    
+
     for (var i = 0; ds[i] && ds[i] == bs[i]; i++);
     ds.splice(0, i); bs.splice(0, i);
-    
+
     var p = path.normalize(
         bs.map(function () { return '..' }).concat(ds).join('/')
     ).replace(/\/$/,'').replace(/^$/, '.');
@@ -24162,17 +24162,17 @@ function rebase (base, dir) {
 },{"__browserify_process":15,"minimist":55,"path":7,"wordwrap":56}],55:[function(require,module,exports){
 module.exports = function (args, opts) {
     if (!opts) opts = {};
-    
+
     var flags = { bools : {}, strings : {} };
-    
+
     [].concat(opts['boolean']).filter(Boolean).forEach(function (key) {
         flags.bools[key] = true;
     });
-    
+
     [].concat(opts.string).filter(Boolean).forEach(function (key) {
         flags.strings[key] = true;
     });
-    
+
     var aliases = {};
     Object.keys(opts.alias || {}).forEach(function (key) {
         aliases[key] = [].concat(opts.alias[key]);
@@ -24182,14 +24182,14 @@ module.exports = function (args, opts) {
             }));
         });
     });
-    
+
     var defaults = opts['default'] || {};
-    
+
     var argv = { _ : [] };
     Object.keys(flags.bools).forEach(function (key) {
         setArg(key, defaults[key] === undefined ? false : defaults[key]);
     });
-    
+
     var notFlags = [];
 
     if (args.indexOf('--') !== -1) {
@@ -24202,15 +24202,15 @@ module.exports = function (args, opts) {
             ? Number(val) : val
         ;
         setKey(argv, key.split('.'), value);
-        
+
         (aliases[key] || []).forEach(function (x) {
             setKey(argv, x.split('.'), value);
         });
     }
-    
+
     for (var i = 0; i < args.length; i++) {
         var arg = args[i];
-        
+
         if (arg.match(/^--.+=/)) {
             // Using [\s\S] instead of . because js doesn't support the
             // 'dotall' regex modifier. See:
@@ -24241,7 +24241,7 @@ module.exports = function (args, opts) {
         }
         else if (arg.match(/^-[^-]+/)) {
             var letters = arg.slice(1,-1).split('');
-            
+
             var broken = false;
             for (var j = 0; j < letters.length; j++) {
                 var next = arg.slice(j+2);
@@ -24251,19 +24251,19 @@ module.exports = function (args, opts) {
                     broken = true;
                     break;
                 }
-                
+
                 if (next === '-') {
                     setArg(letters[j], next)
                     continue;
                 }
-                
+
                 if (/[A-Za-z]/.test(letters[j])
                 && /-?\d+(\.\d*)?(e-?\d+)?$/.test(next)) {
                     setArg(letters[j], next);
                     broken = true;
                     break;
                 }
-                
+
                 if (letters[j+1] && letters[j+1].match(/\W/)) {
                     setArg(letters[j], arg.slice(j+2));
                     broken = true;
@@ -24273,7 +24273,7 @@ module.exports = function (args, opts) {
                     setArg(letters[j], true);
                 }
             }
-            
+
             var key = arg.slice(-1)[0];
             if (!broken && key !== '-') {
                 if (args[i+1] && !/^(-|--)[^-]/.test(args[i+1])
@@ -24297,17 +24297,17 @@ module.exports = function (args, opts) {
             );
         }
     }
-    
+
     Object.keys(defaults).forEach(function (key) {
         if (!hasKey(argv, key.split('.'))) {
             setKey(argv, key.split('.'), defaults[key]);
-            
+
             (aliases[key] || []).forEach(function (x) {
                 setKey(argv, x.split('.'), defaults[key]);
             });
         }
     });
-    
+
     notFlags.forEach(function(key) {
         argv._.push(key);
     });
@@ -24331,7 +24331,7 @@ function setKey (obj, keys, value) {
         if (o[key] === undefined) o[key] = {};
         o = o[key];
     });
-    
+
     var key = keys[keys.length - 1];
     if (o[key] === undefined || typeof o[key] === 'boolean') {
         o[key] = value;
@@ -24361,22 +24361,22 @@ var wordwrap = module.exports = function (start, stop, params) {
         start = params.start;
         stop = params.stop;
     }
-    
+
     if (typeof stop === 'object') {
         params = stop;
         start = start || params.start;
         stop = undefined;
     }
-    
+
     if (!stop) {
         stop = start;
         start = 0;
     }
-    
+
     if (!params) params = {};
     var mode = params.mode || 'soft';
     var re = mode === 'hard' ? /\b/ : /(\S+\s+)/;
-    
+
     return function (text) {
         var chunks = text.toString()
             .split(re)
@@ -24390,16 +24390,16 @@ var wordwrap = module.exports = function (start, stop, params) {
                 return acc;
             }, [])
         ;
-        
+
         return chunks.reduce(function (lines, rawChunk) {
             if (rawChunk === '') return lines;
-            
+
             var chunk = rawChunk.replace(/\t/g, '    ');
-            
+
             var i = lines.length - 1;
             if (lines[i].length + chunk.length > stop) {
                 lines[i] = lines[i].replace(/\s+$/, '');
-                
+
                 chunk.split(/\n/).forEach(function (c) {
                     lines.push(
                         new Array(start + 1).join(' ')
@@ -24420,7 +24420,7 @@ var wordwrap = module.exports = function (start, stop, params) {
             else {
                 lines[i] += chunk;
             }
-            
+
             return lines;
         }, [ new Array(start + 1).join(' ') ]).join('\n');
     };
@@ -31762,7 +31762,6 @@ function YamlFile(filename, docs) {
         });
       } else {
         it(doc.description, function (done) {
-          // console.log('test doc');
           async.series(_.pluck(doc._actions, 'testable'), done);
         });
       }

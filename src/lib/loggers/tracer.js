@@ -16,7 +16,6 @@ var FileLogger = require('./file');
 var _ = require('../utils');
 
 function Tracer(log, config) {
-  // call my super
   FileLogger.call(this, log, config);
 }
 _.inherits(Tracer, FileLogger);

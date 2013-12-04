@@ -2,7 +2,7 @@
  * Simple Mock of the http.IncommingMessage. Just implmenents the methods the methods
  * we use
  *
- * @type {[type]}
+ * @type {Constuctor}
  */
 module.exports = MockIncommingMessage;
 

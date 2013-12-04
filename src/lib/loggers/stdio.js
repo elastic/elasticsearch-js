@@ -28,7 +28,6 @@ var defaultColors = {
 };
 
 function Stdio(log, config) {
-  // call my super
   LoggerAbstract.call(this, log, config);
 
   // config/state
@@ -50,7 +49,7 @@ _.inherits(Stdio, LoggerAbstract);
  * @param  {*} what - The message to log
  * @return {undefined}
  */
-Stdio.prototype.write = function (to, label, colorize, message) {
+Stdio.prototype.write = function (label, message, to, colorize) {
   if (this.color) {
     label = colorize(label);
   }
@@ -66,7 +65,7 @@ Stdio.prototype.write = function (to, label, colorize, message) {
  * @return {undefined}
  */
 Stdio.prototype.onError = _.handler(function (e) {
-  this.write(process.stderr, e.name === 'Error' ? 'ERROR' : e.name, this.colors.error, e.stack);
+  this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack, process.stderr, this.colors.error);
 });
 
 /**
@@ -78,7 +77,7 @@ Stdio.prototype.onError = _.handler(function (e) {
  * @return {undefined}
  */
 Stdio.prototype.onWarning = _.handler(function (msg) {
-  this.write(process.stderr, 'WARNING', this.colors.warning, msg);
+  this.write('WARNING', msg, process.stderr, this.colors.warning);
 });
 
 /**
@@ -90,7 +89,7 @@ Stdio.prototype.onWarning = _.handler(function (msg) {
  * @return {undefined}
  */
 Stdio.prototype.onInfo = _.handler(function (msg) {
-  this.write(process.stdout, 'INFO', this.colors.info, msg);
+  this.write('INFO', msg, process.stdout, this.colors.info);
 });
 
 /**
@@ -102,7 +101,7 @@ Stdio.prototype.onInfo = _.handler(function (msg) {
  * @return {undefined}
  */
 Stdio.prototype.onDebug = _.handler(function (msg) {
-  this.write(process.stdout, 'DEBUG', this.colors.debug, msg);
+  this.write('DEBUG', msg, process.stdout, this.colors.debug);
 });
 
 /**
@@ -113,5 +112,5 @@ Stdio.prototype.onDebug = _.handler(function (msg) {
  * @return {undefined}
  */
 Stdio.prototype.onTrace = _.handler(function (message, curlCall) {
-  this.write(process.stdout, 'TRACE', this.colors.trace, curlCall + '\n' + message);
+  this.write('TRACE', curlCall + '\n' + message, process.stdout, this.colors.trace);
 });

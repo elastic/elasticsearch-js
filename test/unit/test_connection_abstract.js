@@ -3,13 +3,7 @@ var Host = require('../../src/lib/host');
 var sinon = require('sinon');
 var _ = require('lodash');
 
-var stubs = [];
-afterEach(function () {
-  var stub;
-  while (stub = stubs.pop()) {
-    stub.restore();
-  }
-});
+var stub = require('./auto_release_stub').make();
 
 describe('Connection Abstract', function () {
   var host = new Host('localhost:9200');
@@ -83,7 +77,7 @@ describe('Connection Abstract', function () {
 
     it('sets a timeout when set to dead, and removed when alive', function () {
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stubs.push(clock);
+      stub.autoRelease(clock);
       var conn = new ConnectionAbstract(host);
 
       var start = _.size(clock.timeouts);
@@ -112,7 +106,7 @@ describe('Connection Abstract', function () {
     it('should ping the connection after the deadTimeout, and set the status to "alive" on pong', function (done) {
       var conn = new ConnectionAbstract(host);
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stubs.push(clock);
+      stub.autoRelease(clock);
 
       // schedules the resuscitate
       conn.setStatus('dead');
@@ -138,7 +132,7 @@ describe('Connection Abstract', function () {
     it('should ping the connection after the deadTimeout, and set the status to "dead" on error', function (done) {
       var conn = new ConnectionAbstract(host);
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stubs.push(clock);
+      stub.autoRelease(clock);
 
       // schedules the resuscitate
       conn.setStatus('dead');

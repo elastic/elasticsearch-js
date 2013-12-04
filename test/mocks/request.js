@@ -1,3 +1,8 @@
+/**
+ * Extended version of http.ClientRequest with a few methods stubbed
+ *
+ * @type {Constructor}
+ */
 module.exports = MockRequest;
 
 var sinon = require('sinon');

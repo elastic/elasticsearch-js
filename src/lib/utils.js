@@ -22,32 +22,6 @@ _ = utils;
 utils.joinPath = path.join;
 
 /**
- * Recursively re-key an object, applying "transform" to each key
- * @param  {Object} obj - The object to re-key
- * @param  {Function} transform - The transformation function to apply to each key
- * @param  {Boolean} [recursive=true] - Should this act recursively?
- * @param  {Object} out - used primarily for recursion, allows you to specify the object which new keys will be written to
- * @return {Object}
- */
-utils.reKey = function (obj, transform, recursive) {
-  // defaults
-  if (recursive === void 0) { recursive = true; }
-  if (typeof transform !== 'function') { throw new TypeError('invalid transform function'); }
-
-  var out = {};
-
-  _.each(obj, function (prop, name) {
-    if (recursive && _.isPlainObject(prop)) {
-      out[transform(name)] = utils.reKey(prop, transform, recursive);
-    } else {
-      out[transform(name)] = prop;
-    }
-  });
-
-  return out;
-};
-
-/**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
  * key, but the values' types don't match to's value is left unmodified. Only Array and Object values are merged - that
  * it to say values with a typeof "object"
@@ -146,7 +120,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
       words.push(word);
     }
     // add the leading underscore back to strings the had it originally
-    if (words.lenth && string.charAt(0) === '_') {
+    if (words.length && string.charAt(0) === '_') {
       words[0] = '_' + words[0];
     }
     return words.join(sep);
@@ -399,10 +373,10 @@ _.funcEnum = function (config, name, opts, def) {
     case 0:
       break;
     case 1:
-      err += 'or ' + _.keys(opts)[0];
+      err += ' or ' + _.keys(opts)[0];
       break;
     default:
-      err += 'or one of ' + _.keys(opts).join(', ');
+      err += ' or one of ' + _.keys(opts).join(', ');
       break;
     }
     throw new TypeError(err);
