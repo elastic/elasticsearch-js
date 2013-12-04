@@ -5,28 +5,53 @@ var path = require('path');
 var argv = require('optimist')
   .usage([
     'Runner for the Elasticsearch.js unit and integration tests in both node and the browser.',
-    'Specify --no-{{flag}} to negate it.'
+    'To negate a flag you can use --no-{{flag}}.',
+    '',
+    'Examples:',
+    '',
+    '# Before a commit (unit tests in Node & Phantom + integration in Chrome & Firefox):',
+    'npm test --unit --integration --browsers=chrome,firefox',
+    '',
+    '# After a change in the rest-spec:',
+    'npm test --no-unit --integration --browsers=chrome,firefox --check-upstream',
+    '',
+    '# During dev (just Node unit tests):',
+    'npm test --no-browsers',
+    ''
   ].join('\n'))
-  .default({
-    server: true,
-    unit: true,
-    integration: false,
-    host: 'localhost',
-    port: 9200,
-    'xml-output': true,
-    'check-upstream': false,
-    'browsers': '*'
-  })
-  .describe({
-    host: 'hostname for elasticsearch instance used in integration tests',
-    'check-upstream': 'check for remote updates to the yaml test suite'
-  })
-  .alias({
-    u: 'unit',
-    i: 'integration',
-    b: 'browsers',
-    s: 'server',
-    x: 'xml-output'
+  .options({
+    server: {
+      default: true,
+      alias: 's'
+    },
+    unit: {
+      default: true,
+      alias: 'u'
+    },
+    integration: {
+      default: false,
+      alias: 'i'
+    },
+    host: {
+      default: 'localhost',
+      description: 'hostname for elasticsearch instance used in integration tests'
+    },
+    port: {
+      default: 9200,
+      alias: 'p'
+    },
+    browsers: {
+      default: '*',
+      alias: 'b'
+    },
+    'xml-output': {
+      default: true,
+      alias: 'x'
+    },
+    'check-upstream': {
+      default: false,
+      description: 'check for remote updates to the yaml test suite'
+    }
   });
 
 if (process.argv.indexOf('help') + process.argv.indexOf('--help') + process.argv.indexOf('-h') !== -3) {
@@ -43,6 +68,7 @@ if (process.env.npm_config_argv) {
 }
 
 var commands = [];
+var command;
 
 if (argv['just-browser']) {
   argv.server = false;
@@ -50,12 +76,16 @@ if (argv['just-browser']) {
 }
 
 if (argv['check-upstream']) {
-  commands.push(['node', 'scripts/generate/yaml_tests/index.js']);
+  command = ['node', 'scripts/generate/yaml_tests/index.js'];
+  if (argv.force) {
+    command.push('--force');
+  }
+  commands.push(command);
 }
 
 if (argv.unit) {
   if (argv.server) {
-    commands.push(['mocha', 'test/unit/test_*.js', '--require=should']);
+    commands.push(['mocha', 'test/unit/test_*.js', '--require should']);
   }
   if (argv.browsers) {
     commands.push(['testling', '.']);

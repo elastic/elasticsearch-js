@@ -12,7 +12,7 @@ function LoggerAbstract(log, config) {
   _.makeBoundMethods(this);
 
   // when the log closes, remove our event listeners
-  this.log.on('closing', this.bound.cleanUpListeners);
+  this.log.once('closing', this.bound.cleanUpListeners);
 
   this.setupListeners(config.levels);
 }
@@ -62,14 +62,15 @@ LoggerAbstract.prototype.write = function () {
 LoggerAbstract.prototype.setupListeners = function (levels) {
   this.cleanUpListeners();
 
-  this.listeningLevels = levels;
+  this.listeningLevels = [];
 
-  _.each(this.listeningLevels, function (level) {
+  _.each(levels, function (level) {
     var fnName = 'on' + _.ucfirst(level);
     if (this.bound[fnName]) {
+      this.listeningLevels.push(level);
       this.log.on(level, this.bound[fnName]);
     } else {
-      throw new Error(fnName + ' is not a function');
+      throw new Error('Unable to listen for level "' + level + '"');
     }
   }, this);
 };
@@ -144,7 +145,7 @@ LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
  * @return {undefined}
  */
 LoggerAbstract.prototype.onTrace = _.handler(function (message, curlCall) {
-  this.write('TRACE', message + '\n' + curlCall);
+  this.write('TRACE', curlCall + '\n' + message);
 });
 
 

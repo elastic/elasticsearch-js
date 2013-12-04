@@ -28,6 +28,9 @@ function Transport(config) {
   var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
   this.serializer = new Serializer(config);
 
+  // setup the nodesToHostCallback
+  this.nodesToHostCallback = _.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
+
   // setup max retries
   this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
@@ -209,7 +212,8 @@ Transport.prototype.createDefer = function () {
  * @param  {Function} cb - Function to call back once complete
  */
 Transport.prototype.sniff = function (cb) {
-  var self = this;
+  var connectionPool = this.connectionPool;
+  var nodesToHostCallback = this.nodesToHostCallback;
 
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
@@ -217,14 +221,14 @@ Transport.prototype.sniff = function (cb) {
   this.request({
     path: '/_cluster/nodes',
     method: 'GET'
-  }, function (err, resp) {
+  }, function (err, resp, status) {
     if (!err && resp && resp.nodes) {
-      var hosts = _.map(self.nodesToHostCallback(resp.nodes), function (hostConfig) {
+      var hosts = _.map(nodesToHostCallback(resp.nodes), function (hostConfig) {
         return new Host(hostConfig);
       });
-      this.connectionPool.setHosts(hosts);
+      connectionPool.setHosts(hosts);
     }
-    cb(err, resp);
+    cb(err, resp, status);
   });
 };
 

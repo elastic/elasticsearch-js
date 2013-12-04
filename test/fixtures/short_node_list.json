@@ -1,0 +1,16 @@
+{
+  "id1": {
+    "name": "Headknocker",
+    "transport_address": "inet[/10.10.10.100:9300]",
+    "hostname": "Spencers-MacBook-Pro.local",
+    "version": "0.90.5",
+    "http_address": "inet[/10.10.10.100:9205]"
+  },
+  "id2": {
+    "name": "Buttknocker",
+    "transport_address": "inet[/10.10.10.101:9300]",
+    "hostname": "Johns-MacBook-Pro.local",
+    "version": "0.90.5",
+    "http_address": "inet[/10.10.10.101:9205]"
+  }
+}

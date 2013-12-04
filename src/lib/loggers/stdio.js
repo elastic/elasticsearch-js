@@ -20,24 +20,11 @@ var LoggerAbstract = require('../logger');
 var _ = require('../utils');
 
 var defaultColors = {
-  error: function (txt) {
-    return chalk.red.bold(txt);
-  },
-  warning: function (txt) {
-    return chalk.yellow.bold(txt);
-  },
-  info: function (txt) {
-    return chalk.cyan.bold(txt);
-  },
-  debug: function (txt) {
-    return chalk.magenta.bold(txt);
-  },
-  trace: function (txt) {
-    return chalk.white.bold(txt);
-  },
-  traceStatus: function (status) {
-    return chalk[status >= 200 && status < 300 ? 'green' : 'red'].bold(status);
-  }
+  error: chalk.red.bold,
+  warning: chalk.yellow.bold,
+  info: chalk.cyan.bold,
+  debug: chalk.magenta.bold,
+  trace: chalk.white.bold
 };
 
 function Stdio(log, config) {

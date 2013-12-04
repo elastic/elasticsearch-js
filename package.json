@@ -57,6 +57,6 @@
   },
   "testling": {
     "harness": "mocha",
-    "files": "test/unit/test_!(http_connector|stdio_logger).js"
+    "files": "test/unit/test_!(http_connector|stdio_logger|stream_logger|tracer_logger|file_logger).js"
   }
 }

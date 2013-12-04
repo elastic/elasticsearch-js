@@ -2,8 +2,70 @@ describe('Http Connector', function () {
 
   var should = require('should');
   var Host = require('../../src/lib/host');
+  var errors = require('../../src/lib/errors');
   var HttpConnection = require('../../src/lib/connectors/http');
   var ConnectionAbstract = require('../../src/lib/connection');
+  var nock = require('nock');
+  var sinon = require('sinon');
+  var util = require('util');
+
+  var http = require('http');
+  var https = require('https');
+
+  var MockRequest = require('../mocks/request');
+  var MockIncommingMessage = require('../mocks/incomming_message');
+
+  nock.disableNetConnect();
+
+  afterEach(function () {
+    if (http.request.restore) {
+      http.request.restore();
+    }
+    if (https.request.restore) {
+      https.request.restore();
+    }
+  });
+
+  function makeStubReqMethod(prep) {
+    return function (params, cb) {
+      var req = new MockRequest();
+      if (prep) {
+        prep(req, params, cb);
+      }
+      return req;
+    };
+  }
+
+  function whereReqDies(withErr) {
+    return function (req) {
+      process.nextTick(function () {
+        // causes the request to quit and callback
+        req.emit('error', withErr || void 0);
+      });
+    };
+  }
+
+  function whichMocksMessage(prep) {
+    return function (req, params, cb) {
+      process.nextTick(function () {
+        var incom = new MockIncommingMessage();
+        if (prep) {
+          prep(incom);
+        }
+        cb(incom);
+      });
+    };
+  }
+
+  function whichErrorsAfterPartialBody(err) {
+    return function (incom) {
+      incom.statusCode = 200;
+      incom.push('{ "hits": { "hits": { "hits": { "hits": { "hits": { "hits": ');
+      setTimeout(function () {
+        incom.emit('error', err || new Error('Socket is dead now...'));
+      }, 20);
+    };
+  }
 
   describe('Constructor', function () {
     it('creates an object that extends ConnectionAbstract', function () {
@@ -30,7 +92,6 @@ describe('Http Connector', function () {
   });
 
   describe('#makeReqParams', function () {
-
     it('properly reads the host object', function () {
       var host = new Host('john:dude@pizza.com:9200/pizza/cheese?shrooms=true');
       var con = new HttpConnection(host, {});
@@ -133,35 +194,9 @@ describe('Http Connector', function () {
   });
 
   describe('#request', function () {
-    var http = require('http');
-    var https = require('https');
-    var sinon = require('sinon');
-    var util = require('util');
-
-    function FakeRequest() {
-      sinon.stub(this, 'end');
-      sinon.stub(this, 'write');
-      this.log = sinon.stub(this.log);
-    }
-    util.inherits(FakeRequest, http.ClientRequest);
-
-    function reqMethodStub(params, cb) {
-      var req = new FakeRequest();
-      process.nextTick(function () {
-        // causes the request to quit and callback
-        req.emit('error');
-      });
-      return req;
-    }
-
     beforeEach(function () {
-      sinon.stub(http, 'request', reqMethodStub);
-      sinon.stub(https, 'request', reqMethodStub);
-    });
-
-    afterEach(function () {
-      http.request.restore();
-      https.request.restore();
+      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies()));
+      sinon.stub(https, 'request', makeStubReqMethod(whereReqDies()));
     });
 
     it('calls http based on the host', function (done) {
@@ -188,14 +223,7 @@ describe('Http Connector', function () {
       sinon.stub(con.log);
 
       http.request.restore();
-      sinon.stub(http, 'request', function (params, cb) {
-        var req = new FakeRequest();
-        process.nextTick(function () {
-          // causes the request to quit and callback
-          req.emit('error', new Error('actual error'));
-        });
-        return req;
-      });
+      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies(new Error('actual error'))));
 
       con.request({}, function (err) {
         // error should have been sent to the
@@ -221,14 +249,7 @@ describe('Http Connector', function () {
       sinon.stub(con.log);
 
       http.request.restore();
-      sinon.stub(http, 'request', function (params, cb) {
-        var req = new FakeRequest();
-        process.nextTick(function () {
-          // causes the request to quit and callback
-          req.emit('error', new Error('actual error'));
-        });
-        return req;
-      });
+      sinon.stub(http, 'request', makeStubReqMethod(whereReqDies(new Error('actual error'))));
 
       con.request({}, function (err) {
         // error should have been sent to the
@@ -246,25 +267,70 @@ describe('Http Connector', function () {
     });
   });
 
-  describe('Request Implementation', function () {
-    var server;
-    var nock = require('nock');
-    nock.disableNetConnect();
-    var host = new Host('http://esjs.com:9200');
+  describe('#request with incomming message error', function () {
+    function makeStubReqWithMsgWhichErrorsMidBody(err) {
+      return makeStubReqMethod(whichMocksMessage(whichErrorsAfterPartialBody(err)));
+    }
 
-    beforeEach(function () {
-      server = nock('http://esjs.com:9200');
+    it('logs error event', function (done) {
+      var con = new HttpConnection(new Host('https://google.com'));
+      sinon.stub(con.log, 'error');
+      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+
+      con.request({}, function (err, resp, status) {
+        con.log.error.callCount.should.eql(1);
+        done();
+      });
     });
 
-    afterEach(function () {
-      server.done();
-      nock.restore();
+    it('and sets the connection to dead', function (done) {
+      var con = new HttpConnection(new Host('https://google.com'));
+      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+
+      con.request({}, function (err, resp, status) {
+        con.status.should.eql('dead');
+        done();
+      });
     });
 
+    it('passes the original error on', function (done) {
+      var con = new HttpConnection(new Host('https://google.com'));
+      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
+
+      con.request({}, function (err, resp, status) {
+        should.exist(err);
+        err.message.should.eql('no more message :(');
+        done();
+      });
+    });
+
+    it('does not pass the partial body along', function (done) {
+      var con = new HttpConnection(new Host('https://google.com'));
+      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+
+      con.request({}, function (err, resp, status) {
+        should.not.exist(resp);
+        done();
+      });
+    });
+
+    it('does not pass the status code along', function (done) {
+      var con = new HttpConnection(new Host('https://google.com'));
+      sinon.stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
+
+      con.request({}, function (err, resp, status) {
+        should.not.exist(status);
+        done();
+      });
+    });
+  });
+
+  describe('#request\'s responder', function () {
     it('collects the whole request body', function (done) {
-      var con = new HttpConnection(host);
-
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var body = '{ "USER": "doc" }';
+
       server
         .get('/users/1')
         .reply(200, body);
@@ -273,34 +339,34 @@ describe('Http Connector', function () {
         method: 'GET',
         path: '/users/1'
       }, function (err, resp, status) {
-        should(err).not.exist;
+        should.not.exist(err);
         resp.should.eql(body);
         status.should.eql(200);
+        server.done();
         done();
       });
     });
 
-    it('Catches network errors and passes back the error', function () {
-      var con = new HttpConnection(host);
+    it('Ignores serialization errors', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var body = '{ "USER":';
 
-      var body = '{ "USER": "doc" }';
+      // partial body
       server
         .get('/users/1')
-        .reply(200, {
-
-        });
+        .reply(200, body);
 
       con.request({
         method: 'GET',
         path: '/users/1'
       }, function (err, resp, status) {
-        should(err).not.exist;
+        should.not.exist(err);
         resp.should.eql(body);
         status.should.eql(200);
         done();
       });
     });
-
   });
 
 });

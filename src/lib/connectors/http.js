@@ -109,7 +109,11 @@ HttpConnector.prototype.request = function (params, cb) {
     }
 
     log.trace(params.method, reqParams, params.body, response, status);
-    cb(err, response, status);
+    if (err) {
+      cb(err);
+    } else {
+      cb(err, response, status);
+    }
   }, this);
 
   request = this.hand.request(reqParams, function (_incoming) {
