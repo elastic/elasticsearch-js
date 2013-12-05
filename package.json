@@ -3,7 +3,8 @@
     "name": "Spencer Alger",
     "company": "Elasticsearch BV"
   },
-  "name": "elasticsearch-js",
+  "name": "elasticsearch",
+  "main": "src/elasticsearch.js",
   "homepage": "https://github.com/elasticsearch/elasticsearch-js",
   "version": "0.0.1",
   "browser": {
