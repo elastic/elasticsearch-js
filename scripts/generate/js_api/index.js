@@ -1,7 +1,6 @@
 var _ = require('../../../src/lib/utils');
 var fs = require('fs');
 var templates = require('./templates');
-var clean = require('../../clean');
 var restSpecUpdated = require('../../rest_spec_updated');
 
 var outputPath = _.joinPath(__dirname, '../../../src/lib/api.js');
@@ -22,27 +21,28 @@ function download() {
       return action.proxy ? 'proxies' : 'normal';
     });
 
-    clean(outputPath);
+    fs.unlink(outputPath, function () {
+      console.log('writing', actions.length, 'api actions to', outputPath);
 
-    console.log('writing', actions.length, 'api actions to', outputPath);
+      fs.writeFileSync(outputPath, templates.apiFile({
+        actions: groups.normal,
+        proxies: groups.proxies,
+        namespaces: _.unique(namespaces.sort(), true)
+      }));
 
-    fs.writeFileSync(outputPath, templates.apiFile({
-      actions: groups.normal,
-      proxies: groups.proxies,
-      namespaces: _.unique(namespaces.sort(), true)
-    }));
+      if (!fs.existsSync(docOutputDir)) {
+        fs.mkdirSync(docOutputDir);
+      }
 
-    if (!fs.existsSync(docOutputDir)) {
-      fs.mkdirSync(docOutputDir);
-    }
+      fs.writeFileSync(docOutputDir + '_method_list.jade', templates.apiMethodList({
+        actions: actions
+      }));
 
-    fs.writeFileSync(docOutputDir + '_method_list.jade', templates.apiMethodList({
-      actions: actions
-    }));
+      fs.writeFileSync(docOutputDir + '_methods.jade', templates.apiMethods({
+        actions: actions
+      }));
 
-    fs.writeFileSync(docOutputDir + '_methods.jade', templates.apiMethods({
-      actions: actions
-    }));
+    });
   });
 }
 

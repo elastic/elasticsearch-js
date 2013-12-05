@@ -1,7 +1,4 @@
 var path = require('path');
-var fs = require('fs');
-var format = require('util').format;
-var cp = require('child_process');
 
 var argv = require('optimist')
   .default({
@@ -14,83 +11,64 @@ var argv = require('optimist')
   })
   .argv;
 
-var steps = [
-  [runInModule, 'node', [path.join(__dirname, './generate/js_api'), '--force']],
-  [
-    copy,
-    path.join(__dirname, '../docs/_methods.jade'),
-    path.join(argv.outputDir, '_methods.jade')
-  ],
-  [
-    copy,
-    path.join(__dirname, '../docs/_method_list.jade'),
-    path.join(argv.outputDir, '_method_list.jade')
-  ]
-];
+require('./_steps')(argv, [
+  ['runInModule', {
+    cmd: 'node',
+    args: [path.join(__dirname, './generate/js_api'), '--force']
+  }],
+  ['copy', {
+    from: path.join(__dirname, '../docs/_methods.jade'),
+    to: path.join(argv.outputDir, '_methods.jade')
+  }],
+  ['copy', {
+    from: path.join(__dirname, '../docs/_method_list.jade'),
+    to: path.join(argv.outputDir, '_method_list.jade')
+  }]
+]);
 
-(function next() {
-  var step = steps.shift();
-  if (step) {
-    var fn = step.shift();
-    step.push(next);
-    fn.apply(null, step);
-  } else {
-    console.log('Done');
-    process.exit();
-  }
-})();
+// function runInModule(cmd, args, exitCb) {
+//   log('running', cmd, args.join(' '));
 
-function log() {
-  var out = format.apply(console, arguments);
-  if (argv.verbose) {
-    out = '\n' + out + '\n';
-  }
-  console.log(out);
-}
+//   var proc = cp.spawn(cmd, args, {
+//     stdio: argv.verbose ? 'inherit' : 'ignore'
+//   });
 
-function runInModule(cmd, args, exitCb) {
-  log('running', cmd, args.join(' '));
+//   proc.on('error', function (err) {
+//     console.error('Error! --', err.message);
+//     process.exit(1);
+//   });
 
-  var proc = cp.spawn(cmd, args, {
-    stdio: argv.verbose ? 'inherit' : 'ignore'
-  });
+//   proc.on('exit', function (status) {
+//     if (status) {
+//       console.error('Error! --', cmd, 'exit status was', status);
+//       process.exit(1);
+//     } else {
+//       exitCb();
+//     }
+//   });
+// }
 
-  proc.on('error', function (err) {
-    console.error('Error! --', err.message);
-    process.exit(1);
-  });
+// function copy(from, to, done) {
+//   log('copying', from, 'to', to);
 
-  proc.on('exit', function (status) {
-    if (status) {
-      console.error('Error! --', cmd, 'exit status was', status);
-      process.exit(1);
-    } else {
-      exitCb();
-    }
-  });
-}
+//   var read = fs.createReadStream(from);
+//   var write = fs.createWriteStream(to);
 
-function copy(from, to, done) {
-  log('copying', from, 'to', to);
+//   read.pipe(write);
 
-  var read = fs.createReadStream(from);
-  var write = fs.createWriteStream(to);
+//   read.on('error', function (err) {
+//     console.error('unable to read: ' + from);
+//     console.error(err.message);
+//     process.exit(1);
+//   });
 
-  read.pipe(write);
+//   write.on('error', function (err) {
+//     console.error('unable to write to: ' + to);
+//     console.error(err.message);
+//     process.exit(1);
+//   });
 
-  read.on('error', function (err) {
-    console.error('unable to read: ' + from);
-    console.error(err.message);
-    process.exit(1);
-  });
-
-  write.on('error', function (err) {
-    console.error('unable to write to: ' + to);
-    console.error(err.message);
-    process.exit(1);
-  });
-
-  write.on('finish', function () {
-    done();
-  });
-}
+//   write.on('finish', function () {
+//     done();
+//   });
+// }
