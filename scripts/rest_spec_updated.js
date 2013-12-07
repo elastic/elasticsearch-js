@@ -7,7 +7,6 @@ var request = {
   }
 };
 var fs = require('fs');
-var _ = require('lodash');
 
 var lastRestSpecUpdateFile = __dirname + '/last_rest_spec_update.sha';
 var lastRestSpecUpdate;
@@ -17,61 +16,46 @@ if (fs.existsSync(lastRestSpecUpdateFile)) {
   lastRestSpecUpdate = fs.readFileSync(lastRestSpecUpdateFile, 'utf8');
 }
 
-var req = null;
-var force = false;
+var req = https.get(request, function (incoming) {
+  if (incoming.statusCode !== 200) {
+    req.abort();
+    console.error('request for last commit failed', incoming.statusCode, incoming.headers);
+    return;
+  }
 
-if (process.env.npm_config_force ||
-    process.env.FORCE_GEN ||
-    _.contains(process.argv, '-f') ||
-    _.contains(process.argv, '--force')
-) {
-  force = true;
-}
+  var body = '';
 
-if (force) {
-  updated = true;
-} else {
-  req = https.get(request, function (incoming) {
-    if (incoming.statusCode !== 200) {
-      req.abort();
-      console.error('request for last commit failed', incoming.statusCode, incoming.headers);
+  incoming.on('data', onData);
+  incoming.on('end', onEnd);
+
+  function onData(chunk) {
+    body += chunk;
+  }
+
+  function onEnd() {
+    incoming.removeListener('data', onData);
+    incoming.removeListener('end', onEnd);
+    var _req = req;
+    req = null;
+
+    var resp;
+    try {
+      resp = JSON.parse(body);
+    } catch (e) {
+      console.log('unable to parse response from github');
+      _req.emit('ready');
       return;
     }
 
-    var body = '';
-
-    incoming.on('data', onData);
-    incoming.on('end', onEnd);
-
-    function onData(chunk) {
-      body += chunk;
+    if (lastRestSpecUpdate === resp.sha) {
+      updated = false;
+    } else {
+      updated = true;
+      fs.writeFileSync(lastRestSpecUpdateFile, resp.sha);
     }
-
-    function onEnd() {
-      incoming.removeListener('data', onData);
-      incoming.removeListener('end', onEnd);
-      var _req = req;
-      req = null;
-
-      var resp;
-      try {
-        resp = JSON.parse(body);
-      } catch (e) {
-        console.log('unable to parse response from github');
-        _req.emit('ready');
-        return;
-      }
-
-      if (lastRestSpecUpdate === resp.sha) {
-        updated = false;
-      } else {
-        updated = true;
-        fs.writeFileSync(lastRestSpecUpdateFile, resp.sha);
-      }
-      _req.emit('ready');
-    }
-  });
-}
+    _req.emit('ready');
+  }
+});
 
 module.exports = function (cb) {
   function done() {

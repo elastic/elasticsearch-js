@@ -39,8 +39,8 @@ describe('Connection Pool', function () {
 
       _.keys(pool.index).should.eql([host.toString()]);
 
-      pool.connections.alive.should.eql([connection]);
-      pool.connections.dead.should.eql([]);
+      pool._conns.alive.should.eql([connection]);
+      pool._conns.dead.should.eql([]);
     });
 
     describe('#removeConnection', function () {
@@ -48,8 +48,8 @@ describe('Connection Pool', function () {
         pool.addConnection(connection);
         pool.removeConnection(connection2);
 
-        pool.connections.alive.should.eql([connection]);
-        pool.connections.dead.should.eql([]);
+        pool._conns.alive.should.eql([connection]);
+        pool._conns.dead.should.eql([]);
         _.keys(pool.index).length.should.eql(1);
       });
 
@@ -68,8 +68,8 @@ describe('Connection Pool', function () {
     it('#setHosts syncs the list of Hosts with the connections in the index', function () {
       // there should now be two connections
       pool.setHosts([host, host2]);
-      pool.connections.alive.length.should.eql(2);
-      pool.connections.dead.length.should.eql(0);
+      pool._conns.alive.length.should.eql(2);
+      pool._conns.dead.length.should.eql(0);
 
       // get the new connections
       connection = pool.index[host.toString()];
@@ -77,13 +77,13 @@ describe('Connection Pool', function () {
 
       // should remove the second connection
       pool.setHosts([host]);
-      pool.connections.alive.should.eql([connection]);
-      pool.connections.dead.length.should.eql(0);
+      pool._conns.alive.should.eql([connection]);
+      pool._conns.dead.length.should.eql(0);
 
       // should skip the first, but create a new for the second
       pool.setHosts([host, host2]);
-      pool.connections.alive.length.should.eql(2);
-      pool.connections.dead.length.should.eql(0);
+      pool._conns.alive.length.should.eql(2);
+      pool._conns.dead.length.should.eql(0);
 
       // a new connection should have been created
       pool.index[host2.toString()].should.not.be.exactly(connection2);
@@ -157,8 +157,8 @@ describe('Connection Pool', function () {
     });
 
     it('should automatically select the first dead connection when there no living connections', function (done) {
-      pool.connections.alive = [];
-      pool.connections.dead = [1, 2, 3];
+      pool._conns.alive = [];
+      pool._conns.dead = [1, 2, 3];
 
       pool.select(function (err, selection) {
         selection.should.be.exactly(1);
@@ -184,15 +184,15 @@ describe('Connection Pool', function () {
       connection = pool.index[host2.toString()];
       connection2 = pool.index[host2.toString()];
 
-      pool.connections.alive.should.have.length(2);
-      pool.connections.dead.should.have.length(0);
+      pool._conns.alive.should.have.length(2);
+      pool._conns.dead.should.have.length(0);
     });
 
     it('moves an alive connection to dead', function () {
       connection.setStatus('dead');
 
-      pool.connections.alive.should.have.length(1);
-      pool.connections.dead.should.have.length(1);
+      pool._conns.alive.should.have.length(1);
+      pool._conns.dead.should.have.length(1);
     });
 
     it('moves a dead connection to the end of the dead list when it re-dies', function () {
@@ -200,34 +200,34 @@ describe('Connection Pool', function () {
       connection2.setStatus('dead');
 
       // connection is at the front of the line
-      pool.connections.dead[0].should.be.exactly(connection);
+      pool._conns.dead[0].should.be.exactly(connection);
       // it re-dies
       connection.setStatus('dead');
       // connection2 is now at the front of the list
-      pool.connections.dead[0].should.be.exactly(connection2);
+      pool._conns.dead[0].should.be.exactly(connection2);
     });
 
     it('moves a does nothing when a connection is re-alive', function () {
-      var last = pool.connections.alive[pool.connections.alive.length - 1];
-      var first = pool.connections.alive[0];
+      var last = pool._conns.alive[pool._conns.alive.length - 1];
+      var first = pool._conns.alive[0];
 
       last.should.not.be.exactly(first);
 
       // first re-alives
       first.setStatus('alive');
-      pool.connections.alive[0].should.be.exactly(first);
-      pool.connections.alive[pool.connections.alive.length - 1].should.be.exactly(last);
+      pool._conns.alive[0].should.be.exactly(first);
+      pool._conns.alive[pool._conns.alive.length - 1].should.be.exactly(last);
 
       // last re-alives
       last.setStatus('alive');
-      pool.connections.alive[0].should.be.exactly(first);
-      pool.connections.alive[pool.connections.alive.length - 1].should.be.exactly(last);
+      pool._conns.alive[0].should.be.exactly(first);
+      pool._conns.alive[pool._conns.alive.length - 1].should.be.exactly(last);
     });
 
     it('removes all its connection when it closes, causing them to be closed', function () {
       pool.close();
-      pool.connections.alive.should.have.length(0);
-      pool.connections.dead.should.have.length(0);
+      pool._conns.alive.should.have.length(0);
+      pool._conns.dead.should.have.length(0);
 
       connection.status.should.eql('closed');
       connection2.status.should.eql('closed');

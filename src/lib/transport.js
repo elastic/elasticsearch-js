@@ -12,7 +12,7 @@ var when = require('when');
 function Transport(config) {
   config = config || {};
 
-  var LogClass = _.funcEnum(config, 'logClass', Transport.logs, 'main');
+  var LogClass = (typeof config.log === 'function') ? config.log : require('./log');
   config.log = this.log = new LogClass(config);
 
   // overwrite the createDefer method if a new implementation is provided
@@ -34,22 +34,32 @@ function Transport(config) {
   // setup max retries
   this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
+  // setup requestTimeout default
+  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 10000;
+
+  // randomizeHosts option
+  var randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
+
+  if (config.host) {
+    config.hosts = config.host;
+  }
+
   if (config.hosts) {
     var hostsConfig = _.createArray(config.hosts, function (val) {
-      if (_.isPlainObject(val) || _.isString(val)) {
+      if (_.isPlainObject(val) || _.isString(val) || val instanceof Host) {
         return val;
       }
     });
     if (!hostsConfig) {
-      throw new Error('Invalid hosts config. Expected a URL, an array of urls, a host config object, or an array of ' +
-        'host config objects.');
+      throw new TypeError('Invalid hosts config. Expected a URL, an array of urls, a host config object, ' +
+        'or an array of host config objects.');
     }
 
     var hosts = _.map(hostsConfig, function (conf) {
-      return new Host(conf);
+      return (conf instanceof Host) ? conf : new Host(conf);
     });
 
-    if (config.randomizeHosts) {
+    if (randomizeHosts) {
       hosts = _.shuffle(hosts);
     }
 
@@ -63,10 +73,6 @@ Transport.connectionPools = {
 
 Transport.serializers = {
   json: require('./serializers/json')
-};
-
-Transport.logs = {
-  main: require('./log')
 };
 
 Transport.nodesToHostCallbacks = {
@@ -91,8 +97,12 @@ Transport.prototype.request = function (params, cb) {
   var self = this;
   var remainingRetries = this.maxRetries;
   var connection; // set in sendReqWithConnection
-  var connectionReq; // an object with an abort method, set in sendReqWithConnection
-  var request; // the object returned to the user, might be a deferred
+  var aborted = false; // several connector will respond with an error when the request is aborted
+  var requestAbort; // an abort function, returned by connection#request()
+  var requestTimeout; // the general timeout for the total request (inculding all retries)
+  var requestTimeoutId; // the id of the ^timeout
+  var request; // the object returned to the user, might be a promise
+  var defer; // the defer object, will be set when we are using promises.
 
   self.log.debug('starting request', params);
 
@@ -107,26 +117,22 @@ Transport.prototype.request = function (params, cb) {
   }
 
   params.req = {
-    requestTimeout: params.requestTimeout,
     method: params.method,
     path: params.path,
     query: params.query,
     body: params.body,
   };
 
-  self.connectionPool.select(sendReqWithConnection);
-
-  function abortRequest() {
-    remainingRetries = 0;
-    connectionReq.abort();
-  }
-
   function sendReqWithConnection(err, _connection) {
+    if (aborted) {
+      return;
+    }
+
     if (err) {
       respond(err);
     } else if (_connection) {
       connection = _connection;
-      connectionReq = connection.request(params.req, checkRespForFailure);
+      requestAbort = connection.request(params.req, checkRespForFailure);
     } else {
       self.log.warning('No living connections');
       respond(new errors.NoConnections());
@@ -134,17 +140,31 @@ Transport.prototype.request = function (params, cb) {
   }
 
   function checkRespForFailure(err, body, status) {
-    if (err && remainingRetries) {
-      remainingRetries--;
-      self.log.error(err.message, '-- retrying');
-      self.connectionPool.select(sendReqWithConnection);
+    if (aborted) {
+      return;
+    }
+
+    if (err) {
+      connection.setStatus('dead');
+      if (remainingRetries) {
+        remainingRetries--;
+        self.log.error('Request error, retrying --', err.message);
+        self.connectionPool.select(sendReqWithConnection);
+      } else {
+        self.log.error('Request complete with error --', err.message);
+        respond(new errors.ConnectionFault(err));
+      }
     } else {
       self.log.info('Request complete');
-      respond(err ? new errors.ConnectionFault() : void 0, body, status);
+      respond(void 0, body, status);
     }
   }
 
   function respond(err, body, status) {
+    if (aborted) {
+      return;
+    }
+
     var parsedBody;
 
     if (!err && body) {
@@ -154,18 +174,20 @@ Transport.prototype.request = function (params, cb) {
       }
     }
 
-    if (!err) {
-      if ((status < 200 || status >= 300)
-          && (!params.ignore || !_.contains(params.ignore, status))
-      ) {
-        if (errors[status]) {
-          err = new errors[status](parsedBody && parsedBody.error);
-        } else {
-          err = new errors.Generic('unknown error');
-        }
+    // does the response represent an error?
+    if (
+      (!err || err instanceof errors.Serialization)
+      && (status < 200 || status >= 300)
+      && (!params.ignore || !_.contains(params.ignore, status))
+    ) {
+      if (errors[status]) {
+        err = new errors[status](parsedBody && parsedBody.error);
+      } else {
+        err = new errors.Generic('unknown error');
       }
     }
 
+    // how do we parse the body?
     if (params.castExists) {
       if (err && err instanceof errors.NotFound) {
         parsedBody = false;
@@ -175,28 +197,58 @@ Transport.prototype.request = function (params, cb) {
       }
     }
 
+    // how do we send the response?
     if (typeof cb === 'function') {
-      cb(err, parsedBody, status);
+      if (err) {
+        cb(err);
+      } else {
+        cb(void 0, parsedBody, status);
+      }
     } else if (err) {
-      request.reject(err);
+      defer.reject(err);
     } else {
-      request.resolve({
+      defer.resolve({
         body: parsedBody,
         status: status
       });
     }
   }
 
-  // determine the API based on the presense of a callback
+  function abortRequest() {
+    if (aborted) {
+      return;
+    }
+
+    aborted = true;
+    remainingRetries = 0;
+    clearTimeout(requestTimeoutId);
+    if (typeof requestAbort === 'function') {
+      requestAbort();
+    }
+  }
+
+  // set the requestTimeout
+  requestTimeout = params.hasOwnProperty('requestTimeout') ? params.requestTimeout : this.requestTimeout;
+
+  if (requestTimeout && requestTimeout !== Infinity) {
+    requestTimeoutId = setTimeout(function () {
+      respond(new errors.RequestTimeout());
+      abortRequest();
+    }, requestTimeout);
+  }
+
+  // determine the response based on the presense of a callback
   if (typeof cb === 'function') {
     request = {
       abort: abortRequest
     };
   } else {
-    var defer = this.createDefer();
-    defer.promise.abort = abortRequest;
+    defer = this.createDefer();
     request = defer.promise;
+    request.abort = abortRequest;
   }
+
+  self.connectionPool.select(sendReqWithConnection);
 
   return request;
 };
@@ -232,6 +284,10 @@ Transport.prototype.sniff = function (cb) {
   });
 };
 
+/**
+ * Close the Transport, which closes the logs and connection pool
+ * @return {[type]} [description]
+ */
 Transport.prototype.close = function () {
   this.log.close();
   this.connectionPool.close();

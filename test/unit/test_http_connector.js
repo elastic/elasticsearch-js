@@ -210,7 +210,7 @@ describe('Http Connector', function () {
       });
     });
 
-    it('logs error events, and sets the connection to dead when an error occurs', function (done) {
+    it('logs error events when an error occurs', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
 
       stub(con.log, 'error');
@@ -233,14 +233,11 @@ describe('Http Connector', function () {
         con.log.warning.callCount.should.eql(0);
         con.log.debug.callCount.should.eql(0);
 
-        // set status to dead
-        con.status.should.eql('dead');
-
         done();
       });
     });
 
-    it('logs error events, and sets the connection to dead', function (done) {
+    it('logs error events', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
 
       stub(con.log, 'error');
@@ -254,9 +251,6 @@ describe('Http Connector', function () {
         // logged the error
         con.log.error.callCount.should.eql(1);
         con.log.error.lastCall.args[0].message.should.eql('actual error');
-
-        // set status to dead
-        con.status.should.eql('dead');
 
         done();
       });
@@ -275,16 +269,6 @@ describe('Http Connector', function () {
 
       con.request({}, function (err, resp, status) {
         con.log.error.callCount.should.eql(1);
-        done();
-      });
-    });
-
-    it('and sets the connection to dead', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
-      stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
-
-      con.request({}, function (err, resp, status) {
-        con.status.should.eql('dead');
         done();
       });
     });
@@ -360,6 +344,39 @@ describe('Http Connector', function () {
         should.not.exist(err);
         resp.should.eql(body);
         status.should.eql(200);
+        done();
+      });
+    });
+  });
+
+  describe('HTTP specifics', function () {
+    it('uses TCP no delay', function (done) {
+      var con = new HttpConnection(new Host('localhost'));
+      stub(http.ClientRequest.prototype, 'setNoDelay');
+      var server = nock('http://localhost').get('').reply(200);
+
+      con.request({}, function (err, resp, status) {
+        http.ClientRequest.prototype.setNoDelay.callCount.should.eql(1);
+        http.ClientRequest.prototype.setNoDelay.lastCall.args[0].should.eql(true);
+        server.done();
+        done();
+      });
+    });
+
+    it('sets the Content-Length header properly', function (done) {
+      var con = new HttpConnection(new Host('localhost'));
+      stub(http.ClientRequest.prototype, 'setHeader');
+      var server = nock('http://localhost').get('').reply(200);
+
+      var body = 'pasta and 𝄞';
+      body.length.should.eql(12); // nope
+      Buffer.byteLength(body, 'utf8').should.eql(14); // yep
+
+      con.request({
+        body: body
+      }, function (err, resp, status) {
+        http.ClientRequest.prototype.setHeader.lastCall.args.should.eql(['Content-Length', 14]);
+        server.done();
         done();
       });
     });

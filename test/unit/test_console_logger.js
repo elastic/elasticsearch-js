@@ -1,5 +1,5 @@
 var Log = require('../../src/lib/log');
-var StdioLogger = require('../../src/lib/loggers/console');
+var ConsoleLogger = require('../../src/lib/loggers/console');
 var sinon = require('sinon');
 var parentLog;
 
@@ -16,7 +16,7 @@ function makeLogger(parent, levels) {
   var config = {
     levels: Log.parseLevels(levels || 'trace')
   };
-  return new StdioLogger(parent, config);
+  return new ConsoleLogger(parent, config);
 }
 
 var stub = require('./auto_release_stub').make();
@@ -24,5 +24,18 @@ var stub = require('./auto_release_stub').make();
 describe('Console Logger', function () {
 
   require('./generic_logger_tests')(makeLogger);
+
+  it('checks before using unique logging functions, falls back to #log()', function () {
+    var _warning = console.warn;
+    console.warn = null;
+    stub(console, 'log');
+
+    var logger = makeLogger();
+
+    logger.onWarning('message');
+    console.log.callCount.should.eql(1);
+
+    console.warn = _warning;
+  });
 
 });

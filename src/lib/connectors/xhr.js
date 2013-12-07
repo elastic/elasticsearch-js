@@ -10,7 +10,6 @@ module.exports = XhrConnector;
 var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
-var TimeoutError = require('../errors').RequestTimeout;
 var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 
 function XhrConnector(host, config) {
@@ -50,7 +49,6 @@ if (!getXhr) {
 
 XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
-  var requestTimeout = _.has(params, 'requestTimeout') ? this.requestTimeout : 10000;
   var timeoutId;
   var url = this.host.makeUrl(params);
   var log = this.log;
@@ -71,13 +69,9 @@ XhrConnector.prototype.request = function (params, cb) {
     }
   };
 
-  if (requestTimeout) {
-    timeoutId = setTimeout(function () {
-      xhr.onreadystatechange = _.noop;
-      xhr.abort();
-      cb(new TimeoutError());
-    }, requestTimeout);
-  }
-
   xhr.send(params.body || void 0);
+
+  return function () {
+    xhr.abort();
+  };
 };

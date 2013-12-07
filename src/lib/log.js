@@ -22,6 +22,10 @@ function Log(config) {
   var i;
   var outputs;
 
+  if (config.loggers) {
+    config.log = config.loggers;
+  }
+
   if (config.log) {
     if (_.isArrayOfStrings(config.log)) {
       outputs = [{

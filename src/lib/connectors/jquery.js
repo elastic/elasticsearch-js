@@ -14,7 +14,6 @@ JqueryConnector.prototype.request = function (params, cb) {
     data: params.body,
     dataType: 'json',
     headers: params.headers,
-    timeout: params.requestTimeout,
     done: cb
   };
 
@@ -24,7 +23,11 @@ JqueryConnector.prototype.request = function (params, cb) {
     ajax.password = auths[1];
   }
 
-  return jQuery.ajax(ajax);
+  var jqXhr = jQuery.ajax(ajax);
+
+  return function () {
+    jqXhr.abort();
+  };
 };
 
 

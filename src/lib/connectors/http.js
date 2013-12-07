@@ -13,7 +13,6 @@ var handles = {
   https: require('https')
 };
 var _ = require('../utils');
-var errors = require('../errors');
 var qs = require('querystring');
 var KeepAliveAgent = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
@@ -88,7 +87,6 @@ HttpConnector.prototype.request = function (params, cb) {
   var request;
   var response;
   var status = 0;
-  var requestTimeout = _.has(params, 'requestTimeout') ? this.requestTimeout : 10000;
   var log = this.log;
 
   var reqParams = this.makeReqParams(params);
@@ -105,7 +103,6 @@ HttpConnector.prototype.request = function (params, cb) {
       err = void 0;
     } else {
       log.error(err);
-      this.setStatus('dead');
     }
 
     log.trace(params.method, reqParams, params.body, response, status);
@@ -132,14 +129,6 @@ HttpConnector.prototype.request = function (params, cb) {
 
   request.on('error', cleanUp);
 
-  if (requestTimeout) {
-    // timeout for the entire request.
-    timeoutId = setTimeout(function () {
-      request.abort();
-      request.emit('error', new errors.RequestTimeout('Request timed out at ' + requestTimeout + 'ms'));
-    }, requestTimeout);
-  }
-
   request.setNoDelay(true);
   request.setSocketKeepAlive(true);
   request.chunkedEncoding = false;
@@ -151,4 +140,8 @@ HttpConnector.prototype.request = function (params, cb) {
     request.end();
   }
   this.requestCount++;
+
+  return function () {
+    request.abort();
+  };
 };

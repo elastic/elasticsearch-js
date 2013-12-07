@@ -32,7 +32,7 @@ function ConnectionPool(config) {
   // a map of connections to their "id" property, used when sniffing
   this.index = {};
 
-  this.connections = {
+  this._conns = {
     alive: [],
     dead: []
   };
@@ -59,18 +59,18 @@ delete ConnectionPool.connectionClasses._default;
  * @return {[type]}      [description]
  */
 ConnectionPool.prototype.select = function (cb) {
-  if (this.connections.alive.length) {
+  if (this._conns.alive.length) {
     if (this.selector.length > 1) {
-      this.selector(this.connections.alive, cb);
+      this.selector(this._conns.alive, cb);
     } else {
       try {
-        _.nextTick(cb, null, this.selector(this.connections.alive));
+        _.nextTick(cb, null, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
     }
   } else {
-    _.nextTick(cb, null, this.connections.dead[0]);
+    _.nextTick(cb, null, this.getConnection());
   }
 };
 
@@ -88,19 +88,19 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
 
   switch (status) {
   case 'alive':
-    from = this.connections.dead;
-    to = this.connections.alive;
+    from = this._conns.dead;
+    to = this._conns.alive;
     break;
   case 'dead':
-    from = this.connections.alive;
-    to = this.connections.dead;
+    from = this._conns.alive;
+    to = this._conns.dead;
     break;
   case 'redead':
-    from = this.connections.dead;
-    to = this.connections.dead;
+    from = this._conns.dead;
+    to = this._conns.dead;
     break;
   case 'closed':
-    from = this.connections[oldStatus];
+    from = this._conns[oldStatus];
     break;
   }
 
@@ -118,6 +118,23 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
     }
   }
 });
+
+/**
+ * Fetches the first active connection, falls back to dead connections
+ * This is really only here for testing purposes
+ *
+ * @private
+ * @return {Connection} - Some connection
+ */
+ConnectionPool.prototype.getConnection = function () {
+  if (this._conns.alive.length) {
+    return this._conns.alive[0];
+  }
+
+  if (this._conns.dead.length) {
+    return this._conns.dead[0];
+  }
+};
 
 ConnectionPool.prototype.addConnection = function (connection) {
   if (!connection.id) {

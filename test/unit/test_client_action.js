@@ -508,14 +508,14 @@ describe('Client Action runner', function () {
           two: '-69',
           three: 15,
           four: now,
-          five: new Date(999, 2399, 152433)
+          five: new Date('2013-03-01T01:10:00Z')
         }, function (err, params) {
           if (err) { throw err; }
           params.query.one.should.equal('42');
           params.query.two.should.equal('-69');
           params.query.three.should.equal('15');
           params.query.four.should.equal('' + now.getTime());
-          params.query.five.should.equal('-11162948400000');
+          params.query.five.should.equal('1362100200000');
           done();
         });
       });

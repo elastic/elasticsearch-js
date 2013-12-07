@@ -14,6 +14,7 @@ angular.module('elasticsearch.client', [])
   .factory('esFactory', ['$http', '$q', function ($http, $q) {
 
     AngularConnector.prototype.$http = $http;
+    AngularConnector.prototype.$q = $q;
 
     var factory = function (config) {
       config = config || {};

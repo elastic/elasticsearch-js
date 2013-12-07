@@ -34,9 +34,8 @@ Console.prototype.setupListeners = function (levels) {
 };
 
 Console.prototype.write = function (label, message, to) {
-  /* jshint browser:true */
-  if (window.console && window.console[to]) {
-    window.console[to](this.format(label, message));
+  if (console[to]) {
+    console[to](this.format(label, message));
   }
 };
 

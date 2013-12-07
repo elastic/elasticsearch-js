@@ -4,6 +4,7 @@ npm-debug.log
 node_modules
 scripts/scratch*
 test/integration/yaml_suite/log
+.aws-config.json
 
 ## generated files
 scripts/last_rest_spec_update.sha

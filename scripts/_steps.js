@@ -15,9 +15,40 @@ module.exports = function (argv, steps) {
   }
 
   var tasks = {
+    exec: function (params, exitCb) {
+      var cmd = params.cmd;
+      var opts = {};
+
+      if (params.cwd) {
+        opts.cwd = path.resolve(params.cwd);
+      }
+
+      log('running', cmd, (opts.cwd ? 'in ' + opts.cwd : ''));
+
+      cp.exec(cmd, opts, function (err, stdout, stderr) {
+        stdout = stdout.trim();
+        stderr = stderr.trim();
+
+        if (err) {
+          console.error('Error! status:', err.code, ' -----\n' + err.message);
+          process.exit(1);
+        }
+        else {
+          if (argv.verbose) {
+            if (stderr) {
+              console.error('----------- STDERR -----------');
+              console.error(stdout);
+              console.error('------------------------------');
+            }
+            console.log(stdout);
+          }
+          exitCb();
+        }
+      });
+    },
     run: function (params, exitCb) {
       var cmd = params.cmd;
-      var args = params.args;
+      var args = params.args || [];
       var opts = {
         stdio: argv.verbose ? 'inherit' : 'ignore'
       };

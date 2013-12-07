@@ -12,7 +12,7 @@ _.each(opts, function (conn, name) {
   }
 });
 
-// custom __default specification
+// custom _default specification
 if (opts.xhr) {
   opts._default = 'xhr';
 } else if (opts.angular) {

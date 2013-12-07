@@ -812,9 +812,10 @@ api.exists = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
- * @param {String, String[], Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
- * @param {String, String[], Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -863,14 +864,16 @@ api.explain = ca({
       type: 'string'
     },
     source: {
-      type: 'list',
-      name: '_source'
+      type: 'string'
     },
-    sourceExclude: {
+    _source: {
+      type: 'list'
+    },
+    _sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    sourceInclude: {
+    _sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -904,9 +907,9 @@ api.explain = ca({
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {String} params.routing - Specific routing value
- * @param {String, String[], Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
- * @param {String, String[], Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} [params.type=_all] - The type of the document (use `_all` to fetch the first document matching the ID across all types)
@@ -931,15 +934,14 @@ api.get = ca({
     routing: {
       type: 'string'
     },
-    source: {
-      type: 'list',
-      name: '_source'
+    _source: {
+      type: 'list'
     },
-    sourceExclude: {
+    _sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    sourceInclude: {
+    _sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -2629,9 +2631,9 @@ api.info = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
- * @param {String, String[], Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
- * @param {String, String[], Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
@@ -2649,15 +2651,14 @@ api.mget = ca({
     refresh: {
       type: 'boolean'
     },
-    source: {
-      type: 'list',
-      name: '_source'
+    _source: {
+      type: 'list'
     },
-    sourceExclude: {
+    _sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    sourceInclude: {
+    _sourceInclude: {
       type: 'list',
       name: '_source_include'
     }
@@ -2953,9 +2954,10 @@ api.scroll = ca({
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
- * @param {String, String[], Boolean} params.source - True or false to return the _source field or not, or a list of fields to return
- * @param {String, String[], Boolean} params.sourceExclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.sourceInclude - A list of fields to extract and return from the _source field
+ * @param {String} params.source - The URL-encoded request definition using the Query DSL (instead of using request body)
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
@@ -3047,14 +3049,16 @@ api.search = ca({
       type: 'list'
     },
     source: {
-      type: 'list',
-      name: '_source'
+      type: 'string'
     },
-    sourceExclude: {
+    _source: {
+      type: 'list'
+    },
+    _sourceExclude: {
       type: 'list',
       name: '_source_exclude'
     },
-    sourceInclude: {
+    _sourceInclude: {
       type: 'list',
       name: '_source_include'
     },

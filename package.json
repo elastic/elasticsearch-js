@@ -38,14 +38,21 @@
     "sinon": "~1.7.3",
     "nock": "~0.23.0",
     "open": "0.0.4",
-    "testling": "https://github.com/spenceralger/testling/tarball/master"
+    "testling": "git://github.com/spenceralger/testling.git",
+    "load-grunt-tasks": "~0.2.0",
+    "load-grunt-config": "~0.7.0",
+    "grunt-s3": "~0.2.0-alpha.3"
   },
-  "license": "Apache License",
+  "license": "Apache 2.0",
   "dependencies": {
     "when": "~2.6.0",
     "lodash": "~2.3.0",
     "agentkeepalive": "~0.1",
     "chalk": "~0.3.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "scripts": {
     "test": "node scripts/run_tests.js --integration --unit --browsers=chrome,safari,firefox,opera",
