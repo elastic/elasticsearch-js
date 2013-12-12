@@ -77,12 +77,12 @@ function makeJUnitXml(runnerName, testDetails) {
       _.each(suiteInfo.suites, serializeSuite);
     }
 
-    // if (suiteInfo.stdout.trim()) {
-    //   suite.ele('system-out', {}).cdata(suiteInfo.stdout);
-    // }
-    // if (suiteInfo.stderr.trim()) {
-    //   suite.ele('system-err', {}).cdata(suiteInfo.stderr);
-    // }
+    if (suiteInfo.stdout.trim()) {
+      suite.ele('system-out', {}).cdata(suiteInfo.stdout);
+    }
+    if (suiteInfo.stderr.trim()) {
+      suite.ele('system-err', {}).cdata(suiteInfo.stderr);
+    }
   });
 
   return suites.toString({ pretty: true});

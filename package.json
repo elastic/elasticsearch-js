@@ -37,7 +37,7 @@
     "mocha-lcov-reporter": "0.0.1",
     "blanket": "~1.1.5",
     "sinon": "~1.7.3",
-    "nock": "git://github.com/spenceralger/nock.git#c5b07103eb3058035b99118d343ee0dfca666107",
+    "nock": "git://github.com/spenceralger/nock.git#f28dc3c973651830b930793932b4006577260dc1",
     "open": "0.0.4",
     "testling": "git://github.com/spenceralger/testling.git",
     "load-grunt-tasks": "~0.2.0",

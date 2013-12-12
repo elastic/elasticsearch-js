@@ -219,7 +219,9 @@ YamlDoc.prototype = {
 
     log('getting', path, 'from', from);
 
-    var steps = path ? path.split('.') : [];
+    var steps = _.map(path ? path.replace(/\\\./g, '\uffff').split('.') : [], function (step) {
+      return step.replace(/\uffff/g, '.');
+    });
     var remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i++) {
