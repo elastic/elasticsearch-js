@@ -14,9 +14,7 @@ exports.make = function () {
   };
 
   stubber.autoRelease = function (item) {
-    if (item.restore && !~log.indexOf(item)) {
-      log.push(item);
-    }
+    log.push(item);
   };
 
   return stubber;

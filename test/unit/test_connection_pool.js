@@ -151,12 +151,13 @@ describe('Connection Pool', function () {
       };
 
       pool.select(function (err, selection) {
-        should(err).Error;
+        should(err).be.an.instanceOf(Error);
         done();
       });
     });
 
     it('should automatically select the first dead connection when there no living connections', function (done) {
+      pool.setHosts([]);
       pool._conns.alive = [];
       pool._conns.dead = [1, 2, 3];
 
@@ -188,6 +189,10 @@ describe('Connection Pool', function () {
       pool._conns.dead.should.have.length(0);
     });
 
+    afterEach(function () {
+      pool.close();
+    });
+
     it('moves an alive connection to dead', function () {
       connection.setStatus('dead');
 
@@ -207,7 +212,7 @@ describe('Connection Pool', function () {
       pool._conns.dead[0].should.be.exactly(connection2);
     });
 
-    it('moves a does nothing when a connection is re-alive', function () {
+    it('does nothing when a connection is re-alive', function () {
       var last = pool._conns.alive[pool._conns.alive.length - 1];
       var first = pool._conns.alive[0];
 

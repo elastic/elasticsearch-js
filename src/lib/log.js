@@ -305,6 +305,7 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
 
 function prettyJSON(body) {
   try {
+    // TESTME
     return JSON.stringify(JSON.parse(body), null, '  ').replace(/'/g, '\\\'');
   } catch (e) {
     return body || '';

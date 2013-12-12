@@ -8,6 +8,7 @@ test/integration/yaml_suite/log
 
 ## generated files
 scripts/last_rest_spec_update.sha
+test/integration/yaml_suite/yaml_tests.json
 test/browser_integration/yaml_tests.js
 test-output-*.xml
 coverage.html

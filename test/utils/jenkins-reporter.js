@@ -4,20 +4,33 @@
  * @param {Runner} runner
  * @api public
  */
-module.exports = EsjsReporter;
+module.exports = JenkinsReporter;
 
 var Base = require('mocha/lib/reporters/base');
 var _ = require('lodash');
 var chalk = require('chalk');
-var clientManager = require('./client_manager');
-var makeJUnitXml = require('../../../scripts/make_j_unit_xml');
+var makeJUnitXml = require('./make_j_unit_xml');
 var fs = require('fs');
 var path = require('path');
+var inspect = require('util').inspect;
 
-function EsjsReporter(runner) {
+var log = (function () {
+  var locked = _.bind(process.stdout.write, process.stdout);
+  return function (str) {
+    if (typeof str !== 'string') {
+      str = inspect(str);
+    }
+    locked(str);
+  };
+})();
+
+function JenkinsReporter(runner) {
   Base.call(this, runner);
-  clientManager.reporter = this;
+
   var stats = this.stats;
+  var pass = 0;
+  var pending = 0;
+  var fail = 0;
   var rootSuite = {
     results: [],
     suites: []
@@ -36,7 +49,7 @@ function EsjsReporter(runner) {
 
     // suite
     suite = {
-      name: suite.title,
+      name: suite.fullTitle(),
       results: [],
       start: Date.now(),
       stdout: '',
@@ -68,9 +81,17 @@ function EsjsReporter(runner) {
   });
 
   runner.on('test end', function (test) {
-    // test
-    var color = chalk[test.state === 'passed' ? 'green' : 'red'];
-    log(color('.'));
+    if (test.state === 'passed') {
+      pass++;
+      log(chalk.green('.'));
+    } else if (test.pending) {
+      pending++;
+      log(chalk.grey('.'));
+      return;
+    } else {
+      fail++;
+      log(chalk.red('x'));
+    }
 
     var errMsg = void 0;
 
@@ -98,22 +119,19 @@ function EsjsReporter(runner) {
       }).join('\n'));
     }
 
-    if (!test.pending) {
-      if (stack[0]) {
-        stack[0].results.push({
-          name: test.title,
-          time: test.duration,
-          pass: test.state === 'passed',
-          test: test
-        });
-      }
+    if (stack[0]) {
+      stack[0].results.push({
+        name: test.title,
+        time: test.duration,
+        pass: test.state === 'passed',
+        test: test
+      });
     }
   });
 
   runner.on('end', function () {
     restoreStdio();
-    var outputFilename = path.join(__dirname, '../../../test-output-node-yaml.xml');
-    var xml = makeJUnitXml('node ' + process.version + ' yaml tests', {
+    var xml = makeJUnitXml('node ' + process.version, {
       stats: stats,
       suites: _.map(rootSuite.suites, function removeElements(suite) {
         var s = {
@@ -131,16 +149,15 @@ function EsjsReporter(runner) {
         return s;
       })
     });
-    fs.writeFileSync(outputFilename, xml);
-    console.log('\nwrote log to', outputFilename);
-  });
+    console.error(xml);
 
-  var log = (function () {
-    var locked = _.bind(process.stdout.write, process.stdout);
-    return function (str) {
-      locked(str);
-    };
-  })();
+    console.log('\n' + [
+      'tests complete in ' + (Math.round(stats.duration / 10) / 100) + ' seconds',
+      '  fail:    ' + chalk.red(stats.failures),
+      '  pass:    ' + chalk.green(stats.passes),
+      '  pending: ' + chalk.grey(stats.pending)
+    ].join('\n'));
+  });
 
   // overload the write methods on stdout and stderr
   ['stdout', 'stderr'].forEach(function (name) {

@@ -116,7 +116,7 @@ describe('Http Connector', function () {
       });
 
       reqParams.should.include({
-        path: '?user_id=123&jvm=yes'
+        path: '/?user_id=123&jvm=yes'
       });
     });
 
@@ -353,7 +353,7 @@ describe('Http Connector', function () {
     it('uses TCP no delay', function (done) {
       var con = new HttpConnection(new Host('localhost'));
       stub(http.ClientRequest.prototype, 'setNoDelay');
-      var server = nock('http://localhost').get('').reply(200);
+      var server = nock('http://localhost').get('/').reply(200);
 
       con.request({}, function (err, resp, status) {
         http.ClientRequest.prototype.setNoDelay.callCount.should.eql(1);
@@ -366,7 +366,7 @@ describe('Http Connector', function () {
     it('sets the Content-Length header properly', function (done) {
       var con = new HttpConnection(new Host('localhost'));
       stub(http.ClientRequest.prototype, 'setHeader');
-      var server = nock('http://localhost').get('').reply(200);
+      var server = nock('http://localhost').get('/').reply(200);
 
       var body = 'pasta and 𝄞';
       body.length.should.eql(12); // nope

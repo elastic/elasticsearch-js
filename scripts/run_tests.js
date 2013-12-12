@@ -1,7 +1,6 @@
 var async = require('async');
 var cp = require('child_process');
 var chalk = require('chalk');
-var path = require('path');
 var argv = require('optimist')
   .usage([
     'Runner for the Elasticsearch.js unit and integration tests in both node and the browser.',
@@ -25,7 +24,7 @@ var argv = require('optimist')
       alias: 's'
     },
     unit: {
-      default: true,
+      default: false,
       alias: 'u'
     },
     integration: {
@@ -44,10 +43,6 @@ var argv = require('optimist')
       default: '*',
       alias: 'b'
     },
-    'xml-output': {
-      default: true,
-      alias: 'x'
-    },
     'check-upstream': {
       default: false,
       description: 'check for remote updates to the yaml test suite'
@@ -61,22 +56,17 @@ if (process.argv.indexOf('help') + process.argv.indexOf('--help') + process.argv
 
 if (process.env.npm_config_argv) {
   // when called by NPM
-  argv = argv.parse(JSON.parse(process.env.npm_config_argv).original);
+  argv = argv.parse([].concat(process.argv).concat(JSON.parse(process.env.npm_config_argv).original));
 } else {
-  // when called by NPM - via `npm test`
+  // when called directly
   argv = argv.argv;
 }
 
 var commands = [];
 var command;
 
-if (argv['just-browser']) {
-  argv.server = false;
-  argv.browsers = '*';
-}
-
 if (argv['check-upstream']) {
-  command = ['node', 'scripts/generate/yaml_tests/index.js'];
+  command = ['node', 'scripts/generate'];
   if (argv.force) {
     command.push('--force');
   }
@@ -85,21 +75,20 @@ if (argv['check-upstream']) {
 
 if (argv.unit) {
   if (argv.server) {
-    commands.push(['mocha', 'test/unit/test_*.js', '--require should']);
+    commands.push(['./node_modules/.bin/mocha', 'test/unit/test_*.js', '--require should']);
   }
   if (argv.browsers) {
-    commands.push(['testling', '.']);
+    commands.push(['./node_modules/.bin/testling', '.']);
   }
 }
 
 if (argv.integration) {
   if (argv.server) {
     commands.push([
-      'mocha',
+      './node_modules/.bin/mocha',
       'test/integration/yaml_suite/index.js',
-      '-b',
+      // '-b',
       '--require', 'should',
-      argv.x ? '--reporter' : '', argv.x ? path.join(__dirname, '../test/integration/yaml_suite/reporter.js') : '',
       '--host', argv.host,
       '--port', argv.port
     ].filter(Boolean));
@@ -125,6 +114,7 @@ if (commands.length) {
   async.forEachSeries(commands, function (args, done) {
     var command = args.shift();
     console.log(chalk.gray.bold('\n\n' + '# ' + command + ' ' + args.join(' ')));
+
     proc = cp.spawn(command, args, {
       stdio: 'inherit'
     });

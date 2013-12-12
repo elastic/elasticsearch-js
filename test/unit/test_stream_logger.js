@@ -3,7 +3,6 @@ var StreamLogger = require('../../src/lib/loggers/stream');
 var MockWritableStream = require('../mocks/writable_stream');
 var MockOldWritableStream = require('../mocks/old_writable_stream');
 var once = require('events').EventEmitter.prototype.once;
-var sinon = require('sinon');
 var stream = new MockWritableStream();
 var _ = require('lodash');
 var util = require('util');

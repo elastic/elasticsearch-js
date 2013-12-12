@@ -68,6 +68,10 @@ HttpConnector.prototype.makeReqParams = function (params) {
     agent: this.agent
   };
 
+  if (!reqParams.path) {
+    reqParams.path = '/';
+  }
+
   var query = this.host.query ? _.clone(this.host.query) : {};
 
   if (params.query) {
@@ -87,6 +91,7 @@ HttpConnector.prototype.request = function (params, cb) {
   var request;
   var response;
   var status = 0;
+  var headers;
   var log = this.log;
 
   var reqParams = this.makeReqParams(params);
@@ -116,6 +121,7 @@ HttpConnector.prototype.request = function (params, cb) {
   request = this.hand.request(reqParams, function (_incoming) {
     incoming = _incoming;
     status = incoming.statusCode;
+    headers = incoming.headers;
     incoming.setEncoding('utf8');
     response = '';
 

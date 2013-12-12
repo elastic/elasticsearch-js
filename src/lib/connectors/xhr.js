@@ -55,9 +55,9 @@ XhrConnector.prototype.request = function (params, cb) {
   var async = params.async === false ? false : asyncDefault;
 
   if (params.auth) {
-    xhr.open(params.method, url, async, params.auth.user, params.auth.pass);
+    xhr.open(params.method || 'GET', url, async, params.auth.user, params.auth.pass);
   } else {
-    xhr.open(params.method, url, async);
+    xhr.open(params.method || 'GET', url, async);
   }
 
   xhr.onreadystatechange = function () {

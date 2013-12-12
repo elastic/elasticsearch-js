@@ -4,13 +4,11 @@ var errors = require('../../src/lib/errors');
 var when = require('when');
 
 var sinon = require('sinon');
-var nock = require('nock');
+var nock = require('../mocks/server.js');
 var should = require('should');
 var _ = require('lodash');
 var nodeList = require('../fixtures/short_node_list.json');
 var stub = require('./auto_release_stub').make();
-
-nock.disableNetConnect();
 
 /**
  * Allows the tests call #request() without it doing anything past trying to select
@@ -19,10 +17,7 @@ nock.disableNetConnect();
  */
 function shortCircuitRequest(tran, delay) {
   stub(tran.connectionPool, 'select', function (cb) {
-    setTimeout(function () {
-      // call back with no error, and no connection === "NoConnections"
-      cb();
-    }, delay);
+    setTimeout(cb, delay);
   });
 }
 
@@ -315,14 +310,13 @@ describe('Transport Class', function () {
         done();
       });
     });
-    it('logs when it begins', function (done) {
+    it('rejects get requests with bodies', function (done) {
       var trans = new Transport();
       stub(trans.log, 'debug');
       stub(trans.connectionPool, 'select', function (cb) {
         // simulate "no connections"
         process.nextTick(cb);
       });
-
       trans.request({
         body: 'JSON!!',
         method: 'GET'
@@ -754,71 +748,90 @@ describe('Transport Class', function () {
     });
 
     describe('timeout', function () {
-      it('uses 10 seconds for the default', function (done) {
-        this.timeout(5);
-        var clock;
-        stub.autoRelease(clock = sinon.useFakeTimers('setTimeout'));
-
+      it('uses 30 seconds for the default', function () {
+        var clock = sinon.useFakeTimers();
         var tran = new Transport({});
+        var err;
 
-        stub(tran.connectionPool, 'select', function (cb) {
-          setTimeout(cb, 11000);
+        tran.request({});
+
+        _.size(clock.timeouts).should.eql(1);
+        _.each(clock.timeouts, function (timer, id) {
+          timer.callAt.should.eql(30000);
+          clearTimeout(id);
         });
-
-        tran.request({}, function (err) {
-          err.should.be.an.instanceOf(errors.RequestTimeout);
-          done();
-        });
-
-        clock.tick(10010);
+        clock.restore();
       });
-      it('inherits the requestTimeout from the transport', function (done) {
-        this.timeout(5);
-        var clock;
-        stub.autoRelease(clock = sinon.useFakeTimers('setTimeout'));
-
+      it('inherits the requestTimeout from the transport', function () {
+        var clock = sinon.useFakeTimers();
         var tran = new Transport({
           requestTimeout: 5000
         });
+        var err;
 
-        stub(tran.connectionPool, 'select', function (cb) {
-          setTimeout(cb, 11000);
+        tran.request({});
+
+        _.size(clock.timeouts).should.eql(1);
+        _.each(clock.timeouts, function (timer, id) {
+          timer.callAt.should.eql(5000);
+          clearTimeout(id);
+        });
+        clock.restore();
+      });
+      it('clears the timeout when the request is complete', function () {
+        var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+        var tran = new Transport({
+          host: 'http://localhost:9200'
         });
 
-        tran.request({}, function (err) {
+        var server = nock('http://localhost:9200')
+          .get('/')
+          .reply(200, {
+            i: 'am here'
+          });
+
+        tran.request({}, function (err, resp, status) {
+          should.not.exist(err);
+          resp.should.eql({ i: 'am here' });
+          status.should.eql(200);
+          Object.keys(clock.timeouts).should.have.length(0);
+          clock.restore();
+        });
+      });
+      it('timeout responds with a requestTimeout error', function (done) {
+        // var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+        var tran = new Transport({
+          host: 'http://localhost:9200'
+        });
+
+        var server = nock('http://localhost:9200')
+          .get('/')
+          .delay(1000)
+          .reply(200, {
+            i: 'am here'
+          });
+
+        tran.request({
+          requestTimeout: 25
+        }, function (err, resp, status) {
           err.should.be.an.instanceOf(errors.RequestTimeout);
+          // Object.keys(clock.timeouts).should.have.length(0);
+          // clock.restore();
           done();
         });
-
-        clock.tick(6000);
       });
       [false, 0, null].forEach(function (falsy) {
-        it('skips the timeout when it is ' + falsy, function (done) {
-          this.timeout(5);
-          var clock;
-          stub.autoRelease(clock = sinon.useFakeTimers('setTimeout'));
-
-          var tran = new Transport({
-            requestTimeout: 5000
-          });
-
-          stub(tran.connectionPool, 'select', function (cb) {
-            setTimeout(function () {
-              cb(new Error('it works'));
-            }, 10000);
-          });
+        it('skips the timeout when it is ' + falsy, function () {
+          var clock = sinon.useFakeTimers();
+          var tran = new Transport({});
+          stub(tran.connectionPool, 'select', function () {});
 
           tran.request({
             requestTimeout: falsy
-          }, function (err) {
-            err.message.should.eql('it works');
-            done();
-          });
+          }, function (_err) {});
 
-          clock.tick(6000);
-          process.nextTick(function () {
-            clock.tick(6000);
-          });
+          _.size(clock.timeouts).should.eql(0);
+          clock.restore();
         });
       });
     });

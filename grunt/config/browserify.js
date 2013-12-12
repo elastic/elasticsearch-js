@@ -1,4 +1,18 @@
 module.exports = {
+  yaml_suite: {
+    options: {
+      external: [
+        'optimist'
+      ],
+      ignore: [
+        'test/integration/yaml_suite/reporter',
+        'src/elasticsearch.js'
+      ]
+    },
+    files: {
+      'test/integration/browser_yaml_suite/yaml_tests.js': 'test/integration/yaml_suite/index.js'
+    }
+  },
   browser_client: {
     files: {
       '<%= distDir %>/elasticsearch.js': 'src/elasticsearch.js'

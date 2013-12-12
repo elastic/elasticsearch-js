@@ -35,7 +35,7 @@ function Transport(config) {
   this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
   // setup requestTimeout default
-  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 10000;
+  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
 
   // randomizeHosts option
   var randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
@@ -98,7 +98,7 @@ Transport.prototype.request = function (params, cb) {
   var remainingRetries = this.maxRetries;
   var connection; // set in sendReqWithConnection
   var aborted = false; // several connector will respond with an error when the request is aborted
-  var requestAbort; // an abort function, returned by connection#request()
+  var requestAborter; // an abort function, returned by connection#request()
   var requestTimeout; // the general timeout for the total request (inculding all retries)
   var requestTimeoutId; // the id of the ^timeout
   var request; // the object returned to the user, might be a promise
@@ -118,7 +118,7 @@ Transport.prototype.request = function (params, cb) {
 
   params.req = {
     method: params.method,
-    path: params.path,
+    path: params.path || '/',
     query: params.query,
     body: params.body,
   };
@@ -132,17 +132,19 @@ Transport.prototype.request = function (params, cb) {
       respond(err);
     } else if (_connection) {
       connection = _connection;
-      requestAbort = connection.request(params.req, checkRespForFailure);
+      requestAborter = connection.request(params.req, checkRespForFailure);
     } else {
       self.log.warning('No living connections');
       respond(new errors.NoConnections());
     }
   }
 
-  function checkRespForFailure(err, body, status) {
+  function checkRespForFailure(err, body, status, headers) {
     if (aborted) {
       return;
     }
+
+    requestAborter = void 0;
 
     if (err) {
       connection.setStatus('dead');
@@ -156,21 +158,26 @@ Transport.prototype.request = function (params, cb) {
       }
     } else {
       self.log.info('Request complete');
-      respond(void 0, body, status);
+      respond(void 0, body, status, headers);
     }
   }
 
-  function respond(err, body, status) {
+  function respond(err, body, status, headers) {
     if (aborted) {
       return;
     }
 
+    clearTimeout(requestTimeoutId);
     var parsedBody;
 
     if (!err && body) {
-      parsedBody = self.serializer.deserialize(body);
-      if (parsedBody == null) {
-        err = new errors.Serialization();
+      if (!headers || headers['content-type'] === 'application/json') {
+        parsedBody = self.serializer.deserialize(body);
+        if (parsedBody == null) {
+          err = new errors.Serialization();
+        }
+      } else {
+        parsedBody = body;
       }
     }
 
@@ -222,8 +229,8 @@ Transport.prototype.request = function (params, cb) {
     aborted = true;
     remainingRetries = 0;
     clearTimeout(requestTimeoutId);
-    if (typeof requestAbort === 'function') {
-      requestAbort();
+    if (typeof requestAborter === 'function') {
+      requestAborter();
     }
   }
 

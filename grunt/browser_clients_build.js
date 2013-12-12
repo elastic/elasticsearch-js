@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-  grunt.registerTask('build', [
+  grunt.registerTask('browser_clients_build', [
     'clean:dist',
     'browserify',
     'uglify:dist',

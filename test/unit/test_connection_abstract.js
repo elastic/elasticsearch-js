@@ -96,34 +96,31 @@ describe('Connection Abstract', function () {
       var conn = new ConnectionAbstract(host);
 
       conn.setStatus('alive');
-      conn.ping = function () {
+      stub(conn, 'ping', function () {
         throw new Error('ping should not have been called');
-      };
+      });
 
       conn.resuscitate();
     });
 
     it('should ping the connection after the deadTimeout, and set the status to "alive" on pong', function (done) {
       var conn = new ConnectionAbstract(host);
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stub.autoRelease(clock);
+      var clock;
+      stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
 
       // schedules the resuscitate
       conn.setStatus('dead');
 
       // override the ping method to just callback without an error
-      conn.ping = function (cb) {
-        process.nextTick(function () {
-          cb();
-        });
-      };
+      stub(conn, 'ping', function (cb) {
+        cb();
+      });
 
       // will be called after the ping calls back
-      conn.setStatus = function (status) {
+      stub(conn, 'setStatus', function (status) {
         status.should.eql('alive');
-        clock.restore();
         done();
-      };
+      });
 
       // fast forward the clock
       clock.tick(conn.deadTimeout);
@@ -131,24 +128,22 @@ describe('Connection Abstract', function () {
 
     it('should ping the connection after the deadTimeout, and set the status to "dead" on error', function (done) {
       var conn = new ConnectionAbstract(host);
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stub.autoRelease(clock);
+      var clock;
+      stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
 
       // schedules the resuscitate
       conn.setStatus('dead');
 
       // override the ping method to just callback without an error
-      conn.ping = function (cb) {
-        process.nextTick(function () {
-          cb(new Error('server still down'));
-        });
-      };
+      stub(conn, 'ping', function (cb) {
+        cb(new Error('server still down'));
+      });
 
       // will be called after the ping calls back
-      conn.setStatus = function (status) {
+      stub(conn, 'setStatus', function (status) {
         status.should.eql('dead');
         done();
-      };
+      });
 
       // fast forward the clock
       clock.tick(conn.deadTimeout);

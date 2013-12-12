@@ -11,23 +11,27 @@ var argv = require('./argv');
 var testDir = path.resolve(__dirname, './tests');
 var doPattern = new Minimatch(argv.match);
 
-// before running any tests...
-before(function (done) {
-  // start our personal ES Server
-  this.timeout(null);
-  clientManager.create(done);
-});
+describe('yaml -', function () {
 
-before(function (done) {
-  // make sure ES is empty
-  clientManager.get().indices.delete({
-    index: '*',
-    ignore: 404
-  }, done);
-});
+  // before running any tests...
+  before(function (done) {
+    // start our personal ES Server
+    this.timeout(null);
+    clientManager.create(done);
+  });
 
-var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
-  if (doPattern.match(filename)) {
-    return new YamlFile(filename, docs);
-  }
+  before(function (done) {
+    // make sure ES is empty
+    clientManager.get().indices.delete({
+      index: '*',
+      ignore: 404
+    }, done);
+  });
+
+  var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
+    if (doPattern.match(filename)) {
+      return new YamlFile(filename, docs);
+    }
+  });
+
 });

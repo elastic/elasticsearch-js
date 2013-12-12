@@ -28,7 +28,7 @@ describe('Console Logger', function () {
   it('checks before using unique logging functions, falls back to #log()', function () {
     var _warning = console.warn;
     console.warn = null;
-    stub(console, 'log');
+    sinon.stub(console, 'log');
 
     var logger = makeLogger();
 
@@ -36,6 +36,7 @@ describe('Console Logger', function () {
     console.log.callCount.should.eql(1);
 
     console.warn = _warning;
+    console.log.restore();
   });
 
 });

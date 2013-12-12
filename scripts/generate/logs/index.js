@@ -19,9 +19,6 @@ var argv = require('optimist')
   })
   .argv;
 
-// Error.stackTraceLimit = Infinity;
-// process.exit();
-
 var es = require('../../../src/elasticsearch');
 var _ = require('../../../src/lib/utils');
 var async = require('async');

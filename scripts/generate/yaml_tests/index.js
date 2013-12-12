@@ -1,1 +1,0 @@
-require('./generate')(require('../_force'));

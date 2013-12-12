@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
 var chalk = require('chalk');
-var makeJUnitXml = require('../make_j_unit_xml');
+var makeJUnitXml = require('../../test/utils/make_j_unit_xml');
 var docRoot = path.join(__dirname, '../../test/integration/browser_yaml_suite');
 chalk.enabled = true;
 
@@ -21,8 +21,14 @@ var server = http.createServer(function (req, resp) {
   req.filename = path.join(docRoot, req.uri);
 
   var end = resp.end;
-  resp.end = function () {
-    console.log(chalk[this.statusCode < 300 ? 'green' : 'red'](this.statusCode), req.uri);
+  resp.end = function (data) {
+    console.log(
+      chalk[this.statusCode < 300 ? 'green' : 'red'](this.statusCode),
+      req.uri,
+      '-',
+      Buffer.byteLength(data || ''),
+      'bytes'
+    );
     end.apply(resp, arguments);
   };
 

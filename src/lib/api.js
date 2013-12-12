@@ -72,7 +72,6 @@ api.bulk = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [clearScroll](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
  *
@@ -92,7 +91,6 @@ api.clearScroll = ca({
   method: 'DELETE'
 });
 
-
 api.cluster = function ClusterNS(transport) {
   this.transport = transport;
 };
@@ -107,7 +105,6 @@ api.cluster.prototype.getSettings = ca({
     fmt: '/_cluster/settings'
   }
 });
-
 
 /**
  * Perform a [cluster.health](http://elasticsearch.org/guide/reference/api/admin-cluster-health/) request
@@ -182,7 +179,6 @@ api.cluster.prototype.health = ca({
   ]
 });
 
-
 /**
  * Perform a [cluster.nodeHotThreads](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/) request
  *
@@ -227,7 +223,6 @@ api.cluster.prototype.nodeHotThreads = ca({
     }
   ]
 });
-
 
 /**
  * Perform a [cluster.nodeInfo](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/) request
@@ -302,7 +297,6 @@ api.cluster.prototype.nodeInfo = ca({
   ]
 });
 
-
 /**
  * Perform a [cluster.nodeShutdown](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/) request
  *
@@ -335,7 +329,6 @@ api.cluster.prototype.nodeShutdown = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [cluster.nodeStats](http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/) request
@@ -412,7 +405,6 @@ api.cluster.prototype.nodeStats = ca({
   ]
 });
 
-
 /**
  * Perform a [cluster.putSettings](http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/) request
  *
@@ -424,7 +416,6 @@ api.cluster.prototype.putSettings = ca({
   },
   method: 'PUT'
 });
-
 
 /**
  * Perform a [cluster.reroute](http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/) request
@@ -449,7 +440,6 @@ api.cluster.prototype.reroute = ca({
   },
   method: 'POST'
 });
-
 
 /**
  * Perform a [cluster.state](http://elasticsearch.org/guide/reference/api/admin-cluster-state/) request
@@ -502,7 +492,6 @@ api.cluster.prototype.state = ca({
     fmt: '/_cluster/state'
   }
 });
-
 
 /**
  * Perform a [count](http://elasticsearch.org/guide/reference/api/count/) request
@@ -567,7 +556,6 @@ api.count = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [delete](http://elasticsearch.org/guide/reference/api/delete/) request
@@ -644,7 +632,6 @@ api['delete'] = ca({
   },
   method: 'DELETE'
 });
-
 
 /**
  * Perform a [deleteByQuery](http://www.elasticsearch.org/guide/reference/api/delete-by-query/) request
@@ -742,7 +729,6 @@ api.deleteByQuery = ca({
   method: 'DELETE'
 });
 
-
 /**
  * Perform a [exists](http://elasticsearch.org/guide/reference/api/get/) request
  *
@@ -795,7 +781,6 @@ api.exists = ca({
   castExists: true,
   method: 'HEAD'
 });
-
 
 /**
  * Perform a [explain](http://elasticsearch.org/guide/reference/api/explain/) request
@@ -896,7 +881,6 @@ api.explain = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [get](http://elasticsearch.org/guide/reference/api/get/) request
  *
@@ -966,7 +950,6 @@ api.get = ca({
   }
 });
 
-
 /**
  * Perform a [getSource](http://elasticsearch.org/guide/reference/api/get/) request
  *
@@ -1025,7 +1008,6 @@ api.getSource = ca({
     sortOrder: -2
   }
 });
-
 
 /**
  * Perform a [index](http://elasticsearch.org/guide/reference/api/index_/) request
@@ -1137,7 +1119,6 @@ api.index = ca({
   method: 'POST'
 });
 
-
 api.indices = function IndicesNS(transport) {
   this.transport = transport;
 };
@@ -1203,7 +1184,6 @@ api.indices.prototype.analyze = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [indices.clearCache](http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/) request
@@ -1283,7 +1263,6 @@ api.indices.prototype.clearCache = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [indices.close](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
  *
@@ -1314,7 +1293,6 @@ api.indices.prototype.close = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [indices.create](http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/) request
  *
@@ -1344,7 +1322,6 @@ api.indices.prototype.create = ca({
   },
   method: 'POST'
 });
-
 
 /**
  * Perform a [indices.delete](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/) request
@@ -1380,7 +1357,6 @@ api.indices.prototype['delete'] = ca({
   method: 'DELETE'
 });
 
-
 /**
  * Perform a [indices.deleteAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
@@ -1415,7 +1391,6 @@ api.indices.prototype.deleteAlias = ca({
   method: 'DELETE'
 });
 
-
 /**
  * Perform a [indices.deleteMapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-mapping/) request
  *
@@ -1446,7 +1421,6 @@ api.indices.prototype.deleteMapping = ca({
   method: 'DELETE'
 });
 
-
 /**
  * Perform a [indices.deleteTemplate](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
  *
@@ -1476,7 +1450,6 @@ api.indices.prototype.deleteTemplate = ca({
   },
   method: 'DELETE'
 });
-
 
 /**
  * Perform a [indices.deleteWarmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
@@ -1532,7 +1505,6 @@ api.indices.prototype.deleteWarmer = ca({
   method: 'DELETE'
 });
 
-
 /**
  * Perform a [indices.exists](http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/) request
  *
@@ -1552,7 +1524,6 @@ api.indices.prototype.exists = ca({
   castExists: true,
   method: 'HEAD'
 });
-
 
 /**
  * Perform a [indices.existsAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
@@ -1599,7 +1570,6 @@ api.indices.prototype.existsAlias = ca({
   method: 'HEAD'
 });
 
-
 /**
  * Perform a [indices.existsType](http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/) request
  *
@@ -1635,7 +1605,6 @@ api.indices.prototype.existsType = ca({
   castExists: true,
   method: 'HEAD'
 });
-
 
 /**
  * Perform a [indices.flush](http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/) request
@@ -1684,7 +1653,6 @@ api.indices.prototype.flush = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [indices.getAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
@@ -1728,7 +1696,6 @@ api.indices.prototype.getAlias = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.getAliases](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
@@ -1756,7 +1723,6 @@ api.indices.prototype.getAliases = ca({
     }
   ]
 });
-
 
 /**
  * Perform a [indices.getFieldMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html) request
@@ -1811,7 +1777,6 @@ api.indices.prototype.getFieldMapping = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.getMapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-mapping/) request
  *
@@ -1846,7 +1811,6 @@ api.indices.prototype.getMapping = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-settings/) request
  *
@@ -1869,7 +1833,6 @@ api.indices.prototype.getSettings = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.getTemplate](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
  *
@@ -1891,7 +1854,6 @@ api.indices.prototype.getTemplate = ca({
     }
   ]
 });
-
 
 /**
  * Perform a [indices.getWarmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
@@ -1939,7 +1901,6 @@ api.indices.prototype.getWarmer = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.open](http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/) request
  *
@@ -1969,7 +1930,6 @@ api.indices.prototype.open = ca({
   },
   method: 'POST'
 });
-
 
 /**
  * Perform a [indices.optimize](http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/) request
@@ -2033,7 +1993,6 @@ api.indices.prototype.optimize = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [indices.putAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
@@ -2088,7 +2047,6 @@ api.indices.prototype.putAlias = ca({
   method: 'PUT'
 });
 
-
 /**
  * Perform a [indices.putMapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/) request
  *
@@ -2128,7 +2086,6 @@ api.indices.prototype.putMapping = ca({
   method: 'PUT'
 });
 
-
 /**
  * Perform a [indices.putSettings](http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings/) request
  *
@@ -2158,7 +2115,6 @@ api.indices.prototype.putSettings = ca({
   ],
   method: 'PUT'
 });
-
 
 /**
  * Perform a [indices.putTemplate](http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/) request
@@ -2193,7 +2149,6 @@ api.indices.prototype.putTemplate = ca({
   },
   method: 'PUT'
 });
-
 
 /**
  * Perform a [indices.putWarmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
@@ -2241,7 +2196,6 @@ api.indices.prototype.putWarmer = ca({
   method: 'PUT'
 });
 
-
 /**
  * Perform a [indices.refresh](http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh/) request
  *
@@ -2281,7 +2235,6 @@ api.indices.prototype.refresh = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [indices.segments](http://elasticsearch.org/guide/reference/api/admin-indices-segments/) request
  *
@@ -2320,7 +2273,6 @@ api.indices.prototype.segments = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/reference/api/admin-indices-gateway-snapshot/) request
  *
@@ -2355,7 +2307,6 @@ api.indices.prototype.snapshotIndex = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [indices.stats](http://elasticsearch.org/guide/reference/api/admin-indices-stats/) request
@@ -2474,7 +2425,6 @@ api.indices.prototype.stats = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.status](http://elasticsearch.org/guide/reference/api/admin-indices-status/) request
  *
@@ -2521,7 +2471,6 @@ api.indices.prototype.status = ca({
   ]
 });
 
-
 /**
  * Perform a [indices.updateAliases](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
@@ -2545,7 +2494,6 @@ api.indices.prototype.updateAliases = ca({
   },
   method: 'POST'
 });
-
 
 /**
  * Perform a [indices.validateQuery](http://www.elasticsearch.org/guide/reference/api/validate/) request
@@ -2610,7 +2558,6 @@ api.indices.prototype.validateQuery = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [info](http://elasticsearch.org/guide/) request
  *
@@ -2621,7 +2568,6 @@ api.info = ca({
     fmt: '/'
   }
 });
-
 
 /**
  * Perform a [mget](http://elasticsearch.org/guide/reference/api/multi-get/) request
@@ -2689,7 +2635,6 @@ api.mget = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [mlt](http://elasticsearch.org/guide/reference/api/more-like-this/) request
@@ -2814,7 +2759,6 @@ api.mlt = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [msearch](http://www.elasticsearch.org/guide/reference/api/multi-search/) request
  *
@@ -2866,7 +2810,6 @@ api.msearch = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [percolate](http://elasticsearch.org/guide/reference/api/percolate/) request
  *
@@ -2896,7 +2839,6 @@ api.percolate = ca({
   },
   method: 'POST'
 });
-
 
 /**
  * Perform a [scroll](http://www.elasticsearch.org/guide/reference/api/search/scroll/) request
@@ -2930,7 +2872,6 @@ api.scroll = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [search](http://www.elasticsearch.org/guide/reference/api/search/) request
@@ -3122,7 +3063,6 @@ api.search = ca({
   method: 'POST'
 });
 
-
 /**
  * Perform a [suggest](http://elasticsearch.org/guide/reference/api/search/suggest/) request
  *
@@ -3169,7 +3109,6 @@ api.suggest = ca({
   ],
   method: 'POST'
 });
-
 
 /**
  * Perform a [update](http://elasticsearch.org/guide/reference/api/update/) request
@@ -3298,4 +3237,3 @@ api.create = ca.proxy(api.index, {
     params.op_type = 'create';
   }
 });
-

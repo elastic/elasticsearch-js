@@ -9,7 +9,8 @@
   "version": "0.0.1",
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
-    "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js"
+    "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
+    "./test/mocks/server.js": "./test/mocks/browser_server.js"
   },
   "devDependencies": {
     "tar": "~0.1.18",
@@ -36,12 +37,17 @@
     "mocha-lcov-reporter": "0.0.1",
     "blanket": "~1.1.5",
     "sinon": "~1.7.3",
-    "nock": "~0.23.0",
+    "nock": "git://github.com/spenceralger/nock.git#c5b07103eb3058035b99118d343ee0dfca666107",
     "open": "0.0.4",
     "testling": "git://github.com/spenceralger/testling.git",
     "load-grunt-tasks": "~0.2.0",
     "load-grunt-config": "~0.7.0",
-    "grunt-s3": "~0.2.0-alpha.3"
+    "grunt-s3": "~0.2.0-alpha.3",
+    "grunt-run": "~0.1.5",
+    "relative-fs": "0.0.1",
+    "grunt-contrib-compress": "~0.5.3",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-mocha": "~0.4.7"
   },
   "license": "Apache 2.0",
   "dependencies": {
@@ -51,14 +57,12 @@
     "chalk": "~0.3.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "http://github.com/elasticsearch/elasticsearch-js.git"
+    "type": "git",
+    "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "scripts": {
-    "test": "node scripts/run_tests.js --integration --unit --browsers=chrome,safari,firefox,opera",
-    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
-    "build_clients": "grunt",
-    "generate": "node scripts/generate/js_api && node scripts/generate/yaml_tests",
+    "test": "grunt test",
+    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\"./coverage.html",
     "blanket": {
       "pattern": "src"
     }

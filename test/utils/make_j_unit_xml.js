@@ -32,8 +32,9 @@ var _ = require('lodash');
 
 function makeJUnitXml(runnerName, testDetails) {
   _.each(testDetails.suites, function serializeSuite(suiteInfo) {
+
     var suite = suites.ele('testsuite', {
-      package: 'elasticsearch-js:yaml_tests',
+      package: 'elasticsearch-js',
       id: suiteCount++,
       name: suiteInfo.name,
       timestamp: moment(suiteInfo.start).toJSON(),
@@ -45,13 +46,16 @@ function makeJUnitXml(runnerName, testDetails) {
     });
 
     _.each(suiteInfo.results, function (testInfo) {
+      var section;
 
-      var parts = suiteInfo.name.replace(/\.yaml$/, '').replace(/\./g, '_').split(/\//);
-      var section = parts.shift();
-      var behavior = parts.join('/');
+      if (suiteInfo.name.match(/\/.*\.yaml$/)) {
+        section = suiteInfo.name.split('/').slice(0, -1).join('/');
+      } else {
+        section = suiteInfo.name;
+      }
 
       var testcase = suite.ele('testcase', {
-        name: behavior + ' - ' + testInfo.name,
+        name: testInfo.name,
         time: (testInfo.time || 0) / 1000,
         classname: runnerName + '.' + section
       });
@@ -73,8 +77,12 @@ function makeJUnitXml(runnerName, testDetails) {
       _.each(suiteInfo.suites, serializeSuite);
     }
 
-    suite.ele('system-out', {}).cdata(suiteInfo.stdout);
-    suite.ele('system-err', {}).cdata(suiteInfo.stderr);
+    // if (suiteInfo.stdout.trim()) {
+    //   suite.ele('system-out', {}).cdata(suiteInfo.stdout);
+    // }
+    // if (suiteInfo.stderr.trim()) {
+    //   suite.ele('system-err', {}).cdata(suiteInfo.stderr);
+    // }
   });
 
   return suites.toString({ pretty: true});

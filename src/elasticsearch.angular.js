@@ -29,4 +29,5 @@ angular.module('elasticsearch.client', [])
     factory.ConnectionPool = require('./lib/connection_pool');
     factory.Transport = require('./lib/transport');
 
+    return factory;
   }]);

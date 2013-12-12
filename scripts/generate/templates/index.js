@@ -1,5 +1,5 @@
 
-var _ = require('../../../../src/lib/utils');
+var _ = require('../../../src/lib/utils');
 var fs = require('fs');
 var path = require('path');
 

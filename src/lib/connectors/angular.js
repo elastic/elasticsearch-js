@@ -24,7 +24,7 @@ AngularConnector.prototype.request = function (params, cb) {
     cache: false,
     timeout: abort.promise
   }).then(function (response) {
-    cb(null, response.data, response.status);
+    cb(null, response.data, response.status, response.headers);
   }, function (err) {
     cb(new ConnectionFault(err.message));
   });

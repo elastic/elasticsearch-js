@@ -1,15 +1,8 @@
 var server = require('./server');
-var child_process = require('child_process');
 var _ = require('lodash');
 var open = require('open');
-var fs = require('fs');
-var path = require('path');
 var async = require('async');
 var chalk = require('chalk');
-
-var yamlTestSourceFile = path.join(__dirname, '../../test/integration/yaml_suite/index.js');
-var yamlTestBundleFile = path.join(__dirname, '../../test/integration/browser_yaml_suite/yaml_tests.js');
-var clientEntryFile = path.join(__dirname, '../../src/elasticsearch.js');
 
 var browserAppNames = _.transform({
   safari: {
@@ -79,102 +72,45 @@ if (badKeys.length) {
   console.log('opening browser suite in', server.browsers);
 }
 
+server.on('tests done', function (report) {
+  var reports = [];
+  var success = true;
+  _.each(report, function (testSucceeded, browser) {
+    var msg = browser + ':' + (success ? '✔︎' : '⚑');
+    if (testSucceeded) {
+      msg = chalk.green(msg);
+    } else {
+      msg = chalk.red(msg);
+      success = false;
+    }
+    reports.push(' - ' + msg);
+  });
+  console.log('test completed!\n', reports.join('\n'));
+  process.exit(success ? 0 : 1);
+});
+
 async.series([
   function (done) {
-    fs.exists('dist', function (yes) {
-      if (!argv.forceGen && yes) {
-        done();
-        return;
-      }
-
-      console.log('generating client with "grunt build"');
-      child_process.spawn('npm', ['run', 'build_clients'], {
-        stdio: 'inherit'
-      }).on('close', function (status) {
-        done(status && 'grunt closed with a status code of ' + status + '. aborting.');
-      });
+    server.listen(0, function () {
+      server.port = server.address().port;
+      console.log('server listening on port', server.port);
+      done();
     });
   },
   function (done) {
-    fs.exists(yamlTestBundleFile, function (yes) {
-      if (!argv.forceGen && yes) {
-        done();
-        return;
-      }
+    async.eachSeries(_.clone(server.browsers), function (browser, browserDone) {
+      open('http://localhost:' + server.port +
+        '?es_hostname=' + encodeURIComponent(argv.host) +
+        '&es_port=' + encodeURIComponent(argv.port) +
+        '&browser=' + encodeURIComponent(browser), browserAppNames[browser]);
 
-      console.log('generating browser\'s yaml_tests.js bundle');
-      var b = require('browserify')();
-
-      b.add(yamlTestSourceFile);
-      var bundle = b.bundle({
-        external: [
-          'optimist'
-        ],
-        ignore: [
-          'test/integration/yaml_suite/reporter',
-          clientEntryFile
-        ]
-      });
-      var file = fs.createWriteStream(yamlTestBundleFile, {
-        flags: 'w',
-        encoding: 'utf8',
-        mode: 0666
-      });
-
-      bundle.pipe(file);
-
-      file.once('error', function (err) {
-        done(err);
-      });
-
-      bundle.once('error', function (err) {
-        done(err);
-      });
-
-      bundle.once('end', function () {
-        done();
-      });
-
-    });
+      server.once('browser complete', _.bind(browserDone, null, null));
+    }, done);
   }
 ], function (err) {
   if (err) {
     console.error(err);
     process.exit(1);
-  } else {
-    server.listen(0, function () {
-      var port = server.address().port;
-      console.log('server listening on port', port);
-
-      async.eachSeries(_.clone(server.browsers), function (browser, done) {
-        open('http://localhost:' + port +
-          '?es_hostname=' + encodeURIComponent(argv.host) +
-          '&es_port=' + encodeURIComponent(argv.port) +
-          '&browser=' + encodeURIComponent(browser), browserAppNames[browser]);
-
-        server.once('browser complete', function () {
-          done();
-        });
-      });
-    });
-
-    server.on('tests done', function (report) {
-      var reports = [];
-      var success = true;
-      _.each(report, function (testSucceeded, browser) {
-        var msg = browser + ':' + (success ? '✔︎' : '⚑');
-        if (testSucceeded) {
-          msg = chalk.green(msg);
-        } else {
-          msg = chalk.red(msg);
-          success = false;
-        }
-        reports.push(' - ' + msg);
-      });
-      console.log('test completed!\n', reports.join('\n'));
-      process.exit(success ? 0 : 1);
-    });
   }
-
 });
 
