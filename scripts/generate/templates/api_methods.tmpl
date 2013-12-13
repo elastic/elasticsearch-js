@@ -9,7 +9,7 @@ h3#<%= actionId %>.fn
   span.args (params, [callback])
 a.perma(href="api.html#<%= actionId %>", title="Permalink")
 a.esdoc(href="<%= action.docUrl %>", title="Endpoint Docs")
-//
+//-
   h4 Spec:
     pre
       code <%= JSON.stringify(action, null, '  ').split('\n').map(function (line, i) {
@@ -22,7 +22,7 @@ ul.params.api
   li.
     <code class="name"><%= paramWithDefault(paramName, param.default) %></code> <span class="types"><%=
     paramType(param.type) %></span>
-<%= indent(4, param.description || '') %><%
+<%= indent(param.description || '', 4) %><%
 }); %>
   li <a href="#api-conventions-params">the usual</a>
 
