@@ -12,6 +12,7 @@ var testDir = path.resolve(__dirname, './tests');
 var doPattern = new Minimatch(argv.match);
 
 describe('yaml -', function () {
+  this.timeout(30000);
 
   // before running any tests...
   before(function (done) {
