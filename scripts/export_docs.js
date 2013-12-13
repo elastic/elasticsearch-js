@@ -14,7 +14,7 @@ var argv = require('optimist')
 require('./_steps')(argv, [
   ['runInModule', {
     cmd: 'node',
-    args: [path.join(__dirname, './generate'), '--force']
+    args: ['scripts/generate', '--force']
   }],
   ['copy', {
     from: path.join(__dirname, '../docs/_methods.jade'),

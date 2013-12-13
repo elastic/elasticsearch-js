@@ -4,7 +4,7 @@ var actionId = action.name.toLowerCase().replace(/[^\w]+/g, '-');
 
 %>
 
-h3#<%= actionId %>.fn
+h2#<%= actionId %>.fn
   span.name <%= action.name %>
   span.args (params, [callback])
 a.perma(href="api.html#<%= actionId %>", title="Permalink")
@@ -16,21 +16,20 @@ a.esdoc(href="<%= action.docUrl %>", title="Endpoint Docs")
     return (i > 0 ? '      | ' : '') + line;
   }).join('\n') %>
 
-h4 Params:
-ul.params.api
+<% if (_.size(action.allParams)) { %>
+h3 Params:
+dl.params.api
 <% _.each(action.allParams, function (param, paramName) { %>
-  li.
-    <code class="name"><%= paramWithDefault(paramName, param.default) %></code> <span class="types"><%=
-    paramType(param.type) %></span>
+  dt: dfn: code <%= paramWithDefault(paramName, param.default) %>
+  dd.
+    <span class="types"><%= paramType(param.type) %></span>
 <%= indent(param.description || '', 4) %><%
 }); %>
-  li <a href="#api-conventions-params">the usual</a>
+<% } %>
+p.
+  Default method: <%= action.spec.method || 'GET' %><br>
+  Includes <a href="#api-conventions-return">the usual</a>
 
-h4 Method: <code><%= action.spec.method || 'GET' %></code>
-
-h4 Returns:
-p: a(href="#api-conventions-return") the usual
-
-include _examples/<%= action.name %><%
+include _examples/<%= action.name %>.jade<%
 });
 %>

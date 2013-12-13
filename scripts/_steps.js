@@ -76,7 +76,9 @@ module.exports = function (argv, steps) {
       });
     },
     runInModule: function (params, done) {
-
+      params = params || {};
+      params.cwd = path.resolve(__dirname, '../');
+      this.run(params, done);
     },
     copy: function (params, done) {
       var from = params.from;
@@ -125,7 +127,7 @@ module.exports = function (argv, steps) {
     });
 
     if (typeof task === 'function') {
-      task.apply(null, args);
+      task.apply(tasks, args);
     } else {
       throw new Error(taskName + ' is an invalid task, does not resolve to a function.');
     }
