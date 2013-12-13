@@ -385,19 +385,20 @@ describe('Utils', function () {
       should.not.exist(_.getUnwrittenFromStream({}));
     });
 
-    var MockWritableStream = require('../mocks/writable_stream');
+    if (require('stream').Writable) {
+      var MockWritableStream = require('../mocks/writable_stream');
+      it('ignores empty stream', function () {
+        var stream = new MockWritableStream();
+        _.getUnwrittenFromStream(stream).should.be.exactly('');
+      });
 
-    it('ignores empty stream', function () {
-      var stream = new MockWritableStream();
-      _.getUnwrittenFromStream(stream).should.be.exactly('');
-    });
-
-    it('returns only what is in the buffer', function () {
-      var stream = new MockWritableStream();
-      stream.write('hot');
-      stream.write('dog');
-      _.getUnwrittenFromStream(stream).should.be.exactly('dog');
-    });
+      it('returns only what is in the buffer', function () {
+        var stream = new MockWritableStream();
+        stream.write('hot');
+        stream.write('dog');
+        _.getUnwrittenFromStream(stream).should.be.exactly('dog');
+      });
+    }
   });
 
 });

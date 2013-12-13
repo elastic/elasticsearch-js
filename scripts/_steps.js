@@ -15,7 +15,7 @@ module.exports = function (argv, steps) {
   }
 
   var tasks = {
-    exec: function (params, exitCb) {
+    exec: function (params, done) {
       var cmd = params.cmd;
       var opts = {};
 
@@ -42,11 +42,11 @@ module.exports = function (argv, steps) {
             }
             console.log(stdout);
           }
-          exitCb();
+          done();
         }
       });
     },
-    run: function (params, exitCb) {
+    run: function (params, done) {
       var cmd = params.cmd;
       var args = params.args || [];
       var opts = {
@@ -71,9 +71,12 @@ module.exports = function (argv, steps) {
           console.error('Error! --', cmd, 'exit status was', status);
           process.exit(1);
         } else {
-          exitCb();
+          done();
         }
       });
+    },
+    runInModule: function (params, done) {
+
     },
     copy: function (params, done) {
       var from = params.from;

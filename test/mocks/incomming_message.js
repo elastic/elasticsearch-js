@@ -10,6 +10,10 @@ var sinon = require('sinon');
 var util = require('util');
 var Readable = require('stream').Readable;
 
+if (!Readable) {
+  Readable = require('events').EventEmitter;
+}
+
 function MockIncommingMessage() {
   var self = this;
 

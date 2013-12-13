@@ -394,8 +394,16 @@ _.getUnwrittenFromStream = function (stream) {
     var writeBuffer = stream._writableState.buffer;
     var out = '';
     if (writeBuffer.length) {
-      writeBuffer.forEach(function (buffered) {
-        out += buffered.chunk.toString();
+      _.each(writeBuffer, function (writeReq) {
+        if (writeReq.chunk) {
+          // 0.9.12+ uses WriteReq objects with a chunk prop
+          out += '' + writeReq.chunk;
+        } else if (_.isArray(writeReq) && (typeof writeReq[0] === 'string' || Buffer.isBuffer(writeReq[0]))) {
+          // 0.9.4 - 0.9.9 buffers are arrays of arrays like [[chunk, cb], [chunk, undef], ...].
+          out += '' + writeReq[0];
+        } else {
+          return false;
+        }
       });
     }
     return out;

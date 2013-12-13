@@ -1,41 +1,8 @@
-var Log = require('../../src/lib/log');
-var FileLogger = require('../../src/lib/loggers/file');
-var once = require('events').EventEmitter.prototype.once;
-var _ = require('lodash');
-var parentLog;
-var logger;
-var fs = require('fs');
-
-beforeEach(function () {
-  parentLog = new Log();
-});
-
-afterEach(function () {
-  parentLog.close();
-
-  if (logger
-    && logger.stream
-    && logger.stream._writableState
-    && logger.stream._writableState.buffer.length
-  ) {
-    // empty the buffer manually
-    logger.stream._writableState.buffer.splice(0);
-  }
-});
-
-function makeLogger(parent, levels) {
-  parent = parent || parentLog;
-  logger = new FileLogger(parent, {
-    levels: Log.parseLevels(levels || 'trace'),
-    path: 'test.log'
-  });
-  return logger;
-}
-
-var stub = require('./auto_release_stub').make();
-
-describe('File Logger', function () {
-  require('./generic_logger_tests')(makeLogger);
+module.exports = function (makeLogger) {
+  var stub = require('./auto_release_stub').make();
+  var fs = require('fs');
+  var once = require('events').EventEmitter.prototype.once;
+  var _ = require('lodash');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
@@ -89,4 +56,4 @@ describe('File Logger', function () {
       });
     }
   });
-});
+};

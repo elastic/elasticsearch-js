@@ -10,5 +10,6 @@ test/integration/yaml_suite/log
 scripts/last_rest_spec_update.sha
 test/integration/yaml_suite/yaml_tests.json
 test/browser_integration/yaml_tests.js
-test-output-*.xml
+junit-*.xml
+test.log
 coverage.html

@@ -19,22 +19,18 @@ a.esdoc(href="<%= action.docUrl %>", title="Endpoint Docs")
 h4 Params:
 ul.params.api
 <% _.each(action.allParams, function (param, paramName) { %>
-  li
-    code.name <%= paramWithDefault(paramName, param.default) %>
-    <%=
-      _.map(
-        ('<span class="types">' + paramType(param.type) + '</span> ' + (param.description || '')).split('\n'),
-        function (line) {
-          return '|  ' + line + '\n';
-        }
-      ).join('\n')
-    %>
-<% }); %>
+  li.
+    <code class="name"><%= paramWithDefault(paramName, param.default) %></code> <span class="types"><%=
+    paramType(param.type) %></span>
+<%= indent(4, param.description || '') %><%
+}); %>
   li <a href="#api-conventions-params">the usual</a>
 
 h4 Method: <code><%= action.spec.method || 'GET' %></code>
 
 h4 Returns:
-p: a(href="#api-conventions-return") the usual<%
+p: a(href="#api-conventions-return") the usual
+
+include _examples/<%= action.name %><%
 });
 %>

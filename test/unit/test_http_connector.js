@@ -38,28 +38,6 @@ describe('Http Connector', function () {
     };
   }
 
-  function whichMocksMessage(prep) {
-    return function (req, params, cb) {
-      process.nextTick(function () {
-        var incom = new MockIncommingMessage();
-        if (prep) {
-          prep(incom);
-        }
-        cb(incom);
-      });
-    };
-  }
-
-  function whichErrorsAfterPartialBody(err) {
-    return function (incom) {
-      incom.statusCode = 200;
-      incom.push('{ "hits": { "hits": { "hits": { "hits": { "hits": { "hits": ');
-      setTimeout(function () {
-        incom.emit('error', err || new Error('Socket is dead now...'));
-      }, 20);
-    };
-  }
-
   describe('Constructor', function () {
     it('creates an object that extends ConnectionAbstract', function () {
       var con = new HttpConnection(new Host());
@@ -259,7 +237,17 @@ describe('Http Connector', function () {
 
   describe('#request with incomming message error', function () {
     function makeStubReqWithMsgWhichErrorsMidBody(err) {
-      return makeStubReqMethod(whichMocksMessage(whichErrorsAfterPartialBody(err)));
+      return makeStubReqMethod(function (req, params, cb) {
+        process.nextTick(function () {
+          var incom = new MockIncommingMessage();
+          incom.statusCode = 200;
+          setTimeout(function () {
+            incom.emit('data', '{ "not json"');
+            incom.emit('error', err || new Error('Socket is dead now...'));
+          }, 20);
+          cb(incom);
+        });
+      });
     }
 
     it('logs error event', function (done) {

@@ -23421,27 +23421,30 @@ var argv = require('./argv');
 var testDir = path.resolve(__dirname, './tests');
 var doPattern = new Minimatch(argv.match);
 
-// before running any tests...
-before(function (done) {
-  // start our personal ES Server
-  this.timeout(null);
-  clientManager.create(done);
-});
+describe('yaml -', function () {
 
-before(function (done) {
-  // make sure ES is empty
-  clientManager.get().indices.delete({
-    index: '*',
-    ignore: 404
-  }, done);
-});
+  // before running any tests...
+  before(function (done) {
+    // start our personal ES Server
+    this.timeout(null);
+    clientManager.create(done);
+  });
 
-var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
-  if (doPattern.match(filename)) {
-    return new YamlFile(filename, docs);
-  }
-});
+  before(function (done) {
+    // make sure ES is empty
+    clientManager.get().indices.delete({
+      index: '*',
+      ignore: 404
+    }, done);
+  });
 
+  var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
+    if (doPattern.match(filename)) {
+      return new YamlFile(filename, docs);
+    }
+  });
+
+});
 },{"../../../src/elasticsearch":2,"../../../src/lib/utils":52,"./argv":53,"./client_manager":54,"./yaml_file":58,"./yaml_tests.json":59,"async":1,"expect.js":15,"js-yaml":16,"minimatch":49,"path":8}],56:[function(require,module,exports){
 var process=require("__browserify_process");var childProc = require('child_process');
 var events = require('events');
@@ -23731,7 +23734,9 @@ YamlDoc.prototype = {
 
     log('getting', path, 'from', from);
 
-    var steps = path ? path.split('.') : [];
+    var steps = _.map(path ? path.replace(/\\\./g, '\uffff').split('.') : [], function (step) {
+      return step.replace(/\uffff/g, '.');
+    });
     var remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i++) {
