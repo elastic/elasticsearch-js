@@ -35,7 +35,8 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
 }
 
 function updateSubmodules(done) {
-  cp.exec('git submodule update --init --recursive', function (err, stdout, stderr) {
+  cp.exec('git submodule update --init && git submodule foreach git pull origin master',
+  function (err, stdout, stderr) {
     stdout = stdout.trim();
     stderr = stderr.trim();
 
