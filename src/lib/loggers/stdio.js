@@ -50,6 +50,7 @@ _.inherits(Stdio, LoggerAbstract);
  * @return {undefined}
  */
 Stdio.prototype.write = function (label, message, to, colorize) {
+  label = 'Elasticsearch ' + label;
   if (this.color) {
     label = colorize(label);
   }

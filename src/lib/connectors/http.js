@@ -22,12 +22,7 @@ var ConnectionAbstract = require('../connection');
  *
  * @param {Host} host - The host object representing the elasticsearch node we will be talking to
  * @param {Object} [config] - Configuration options (extends the configuration options for ConnectionAbstract)
- * @param {Number} [config.maxSockets=10] - the maximum number of sockets that will be opened to this node
- * @param {Number} [config.maxFreeSockets=10] - this maximum number of sockets that can sit idle to this node
- * @param {Number} [config.maxKeepAliveTime=300000] - an idle timeout for the connections to this node. If your
- * @param {Number} [config.timeout=10000] - an idle timeout for the connections to this node. If your
- *  maxSockets is much higher than your average concurrent usage, this timeout will cause sockets to close which
- *  can be interpreted as "bad" behavior for clients.
+ * @param {Number} [config.concurrency=10] - the maximum number of sockets that will be opened to this node
  */
 function HttpConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
@@ -40,15 +35,14 @@ function HttpConnector(host, config) {
 
   config = _.defaults(config || {}, {
     maxSockets: 10,
-    maxFreeSockets: this.hand.Agent.defaultMaxSockets,
+    maxKeepAliveRequests: 0,
     maxKeepAliveTime: 3e5 // 5 minutes
   });
 
   this.agent = new KeepAliveAgent({
-    keepAlive: true,
     maxSockets: config.maxSockets,
-    maxFreeSockets: config.maxFreeSockets,
-    keepAliveMsecs: config.keepAliveMsecs
+    maxKeepAliveRequests: config.maxKeepAliveRequests,
+    maxKeepAliveTime: config.maxKeepAliveTime
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);
@@ -106,15 +100,13 @@ HttpConnector.prototype.request = function (params, cb) {
 
     if ((err instanceof Error) === false) {
       err = void 0;
-    } else {
-      log.error(err);
     }
 
     log.trace(params.method, reqParams, params.body, response, status);
     if (err) {
       cb(err);
     } else {
-      cb(err, response, status);
+      cb(err, response, status, headers);
     }
   }, this);
 
