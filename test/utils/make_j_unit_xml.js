@@ -50,9 +50,9 @@ function makeJUnitXml(runnerName, testDetails) {
       var section;
 
       if (suiteInfo.name.match(/\/.*\.yaml$/)) {
-        section = suiteInfo.name.split('/').slice(0, -1).join('/');
+        section = suiteInfo.name.split('/').slice(0, -1).join('/').replace(/\./g, '/');
       } else {
-        section = suiteInfo.name;
+        section = suiteInfo.name.replace(/\./g, ',');
       }
 
       var testcase = suite.ele('testcase', {
