@@ -11,7 +11,7 @@ var argv = require('./argv');
 var testDir = path.resolve(__dirname, './tests');
 var doPattern = new Minimatch(argv.match);
 
-describe('yaml -', function () {
+describe('integration', function () {
   this.timeout(30000);
 
   // before running any tests...

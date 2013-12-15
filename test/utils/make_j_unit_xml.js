@@ -48,6 +48,7 @@ function makeJUnitXml(runnerName, testDetails) {
 
     _.each(suiteInfo.results, function (testInfo) {
       var section;
+      var integration = false;
 
       if (suiteInfo.name.match(/\/.*\.yaml$/)) {
         section = suiteInfo.name.split('/').slice(0, -1).join('/').replace(/\./g, '/');
@@ -55,10 +56,15 @@ function makeJUnitXml(runnerName, testDetails) {
         section = suiteInfo.name.replace(/\./g, ',');
       }
 
+      if (section.indexOf('integration ') === 0) {
+        section = section.replace(/^integration /, '');
+        integration = true;
+      }
+
       var testcase = suite.ele('testcase', {
         name: testInfo.name,
         time: (testInfo.time || 0) / 1000,
-        classname: runnerName + '.' + section
+        classname: runnerName + (integration ? ' - integration' : '') + '.' + section
       });
 
       if (testInfo.errMsg) {
