@@ -45,7 +45,7 @@ describe('Stdio Logger', function () {
     it('obeys the logger.color === false', function () {
       var logger = makeLogger();
       stub(process.stdout, 'write');
-      var withoutColor = 'INFO: ' + now + '\n  something\n\n';
+      var withoutColor = 'Elasticsearch INFO: ' + now + '\n  something\n\n';
 
       logger.color = false;
       logger.onInfo('something');
@@ -56,7 +56,7 @@ describe('Stdio Logger', function () {
       var logger = makeLogger();
 
       stub(process.stdout, 'write');
-      var withoutColor = 'TRACE: ' + now + '\n  curl\n  msg\n\n';
+      var withoutColor = 'Elasticsearch TRACE: ' + now + '\n  curl\n  msg\n\n';
 
       logger.color = true;
       logger.onTrace('msg', 'curl');

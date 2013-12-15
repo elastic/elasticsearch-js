@@ -37,7 +37,7 @@
     "mocha-lcov-reporter": "0.0.1",
     "blanket": "~1.1.5",
     "sinon": "~1.7.3",
-    "nock": "git://github.com/spenceralger/nock.git#f28dc3c973651830b930793932b4006577260dc1",
+    "nock": "git://github.com/spenceralger/nock.git#5218548233983c594da5535bc07e7db36841987e",
     "open": "0.0.4",
     "testling": "git://github.com/spenceralger/testling.git",
     "load-grunt-tasks": "~0.2.0",
@@ -64,7 +64,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\"./coverage.html",
+    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
     "blanket": {
       "pattern": "src"
     }

@@ -12,9 +12,8 @@ module.exports = function (grunt) {
         banner: '/*! <%= package.name %> - v<%= package.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
           '<%= package.homepage ? " * " + package.homepage + "\\n" : "" %>' +
-          ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= package.author.name %>;' +
-          ' Licensed <%= package.license %> */\n' +
-          ' // built using browserify\n\n'
+          ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= package.author.company %>;' +
+          ' Licensed <%= package.license %> */\n'
       }
     }
   });

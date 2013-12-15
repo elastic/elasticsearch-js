@@ -27,7 +27,7 @@ We also provide builds of the elasticsearch.js client for use in the browser. If
  - [Quick Start](http://spenceralger.github.io/elasticsearch-js/index.html#quick-start)
  - [API](http://spenceralger.github.io/elasticsearch-js/api.html)
  - [Configuration](http://spenceralger.github.io/elasticsearch-js/index.html#configuration)
- - [Development/Contributions](http://spenceralger.github.io/elasticsearch-js/index.html#dev)
+ - [Development/Contributing](http://spenceralger.github.io/elasticsearch-js/index.html#dev)
  - [Extending Core Components](http://spenceralger.github.io/elasticsearch-js/index.html#extending)
  - [Logging](http://spenceralger.github.io/elasticsearch-js/index.html#logging)
 

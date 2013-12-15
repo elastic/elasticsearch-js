@@ -22,10 +22,6 @@ function Log(config) {
   var i;
   var outputs;
 
-  if (config.loggers) {
-    config.log = config.loggers;
-  }
-
   if (config.log) {
     if (_.isArrayOfStrings(config.log)) {
       outputs = [{
@@ -305,8 +301,7 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
 
 function prettyJSON(body) {
   try {
-    // TESTME
-    return JSON.stringify(JSON.parse(body), null, '  ').replace(/'/g, '\\\'');
+    return JSON.stringify(JSON.parse(body), null, '  ').replace(/'/g, '\\u0027');
   } catch (e) {
     return body || '';
   }

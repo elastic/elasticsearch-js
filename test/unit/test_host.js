@@ -122,8 +122,9 @@ describe('Host class', function () {
         path: '/this and that',
         query: {
           param: 1
-        }
-      }).should.eql('http://localhost:9200/prefix/this and that?param=1&user_id=123');
+        },
+        auth: 'user:pass'
+      }).should.eql('http://user:pass@localhost:9200/prefix/this and that?param=1&user_id=123');
     });
 
     it('ensures that path starts with a forward-slash', function () {
@@ -148,8 +149,8 @@ describe('Host class', function () {
       host = new Host({ host: 'john', port: 80 });
       host.makeUrl().should.eql('http://john/');
 
-      host = new Host({ host: 'italy', path: '/pie' });
-      host.makeUrl().should.eql('http://italy:9200/pie');
+      host = new Host({ host: 'italy', path: '/pie', auth: 'user:pass'});
+      host.makeUrl().should.eql('http://user:pass@italy:9200/pie');
     });
   });
 

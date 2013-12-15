@@ -33,20 +33,6 @@ describe('Transport Class', function () {
       trans.log.should.be.an.instanceOf(CustomLogClass);
     });
 
-    it('Accepts a "createDefer" function, which can be used to tie into other promise libs.', function () {
-      function CustomPromise() {
-        this.then = function () {};
-      }
-
-      var trans = new Transport({
-        createDefer: function () {
-          return new CustomPromise();
-        }
-      });
-
-      trans.createDefer().should.be.an.instanceOf(CustomPromise);
-    });
-
     it('Accepts a connection pool class and intanciates it at this.connectionPool', function () {
       function CustomConnectionPool() {}
       var trans = new Transport({
@@ -73,6 +59,33 @@ describe('Transport Class', function () {
           connectionPool: 'pasta'
         });
       }).should.throw(/invalid connectionpool/i);
+    });
+
+    it('calls sniff immediately if sniffOnStart is true', function () {
+      stub(Transport.prototype, 'sniff');
+      var trans = new Transport({
+        sniffOnStart: true
+      });
+
+      trans.sniff.callCount.should.eql(1);
+    });
+
+    it('schedules a sniff when sniffInterval is set', function () {
+      var clock = sinon.useFakeTimers('setTimeout');
+      stub(Transport.prototype, 'sniff');
+
+      var trans = new Transport({
+        sniffInterval: 25000
+      });
+
+      _.size(clock.timeouts).should.eql(1);
+      var id = _.keys(clock.timeouts).pop();
+      clock.tick(25000);
+      trans.sniff.callCount.should.eql(1);
+      _.size(clock.timeouts).should.eql(1);
+      _.keys(clock.timeouts).pop().should.not.eql(id);
+
+      clock.restore();
     });
 
     describe('host config', function () {
@@ -195,6 +208,14 @@ describe('Transport Class', function () {
     });
   });
 
+  describe('::createDefer', function () {
+    it('returns a when.js promise by default', function () {
+
+      Transport.createDefer().constructor.should.be.exactly(when.defer().constructor);
+    });
+  });
+
+
   describe('#sniff', function () {
     var trans;
 
@@ -272,27 +293,6 @@ describe('Transport Class', function () {
         status.should.eql(200);
         done();
       });
-    });
-  });
-
-  describe('#createDefer', function () {
-    it('returns a when.js promise by default', function () {
-      var trans = new Transport({
-        hosts: 'localhost'
-      });
-
-      trans.createDefer().constructor.should.be.exactly(when.defer().constructor);
-    });
-    it('is overridden by the createDefer option', function () {
-      var when = require('when');
-      var trans = new Transport({
-        hosts: 'localhost',
-        createDefer: function () {
-          return 'pasta';
-        }
-      });
-
-      trans.createDefer().should.be.exactly('pasta');
     });
   });
 
@@ -445,48 +445,47 @@ describe('Transport Class', function () {
     });
 
     describe('gets a connection err', function () {
-      function testRetries(retries, done) {
-        var randomSelector = require('../../src/lib/selectors/random');
-        var connections;
-        var attempts = 0;
-        function failRequest(params, cb) {
-          attempts++;
-          process.nextTick(function () {
-            cb(new Error('Unable to do that thing you wanted'));
-          });
-        }
-
-        var trans = new Transport({
-          hosts: _.map(new Array(retries + 1), function (i) {
-            return 'localhost/' + i;
-          }),
-          maxRetries: retries,
-          selector: function (_conns) {
-            connections = _conns;
-            return randomSelector(_conns);
+      // create a test that checks N retries
+      function testRetries(retries) {
+        return function (done) {
+          var randomSelector = require('../../src/lib/selectors/random');
+          var connections;
+          var attempts = 0;
+          function failRequest(params, cb) {
+            attempts++;
+            process.nextTick(function () {
+              cb(new Error('Unable to do that thing you wanted'));
+            });
           }
-        });
 
-        // trigger a select so that we can harvest the connection list
-        trans.connectionPool.select(_.noop);
-        _.each(connections, function (conn) {
-          stub(conn, 'request', failRequest);
-        });
+          var trans = new Transport({
+            hosts: _.map(new Array(retries + 1), function (i) {
+              return 'localhost/' + i;
+            }),
+            maxRetries: retries,
+            selector: function (_conns) {
+              connections = _conns;
+              return randomSelector(_conns);
+            }
+          });
 
-        trans.request({}, function (err, resp, body) {
-          attempts.should.eql(retries + 1);
-          err.should.be.an.instanceOf(errors.ConnectionFault);
-          should.not.exist(resp);
-          should.not.exist(body);
-          done();
-        });
+          // trigger a select so that we can harvest the connection list
+          trans.connectionPool.select(_.noop);
+          _.each(connections, function (conn) {
+            stub(conn, 'request', failRequest);
+          });
+
+          trans.request({}, function (err, resp, body) {
+            attempts.should.eql(retries + 1);
+            err.should.be.an.instanceOf(errors.ConnectionFault);
+            should.not.exist(resp);
+            should.not.exist(body);
+            done();
+          });
+        };
       }
-      it('retries when there are retries remaining', function (done) {
-        testRetries(30, done);
-      });
-      it('responds when there are no retries', function (done) {
-        testRetries(0, done);
-      });
+      it('retries when there are retries remaining', testRetries(_.random(25, 40)));
+      it('responds when there are no retries', testRetries(0));
     });
 
     describe('server responds', function () {
@@ -505,16 +504,34 @@ describe('Transport Class', function () {
           .reply(500, 'ah shit')
 
           .get('/exists?')
-          .reply(200, '{"status":200}')
+          .reply(200, {
+            status: 200
+          })
 
           .get('/give-me-someth')
-          .reply(200, '{"not":"valid')
+          .reply(200, '{"not":"valid', {
+            'Content-Type': 'application/json'
+          })
 
           .get('/')
-          .reply(200, '{"the answer":42}')
+          .reply(200, {
+            'the answer': 42
+          })
 
           .get('/huh?')
-          .reply(530, 'boo');
+          .reply(530, 'boo')
+
+          .get('/hottie-threads')
+          .reply(200, [
+            'he said',
+            'she said',
+            'he said',
+            'she said',
+            'he said',
+            'she said'
+          ].join('\n'), {
+            'Content-Type': 'text/plain'
+          });
       });
 
       after(function () {
@@ -532,8 +549,8 @@ describe('Transport Class', function () {
           }, function (err, body, status) {
             err.should.be.an.instanceOf(errors[400]);
             err.should.be.an.instanceOf(errors.BadRequest);
-            should.not.exist(body);
-            should.not.exist(status);
+            body.should.eql('sorry bub');
+            status.should.eql(400);
             done();
           });
         });
@@ -568,8 +585,8 @@ describe('Transport Class', function () {
             }, function (err, body, status) {
               err.should.be.an.instanceOf(errors[404]);
               err.should.be.an.instanceOf(errors.NotFound);
-              should.not.exist(body);
-              should.not.exist(status);
+              body.should.eql('nothing here');
+              status.should.eql(404);
               done();
             });
           });
@@ -587,14 +604,14 @@ describe('Transport Class', function () {
           }, function (err, body, status) {
             err.should.be.an.instanceOf(errors[500]);
             err.should.be.an.instanceOf(errors.InternalServerError);
-            should.not.exist(body);
-            should.not.exist(status);
+            body.should.eql('ah shit');
+            status.should.eql(500);
             done();
           });
         });
       });
 
-      describe('with a 500 status code', function () {
+      describe('with a 530 status code', function () {
         it('passes back a Generic error', function (done) {
           var trans = new Transport({
             hosts: 'localhost'
@@ -604,8 +621,8 @@ describe('Transport Class', function () {
             path: '/huh?'
           }, function (err, body, status) {
             err.should.be.an.instanceOf(errors.Generic);
-            should.not.exist(body);
-            should.not.exist(status);
+            body.should.eql('boo');
+            status.should.eql(530);
             done();
           });
         });
@@ -639,8 +656,8 @@ describe('Transport Class', function () {
               path: '/give-me-someth',
             }, function (err, body, status) {
               err.should.be.an.instanceOf(errors.Serialization);
-              should.not.exist(body);
-              should.not.exist(status);
+              body.should.eql('{"not":"valid');
+              status.should.eql(200);
               done();
             });
           });
@@ -663,6 +680,22 @@ describe('Transport Class', function () {
           });
         });
       });
+
+      describe('with plain text', function () {
+        it('notices the content-type header and returns the text', function (done) {
+          var trans = new Transport({
+            hosts: 'localhost'
+          });
+
+          trans.request({
+            path: '/hottie-threads',
+          }, function (err, body, status) {
+            should.not.exist(err);
+            body.should.match(/s?he said/g);
+            done();
+          });
+        });
+      });
     });
 
     describe('return value', function () {
@@ -680,21 +713,43 @@ describe('Transport Class', function () {
         when.isPromise(ret).should.be.ok;
         ret.abort.should.have.type('function');
       });
-      it('the promise is always pulled from the defer created by this.createDefer()', function () {
+      it('promise is always pulled from the defer created by this.createDefer()', function () {
         var fakePromise = {};
-        var tran = new Transport({
-          createDefer: function () {
-            return {
-              resolve: _.noop,
-              reject: _.noop,
-              promise: fakePromise
-            };
-          }
-        });
+        var origCreate = Transport.createDefer;
+        Transport.createDefer = function () {
+          return {
+            resolve: _.noop,
+            reject: _.noop,
+            promise: fakePromise
+          };
+        };
+        var tran = new Transport({});
         shortCircuitRequest(tran);
         var ret = tran.request({});
+        Transport.createDefer = origCreate;
         ret.should.be.exactly(fakePromise);
         ret.abort.should.have.type('function');
+      });
+      it('resolves the promise it returns with an object containing status and body keys', function (done) {
+        var serverMock = nock('http://esbox.1.com')
+          .get('/')
+          .reply(200, {
+            good: 'day'
+          });
+
+        var tran = new Transport({
+          hosts: 'http://esbox.1.com'
+        });
+
+        tran.request({}).then(function (resp) {
+          resp.should.eql({
+            body: {
+              good: 'day'
+            },
+            status: 200
+          });
+          done();
+        });
       });
     });
 

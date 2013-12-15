@@ -128,7 +128,14 @@ Host.prototype.makeUrl = function (params) {
     query = qs.stringify(this.query);
   }
 
-  return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
+  var auth = '';
+  if (params.auth) {
+    auth = params.auth + '@';
+  } else if (this.auth) {
+    auth = this.auth + '@';
+  }
+
+  return this.protocol + '://' + auth + this.host + port + path + (query ? '?' + query : '');
 };
 
 Host.prototype.toString = function () {

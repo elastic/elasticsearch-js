@@ -68,8 +68,7 @@ module.exports = {
         ],
         log: {
           type: process.browser ? 'console' : 'stdio',
-          level: 'trace',
-          color: false
+          level: process.env.VERBOSE ? 'trace' : 'warning'
         }
       });
 

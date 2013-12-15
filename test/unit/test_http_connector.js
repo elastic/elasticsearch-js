@@ -188,7 +188,7 @@ describe('Http Connector', function () {
       });
     });
 
-    it('logs error events when an error occurs', function (done) {
+    it('does not log error events', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
 
       stub(con.log, 'error');
@@ -205,8 +205,8 @@ describe('Http Connector', function () {
         err.message.should.eql('actual error');
 
         // logged the error and the trace log
-        con.log.error.callCount.should.eql(1);
         con.log.trace.callCount.should.eql(1);
+        con.log.error.callCount.should.eql(0);
         con.log.info.callCount.should.eql(0);
         con.log.warning.callCount.should.eql(0);
         con.log.debug.callCount.should.eql(0);
@@ -227,9 +227,7 @@ describe('Http Connector', function () {
         err.message.should.eql('actual error');
 
         // logged the error
-        con.log.error.callCount.should.eql(1);
-        con.log.error.lastCall.args[0].message.should.eql('actual error');
-
+        con.log.error.callCount.should.eql(0);
         done();
       });
     });
@@ -250,13 +248,13 @@ describe('Http Connector', function () {
       });
     }
 
-    it('logs error event', function (done) {
+    it('does not log errors', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
       stub(con.log, 'error');
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
-        con.log.error.callCount.should.eql(1);
+        con.log.error.callCount.should.eql(0);
         done();
       });
     });

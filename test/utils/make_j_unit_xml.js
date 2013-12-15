@@ -29,6 +29,7 @@ var suites = testXml.create('testsuites');
 var suiteCount = 0;
 var moment = require('moment');
 var _ = require('lodash');
+var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
   _.each(testDetails.suites, function serializeSuite(suiteInfo) {
@@ -78,10 +79,10 @@ function makeJUnitXml(runnerName, testDetails) {
     }
 
     if (suiteInfo.stdout.trim()) {
-      suite.ele('system-out', {}).cdata(suiteInfo.stdout);
+      suite.ele('system-out', {}).cdata(chalk.stripColor(suiteInfo.stdout));
     }
     if (suiteInfo.stderr.trim()) {
-      suite.ele('system-err', {}).cdata(suiteInfo.stderr);
+      suite.ele('system-err', {}).cdata(chalk.stripColor(suiteInfo.stderr));
     }
   });
 

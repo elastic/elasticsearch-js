@@ -36,4 +36,5 @@ AngularConnector.prototype.request = function (params, cb) {
 
 // must be overwritten before this connection can be used
 AngularConnector.prototype.$http = null;
+// required in order to provide abort functionality
 AngularConnector.prototype.$q = null;

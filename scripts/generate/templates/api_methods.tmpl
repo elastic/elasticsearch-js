@@ -7,14 +7,12 @@ var actionId = action.name.toLowerCase().replace(/[^\w]+/g, '-');
 h2#<%= actionId %>.fn
   span.name <%= action.name %>
   span.args (params, [callback])
-a.perma(href="api.html#<%= actionId %>", title="Permalink")
-a.esdoc(href="<%= action.docUrl %>", title="Endpoint Docs")
-//-
-  h4 Spec:
-    pre
-      code <%= JSON.stringify(action, null, '  ').split('\n').map(function (line, i) {
-    return (i > 0 ? '      | ' : '') + line;
-  }).join('\n') %>
+include _descriptions/<%= action.name %>.jade
+a.esdoc(href="<%= action.docUrl %>", title="<%= action.name %> at elasticsearch.org").
+  <%= action.docUrl %>
+p.tight.
+  The default method is <code><%= action.spec.method || 'GET' %></code> and
+  the usual <a href="#api-conventions">params and return values</a> apply.
 
 <% if (_.size(action.allParams)) { %>
 h3 Params:
@@ -26,10 +24,6 @@ dl.params.api
 <%= indent(param.description || '', 4) %><%
 }); %>
 <% } %>
-p.
-  Default method: <%= action.spec.method || 'GET' %><br>
-  Includes <a href="#api-conventions-return">the usual</a>
-
 include _examples/<%= action.name %>.jade<%
 });
 %>
