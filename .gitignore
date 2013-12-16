@@ -12,4 +12,5 @@ test/integration/yaml_suite/yaml_tests.json
 test/browser_integration/yaml_tests.js
 junit-*.xml
 test.log
+elasticsearch.log
 coverage.html
