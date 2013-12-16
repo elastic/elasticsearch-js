@@ -11,6 +11,12 @@ describe('Client instances creation', function () {
     client = new es.Client();
   });
 
+  it('throws an error linking to the es module when you try to instanciate the exports', function () {
+    (function () {
+      var client = new es();
+    }).should.throw(/previous "elasticsearch" module/);
+  });
+
   it('inherits the api', function () {
     client.bulk.should.eql(api.bulk);
     client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);

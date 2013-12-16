@@ -21,6 +21,10 @@ function shortCircuitRequest(tran, delay) {
   });
 }
 
+function getConnection(transport, status) {
+  return transport.connectionPool.getConnections(status || 'alive', 1).pop();
+}
+
 describe('Transport Class', function () {
 
   describe('Constructor', function () {
@@ -333,7 +337,7 @@ describe('Transport Class', function () {
         var trans = new Transport({
           hosts: 'localhost'
         });
-        var conn = trans.connectionPool.getConnection();
+        var conn = getConnection(trans);
         var body = {
           _id: 'simple body',
           name: 'ഢധയമബ'
@@ -352,7 +356,7 @@ describe('Transport Class', function () {
         var trans = new Transport({
           hosts: 'localhost'
         });
-        var conn = trans.connectionPool.getConnection();
+        var conn = getConnection(trans);
         var body = [
           { _id: 'simple body'},
           { name: 'ഢധയമബ' }
@@ -378,7 +382,7 @@ describe('Transport Class', function () {
         var trans = new Transport({
           hosts: 'localhost'
         });
-        var conn = trans.connectionPool.getConnection();
+        var conn = getConnection(trans);
         var body = {
           _id: 'circular body'
         };
@@ -434,7 +438,7 @@ describe('Transport Class', function () {
         var trans = new Transport({
           hosts: 'localhost'
         });
-        var conn = trans.connectionPool.getConnection();
+        var conn = getConnection(trans);
 
         stub(conn, 'request', function () {
           done();
@@ -459,7 +463,7 @@ describe('Transport Class', function () {
           }
 
           var trans = new Transport({
-            hosts: _.map(new Array(retries + 1), function (i) {
+            hosts: _.map(new Array(retries + 1), function (val, i) {
               return 'localhost/' + i;
             }),
             maxRetries: retries,
@@ -759,7 +763,7 @@ describe('Transport Class', function () {
           host: 'localhost'
         });
 
-        var con = tran.connectionPool.getConnection();
+        var con = getConnection(tran);
         stub(con, 'request', function () {
           throw new Error('Request should not have been called.');
         });
@@ -772,7 +776,7 @@ describe('Transport Class', function () {
           host: 'localhost'
         });
 
-        var con = tran.connectionPool.getConnection();
+        var con = getConnection(tran);
         stub(con, 'request', function () {
           process.nextTick(function () {
             ret.abort();
@@ -789,7 +793,7 @@ describe('Transport Class', function () {
           host: 'localhost'
         });
 
-        var con = tran.connectionPool.getConnection();
+        var con = getConnection(tran);
         stub(con, 'request', function (params, cb) {
           cb();
         });

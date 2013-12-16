@@ -13,13 +13,17 @@ var _ = require('./utils');
 var Log = require('./log');
 
 function ConnectionPool(config) {
+  config = config || {};
   _.makeBoundMethods(this);
 
-  this.log = config.log;
-  if (!this.log) {
+  if (!config.log) {
     this.log = new Log();
+    config.log = this.log;
+  } else {
+    this.log = config.log;
   }
 
+  // we will need this when we create connections down the road
   this._config = config;
 
   // get the selector config var
@@ -29,6 +33,11 @@ function ConnectionPool(config) {
   this.Connection = _.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
     ConnectionPool.defaultConnectionClass);
 
+  // time that connections will wait before being revived
+  this.deadTimeout = config.hasOwnProperty('deadTimeout') ? config.deadTimeout : 60000;
+  this.maxDeadTimeout = config.hasOwnProperty('maxDeadTimeout') ? config.maxDeadTimeout : 18e5;
+  this.calcDeadTimeout = _.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
+
   // a map of connections to their "id" property, used when sniffing
   this.index = {};
 
@@ -36,6 +45,9 @@ function ConnectionPool(config) {
     alive: [],
     dead: []
   };
+
+  // information about timeouts for dead connections
+  this._timeouts = [];
 }
 
 // selector options
@@ -46,6 +58,16 @@ ConnectionPool.defaultSelector = 'roundRobin';
 ConnectionPool.connectionClasses = require('./connectors');
 ConnectionPool.defaultConnectionClass = ConnectionPool.connectionClasses._default;
 delete ConnectionPool.connectionClasses._default;
+
+// the function that calculates timeouts based on attempts
+ConnectionPool.calcDeadTimeoutOptions = {
+  flat: function (attempt, baseTimeout) {
+    return baseTimeout;
+  },
+  exponential: function (attempt, baseTimeout) {
+    return Math.min(baseTimeout * 2 * Math.pow(2, (attempt * 0.5 - 1)), this.maxDeadTimeout);
+  }
+};
 
 /**
  * Selects a connection from the list using the this.selector
@@ -69,73 +91,177 @@ ConnectionPool.prototype.select = function (cb) {
         cb(e);
       }
     }
+  } else if (this._timeouts.length) {
+    this._selectDeadConnection(cb);
   } else {
-    _.nextTick(cb, null, this.getConnection());
+    _.nextTick(cb, null);
   }
 };
 
+/**
+ * Handler for the "set status" event emitted but the connections. It will move
+ * the connection to it's proper connection list (unless it was closed).
+ *
+ * @param  {String} status - the connection's new status
+ * @param  {String} oldStatus - the connection's old status
+ * @param  {ConnectionAbstract} connection - the connection object itself
+ */
 ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, connection) {
-  var from, to, index;
+  var index;
 
-  if (oldStatus === status) {
-    if (status === 'dead') {
-      // we want to remove the connection from it's current possition and move it to the end
-      status = 'redead';
-    } else {
-      return true;
+  var died = (status === 'dead');
+  var wasAlreadyDead = (died && oldStatus === 'dead');
+  var revived = (!died && oldStatus === 'dead');
+  var noChange = (oldStatus === status);
+  var from = this._conns[oldStatus];
+  var to = this._conns[status];
+
+  if (noChange && !died) {
+    return true;
+  }
+
+  if (from !== to) {
+    if (_.isArray(from)) {
+      index = from.indexOf(connection);
+      if (index !== -1) {
+        from.splice(index, 1);
+      }
+    }
+
+    if (_.isArray(to)) {
+      index = to.indexOf(connection);
+      if (index === -1) {
+        to.push(connection);
+      }
     }
   }
 
-  switch (status) {
-  case 'alive':
-    from = this._conns.dead;
-    to = this._conns.alive;
-    break;
-  case 'dead':
-    from = this._conns.alive;
-    to = this._conns.dead;
-    break;
-  case 'redead':
-    from = this._conns.dead;
-    to = this._conns.dead;
-    break;
-  case 'closed':
-    from = this._conns[oldStatus];
-    break;
+  if (died) {
+    this._onConnectionDied(connection, wasAlreadyDead);
   }
 
-  if (from && from.indexOf) {
-    index = from.indexOf(connection);
-    if (~index) {
-      from.splice(index, 1);
-    }
-  }
-
-  if (to && to.indexOf) {
-    index = to.indexOf(connection);
-    if (!~index) {
-      to.push(connection);
-    }
+  if (revived) {
+    this._onConnectionRevived(connection);
   }
 });
 
 /**
- * Fetches the first active connection, falls back to dead connections
- * This is really only here for testing purposes
- *
- * @private
- * @return {Connection} - Some connection
+ * Handler used to clear the times created when a connection dies
+ * @param  {ConnectionAbstract} connection
  */
-ConnectionPool.prototype.getConnection = function () {
-  if (this._conns.alive.length) {
-    return this._conns.alive[0];
-  }
-
-  if (this._conns.dead.length) {
-    return this._conns.dead[0];
+ConnectionPool.prototype._onConnectionRevived = function (connection) {
+  var timeout;
+  for (var i = 0; i < this._timeouts.length; i++)  {
+    if (this._timeouts[i].conn === connection) {
+      timeout = this._timeouts[i];
+      if (timeout.id) {
+        clearTimeout(timeout.id);
+      }
+      this._timeouts.splice(i, 1);
+      break;
+    }
   }
 };
 
+/**
+ * Handler used to update or create a timeout for the connection which has died
+ * @param  {ConnectionAbstract} connection
+ * @param  {Boolean} alreadyWasDead - If the connection was preivously dead this must be set to true
+ */
+ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
+  var timeout;
+  if (alreadyWasDead) {
+    for (var i = 0; i < this._timeouts.length; i++)  {
+      if (this._timeouts[i].conn === connection) {
+        timeout = this._timeouts[i];
+        break;
+      }
+    }
+  } else {
+    timeout = {
+      conn: connection,
+      attempt: 0,
+      revive: function (cb) {
+        timeout.attempt++;
+        connection.ping(function (err) {
+          connection.setStatus(err ? 'dead' : 'alive');
+          if (cb && typeof cb === 'function') {
+            cb(err);
+          }
+        });
+      }
+    };
+    this._timeouts.push(timeout);
+  }
+
+  if (timeout.id) {
+    clearTimeout(timeout.id);
+  }
+
+  var ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
+  timeout.id = setTimeout(timeout.revive, ms);
+  timeout.runAt = Date.now() + ms;
+};
+
+ConnectionPool.prototype._selectDeadConnection = function (cb) {
+  var orderedTimeouts = _.sortBy(this._timeouts, 'runAt');
+  var log = this.log;
+
+  process.nextTick(function next() {
+    var timeout = orderedTimeouts.shift();
+    if (!timeout) {
+      cb(null);
+      return;
+    }
+
+    if (!timeout.conn) {
+      next();
+      return;
+    }
+
+    if (timeout.conn.status === 'dead') {
+      timeout.revive(function (err) {
+        if (err) {
+          log.warning('Unable to revive connection: ' + timeout.conn.id);
+          process.nextTick(next);
+        } else {
+          cb(null, timeout.conn);
+        }
+      });
+    } else {
+      cb(null, timeout.conn);
+    }
+  });
+};
+
+/**
+ * Returns a random list of nodes from the living connections up to the limit.
+ * If there are no living connections it will fall back to the dead connections.
+ * If there are no dead connections it will return nothing.
+ *
+ * This is used for testing (when we just want the one existing node)
+ * and sniffing, where using the selector to get all of the living connections
+ * is not reasonable.
+ *
+ * @param {Number} limit - Max number to return
+ */
+ConnectionPool.prototype.getConnections = function (status, limit) {
+  var list;
+  if (status) {
+    list = this._conns[status];
+  } else {
+    list = this._conns[this._conns.alive.length ? 'alive' : 'dead'];
+  }
+
+  return _.shuffle(list).slice(0, typeof limit === 'undefined' ? list.length : limit);
+};
+
+/**
+ * Add a single connection to the pool and change it's status to "alive".
+ * The connection should inherit from ConnectionAbstract
+ *
+ * @param {ConnectionAbstract} connection - The connection to add
+ */
 ConnectionPool.prototype.addConnection = function (connection) {
   if (!connection.id) {
     connection.id = connection.host.toString();
@@ -149,6 +275,11 @@ ConnectionPool.prototype.addConnection = function (connection) {
   }
 };
 
+/**
+ * Remove a connection from the pool, and set it's status to "closed".
+ *
+ * @param  {ConnectionAbstract} connection - The connection to remove/close
+ */
 ConnectionPool.prototype.removeConnection = function (connection) {
   if (!connection.id) {
     connection.id = connection.host.toString();
@@ -161,6 +292,12 @@ ConnectionPool.prototype.removeConnection = function (connection) {
   }
 };
 
+/**
+ * Override the internal node list. All connections that are not in the new host
+ * list are closed and removed. Non-unique hosts are ignored.
+ *
+ * @param {Host[]} hosts - An array of Host instances.
+ */
 ConnectionPool.prototype.setHosts = function (hosts) {
   var connection;
   var i;
@@ -186,6 +323,9 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   }
 };
 
+/**
+ * Close the conncetion pool, as well as all of it's connections
+ */
 ConnectionPool.prototype.close = function () {
   this.setHosts([]);
 };

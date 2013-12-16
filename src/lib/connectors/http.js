@@ -137,7 +137,6 @@ HttpConnector.prototype.request = function (params, cb) {
   } else {
     request.end();
   }
-  this.requestCount++;
 
   return function () {
     request.abort();

@@ -255,10 +255,13 @@ Transport.prototype.request = function (params, cb) {
   requestTimeout = params.hasOwnProperty('requestTimeout') ? params.requestTimeout : this.requestTimeout;
 
   if (requestTimeout && requestTimeout !== Infinity) {
-    requestTimeoutId = setTimeout(function () {
-      respond(new errors.RequestTimeout());
-      abortRequest();
-    }, requestTimeout);
+    requestTimeout = parseInt(requestTimeout, 10);
+    if (!isNaN(requestTimeout)) {
+      requestTimeoutId = setTimeout(function () {
+        respond(new errors.RequestTimeout('Request Timeout after ' + requestTimeout + 'ms'));
+        abortRequest();
+      }, requestTimeout);
+    }
   }
 
   // determine the response based on the presense of a callback
@@ -272,7 +275,12 @@ Transport.prototype.request = function (params, cb) {
     request.abort = abortRequest;
   }
 
-  self.connectionPool.select(sendReqWithConnection);
+
+  if (connection) {
+    sendReqWithConnection(null, connection);
+  } else {
+    self.connectionPool.select(sendReqWithConnection);
+  }
 
   return request;
 };

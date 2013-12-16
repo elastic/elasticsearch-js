@@ -8,12 +8,9 @@ var stub = require('./auto_release_stub').make();
 describe('Connection Abstract', function () {
   var host = new Host('localhost:9200');
 
-  it('constructs with defaults for deadTimeout, requestCount, host, and bound', function () {
+  it('constructs with defaults for host, and bound', function () {
     var conn = new ConnectionAbstract(host);
-    conn.deadTimeout.should.eql(30000);
-    conn.requestCount.should.eql(0);
     conn.host.should.be.exactly(host);
-    conn.bound.should.have.properties('resuscitate');
   });
 
   it('requires a valid host', function () {
@@ -34,21 +31,50 @@ describe('Connection Abstract', function () {
   });
 
   describe('#ping', function () {
-    it('requires a callback', function () {
-      (function () {
-        (new ConnectionAbstract(host)).ping();
-      }).should.throw(TypeError);
+    it('accpets just a callback', function () {
+      var conn = new ConnectionAbstract(host);
+      stub(conn, 'request');
+      var cb = function () {};
+      conn.ping(cb);
+      conn.request.callCount.should.eql(1);
+      conn.request.lastCall.args[0].should.have.type('object');
+      conn.request.lastCall.args[1].should.have.type('function');
+    });
+
+    it('accpets just params', function () {
+      var conn = new ConnectionAbstract(host);
+      stub(conn, 'request');
+      conn.ping({});
+      conn.request.callCount.should.eql(1);
+      conn.request.lastCall.args[0].should.have.type('object');
+      conn.request.lastCall.args[1].should.have.type('function');
+    });
+
+    it('allows overriding the requestTimeout, method, and path', function () {
+      var conn = new ConnectionAbstract(host);
+      stub(conn, 'request');
+      var params = {
+        method: 'HEAD',
+        path: '/',
+        requestTimeout: 10000
+      };
+      conn.ping(params);
+      conn.request.callCount.should.eql(1);
+      conn.request.lastCall.args[0].should.include(params);
+      conn.request.lastCall.args[1].should.have.type('function');
     });
 
     it('calls it\'s own request method', function () {
       var conn = new ConnectionAbstract(host);
       var football = {};
-      conn.request = function () {
-        return football;
-      };
-
-      conn.ping(function () {}).should.be.exactly(football);
+      stub(conn, 'request');
+      conn.ping();
+      conn.request.callCount.should.eql(1);
     });
+
+    it('sets a timer for the request');
+    it('aborts the request if it takes too long');
+    it('ignores the response from the request if it already aborted');
   });
 
   describe('#setStatus', function () {
@@ -75,79 +101,79 @@ describe('Connection Abstract', function () {
       conn.status.should.eql('closed');
     });
 
-    it('sets a timeout when set to dead, and removed when alive', function () {
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
-      stub.autoRelease(clock);
-      var conn = new ConnectionAbstract(host);
+    // it('sets a timeout when set to dead, and removed when alive', function () {
+    //   var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+    //   stub.autoRelease(clock);
+    //   var conn = new ConnectionAbstract(host);
 
-      var start = _.size(clock.timeouts);
-      conn.setStatus('dead');
-      _.size(clock.timeouts).should.be.eql(start + 1);
+    //   var start = _.size(clock.timeouts);
+    //   conn.setStatus('dead');
+    //   _.size(clock.timeouts).should.be.eql(start + 1);
 
-      conn.setStatus('alive');
-      _.size(clock.timeouts).should.eql(start);
-      clock.restore();
-    });
+    //   conn.setStatus('alive');
+    //   _.size(clock.timeouts).should.eql(start);
+    //   clock.restore();
+    // });
 
   });
 
-  describe('#resuscitate', function () {
-    it('should not ping the connection unless it is still dead', function () {
-      var conn = new ConnectionAbstract(host);
+  // describe('#resuscitate', function () {
+  //   it('should not ping the connection unless it is still dead', function () {
+  //     var conn = new ConnectionAbstract(host);
 
-      conn.setStatus('alive');
-      stub(conn, 'ping', function () {
-        throw new Error('ping should not have been called');
-      });
+  //     conn.setStatus('alive');
+  //     stub(conn, 'ping', function () {
+  //       throw new Error('ping should not have been called');
+  //     });
 
-      conn.resuscitate();
-    });
+  //     conn.resuscitate();
+  //   });
 
-    it('should ping the connection after the deadTimeout, and set the status to "alive" on pong', function (done) {
-      var conn = new ConnectionAbstract(host);
-      var clock;
-      stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
+  //   it('should ping the connection after the deadTimeout, and set the status to "alive" on pong', function (done) {
+  //     var conn = new ConnectionAbstract(host);
+  //     var clock;
+  //     stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
 
-      // schedules the resuscitate
-      conn.setStatus('dead');
+  //     // schedules the resuscitate
+  //     conn.setStatus('dead');
 
-      // override the ping method to just callback without an error
-      stub(conn, 'ping', function (cb) {
-        cb();
-      });
+  //     // override the ping method to just callback without an error
+  //     stub(conn, 'ping', function (cb) {
+  //       cb();
+  //     });
 
-      // will be called after the ping calls back
-      stub(conn, 'setStatus', function (status) {
-        status.should.eql('alive');
-        done();
-      });
+  //     // will be called after the ping calls back
+  //     stub(conn, 'setStatus', function (status) {
+  //       status.should.eql('alive');
+  //       done();
+  //     });
 
-      // fast forward the clock
-      clock.tick(conn.deadTimeout);
-    });
+  //     // fast forward the clock
+  //     clock.tick(conn.deadTimeout);
+  //   });
 
-    it('should ping the connection after the deadTimeout, and set the status to "dead" on error', function (done) {
-      var conn = new ConnectionAbstract(host);
-      var clock;
-      stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
+  //   it('should ping the connection after the deadTimeout, and set the status to "dead" on error', function (done) {
+  //     var conn = new ConnectionAbstract(host);
+  //     var clock;
+  //     stub.autoRelease(clock = sinon.useFakeTimers('setTimeout', 'clearTimeout'));
 
-      // schedules the resuscitate
-      conn.setStatus('dead');
+  //     // schedules the resuscitate
+  //     conn.setStatus('dead');
 
-      // override the ping method to just callback without an error
-      stub(conn, 'ping', function (cb) {
-        cb(new Error('server still down'));
-      });
+  //     // override the ping method to just callback without an error
+  //     stub(conn, 'ping', function (cb) {
+  //       cb(new Error('server still down'));
+  //     });
 
-      // will be called after the ping calls back
-      stub(conn, 'setStatus', function (status) {
-        status.should.eql('dead');
-        done();
-      });
+  //     // will be called after the ping calls back
+  //     stub(conn, 'setStatus', function (status) {
+  //       status.should.eql('dead');
+  //       done();
+  //     });
 
-      // fast forward the clock
-      clock.tick(conn.deadTimeout);
-    });
-  });
+  //     // fast forward the clock
+  //     clock.tick(conn.deadTimeout);
+  //   });
+  // });
 
 });

@@ -232,13 +232,12 @@ function exec(transport, spec, params, cb) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
       case 'body':
-        request.body = params[key];
+      case 'requestTimeout':
+      case 'maxRetries':
+        request[key] = params[key];
         break;
       case 'ignore':
         request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
-        break;
-      case 'requestTimeout':
-        request.requestTimeout = params[key];
         break;
       case 'method':
         request.method = _.toUpperString(params[key]);

@@ -4,11 +4,7 @@ var _ = require('./utils');
 var EventEmitter = require('events').EventEmitter;
 var Log = require('./log');
 var Host = require('./host');
-
-var defaults = {
-  deadTimeout: 30000,
-  requestTimeout: 10000
-};
+var errors = require('./errors');
 
 /**
  * Abstract class used for Connection classes
@@ -16,14 +12,10 @@ var defaults = {
  * @constructor
  */
 function ConnectionAbstract(host, config) {
+  config = config || {};
   EventEmitter.call(this);
 
-  config = _.defaults(config || {}, defaults);
-
-  this.deadTimeout = config.deadTimeout;
-  this.requestTimeout = config.requestTimeout;
-  this.requestCount = 0;
-
+  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
   this.log = config.log || new Log();
 
   if (!host) {
@@ -52,31 +44,52 @@ ConnectionAbstract.prototype.request = function () {
   throw new Error('Connection#request must be overwritten by the Connector');
 };
 
-ConnectionAbstract.prototype.ping = function (cb) {
-  if (typeof cb !== 'function') {
-    throw new TypeError('Callback must be a function');
+ConnectionAbstract.prototype.ping = function (params, cb) {
+  if (typeof params === 'function') {
+    cb = params;
+    params = null;
+  } else {
+    cb = typeof cb === 'function' ? cb : null;
   }
 
-  return this.request({
+  var requestTimeout = 100;
+  var requestTimeoutId;
+  var aborted;
+  var abort;
+
+  if (params && params.hasOwnProperty('requestTimeout')) {
+    requestTimeout = params.requestTimeout;
+  }
+
+  abort = this.request(_.defaults(params || {}, {
     path: '/',
-    method: 'HEAD',
-    requestTimeout: 100
-  }, cb);
+    method: 'HEAD'
+  }), function (err) {
+    if (aborted) {
+      return;
+    }
+    clearTimeout(requestTimeoutId);
+    if (cb) {
+      cb(err);
+    }
+  });
+
+  if (requestTimeout) {
+    requestTimeoutId = setTimeout(function () {
+      if (abort) {
+        abort();
+      }
+      aborted = true;
+      if (cb) {
+        cb(new errors.RequestTimeout('Ping Timeout after ' + requestTimeout + 'ms'));
+      }
+    }, requestTimeout);
+  }
 };
 
 ConnectionAbstract.prototype.setStatus = function (status) {
   var origStatus = this.status;
-
   this.status = status;
-
-  if (this._deadTimeoutId) {
-    clearTimeout(this._deadTimeoutId);
-    this._deadTimeoutId = null;
-  }
-
-  if (status === 'dead') {
-    this._deadTimeoutId = setTimeout(this.bound.resuscitate, this.deadTimeout);
-  }
 
   this.emit('status set', status, origStatus, this);
 
@@ -84,17 +97,3 @@ ConnectionAbstract.prototype.setStatus = function (status) {
     this.removeAllListeners();
   }
 };
-
-ConnectionAbstract.prototype.resuscitate = _.scheduled(function () {
-  var self = this;
-
-  if (self.status === 'dead') {
-    self.ping(function (err) {
-      if (!err) {
-        self.setStatus('alive');
-      } else {
-        self.setStatus('dead');
-      }
-    });
-  }
-});

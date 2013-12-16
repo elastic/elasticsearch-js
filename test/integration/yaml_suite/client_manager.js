@@ -36,7 +36,9 @@ module.exports = {
       }
     } else if (externalExists === void 0) {
       doCreateClient(function () {
-        client.ping(function (err) {
+        client.ping({
+          requestTimeout: 1000
+        }, function (err) {
           if (err instanceof es.errors.ConnectionFault) {
             externalExists = false;
             create(done);

@@ -6,10 +6,12 @@ module.exports = {
       'grunt/**/*.js',
       'Gruntfile.js'
     ],
-    interrupt: true,
     tasks: [
       // 'jshint',
       'run:unit_tests'
-    ]
+    ],
+    options: {
+      interrupt: true,
+    }
   }
 };

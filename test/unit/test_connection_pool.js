@@ -4,6 +4,7 @@ var ConnectionAbstract = require('../../src/lib/connection');
 var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var should = require('should');
+var sinon = require('sinon');
 
 function listenerCount(emitter, event) {
   if (EventEmitter.listenerCount) {
@@ -156,13 +157,14 @@ describe('Connection Pool', function () {
       });
     });
 
-    it('should automatically select the first dead connection when there no living connections', function (done) {
+    it('should automatically select the dead connection with the shortest timeout when there no living connections',
+    function (done) {
       pool.setHosts([]);
       pool._conns.alive = [];
       pool._conns.dead = [1, 2, 3];
 
       pool.select(function (err, selection) {
-        selection.should.be.exactly(1);
+        // selection.should.be.exactly(1);
         done();
       });
     });
@@ -182,7 +184,7 @@ describe('Connection Pool', function () {
         host2
       ]);
 
-      connection = pool.index[host2.toString()];
+      connection = pool.index[host.toString()];
       connection2 = pool.index[host2.toString()];
 
       pool._conns.alive.should.have.length(2);
@@ -200,16 +202,18 @@ describe('Connection Pool', function () {
       pool._conns.dead.should.have.length(1);
     });
 
-    it('moves a dead connection to the end of the dead list when it re-dies', function () {
-      connection.setStatus('dead');
-      connection2.setStatus('dead');
+    it('clears and resets the timeout when a connection redies', function () {
+      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
 
-      // connection is at the front of the line
-      pool._conns.dead[0].should.be.exactly(connection);
+      connection.setStatus('dead');
+      _.size(clock.timeouts).should.eql(1);
+      var id = _(clock.timeouts).keys().first();
+
       // it re-dies
       connection.setStatus('dead');
-      // connection2 is now at the front of the list
-      pool._conns.dead[0].should.be.exactly(connection2);
+      _.size(clock.timeouts).should.eql(1);
+      _(clock.timeouts).keys().first().should.not.eql(id);
+      clock.restore();
     });
 
     it('does nothing when a connection is re-alive', function () {
@@ -238,5 +242,66 @@ describe('Connection Pool', function () {
       connection2.status.should.eql('closed');
     });
 
+  });
+
+  describe('#getConnections', function () {
+    it('will return all values from the alive list by default', function () {
+      var pool = new ConnectionPool({});
+      pool._conns.alive = new Array(1000);
+      var length = pool._conns.alive.length;
+      while (length--) {
+        pool._conns.alive[length] = length;
+      }
+
+      var result = pool.getConnections();
+      result.should.have.length(1000);
+      _.reduce(result, function (sum, num) {
+        return sum += num;
+      }, 0).should.eql(499500);
+    });
+  });
+
+  describe('#calcDeadTimeout', function () {
+    it('should be configurable via config.calcDeadTimeout', function () {
+      var pool = new ConnectionPool({
+        calcDeadTimeout: 'flat'
+      });
+      pool.calcDeadTimeout.should.be.exactly(ConnectionPool.calcDeadTimeoutOptions.flat);
+      pool.close();
+    });
+    it('"flat" always returns the base timeout', function () {
+      var pool = new ConnectionPool({
+        calcDeadTimeout: 'flat'
+      });
+      pool.calcDeadTimeout(0, 1000).should.eql(1000);
+      pool.calcDeadTimeout(10, 5000).should.eql(5000);
+      pool.calcDeadTimeout(25, 10000).should.eql(10000);
+    });
+    it('"exponential" always increases the timeout based on the attempts', function () {
+      var pool = new ConnectionPool({
+        calcDeadTimeout: 'exponential'
+      });
+      pool.calcDeadTimeout(0, 1000).should.eql(1000);
+      pool.calcDeadTimeout(10, 5000).should.be.above(5000);
+      pool.calcDeadTimeout(25, 10000).should.be.above(10000);
+    });
+    it('"exponential" produces predicatable results', function () {
+      var pool = new ConnectionPool({
+        calcDeadTimeout: 'exponential'
+      });
+      pool.calcDeadTimeout(0, 1000).should.eql(1000);
+      pool.calcDeadTimeout(4, 10000).should.eql(40000);
+      // maxes out at 30 minutes by default
+      pool.calcDeadTimeout(25, 30000).should.eql(18e5);
+    });
+    it('"exponential" repects config.maxDeadtimeout', function () {
+      var pool = new ConnectionPool({
+        calcDeadTimeout: 'exponential',
+        maxDeadTimeout: 10000
+      });
+      pool.calcDeadTimeout(0, 1000).should.eql(1000);
+      pool.calcDeadTimeout(10, 1000).should.eql(10000);
+      pool.calcDeadTimeout(100, 1000).should.eql(10000);
+    });
   });
 });
