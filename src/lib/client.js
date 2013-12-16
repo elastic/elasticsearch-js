@@ -31,11 +31,18 @@ var ca = require('./client_action');
 var Transport = require('./transport');
 
 function Client(config) {
+  if (!(this instanceof Client)) {
+    return new Client(config);
+  }
   config = config || {};
 
   // our client will log minimally by default
   if (!config.hasOwnProperty('log')) {
     config.log = 'warning';
+  }
+
+  if (!config.hosts && !config.host) {
+    config.host = 'http://localhost:9200';
   }
 
   this.transport = new Transport(config);

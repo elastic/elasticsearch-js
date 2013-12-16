@@ -100,6 +100,9 @@ Transport.createDefer = function () {
  * @todo abort
  * @todo access to custom headers, modifying of request in general
  * @param {object} params
+ * @param {Number} params.requestTimeout - timeout for the entire request (inculding all retries)
+ * @param {Number} params.maxRetries - number of times the request will be re-run in
+ *   the original node chosen can not be connected to.
  * @param {String} params.url - The url for the request
  * @param {String} params.method - The HTTP method for the request
  * @param {String} params.body - The body of the HTTP request
@@ -109,12 +112,13 @@ Transport.prototype.request = function (params, cb) {
 
   var self = this;
   var remainingRetries = this.maxRetries;
+  var requestTimeout = this.requestTimeout;
+
   var connection; // set in sendReqWithConnection
   var aborted = false; // several connector will respond with an error when the request is aborted
   var requestAborter; // an abort function, returned by connection#request()
-  var requestTimeout; // the general timeout for the total request (inculding all retries)
   var requestTimeoutId; // the id of the ^timeout
-  var request; // the object returned to the user, might be a promise
+  var ret; // the object returned to the user, might be a promise
   var defer; // the defer object, will be set when we are using promises.
 
   self.log.debug('starting request', params);
@@ -127,6 +131,14 @@ Transport.prototype.request = function (params, cb) {
   // serialize the body
   if (params.body) {
     params.body = self.serializer[params.bulkBody ? 'bulkBody' : 'serialize'](params.body);
+  }
+
+  if (params.hasOwnProperty('maxRetries')) {
+    remainingRetries = params.maxRetries;
+  }
+
+  if (params.hasOwnProperty('requestTimeout')) {
+    requestTimeout = params.requestTimeout;
   }
 
   params.req = {
@@ -251,28 +263,22 @@ Transport.prototype.request = function (params, cb) {
     }
   }
 
-  // set the requestTimeout
-  requestTimeout = params.hasOwnProperty('requestTimeout') ? params.requestTimeout : this.requestTimeout;
-
   if (requestTimeout && requestTimeout !== Infinity) {
-    requestTimeout = parseInt(requestTimeout, 10);
-    if (!isNaN(requestTimeout)) {
-      requestTimeoutId = setTimeout(function () {
-        respond(new errors.RequestTimeout('Request Timeout after ' + requestTimeout + 'ms'));
-        abortRequest();
-      }, requestTimeout);
-    }
+    requestTimeoutId = setTimeout(function () {
+      respond(new errors.RequestTimeout('Request Timeout after ' + requestTimeout + 'ms'));
+      abortRequest();
+    }, requestTimeout);
   }
 
   // determine the response based on the presense of a callback
   if (typeof cb === 'function') {
-    request = {
+    ret = {
       abort: abortRequest
     };
   } else {
     defer = Transport.createDefer();
-    request = defer.promise;
-    request.abort = abortRequest;
+    ret = defer.promise;
+    ret.abort = abortRequest;
   }
 
 
@@ -282,7 +288,7 @@ Transport.prototype.request = function (params, cb) {
     self.connectionPool.select(sendReqWithConnection);
   }
 
-  return request;
+  return ret;
 };
 
 

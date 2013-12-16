@@ -22,9 +22,10 @@ AngularConnector.prototype.request = function (params, cb) {
     url: this.host.makeUrl(params),
     data: params.body,
     cache: false,
-    timeout: abort.promise
+    transformRequest: [],
+    transformResponse: []
   }).then(function (response) {
-    cb(null, response.data, response.status, response.headers);
+    cb(null, response.data, response.status, response.headers());
   }, function (err) {
     cb(new ConnectionFault(err.message));
   });

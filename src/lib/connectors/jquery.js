@@ -7,12 +7,21 @@
  */
 module.exports = JqueryConnector;
 
-function JqueryConnector() {}
+var _ = require('../utils');
+var ConnectionAbstract = require('../connection');
+var ConnectionFault = require('../errors').ConnectionFault;
+
+function JqueryConnector(host, config) {
+  ConnectionAbstract.call(this, host, config);
+}
+_.inherits(JqueryConnector, ConnectionAbstract);
 
 JqueryConnector.prototype.request = function (params, cb) {
   var ajax = {
+    url: this.host.makeUrl(params),
     data: params.body,
-    dataType: 'json',
+    method: params.method,
+    dataType: 'text',
     headers: params.headers,
     done: cb
   };
@@ -23,10 +32,16 @@ JqueryConnector.prototype.request = function (params, cb) {
     ajax.password = auths[1];
   }
 
-  var jqXhr = jQuery.ajax(ajax);
+  var jqXHR = jQuery.ajax(ajax)
+    .done(function (data, textStatus, jqXHR) {
+      cb(null, data, jqXHR.statusCode(), jqXHR.getAllResponseHeaders());
+    })
+    .fail(function (jqXHR, textStatus, err) {
+      cb(new ConnectionFault(err && err.message));
+    });
 
   return function () {
-    jqXhr.abort();
+    jqXHR.abort();
   };
 };
 
