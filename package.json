@@ -4,6 +4,7 @@
     "company": "Elasticsearch BV"
   },
   "name": "elasticsearch",
+  "decription":"The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
   "homepage": "https://github.com/elasticsearch/elasticsearch-js",
   "version": "1.0.0",
