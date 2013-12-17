@@ -6,7 +6,7 @@
   "name": "elasticsearch",
   "main": "src/elasticsearch.js",
   "homepage": "https://github.com/elasticsearch/elasticsearch-js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
