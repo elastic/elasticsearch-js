@@ -5,7 +5,7 @@ The official low-level Elasticsearch client for Node.js and the browser.
 ## Features
 
  - One-to-one mapping with REST API and the other official clients
- - Generalized, pluggable architecture. See [Extending Core Components](http://spenceralger.github.io/elasticsearch-js/index.html#extending)
+ - Generalized, pluggable architecture. See [Extending Core Components](http://elasticsearch.github.io/elasticsearch-js/index.html#extending)
  - Configurable, automatic discovery of cluster nodes
  - Persistent, Keep-Alive connections
  - Load balancing (with pluggable selection strategy) across all available nodes.
@@ -24,12 +24,12 @@ We also provide builds of the elasticsearch.js client for use in the browser. If
  - master: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/master/elasticsearch-js.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/master/elasticsearch-js.tar.gz)
 
 ## Docs
- - [Quick Start](http://spenceralger.github.io/elasticsearch-js/index.html#quick-start)
- - [API](http://spenceralger.github.io/elasticsearch-js/api.html)
- - [Configuration](http://spenceralger.github.io/elasticsearch-js/index.html#configuration)
- - [Development/Contributing](http://spenceralger.github.io/elasticsearch-js/index.html#dev)
- - [Extending Core Components](http://spenceralger.github.io/elasticsearch-js/index.html#extending)
- - [Logging](http://spenceralger.github.io/elasticsearch-js/index.html#logging)
+ - [Quick Start](http://elasticsearch.github.io/elasticsearch-js/index.html#quick-start)
+ - [API](http://elasticsearch.github.io/elasticsearch-js/api.html)
+ - [Configuration](http://elasticsearch.github.io/elasticsearch-js/index.html#configuration)
+ - [Development/Contributing](http://elasticsearch.github.io/elasticsearch-js/index.html#dev)
+ - [Extending Core Components](http://elasticsearch.github.io/elasticsearch-js/index.html#extending)
+ - [Logging](http://elasticsearch.github.io/elasticsearch-js/index.html#logging)
 
 ## License
 

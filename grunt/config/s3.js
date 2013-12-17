@@ -21,7 +21,7 @@ module.exports = {
     upload: [
       {
         src: '<%= distDir %>/archives/*',
-        dest: 'elasticsearch/elasticsearch-js/latest'
+        dest: 'elasticsearch/elasticsearch-js/master'
       }
     ]
   },

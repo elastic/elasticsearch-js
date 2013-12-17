@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('check_for_confirmation', function () {
     if (grunt.config.get('confirm.release')) {
-      grunt.verbose.log('release confirmed');
+      grunt.log.verbose.writeln('release confirmed');
     } else {
       throw new Error('Aborting release');
     }
