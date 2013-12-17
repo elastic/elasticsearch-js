@@ -6,8 +6,6 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
   While developing, be sure to run JSHint on the files you modify. This is simple with most IDE's and the project has .jshintrc files in the proper places, make sure jshint is using them.
 
-  We use the `"white": true` jshint config option to enforce style, but the
-
 2. Write tests
 
   Please write test cases to exercise your changes.
