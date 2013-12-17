@@ -33,6 +33,10 @@ function Transport(config) {
   // setup requestTimeout default
   this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
 
+  if (config.hasOwnProperty('defer')) {
+    this.defer = config.defer;
+  }
+
   // randomizeHosts option
   var randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
 
@@ -88,7 +92,7 @@ Transport.nodesToHostCallbacks = {
   main: require('./nodes_to_host')
 };
 
-Transport.createDefer = function () {
+Transport.prototype.defer = function () {
   return when.defer();
 };
 
@@ -276,7 +280,7 @@ Transport.prototype.request = function (params, cb) {
       abort: abortRequest
     };
   } else {
-    defer = Transport.createDefer();
+    defer = this.defer();
     ret = defer.promise;
     ret.abort = abortRequest;
   }

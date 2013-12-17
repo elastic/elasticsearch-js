@@ -5,26 +5,21 @@
  * It will also instruct the client to use Angular's $http service for it's ajax requests
  */
 var AngularConnector = require('./lib/connectors/angular');
-var Transport = require('./lib/transport');
 var Client = require('./lib/client');
 
 process.angular_build = true;
 
 /* global angular */
-angular.module('elasticsearch.client', [])
+angular.module('elasticsearch', [])
   .factory('esFactory', ['$http', '$q', function ($http, $q) {
-
-    AngularConnector.prototype.$http = $http;
-    AngularConnector.prototype.$q = $q;
-
-    // make the Transport return $q promisses instead
-    Transport.createDefer = function () {
-      return $q.defer();
-    };
 
     var factory = function (config) {
       config = config || {};
       config.connectionClass = AngularConnector;
+      config.$http = $http;
+      config.defer = function () {
+        return $q.defer();
+      };
       return new Client(config);
     };
 

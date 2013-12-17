@@ -12,12 +12,14 @@ var ConnectionFault = require('../errors').ConnectionFault;
 
 function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
+  this.defer = config.defer;
+  this.$http = config.$http;
 }
 _.inherits(AngularConnector, ConnectionAbstract);
 
 AngularConnector.prototype.request = function (params, cb) {
-  var abort = this.$q.defer();
-  this.$http({
+  var abort = this.defer();
+  AngularConnector.$http({
     method: params.method,
     url: this.host.makeUrl(params),
     data: params.body,
@@ -34,8 +36,3 @@ AngularConnector.prototype.request = function (params, cb) {
     abort.resolve();
   };
 };
-
-// must be overwritten before this connection can be used
-AngularConnector.prototype.$http = null;
-// required in order to provide abort functionality
-AngularConnector.prototype.$q = null;

@@ -212,10 +212,9 @@ describe('Transport Class', function () {
     });
   });
 
-  describe('::createDefer', function () {
+  describe('#defer', function () {
     it('returns a when.js promise by default', function () {
-
-      Transport.createDefer().constructor.should.be.exactly(when.defer().constructor);
+      Transport.prototype.defer().constructor.should.be.exactly(when.defer().constructor);
     });
   });
 
@@ -717,10 +716,10 @@ describe('Transport Class', function () {
         when.isPromise(ret).should.be.ok;
         ret.abort.should.have.type('function');
       });
-      it('promise is always pulled from the defer created by this.createDefer()', function () {
+      it('promise is always pulled from the defer created by this.defer()', function () {
         var fakePromise = {};
-        var origCreate = Transport.createDefer;
-        Transport.createDefer = function () {
+        var origDefer = Transport.prototype.defer;
+        Transport.prototype.defer = function () {
           return {
             resolve: _.noop,
             reject: _.noop,
@@ -730,7 +729,7 @@ describe('Transport Class', function () {
         var tran = new Transport({});
         shortCircuitRequest(tran);
         var ret = tran.request({});
-        Transport.createDefer = origCreate;
+        Transport.prototype.defer = origDefer;
         ret.should.be.exactly(fakePromise);
         ret.abort.should.have.type('function');
       });
