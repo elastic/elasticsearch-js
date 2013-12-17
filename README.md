@@ -1,6 +1,6 @@
 # elasticsearch.js
 
-The official low-level Elasticsearch client for Node.js and the browser. [![Build Status](http://build.elasticsearch.com/job/es-js_nightly/badge/icon)](http://build.elasticsearch.com/job/es-js_nightly/)
+The official low-level Elasticsearch client for Node.js and the browser. [![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
 
 ## Features
 
