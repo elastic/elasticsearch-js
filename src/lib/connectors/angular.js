@@ -19,7 +19,7 @@ _.inherits(AngularConnector, ConnectionAbstract);
 
 AngularConnector.prototype.request = function (params, cb) {
   var abort = this.defer();
-  AngularConnector.$http({
+  this.$http({
     method: params.method,
     url: this.host.makeUrl(params),
     data: params.body,
