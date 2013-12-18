@@ -3,6 +3,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'jshint',
     'run:unit_tests',
+    'run:generate',
     'run:integration_tests'
   ]);
 
