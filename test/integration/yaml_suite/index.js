@@ -1,15 +1,12 @@
 var path = require('path');
 var async = require('async');
 var jsYaml = require('js-yaml');
-var expect = require('expect.js');
 var YamlFile = require('./yaml_file');
 var _ = require('../../../src/lib/utils');
 var es = require('../../../src/elasticsearch');
 var clientManager = require('./client_manager');
-var Minimatch = require('minimatch').Minimatch;
 var argv = require('./argv');
 var testDir = path.resolve(__dirname, './tests');
-var doPattern = new Minimatch(argv.match);
 
 describe('integration', function () {
   this.timeout(30000);
@@ -30,9 +27,7 @@ describe('integration', function () {
   });
 
   var files = _.map(require('./yaml_tests.json'), function (docs, filename) {
-    if (doPattern.match(filename)) {
-      return new YamlFile(filename, docs);
-    }
+    return new YamlFile(filename, docs);
   });
 
 });

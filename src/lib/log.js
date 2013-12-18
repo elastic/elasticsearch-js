@@ -271,12 +271,15 @@ Log.prototype.trace = function (method, requestUrl, body, responseBody, response
   if (this.listenerCount('trace')) {
     if (typeof requestUrl === 'string') {
       requestUrl = url.parse(requestUrl, true, true);
+    } else if (requestUrl.path) {
+      requestUrl.query = url.parse(requestUrl.path, true, false).query;
     }
+
     requestUrl = _.defaults({
       host: 'localhost:9200',
-      query: _.defaults({
+      query: _.defaults(requestUrl.query || {}, {
         pretty: true
-      }, requestUrl.query)
+      })
     }, requestUrl);
     delete requestUrl.auth;
 

@@ -5,6 +5,7 @@ node_modules
 scripts/scratch*
 test/integration/yaml_suite/log
 .aws-config.json
+.idea
 
 ## generated files
 scripts/last_rest_spec_update.sha
@@ -12,5 +13,5 @@ test/integration/browser_yaml_suite/yaml_tests.js
 test/integration/yaml_suite/yaml_tests.json
 junit-*.xml
 test.log
-elasticsearch.log
+elasticsearch*.log
 coverage.html

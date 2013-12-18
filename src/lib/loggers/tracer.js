@@ -12,13 +12,20 @@
 
 module.exports = Tracer;
 
-var FileLogger = require('./file');
+var StreamLogger = require('./stream');
+var fs = require('fs');
 var _ = require('../utils');
 
 function Tracer(log, config) {
-  FileLogger.call(this, log, config);
+  if (config.path === false) {
+    config.stream = process.stderr;
+  } else {
+    config.stream = fs.createWriteStream(config.path || 'elasticsearch-tracer.log');
+  }
+
+  StreamLogger.call(this, log, config);
 }
-_.inherits(Tracer, FileLogger);
+_.inherits(Tracer, StreamLogger);
 
 Tracer.prototype.onTrace = _.handler(function (message, curlCall) {
   this.write('TRACE', message, curlCall);

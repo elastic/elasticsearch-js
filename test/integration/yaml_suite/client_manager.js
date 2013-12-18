@@ -1,4 +1,7 @@
-if (process.browser) {
+var BROWSER = process.env.browser;
+var VERBOSE = process.env.VERBOSE;
+
+if (BROWSER) {
   /* jshint browser: true */
   var es = window.elasticsearch;
 } else {
@@ -69,8 +72,15 @@ module.exports = {
           }
         ],
         log: {
-          type: process.browser ? 'console' : 'stdio',
-          level: process.env.VERBOSE ? 'trace' : 'warning'
+          type: BROWSER
+            ? 'console'
+            : VERBOSE
+              ? 'tracer'
+              : 'stdio',
+          level: VERBOSE
+            ? 'trace'
+            : 'warning',
+          path: VERBOSE ? undefined : false
         }
       });
 

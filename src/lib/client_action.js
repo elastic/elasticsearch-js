@@ -16,7 +16,7 @@ function ClientAction(spec) {
     spec.method = 'GET';
   }
 
-  return function (params, cb) {
+  function action(params, cb) {
     if (typeof params === 'function') {
       cb = params;
       params = {};
@@ -34,7 +34,11 @@ function ClientAction(spec) {
         return when.reject(e);
       }
     }
-  };
+  }
+
+  action.spec = spec;
+
+  return action;
 }
 
 var castType = {

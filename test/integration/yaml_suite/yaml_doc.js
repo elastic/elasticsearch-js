@@ -8,8 +8,8 @@
 module.exports = YamlDoc;
 
 var _ = require('../../../src/lib/utils');
+var should = require('should');
 var clientManager = require('./client_manager');
-var expect = require('expect.js');
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
@@ -42,7 +42,7 @@ function getVersionFromES(done) {
     if (err) {
       throw new Error('unable to get info about ES');
     }
-    expect(resp.version.number).to.match(versionRE);
+    should(resp.version.number).match(versionRE);
     ES_VERSION = versionToComparableString(versionRE.exec(resp.version.number)[1]);
     done();
   });
@@ -77,7 +77,7 @@ function versionToComparableString(version) {
  */
 function rangeMatchesCurrentVersion(rangeString, done) {
   function doWork() {
-    expect(rangeString).to.match(versionRangeRE);
+    should(rangeString).match(versionRangeRE);
 
     var range = versionRangeRE.exec(rangeString);
     range = _.map(_.last(range, 2), versionToComparableString);
@@ -114,7 +114,7 @@ function YamlDoc(doc, file) {
     var method = self['do_' + action.name];
 
     // check that it's a function
-    expect(method).to.be.a('function');
+    should(method).have.type('function');
 
     if (_.isPlainObject(action.args)) {
       action.name += ' ' + _.keys(action.args).join(', ');
@@ -306,11 +306,18 @@ YamlDoc.prototype = {
     var action = Object.keys(args).pop();
     var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
-    var params = _.transform(args[action], function (note, val, name) {
-      note[_.camelCase(name)] = (typeof val === 'string' && val[0] === '$') ? this.get(val) : val;
+    var params = _.transform(args[action], function (params, val, name) {
+      var camelName = _.camelCase(name);
+      // undocumented params should be passed through as-is
+      var paramName = name;
+      if (clientAction && clientAction.spec && clientAction.spec.params && clientAction.spec.params[camelName]) {
+        paramName = camelName;
+      }
+
+      params[paramName] = (typeof val === 'string' && val[0] === '$') ? this.get(val) : val;
     }, {}, this);
 
-    expect(clientAction || clientActionName).to.be.a('function');
+    should(clientAction || clientActionName).have.type('function');
 
     if (typeof clientAction === 'function') {
       if (_.isNumeric(catcher)) {
@@ -325,11 +332,11 @@ YamlDoc.prototype = {
           if (catcher) {
             if (catcher instanceof RegExp) {
               // error message should match the regexp
-              expect(error.message).to.match(catcher);
+              should(error.message).match(catcher);
               error = null;
             } else if (typeof catcher === 'function') {
               // error should be an instance of
-              expect(error).to.be.a(catcher);
+              should(error).be.an.instanceOf(catcher);
               error = null;
             } else {
               return done(new Error('Invalid catcher ' + catcher));
@@ -373,7 +380,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_is_true: function (path) {
-    expect(this.get(path)).to.be.ok;
+    should(Boolean(this.get(path))).equal(true, 'path: ' + path);
   },
 
   /**
@@ -384,7 +391,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_is_false: function (path) {
-    expect(this.get(path)).to.not.be.ok;
+    should(Boolean(this.get(path))).equal(false, 'path: ' + path);
   },
 
   /**
@@ -398,7 +405,7 @@ YamlDoc.prototype = {
       if (val[0] === '$') {
         val = this.get(val);
       }
-      expect(this.get(path)).to.eql(val);
+      should(this.get(path)).eql(val, 'path: ' + path);
     }, this);
   },
 
@@ -410,7 +417,7 @@ YamlDoc.prototype = {
    */
   do_lt: function (args) {
     _.forOwn(args, function (num, path) {
-      expect(this.get(path)).to.be.below(num);
+      should(this.get(path)).be.below(num, 'path: ' + path);
     }, this);
   },
 
@@ -422,7 +429,7 @@ YamlDoc.prototype = {
    */
   do_gt: function (args) {
     _.forOwn(args, function (num, path) {
-      expect(this.get(path)).to.be.above(num);
+      should(this.get(path)).be.above(num, 'path: ' + path);
     }, this);
   },
 
@@ -435,7 +442,7 @@ YamlDoc.prototype = {
    */
   do_length: function (args) {
     _.forOwn(args, function (len, path) {
-      expect(_.size(this.get(path))).to.be(len);
+      should(_.size(this.get(path))).eql(len, 'path: ' + path);
     }, this);
   }
 };

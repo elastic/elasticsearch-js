@@ -66,6 +66,7 @@ Client.prototype.ping = ca({
   url: {
     fmt: '/'
   },
+  castExists: true,
   requestTimeout: 100
 });
 

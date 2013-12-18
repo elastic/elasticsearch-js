@@ -6,8 +6,7 @@ var defaults = {
   clusterName: 'yaml-test-runner',
   dataPath: '/tmp/yaml-test-runner',
   host: 'localhost',
-  port: '9200',
-  match: '**'
+  port: '9200'
 };
 
 if (process.browser) {

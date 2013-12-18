@@ -7,7 +7,7 @@ module.exports = {
       'Gruntfile.js'
     ],
     tasks: [
-      // 'jshint',
+      'jshint',
       'run:unit_tests'
     ],
     options: {
