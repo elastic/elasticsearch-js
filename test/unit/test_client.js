@@ -17,6 +17,12 @@ describe('Client instances creation', function () {
     }).should.throw(/previous "elasticsearch" module/);
   });
 
+  it('Succeeds even not called with new', function () {
+    var client = es.Client();
+    client.bulk.should.eql(api.bulk);
+    client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);
+  });
+
   it('inherits the api', function () {
     client.bulk.should.eql(api.bulk);
     client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);

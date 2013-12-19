@@ -43,7 +43,8 @@
     "grunt-contrib-compress": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
-    "grunt-mocha-cov": "~0.1.1"
+    "grunt-mocha-cov": "~0.1.1",
+    "grunt-open": "~0.2.2"
   },
   "license": "Apache 2.0",
   "dependencies": {
@@ -58,7 +59,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
     "blanket": {
       "pattern": "src"
     }
