@@ -5,23 +5,15 @@ module.exports = {
   options: {
     require: ['should']
   },
-  coverage: {
-    src: unitTests,
-    options: {
-      reporter: 'mocha-lcov-reporter',
-      coveralls: {
-        serviceName: 'travis-ci',
-        repoToken: process.env.ESJS_COVERALS_REPO_TOKEN
-      }
-    }
-  },
   unit: {
     src: unitTests
   },
   integration: {
     src: integrationTests
   },
-  make_html_unit_cov: {
+
+  // run the unit tests, and update coverage.html
+  make_coverage_html: {
     src: unitTests,
     options: {
       reporter: 'html-cov',
@@ -29,4 +21,14 @@ module.exports = {
     }
   },
 
+  // for use by travis
+  ship_coverage: {
+    src: unitTests,
+    options: {
+      reporter: 'mocha-lcov-reporter',
+      coveralls: {
+        serviceName: 'travis-ci'
+      }
+    }
+  }
 };

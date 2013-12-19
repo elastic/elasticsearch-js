@@ -2,7 +2,6 @@ module.exports = function (grunt) {
 
   // Default task runs the build process.
   grunt.registerTask('default', [
-    'generate',
     'test'
   ]);
 
@@ -13,17 +12,17 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'jshint',
     'mochacov:unit',
-    'run:generate',
+    'generate',
     'mochacov:integration',
   ]);
 
   grunt.registerTask('coverage', [
-    'mochacov:make_html_unit_cov',
-    'open:html_unit_cov'
+    'mochacov:make_coverage_html',
+    'open:coverage'
   ]);
 
   grunt.registerTask('travis', [
     'test',
-    'mochacov:coverage'
+    'mochacov:ship_coverage'
   ]);
 };

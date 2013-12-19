@@ -59,7 +59,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "coverage": "mocha test/unit/test_*.js --require blanket -R html-cov > coverage.html && open -a \"Google Chrome\" ./coverage.html",
     "blanket": {
       "pattern": "src"
     }

@@ -2,16 +2,16 @@ module.exports = {
   source: {
     files: [
       'src/**/*.js',
-      'test/unit/**/*.js',
       'grunt/**/*.js',
+      'test/unit/**/*.js',
       'Gruntfile.js'
     ],
     tasks: [
       'jshint',
-      'run:unit_tests'
+      'mochacov:unit'
     ],
     options: {
-      interrupt: true,
+      interrupt: true
     }
   }
 };

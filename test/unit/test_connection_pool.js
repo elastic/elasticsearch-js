@@ -1,10 +1,12 @@
 var ConnectionPool = require('../../src/lib/connection_pool');
 var Host = require('../../src/lib/host');
+var errors = require('../../src/lib/errors');
 var ConnectionAbstract = require('../../src/lib/connection');
 var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var should = require('should');
 var sinon = require('sinon');
+var stub = require('./auto_release_stub').make();
 
 function listenerCount(emitter, event) {
   if (EventEmitter.listenerCount) {
@@ -157,14 +159,53 @@ describe('Connection Pool', function () {
       });
     });
 
-    it('should automatically select the dead connection with the shortest timeout when there no living connections',
+  });
+
+  describe('Connection selection with no living nodes', function () {
+    it('should ping all of the dead nodes, in order of oldest timeout, and return the first that\'s okay',
     function (done) {
-      pool.setHosts([]);
-      pool._conns.alive = [];
-      pool._conns.dead = [1, 2, 3];
+      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      var pool = new ConnectionPool({
+        deadTimeout: 10000
+      });
+
+      var connections = [
+        new ConnectionAbstract(new Host('http://localhost:9200')),
+        new ConnectionAbstract(new Host('http://localhost:9201')),
+        new ConnectionAbstract(new Host('http://localhost:9202')),
+        new ConnectionAbstract(new Host('http://localhost:9203'))
+      ];
+      var pingQueue = _.shuffle(connections);
+      var expectedSelection = pingQueue[pingQueue.length - 1];
+
+      pingQueue.forEach(function (conn) {
+        pool.addConnection(conn);
+        stub(conn, 'ping', function (params, cb) {
+          if (typeof params === 'function') {
+            cb = params;
+          }
+          var expectedConn = pingQueue.shift();
+          conn.should.be.exactly(expectedConn);
+          if (pingQueue.length) {
+            process.nextTick(function () {
+              cb(new Error('keep trying'));
+            });
+          } else {
+            process.nextTick(function () {
+              cb(null, true);
+            });
+          }
+        });
+        conn.setStatus('dead');
+        clock.tick(500);
+      });
 
       pool.select(function (err, selection) {
-        // selection.should.be.exactly(1);
+        clock.restore();
+        selection.should.be.exactly(expectedSelection);
+        pingQueue.should.have.length(0);
+        pool.setHosts([]);
+        should.not.exist(err);
         done();
       });
     });

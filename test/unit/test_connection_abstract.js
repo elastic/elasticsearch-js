@@ -1,7 +1,9 @@
 var ConnectionAbstract = require('../../src/lib/connection');
 var Host = require('../../src/lib/host');
 var sinon = require('sinon');
+var should = require('should');
 var _ = require('lodash');
+var errors = require('../../src/lib/errors');
 
 var stub = require('./auto_release_stub').make();
 
@@ -72,8 +74,62 @@ describe('Connection Abstract', function () {
       conn.request.callCount.should.eql(1);
     });
 
-    it('sets a timer for the request');
-    it('aborts the request if it takes too long');
+    it('sets a timer for the request', function (done) {
+      var conn = new ConnectionAbstract(host);
+      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      var order = 0;
+
+      stub(conn, 'request', function (params, cb) {
+        setTimeout(function () {
+          should(++order).eql(2);
+          cb();
+        }, 10001);
+      });
+
+      conn.ping({
+        requestTimeout: 100
+      }, function (err) {
+        should(++order).eql(1);
+        err.should.be.an.instanceOf(errors.RequestTimeout);
+      });
+
+      process.nextTick(function () {
+        clock.tick(1000);
+        clock.tick(10000);
+        clock.restore();
+        done();
+      });
+    });
+    it('calls the requestAborter if req takes too long', function (done) {
+      var conn = new ConnectionAbstract(host);
+      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      var order = 0;
+
+      stub(conn, 'request', function (params, cb) {
+        setTimeout(function () {
+          should(++order).eql(3);
+          cb();
+        }, 10001);
+
+        return function () {
+          should(++order).eql(1);
+        };
+      });
+
+      conn.ping({
+        requestTimeout: 100
+      }, function (err) {
+        should(++order).eql(2);
+        err.should.be.an.instanceOf(errors.RequestTimeout);
+      });
+
+      process.nextTick(function () {
+        clock.tick(1000);
+        clock.tick(10000);
+        clock.restore();
+        done();
+      });
+    });
     it('ignores the response from the request if it already aborted');
   });
 

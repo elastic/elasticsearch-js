@@ -1,5 +1,5 @@
 module.exports = {
-  html_unit_cov: {
+  coverage: {
     path: 'coverage.html',
     app: 'Google Chrome'
   }
