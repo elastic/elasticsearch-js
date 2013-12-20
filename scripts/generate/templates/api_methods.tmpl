@@ -4,18 +4,16 @@ var actionId = action.name.toLowerCase().replace(/[^\w]+/g, '-');
 
 %>
 
-h2#<%= actionId %>.fn
-  span.name <%= action.name %>
-  span.args (params, [callback])
+h2#<%= actionId %>.fn <%= action.name %>(params, [callback])
 include _descriptions/<%= action.name %>.jade
-a.esdoc(href="<%= action.docUrl %>", title="<%= action.name %> at elasticsearch.org").
-  <%= action.docUrl %>
-p.tight.
+p.
   The default method is <code><%= action.spec.method || 'GET' %></code> and
   the usual <a href="#api-conventions">params and return values</a> apply.
-
+  See <a href="<%= action.docUrl %>" title="<%= action.name %>
+  at elasticsearch.org"><%= action.docUrl %></a> for more about this method.
+include _examples/<%= action.name %>.jade
 <% if (_.size(action.allParams)) { %>
-h3 Params:
+h3 Params
 dl.params.api
 <% _.each(action.allParams, function (param, paramName) { %>
   dt: dfn: code <%= paramWithDefault(paramName, param.default) %>
@@ -23,7 +21,7 @@ dl.params.api
     <span class="types"><%= paramType(param.type) %></span>
 <%= indent(param.description || '', 4) %><%
 }); %>
-<% } %>
-include _examples/<%= action.name %>.jade<%
+<% }
+
 });
 %>

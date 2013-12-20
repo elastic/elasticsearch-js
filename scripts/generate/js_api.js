@@ -15,6 +15,7 @@ module.exports = function (done) {
 
   var files; // populated in readSpecFiles
   var apiSpec; // populated by parseSpecFiles
+  var docVars; // slightly modified clone of apiSpec for the docs
 
   // generate the API
   async.series([
@@ -22,6 +23,7 @@ module.exports = function (done) {
     parseSpecFiles,
     writeApiFile,
     ensureDocsDir,
+    formatDocVars,
     writeMethodList,
     writeMethodDocs
   ], done);
@@ -88,10 +90,21 @@ module.exports = function (done) {
     });
   }
 
+  function formatDocVars(done) {
+    // merge the actions and proxies to make
+    // itteration easir and keep them in order
+    docVars = _.omit(apiSpec, 'proxies');
+    docVars.actions = _.sortBy(
+      [].concat(apiSpec.actions).concat(apiSpec.proxies),
+      'name'
+    );
+    done();
+  }
+
   function writeMethodList(done) {
     fs.writeFile(
       '../../docs/_method_list.jade',
-      templates.apiMethodList(apiSpec),
+      templates.apiMethodList(docVars),
       done
     );
   }
@@ -99,7 +112,7 @@ module.exports = function (done) {
   function writeMethodDocs(done) {
     fs.writeFile(
       '../../docs/_methods.jade',
-      templates.apiMethods(apiSpec),
+      templates.apiMethods(docVars),
       done
     );
   }

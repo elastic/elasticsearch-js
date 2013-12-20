@@ -11,7 +11,7 @@
     return def;
   }
 
-  $.es = es;
+  $.es = $.extend({}, es);
   $.es.Client = function (config) {
     config = config || {};
     config.defer = defer;
