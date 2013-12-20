@@ -13,7 +13,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('browser_clients:publish', [
-    'browser_clients_build',
+    'browser_clients:build',
     'compress:dist_zip',
     'compress:dist_tarball',
     's3:latest'
@@ -22,7 +22,7 @@ module.exports = function (grunt) {
   grunt.registerTask('browser_clients:release', [
     'prompt:confirm_release',
     '__check_for_confirmation',
-    'browser_clients_build',
+    'browser_clients:build',
     'compress:dist_zip',
     'compress:dist_tarball',
     's3:release'
