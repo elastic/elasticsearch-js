@@ -1,14 +1,17 @@
+// make it dry
+function archive(out) {
+  return {
+    cwd: '<%= distDir %>',
+    src: 'elasticsearch-js',
+    options: {
+      archive: '<%= distDir %>/archives/' + out
+    }
+  };
+}
+
 module.exports = {
-  dist_zip: {
-    src: '<%= distDir %>/*.js',
-    options: {
-      archive: '<%= distDir %>/archives/elasticsearch-js.zip'
-    }
-  },
-  dist_tarball: {
-    src: '<%= distDir %>/*.js',
-    options: {
-      archive: '<%= distDir %>/archives/elasticsearch-js.tar.gz'
-    }
-  }
+  master_zip:       archive('elasticsearch-js-master.zip'),
+  master_tarball:   archive('elasticsearch-js-master.tar.gz'),
+  release_zip:      archive('elasticsearch-js-<%= package.version %>.zip'),
+  release_tarball:  archive('elasticsearch-js-<%= package.version %>.tar.gz')
 };

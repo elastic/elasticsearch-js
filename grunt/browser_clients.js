@@ -1,30 +1,37 @@
 module.exports = function (grunt) {
   grunt.registerTask('browser_clients:test', [
     'build',
+    'browserify:yaml_tests',
     'run:browser_unit_tests',
     'run:browser_integration_tests'
   ]);
 
   grunt.registerTask('browser_clients:build', [
     'clean:dist',
-    'browserify',
+    'browserify:browser_client',
+    'browserify:angular_client',
+    'browserify:jquery_client',
     'uglify:dist',
     'concat:dist_banners'
   ]);
 
-  grunt.registerTask('browser_clients:publish', [
+  grunt.registerTask('browser_clients:distribute', [
+    'clean:dist',
     'browser_clients:build',
-    'compress:dist_zip',
-    'compress:dist_tarball',
+    'copy:dist_to_named_dir',
+    'compress:master_zip',
+    'compress:master_tarball',
     's3:latest'
   ]);
 
   grunt.registerTask('browser_clients:release', [
     'prompt:confirm_release',
     '__check_for_confirmation',
+    'clean:dist',
     'browser_clients:build',
-    'compress:dist_zip',
-    'compress:dist_tarball',
+    'copy:dist_to_named_dir',
+    'compress:release_zip',
+    'compress:release_tarball',
     's3:release'
   ]);
 

@@ -34,7 +34,9 @@ JqueryConnector.prototype.request = function (params, cb) {
 
   var jqXHR = jQuery.ajax(ajax)
     .done(function (data, textStatus, jqXHR) {
-      cb(null, data, jqXHR.statusCode(), jqXHR.getAllResponseHeaders());
+      cb(null, data, jqXHR.statusCode(), {
+        'content-type': jqXHR.getResponseHeader('content-type')
+      });
     })
     .fail(function (jqXHR, textStatus, err) {
       cb(new ConnectionFault(err && err.message));
