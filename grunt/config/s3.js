@@ -18,7 +18,6 @@ module.exports = {
       bucket: 'download.elasticsearch.org',
       access: 'public-read',
       headers: {
-        'Content-Type': 'text/plain',
         'X-Content-Type-Options': 'nosniff',
         'Content-Disposition': 'attachment'
       }
