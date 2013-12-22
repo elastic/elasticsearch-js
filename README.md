@@ -22,7 +22,7 @@ npm install elasticsearch
 
 We also provide builds of the elasticsearch.js client for use in the browser. If your project uses Angular or jQuery we also provide specifc builds for you, simply include the `elasticsearch.{{lib}}.js` files in your project instead.
 
- - v1.0.3: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.0.3.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.0.3.tar.gz)
+ - v1.1.0: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.1.0.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.1.0.tar.gz)
  - master: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.tar.gz)
 
 ## Docs
