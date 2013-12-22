@@ -733,7 +733,7 @@ describe('Transport Class', function () {
         ret.should.be.exactly(fakePromise);
         ret.abort.should.have.type('function');
       });
-      it('resolves the promise it returns with an object containing status and body keys', function (done) {
+      it('resolves the promise it with the response body', function (done) {
         var serverMock = nock('http://esbox.1.com')
           .get('/')
           .reply(200, {
@@ -746,10 +746,7 @@ describe('Transport Class', function () {
 
         tran.request({}).then(function (resp) {
           resp.should.eql({
-            body: {
-              good: 'day'
-            },
-            status: 200
+            good: 'day'
           });
           done();
         });
