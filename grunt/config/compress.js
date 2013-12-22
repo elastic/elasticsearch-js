@@ -2,7 +2,8 @@
 function archive(out) {
   return {
     cwd: '<%= distDir %>',
-    src: 'elasticsearch-js',
+    src: 'elasticsearch-js/*',
+    expand: true,
     options: {
       archive: '<%= distDir %>/archives/' + out
     }
