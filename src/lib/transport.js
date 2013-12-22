@@ -247,10 +247,7 @@ Transport.prototype.request = function (params, cb) {
       err.status = status;
       defer.reject(err);
     } else {
-      defer.resolve({
-        body: parsedBody,
-        status: status
-      });
+      defer.resolve(parsedBody);
     }
   }
 
