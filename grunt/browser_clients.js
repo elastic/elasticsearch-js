@@ -21,7 +21,7 @@ module.exports = function (grunt) {
     'copy:dist_to_named_dir',
     'compress:master_zip',
     'compress:master_tarball',
-    's3:latest'
+    's3:upload_archives'
   ]);
 
   grunt.registerTask('browser_clients:release', [
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
     'copy:dist_to_named_dir',
     'compress:release_zip',
     'compress:release_tarball',
-    's3:release'
+    's3:upload_archives'
   ]);
 
   grunt.registerTask('__check_for_confirmation', function () {
