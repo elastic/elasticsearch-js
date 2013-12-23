@@ -3,13 +3,9 @@ module.exports = {
     exec: 'node scripts/generate'
   },
   browser_unit_tests: {
-    exec: 'node scripts/run_tests --unit --no-server',
+    exec: 'npm run browser_tests',
     options: {
-      cwd: '.',
-      passArgs: [
-        'port',
-        'host'
-      ]
+      cwd: '.'
     }
   },
   browser_integration_tests: {

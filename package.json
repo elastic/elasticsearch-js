@@ -44,7 +44,8 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
     "grunt-mocha-cov": "~0.1.1",
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "glob": "~3.2.7"
   },
   "license": "Apache 2.0",
   "dependencies": {
@@ -57,14 +58,25 @@
     "type": "git",
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
+  "testling": {
+    "files": [
+      "test/unit/test_!(file_logger|http_connector|stdio_logger|stream_logger|tracer_logger|transport_with_server)*",
+      "test/unit/browser_test_*.js"
+    ],
+    "harness": "mocha",
+    "browsers": {
+      "ie": [ 9, 10, 11 ],
+      "firefox": [ 24, "nightly" ],
+      "chrome": [ 30, "canary" ],
+      "safari": [ 5.1 ],
+      "opera": [ 12 ]
+    }
+  },
   "scripts": {
     "test": "grunt test",
+    "browser_tests": "browserify test/unit/run_browser_builds.js | testling --harness=mocha -u",
     "blanket": {
       "pattern": "src"
     }
-  },
-  "testling": {
-    "harness": "mocha",
-    "files": "test/unit/test_!(http_connector|stdio_logger|stream_logger|tracer_logger|file_logger).js"
   }
 }

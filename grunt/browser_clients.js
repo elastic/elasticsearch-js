@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     'build',
     'browserify:yaml_tests',
     'run:browser_unit_tests',
-    'run:browser_integration_tests'
+    // 'run:browser_integration_tests'
   ]);
 
   grunt.registerTask('browser_clients:build', [
