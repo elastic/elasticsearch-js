@@ -1,5 +1,5 @@
 describe('Logger Abstract', function () {
-
+  var expect = require('expect.js');
   var sinon = require('sinon');
   var Log = require('../../src/lib/log');
   var LoggerAbstract = require('../../src/lib/logger');
@@ -23,10 +23,10 @@ describe('Logger Abstract', function () {
 
   describe('#write', function () {
     it('requires that it is overwritten', function () {
-      (function () {
+      expect(function () {
         var logger = makeLogger();
         logger.write();
-      }).should.throw(/overwritten/);
+      }).to.throwError(/overwritten/);
     });
   });
 

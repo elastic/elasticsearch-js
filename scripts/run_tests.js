@@ -75,7 +75,7 @@ if (argv['check-upstream']) {
 
 if (argv.unit) {
   if (argv.server) {
-    commands.push(['./node_modules/.bin/mocha', 'test/unit/test_*.js', '--require should']);
+    commands.push(['./node_modules/.bin/mocha', 'test/unit/test_*.js']);
   }
   if (argv.browsers) {
     commands.push(['./node_modules/.bin/testling', '.']);
@@ -88,7 +88,6 @@ if (argv.integration) {
       './node_modules/.bin/mocha',
       'test/integration/yaml_suite/index.js',
       // '-b',
-      '--require', 'should',
       '--host', argv.host,
       '--port', argv.port
     ].filter(Boolean));

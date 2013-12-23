@@ -86,7 +86,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.selector(this._conns.alive, cb);
     } else {
       try {
-        _.nextTick(cb, null, this.selector(this._conns.alive));
+        _.nextTick(cb, void 0, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
@@ -94,7 +94,7 @@ ConnectionPool.prototype.select = function (cb) {
   } else if (this._timeouts.length) {
     this._selectDeadConnection(cb);
   } else {
-    _.nextTick(cb, null);
+    _.nextTick(cb, void 0);
   }
 };
 
@@ -210,7 +210,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
   process.nextTick(function next() {
     var timeout = orderedTimeouts.shift();
     if (!timeout) {
-      cb(null);
+      cb(void 0);
       return;
     }
 
@@ -225,11 +225,11 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
           log.warning('Unable to revive connection: ' + timeout.conn.id);
           process.nextTick(next);
         } else {
-          cb(null, timeout.conn);
+          cb(void 0, timeout.conn);
         }
       });
     } else {
-      cb(null, timeout.conn);
+      cb(void 0, timeout.conn);
     }
   });
 };

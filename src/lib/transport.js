@@ -284,7 +284,7 @@ Transport.prototype.request = function (params, cb) {
 
 
   if (connection) {
-    sendReqWithConnection(null, connection);
+    sendReqWithConnection(void 0, connection);
   } else {
     self.connectionPool.select(sendReqWithConnection);
   }

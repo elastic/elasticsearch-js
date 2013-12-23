@@ -1,4 +1,5 @@
 module.exports = function (makeLogger) {
+  var expect = require('expect.js');
   var stub = require('./auto_release_stub').make();
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
@@ -34,8 +35,8 @@ module.exports = function (makeLogger) {
         exitHandler.call(process);
 
         // the first line is sent immediately to _write and there is nothing we can do about that
-        flushedOutput.should.match(new RegExp(line));
-        flushedOutput.match(new RegExp(line, 'g')).length.should.eql(9);
+        expect(flushedOutput).to.match(new RegExp(line));
+        expect(flushedOutput.match(new RegExp(line, 'g'))).to.have.property('length', 9);
       });
     } else {
       it('does not fall apart with non streams2 streams', function () {
@@ -49,10 +50,10 @@ module.exports = function (makeLogger) {
 
         var logger = makeLogger();
 
-        (function () {
+        expect(function () {
           // call the event handler
           exitHandler.call(process);
-        }).should.not.throw();
+        }).to.not.throw();
       });
     }
   });

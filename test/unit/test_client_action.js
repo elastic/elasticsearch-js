@@ -1,5 +1,5 @@
 var ca = require('../../src/lib/client_action');
-var should = require('should');
+var expect = require('expect.js');
 var _ = require('lodash');
 var when = require('when');
 
@@ -64,7 +64,7 @@ describe('Client Action runner', function () {
 
       // note: the first arg is the callback
       action(function (err, params) {
-        params.query.should.eql({});
+        expect(params.query).to.eql({});
         done();
       });
     });
@@ -76,9 +76,9 @@ describe('Client Action runner', function () {
         throw new Error('proxy function called');
       });
 
-      (function () {
+      expect(function () {
         action({}, function () {});
-      }).should.throw('proxy function called');
+      }).to.throwError('proxy function called');
     });
 
     it('provides the proper context', function (done) {
@@ -91,15 +91,15 @@ describe('Client Action runner', function () {
       });
 
       action({}, function (err, params) {
-        client.transport.request.should.be.type('function');
+        expect(client.transport.request).to.be.a('function');
         done();
       });
     });
 
     it('handles passing just the callback', function () {
       var action = makeClientActionProxy(function (params, cb) {
-        should(_.isObject(params)).be.ok;
-        cb.should.be.type('function');
+        expect(_.isObject(params)).to.be.ok;
+        expect(cb).to.be.a('function');
       });
 
       action(function () {});
@@ -107,7 +107,7 @@ describe('Client Action runner', function () {
 
     it('supports a param transformation function', function () {
       var action = makeClientActionProxy(function (params, cb) {
-        params.should.have.property('transformed');
+        expect(params).to.have.property('transformed');
       }, {
         transform: function (params) {
           params.transformed = true;
@@ -123,7 +123,7 @@ describe('Client Action runner', function () {
         return football;
       });
 
-      action().should.be.exactly(football);
+      expect(action()).to.be(football);
     });
   });
 
@@ -155,9 +155,9 @@ describe('Client Action runner', function () {
           three: '15m'
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.eql(1500);
-          params.query.two.should.eql('500');
-          params.query.three.should.eql('15m');
+          expect(params.query.one).to.eql(1500);
+          expect(params.query.two).to.eql('500');
+          expect(params.query.three).to.eql('15m');
 
           done();
         });
@@ -167,7 +167,7 @@ describe('Client Action runner', function () {
         action({
           one: new Date()
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -177,7 +177,7 @@ describe('Client Action runner', function () {
           one: ['one'],
           two: [ 1304 ]
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -186,7 +186,7 @@ describe('Client Action runner', function () {
         action({
           one: { but: 'duration' }
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -210,7 +210,7 @@ describe('Client Action runner', function () {
           three: ['some', 'strings'],
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.should.eql({
+          expect(params.query).to.eql({
             one: 'some,strings',
             two: 1430,
             three: 'some,strings'
@@ -223,7 +223,7 @@ describe('Client Action runner', function () {
         action({
           one: /regexp!/g
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -234,7 +234,7 @@ describe('Client Action runner', function () {
             pasta: 'sauce'
           }
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -254,7 +254,7 @@ describe('Client Action runner', function () {
           one: 'opt'
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.eql('opt');
+          expect(params.query.one).to.eql('opt');
           done();
         });
       });
@@ -264,7 +264,7 @@ describe('Client Action runner', function () {
           one: 150
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.be.exactly('150');
+          expect(params.query.one).to.be('150');
           done();
         });
       });
@@ -273,7 +273,7 @@ describe('Client Action runner', function () {
         action({
           one: 'not an opt'
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -301,10 +301,10 @@ describe('Client Action runner', function () {
           four: ''
         }, function (err, params) {
           if (err) { throw err; }
-          should(params.query.one).be.exactly(false);
-          should(params.query.two).be.exactly(false);
-          should(params.query.three).be.exactly(false);
-          should(params.query.four).be.exactly(false);
+          expect(params.query.one).to.be(false);
+          expect(params.query.two).to.be(false);
+          expect(params.query.three).to.be(false);
+          expect(params.query.four).to.be(false);
           done();
         });
       });
@@ -319,12 +319,12 @@ describe('Client Action runner', function () {
           six: {}
         }, function (err, params) {
           if (err) { throw err; }
-          should(params.query.one).be.exactly(true);
-          should(params.query.two).be.exactly(true);
-          should(params.query.three).be.exactly(true);
-          should(params.query.four).be.exactly(true);
-          should(params.query.five).be.exactly(true);
-          should(params.query.six).be.exactly(true);
+          expect(params.query.one).to.be(true);
+          expect(params.query.two).to.be(true);
+          expect(params.query.three).to.be(true);
+          expect(params.query.four).to.be(true);
+          expect(params.query.five).to.be(true);
+          expect(params.query.six).to.be(true);
           done();
         });
       });
@@ -354,12 +354,12 @@ describe('Client Action runner', function () {
           six: 0xFFF
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.equal(42);
-          params.query.two.should.equal(-69);
-          params.query.three.should.equal(15);
-          params.query.four.should.equal(-100);
-          params.query.five.should.equal(255);
-          params.query.six.should.equal(4095);
+          expect(params.query.one).to.be(42);
+          expect(params.query.two).to.be(-69);
+          expect(params.query.three).to.be(15);
+          expect(params.query.four).to.be(-100);
+          expect(params.query.five).to.be(255);
+          expect(params.query.six).to.be(4095);
           done();
         });
       });
@@ -374,12 +374,12 @@ describe('Client Action runner', function () {
           six: '123e-2',
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.equal(-1.6);
-          params.query.two.should.equal(4.536);
-          params.query.three.should.equal(-2.6);
-          params.query.four.should.equal(3.1415);
-          params.query.five.should.equal(800000);
-          params.query.six.should.equal(1.23);
+          expect(params.query.one).to.be(-1.6);
+          expect(params.query.two).to.be(4.536);
+          expect(params.query.three).to.be(-2.6);
+          expect(params.query.four).to.be(3.1415);
+          expect(params.query.five).to.be(800000);
+          expect(params.query.six).to.be(1.23);
           done();
         });
       });
@@ -388,7 +388,7 @@ describe('Client Action runner', function () {
         action({
           one: new Date()
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -396,7 +396,7 @@ describe('Client Action runner', function () {
         action({
           one: {}
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -404,7 +404,7 @@ describe('Client Action runner', function () {
         action({
           one: []
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -412,7 +412,7 @@ describe('Client Action runner', function () {
         action({
           one: /pasta/g
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -442,12 +442,12 @@ describe('Client Action runner', function () {
           six: 0xFFF
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.equal('42');
-          params.query.two.should.equal('-69');
-          params.query.three.should.equal('15');
-          params.query.four.should.equal('-100');
-          params.query.five.should.equal('0xFF');
-          params.query.six.should.equal('4095');
+          expect(params.query.one).to.be('42');
+          expect(params.query.two).to.be('-69');
+          expect(params.query.three).to.be('15');
+          expect(params.query.four).to.be('-100');
+          expect(params.query.five).to.be('0xFF');
+          expect(params.query.six).to.be('4095');
           done();
         });
       });
@@ -456,7 +456,7 @@ describe('Client Action runner', function () {
         action({
           one: new Date()
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -464,7 +464,7 @@ describe('Client Action runner', function () {
         action({
           one: {}
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -472,7 +472,7 @@ describe('Client Action runner', function () {
         action({
           one: []
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -480,7 +480,7 @@ describe('Client Action runner', function () {
         action({
           one: /pasta/g
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -511,11 +511,11 @@ describe('Client Action runner', function () {
           five: new Date('2013-03-01T01:10:00Z')
         }, function (err, params) {
           if (err) { throw err; }
-          params.query.one.should.equal('42');
-          params.query.two.should.equal('-69');
-          params.query.three.should.equal('15');
-          params.query.four.should.equal('' + now.getTime());
-          params.query.five.should.equal('1362100200000');
+          expect(params.query.one).to.be('42');
+          expect(params.query.two).to.be('-69');
+          expect(params.query.three).to.be('15');
+          expect(params.query.four).to.be('' + now.getTime());
+          expect(params.query.five).to.be('1362100200000');
           done();
         });
       });
@@ -524,7 +524,7 @@ describe('Client Action runner', function () {
         action({
           one: {}
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -532,7 +532,7 @@ describe('Client Action runner', function () {
         action({
           one: []
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -540,7 +540,7 @@ describe('Client Action runner', function () {
         action({
           one: /pasta/g
         }, function (err, params) {
-          err.should.be.an.instanceOf(TypeError);
+          expect(err).to.be.a(TypeError);
           done();
         });
       });
@@ -554,7 +554,7 @@ describe('Client Action runner', function () {
       });
 
       action({}, function (err, params) {
-        params.bulkBody.should.be.exactly(true);
+        expect(params.bulkBody).to.be(true);
         done();
       });
     });
@@ -565,7 +565,7 @@ describe('Client Action runner', function () {
       });
 
       action({}, function (err, params) {
-        params.castExists.should.be.exactly(true);
+        expect(params.castExists).to.be(true);
         done();
       });
     });
@@ -580,7 +580,7 @@ describe('Client Action runner', function () {
       var body = '{"JSON":"PLEASE"}';
 
       action({ body: body }, function (err, params) {
-        params.body.should.be.exactly(body);
+        expect(params.body).to.be(body);
         done();
       });
     });
@@ -589,7 +589,7 @@ describe('Client Action runner', function () {
       action().then(function () {
         done(new Error('Error should have been raised'));
       }, function (err) {
-        err.should.be.an.instanceOf(TypeError);
+        expect(err).to.be.a(TypeError);
         done();
       });
     });
@@ -602,7 +602,7 @@ describe('Client Action runner', function () {
       });
 
       action({method: 'get'}, function (err, params) {
-        params.method.should.be.exactly('GET');
+        expect(params.method).to.be('GET');
         done();
       });
     });
@@ -613,7 +613,7 @@ describe('Client Action runner', function () {
       });
 
       action({}, function (err, params) {
-        params.method.should.be.exactly('POST');
+        expect(params.method).to.be('POST');
         done();
       });
     });
@@ -623,7 +623,7 @@ describe('Client Action runner', function () {
     it('passes ignore as an array', function (done) {
       var action = makeClientAction({});
       action({ ignore: 404 }, function (err, params) {
-        params.ignore.should.eql([404]);
+        expect(params.ignore).to.eql([404]);
         done();
       });
     });
@@ -636,7 +636,7 @@ describe('Client Action runner', function () {
       });
 
       action({}, function (err, params) {
-        params.requestTimeout.should.be.exactly(100);
+        expect(params.requestTimeout).to.be(100);
         done();
       });
     });
@@ -647,7 +647,7 @@ describe('Client Action runner', function () {
       });
 
       action({ requestTimeout: 3000 }, function (err, params) {
-        params.requestTimeout.should.be.exactly(3000);
+        expect(params.requestTimeout).to.be(3000);
         done();
       });
     });
@@ -656,7 +656,7 @@ describe('Client Action runner', function () {
       var action = makeClientAction({});
 
       action({}, function (err, params) {
-        should(params.requestTimeout).be.exactly(void 0);
+        expect(params.requestTimeout).be(void 0);
         done();
       });
     });
@@ -695,7 +695,7 @@ describe('Client Action runner', function () {
       action({
         type: ['type1', 'type2']
       }, function (err, params) {
-        err.should.be.an.instanceOf(TypeError);
+        expect(err).to.be.a(TypeError);
         done();
       });
     });
@@ -706,7 +706,7 @@ describe('Client Action runner', function () {
         id: '1'
       }, function (err, params) {
         if (err) { throw err; }
-        params.path.should.be.exactly('/index1/_all/1/');
+        expect(params.path).to.be('/index1/_all/1/');
         done();
       });
     });
@@ -719,7 +719,7 @@ describe('Client Action runner', function () {
         thing: 'poo'
       }, function (err, params) {
         if (err) { throw err; }
-        params.path.should.be.exactly('/index1%2Cindex2/_all%2C-pizza/123/poo');
+        expect(params.path).to.be('/index1%2Cindex2/_all%2C-pizza/123/poo');
         done();
       });
     });
@@ -741,7 +741,7 @@ describe('Client Action runner', function () {
       },
       function (err, params) {
         if (err) { throw err; }
-        params.query.should.eql({
+        expect(params.query).to.eql({
           a: 'pizza',
           b: '1M'
         });
@@ -757,7 +757,7 @@ describe('Client Action runner', function () {
       },
       function (err, params) {
         if (err) { throw err; }
-        params.query.should.eql({
+        expect(params.query).to.eql({
           a: 'pizza',
           b: '3w',
           c: 'popular'
@@ -773,7 +773,7 @@ describe('Client Action runner', function () {
       },
       function (err, params) {
         if (err) { throw err; }
-        params.query.should.eql({
+        expect(params.query).to.eql({
           a: 'pizza'
         });
         done();
@@ -792,7 +792,7 @@ describe('Client Action runner', function () {
       },
       function (err, params) {
         if (err) { throw err; }
-        params.query.should.eql({
+        expect(params.query).to.eql({
           a: 'pizza',
           b: '3w',
           q: 'beep'
@@ -806,7 +806,7 @@ describe('Client Action runner', function () {
         b: '3w'
       },
       function (err, params) {
-        err.should.be.an.instanceOf(TypeError);
+        expect(err).to.be.a(TypeError);
         done();
       });
     });

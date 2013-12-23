@@ -1,39 +1,40 @@
-var Log = require('../../src/lib/log');
-var StreamLogger = require('../../src/lib/loggers/stream');
-var MockWritableStream = require('../mocks/writable_stream');
-var once = require('events').EventEmitter.prototype.once;
-var stream = new MockWritableStream();
-var _ = require('lodash');
-var parentLog;
-
-var stub = require('./auto_release_stub').make();
-
-beforeEach(function () {
-  stub(stream, 'write');
-  stub(stream, 'end');
-
-  parentLog = new Log();
-});
-
-afterEach(function () {
-  parentLog.close();
-
-  if (stream._writableState && stream._writableState.buffer.length) {
-    // empty the buffer manually
-    stream._writableState.buffer.splice(0);
-  }
-});
-
-function makeLogger(parent, levels) {
-  parent = parent || parentLog;
-  var config = {
-    levels: Log.parseLevels(levels || 'trace'),
-    stream: stream
-  };
-  return new StreamLogger(parent, config);
-}
-
 describe('Stream Logger', function () {
+  var Log = require('../../src/lib/log');
+  var StreamLogger = require('../../src/lib/loggers/stream');
+  var MockWritableStream = require('../mocks/writable_stream');
+  var once = require('events').EventEmitter.prototype.once;
+  var stream = new MockWritableStream();
+  var _ = require('lodash');
+  var expect = require('expect.js');
+  var parentLog;
+
+  var stub = require('./auto_release_stub').make();
+
+  beforeEach(function () {
+    stub(stream, 'write');
+    stub(stream, 'end');
+
+    parentLog = new Log();
+  });
+
+  afterEach(function () {
+    parentLog.close();
+
+    if (stream._writableState && stream._writableState.buffer.length) {
+      // empty the buffer manually
+      stream._writableState.buffer.splice(0);
+    }
+  });
+
+  function makeLogger(parent, levels) {
+    parent = parent || parentLog;
+    var config = {
+      levels: Log.parseLevels(levels || 'trace'),
+      stream: stream
+    };
+    return new StreamLogger(parent, config);
+  }
+
   require('./generic_logger_tests')(makeLogger);
 
   describe('buffer flush', function () {
@@ -67,8 +68,8 @@ describe('Stream Logger', function () {
         console.error.restore();
 
         // the first line is sent immediately to _write and there is nothing we are not going to worry about it
-        flushedOutput.should.match(new RegExp(line));
-        flushedOutput.match(new RegExp(line, 'g')).length.should.eql(9);
+        expect(flushedOutput).to.match(new RegExp(line));
+        expect(flushedOutput.match(new RegExp(line, 'g'))).to.have.length(9);
       });
     } else {
       it('does not fall apart with non streams2 streams', function () {
@@ -82,10 +83,10 @@ describe('Stream Logger', function () {
 
         var logger = makeLogger();
 
-        (function () {
+        expect(function () {
           // call the event handler
           exitHandler.call(process);
-        }).should.not.throw();
+        }).to.not.throw();
       });
     }
   });

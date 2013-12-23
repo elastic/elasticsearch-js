@@ -1,7 +1,7 @@
-var es = require('../../src/elasticsearch');
-var api = require('../../src/lib/api');
-
 describe('Client instances creation', function () {
+  var es = require('../../src/elasticsearch');
+  var api = require('../../src/lib/api');
+  var expect = require('expect.js');
   var client;
 
   beforeEach(function () {
@@ -12,20 +12,21 @@ describe('Client instances creation', function () {
   });
 
   it('throws an error linking to the es module when you try to instanciate the exports', function () {
-    (function () {
-      var client = new es();
-    }).should.throw(/previous "elasticsearch" module/);
+    var Es = es;
+    expect(function () {
+      var client = new Es();
+    }).to.throwError(/previous "elasticsearch" module/);
   });
 
   it('Succeeds even not called with new', function () {
     var client = es.Client();
-    client.bulk.should.eql(api.bulk);
-    client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);
+    expect(client.bulk).to.eql(api.bulk);
+    expect(client.cluster.nodeStats).to.eql(api.cluster.prototype.nodeStats);
   });
 
   it('inherits the api', function () {
-    client.bulk.should.eql(api.bulk);
-    client.cluster.nodeStats.should.eql(api.cluster.prototype.nodeStats);
+    expect(client.bulk).to.eql(api.bulk);
+    expect(client.cluster.nodeStats).to.eql(api.cluster.prototype.nodeStats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {
@@ -34,14 +35,14 @@ describe('Client instances creation', function () {
       called = true;
     };
     client.close();
-    called.should.be.exactly(true);
+    expect(called).to.be(true);
   });
 
   it('creates a warning level logger by default', function () {
-    client.transport.log.listenerCount('error').should.eql(1);
-    client.transport.log.listenerCount('warning').should.eql(1);
-    client.transport.log.listenerCount('info').should.eql(0);
-    client.transport.log.listenerCount('debug').should.eql(0);
-    client.transport.log.listenerCount('trace').should.eql(0);
+    expect(client.transport.log.listenerCount('error')).to.eql(1);
+    expect(client.transport.log.listenerCount('warning')).to.eql(1);
+    expect(client.transport.log.listenerCount('info')).to.eql(0);
+    expect(client.transport.log.listenerCount('debug')).to.eql(0);
+    expect(client.transport.log.listenerCount('trace')).to.eql(0);
   });
 });

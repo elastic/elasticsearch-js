@@ -4,7 +4,7 @@ var errors = require('../../src/lib/errors');
 var when = require('when');
 
 var sinon = require('sinon');
-var should = require('should');
+var expect = require('expect.js');
 var _ = require('lodash');
 var nodeList = require('../fixtures/short_node_list.json');
 var stub = require('./auto_release_stub').make();
@@ -33,7 +33,7 @@ describe('Transport Class', function () {
         log: CustomLogClass
       });
 
-      trans.log.should.be.an.instanceOf(CustomLogClass);
+      expect(trans.log).to.be.a(CustomLogClass);
     });
 
     it('Accepts a connection pool class and intanciates it at this.connectionPool', function () {
@@ -42,7 +42,7 @@ describe('Transport Class', function () {
         connectionPool: CustomConnectionPool
       });
 
-      trans.connectionPool.should.be.an.instanceOf(CustomConnectionPool);
+      expect(trans.connectionPool).to.be.a(CustomConnectionPool);
     });
 
     it('Accepts the name of a connectionPool class that is defined on Transport.connectionPools', function () {
@@ -52,16 +52,16 @@ describe('Transport Class', function () {
         connectionPool: 'custom'
       });
 
-      trans.connectionPool.should.be.an.instanceOf(Transport.connectionPools.custom);
+      expect(trans.connectionPool).to.be.a(Transport.connectionPools.custom);
       delete Transport.connectionPools.custom;
     });
 
     it('Throws an error when connectionPool config is set wrong', function () {
-      (function () {
+      expect(function () {
         var trans = new Transport({
           connectionPool: 'pasta'
         });
-      }).should.throw(/invalid connectionpool/i);
+      }).to.throwError(/invalid connectionpool/i);
     });
 
     it('calls sniff immediately if sniffOnStart is true', function () {
@@ -70,7 +70,7 @@ describe('Transport Class', function () {
         sniffOnStart: true
       });
 
-      trans.sniff.callCount.should.eql(1);
+      expect(trans.sniff.callCount).to.eql(1);
     });
 
     it('schedules a sniff when sniffInterval is set', function () {
@@ -81,34 +81,34 @@ describe('Transport Class', function () {
         sniffInterval: 25000
       });
 
-      _.size(clock.timeouts).should.eql(1);
+      expect(_.size(clock.timeouts)).to.eql(1);
       var id = _.keys(clock.timeouts).pop();
       clock.tick(25000);
-      trans.sniff.callCount.should.eql(1);
-      _.size(clock.timeouts).should.eql(1);
-      _.keys(clock.timeouts).pop().should.not.eql(id);
+      expect(trans.sniff.callCount).to.eql(1);
+      expect(_.size(clock.timeouts)).to.eql(1);
+      expect(clock.timeouts).to.not.have.key(id);
 
       clock.restore();
     });
 
     describe('host config', function () {
       it('rejects non-strings/objects', function () {
-        (function () {
+        expect(function () {
           var trans = new Transport({
             host: [
               'localhost',
               9393
             ]
           });
-        }).should.throw(TypeError);
+        }).to.throwError(TypeError);
 
-        (function () {
+        expect(function () {
           var trans = new Transport({
             host: [
               [9292]
             ]
           });
-        }).should.throw(TypeError);
+        }).to.throwError(TypeError);
       });
 
       it('accepts the config value on the host: key', function () {
@@ -117,8 +117,8 @@ describe('Transport Class', function () {
           host: 'localhost'
         });
 
-        trans.connectionPool.setHosts.callCount.should.eql(1);
-        trans.connectionPool.setHosts.lastCall.args[0].should.eql([
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
+        expect(trans.connectionPool.setHosts.lastCall.args[0]).to.eql([
           new Host('localhost')
         ]);
       });
@@ -129,8 +129,8 @@ describe('Transport Class', function () {
           hosts: 'localhost'
         });
 
-        trans.connectionPool.setHosts.callCount.should.eql(1);
-        trans.connectionPool.setHosts.lastCall.args[0].should.eql([
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
+        expect(trans.connectionPool.setHosts.lastCall.args[0]).to.eql([
           new Host('localhost')
         ]);
       });
@@ -142,8 +142,8 @@ describe('Transport Class', function () {
           host: h
         });
 
-        trans.connectionPool.setHosts.callCount.should.eql(1);
-        trans.connectionPool.setHosts.lastCall.args[0][0].should.be.exactly(h);
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
+        expect(trans.connectionPool.setHosts.lastCall.args[0][0]).to.be(h);
       });
 
       it('accepts strings as the config', function () {
@@ -154,8 +154,8 @@ describe('Transport Class', function () {
           ]
         });
 
-        trans.connectionPool.setHosts.callCount.should.eql(1);
-        trans.connectionPool.setHosts.lastCall.args[0].should.eql([
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
+        expect(trans.connectionPool.setHosts.lastCall.args[0]).to.eql([
           new Host({
             host: 'localhost',
             port: 8888
@@ -179,8 +179,8 @@ describe('Transport Class', function () {
           ]
         });
 
-        trans.connectionPool.setHosts.callCount.should.eql(1);
-        trans.connectionPool.setHosts.lastCall.args[0].should.eql([
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
+        expect(trans.connectionPool.setHosts.lastCall.args[0]).to.eql([
           new Host('https://myescluster.com:777/bon/iver?access=all')
         ]);
       });
@@ -195,7 +195,7 @@ describe('Transport Class', function () {
           hosts: 'localhost'
         });
 
-        _.shuffle.callCount.should.eql(1);
+        expect(_.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
         var _ = require('../../src/lib/utils');
@@ -206,14 +206,14 @@ describe('Transport Class', function () {
           randomizeHosts: false
         });
 
-        _.shuffle.callCount.should.eql(0);
+        expect(_.shuffle.callCount).to.eql(0);
       });
     });
   });
 
   describe('#defer', function () {
     it('returns a when.js promise by default', function () {
-      Transport.prototype.defer().constructor.should.be.exactly(when.defer().constructor);
+      expect(Transport.prototype.defer().constructor).to.be(when.defer().constructor);
     });
   });
 
@@ -239,13 +239,13 @@ describe('Transport Class', function () {
     it('works without a callback', function (done) {
       trans.sniff();
       setTimeout(function () {
-        trans.request.callCount.should.eql(1);
+        expect(trans.request.callCount).to.eql(1);
         done();
       }, 5);
     });
     it('calls the nodesToHostCallback with the list of nodes', function (done) {
       trans.nodesToHostCallback = function (nodes) {
-        nodes.should.eql(nodeList);
+        expect(nodes).to.eql(nodeList);
         done();
         return [];
       };
@@ -254,18 +254,18 @@ describe('Transport Class', function () {
     it('takes the host configs, converts them into Host objects, and passes them to connectionPool.setHosts',
     function (done) {
       trans.sniff(function () {
-        trans.connectionPool.setHosts.callCount.should.eql(1);
+        expect(trans.connectionPool.setHosts.callCount).to.eql(1);
         var hosts = trans.connectionPool.setHosts.lastCall.args[0];
 
-        hosts.should.have.length(2);
+        expect(hosts).to.have.length(2);
 
-        hosts[0].should.be.an.instanceOf(Host);
-        hosts[0].host.should.eql('10.10.10.100');
-        hosts[0].port.should.eql(9205);
+        expect(hosts[0]).to.be.a(Host);
+        expect(hosts[0].host).to.eql('10.10.10.100');
+        expect(hosts[0].port).to.eql(9205);
 
-        hosts[0].should.be.an.instanceOf(Host);
-        hosts[1].host.should.eql('10.10.10.101');
-        hosts[1].port.should.eql(9205);
+        expect(hosts[0]).to.be.a(Host);
+        expect(hosts[1].host).to.eql('10.10.10.101');
+        expect(hosts[1].port).to.eql(9205);
         done();
       });
     });
@@ -277,22 +277,20 @@ describe('Transport Class', function () {
       };
 
       trans.sniff(function (err) {
-        err.message.should.eql('something funked up');
+        expect(err.message).to.eql('something funked up');
         done();
       });
     });
     it('passed back the full server response', function (done) {
       trans.sniff(function (err, resp, status) {
-        resp.should.include({
-          ok: true,
-          cluster_name: 'clustername'
-        });
+        expect(resp.ok).to.eql(true);
+        expect(resp.cluster_name).to.eql('clustername');
         done();
       });
     });
     it('passed back the server response code', function (done) {
       trans.sniff(function (err, resp, status) {
-        status.should.eql(200);
+        expect(status).to.eql(200);
         done();
       });
     });
@@ -308,7 +306,7 @@ describe('Transport Class', function () {
       });
 
       trans.request({}, function () {
-        trans.log.debug.callCount.should.eql(1);
+        expect(trans.log.debug.callCount).to.eql(1);
         done();
       });
     });
@@ -323,9 +321,8 @@ describe('Transport Class', function () {
         body: 'JSON!!',
         method: 'GET'
       }, function (err) {
-        should.exist(err);
-        err.should.be.an.instanceOf(TypeError);
-        err.message.should.match(/body.*method.*get/i);
+        expect(err).to.be.a(TypeError);
+        expect(err.message).to.match(/body.*method.*get/i);
         done();
       });
     });
@@ -342,7 +339,7 @@ describe('Transport Class', function () {
         };
 
         stub(conn, 'request', function (params) {
-          JSON.parse(params.body).should.eql(body);
+          expect(JSON.parse(params.body)).to.eql(body);
           done();
         });
 
@@ -361,7 +358,7 @@ describe('Transport Class', function () {
         ];
 
         stub(conn, 'request', function (params) {
-          params.body.should.eql(
+          expect(params.body).to.eql(
             '{"_id":"simple body"}\n' +
             '{"name":"ഢധയമബ"}\n'
           );
@@ -386,11 +383,11 @@ describe('Transport Class', function () {
         };
         body.body = body;
 
-        (function () {
+        expect(function () {
           trans.request({
             body: body
           });
-        }).should.throw(TypeError);
+        }).to.throwError(TypeError);
       });
     });
 
@@ -399,10 +396,10 @@ describe('Transport Class', function () {
         var trans = new Transport();
         stub(trans.log, 'warning');
         trans.request({}, function (err, body, status) {
-          trans.log.warning.callCount.should.eql(1);
-          err.should.be.an.instanceOf(errors.NoConnections);
-          should.not.exist(body);
-          should.not.exist(status);
+          expect(trans.log.warning.callCount).to.eql(1);
+          expect(err).to.be.a(errors.NoConnections);
+          expect(body).to.be(undefined);
+          expect(status).to.be(undefined);
           done();
         });
       });
@@ -415,7 +412,7 @@ describe('Transport Class', function () {
         });
 
         trans.request({}, function (err, body, status) {
-          err.message.should.eql('I am broken');
+          expect(err.message).to.eql('I am broken');
         });
       });
       it('quits if gets an error from an async selector', function () {
@@ -429,7 +426,7 @@ describe('Transport Class', function () {
         });
 
         trans.request({}, function (err, body, status) {
-          err.message.should.eql('I am broken');
+          expect(err.message).to.eql('I am broken');
         });
       });
       it('calls connection#request once it gets one', function (done) {
@@ -478,10 +475,10 @@ describe('Transport Class', function () {
           });
 
           trans.request({}, function (err, resp, body) {
-            attempts.should.eql(retries + 1);
-            err.should.be.an.instanceOf(errors.ConnectionFault);
-            should.not.exist(resp);
-            should.not.exist(body);
+            expect(attempts).to.eql(retries + 1);
+            expect(err).to.be.a(errors.ConnectionFault);
+            expect(resp).to.be(undefined);
+            expect(body).to.be(undefined);
             done();
           });
         };
@@ -497,15 +494,15 @@ describe('Transport Class', function () {
         var tran = new Transport();
         shortCircuitRequest(tran);
         var ret = tran.request({}, _.noop);
-        ret.should.have.type('object');
-        ret.abort.should.have.type('function');
+        expect(ret).to.be.a('object');
+        expect(ret.abort).to.be.a('function');
       });
       it('the object is a promise when a callback is not suplied', function () {
         var tran = new Transport();
         shortCircuitRequest(tran);
         var ret = tran.request({});
-        when.isPromise(ret).should.be.ok;
-        ret.abort.should.have.type('function');
+        expect(when.isPromise(ret)).to.be(true);
+        expect(ret.abort).to.be.a('function');
       });
       it('promise is always pulled from the defer created by this.defer()', function () {
         var fakePromise = {};
@@ -521,8 +518,8 @@ describe('Transport Class', function () {
         shortCircuitRequest(tran);
         var ret = tran.request({});
         Transport.prototype.defer = origDefer;
-        ret.should.be.exactly(fakePromise);
-        ret.abort.should.have.type('function');
+        expect(ret).to.be(fakePromise);
+        expect(ret.abort).to.be.a('function');
       });
     });
 
@@ -583,9 +580,9 @@ describe('Transport Class', function () {
 
         tran.request({});
 
-        _.size(clock.timeouts).should.eql(1);
+        expect(_.size(clock.timeouts)).to.eql(1);
         _.each(clock.timeouts, function (timer, id) {
-          timer.callAt.should.eql(30000);
+          expect(timer.callAt).to.eql(30000);
           clearTimeout(id);
         });
         clock.restore();
@@ -599,9 +596,9 @@ describe('Transport Class', function () {
 
         tran.request({});
 
-        _.size(clock.timeouts).should.eql(1);
+        expect(_.size(clock.timeouts)).to.eql(1);
         _.each(clock.timeouts, function (timer, id) {
-          timer.callAt.should.eql(5000);
+          expect(timer.callAt).to.eql(5000);
           clearTimeout(id);
         });
         clock.restore();
@@ -618,7 +615,7 @@ describe('Transport Class', function () {
             requestTimeout: falsy
           }, function (_err) {});
 
-          _.size(clock.timeouts).should.eql(0);
+          expect(_.size(clock.timeouts)).to.eql(0);
           clock.restore();
         });
       });
@@ -633,8 +630,8 @@ describe('Transport Class', function () {
 
       tran.close();
 
-      tran.connectionPool.close.callCount.should.eql(1);
-      tran.log.close.callCount.should.eql(1);
+      expect(tran.connectionPool.close.callCount).to.eql(1);
+      expect(tran.log.close.callCount).to.eql(1);
     });
   });
 

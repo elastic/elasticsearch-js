@@ -1,14 +1,14 @@
 /* jshint browser:true */
 /* global angular */
 
-var should = require('should');
+var expect = require('expect.js');
 var Client = require('../../src/lib/client');
 
 describe('Angular esFactory', function () {
   before(function (done) {
     // inject angular
     var scr = document.createElement('script');
-    scr.src = '/test/unit/angular-1.2.5.js';
+    scr.src = '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.5/angular.js';
     scr.async = true;
     scr.onload = function () {
       require('../../src/elasticsearch.angular.js');
@@ -37,7 +37,7 @@ describe('Angular esFactory', function () {
   it('is available in the elasticsearch module', function (done) {
     directive(function (esFactory) {
       return function () {
-        esFactory.should.have.type('function');
+        expect(esFactory).to.be.a('function');
         done();
       };
     });
@@ -45,8 +45,8 @@ describe('Angular esFactory', function () {
   it('has Transport and ConnectionPool properties', function (done) {
     directive(function (esFactory) {
       return function () {
-        esFactory.should.have.property('Transport');
-        esFactory.should.have.property('ConnectionPool');
+        expect(esFactory).to.have.property('Transport');
+        expect(esFactory).to.have.property('ConnectionPool');
         done();
       };
     });
@@ -54,7 +54,7 @@ describe('Angular esFactory', function () {
   it('returns a new client when it is called', function (done) {
     directive(function (esFactory) {
       return function () {
-        esFactory({ log: null }).should.be.an.instanceOf(Client);
+        expect(esFactory({ log: null })).to.be.a(Client);
         done();
       };
     });

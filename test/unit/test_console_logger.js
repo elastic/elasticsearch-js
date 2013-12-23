@@ -1,6 +1,7 @@
 var Log = require('../../src/lib/log');
 var ConsoleLogger = require('../../src/lib/loggers/console');
 var sinon = require('sinon');
+var expect = require('expect.js');
 var parentLog;
 
 beforeEach(function () {
@@ -33,7 +34,7 @@ describe('Console Logger', function () {
     var logger = makeLogger();
 
     logger.onWarning('message');
-    console.log.callCount.should.eql(1);
+    expect(console.log.callCount).to.be(1);
 
     console.warn = _warning;
     console.log.restore();

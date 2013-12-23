@@ -1,7 +1,6 @@
-var JsonSerializer = require('../../src/lib/serializers/json');
-var should = require('should');
-
 describe('JSON serializer', function () {
+  var JsonSerializer = require('../../src/lib/serializers/json');
+  var expect = require('expect.js');
   var stub = require('./auto_release_stub').make();
 
   function makeSerializer() {
@@ -13,20 +12,20 @@ describe('JSON serializer', function () {
       stub(JSON, 'stringify');
       var ser = makeSerializer();
       ser.serialize({ some: 'object' });
-      JSON.stringify.callCount.should.eql(1);
+      expect(JSON.stringify.callCount).to.eql(1);
     });
 
     it('does not modify strings', function () {
       var ser = makeSerializer();
       var thing = 'pretend that I am serialized';
-      ser.serialize(thing).should.be.exactly(thing);
+      expect(ser.serialize(thing)).to.be(thing);
     });
 
     it('returns nothing for invalid values', function () {
       var ser = makeSerializer();
 
-      should.not.exist(ser.serialize(null));
-      should.not.exist(ser.serialize(false));
+      expect(ser.serialize(null)).to.be(undefined);
+      expect(ser.serialize(false)).to.be(undefined);
     });
 
     it('throws serialization errors', function () {
@@ -34,9 +33,9 @@ describe('JSON serializer', function () {
       var thing = { name: 'thing' };
       thing.self = thing;
 
-      (function () {
+      expect(function () {
         ser.serialize(thing);
-      }).should.throw();
+      }).to.throwError();
     });
   });
 
@@ -45,22 +44,22 @@ describe('JSON serializer', function () {
       stub(JSON, 'parse');
       var ser = makeSerializer();
       ser.deserialize('{ "some": "JSON" }');
-      JSON.parse.callCount.should.eql(1);
+      expect(JSON.parse.callCount).to.eql(1);
     });
 
     it('ignores non string values', function () {
       var ser = makeSerializer();
       var thing = ['pretend that I am not here'];
-      should.not.exist(ser.deserialize(thing));
-      should.not.exist(ser.deserialize(null));
-      should.not.exist(ser.deserialize(false));
+      expect(ser.deserialize(thing)).to.be(undefined);
+      expect(ser.deserialize(null)).to.be(undefined);
+      expect(ser.deserialize(false)).to.be(undefined);
     });
 
     it('catches serialization errors, returns nothing', function () {
       var ser = makeSerializer();
       var thing = '{ name: \'thing\' }';
 
-      should.not.exist(ser.deserialize(thing));
+      expect(ser.deserialize(thing)).to.be(undefined);
     });
   });
 
@@ -73,27 +72,27 @@ describe('JSON serializer', function () {
 
     it('creates a string out of an array of obejcts', function () {
       var ser = makeSerializer();
-      ser.bulkBody(body).should.eql(bulk);
+      expect(ser.bulkBody(body)).to.eql(bulk);
     });
 
     it('adds a newline to the end of strings', function () {
       var ser = makeSerializer();
-      ser.bulkBody(bulk.substr(0, bulk.length - 1)).should.eql(bulk);
+      expect(ser.bulkBody(bulk.substr(0, bulk.length - 1))).to.eql(bulk);
     });
 
     it('throws an error for anything else', function () {
       var ser = makeSerializer();
-      (function () {
+      expect(function () {
         ser.bulkBody({});
-      }).should.throw();
+      }).to.throwError();
 
-      (function () {
+      expect(function () {
         ser.bulkBody(null);
-      }).should.throw();
+      }).to.throwError();
 
-      (function () {
+      expect(function () {
         ser.bulkBody(false);
-      }).should.throw();
+      }).to.throwError();
     });
   });
 });

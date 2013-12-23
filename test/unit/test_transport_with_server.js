@@ -2,10 +2,10 @@ var Transport = require('../../src/lib/transport');
 var Host = require('../../src/lib/host');
 var errors = require('../../src/lib/errors');
 var when = require('when');
+var expect = require('expect.js');
 
 var sinon = require('sinon');
 var nock = require('../mocks/server.js');
-var should = require('should');
 var _ = require('lodash');
 var nodeList = require('../fixtures/short_node_list.json');
 var stub = require('./auto_release_stub').make();
@@ -86,10 +86,10 @@ describe('Transport + Mock server', function () {
           trans.request({
             path: '/give-me-400'
           }, function (err, body, status) {
-            err.should.be.an.instanceOf(errors[400]);
-            err.should.be.an.instanceOf(errors.BadRequest);
-            body.should.eql('sorry bub');
-            status.should.eql(400);
+            expect(err).to.be.a(errors[400]);
+            expect(err).to.be.a(errors.BadRequest);
+            expect(body).to.eql('sorry bub');
+            expect(status).to.eql(400);
             done();
           });
         });
@@ -106,9 +106,9 @@ describe('Transport + Mock server', function () {
               path: '/give-me-404',
               castExists: true
             }, function (err, body, status) {
-              should.not.exist(err);
-              body.should.eql(false);
-              status.should.eql(404);
+              expect(err).to.be(undefined);
+              expect(body).to.eql(false);
+              expect(status).to.eql(404);
               done();
             });
           });
@@ -122,10 +122,10 @@ describe('Transport + Mock server', function () {
             trans.request({
               path: '/give-me-404'
             }, function (err, body, status) {
-              err.should.be.an.instanceOf(errors[404]);
-              err.should.be.an.instanceOf(errors.NotFound);
-              body.should.eql('nothing here');
-              status.should.eql(404);
+              expect(err).to.be.a(errors[404]);
+              expect(err).to.be.a(errors.NotFound);
+              expect(body).to.eql('nothing here');
+              expect(status).to.eql(404);
               done();
             });
           });
@@ -141,10 +141,10 @@ describe('Transport + Mock server', function () {
           trans.request({
             path: '/give-me-500'
           }, function (err, body, status) {
-            err.should.be.an.instanceOf(errors[500]);
-            err.should.be.an.instanceOf(errors.InternalServerError);
-            body.should.eql('ah shit');
-            status.should.eql(500);
+            expect(err).to.be.a(errors[500]);
+            expect(err).to.be.a(errors.InternalServerError);
+            expect(body).to.eql('ah shit');
+            expect(status).to.eql(500);
             done();
           });
         });
@@ -159,9 +159,9 @@ describe('Transport + Mock server', function () {
           trans.request({
             path: '/huh?'
           }, function (err, body, status) {
-            err.should.be.an.instanceOf(errors.Generic);
-            body.should.eql('boo');
-            status.should.eql(530);
+            expect(err).to.be.a(errors.Generic);
+            expect(body).to.eql('boo');
+            expect(status).to.eql(530);
             done();
           });
         });
@@ -178,9 +178,9 @@ describe('Transport + Mock server', function () {
               path: '/exists?',
               castExists: true
             }, function (err, body, status) {
-              should.not.exist(err);
-              body.should.eql(true);
-              status.should.eql(200);
+              expect(err).to.be(undefined);
+              expect(body).to.eql(true);
+              expect(status).to.eql(200);
               done();
             });
           });
@@ -194,9 +194,9 @@ describe('Transport + Mock server', function () {
             trans.request({
               path: '/give-me-someth',
             }, function (err, body, status) {
-              err.should.be.an.instanceOf(errors.Serialization);
-              body.should.eql('{"not":"valid');
-              status.should.eql(200);
+              expect(err).to.be.a(errors.Serialization);
+              expect(body).to.eql('{"not":"valid');
+              expect(status).to.eql(200);
               done();
             });
           });
@@ -210,8 +210,8 @@ describe('Transport + Mock server', function () {
             trans.request({
               path: '/',
             }, function (err, body, status) {
-              should.not.exist(err);
-              body.should.eql({
+              expect(err).to.be(undefined);
+              expect(body).to.eql({
                 'the answer': 42
               });
               done();
@@ -229,8 +229,8 @@ describe('Transport + Mock server', function () {
           trans.request({
             path: '/hottie-threads',
           }, function (err, body, status) {
-            should.not.exist(err);
-            body.should.match(/s?he said/g);
+            expect(err).to.be(undefined);
+            expect(body).to.match(/s?he said/g);
             done();
           });
         });
@@ -250,7 +250,7 @@ describe('Transport + Mock server', function () {
         });
 
         tran.request({}).then(function (resp) {
-          resp.should.eql({
+          expect(resp).to.eql({
             good: 'day'
           });
           done();
@@ -272,10 +272,10 @@ describe('Transport + Mock server', function () {
           });
 
         tran.request({}, function (err, resp, status) {
-          should.not.exist(err);
-          resp.should.eql({ i: 'am here' });
-          status.should.eql(200);
-          Object.keys(clock.timeouts).should.have.length(0);
+          expect(err).to.be(undefined);
+          expect(resp).to.eql({ i: 'am here' });
+          expect(status).to.eql(200);
+          expect(_.keys(clock.timeouts)).to.have.length(0);
           clock.restore();
         });
       });
@@ -296,8 +296,8 @@ describe('Transport + Mock server', function () {
         tran.request({
           requestTimeout: 25
         }, function (err, resp, status) {
-          err.should.be.an.instanceOf(errors.RequestTimeout);
-          // Object.keys(clock.timeouts).should.have.length(0);
+          expect(err).to.be.a(errors.RequestTimeout);
+          // expect(_.keys(clock.timeouts)).to.have.length(0);
           // clock.restore();
           done();
         });
