@@ -1,6 +1,7 @@
 describe('JSON serializer', function () {
   var JsonSerializer = require('../../src/lib/serializers/json');
   var expect = require('expect.js');
+  var sinon = require('sinon');
   var stub = require('./auto_release_stub').make();
 
   function makeSerializer() {
@@ -9,10 +10,11 @@ describe('JSON serializer', function () {
 
   describe('#serialize', function () {
     it('defers to JSON.stringify', function () {
-      stub(JSON, 'stringify');
+      var stub = sinon.stub(JSON, 'stringify');
       var ser = makeSerializer();
       ser.serialize({ some: 'object' });
-      expect(JSON.stringify.callCount).to.eql(1);
+      expect(stub.callCount).to.eql(1);
+      stub.restore();
     });
 
     it('does not modify strings', function () {
