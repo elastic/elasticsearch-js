@@ -66,11 +66,6 @@
     ],
     "harness": "mocha",
     "browsers": {
-      "ie": [
-        9,
-        10,
-        11
-      ],
       "firefox": [
         24,
         "nightly"
