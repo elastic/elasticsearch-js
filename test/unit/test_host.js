@@ -78,7 +78,7 @@ describe('Host class', function () {
       });
 
       it('will cause extra properties', function () {
-        var host = new Host(url.parse('https://joe:diner@pizza.com:888/path?query=yes'));
+        var host = new Host(url.parse('https://joe:diner@pizza.com:888/path?query=yes#section'));
         expect(host.protocol).to.eql('https');
         expect(host.host).to.eql('pizza.com');
         expect(host.port).to.eql(888);

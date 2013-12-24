@@ -53,7 +53,7 @@ module.exports = function (makeLogger) {
         expect(function () {
           // call the event handler
           exitHandler.call(process);
-        }).to.not.throw();
+        }).to.not.throwError();
       });
     }
   });
