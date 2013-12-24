@@ -23,6 +23,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('travis', [
     'test',
+    'browser_clients:test',
     'mochacov:ship_coverage'
   ]);
 };

@@ -1,8 +1,8 @@
 module.exports = function (grunt) {
   grunt.registerTask('browser_clients:test', [
-    'build',
-    'browserify:yaml_tests',
-    'run:browser_unit_tests',
+    'browser_clients:build',
+    'run:browser_unit_tests'
+    // 'browserify:yaml_tests',
     // 'run:browser_integration_tests'
   ]);
 

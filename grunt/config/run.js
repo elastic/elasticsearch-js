@@ -3,7 +3,7 @@ module.exports = {
     exec: 'node scripts/generate'
   },
   browser_unit_tests: {
-    exec: 'npm run browser_tests',
+    exec: './node_modules/.bin/testling .',
     options: {
       cwd: '.'
     }
