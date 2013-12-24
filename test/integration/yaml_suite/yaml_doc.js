@@ -114,7 +114,7 @@ function YamlDoc(doc, file) {
     var method = self['do_' + action.name];
 
     // check that it's a function
-    expect(method).to.have.type('function');
+    expect(method).to.be.a('function');
 
     if (_.isPlainObject(action.args)) {
       action.name += ' ' + _.keys(action.args).join(', ');
