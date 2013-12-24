@@ -5,17 +5,8 @@ var expect = require('expect.js');
 var Client = require('../../src/lib/client');
 
 describe('Angular esFactory', function () {
-  before(function (done) {
-    // inject angular
-    var scr = document.createElement('script');
-    scr.src = '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.5/angular.js';
-    scr.async = true;
-    scr.onload = function () {
-      require('../../src/elasticsearch.angular.js');
-      done();
-    };
-    scr.type = 'text/javascript';
-    document.getElementsByTagName('head')[0].appendChild(scr);
+  before(function () {
+    require('../../src/elasticsearch.angular.js');
   });
 
   var uuid = (function () { var i = 0; return function () { return ++i; }; }());

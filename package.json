@@ -60,6 +60,9 @@
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "testling": {
+    "scripts": [
+      "test/unit/angular-*.js"
+    ],
     "files": [
       "test/unit/test_!(file_logger|http_connector|stdio_logger|console_logger|stream_logger|tracer_logger|transport_with_server)*",
       "test/unit/browser_test_*.js"
@@ -84,7 +87,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "browser_tests": "browserify test/unit/run_browser_builds.js | testling --harness=mocha -u",
     "blanket": {
       "pattern": "src"
     }
