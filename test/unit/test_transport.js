@@ -605,7 +605,7 @@ describe('Transport Class', function () {
       });
 
 
-      [false, 0, null].forEach(function (falsy) {
+      _.each([false, 0, null], function (falsy) {
         it('skips the timeout when it is ' + falsy, function () {
           var clock = sinon.useFakeTimers();
           var tran = new Transport({});

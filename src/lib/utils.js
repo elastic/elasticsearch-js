@@ -32,7 +32,7 @@ utils.joinPath = path.join;
  * @return {Object} - returns the modified to value
  */
 utils.deepMerge = function (to, from) {
-  Object.keys(from).forEach(function (key) {
+  _.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
     case 'undefined':
       to[key] = from[key];
@@ -56,7 +56,15 @@ utils.deepMerge = function (to, from) {
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-'String Object PlainObject Array Finite Function RegExp'.split(' ').forEach(function (type) {
+_.each([
+  'String',
+  'Object',
+  'PlainObject',
+  'Array',
+  'Finite',
+  'Function',
+  'RegExp'
+], function (type) {
   var check = _.bindKey(_, 'is' + type);
 
   utils['isArrayOf' + type + 's'] = function (arr) {

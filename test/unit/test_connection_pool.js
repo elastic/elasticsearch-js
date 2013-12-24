@@ -178,7 +178,7 @@ describe('Connection Pool', function () {
       var pingQueue = _.shuffle(connections);
       var expectedSelection = pingQueue[pingQueue.length - 1];
 
-      pingQueue.forEach(function (conn) {
+      _.each(pingQueue, function (conn) {
         pool.addConnection(conn);
         stub(conn, 'ping', function (params, cb) {
           if (typeof params === 'function') {

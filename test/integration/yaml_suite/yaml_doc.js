@@ -303,7 +303,7 @@ YamlDoc.prototype = {
     delete args.catch;
 
     var client = clientManager.get();
-    var action = Object.keys(args).pop();
+    var action = _.keys(args).pop();
     var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
     var params = _.transform(args[action], function (params, val, name) {

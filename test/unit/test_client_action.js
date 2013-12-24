@@ -679,11 +679,11 @@ describe('Client Action runner', function () {
           opt: {
             type: {
               type: 'list',
-              default: '_all'
+              'default': '_all'
             },
             thing: {
               type: 'any',
-              default: ''
+              'default': ''
             }
           }
         }
@@ -729,7 +729,7 @@ describe('Client Action runner', function () {
     var action = makeClientAction({
       params: {
         a: { type: 'list', required: true },
-        b: { type: 'duration', default: '15m' },
+        b: { type: 'duration', 'default': '15m' },
         q: { type: 'any' }
       }
     });

@@ -11,7 +11,8 @@
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
-    "./test/mocks/server.js": "./test/mocks/browser_server.js"
+    "./test/mocks/server.js": "./test/mocks/browser_server.js",
+    "lodash": "./node_modules/lodash/dist/lodash.compat.js"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
