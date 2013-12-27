@@ -1,0 +1,37 @@
+.Get the number of all documents in the cluster
+[source,js]
+---------
+client.count(function (error, response, status) {
+  // check for and handle error
+  var count = response.count;
+});
+---------
+
+.Get the number of documents in an index
+[source,js]
+---------
+client.count({
+  index: 'index_name'
+}, function (error, response) {
+  // ...
+});
+---------
+
+.Get the number of documents matching a query
+[source,js]
+---------
+client.count(
+  index: 'index_name',
+  body: {
+    filtered: {
+      filter: {
+        terms: {
+          foo: ['bar']
+        }
+      }
+    }
+  }
+}, function (err, response) {
+  // ...
+});
+---------

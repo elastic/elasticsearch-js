@@ -1,0 +1,34 @@
+.Search with a simple query string query
+[source,js]
+---------
+client.search({
+  index: 'myindex',
+  q: 'title:test'
+}, function (error, response) {
+  // ...
+});
+---------
+
+.Passing a full request definition in the Elasticsearch's Query DSL as a `Hash`
+[source,js]
+---------
+client.search({
+  index: 'myindex',
+  body: {
+    query: {
+      match: {
+        title: 'test'
+      }
+    },
+    facets: {
+      tags: {
+        terms: {
+          field: 'tags'
+        }
+      }
+    }
+  }
+}, function (error, response) {
+  // ...
+}):
+---------

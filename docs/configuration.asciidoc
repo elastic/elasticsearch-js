@@ -1,0 +1,246 @@
+[[configuration]]
+== Configuration
+
+The `Client` constructor accepts a single object as it's argument, and the following keys can be used to configure that client instance.
+
+[source,js]
+------
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({
+  ...
+});
+------
+
+=== Config options
+[horizontal]
+`host or hosts`[[config-hosts]]::
+`String, String[], Object[]` -- Specify the hosts that this client will connect to. If sniffing is enabled, or you call `client.sniff()`, this list will be used as seeds to discover the rest of your cluster.
+
+Default:::
++
+[source,js]
+------
+'http://localhost:9200'
+------
+
+
+
+`log`[[config-log]]:: `String, String[], Object, Object[], Constructor` -- Unless a constructor is specified, this sets the output settings for the bundled logger. See the section on configuring-logging[logging] for more information.
+
+Default in Node:::
++
+[source,js]
+-----
+[{
+  type: 'stdio',
+  levels: ['error', 'warning']
+}]
+-----
+
+
+
+`connectionClass`[[config-connectionClass]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
+
+Defaults:::
+  * Node: `"http"`
+  * Browser Build: `"xhr"`
+  * Angular Build: `"angular"`
+  * jQuery Build: `"jquery"`
+
+
+
+`selector`:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
++
+To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style with a possible error like: `cb(err, selectedConnection)`.
+
+Default::: `"roundRobin"`
+
+Options:::
+  * `"roundRobin"`
+  * `"random"`
+
+
+
+
+`sniffOnStart`:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
+
+Default::: `false`
+
+
+
+
+
+`sniffInterval`:: `Number, false` -- Every `n` milliseconds, perform a sniff operation and make sure our list of nodes is complete.
+
+Default::: `false`
+
+
+
+
+
+`sniffOnConnectionFault`:: `Boolean` -- Should the client immediately sniff for a more current list of nodes when a connection dies?
+
+Default::: `false`
+
+
+
+
+`maxRetries`[[config-max-retries]]:: `Integer` -- How many times should the client try to connect to other nodes before returning a <<connection-fault,ConnectionFault>> error.
+
+Default::: `3`
+
+
+
+
+
+`requestTimeout`[[config-request-timeout]]:: `Number` -- Milliseconds before an HTTP request will be aborted and retried. This can also be set per request.
+
+Default::: `30000`
+
+
+
+
+
+`deadTimeout`:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
+
+Default::: `30000`
+
+
+
+
+
+`maxSockets`:: `Number` -- Number of sockets each connection should keep to it's corresponding node. This will also be the maximum number of concurrent requests that could be made to that node. These sockets are currently kept alive using https://github.com/TBEDP/agentkeepalive[agentkeepalive].
+
+Default::: `10`
+
+
+
+
+`maxKeepAliveTime`:: `Number, false` -- Milliseconds of inactivity before the socket is destroyed
+
+Default::: `60000`
+
+
+
+
+`defer`:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
+
+Default:::
++
+[source,js]
+-----
+function () {
+  return when.defer();
+}
+-----
+
+
+
+`nodesToHostCallback`:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
+
+Default:::
+see https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/nodes_to_host.js[nodes_to_host.js]
+
+
+
+=== Examples
+
+Connect to just a single seed node, and use sniffing to find the rest of the cluster.
+
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  sniffOnStart: true,
+  sniffInterval: 60000,
+});
+-----
+
+Specify a couple of hosts which use basic auth.
+
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  hosts: [
+    'https://user:pass@box1.server.org:9200',
+    'https://user:pass@box2.server.org:9200'
+  ]
+});
+-----
+
+Use host objects to define extra properties, and a selector that uses those properties to pick a node.
+
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  hosts: [
+    {
+      protocol: 'https',
+      host: 'box1.server.org',
+      port: 56394,
+      country: 'EU',
+      weight: 10
+    },
+    {
+      protocol: 'https',
+      host: 'box2.server.org',
+      port: 56394,
+      country: 'US',
+      weight: 50
+    }
+  ],
+  selector: function (hosts) {
+    var myCountry = process.env.COUNTRY;
+    // first try to find a node that is in the same country
+    var selection = _.find(nodes, function (node) {
+      return node.host.country === myCountry;
+    });
+
+    if (!selection) {
+      // choose the node with the smallest weight.
+      selection = _(nodes).sortBy(function (node) {
+        return node.host.weight;
+      }).first();
+    }
+
+    return selection;
+  }
+});
+-----
+
+.Use a custom nodesToHostCallback that will direct all of the requests to a proxy and select the node via a query string param.
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  nodesToHostCallback: function (nodes) {
+    /*
+     * The nodes object will look something like this
+     * {
+     *   "y-YWd-LITrWXWoCi4r2GlQ": {
+     *     name: "Supremor",
+     *     transport_address: "inet[/192.168.1.15:9300]",
+     *     hostname: "Small-ESBox.infra",
+     *     version: "1.0.0",
+     *     http_address: "inet[/192.168.1.15:9200]",
+     *     attributes: {
+     *        custom: "attribute"
+     *     }
+     *   },
+     *   ...
+     * }
+     */
+
+    return _.transform(nodes, function (nodeList, node, id) {
+      var port = node.http_address.match(/:(\d+)/)[1];
+      nodeList.push({
+        host: 'esproxy.example.com',
+        port: 80,
+        query: {
+          nodeHostname: node.hostname,
+          nodePort: port
+        }
+      });
+    }, []);
+  }
+})
+-----

@@ -1,0 +1,1 @@
+Perform many index/delete operations in a single API call.

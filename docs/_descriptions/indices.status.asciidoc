@@ -1,0 +1,1 @@
+Get a comprehensive status information of one or more indices.

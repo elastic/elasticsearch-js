@@ -1,0 +1,1 @@
+Validate a potentially expensive query without executing it.

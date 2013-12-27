@@ -1,0 +1,15 @@
+.Perform multiple different searches, the body is made up of meta/data pairs
+[source,js]
+---------
+client.msearch({
+  body: [
+    // match all query, on all indices and types
+    {}
+    { query: { match_all: {} } },
+
+    // query_string query, on index/mytype
+    { index: 'myindex', type: 'mytype' },
+    { query: { query_string: { query: '"Test 1"' } } }
+  ]
+});
+---------

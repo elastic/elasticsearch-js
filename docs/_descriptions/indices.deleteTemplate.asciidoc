@@ -1,0 +1,1 @@
+Delete an index template by its name.

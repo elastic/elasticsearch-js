@@ -1,0 +1,23 @@
+.Deleting documents with a simple query
+[source,js]
+---------
+client.deleteByQuery({
+  index: 'myindex',
+  q: 'test'
+}, function (error, response) {
+  // ...
+});
+---------
+
+.Deleting documents using the Query DSL
+[source,js]
+---------
+client.delete_by_query({
+  index: 'posts',
+  body: {
+    term: { published: false }
+  }
+}, function (error, response) {
+  // ...
+});
+---------
