@@ -1,0 +1,16 @@
+.Create or update a document
+[source,js]
+---------
+client.index({
+  index: 'myindex',
+  type: 'mytype',
+  id: '1',
+  body: {
+    title: 'Test 1',
+    tags: ['y', 'z'],
+    published: true,
+  }
+}, function (error response) {
+
+});
+---------

@@ -1,0 +1,1 @@
+Delete documents from one or more indices and one or more types based on a query.

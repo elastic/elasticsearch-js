@@ -1,0 +1,1 @@
+Close an index to remove it's overhead from the cluster. Closed index is blocked for read/write operations.

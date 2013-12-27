@@ -1,0 +1,34 @@
+.Return query terms suggestions (“auto-correction”)
+[source,js]
+---------
+client.suggest({
+index: 'myindex',
+body: {
+  mysuggester: {
+    text: 'tset',
+    term: {
+      field: 'title'
+    }
+  }
+}
+}, function (error, response) {
+// response will be formatted like so:
+//
+// {
+//   ...
+//   mysuggester: [
+//     {
+//       text: "tset",
+//       ...
+//       options: [
+//         {
+//           text: "test",
+//           score: 0.75,
+//           freq: 5
+//         }
+//       ]
+//     }
+//   ]
+// }
+});
+---------

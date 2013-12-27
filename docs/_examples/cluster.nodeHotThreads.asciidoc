@@ -1,0 +1,11 @@
+.Return 10 hottest threads
+[source,js]
+---------
+client.cluster.nodeHotThreads({
+  threads: 10
+  nodeId: 'mymisbehavingnode',
+  maxRetries: 10
+}, function (error, response) {
+  console.log(response);
+})
+---------

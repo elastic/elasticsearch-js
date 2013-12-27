@@ -24,7 +24,6 @@ module.exports = function (done) {
     writeApiFile,
     ensureDocsDir,
     formatDocVars,
-    writeMethodList,
     writeMethodDocs
   ], done);
 
@@ -101,17 +100,9 @@ module.exports = function (done) {
     done();
   }
 
-  function writeMethodList(done) {
-    fs.writeFile(
-      '../../docs/_method_list.jade',
-      templates.apiMethodList(docVars),
-      done
-    );
-  }
-
   function writeMethodDocs(done) {
     fs.writeFile(
-      '../../docs/_methods.jade',
+      '../../docs/api_methods.asciidoc',
       templates.apiMethods(docVars),
       done
     );

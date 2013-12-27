@@ -1,0 +1,15 @@
+.Check that the document `/myindex/mytype/1` exits
+[source,js]
+---------
+client.exists({
+  index: 'myindex',
+  type: 'mytype',
+  id: 1
+}, function (error, exists) {
+  if (exists === true) {
+    // ...
+  } else {
+    // ...
+  }
+});
+---------

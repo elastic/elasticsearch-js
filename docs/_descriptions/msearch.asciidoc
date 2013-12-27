@@ -1,0 +1,1 @@
+Execute several search requests within the same request.

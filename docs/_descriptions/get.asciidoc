@@ -1,0 +1,1 @@
+Get a typed JSON document from the index based on its id.

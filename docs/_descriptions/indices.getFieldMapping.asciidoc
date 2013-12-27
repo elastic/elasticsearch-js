@@ -1,0 +1,1 @@
+Retrieve mapping definition of a specific field.

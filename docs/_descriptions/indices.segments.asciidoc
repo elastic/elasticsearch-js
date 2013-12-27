@@ -1,0 +1,1 @@
+Retrieve low level segments information that a Lucene index (shard level) is built with.

@@ -1,0 +1,1 @@
+(more like this) Gets more documents that are “like” the document specified using `index`, `type`, and `id`.

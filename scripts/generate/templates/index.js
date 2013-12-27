@@ -49,6 +49,34 @@ var templateGlobals = {
     }).join('\n');
   },
 
+  joinParagraphs: function (block) {
+    return block.split('\n\n').join('\n+\n');
+  },
+
+  description: function (action) {
+    try {
+      return fs.readFileSync(path.join(__dirname, '../../../docs/_descriptions/' + action + '.asciidoc'));
+    } catch (e) {
+      if (~e.message.indexOf('ENOENT')) {
+        return '// no description';
+      } else {
+        throw e;
+      }
+    }
+  },
+
+  examples: function (action) {
+    try {
+      return fs.readFileSync(path.join(__dirname, '../../../docs/_examples/' + action + '.asciidoc'));
+    } catch (e) {
+      if (~e.message.indexOf('ENOENT')) {
+        return '// no examples';
+      } else {
+        throw e;
+      }
+    }
+  },
+
   paramType: function (type) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
     case 'time':

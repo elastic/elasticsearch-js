@@ -1,0 +1,11 @@
+.Get `/myindex/mytype/1`
+[source,js]
+---------
+client.get({
+  index: 'myindex',
+  type: 'mytype',
+  id: 1
+}, function (error, response) {
+  // ...
+});
+---------
