@@ -2,9 +2,6 @@ var unitTests = ['test/unit/test_*.js'];
 var integrationTests = ['test/integration/yaml_suite/index.js'];
 
 module.exports = {
-  options: {
-    require: ['should']
-  },
   unit: {
     src: unitTests
   },
