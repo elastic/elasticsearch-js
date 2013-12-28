@@ -1,3 +1,4 @@
+[[api-reference]]
 == API Method Reference
 
 
@@ -136,6 +137,8 @@ client.cluster.nodeHotThreads([params, [callback]])
 
 Returns information about the hottest threads in the cluster or on a specific node as a String. The information is returned as text, and allows you to understand what are currently the most taxing operations happening in the cluster, for debugging or monitoring purposes.
 
+WARNING: This endpoint returns plain text
+
 The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/[the elasticsearch docs] for more about this method.
 
 .Return 10 hottest threads
@@ -143,8 +146,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ---------
 client.cluster.nodeHotThreads({
   threads: 10
+  nodeId: 'mymisbehavingnode',
+  maxRetries: 10
 }, function (error, response) {
-  // WARNING: response is plain text
+  console.log(response);
 })
 ---------
 

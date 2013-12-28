@@ -33,6 +33,64 @@ We also provide builds of the elasticsearch.js client for use in the browser. If
  - [Extending Core Components](http://elasticsearch.github.io/elasticsearch-js/index.html#extending)
  - [Logging](http://elasticsearch.github.io/elasticsearch-js/index.html#logging)
 
+## Examples
+
+Create a client instance
+```js
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'trace'
+});
+```
+
+Send a HEAD request to "/?hello=elasticsearch" and allow up to 1 second for it to complete.
+```js
+client.ping({
+  requestTimeout: 1000,
+  // undocumented params are appended to the query string
+  hello: "elasticsearch!"
+}, function (error) {
+  if (error) {
+    console.trace('elasticsearch cluster is down!');
+  } else {
+    console.log('All is well');
+  }
+});
+```
+
+Skip the callback to get a promise back
+```js
+client.search({
+  q: 'pants'
+}).then(function (body) {
+  var hits = body.hits.hits;
+}, function (error) {
+  console.trace(error.message);
+});
+```
+
+Find tweets that have "elasticsearch" in their body field
+```js
+client.search({
+  index: 'twitter',
+  type: 'tweets',
+  body: {
+    query: {
+      match: {
+        body: 'elasticsearch'
+      }
+    }
+  }
+}).then(function (resp) {
+    var hits = resp.hits.hits;
+}, function (err) {
+    console.trace(err.message);
+});
+```
+
+~~More examples and detailed information about each method are available [here](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/master/index.html)~~
+
 ## License
 
 This software is licensed under the Apache 2 license, quoted below.

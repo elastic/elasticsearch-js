@@ -48,7 +48,7 @@ client.search({
 }).then(function (body) {
   var hits = body.hits.hits;
 }, function (error) {
-  // freak out!
+  console.trace(error.message);
 });
 -----------------
 
@@ -84,10 +84,9 @@ Now for some examples using the Query DSL.
 
 ===== Simple match query
 
+.Find tweets that have "elasticsearch" in their body field
 [source,js]
 -----------------
-// match tweets that have "elasticsearch"
-// in their body field
 client.search({
   index: 'twitter',
   type: 'tweets',
@@ -98,6 +97,10 @@ client.search({
       }
     }
   }
+}).then(function (resp) {
+    var hits = resp.hits.hits;
+}, function (err) {
+    console.trace(err.message);
 });
 -----------------
 
