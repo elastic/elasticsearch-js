@@ -16,6 +16,11 @@ module.exports = function (grunt) {
     'mochacov:integration',
   ]);
 
+  grunt.registerTask('unit_test', [
+    'jshint',
+    'mochacov:unit'
+  ]);
+
   grunt.registerTask('coverage', [
     'mochacov:make_coverage_html',
     'open:coverage'

@@ -424,8 +424,12 @@ client.count(
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `minScore`::
 `Number` -- Include only documents with a specific `_score` value in the result
 `preference`::
@@ -602,8 +606,12 @@ client.delete_by_query({
 `String` -- The default operator for query string query (AND or OR)
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `[replication=sync]`::
 `String` -- Specific replication type
 `q`::
@@ -984,8 +992,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Clear ID caches for parent/child
 `idCache`::
 `Boolean` -- Clear ID caches for parent/child
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index name to limit the operation
 `recycler`::
@@ -1209,8 +1221,12 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open,closed]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -1234,8 +1250,12 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
 `type`::
@@ -1263,8 +1283,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- TODO: ?
 `full`::
 `Boolean` -- TODO: ?
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `index`::
@@ -1288,35 +1312,16 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
 `String, String[], Boolean` -- A comma-separated list of alias names to return
-
-[[api-indices-getaliases]]
-=== `indices.getAliases`
-
-[source,js]
---------
-client.indices.getAliases([params, [callback]])
---------
-
-Retrieve specified aliases
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 
 [[api-indices-getfieldmapping]]
 === `indices.getFieldMapping`
@@ -1480,8 +1485,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `flush`::
 `Boolean` -- Specify whether the index should be flushed after performing the operation (default: true)
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `maxNumSegments`::
 `Number` -- The number of segments the index should be merged into (default: dynamic)
 `onlyExpungeDeletes`::
@@ -1646,8 +1655,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `operationThreading`::
 `Anything` -- TODO: ?
 `index`::
@@ -1671,8 +1684,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `operationThreading`::
 `Anything` -- TODO: ?
 `index`::
@@ -1696,8 +1713,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
@@ -1745,8 +1766,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- A comma-separated list of search groups for `search` statistics
 `idCache`::
 `Boolean` -- Return information about ID cache
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `indexing`::
 `Boolean` -- Return information about indexing operations
 `merge`::
@@ -1786,8 +1811,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `operationThreading`::
 `Anything` -- TODO: ?
 `recovery`::
@@ -1842,8 +1871,12 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `explain`::
 `Boolean` -- Return detailed information about the error
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `operationThreading`::
 `Anything` -- TODO: ?
 `source`::
@@ -2262,8 +2295,12 @@ client.search({
 `String, String[], Boolean` -- A comma-separated list of fields to return as part of a hit
 `from`::
 `Number` -- Starting offset (default: 0)
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `indicesBoost`::
 `String, String[], Boolean` -- Comma-separated list of index boosts
 `lenient`::
@@ -2362,8 +2399,12 @@ body: {
 ==== Params
 
 [horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `preference`::
 `String` -- Specify the node or shard the operation should be performed on (default: random)
 `routing`::

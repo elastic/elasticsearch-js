@@ -1,24 +1,23 @@
 module.exports = {
-  generate: {
-    exec: 'node scripts/generate'
+  options: {
+    cwd: './scripts'
   },
-  browser_unit_tests: {
-    exec: 'node scripts/run_tests --unit --no-server',
+  generate: {
+    exec: 'node generate'
+  },
+  browser_integration_tests: {
+    exec: 'node run_browser_integration_suite',
     options: {
-      cwd: '.',
       passArgs: [
-        'port',
-        'host'
+        'browsers'
       ]
     }
   },
-  browser_integration_tests: {
-    exec: 'node scripts/run_tests --integration --no-server',
+  browser_unit_tests: {
+    exec: './node_modules/.bin/testling .',
     options: {
-      cwd: '.',
       passArgs: [
-        'port',
-        'host'
+        'x'
       ]
     }
   }

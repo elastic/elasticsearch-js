@@ -2,7 +2,7 @@ var async = require('async');
 var fs = require('fs');
 var S = require('string');
 
-var restSpecDir = './src/rest-api-spec/api/';
+var restSpecDir = './src/elasticsearch/rest-api-spec/api/';
 
 function fileExists(path, done) {
   fs.stat(path, function (err, stats) {

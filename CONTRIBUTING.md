@@ -12,27 +12,11 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
 2. When you're ready to run the tests
 
-  Call `npm test` which executes `scripts/run_tests.js`.
-
-  ```sh
-  $ node scripts/run_tests.js --help
-
-  Runner for the Elasticsearch.js Unit and Integration tests in both node and the browser.
-  Specify --no-{{flag}} to negate it.
-
-  Options:
-    --server         [true]
-    --browser        [true]
-    --unit           [true]
-    --integration    [false]
-    --port           [9200]
-    --host           ["localhost"] hostname for elasticsearch instance used in integration tests
-    --check-upstream [false]       check for remote updates to the yaml test suite
-  ```
+  Integration and unit tests can be run by simply calling `npm test` or `grunt test`, but the integration tests require a running instance of elasticsearch and ***WILL WIPE ALL DATA FROM ELASTICSEARCH***. If you only want to run the unit tests, run `grunt unit_test` instead. Travis and Jenkins run the integration tests so your changes can be verified before they are merged.
 
 3. Submit a pull request
 
-  Push your local changes to your forked copy of the repository and submit a pull request. In the pull request, describe what your changes do and be sure to link to any conversations regarding this implementation, eg "Closes #123".
+  Push your local changes a forked copy of the repository and submit a pull request. In the pull request, describe what your changes do and be sure to link to any conversations regarding this implementation, eg "Closes #123".
 
 4. Sign the CLA
 

@@ -28,7 +28,7 @@ module.exports = function (done) {
   ], done);
 
   function readSpecFiles(done) {
-    var apiDir = '../../src/rest-api-spec/api/';
+    var apiDir = '../../src/elasticsearch/rest-api-spec/api/';
     files = fs.readdirSync(apiDir).map(function (filename) {
       return require(apiDir + filename);
     });

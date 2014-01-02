@@ -16,7 +16,7 @@ module.exports = function (done) {
   ], done);
 
   function readYamlTests(done) {
-    var testDir = path.join(__dirname, '../../src/rest-api-spec/test/');
+    var testDir = path.join(__dirname, '../../src/elasticsearch/rest-api-spec/test/');
 
     function readDirectories(dir) {
       fs.readdirSync(dir).forEach(function (filename) {
