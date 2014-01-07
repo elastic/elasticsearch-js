@@ -1,8 +1,7 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 
 # generate the latest version of the yaml-tests
-node scripts/generate/ --no-api --es_version="=$ES_V"
+./node_modules/.bin/grunt run:generate_yaml_tests --es_branch="=$ES_V"
 
 export VERBOSE="true"
 

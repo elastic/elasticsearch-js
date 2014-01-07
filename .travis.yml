@@ -2,9 +2,22 @@ language: node_js
 node_js:
   - "0.10"
   - "0.8"
-services:
-  - elasticsearch
-before_script:
-  - npm install -g grunt-cli
-script:
-  - grunt travis
+env:
+  # - ES_RELEASE=0.90.0 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.1 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.2 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.3 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.4 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.5 ES_BRANCH=0.90
+  # - ES_RELEASE=0.90.6 ES_BRANCH=0.90
+  - ES_RELEASE=0.90.7 ES_BRANCH=0.90
+  - ES_RELEASE=0.90.8 ES_BRANCH=0.90
+  - ES_RELEASE=0.90.9 ES_BRANCH=0.90
+  - ES_BRANCH=0.90
+  - ES_BRANCH=master
+script: ./scripts/travis.sh
+email:
+  recipients:
+    - spencer.alger@elasticsearch.com
+  on_success: change
+  on_failure: always

@@ -5,14 +5,10 @@ module.exports = function (grunt) {
     'test'
   ]);
 
-  grunt.registerTask('generate', [
-    'run:generate'
-  ]);
-
   grunt.registerTask('test', [
     'jshint',
     'mochacov:unit',
-    'generate',
+    'run:generate',
     'mochacov:integration',
   ]);
 
@@ -24,10 +20,5 @@ module.exports = function (grunt) {
   grunt.registerTask('coverage', [
     'mochacov:make_coverage_html',
     'open:coverage'
-  ]);
-
-  grunt.registerTask('travis', [
-    'test',
-    'mochacov:ship_coverage'
   ]);
 };

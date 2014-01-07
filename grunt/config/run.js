@@ -1,18 +1,24 @@
 module.exports = {
-  options: {
-    cwd: './scripts'
-  },
   generate: {
-    exec: 'node generate/index.js',
+    exec: 'node ./scripts/generate/index.js',
     options: {
       passArgs: [
         'verbose',
-        'es_version'
+        'es_branch'
+      ]
+    }
+  },
+  generate_yaml_tests: {
+    exec: 'node ./scripts/generate/index.js --no-api',
+    options: {
+      passArgs: [
+        'verbose',
+        'es_branch'
       ]
     }
   },
   browser_integration_tests: {
-    exec: 'node run_browser_integration_suite',
+    exec: 'node ./scripts/run_browser_integration_suite',
     options: {
       passArgs: [
         'browsers'
