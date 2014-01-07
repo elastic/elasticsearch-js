@@ -61,14 +61,19 @@ echo -en 'travis_fold:start:setup_es\\r'
   fi
 
   sleep 3
-echo -en 'travis_fold:end:setup_es\\r'
+echo -en 'travis_fold:end:setup_es\\r\\n'
 
 echo -en 'travis_fold:start:install_grunt\\r'
   npm install -g grunt-cli
 echo -en 'travis_fold:end:install_grunt\\r'
 
-grunt --es_branch="=$ES_BRANCH" jshint mochacov:unit run:generate_yaml_tests mochacov:integration mochacov:ship_coverage
-RESULT=$?
+if [ $NO_UNIT = "true" ]; then
+  grunt --es_branch="=$ES_BRANCH" run:generate_yaml_tests mochacov:integration
+  RESULT=$?
+else
+  grunt --es_branch="=$ES_BRANCH" jshint mochacov:unit run:generate_yaml_tests mochacov:integration mochacov:ship_coverage
+  RESULT=$?
+fi
 
 killall java 2>/dev/null
 exit $RESULT

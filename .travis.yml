@@ -1,20 +1,23 @@
 language: node_js
-node_js:
-  - "0.10"
-  - "0.8"
-env:
-  # - ES_RELEASE=0.90.0 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.1 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.2 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.3 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.4 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.5 ES_BRANCH=0.90
-  # - ES_RELEASE=0.90.6 ES_BRANCH=0.90
-  - ES_RELEASE=0.90.7 ES_BRANCH=0.90
-  - ES_RELEASE=0.90.8 ES_BRANCH=0.90
-  - ES_RELEASE=0.90.9 ES_BRANCH=0.90
-  - ES_BRANCH=0.90
-  - ES_BRANCH=master
+node_js: false
+matrix:
+  fast_finish: true
+
+  include:
+    - node_js: "0.10"
+      env: ES_RELEASE=0.90.8 ES_BRANCH=0.90 NO_UNIT=true
+    - node_js: "0.10"
+      env: ES_RELEASE=0.90.9 ES_BRANCH=0.90 NO_UNIT=true
+    - node_js: "0.10"
+      env: ES_BRANCH=0.90 NO_UNIT=true
+    - node_js: "0.10"
+      env: ES_BRANCH=master
+    - node_js: "0.8"
+      env: ES_BRANCH=master
+
+  exclude:
+    - node_js: false
+
 script: ./scripts/travis.sh
 email:
   recipients:
