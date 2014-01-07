@@ -19,6 +19,11 @@ var argv = require('optimist')
     tests: {
       default: true,
       boolean: true
+    },
+    es_version: {
+      default: 'master',
+      string: true,
+      alias: 'b'
     }
   });
 
@@ -35,23 +40,46 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
 }
 
 function updateSubmodules(done) {
-  cp.exec('git submodule update --init && git submodule foreach git pull origin master',
-  function (err, stdout, stderr) {
-    stdout = stdout.trim();
-    stderr = stderr.trim();
+  var branch = argv.es_version;
+  // branch can be prefixed with = or suffixed with _nightly
+  if (branch.indexOf) {
+    ['='].forEach(function removePrefix(pref) {
+      if (branch.indexOf(pref) === 0) {
+        branch = branch.substring(pref.length);
+      }
+    });
 
-    if (err) {
-      done(new Error('Unable to update submodules: ' + err.message));
-      return;
-    } else if (argv.verbose && stdout) {
-      console.log(stdout);
-    }
+    ['_nightly'].forEach(function removeSuffix(suf) {
+      if (branch.indexOf(suf) === branch.length - suf.length) {
+        branch = branch.substr(0, branch.length - suf.length);
+      }
+    });
+  }
 
-    if (stderr) {
-      console.error(stderr);
+  var stdio = [
+    'ignore',
+    argv.verbose ? process.stdout : 'ignore',
+    process.stderr
+  ];
+
+  async.series([
+    function (done) {
+      // init submodules
+      cp.spawn('git', ['submodule', 'update', '--init'], {
+        stdio: stdio
+      }).on('exit', function (status) {
+        done(status ? new Error('Unable to init submodules.') : void 0);
+      });
+    },
+    function (done) {
+      // checkout branch and clean it
+      cp.spawn('git', ['submodule', 'foreach', 'git checkout --detach origin/' + branch + ' && git clean -f'], {
+        stdio: stdio
+      }).on('exit', function (status) {
+        done(status ? new Error('Unable to init submodules.') : void 0);
+      });
     }
-    done();
-  });
+  ], done);
 }
 
 updateSubmodules(function (err) {

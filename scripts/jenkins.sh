@@ -1,7 +1,8 @@
 #!/bin/bash
 
+
 # generate the latest version of the yaml-tests
-node scripts/generate/ --no-api 2>&1 > /dev/null
+node scripts/generate/ --no-api --es_version="=$ES_V"
 
 export VERBOSE="true"
 

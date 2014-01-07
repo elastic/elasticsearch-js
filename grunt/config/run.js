@@ -3,7 +3,13 @@ module.exports = {
     cwd: './scripts'
   },
   generate: {
-    exec: 'node generate'
+    exec: 'node generate/index.js',
+    options: {
+      passArgs: [
+        'verbose',
+        'es_version'
+      ]
+    }
   },
   browser_integration_tests: {
     exec: 'node run_browser_integration_suite',
