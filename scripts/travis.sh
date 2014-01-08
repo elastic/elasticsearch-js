@@ -20,10 +20,8 @@ ES_DIR="$SNAPSHOTS/$ES_VERSION"
 ES_BIN="$ES_DIR/bin/elasticsearch"
 
 function fold {
-  echo -e "travis_fold:$1"
-  if [[ $1 =~ ^end ]]; then
-    echo ""
-    echo ""
+  if [ $TRAVIS = "true" ]; then
+    echo -e "travis_fold:$1"
   fi
 }
 
