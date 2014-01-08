@@ -71,7 +71,7 @@ async.series([
   },
   function (done) {
     // checkout branch and clean it
-    cp.spawn('git', ['submodule', 'foreach', 'git checkout origin/' + branch + ' && git clean -f'], {
+    cp.spawn('git', ['submodule', 'foreach', 'git fetch origin master && git checkout origin/' + branch + ' && git clean -f'], {
       stdio: stdio
     }).on('exit', function (status) {
       done(status ? new Error('Unable to checkout ' + branch) : void 0);
