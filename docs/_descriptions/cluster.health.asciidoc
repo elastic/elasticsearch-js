@@ -1,0 +1,1 @@
+Get a very simple status on the health of the cluster.

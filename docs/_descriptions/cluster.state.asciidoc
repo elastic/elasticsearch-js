@@ -1,0 +1,1 @@
+Get comprehensive details about the state of the whole cluster (indices settings, allocations, etc).

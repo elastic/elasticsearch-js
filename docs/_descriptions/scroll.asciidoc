@@ -1,0 +1,1 @@
+Scroll a search request (retrieve the next set of results) after specifying the scroll parameter in a `search()` call.

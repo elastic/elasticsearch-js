@@ -1,5 +1,4 @@
 dist
-docs
 npm-debug.log
 node_modules
 scripts/scratch*
@@ -15,3 +14,4 @@ junit-*.xml
 test.log
 elasticsearch*.log
 coverage.html
+.snapshots

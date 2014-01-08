@@ -1,0 +1,1 @@
+The suggest feature suggests similar looking terms based on a provided text by using a specific suggester.

@@ -1,0 +1,1 @@
+Get multiple documents based on an index, type (optional) and ids. The body required by mget can take two forms: an array of document locations, or an array of document ids.

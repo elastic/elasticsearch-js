@@ -1,0 +1,12 @@
+.Search for similar documents using the `title` property of document `myindex/mytype/1`
+[source,js]
+---------
+client.mlt({
+  index: 'myindex',
+  type: 'mytype',
+  id: 1,
+  mlt_fields: 'title'
+}, function (errors, response) {
+  // ...
+});
+---------

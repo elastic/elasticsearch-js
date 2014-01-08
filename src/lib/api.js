@@ -497,7 +497,9 @@ api.cluster.prototype.state = ca({
  * Perform a [count](http://elasticsearch.org/guide/reference/api/count/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Number} params.minScore - Include only documents with a specific `_score` value in the result
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.routing - Specific routing value
@@ -507,14 +509,22 @@ api.cluster.prototype.state = ca({
  */
 api.count = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     minScore: {
       type: 'number',
@@ -641,7 +651,9 @@ api['delete'] = ca({
  * @param {String} params.consistency - Specific write consistency setting for the operation
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
@@ -675,14 +687,22 @@ api.deleteByQuery = ca({
     df: {
       type: 'string'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     replication: {
       type: 'enum',
@@ -1197,7 +1217,9 @@ api.indices.prototype.analyze = ca({
  * @param {Boolean} params.filterKeys - A comma-separated list of keys to clear when using the `filter_cache` parameter (default: all)
  * @param {Boolean} params.id - Clear ID caches for parent/child
  * @param {Boolean} params.idCache - Clear ID caches for parent/child
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index name to limit the operation
  * @param {Boolean} params.recycler - Clear the recycler cache
  */
@@ -1231,14 +1253,22 @@ api.indices.prototype.clearCache = ca({
       type: 'boolean',
       name: 'id_cache'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     index: {
       type: 'list'
@@ -1269,6 +1299,9 @@ api.indices.prototype.clearCache = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.close = ca({
@@ -1279,6 +1312,23 @@ api.indices.prototype.close = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   url: {
@@ -1509,9 +1559,31 @@ api.indices.prototype.deleteWarmer = ca({
  * Perform a [indices.exists](http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to check
  */
 api.indices.prototype.exists = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
   url: {
     fmt: '/<%=index%>',
     req: {
@@ -1529,20 +1601,33 @@ api.indices.prototype.exists = ca({
  * Perform a [indices.existsAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.existsAlias = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
-      options: [
-        'none',
-        'missing'
+      'default': [
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -1564,6 +1649,14 @@ api.indices.prototype.existsAlias = ca({
           type: 'list'
         }
       }
+    },
+    {
+      fmt: '/<%=index%>/_alias',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
     }
   ],
   castExists: true,
@@ -1574,20 +1667,30 @@ api.indices.prototype.existsAlias = ca({
  * Perform a [indices.existsType](http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` to check the types across all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to check
  */
 api.indices.prototype.existsType = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     }
   },
   url: {
@@ -1610,9 +1713,11 @@ api.indices.prototype.existsType = ca({
  * Perform a [indices.flush](http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.force - TODO: ?
- * @param {Boolean} params.full - TODO: ?
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.force - Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
+ * @param {Boolean} params.full - If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
@@ -1624,14 +1729,22 @@ api.indices.prototype.flush = ca({
     full: {
       type: 'boolean'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     refresh: {
       type: 'boolean'
@@ -1657,20 +1770,30 @@ api.indices.prototype.flush = ca({
  * Perform a [indices.getAlias](http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
 api.indices.prototype.getAlias = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -1689,6 +1812,14 @@ api.indices.prototype.getAlias = ca({
       fmt: '/_alias/<%=name%>',
       req: {
         name: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_alias',
+      req: {
+        index: {
           type: 'list'
         }
       }
@@ -1729,6 +1860,9 @@ api.indices.prototype.getAliases = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.includeDefaults - Whether the default mapping values should be returned as well
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
  * @param {String, String[], Boolean} params.field - A comma-separated list of fields
@@ -1738,6 +1872,23 @@ api.indices.prototype.getFieldMapping = ca({
     includeDefaults: {
       type: 'boolean',
       name: 'include_defaults'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -1781,10 +1932,32 @@ api.indices.prototype.getFieldMapping = ca({
  * Perform a [indices.getMapping](http://www.elasticsearch.org/guide/reference/api/admin-indices-get-mapping/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
  */
 api.indices.prototype.getMapping = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
   urls: [
     {
       fmt: '/<%=index%>/<%=type%>/_mapping',
@@ -1859,11 +2032,33 @@ api.indices.prototype.getTemplate = ca({
  * Perform a [indices.getWarmer](http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
  * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to get all warmers
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.getWarmer = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
   urls: [
     {
       fmt: '/<%=index%>/<%=type%>/_warmer/<%=name%>',
@@ -1907,6 +2102,9 @@ api.indices.prototype.getWarmer = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.open = ca({
@@ -1917,6 +2115,23 @@ api.indices.prototype.open = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'closed',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   url: {
@@ -1936,7 +2151,9 @@ api.indices.prototype.open = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Number} params.maxNumSegments - The number of segments the index should be merged into (default: dynamic)
  * @param {Boolean} params.onlyExpungeDeletes - Specify whether the operation should only expunge deleted documents
  * @param {Anything} params.operationThreading - TODO: ?
@@ -1949,14 +2166,22 @@ api.indices.prototype.optimize = ca({
     flush: {
       type: 'boolean'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     maxNumSegments: {
       type: 'number',
@@ -2054,6 +2279,9 @@ api.indices.prototype.putAlias = ca({
  * @param {Boolean} params.ignoreConflicts - Specify whether to ignore conflicts while updating the mapping (default: false)
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` to perform the operation on all indices
  * @param {String} params.type - The name of the document type
  */
@@ -2069,6 +2297,23 @@ api.indices.prototype.putMapping = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   url: {
@@ -2091,6 +2336,9 @@ api.indices.prototype.putMapping = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.putSettings = ca({
@@ -2098,6 +2346,23 @@ api.indices.prototype.putSettings = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -2155,6 +2420,9 @@ api.indices.prototype.putTemplate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed) in the search request to warm
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices in the search request to warm. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both, in the search request to warm.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
  * @param {String} params.name - The name of the warmer
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
@@ -2164,6 +2432,23 @@ api.indices.prototype.putWarmer = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -2200,20 +2485,30 @@ api.indices.prototype.putWarmer = ca({
  * Perform a [indices.refresh](http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.refresh = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     operationThreading: {
       name: 'operation_threading'
@@ -2239,20 +2534,30 @@ api.indices.prototype.refresh = ca({
  * Perform a [indices.segments](http://elasticsearch.org/guide/reference/api/admin-indices-segments/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.segments = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     operationThreading: {
       name: 'operation_threading'
@@ -2277,19 +2582,29 @@ api.indices.prototype.segments = ca({
  * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/reference/api/admin-indices-gateway-snapshot/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
  */
 api.indices.prototype.snapshotIndex = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -2325,7 +2640,9 @@ api.indices.prototype.snapshotIndex = ca({
  * @param {Boolean} params.get - Return information about get operations
  * @param {Boolean} params.groups - A comma-separated list of search groups for `search` statistics
  * @param {Boolean} params.idCache - Return information about ID cache
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.indexing - Return information about indexing operations
  * @param {Boolean} params.merge - Return information about merge operations
  * @param {Boolean} params.refresh - Return information about refresh operations
@@ -2382,14 +2699,22 @@ api.indices.prototype.stats = ca({
       type: 'boolean',
       name: 'id_cache'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     indexing: {
       type: 'boolean'
@@ -2429,7 +2754,9 @@ api.indices.prototype.stats = ca({
  * Perform a [indices.status](http://elasticsearch.org/guide/reference/api/admin-indices-status/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {Boolean} params.recovery - Return information about shard recovery
  * @param {Boolean} params.snapshot - TODO: ?
@@ -2437,14 +2764,22 @@ api.indices.prototype.stats = ca({
  */
 api.indices.prototype.status = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     operationThreading: {
       name: 'operation_threading'
@@ -2500,7 +2835,9 @@ api.indices.prototype.updateAliases = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.explain - Return detailed information about the error
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
  * @param {String} params.q - Query in the Lucene query string syntax
@@ -2512,14 +2849,22 @@ api.indices.prototype.validateQuery = ca({
     explain: {
       type: 'boolean'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     operationThreading: {
       name: 'operation_threading'
@@ -2884,7 +3229,9 @@ api.scroll = ca({
  * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return as part of a hit
  * @param {Number} params.from - Starting offset (default: 0)
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.indicesBoost - Comma-separated list of index boosts
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
@@ -2939,14 +3286,22 @@ api.search = ca({
     from: {
       type: 'number'
     },
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     indicesBoost: {
       type: 'list',
@@ -3067,7 +3422,9 @@ api.search = ca({
  * Perform a [suggest](http://elasticsearch.org/guide/reference/api/search/suggest/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.routing - Specific routing value
  * @param {String} params.source - The URL-encoded request definition (instead of using request body)
@@ -3075,14 +3432,22 @@ api.search = ca({
  */
 api.suggest = ca({
   params: {
-    ignoreIndices: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
       type: 'enum',
-      'default': 'none',
+      'default': 'open',
       options: [
-        'none',
-        'missing'
+        'open',
+        'closed'
       ],
-      name: 'ignore_indices'
+      name: 'expand_wildcards'
     },
     preference: {
       type: 'string'

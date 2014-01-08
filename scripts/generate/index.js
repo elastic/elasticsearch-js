@@ -19,6 +19,11 @@ var argv = require('optimist')
     tests: {
       default: true,
       boolean: true
+    },
+    es_branch: {
+      default: 'master',
+      string: true,
+      alias: 'b'
     }
   });
 
@@ -34,39 +39,58 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
   argv.force = argv.f = process.env.FORCE || process.env.FORCE_GEN;
 }
 
-function updateSubmodules(done) {
-  cp.exec('git submodule update --init && git submodule foreach git pull origin master',
-  function (err, stdout, stderr) {
-    stdout = stdout.trim();
-    stderr = stderr.trim();
-
-    if (err) {
-      done(new Error('Unable to update submodules: ' + err.message));
-      return;
-    } else if (argv.verbose && stdout) {
-      console.log(stdout);
+var branch = argv.es_branch;
+// branch can be prefixed with = or suffixed with _nightly
+if (branch.indexOf) {
+  ['='].forEach(function removePrefix(pref) {
+    if (branch.indexOf(pref) === 0) {
+      branch = branch.substring(pref.length);
     }
+  });
 
-    if (stderr) {
-      console.error(stderr);
+  ['_nightly'].forEach(function removeSuffix(suf) {
+    if (branch.indexOf(suf) === branch.length - suf.length) {
+      branch = branch.substr(0, branch.length - suf.length);
     }
-    done();
   });
 }
 
-updateSubmodules(function (err) {
+var stdio = [
+  'ignore',
+  argv.verbose ? process.stdout : 'ignore',
+  process.stderr
+];
+
+async.series([
+  function (done) {
+    cp.spawn('git', ['submodule', 'update', '--init'], {
+      stdio: stdio
+    }).on('exit', function (status) {
+      done(status ? new Error('Unable to init submodules.') : void 0);
+    });
+  },
+  function (done) {
+    // checkout branch and clean it
+    cp.spawn('git', ['submodule', 'foreach', 'git fetch origin master && git checkout origin/' + branch + ' && git clean -f'], {
+      stdio: stdio
+    }).on('exit', function (status) {
+      done(status ? new Error('Unable to checkout ' + branch) : void 0);
+    });
+  },
+  function (done) {
+    var tasks = [];
+
+    if (argv.api) {
+      tasks.push(require('./js_api'));
+    }
+    if (argv.tests) {
+      tasks.push(require('./yaml_tests'));
+    }
+
+    async.parallel(tasks, done);
+  }
+], function (err) {
   if (err) {
     throw err;
   }
-
-  var tasks = [];
-
-  if (argv.api) {
-    tasks.push(require('./js_api'));
-  }
-  if (argv.tests) {
-    tasks.push(require('./yaml_tests'));
-  }
-
-  async.parallel(tasks, function () {});
 });

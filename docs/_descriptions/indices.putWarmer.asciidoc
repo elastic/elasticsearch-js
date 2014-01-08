@@ -1,0 +1,1 @@
+Create an index warmer to run registered search requests to warm up the index before it is available for search.

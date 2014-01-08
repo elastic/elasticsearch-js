@@ -1,0 +1,29 @@
+.An array of doc locations. Useful for getting documents from different indices.
+[source,js]
+---------
+client.mget({
+  body: {
+    docs: [
+      { _index: 'indexA', _type: 'typeA', _id: '1' },
+      { _index: 'indexB', _type: 'typeB', _id: '1' },
+      { _index: 'indexC', _type: 'typeC', _id: '1' }
+    ]
+  }
+}, function(error, response){
+  // ...
+});
+---------
+
+.An array of ids. You must also specify the `index` and `type` that apply to all of the ids.
+[source,js]
+---------
+client.mget({
+  index: 'myindex',
+  type: 'mytype',
+  body: {
+    ids: [1, 2, 3]
+  }
+}, function(error, response){
+  // ...
+});
+---------

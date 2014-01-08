@@ -1,0 +1,3 @@
+Returns information about the hottest threads in the cluster or on a specific node as a String. The information is returned as text, and allows you to understand what are currently the most taxing operations happening in the cluster, for debugging or monitoring purposes.
+
+WARNING: This endpoint returns plain text

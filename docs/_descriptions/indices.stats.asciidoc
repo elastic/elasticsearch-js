@@ -1,0 +1,1 @@
+Retrieve statistics on different operations happening on an index.

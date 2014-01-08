@@ -24,41 +24,51 @@ var esServer = null;
 
 module.exports = {
   create: function create(cb) {
-    if (argv.createServer || externalExists === false) {
-      if (!esServer) {
-        server.start(function (err, _server) {
-          esServer = _server;
-          if (err) {
-            done(err);
-          } else {
-            doCreateClient(done);
-          }
-        });
-      } else {
-        doCreateClient(done);
-      }
-    } else if (externalExists === void 0) {
-      doCreateClient(function () {
+    // create a client and ping the server for up to 15 seconds
+    doCreateClient({
+      logConfig: null
+    }, function () {
+      var attemptsRemaining = 30;
+      var timeout = 500;
+
+      (function ping() {
         client.ping({
-          requestTimeout: 1000
+          maxRetries: 0,
+          requestTimeout: 100
         }, function (err) {
-          if (err instanceof es.errors.ConnectionFault) {
-            externalExists = false;
-            create(done);
+          if (err && --attemptsRemaining) {
+            setTimeout(ping, timeout);
+          } else if (err) {
+            cb(new Error('unable to establish contact with ES'));
           } else {
-            done(err);
+            // create a new client
+            doCreateClient(function () {
+              cb(void 0, client);
+            });
           }
         });
-      });
-    } else {
-      doCreateClient(done);
-    }
+      }());
+    });
 
-    function done(err) {
-      cb(err, client);
-    }
+    function doCreateClient(options, cb) {
+      if (typeof options === 'function') {
+        cb = options, options = {};
+      }
 
-    function doCreateClient(cb) {
+      var logConfig = _.has(options, 'logConfig')
+        ? options.logConfig
+        : {
+          type: BROWSER
+            ? 'console'
+            : VERBOSE
+              ? 'tracer'
+              : 'stdio',
+          level: VERBOSE
+            ? 'trace'
+            : 'warning',
+          path: VERBOSE ? undefined : false
+        };
+
       // close existing client
       if (client) {
         client.close();
@@ -71,17 +81,7 @@ module.exports = {
             port: esServer ? esServer.__port : argv.port
           }
         ],
-        log: {
-          type: BROWSER
-            ? 'console'
-            : VERBOSE
-              ? 'tracer'
-              : 'stdio',
-          level: VERBOSE
-            ? 'trace'
-            : 'warning',
-          path: VERBOSE ? undefined : false
-        }
+        log: logConfig
       });
 
       _.nextTick(cb);

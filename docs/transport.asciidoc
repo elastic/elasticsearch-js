@@ -1,0 +1,24 @@
+[[transport-reference]]
+== Transport
+
+=== request(params, [callback])
+
+==== Params
+[horizontal]
+`path`::
+`String` -- The path/endpoint for the request
+
+`query`::
+`Object` -- The query string params
+
+`path`::
+`Object` -- The query string params
+
+`ignore`::
+`Number, Number[]` -- HTTP status codes which should not be treated as errors
+
+`requestTimeout`::
+`Number` -- Milliseconds this request has to complete. The default can be set using the client's `requestTimeout:` config parameter.
+
+`method`::
+`String` -- The HTTP method to use for this request. All of the API methods have their own default.

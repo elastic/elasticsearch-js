@@ -1,0 +1,27 @@
+[[api-conventions]]
+== API Conventions
+=== Generic Parameters
+By default, all api methods accept the following parameters. They are omitted from the param lists of each method, just because.
+
+[horizontal]
+`method`::
++
+`String` -- The HTTP method to use for this request. All of the API methods have their own default.
+
+`body`::
+`String, Anything` -- The body to send along with this request. If the body is a string it will be passed along as is, otherwise it is passed to the serializer and converted to either JSON or a newline seperated list of JSON objects based on the API method.
++
+NOTE: the https://github.com/fullscale/elastic.js[elastic.js] library can be used to make building request bodies simpler.
+
+`ignore`::
++
+`Number, Number[]` -- HTTP status codes which should not be considered errors for this request.
+
+=== Config values you can override per request
+  * `requestTimeout` -- <<config-request-timeout, more info>>
+  * `maxRetries` -- <<config-max-retries, more info>>
+
+=== Callbacks or Promises
+When a callback is passed to any of the API methods, it will be called with `(err, response, status)`. If you prefer to use promises, don't pass a callback and a promise will be returned. The promise will either be resolved with the response body, or rejected with the error that occured (including any 300+ response for non "exists" methods).
+
+Both styles of calling the API will return an object (either a promise or just a plain object) which has an `abort()` method. Calling that abort method ends the HTTP request, but it will not end the work Elasticsearch is doing.

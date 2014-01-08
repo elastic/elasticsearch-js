@@ -1,0 +1,69 @@
+.First, Register queries named “alert-1” and “alert-2” for the “myindex” index
+[source,js]
+---------
+client.index({
+  index: '_percolator',
+  type: 'myindex',
+  id: 'alert-1',
+  body: {
+    // This query will be run against documents sent to percolate
+    query: {
+      query_string: {
+        query: 'foo'
+      }
+    }
+  }
+}, function (error, response) {
+  // ...
+});
+
+client.index({
+  index: '_percolator',
+  type: 'myindex',
+  id: 'alert-2',
+  body: {
+    // This query will also be run against documents sent to percolate
+    query: {
+      query_string: {
+        query: 'bar'
+      }
+    }
+  }
+}, function (error, response) {
+  // ...
+});
+---------
+
+.Then you can send documents to learn which query `_percolator` queries they match
+[source,js]
+---------
+client.percolate({
+  index: 'myindex',
+  body: {
+    doc: {
+      title: "Foo"
+    }
+  }
+}, function (error, response) {
+  // response would equal
+  // {
+  //   ok:true,
+  //   matches: [ "alert-1" ]
+  // }
+});
+
+client.percolate({
+  index: 'myindex',
+  body: {
+    doc: {
+      title: "Foo Bar"
+    }
+  }
+}, function (error, response) {
+  // response would equal
+  // {
+  //   ok:true,
+  //   matches: [ "alert-1", "alert-2" ]
+  // }
+});
+---------

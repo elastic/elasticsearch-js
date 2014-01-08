@@ -1,0 +1,11 @@
+.Delete the document `/myindex/mytype/1`
+[source,js]
+---------
+client.delete({
+  index: 'myindex',
+  type: 'mytype',
+  id: '1'
+}, function (error, response) {
+  // ...
+});
+---------

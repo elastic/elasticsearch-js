@@ -1,0 +1,4 @@
+Return documents matching a query, aggregations/facets, highlighted snippets, suggestions, and more. Write your queries as either http://www.elasticsearch.org/guide/reference/api/search/uri-request/[simple query strings] in the `q` parameter, or by specifying a http://www.elasticsearch.org/guide/reference/api/search/request-body/[full request definition] using the http://www.elasticsearch.org/guide/reference/query-dsl/[Elasticsearch Query DSL] in the `body` parameter.
+
+TIP: https://github.com/fullscale/elastic.js[elastic.js] can be used to make building query bodies easier.
+

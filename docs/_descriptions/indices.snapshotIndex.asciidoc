@@ -1,0 +1,1 @@
+Initiate a snapshot through the gateway of one or more indices.

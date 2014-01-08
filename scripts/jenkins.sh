@@ -1,9 +1,14 @@
-#!/bin/bash
-
-# generate the latest version of the yaml-tests
-node scripts/generate/ --no-api 2>&1 > /dev/null
+#!/usr/bin/env bash
 
 export VERBOSE="true"
+
+if [ -x $ES_V ]; then
+  echo "missing ES_V environment var"
+  exit 1
+fi
+
+# generate the latest version of the yaml-tests
+node scripts/generate --es_branch="=$ES_V" --no-api
 
 # unit tests
 ./node_modules/.bin/mocha test/unit/test_*.js \

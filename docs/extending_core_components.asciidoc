@@ -1,0 +1,17 @@
+[[extending_core_components]]
+== Extending Core Components
+We decided to make this client low-level, and as such we probably have not implemented all the features you are looking for. For this reason, we made extending or even replacing the core components simple.
+
+=== Connection
+Coming Soon
+
+=== ConnectionPool
+Coming Soon
+
+=== Log
+see <<logging>>.
+
+=== Client/API
+The Client's only real purpose (as you may be able to tell from client.js) is to hold the API methods, set a few default values, and instantiate the transport. The transport is where all the networking, retry, and cluster discovery takes place and including it in your client is as simple as `transport = new es.Transport({});`. This way, you can benefit from the core features of our client.
+
+NOTE: In the near future the entire transport level will be abstracted into a separate module, as well as the API.

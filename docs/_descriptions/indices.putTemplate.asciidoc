@@ -1,0 +1,1 @@
+Create an index template that will automatically be applied to new indices created.

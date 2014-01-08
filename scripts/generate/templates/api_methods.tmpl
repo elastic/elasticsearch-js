@@ -1,27 +1,35 @@
+[[api-reference]]
+== API Method Reference
 <%
 _.each(actions, function (action) {
-var actionId = action.name.toLowerCase().replace(/[^\w]+/g, '-');
+var actionId = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-');
 
 %>
 
-h2#<%= actionId %>.fn <%= action.name %>(params, [callback])
-include _descriptions/<%= action.name %>.jade
-p.
-  The default method is <code><%= action.spec.method || 'GET' %></code> and
-  the usual <a href="#api-conventions">params and return values</a> apply.
-  See <a href="<%= action.docUrl %>" title="<%= action.name %>
-  at elasticsearch.org"><%= action.docUrl %></a> for more about this method.
-include _examples/<%= action.name %>.jade
-<% if (_.size(action.allParams)) { %>
-h3 Params
-dl.params.api
-<% _.each(action.allParams, function (param, paramName) { %>
-  dt: dfn: code <%= paramWithDefault(paramName, param.default) %>
-  dd.
-    <span class="types"><%= paramType(param.type) %></span>
-<%= indent(param.description || '', 4) %><%
-}); %>
-<% }
+[[<%= actionId %>]]
+=== `<%= action.name %>`
 
-});
+[source,js]
+--------
+client.<%= action.name %>([params, [callback]])
+--------
+
+<%= description(action.name) %>
+
+The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-conventions,params and return values>> apply. See <%= action.docUrl %>[the elasticsearch docs] for more about this method.
+
+<%= examples(action.name) %>
+
+<% if (_.size(action.allParams)) { %>
+==== Params
+
+[horizontal]<%
+_.each(action.allParams, function (param, paramName) { %>
+`<%= paramWithDefault(paramName, param.default) %>`::
+`<%= paramType(param.type) %>` -- <%= joinParagraphs(param.description || '', 4) %><%
+
+  }); // endeach
+} // endif
+
+}); // endeach
 %>

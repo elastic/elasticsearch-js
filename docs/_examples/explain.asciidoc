@@ -1,0 +1,32 @@
+.See how a document is scored against a simple query
+[source,js]
+---------
+client.explain({
+  // the document to test
+  index: 'myindex',
+  type: 'mytype',
+  id: '1',
+
+  // the query to score it against
+  q: 'field:value'
+}, function (error, response) {
+  // ...
+});
+---------
+
+.See how a document is scored against a query written in the Query DSL
+[source,js]
+---------
+client.explain({
+  index: 'myindex',
+  type: 'mytype',
+  id: '1',
+  body: {
+    query: {
+      match: { title: 'test' }
+    }
+  }
+}, function (error, response) {
+  // ...
+});
+---------

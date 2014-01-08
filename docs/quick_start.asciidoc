@@ -1,0 +1,161 @@
+[[quick-start]]
+== Quick Start
+
+=== Creating a client
+Start using Elasticsearch.js by creating an instance of the `elasticsearch.Client` class. The constructor accepts a config object/hash where you can define defaults values, or even entire classes, for the client to use. For a full list of config options check out the the <<configuration,section deicated to configuration>>.
+
+[source,js]
+-----------------
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'trace'
+});
+-----------------
+
+=== Say hello to Elasticsearch
+
+Almost all of the methods on the client accept two arguments:
+
+  * `params` - an optional object/hash of parameters <<api-conventions,More info here>>.
+  * `callback` - an optional function that will be called with the final result of the method. When omitted, a https://github.com/cujojs/when/blob/master/docs/api.md#promise[promise] is returned. api-conventions-cb[More info here].
+
+==== Ping the cluster
+
+.Send a HEAD request to "/?hello=elasticsearch" and allow up to 1 second for it to complete.
+[source,js]
+-----------------
+client.ping({
+  requestTimeout: 1000,
+  // undocumented params are appended to the query string
+  hello: "elasticsearch!"
+}, function (error) {
+  if (error) {
+    console.error('elasticsearch cluster is down!');
+  } else {
+    console.log('All is well');
+  }
+});
+-----------------
+
+==== Use Promises
+
+.Skip the callback to get a promise back
+[source,js]
+-----------------
+client.search({
+  q: 'pants'
+}).then(function (body) {
+  var hits = body.hits.hits;
+}, function (error) {
+  console.trace(error.message);
+});
+-----------------
+
+==== Allow 404 responses
+
+.Prevent 404 responses from being considered errors by telling the client to ignore them.
+[source,js]
+-----------------
+client.indices.delete({
+  index: 'test_index',
+  ignore: [404]
+}).then(function (body) {
+  // since we told the client to ignore 404 errors, the
+  // promise is resolved even if the index does not exist
+  console.log('index was deleted or never existed');
+}, function (error) {
+  // oh no!
+});
+-----------------
+
+=== Searching for documents
+A very common use-case for elasticsearch is to sort through through large collections of documents in order to find ones that are relavent to a query. In most cases you will use the client's `search()` method to accomplish this.
+
+==== Elasticsearch Query DSL
+
+For many searches you will want to define a search document that tells elasticsearch exactly how to find the documents you are looking for. To do this you will use the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[elasticsearch query DSL]. If you are not familiary with Elasticsearch's query DSL is it recommended that you research the topic at elasticsearch.org or watch/read one of these introductions:
+
+  * https://www.youtube.com/watch?v=52G5ZzE0XpY#t=1471[Clinton Gormley "Getting down and dirty with Elasticsearch"]
+  * http://okfnlabs.org/blog/2013/07/01/elasticsearch-query-tutorial.html#query-dsl-overview[Querying Elasticsearch - A Tutorial and Guide]
+  * http://exploringelasticsearch.com/book/searching-data/the-query-dsl-and-the-search-api.html[The Query DSL and the Search API - Searching Data - Exploring Elasticsearch]
+
+Now for some examples using the Query DSL.
+
+===== Simple match query
+
+.Find tweets that have "elasticsearch" in their body field
+[source,js]
+-----------------
+client.search({
+  index: 'twitter',
+  type: 'tweets',
+  body: {
+    query: {
+      match: {
+        body: 'elasticsearch'
+      }
+    }
+  }
+}).then(function (resp) {
+    var hits = resp.hits.hits;
+}, function (err) {
+    console.trace(err.message);
+});
+-----------------
+
+===== More complex filtered query
+
+To power a search form on a public site, you might want to allow the user to specify some text but also limit the documents returned by a few criteria. This is a good use-case for a filtered query.
+
+NOTE: In this example, `request` and `response` are http://expressjs.com/api.html#request[Express] request and response objects.
+
+[source,js]
+-----------------
+var pageNum = request.param('page', 0);
+var perPage = request.param('per_page', 15);
+var userQuery = request.param('search_query');
+var userId = request.session.userId;
+
+client.search({
+  index: 'posts',
+  from: (pageNum - 1) * perPage,
+  size: perPage,
+  body: {
+    filtered: {
+      query: {
+        match: {
+          // match the query agains all of
+          // the fields in the posts index
+          _all: userQuery
+        }
+      },
+      filter: {
+        // only return documents that are
+        // public or owned by the current user
+        or: [
+          {
+            term: { privacy: "public" }
+          },
+          {
+            term: { owner: userId }
+          }
+        ]
+      }
+    }
+  }
+}, function (error, response) {
+  if (err) {
+    // handle error
+    return;
+  }
+
+  response.render('search_results', {
+    results: response.hits.hits,
+    page: pageNum,
+    pages: Math.ceil(response.hists.total / perPage)
+  })
+});
+-----------------
+
+You can find a lot more information about filters http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filters.html[here]
