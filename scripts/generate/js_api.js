@@ -151,6 +151,7 @@ module.exports = function (done) {
       }
 
       var urls = _.difference(def.url.paths, aliases[name]);
+      var urlSignatures = [];
       urls = _.map(urls, function (url) {
         var optionalVars = {};
         var requiredVars = {};
@@ -170,6 +171,8 @@ module.exports = function (done) {
           target[name] = _.omit(param, 'required', 'description', 'name');
         }
 
+        urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
+
         return _.omit({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + _.camelCase(match) + '%>';
@@ -181,6 +184,10 @@ module.exports = function (done) {
           return !v;
         });
       });
+
+      if (urlSignatures.length !== _.unique(urlSignatures).length) {
+        throw new Error('Multiple URLS with the same signature detected for ' + spec.name);
+      }
 
       if (urls.length > 1) {
         spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function (url) {
