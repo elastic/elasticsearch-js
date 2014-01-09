@@ -35,6 +35,10 @@ describe('File Logger', function () {
     return logger;
   }
 
+  after(function () {
+    fs.unlinkSync('test.log');
+  });
+
   require('./generic_logger_tests')(makeLogger);
 
   describe('buffer flush', function () {
