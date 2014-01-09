@@ -1,6 +1,6 @@
 module.exports = function (makeLogger) {
   var expect = require('expect.js');
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
   var _ = require('lodash');

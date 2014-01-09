@@ -17,7 +17,7 @@ describe('Http Connector', function () {
 
   nock.disableNetConnect();
 
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   function makeStubReqMethod(prep) {
     return function (params, cb) {

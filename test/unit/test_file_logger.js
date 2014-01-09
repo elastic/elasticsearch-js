@@ -7,7 +7,7 @@ describe('File Logger', function () {
   var logger;
   var expect = require('expect.js');
   var fs = require('fs');
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   beforeEach(function () {
     parentLog = new Log();

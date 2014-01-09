@@ -6,7 +6,7 @@ var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var expect = require('expect.js');
 var sinon = require('sinon');
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 function listenerCount(emitter, event) {
   if (EventEmitter.listenerCount) {

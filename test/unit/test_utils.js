@@ -1,7 +1,7 @@
 var _ = require('../../src/lib/utils');
 var expect = require('expect.js');
 
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 describe('Utils', function () {
 

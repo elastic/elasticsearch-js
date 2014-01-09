@@ -5,7 +5,7 @@ var expect = require('expect.js');
 var _ = require('lodash');
 var errors = require('../../src/lib/errors');
 
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 describe('Connection Abstract', function () {
   var host = new Host('localhost:9200');

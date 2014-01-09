@@ -7,7 +7,7 @@ var sinon = require('sinon');
 var expect = require('expect.js');
 var _ = require('lodash');
 var nodeList = require('../fixtures/short_node_list.json');
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 /**
  * Allows the tests call #request() without it doing anything past trying to select

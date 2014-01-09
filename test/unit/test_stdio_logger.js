@@ -22,7 +22,7 @@ describe('Stdio Logger', function () {
     return new StdioLogger(parent, config);
   }
 
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   require('./generic_logger_tests')(makeLogger);
 

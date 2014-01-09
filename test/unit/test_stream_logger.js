@@ -8,7 +8,7 @@ describe('Stream Logger', function () {
   var expect = require('expect.js');
   var parentLog;
 
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   beforeEach(function () {
     stub(stream, 'write');

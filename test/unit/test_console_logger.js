@@ -20,7 +20,7 @@ function makeLogger(parent, levels) {
   return new ConsoleLogger(parent, config);
 }
 
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 describe('Console Logger', function () {
 

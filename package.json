@@ -46,7 +46,9 @@
     "grunt-mocha-cov": "~0.1.1",
     "grunt-open": "~0.2.2",
     "glob": "~3.2.7",
-    "expect.js": "~0.2.0"
+    "expect.js": "~0.2.0",
+    "aliasify": "~1.2.1",
+    "express": "~3.4.7"
   },
   "license": "Apache 2.0",
   "dependencies": {

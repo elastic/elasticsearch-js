@@ -5,7 +5,7 @@ describe('Logger Abstract', function () {
   var LoggerAbstract = require('../../src/lib/logger');
 
   var parentLog;
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   function makeLogger(parent, levels) {
     return new LoggerAbstract(parent || parentLog, {

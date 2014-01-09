@@ -6,7 +6,7 @@ var now = new Date('2013-03-01T00:00:00Z');
 var sinon = require('sinon');
 
 module.exports = function (makeLogger) {
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
   var parent = new Log();
 
   afterEach(function () {

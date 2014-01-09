@@ -22,7 +22,7 @@ describe('Tracer Logger', function () {
     return new TracerLogger(parent, config);
   }
 
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
 
   require('./generic_logger_tests')(makeLogger);
