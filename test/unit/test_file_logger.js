@@ -32,6 +32,10 @@ function makeLogger(parent, levels) {
   return logger;
 }
 
+after(function () {
+  fs.unlinkSync('test.log');
+});
+
 var stub = require('./auto_release_stub').make();
 
 describe('File Logger', function () {
