@@ -28,10 +28,10 @@ function group {
 # Do, log, and check a call
 #####
 function call {
-  DO="$*"
-  echo -e "\$ ${DO}"
+  local DO="$*"
+  echo "\$ ${DO}"
   echo $DO | bash
-  RESULT=$?
+  local RESULT=$?
   if [ "$RESULT" -gt "0" ]; then
     echo "non-zero exit code: $RESULT"
     exit $RESULT
@@ -39,10 +39,10 @@ function call {
 }
 
 #####
-# call grunt, but make sure it exists first
+# call grunt, but make sure it's installed first
 #####
 function grunt_ {
-  DO="$*"
+  local DO="$*"
 
   if [ ! -x "`which grunt`" ]; then
     group "start:install_grunt"
@@ -61,32 +61,32 @@ function grunt_ {
 #####
 function get_es {
   group "start:setup_es"
-    ES_BRANCH=$1
-    ES_RELEASE=$2
+    local ES_BRANCH=$1
+    local ES_RELEASE=$2
 
-    ROOT="$PWD"
-    ES_SUBMODULE="$ROOT/src/elasticsearch"
-    SNAPSHOTS="$ROOT/.snapshots"
+    local ROOT="$PWD"
+    local ES_SUBMODULE="$ROOT/src/elasticsearch"
+    local SNAPSHOTS="$ROOT/.snapshots"
 
     if [ ! -d "$SNAPSHOTS" ]; then
       mkdir -p $SNAPSHOTS
     fi
 
     if [ -n "$ES_RELEASE" ]; then
-      ES_VERSION="v${ES_RELEASE}"
-      ES_URL="https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_RELEASE}.zip"
-      ES_DIR="${SNAPSHOTS}/${ES_VERSION}"
+      local ES_VERSION="v${ES_RELEASE}"
+      local ES_URL="https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_RELEASE}.zip"
+      local ES_DIR="${SNAPSHOTS}/${ES_VERSION}"
     else
-      ES_VERSION="${ES_BRANCH}_nightly"
-      ES_URL="http://s3-us-west-2.amazonaws.com/build.elasticsearch.org/origin/$ES_BRANCH/nightly/JDK6/elasticsearch-latest-SNAPSHOT.zip"
-      DATE=`date +%Y_%m_%d`
-      ES_DIR="${SNAPSHOTS}/${ES_VERSION}_${DATE}"
+      local ES_VERSION="${ES_BRANCH}_nightly"
+      local ES_URL="http://s3-us-west-2.amazonaws.com/build.elasticsearch.org/origin/$ES_BRANCH/nightly/JDK6/elasticsearch-latest-SNAPSHOT.zip"
+      local DATE=`date +%Y_%m_%d`
+      local ES_DIR="${SNAPSHOTS}/${ES_VERSION}_${DATE}"
       if [ ! -d $ES_DIR ]; then
         call rm -rf ${SNAPSHOTS}/${ES_VERSION}*
       fi
     fi
 
-    ES_BIN="$ES_DIR/bin/elasticsearch"
+    local ES_BIN="$ES_DIR/bin/elasticsearch"
 
     call cd $SNAPSHOTS
 
