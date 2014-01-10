@@ -30,7 +30,7 @@ function group {
 function call {
   DO="$*"
   echo -e "\$ ${DO}"
-  $DO
+  echo $DO | bash
   RESULT=$?
   if [ "$RESULT" -gt "0" ]; then
     echo "non-zero exit code: $RESULT"
@@ -69,10 +69,10 @@ function get_es {
     SNAPSHOTS="$ROOT/.snapshots"
 
     if [ ! -d "$SNAPSHOTS" ]; then
-      mkdir $SNAPSHOTS
+      mkdir -p $SNAPSHOTS
     fi
 
-    if [ ! -z $ES_RELEASE ]; then
+    if [ -n "$ES_RELEASE" ]; then
       ES_VERSION="v${ES_RELEASE}"
       ES_URL="https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_RELEASE}.zip"
       ES_DIR="${SNAPSHOTS}/${ES_VERSION}"
@@ -88,20 +88,17 @@ function get_es {
 
     ES_BIN="$ES_DIR/bin/elasticsearch"
 
-    echo "Killing existsing java processes"
-    killall java 2>/dev/null
-
-    cd $SNAPSHOTS
+    call cd $SNAPSHOTS
 
     if [ ! -d "$ES_DIR" ]; then
       echo "Downloading Elasticsearch $ES_VERSION"
       call curl -#O $ES_URL
-      call unzip -q elasticsearch-*.zip
-      call rm elasticsearch-*.zip
-      call mv elasticsearch-*/ $ES_DIR
+      unzip -q elasticsearch-*.zip
+      rm elasticsearch-*.zip
+      mv elasticsearch-*/ $ES_DIR
     fi
 
-    cd $ROOT
+    call cd $ROOT
 
     if [ ! -x "$ES_BIN" ]; then
       echo "Unable to find elasticsearch executable"
@@ -126,31 +123,34 @@ function get_es {
 
 if [ -n "$ES_BRANCH" ]; then
   TESTING_BRANCH=$ES_BRANCH
-else if [ -n "$ES_V" ]; then
+elif [ -n "$ES_V" ]; then
   TESTING_BRANCH=$ES_V
 else
   TESTING_BRANCH="master"
 fi
 
-if [[ $NODE_UNIT -eq 1 ]]; then
+if [[ "$NODE_UNIT" != "0" ]]; then
   grunt_ jshint mochacov:unit
 fi
 
-if [ flag $NODE_INTEGRATION ]; then
-  if [ -n "$ES_BRANCH" ] && [[ $USER != "jenkins" ]]; then
+if [[ "$NODE_INTEGRATION" != "0" ]]; then
+  if [[ -n "$ES_BRANCH" ]] && [[ "$USER" != "jenkins" ]]; then
+    killall java 2>/dev/null
     get_es $ES_BRANCH $ES_RELEASE
   fi
 
-  call node scripts/generate --no-api --es_branch=$TESTING_BRANCH
+  call node scripts/generate --no-api --es_branch=\"$TESTING_BRANCH\"
   grunt_ mochacov:integration
+
+  if [[ -n "$ES_BRANCH" ]] && [[ "$USER" != "jenkins" ]]; then
+    killall java 2>/dev/null
+  fi
 fi
 
-if [ -n "$TEST_BROWSER" ]; then
-  call node scripts/browser_tests --browser=\"$TEST_BROWSER\" --es_branch=$TESTING_BRANCH
+if [[ -n "$TEST_BROWSER" ]]; then
+  grunt_ run:browser_test_server saucelabs-mocha:${TEST_BROWSER}
 fi
 
-if [[ $COVERAGE -eq 1 ]]; then
+if [[ "$COVERAGE" == "1" ]]; then
   grunt_ mochacov:ship_coverage
 fi
-
-killall java 2>/dev/null

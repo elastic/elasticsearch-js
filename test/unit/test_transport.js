@@ -479,6 +479,7 @@ describe('Transport Class', function () {
             expect(err).to.be.a(errors.ConnectionFault);
             expect(resp).to.be(undefined);
             expect(body).to.be(undefined);
+            trans.close();
             done();
           });
         };

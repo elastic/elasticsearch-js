@@ -13,5 +13,6 @@ test/integration/yaml_suite/yaml_tests.json
 junit-*.xml
 test.log
 elasticsearch*.log
+sauce_connect.lo*
 coverage.html
 .snapshots

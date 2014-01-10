@@ -117,24 +117,34 @@ function YamlDoc(doc, file) {
     expect(method).to.be.a('function');
 
     if (_.isPlainObject(action.args)) {
-      action.name += ' ' + _.keys(action.args).join(', ');
+      action.name += '(' + JSON.stringify(action.args) + ')';
     } else if (action.args) {
-      action.name += ' ' + action.args;
+      action.name += '(' + action.args + ')';
     }
 
     // wrap in a check for skipping
     action.bound = _.bind(method, self, action.args);
 
-    // create a function that can be passed to
+    // create a function that can be passed to mocha or async
     action.testable = function (done) {
       if (self.skipping || self.file.skipping) {
         return done();
       }
       if (method.length > 1) {
-        action.bound(done);
+        action.bound(function (err) {
+          if (err) {
+            err.message += ' in ' + action.name;
+          }
+          done(err);
+        });
       } else {
-        action.bound();
-        done();
+        try {
+          action.bound();
+          done();
+        } catch (err) {
+          err.message += ' in ' + action.name;
+          done(err);
+        }
       }
     };
 

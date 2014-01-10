@@ -349,7 +349,7 @@ aliases = {
     '/{index}/_stats/search/{search_groups}',
     '/{index}/_stats/fielddata/{fields}'
   ],
-  'search': [
-    '/_search'
-  ]
+  // 'search': [
+  //   '/_search'
+  // ]
 };

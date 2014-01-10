@@ -8,10 +8,13 @@
     <div id="mocha"></div>
     <script src="expect.js"></script>
     <script src="mocha.js"></script>
-    <script>mocha.setup('bdd');</script>
-    <script>mocha.checkLeaks();</script>
+    <script>
+      mocha.setup('bdd');
+      mocha.checkLeaks();
+      mocha.globals(['mochaRunner']);
+    </script>
     <script src="angular.js"></script>
     <script src="angular_build.js"></script>
-    <script src="begin!"></script>
+    <script>var mochaRunner = mocha.run();</script>
   </body>
 </html>

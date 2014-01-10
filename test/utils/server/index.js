@@ -11,7 +11,6 @@ var pkg = require(root + '/package.json');
 
 var defaultFiles = _.transform(pkg.testling.files, function (files, pattern) {
   [].push.apply(files, _.map(glob.sync(pattern), function (filename) {
-    console.log('resolving', filename);
     return path.resolve(root, filename);
   }));
 }, []);
@@ -25,7 +24,6 @@ var aliasify = require('aliasify').configure({
 
 function browserBuild(name) {
   return function (req, res, next) {
-
     res.set('Content-Type', 'application/javascript');
 
     var b = browserify(_.union(defaultFiles, [
@@ -66,23 +64,7 @@ app
   // bundles
   .get('/angular_build.js', browserBuild('angular'))
   .get('/jquery_build.js', browserBuild('jquery'))
-  .get('/browser_build.js', browserBuild('browser'))
-
-  // stupid
-  .get('/begin!', function (req, res) {
-    res.set('Content-Type', 'application/javascript');
-    res.send([
-      'mocha.run().on(\'end\', function () {',
-      '  var stats = window.completeTestStats = {};',
-      '  for (var key in this.stats) {',
-      '    if (this.stats.hasOwnProperty(key)) {',
-      '      stats[key] = this.stats[key];',
-      '    }',
-      '  }',
-      '  console && console.dir && console.dir(window.completeTestStats);',
-      '});'
-    ].join('\n'));
-  });
+  .get('/browser_build.js', browserBuild('browser'));
 
 http.createServer(app).listen(8000, function () {
   console.log('listening on port 8000');

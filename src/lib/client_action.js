@@ -213,10 +213,8 @@ function exec(transport, spec, params, cb) {
 
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
-    throw new TypeError(
-      'Unable to build a path with those params. Supply at least ' +
-      _.keys(spec.urls[spec.urls.length - 1].req).join(', ')
-    );
+    var minUrl = spec.url || spec.urls[spec.urls.length - 1];
+    throw new TypeError('Unable to build a path with those params. Supply at least ' + _.keys(minUrl.req).join(', '));
   }
 
   // build the query string

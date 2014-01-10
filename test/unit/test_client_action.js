@@ -98,7 +98,7 @@ describe('Client Action runner', function () {
 
     it('handles passing just the callback', function () {
       var action = makeClientActionProxy(function (params, cb) {
-        expect(_.isObject(params)).to.be.ok;
+        expect(_.isObject(params)).to.be.ok();
         expect(cb).to.be.a('function');
       });
 

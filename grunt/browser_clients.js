@@ -35,6 +35,11 @@ module.exports = function (grunt) {
     's3:upload_archives'
   ]);
 
+  grunt.registerTask('browser_clients:test', [
+    'run:browser_test_server',
+    'saucelabs-mocha'
+  ]);
+
   grunt.registerTask('__check_for_confirmation', function () {
     if (grunt.config.get('confirm.release')) {
       grunt.log.verbose.writeln('release confirmed');

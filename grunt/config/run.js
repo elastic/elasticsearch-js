@@ -17,20 +17,11 @@ module.exports = {
       ]
     }
   },
-  browser_integration_tests: {
-    exec: 'node ./scripts/run_browser_integration_suite',
+  browser_test_server: {
+    exec: 'node ./test/utils/server',
     options: {
-      passArgs: [
-        'browsers'
-      ]
-    }
-  },
-  browser_unit_tests: {
-    exec: './node_modules/.bin/testling .',
-    options: {
-      passArgs: [
-        'x'
-      ]
+      wait: false,
+      ready: /listening/
     }
   }
 };
