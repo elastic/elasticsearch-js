@@ -39,7 +39,7 @@ function HttpConnector(host, config) {
     maxKeepAliveTime: 3e5 // 5 minutes
   });
 
-  var KeepAliveAgent_ = this.host.protocol === 'https' ? KeepAliveAgent : KeepAliveAgent.HttpsAgent;
+  var KeepAliveAgent_ = this.host.protocol === 'https' ? KeepAliveAgent.HttpsAgent : KeepAliveAgent;
 
   this.agent = new KeepAliveAgent_({
     maxSockets: config.maxSockets,
