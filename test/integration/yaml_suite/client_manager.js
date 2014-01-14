@@ -9,8 +9,7 @@ if (BROWSER) {
 }
 var argv = require('./argv');
 var server = require('./server');
-// var path = require('path');
-// var fs = require('fs');
+var fs = require('relative-fs').relativeTo(require('path').join(__dirname, '../../../'));
 var _ = require('../../../src/lib/utils');
 
 // current client
@@ -65,9 +64,14 @@ module.exports = {
               : 'stdio',
           level: VERBOSE
             ? 'trace'
-            : 'warning',
-          path: VERBOSE ? undefined : false
+            : 'warning'
         };
+
+      if (logConfig && logConfig.type === 'tracer') {
+        try {
+          fs.unlinkSync('../../../elasticsearch-tracer.log');
+        } catch (e) {}
+      }
 
       // close existing client
       if (client) {
