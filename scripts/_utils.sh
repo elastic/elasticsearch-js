@@ -3,7 +3,7 @@
 #####
 function group {
   if [ -n "$TRAVIS" ]; then
-    echo -e "travis_fold:$1"
+    echo -e "travis_fold:${1// /_}"
   fi
 }
 

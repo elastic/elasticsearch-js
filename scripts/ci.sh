@@ -55,7 +55,9 @@ if [[ "$NODE_UNIT" != "0" ]]; then
 fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
-  call node scripts/generate --no-api
+  group "start:generate_tests"
+    call node scripts/generate --no-api
+  group "end:generate_tests"
 
   if [[ "$USER" != "jenkins" ]]; then
     manage_es start $TESTING_BRANCH $ES_RELEASE
