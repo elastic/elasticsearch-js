@@ -61,7 +61,7 @@ if [[ "$NODE_UNIT" != "0" ]]; then
         --reporter ../../../test/utils/jenkins-reporter.js"
       echo "\$ $MOCHA_EXE"
 
-      $MOCHA_EXE 2> test/junit-node-integration.xml
+      $MOCHA_EXE
 
     else
       grunt_ jshint mochacov:unit
@@ -98,7 +98,7 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
         --reporter ../../../test/utils/jenkins-reporter.js"
       echo "\$ $MOCHA_EXE"
 
-      $MOCHA_EXE 2> test/junit-node-integration.xml
+      $MOCHA_EXE
     else
       manage_es start $TESTING_BRANCH $ES_RELEASE
       grunt_ mochacov:integration_$TESTING_BRANCH
