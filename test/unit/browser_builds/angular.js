@@ -2,11 +2,10 @@
 /* global angular */
 
 var expect = require('expect.js');
-var Client = require('../../src/lib/client');
 
 describe('Angular esFactory', function () {
   before(function () {
-    require('../../src/elasticsearch.angular.js');
+    require('../../../src/elasticsearch.angular.js');
   });
 
   var uuid = (function () { var i = 0; return function () { return ++i; }; }());
@@ -46,8 +45,9 @@ describe('Angular esFactory', function () {
     directive(function (esFactory) {
       return function () {
         try {
-          var client = esFactory({ log: null });
+          var client = esFactory({ hosts: null });
           expect(client).to.have.keys('ping', 'transport', 'indices', 'cluster');
+          client.close();
         } catch (e) {
           return done(e);
         }

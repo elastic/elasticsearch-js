@@ -12,7 +12,7 @@ describe('jQuery.es namespace', function () {
   });
   it('can create a client', function () {
     var client = new $.es.Client({ hosts: null });
-    expect(client).to.be.a($.es.Client);
+    expect(client).to.have.keys('ping', 'transport', 'indices', 'cluster');
     client.close();
   });
 });

@@ -40,13 +40,13 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
       Quick Option: Run them locally in your browser
       ```sh
-      grunt run:browser_test_server
+      node ./test/utils/server
       # open http://localhost:8000/browser.html, angular.html, or jquery.html
       ```
 
       Run them on Sauce Labs across several browsers, operating systems, and browser versions
       ```sh
-      grunt saucelabs-mocha
+      grunt browser_clients:test
       ```
 
 

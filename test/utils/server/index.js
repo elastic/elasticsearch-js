@@ -8,20 +8,28 @@ var root = path.join(__dirname, '../../..');
 var glob = require('glob');
 var browserify = require('browserify');
 var pkg = require(root + '/package.json');
-var testFiles = 'test/unit/test_!(' + [
-  'file_logger',
-  'http_connector',
-  'stdio_logger',
-  'console_logger',
-  'stream_logger',
-  'tracer_logger',
-  'transport_with_server',
-].join('|') + ')*';
 
-var defaultFiles = _.map(glob.sync(testFiles), function (filename) {
-  return path.resolve(root, filename);
-});
+var testFiles = {
+  unit: 'test/unit/test_!(' + [
+    'file_logger',
+    'http_connector',
+    'stdio_logger',
+    'console_logger',
+    'stream_logger',
+    'tracer_logger',
+    'transport_with_server',
+  ].join('|') + ')*',
+  build: 'test/unit/browser_builds/*.js'
+};
 
+// resolve the test file globs
+_.transform(testFiles, function (out, pattern, name) {
+  out[name] = _.map(glob.sync(pattern), function (filename) {
+    return path.resolve(root, filename);
+  });
+}, testFiles);
+
+// generic aliasify instance
 var aliasify = require('aliasify').configure({
   aliases: pkg.browser,
   excludeExtensions: 'json',
@@ -29,31 +37,31 @@ var aliasify = require('aliasify').configure({
   configDir: root
 });
 
+// queue for bundle requests, two at a time
 var bundleQueue = async.queue(function (task, done) {
   task(done);
-}, 1);
+}, 2);
 
-
-function browserBuild(name) {
-  var files = _.union(defaultFiles, [path.resolve(root, 'test/unit/browser_test_' + name + '_build.js')]);
-
+// create a route that bundles a file list, based on the patterns defined in testFiles
+function bundleTests(name) {
   return function (req, res, next) {
     bundleQueue.push(function (done) {
       res.set('Content-Type', 'application/javascript');
 
-      var b = browserify(files);
+      var b = browserify(testFiles[name]);
       b.transform(aliasify);
       var str = b.bundle({
         insertGlobals: true
       });
 
       str.pipe(res);
-      str.on('error', done);
-      str.on('end', done);
+      str.once('end', done);
+      str.once('error', done);
     });
   };
 }
 
+// create a route that just rends a specific file (like a symlink or something)
 function sendFile(file) {
   return function (req, res, next) {
     res.sendfile(file);
@@ -66,9 +74,8 @@ app
   .use(express.logger('dev'))
   .use(app.router)
   // runners
-  .get('/browser.html', sendFile(root + '/test/angular_build_unit_tests.html'))
-  .get('/jquery.html', sendFile(root + '/test/angular_build_unit_tests.html'))
-  .get('/angular.html', sendFile(root + '/test/angular_build_unit_tests.html'))
+  .get('/unit.html', sendFile(root + '/test/browser_unit_tests.html'))
+  .get('/builds.html', sendFile(root + '/test/browser_build_unit_tests.html'))
 
   // support
   .get('/expect.js', sendFile(root + '/node_modules/expect.js/expect.js'))
@@ -79,10 +86,16 @@ app
   .get('/angular.js', sendFile(root + '/test/utils/angular.js'))
   .get('/jquery.js', sendFile(root + '/test/utils/jquery.js'))
 
+  // builds
+  .get('/elasticsearch.js', sendFile(root + '/dist/elasticsearch.js'))
+  .get('/elasticsearch.angular.js', sendFile(root + '/dist/elasticsearch.angular.js'))
+  .get('/elasticsearch.jquery.js', sendFile(root + '/dist/elasticsearch.jquery.js'))
+
   // bundles
-  .get('/angular_build.js', browserBuild('angular'))
-  .get('/jquery_build.js', browserBuild('jquery'))
-  .get('/browser_build.js', browserBuild('browser'));
+  .get('/unit_tests.js', bundleTests('unit'))
+  .get('/build_tests.js', bundleTests('build'))
+
+  ;
 
 http.createServer(app).listen(8000, function () {
   console.log('listening on port 8000');

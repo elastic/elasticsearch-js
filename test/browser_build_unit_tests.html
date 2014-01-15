@@ -11,13 +11,24 @@
     <script src="mocha.js"></script>
     <script>
       mocha.setup('bdd');
+      // sauce labs & selenium inject global variables that break this
       // mocha.checkLeaks();
-      // mocha.globals(['mochaRunner', 'elasticsearch']);
+      // mocha.globals(['mochaRunner', 'angular']);
     </script>
-    <script src="browser_build.js"></script>
+    <!-- libs -->
+    <script src="jquery.js"></script>
+    <script src="angular.js"></script>
+
+    <!-- builds -->
+    <script src="elasticsearch.js"></script>
+    <script src="elasticsearch.angular.js"></script>
+    <script src="elasticsearch.jquery.js"></script>
+
+    <!-- tests -->
+    <script src="build_tests.js"></script>
     <script>
       mocha.run().on('end', function(){
-        window.mochaResults = runner.stats;
+        window.mochaResults = this.stats;
       });
     </script>
   </body>
