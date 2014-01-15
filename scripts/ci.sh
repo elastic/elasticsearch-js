@@ -71,7 +71,7 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
 fi
 
 if [[ -n "$TEST_BROWSER" ]]; then
-  grunt_ run:browser_test_server saucelabs-mocha:${TEST_BROWSER}
+  grunt_ browser_clients:build run:browser_test_server saucelabs-mocha:${TEST_BROWSER}
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
