@@ -53,23 +53,15 @@ else
   TESTING_BRANCH="master"
 fi
 
-# convert TESTING_BRANCH into BRANCH_SUFFIX
-if [[ $TESTING_BRANCH = 'master' ]]; then
-  BRANCH_SUFFIX=''
-else
-  BRANCH_SUFFIX=${TESTING_BRANCH//./_}
-fi
-
-# find value of ES_PORT
-if [[ -n "$es_port" ]]; then
-  # jenkins
-  ES_PORT=$es_port
-else
-  ES_PORT=9200
-fi
-
 if [[ "$NODE_UNIT" != "0" ]]; then
-  grunt_ jshint mochacov:unit
+  if [[ -n "$JENKINS" ]]; then
+    ./node_modules/.bin/mocha test/unit/test_*.js \
+      --require should \
+      --reporter ../../../test/utils/jenkins-reporter.js \
+      2> test/junit-node-unit.xml
+  else
+    grunt_ jshint mochacov:unit
+  fi
 fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
@@ -77,22 +69,31 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
     call node scripts/generate --no-api
   group "end:generate_tests"
 
-  MOCHA_EXE="./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
-    --require should
-    --host localhost
-    --port $ES_PORT"
-
   if [[ -n "$JENKINS" ]]; then
-    MOCHA_EXE="$MOCHA_EXE
-    --reporter ../../../test/utils/jenkins-reporter.js
-    2> test/junit-node-integration.xml"
+    # convert TESTING_BRANCH into BRANCH_SUFFIX
+    if [[ $TESTING_BRANCH = 'master' ]]; then
+      BRANCH_SUFFIX=''
+    else
+      BRANCH_SUFFIX=${TESTING_BRANCH//./_}
+    fi
+
+    # find value of ES_PORT
+    if [[ -n "$es_port" ]]; then
+      # jenkins
+      ES_PORT=$es_port
+    else
+      ES_PORT=9200
+    fi
+
+    ./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js \
+      --require should \
+      --host localhost \
+      --port $ES_PORT \
+      --reporter ../../../test/utils/jenkins-reporter.js \
+      2> test/junit-node-integration.xml
   else
     manage_es start $TESTING_BRANCH $ES_RELEASE
-  fi
-
-  call $MOCHA_EXE
-
-  if [[ -z "$JENKINS" ]]; then
+    grunt_ mochacov:integration_$TESTING_BRANCH
     manage_es stop $TESTING_BRANCH $ES_RELEASE
   fi
 fi
