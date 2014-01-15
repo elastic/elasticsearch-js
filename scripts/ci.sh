@@ -56,13 +56,9 @@ fi
 if [[ "$NODE_UNIT" != "0" ]]; then
   group "start:unit_tests"
     if [[ -n "$JENKINS" ]]; then
-      MOCHA_EXE="./node_modules/.bin/mocha test/unit/test_*.js \
-        --require should \
-        --reporter ../../../test/utils/jenkins-reporter.js"
+      MOCHA_EXE="./node_modules/.bin/mocha test/unit/test_*.js --reporter ../../../test/utils/jenkins-reporter.js"
       echo "\$ $MOCHA_EXE"
-
-      $MOCHA_EXE
-
+      $MOCHA_EXE 2> test/junit-node-unit.xml
     else
       grunt_ jshint mochacov:unit
     fi
@@ -92,13 +88,12 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
       fi
 
       MOCHA_EXE="./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js \
-        --require should \
         --host localhost \
         --port $ES_PORT \
         --reporter ../../../test/utils/jenkins-reporter.js"
       echo "\$ $MOCHA_EXE"
 
-      $MOCHA_EXE
+      $MOCHA_EXE 2> test/junit-node-integration.xml
     else
       manage_es start $TESTING_BRANCH $ES_RELEASE
       grunt_ mochacov:integration_$TESTING_BRANCH
