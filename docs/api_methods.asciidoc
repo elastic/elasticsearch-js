@@ -1079,9 +1079,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 `index`::
-`String` -- The name of the index with an alias
+`String, String[], Boolean` -- A comma-separated list of index names (supports wildcards); use `_all` for all indices
 `name`::
-`String` -- The name of the alias to be deleted
+`String, String[], Boolean` -- A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
 
 [[api-indices-deletemapping]]
 === `indices.deleteMapping`
@@ -1104,9 +1104,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 `index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` for all indices
+`String, String[], Boolean` -- A comma-separated list of index names (supports wildcards); use `_all` for all indices
 `type`::
-`String` -- The name of the document type to delete
+`String, String[], Boolean` -- A comma-separated list of document types to delete (supports wildcards); use `_all` to delete all document types in the specified indices.
 
 [[api-indices-deletetemplate]]
 === `indices.deleteTemplate`
@@ -1153,12 +1153,10 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 [horizontal]
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
 `name`::
-`String` -- The name of the warmer (supports wildcards); leave empty to delete all warmers
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
+`String, String[], Boolean` -- A comma-separated list of warmer names to delete (supports wildcards); use `_all` to delete all warmers in the specified indices. You must specify a name either in the uri or in the parameters.
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to delete warmers from (supports wildcards); use `_all` to perform the operation on all indices.
 
 [[api-indices-exists]]
 === `indices.exists`
@@ -1574,7 +1572,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 `index`::
-`String` -- The name of the index with an alias
+`String, String[], Boolean` -- A comma-separated list of index names the alias should point to (supports wildcards); use `_all` or omit to perform the operation on all indices.
 `name`::
 `String` -- The name of the alias to be created or updated
 
@@ -1609,7 +1607,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` to perform the operation on all indices
+`String, String[], Boolean` -- A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
 `type`::
 `String` -- The name of the document type
 
@@ -1700,7 +1698,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both, in the search request to warm.
 `index`::
-`String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
+`String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
 `name`::
 `String` -- The name of the warmer
 `type`::

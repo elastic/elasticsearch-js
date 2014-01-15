@@ -1,4 +1,5 @@
 var errors = require('../../src/lib/errors');
+var expect = require('expect.js');
 var _ = require('lodash');
 
 _.each(errors, function (CustomError, name) {
@@ -6,8 +7,9 @@ _.each(errors, function (CustomError, name) {
     describe(name, function () {
       it('extend the ErrorAbstract and Error classes', function () {
         var err = new CustomError();
-        err.message.length.should.be.above(7);
-        err.should.be.an.instanceOf(Error).and.an.instanceOf(errors._Abstract);
+        expect(err.message.length).to.be.greaterThan(7);
+        expect(err).to.be.an(Error);
+        expect(err).to.be.an(errors._Abstract);
       });
     });
   }
@@ -20,6 +22,6 @@ describe('Error Abstract', function () {
     var err = new errors._Abstract();
     process.browser = isBrowser;
 
-    err.stack.should.be.exactly('');
+    expect(err.stack).to.be('');
   });
 });

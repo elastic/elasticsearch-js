@@ -1,6 +1,4 @@
-var aliases; // defined at the bottom of this file.
-
-module.exports = function (done) {
+module.exports = function (branch, done) {
   /**
    * Read the API actions form the rest-api-spec repo.
    * @type {[type]}
@@ -17,6 +15,9 @@ module.exports = function (done) {
   var apiSpec; // populated by parseSpecFiles
   var docVars; // slightly modified clone of apiSpec for the docs
 
+  var branchSuffix = branch === 'master' ? '' : '_' + _.snakeCase(branch);
+  var aliases = require('./aliases' + branchSuffix);
+
   // generate the API
   async.series([
     readSpecFiles,
@@ -28,9 +29,11 @@ module.exports = function (done) {
   ], done);
 
   function readSpecFiles(done) {
-    var apiDir = '../../src/elasticsearch/rest-api-spec/api/';
+    var apiDir = require('path').join(__dirname, '../../src/elasticsearch/rest-api-spec/api/');
     files = fs.readdirSync(apiDir).map(function (filename) {
-      return require(apiDir + filename);
+      var module = require(apiDir + filename);
+      delete require.cache[apiDir + filename];
+      return module;
     });
     done();
   }
@@ -68,9 +71,10 @@ module.exports = function (done) {
   }
 
   function writeApiFile(done) {
-    var outputPath = require('path').join(__dirname, '../../src/lib/api.js');
-    console.log('writing', apiSpec.actions.length, 'api actions to', outputPath);
-    fs.writeFile(outputPath, templates.apiFile(apiSpec), done);
+    var outputPath = require('path').join(__dirname, '../../src/lib/api' + branchSuffix + '.js');
+    fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
+    console.log('wrote', apiSpec.actions.length, 'api actions to', outputPath);
+    done();
   }
 
   function ensureDocsDir(done) {
@@ -102,7 +106,7 @@ module.exports = function (done) {
 
   function writeMethodDocs(done) {
     fs.writeFile(
-      '../../docs/api_methods.asciidoc',
+      '../../docs/api_methods' + branchSuffix + '.asciidoc',
       templates.apiMethods(docVars),
       done
     );
@@ -151,6 +155,7 @@ module.exports = function (done) {
       }
 
       var urls = _.difference(def.url.paths, aliases[name]);
+      var urlSignatures = [];
       urls = _.map(urls, function (url) {
         var optionalVars = {};
         var requiredVars = {};
@@ -170,6 +175,8 @@ module.exports = function (done) {
           target[name] = _.omit(param, 'required', 'description', 'name');
         }
 
+        urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
+
         return _.omit({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + _.camelCase(match) + '%>';
@@ -181,6 +188,10 @@ module.exports = function (done) {
           return !v;
         });
       });
+
+      if (urlSignatures.length !== _.unique(urlSignatures).length) {
+        throw new Error('Multiple URLS with the same signature detected for ' + spec.name + '\n' + _.pluck(urls, 'fmt').join('\n') + '\n');
+      }
 
       if (urls.length > 1) {
         spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function (url) {
@@ -283,68 +294,3 @@ module.exports = function (done) {
   }
 };
 
-aliases = {
-  'cluster.nodeHotThreads': [
-    '/_cluster/nodes/hotthreads',
-    '/_cluster/nodes/hot_threads',
-    '/_nodes/hot_threads',
-    '/_cluster/nodes/{node_id}/hotthreads',
-    '/_cluster/nodes/{node_id}/hot_threads',
-    '/_nodes/{node_id}/hot_threads'
-  ],
-  'cluster.nodeInfo': [
-    '/_cluster/nodes',
-    '/_nodes/settings',
-    '/_nodes/os',
-    '/_nodes/process',
-    '/_nodes/jvm',
-    '/_nodes/thread_pool',
-    '/_nodes/network',
-    '/_nodes/transport',
-    '/_nodes/http',
-    '/_nodes/plugin',
-    '/_cluster/nodes/{node_id}',
-    '/_nodes/{node_id}/settings',
-    '/_nodes/{node_id}/os',
-    '/_nodes/{node_id}/process',
-    '/_nodes/{node_id}/jvm',
-    '/_nodes/{node_id}/thread_pool',
-    '/_nodes/{node_id}/network',
-    '/_nodes/{node_id}/transport',
-    '/_nodes/{node_id}/http',
-    '/_nodes/{node_id}/plugin'
-  ],
-  'cluster.nodeShutdown': [
-    '/_cluster/nodes/_shutdown'
-  ],
-  'cluster.nodeStats': [
-    '/_cluster/nodes/stats',
-    '/_nodes/stats/{metric_family}',
-    '/_nodes/stats/indices/{metric}/{fields}',
-    '/_cluster/nodes/{node_id}/stats',
-    '/_nodes/{node_id}/stats/{metric_family}',
-    '/_nodes/{node_id}/stats/indices/{metric}/{fields}'
-  ],
-  'get': [
-    '/{index}/{type}/{id}/_source'
-  ],
-  'indices.deleteMapping': [
-    '/{index}/{type}/_mapping'
-  ],
-  'indices.deleteWarmer': [
-    '/{index}/_warmer',
-    '/{index}/_warmers',
-    '/{index}/_warmers/{name}'
-  ],
-  'indices.stats': [
-    '_stats/{metric_family}',
-    '/_stats/indexing',
-    '/_stats/indexing/{indexing_types}',
-    '/_stats/search/{search_groups}',
-    '/_stats/fielddata/{fields}',
-    '/{index}/_stats/{metric_family}',
-    '/{index}/_stats/indexing',
-    '/{index}/_stats/search/{search_groups}',
-    '/{index}/_stats/fielddata/{fields}'
-  ]
-};

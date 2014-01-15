@@ -26,50 +26,57 @@
 
 module.exports = Client;
 
-var api = require('./api.js');
-var ca = require('./client_action');
 var Transport = require('./transport');
+var ca = require('./client_action');
+var _ = require('./utils');
+var defaultApi = 'master';
+var apis = {
+  '0.90': require('./api_0_90'),
+  'master': require('./api')
+};
 
 function Client(config) {
-  if (!(this instanceof Client)) {
-    return new Client(config);
-  }
   config = config || {};
 
-  // our client will log minimally by default
-  if (!config.hasOwnProperty('log')) {
-    config.log = 'warning';
+  function EsApiClient(config) {
+    // our client will log minimally by default
+    if (!config.hasOwnProperty('log')) {
+      config.log = 'warning';
+    }
+
+    if (!config.hosts && !config.host) {
+      config.host = 'http://localhost:9200';
+    }
+
+    this.ping = ca({
+      method: 'HEAD',
+      url: {
+        fmt: '/'
+      },
+      castExists: true,
+      requestTimeout: 100
+    });
+
+    this.close = function () {
+      this.transport.close();
+    };
+
+    this.transport = new Transport(config);
+
+    // instantiate the api's namespaces
+    for (var i = 0; i < this._namespaces.length; i++) {
+      this[this._namespaces[i]] = new this[this._namespaces[i]](this.transport);
+    }
+
+    delete this._namespaces;
   }
 
-  if (!config.hosts && !config.host) {
-    config.host = 'http://localhost:9200';
+  var apiVersion = config.apiVersion || defaultApi;
+  if (apis.hasOwnProperty(apiVersion)) {
+    EsApiClient.prototype = apis[apiVersion];
+  } else {
+    throw new Error('Invalid apiVersion "' + apiVersion + '", expected one of ' + _.keys(apis).join(', '));
   }
 
-  this.transport = new Transport(config);
-
-  // instantiate the api's namespaces
-  for (var i = 0; i < this._namespaces.length; i++) {
-    this[this._namespaces[i]] = new this[this._namespaces[i]](this.transport);
-  }
+  return new EsApiClient(config);
 }
-
-Client.prototype = api;
-
-/**
- * Ping some node to ensure that the cluster is available in some respect
- *
- * @param {Object} params - Currently just a placeholder, no params used at this time
- * @param {Function} cb - callback
- */
-Client.prototype.ping = ca({
-  method: 'HEAD',
-  url: {
-    fmt: '/'
-  },
-  castExists: true,
-  requestTimeout: 100
-});
-
-Client.prototype.close = function () {
-  this.transport.close();
-};

@@ -32,7 +32,7 @@ utils.joinPath = path.join;
  * @return {Object} - returns the modified to value
  */
 utils.deepMerge = function (to, from) {
-  Object.keys(from).forEach(function (key) {
+  _.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
     case 'undefined':
       to[key] = from[key];
@@ -56,8 +56,16 @@ utils.deepMerge = function (to, from) {
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-'String Object PlainObject Array Finite Function RegExp'.split(' ').forEach(function (type) {
-  var check = _.bindKey(_, 'is' + type);
+_.each([
+  'String',
+  'Object',
+  'PlainObject',
+  'Array',
+  'Finite',
+  'Function',
+  'RegExp'
+], function (type) {
+  var check = _['is' + type];
 
   utils['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
@@ -92,7 +100,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     for (; i < string.length; i++) {
       code = string.charCodeAt(i);
       c = string.charAt(i);
-      lower = code >= 97 && code <= 122;
+      lower = (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
       upper = code >= 65 && code <= 90;
 
       if (upper || !lower) {

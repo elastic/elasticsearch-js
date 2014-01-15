@@ -1,6 +1,7 @@
 var Log = require('../../src/lib/log');
 var ConsoleLogger = require('../../src/lib/loggers/console');
 var sinon = require('sinon');
+var expect = require('expect.js');
 var parentLog;
 
 beforeEach(function () {
@@ -19,7 +20,7 @@ function makeLogger(parent, levels) {
   return new ConsoleLogger(parent, config);
 }
 
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 describe('Console Logger', function () {
 
@@ -33,7 +34,7 @@ describe('Console Logger', function () {
     var logger = makeLogger();
 
     logger.onWarning('message');
-    console.log.callCount.should.eql(1);
+    expect(console.log.callCount).to.be(1);
 
     console.warn = _warning;
     console.log.restore();

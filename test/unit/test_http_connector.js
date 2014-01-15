@@ -1,6 +1,6 @@
 describe('Http Connector', function () {
 
-  var should = require('should');
+  var expect = require('expect.js');
   var Host = require('../../src/lib/host');
   var errors = require('../../src/lib/errors');
   var HttpConnection = require('../../src/lib/connectors/http');
@@ -18,7 +18,7 @@ describe('Http Connector', function () {
 
   nock.disableNetConnect();
 
-  var stub = require('./auto_release_stub').make();
+  var stub = require('../utils/auto_release_stub').make();
 
   function makeStubReqMethod(prep) {
     return function (params, cb) {
@@ -42,13 +42,13 @@ describe('Http Connector', function () {
   describe('Constructor', function () {
     it('creates an object that extends ConnectionAbstract', function () {
       var con = new HttpConnection(new Host());
-      con.should.be.an.instanceOf(ConnectionAbstract);
+      expect(con).to.be.a(ConnectionAbstract);
     });
 
     it('sets certain defaults', function () {
       var con = new HttpConnection(new Host());
 
-      con.hand.should.be.exactly(require('http'));
+      expect(con.hand).to.be(require('http'));
       // con.requestTimeout
       // maxSockets
       // maxFreeSockets
@@ -57,9 +57,9 @@ describe('Http Connector', function () {
     });
 
     it('expects the host to have a protocol of http or https', function () {
-      (function () {
+      expect(function () {
         var con = new HttpConnection(new Host('thrifty://es.com/stuff'));
-      }).should.throw(/invalid protocol/i);
+      }).to.throwError(/invalid protocol/i);
     });
   });
 
@@ -69,7 +69,7 @@ describe('Http Connector', function () {
       var con = new HttpConnection(host, {});
       var reqParams = con.makeReqParams();
 
-      reqParams.should.eql({
+      expect(reqParams).to.eql({
         method: 'GET',
         protocol: 'http:',
         auth: 'john:dude',
@@ -94,9 +94,7 @@ describe('Http Connector', function () {
         }
       });
 
-      reqParams.should.include({
-        path: '/?user_id=123&jvm=yes'
-      });
+      expect(reqParams.path).to.eql('/?user_id=123&jvm=yes');
     });
 
     it('merges the path prefex', function () {
@@ -109,7 +107,7 @@ describe('Http Connector', function () {
         }
       });
 
-      reqParams.should.eql({
+      expect(reqParams).to.eql({
         method: 'GET',
         protocol: 'https:',
         auth: null,
@@ -132,7 +130,7 @@ describe('Http Connector', function () {
         }
       });
 
-      reqParams.should.eql({
+      expect(reqParams).to.eql({
         method: 'PUT',
         protocol: 'http:',
         auth: null,
@@ -152,7 +150,7 @@ describe('Http Connector', function () {
         path: '/stuff'
       });
 
-      reqParams.should.eql({
+      expect(reqParams).to.eql({
         method: 'PUT',
         protocol: 'http:',
         auth: null,
@@ -174,9 +172,9 @@ describe('Http Connector', function () {
     it('calls http based on the host', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
       con.request({}, function () {
-        http.request.callCount.should.eql(1);
-        https.request.callCount.should.eql(0);
-        http.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent);
+        expect(http.request.callCount).to.be(1);
+        expect(https.request.callCount).to.be(0);
+        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
         done();
       });
     });
@@ -184,9 +182,9 @@ describe('Http Connector', function () {
     it('calls https based on the host', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
       con.request({}, function () {
-        http.request.callCount.should.eql(0);
-        https.request.callCount.should.eql(1);
-        https.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent.HttpsAgent);
+        expect(http.request.callCount).to.be(0);
+        expect(https.request.callCount).to.be(1);
+        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.HttpsAgent);
         done();
       });
     });
@@ -205,14 +203,14 @@ describe('Http Connector', function () {
 
       con.request({}, function (err) {
         // error should have been sent to the
-        err.message.should.eql('actual error');
+        expect(err.message).to.eql('actual error');
 
         // logged the error and the trace log
-        con.log.trace.callCount.should.eql(1);
-        con.log.error.callCount.should.eql(0);
-        con.log.info.callCount.should.eql(0);
-        con.log.warning.callCount.should.eql(0);
-        con.log.debug.callCount.should.eql(0);
+        expect(con.log.trace.callCount).to.eql(1);
+        expect(con.log.error.callCount).to.eql(0);
+        expect(con.log.info.callCount).to.eql(0);
+        expect(con.log.warning.callCount).to.eql(0);
+        expect(con.log.debug.callCount).to.eql(0);
 
         done();
       });
@@ -227,10 +225,10 @@ describe('Http Connector', function () {
 
       con.request({}, function (err) {
         // error should have been sent to the
-        err.message.should.eql('actual error');
+        expect(err.message).to.eql('actual error');
 
         // logged the error
-        con.log.error.callCount.should.eql(0);
+        expect(con.log.error.callCount).to.eql(0);
         done();
       });
     });
@@ -257,7 +255,7 @@ describe('Http Connector', function () {
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
-        con.log.error.callCount.should.eql(0);
+        expect(con.log.error.callCount).to.eql(0);
         done();
       });
     });
@@ -267,8 +265,8 @@ describe('Http Connector', function () {
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
 
       con.request({}, function (err, resp, status) {
-        should.exist(err);
-        err.message.should.eql('no more message :(');
+        expect(err).to.be.an(Error);
+        expect(err.message).to.eql('no more message :(');
         done();
       });
     });
@@ -278,7 +276,7 @@ describe('Http Connector', function () {
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
-        should.not.exist(resp);
+        expect(resp).to.be(undefined);
         done();
       });
     });
@@ -288,7 +286,7 @@ describe('Http Connector', function () {
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
-        should.not.exist(status);
+        expect(status).to.be(undefined);
         done();
       });
     });
@@ -308,9 +306,9 @@ describe('Http Connector', function () {
         method: 'GET',
         path: '/users/1'
       }, function (err, resp, status) {
-        should.not.exist(err);
-        resp.should.eql(body);
-        status.should.eql(200);
+        expect(err).to.be(undefined);
+        expect(resp).to.eql(body);
+        expect(status).to.eql(200);
         server.done();
         done();
       });
@@ -330,9 +328,9 @@ describe('Http Connector', function () {
         method: 'GET',
         path: '/users/1'
       }, function (err, resp, status) {
-        should.not.exist(err);
-        resp.should.eql(body);
-        status.should.eql(200);
+        expect(err).to.be(undefined);
+        expect(resp).to.eql(body);
+        expect(status).to.eql(200);
         done();
       });
     });
@@ -345,8 +343,8 @@ describe('Http Connector', function () {
       var server = nock('http://localhost').get('/').reply(200);
 
       con.request({}, function (err, resp, status) {
-        http.ClientRequest.prototype.setNoDelay.callCount.should.eql(1);
-        http.ClientRequest.prototype.setNoDelay.lastCall.args[0].should.eql(true);
+        expect(http.ClientRequest.prototype.setNoDelay.callCount).to.eql(1);
+        expect(http.ClientRequest.prototype.setNoDelay.lastCall.args[0]).to.eql(true);
         server.done();
         done();
       });
@@ -358,13 +356,13 @@ describe('Http Connector', function () {
       var server = nock('http://localhost').get('/').reply(200);
 
       var body = 'pasta and 𝄞';
-      body.length.should.eql(12); // nope
-      Buffer.byteLength(body, 'utf8').should.eql(14); // yep
+      expect(body.length).to.eql(12); // nope
+      expect(Buffer.byteLength(body, 'utf8')).to.eql(14); // yep
 
       con.request({
         body: body
       }, function (err, resp, status) {
-        http.ClientRequest.prototype.setHeader.lastCall.args.should.eql(['Content-Length', 14]);
+        expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
         server.done();
         done();
       });

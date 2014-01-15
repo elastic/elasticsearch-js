@@ -1545,8 +1545,8 @@ api.indices.prototype['delete'] = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit timestamp for the document
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String} params.index - The name of the index with an alias
- * @param {String} params.name - The name of the alias to be deleted
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names (supports wildcards); use `_all` for all indices
+ * @param {String, String[], Boolean} params.name - A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
  */
 api.indices.prototype.deleteAlias = ca({
   params: {
@@ -1558,30 +1558,18 @@ api.indices.prototype.deleteAlias = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_alias/<%=name%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_alias/<%=name%>',
+    req: {
+      index: {
+        type: 'list'
+      },
+      name: {
+        type: 'list'
       }
     },
-    {
-      fmt: '/<%=index%>/_aliases/<%=name%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    }
-  ],
+    sortOrder: -2
+  },
   method: 'DELETE'
 });
 
@@ -1590,8 +1578,8 @@ api.indices.prototype.deleteAlias = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` for all indices
- * @param {String} params.type - The name of the document type to delete
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names (supports wildcards); use `_all` for all indices
+ * @param {String, String[], Boolean} params.type - A comma-separated list of document types to delete (supports wildcards); use `_all` to delete all document types in the specified indices.
  */
 api.indices.prototype.deleteMapping = ca({
   params: {
@@ -1600,52 +1588,18 @@ api.indices.prototype.deleteMapping = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/<%=type%>/_mapping',
+    req: {
+      index: {
+        type: 'list'
+      },
+      type: {
+        type: 'list'
       }
     },
-    {
-      fmt: '/<%=index%>/_mapping/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/<%=type%>/_mappings',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_mappings/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    }
-  ],
+    sortOrder: -2
+  },
   method: 'DELETE'
 });
 
@@ -1684,15 +1638,17 @@ api.indices.prototype.deleteTemplate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to delete all warmers
- * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
+ * @param {String, String[], Boolean} params.name - A comma-separated list of warmer names to delete (supports wildcards); use `_all` to delete all warmers in the specified indices. You must specify a name either in the uri or in the parameters.
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to delete warmers from (supports wildcards); use `_all` to perform the operation on all indices.
  */
 api.indices.prototype.deleteWarmer = ca({
   params: {
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    name: {
+      type: 'list'
     }
   },
   url: {
@@ -1702,7 +1658,7 @@ api.indices.prototype.deleteWarmer = ca({
         type: 'list'
       },
       name: {
-        type: 'string'
+        type: 'list'
       }
     },
     sortOrder: -2
@@ -2493,7 +2449,7 @@ api.indices.prototype.optimize = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit timestamp for the document
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String} params.index - The name of the index with an alias
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` or omit to perform the operation on all indices.
  * @param {String} params.name - The name of the alias to be created or updated
  */
 api.indices.prototype.putAlias = ca({
@@ -2511,18 +2467,7 @@ api.indices.prototype.putAlias = ca({
       fmt: '/<%=index%>/_alias/<%=name%>',
       req: {
         index: {
-          type: 'string'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_aliases/<%=name%>',
-      req: {
-        index: {
-          type: 'string'
+          type: 'list'
         },
         name: {
           type: 'string'
@@ -2531,14 +2476,6 @@ api.indices.prototype.putAlias = ca({
     },
     {
       fmt: '/_alias/<%=name%>',
-      req: {
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_aliases/<%=name%>',
       req: {
         name: {
           type: 'string'
@@ -2559,7 +2496,7 @@ api.indices.prototype.putAlias = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` to perform the operation on all indices
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
  * @param {String} params.type - The name of the document type
  */
 api.indices.prototype.putMapping = ca({
@@ -2595,17 +2532,6 @@ api.indices.prototype.putMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_mapping',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_mapping/<%=type%>',
       req: {
         index: {
@@ -2617,37 +2543,7 @@ api.indices.prototype.putMapping = ca({
       }
     },
     {
-      fmt: '/<%=index%>/<%=type%>/_mappings',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_mappings/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/_mapping/<%=type%>',
-      req: {
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_mappings/<%=type%>',
       req: {
         type: {
           type: 'string'
@@ -2760,7 +2656,7 @@ api.indices.prototype.putTemplate = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed) in the search request to warm
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices in the search request to warm. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both, in the search request to warm.
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
  * @param {String} params.name - The name of the warmer
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
  */
@@ -2804,20 +2700,6 @@ api.indices.prototype.putWarmer = ca({
       }
     },
     {
-      fmt: '/<%=index%>/<%=type%>/_warmers/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_warmer/<%=name%>',
       req: {
         index: {
@@ -2829,26 +2711,7 @@ api.indices.prototype.putWarmer = ca({
       }
     },
     {
-      fmt: '/<%=index%>/_warmers/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/_warmer/<%=name%>',
-      req: {
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_warmers/<%=name%>',
       req: {
         name: {
           type: 'string'

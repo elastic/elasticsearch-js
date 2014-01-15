@@ -42,7 +42,7 @@ function ClientAction(spec) {
 }
 
 var castType = {
-  enum: function (param, val, name) {
+  'enum': function (param, val, name) {
     /* jshint eqeqeq: false */
     for (var i = 0; i < param.options.length; i++) {
       if (param.options[i] == val) {
@@ -80,7 +80,7 @@ var castType = {
       throw new TypeError('Invalid ' + name + ': expected be a comma seperated list, array, number or string.');
     }
   },
-  boolean: function (param, val) {
+  'boolean': function (param, val) {
     val = _.isString(val) ? val.toLowerCase() : val;
     return (val === 'no' || val === 'off') ? false : !!val;
   },
@@ -213,10 +213,8 @@ function exec(transport, spec, params, cb) {
 
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
-    throw new TypeError(
-      'Unable to build a path with those params. Supply at least ' +
-      _.keys(spec.urls[spec.urls.length - 1].req).join(', ')
-    );
+    var minUrl = spec.url || spec.urls[spec.urls.length - 1];
+    throw new TypeError('Unable to build a path with those params. Supply at least ' + _.keys(minUrl.req).join(', '));
   }
 
   // build the query string

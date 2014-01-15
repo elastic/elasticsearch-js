@@ -7,14 +7,24 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'jshint',
-    'mochacov:unit',
     'run:generate',
-    'mochacov:integration',
+    'mochacov:unit',
+
+    'run:install_es_master',
+    'run:es_master',
+    'mochacov:integration_master',
+    'stop:es_master',
+
+    'run:install_es_0.90',
+    'run:es_0.90',
+    'mochacov:integration_0.90',
+    'stop:es_0.90'
   ]);
 
   grunt.registerTask('unit_test', [
     'jshint',
-    'mochacov:unit'
+    'run:generate',
+    'mochacov:unit',
   ]);
 
   grunt.registerTask('coverage', [

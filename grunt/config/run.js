@@ -1,36 +1,54 @@
+var esOpts = [
+  '-D es.network.host=localhost',
+  '-D es.cluster.name=elasticsearch_js_test_runners',
+  '-D es.node.name=elasticsearch_js_test_runner',
+  '-D es.gateway.type=none',
+  '-D es.index.store.type=memory',
+  '-D es.discovery.zen.ping.multicast.enabled=false',
+  '-D es.discovery.zen.ping_timeout=1',
+  '-D es.logger.level=ERROR'
+].join(' ');
+
 module.exports = {
   generate: {
     exec: 'node ./scripts/generate/index.js',
     options: {
       passArgs: [
-        'verbose',
-        'es_branch'
+        'verbose'
       ]
     }
   },
-  generate_yaml_tests: {
-    exec: 'node ./scripts/generate/index.js --no-api',
+  browser_test_server: {
+    exec: 'node ./test/utils/server',
     options: {
-      passArgs: [
-        'verbose',
-        'es_branch'
-      ]
+      wait: false,
+      ready: /listening/
     }
   },
-  browser_integration_tests: {
-    exec: 'node ./scripts/run_browser_integration_suite',
+  install_es_master: {
+    exec: './scripts/es.sh install master',
+  },
+  es_master: {
+    exec: './.snapshots/master_nightly/bin/elasticsearch ' + esOpts,
     options: {
-      passArgs: [
-        'browsers'
-      ]
+      wait: false,
+      quiet: true,
+      onClose: function () {
+
+      },
+      onReady: function () {
+
+      }
     }
   },
-  browser_unit_tests: {
-    exec: './node_modules/.bin/testling .',
+  'install_es_0.90': {
+    exec: './scripts/es.sh install 0.90',
+  },
+  'es_0.90': {
+    exec: './.snapshots/0.90_nightly/bin/elasticsearch -f ' + esOpts,
     options: {
-      passArgs: [
-        'x'
-      ]
+      wait: false,
+      quiet: true
     }
   }
 };

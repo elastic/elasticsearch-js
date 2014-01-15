@@ -4,9 +4,9 @@ var errors = require('../../src/lib/errors');
 var ConnectionAbstract = require('../../src/lib/connection');
 var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
-var should = require('should');
+var expect = require('expect.js');
 var sinon = require('sinon');
-var stub = require('./auto_release_stub').make();
+var stub = require('../utils/auto_release_stub').make();
 
 function listenerCount(emitter, event) {
   if (EventEmitter.listenerCount) {
@@ -37,13 +37,13 @@ describe('Connection Pool', function () {
     });
 
     it('#addConnection only adds the connection if it doesn\'t already exist', function () {
-      _.keys(pool.index).length.should.eql(0);
+      expect(_.keys(pool.index).length).to.eql(0);
       pool.addConnection(connection);
 
-      _.keys(pool.index).should.eql([host.toString()]);
+      expect(_.keys(pool.index)).to.eql([host.toString()]);
 
-      pool._conns.alive.should.eql([connection]);
-      pool._conns.dead.should.eql([]);
+      expect(pool._conns.alive).to.eql([connection]);
+      expect(pool._conns.dead).to.eql([]);
     });
 
     describe('#removeConnection', function () {
@@ -51,28 +51,28 @@ describe('Connection Pool', function () {
         pool.addConnection(connection);
         pool.removeConnection(connection2);
 
-        pool._conns.alive.should.eql([connection]);
-        pool._conns.dead.should.eql([]);
-        _.keys(pool.index).length.should.eql(1);
+        expect(pool._conns.alive).to.eql([connection]);
+        expect(pool._conns.dead).to.eql([]);
+        expect(_.keys(pool.index).length).to.eql(1);
       });
 
       it('closes the connection when it removes it', function () {
         pool.addConnection(connection);
-        connection.status.should.eql('alive');
-        listenerCount(connection, 'status set').should.eql(1);
+        expect(connection.status).to.eql('alive');
+        expect(listenerCount(connection, 'status set')).to.eql(1);
 
         pool.removeConnection(connection);
 
-        connection.status.should.eql('closed');
-        listenerCount(connection, 'status set').should.eql(0);
+        expect(connection.status).to.eql('closed');
+        expect(listenerCount(connection, 'status set')).to.eql(0);
       });
     });
 
     it('#setHosts syncs the list of Hosts with the connections in the index', function () {
       // there should now be two connections
       pool.setHosts([host, host2]);
-      pool._conns.alive.length.should.eql(2);
-      pool._conns.dead.length.should.eql(0);
+      expect(pool._conns.alive.length).to.eql(2);
+      expect(pool._conns.dead.length).to.eql(0);
 
       // get the new connections
       connection = pool.index[host.toString()];
@@ -80,16 +80,16 @@ describe('Connection Pool', function () {
 
       // should remove the second connection
       pool.setHosts([host]);
-      pool._conns.alive.should.eql([connection]);
-      pool._conns.dead.length.should.eql(0);
+      expect(pool._conns.alive).to.eql([connection]);
+      expect(pool._conns.dead.length).to.eql(0);
 
       // should skip the first, but create a new for the second
       pool.setHosts([host, host2]);
-      pool._conns.alive.length.should.eql(2);
-      pool._conns.dead.length.should.eql(0);
+      expect(pool._conns.alive.length).to.eql(2);
+      expect(pool._conns.dead.length).to.eql(0);
 
       // a new connection should have been created
-      pool.index[host2.toString()].should.not.be.exactly(connection2);
+      expect(pool.index[host2.toString()]).to.not.be(connection2);
     });
   });
 
@@ -110,7 +110,7 @@ describe('Connection Pool', function () {
 
     it('detects if the selector is async', function (done) {
       pool.selector = function (list, cb) {
-        cb.should.have.type('function');
+        expect(cb).to.be.a('function');
         cb();
       };
 
@@ -122,7 +122,7 @@ describe('Connection Pool', function () {
 
     it('detects if the selector is not async', function (done) {
       pool.selector = function (list) {
-        arguments.should.have.length(1);
+        expect(arguments.length).to.be(1);
       };
 
       pool.select(function (err) {
@@ -140,12 +140,12 @@ describe('Connection Pool', function () {
 
       pool.select(function (err, selection) {
         if (err) { throw err; }
-        selection.host.should.be.exactly(host);
+        expect(selection.host).to.be(host);
         selected = selection;
         done();
       });
 
-      should(selected).be.exactly(null);
+      expect(selected).to.be(null);
     });
 
     it('should catch errors in sync selectors', function (done) {
@@ -154,7 +154,7 @@ describe('Connection Pool', function () {
       };
 
       pool.select(function (err, selection) {
-        should(err).be.an.instanceOf(Error);
+        expect(err).be.an(Error);
         done();
       });
     });
@@ -178,14 +178,14 @@ describe('Connection Pool', function () {
       var pingQueue = _.shuffle(connections);
       var expectedSelection = pingQueue[pingQueue.length - 1];
 
-      pingQueue.forEach(function (conn) {
+      _.each(pingQueue, function (conn) {
         pool.addConnection(conn);
         stub(conn, 'ping', function (params, cb) {
           if (typeof params === 'function') {
             cb = params;
           }
           var expectedConn = pingQueue.shift();
-          conn.should.be.exactly(expectedConn);
+          expect(conn).to.be(expectedConn);
           if (pingQueue.length) {
             process.nextTick(function () {
               cb(new Error('keep trying'));
@@ -202,10 +202,10 @@ describe('Connection Pool', function () {
 
       pool.select(function (err, selection) {
         clock.restore();
-        selection.should.be.exactly(expectedSelection);
-        pingQueue.should.have.length(0);
+        expect(selection).to.be(expectedSelection);
+        expect(pingQueue.length).to.be(0);
         pool.setHosts([]);
-        should.not.exist(err);
+        expect(err).to.be(undefined);
         done();
       });
     });
@@ -228,8 +228,8 @@ describe('Connection Pool', function () {
       connection = pool.index[host.toString()];
       connection2 = pool.index[host2.toString()];
 
-      pool._conns.alive.should.have.length(2);
-      pool._conns.dead.should.have.length(0);
+      expect(pool._conns.alive.length).to.be(2);
+      expect(pool._conns.dead.length).to.be(0);
     });
 
     afterEach(function () {
@@ -239,21 +239,21 @@ describe('Connection Pool', function () {
     it('moves an alive connection to dead', function () {
       connection.setStatus('dead');
 
-      pool._conns.alive.should.have.length(1);
-      pool._conns.dead.should.have.length(1);
+      expect(pool._conns.alive.length).to.be(1);
+      expect(pool._conns.dead.length).to.be(1);
     });
 
     it('clears and resets the timeout when a connection redies', function () {
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
 
       connection.setStatus('dead');
-      _.size(clock.timeouts).should.eql(1);
+      expect(_.size(clock.timeouts)).to.eql(1);
       var id = _(clock.timeouts).keys().first();
 
       // it re-dies
       connection.setStatus('dead');
-      _.size(clock.timeouts).should.eql(1);
-      _(clock.timeouts).keys().first().should.not.eql(id);
+      expect(_.size(clock.timeouts)).to.eql(1);
+      expect(_(clock.timeouts).keys().first()).to.not.eql(id);
       clock.restore();
     });
 
@@ -261,26 +261,26 @@ describe('Connection Pool', function () {
       var last = pool._conns.alive[pool._conns.alive.length - 1];
       var first = pool._conns.alive[0];
 
-      last.should.not.be.exactly(first);
+      expect(last).to.not.be(first);
 
       // first re-alives
       first.setStatus('alive');
-      pool._conns.alive[0].should.be.exactly(first);
-      pool._conns.alive[pool._conns.alive.length - 1].should.be.exactly(last);
+      expect(pool._conns.alive[0]).to.be(first);
+      expect(pool._conns.alive[pool._conns.alive.length - 1]).to.be(last);
 
       // last re-alives
       last.setStatus('alive');
-      pool._conns.alive[0].should.be.exactly(first);
-      pool._conns.alive[pool._conns.alive.length - 1].should.be.exactly(last);
+      expect(pool._conns.alive[0]).to.be(first);
+      expect(pool._conns.alive[pool._conns.alive.length - 1]).to.be(last);
     });
 
     it('removes all its connection when it closes, causing them to be closed', function () {
       pool.close();
-      pool._conns.alive.should.have.length(0);
-      pool._conns.dead.should.have.length(0);
+      expect(pool._conns.alive.length).to.be(0);
+      expect(pool._conns.dead.length).to.be(0);
 
-      connection.status.should.eql('closed');
-      connection2.status.should.eql('closed');
+      expect(connection.status).to.eql('closed');
+      expect(connection2.status).to.eql('closed');
     });
 
   });
@@ -295,10 +295,10 @@ describe('Connection Pool', function () {
       }
 
       var result = pool.getConnections();
-      result.should.have.length(1000);
-      _.reduce(result, function (sum, num) {
+      expect(result.length).to.be(1000);
+      expect(_.reduce(result, function (sum, num) {
         return sum += num;
-      }, 0).should.eql(499500);
+      }, 0)).to.eql(499500);
     });
   });
 
@@ -307,42 +307,42 @@ describe('Connection Pool', function () {
       var pool = new ConnectionPool({
         calcDeadTimeout: 'flat'
       });
-      pool.calcDeadTimeout.should.be.exactly(ConnectionPool.calcDeadTimeoutOptions.flat);
+      expect(pool.calcDeadTimeout).to.be(ConnectionPool.calcDeadTimeoutOptions.flat);
       pool.close();
     });
     it('"flat" always returns the base timeout', function () {
       var pool = new ConnectionPool({
         calcDeadTimeout: 'flat'
       });
-      pool.calcDeadTimeout(0, 1000).should.eql(1000);
-      pool.calcDeadTimeout(10, 5000).should.eql(5000);
-      pool.calcDeadTimeout(25, 10000).should.eql(10000);
+      expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
+      expect(pool.calcDeadTimeout(10, 5000)).to.eql(5000);
+      expect(pool.calcDeadTimeout(25, 10000)).to.eql(10000);
     });
     it('"exponential" always increases the timeout based on the attempts', function () {
       var pool = new ConnectionPool({
         calcDeadTimeout: 'exponential'
       });
-      pool.calcDeadTimeout(0, 1000).should.eql(1000);
-      pool.calcDeadTimeout(10, 5000).should.be.above(5000);
-      pool.calcDeadTimeout(25, 10000).should.be.above(10000);
+      expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
+      expect(pool.calcDeadTimeout(10, 5000)).to.be.greaterThan(5000);
+      expect(pool.calcDeadTimeout(25, 10000)).to.be.greaterThan(10000);
     });
     it('"exponential" produces predicatable results', function () {
       var pool = new ConnectionPool({
         calcDeadTimeout: 'exponential'
       });
-      pool.calcDeadTimeout(0, 1000).should.eql(1000);
-      pool.calcDeadTimeout(4, 10000).should.eql(40000);
+      expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
+      expect(pool.calcDeadTimeout(4, 10000)).to.eql(40000);
       // maxes out at 30 minutes by default
-      pool.calcDeadTimeout(25, 30000).should.eql(18e5);
+      expect(pool.calcDeadTimeout(25, 30000)).to.eql(18e5);
     });
     it('"exponential" repects config.maxDeadtimeout', function () {
       var pool = new ConnectionPool({
         calcDeadTimeout: 'exponential',
         maxDeadTimeout: 10000
       });
-      pool.calcDeadTimeout(0, 1000).should.eql(1000);
-      pool.calcDeadTimeout(10, 1000).should.eql(10000);
-      pool.calcDeadTimeout(100, 1000).should.eql(10000);
+      expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
+      expect(pool.calcDeadTimeout(10, 1000)).to.eql(10000);
+      expect(pool.calcDeadTimeout(100, 1000)).to.eql(10000);
     });
   });
 });

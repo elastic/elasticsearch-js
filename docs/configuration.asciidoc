@@ -25,6 +25,8 @@ Default:::
 
 
 
+
+
 `log`[[config-log]]:: `String, String[], Object, Object[], Constructor` -- Unless a constructor is specified, this sets the output settings for the bundled logger. See the section on configuring-logging[logging] for more information.
 
 Default in Node:::
@@ -39,25 +41,15 @@ Default in Node:::
 
 
 
-`connectionClass`[[config-connectionClass]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
-
-Defaults:::
-  * Node: `"http"`
-  * Browser Build: `"xhr"`
-  * Angular Build: `"angular"`
-  * jQuery Build: `"jquery"`
 
 
+`apiVersion`[[config-api-version]]:: `String` -- Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.
 
-`selector`:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
-+
-To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style with a possible error like: `cb(err, selectedConnection)`.
+Default ::: `master`
 
-Default::: `"roundRobin"`
-
-Options:::
-  * `"roundRobin"`
-  * `"random"`
+Options :::
+  * `"master"`
+  * `"0.90"`
 
 
 
@@ -119,6 +111,32 @@ Default::: `10`
 `maxKeepAliveTime`:: `Number, false` -- Milliseconds of inactivity before the socket is destroyed
 
 Default::: `60000`
+
+
+
+
+
+`connectionClass`[[config-connectionClass]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
+
+Defaults:::
+  * Node: `"http"`
+  * Browser Build: `"xhr"`
+  * Angular Build: `"angular"`
+  * jQuery Build: `"jquery"`
+
+
+
+
+`selector`:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
++
+To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style with a possible error like: `cb(err, selectedConnection)`.
+
+Default::: `"roundRobin"`
+
+Options:::
+  * `"roundRobin"`
+  * `"random"`
+
 
 
 

@@ -8,7 +8,6 @@ if (BROWSER) {
   var es = require('../../../src/elasticsearch');
 }
 var argv = require('./argv');
-var server = require('./server');
 var fs = require('relative-fs').relativeTo(require('path').join(__dirname, '../../../'));
 var _ = require('../../../src/lib/utils');
 
@@ -18,11 +17,8 @@ var client = null;
 // when set to a boolean, hold the test of a ping
 var externalExists;
 
-// a reference to a personal instance of ES Server
-var esServer = null;
-
 module.exports = {
-  create: function create(cb) {
+  create: function create(branch, cb) {
     // create a client and ping the server for up to 15 seconds
     doCreateClient({
       logConfig: null
@@ -31,14 +27,17 @@ module.exports = {
       var timeout = 500;
 
       (function ping() {
-        client.ping({
+        client.info({
           maxRetries: 0,
           requestTimeout: 100
-        }, function (err) {
+        }, function (err, resp) {
           if (err && --attemptsRemaining) {
             setTimeout(ping, timeout);
           } else if (err) {
             cb(new Error('unable to establish contact with ES'));
+          } else if (resp.name !== 'elasticsearch_js_test_runner') {
+            console.log(resp);
+            cb(new Error('Almosted wiped out another es node. Shut-down all instances of ES and try again.'));
           } else {
             // create a new client
             doCreateClient(function () {
@@ -79,10 +78,11 @@ module.exports = {
       }
 
       client = new es.Client({
+        apiVersion: branch,
         hosts: [
           {
-            host: esServer ? esServer.__hostname : argv.host,
-            port: esServer ? esServer.__port : argv.port
+            host: argv.host,
+            port: argv.port
           }
         ],
         log: logConfig

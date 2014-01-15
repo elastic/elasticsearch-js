@@ -11,13 +11,13 @@
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
-    "./test/mocks/server.js": "./test/mocks/browser_server.js"
+    "./test/mocks/server.js": "./test/mocks/browser_server.js",
+    "lodash": "./node_modules/lodash/dist/lodash.compat.js"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
     "async": "~0.2.9",
     "moment": "~2.4.0",
-    "should": "~2.1.0",
     "js-yaml": "~2.1.3",
     "optimist": "~0.6.0",
     "browserify": "~2.35.1",
@@ -34,7 +34,6 @@
     "sinon": "~1.7.3",
     "nock": "0.27.0",
     "open": "0.0.4",
-    "testling": "git://github.com/spenceralger/testling.git",
     "load-grunt-tasks": "~0.2.0",
     "load-grunt-config": "~0.7.0",
     "grunt-s3": "~0.2.0-alpha.3",
@@ -44,14 +43,20 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
     "grunt-mocha-cov": "~0.1.1",
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "glob": "~3.2.7",
+    "expect.js": "~0.2.0",
+    "aliasify": "~1.2.1",
+    "express": "~3.4.7",
+    "grunt-saucelabs": "git://github.com/axemclion/grunt-saucelabs.git#01b68705a6823ff86930f28296ac6467fbea244b"
   },
   "license": "Apache 2.0",
   "dependencies": {
     "when": "~2.6.0",
     "lodash": "~2.3.0",
     "agentkeepalive": "~0.1",
-    "chalk": "~0.3.0"
+    "chalk": "~0.3.0",
+    "event-stream": "~3.1.0"
   },
   "repository": {
     "type": "git",
@@ -62,9 +67,5 @@
     "blanket": {
       "pattern": "src"
     }
-  },
-  "testling": {
-    "harness": "mocha",
-    "files": "test/unit/test_!(http_connector|stdio_logger|stream_logger|tracer_logger|file_logger).js"
   }
 }

@@ -1,5 +1,7 @@
 var cp = require('child_process');
 var async = require('async');
+var estream = require('event-stream');
+var chalk = require('chalk');
 var argv = require('optimist')
   .options({
     force: {
@@ -39,56 +41,72 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
   argv.force = argv.f = process.env.FORCE || process.env.FORCE_GEN;
 }
 
-var branch = argv.es_branch;
-// branch can be prefixed with = or suffixed with _nightly
-if (branch.indexOf) {
-  ['='].forEach(function removePrefix(pref) {
-    if (branch.indexOf(pref) === 0) {
-      branch = branch.substring(pref.length);
-    }
-  });
+function spawn(cmd, args) {
+  console.log(chalk.white.bold('$ ' + cmd + ' ' + args.join(' ')));
 
-  ['_nightly'].forEach(function removeSuffix(suf) {
-    if (branch.indexOf(suf) === branch.length - suf.length) {
-      branch = branch.substr(0, branch.length - suf.length);
-    }
-  });
+  var proc = cp.spawn(cmd, args, { stdio: 'pipe'});
+  var out = estream.split();
+
+  if (argv.verbose) {
+    proc.stdout.pipe(out);
+  } else {
+    proc.stdout.resume();
+  }
+
+  proc.stderr.pipe(out);
+
+  out
+    .pipe(estream.mapSync(function indent(line) {
+      return '    ' + line + '\n';
+    }))
+    .pipe(process.stdout);
+
+  return proc;
 }
 
-var stdio = [
-  'ignore',
-  argv.verbose ? process.stdout : 'ignore',
-  process.stderr
-];
+function generateBranch(branch, i, done) {
+  async.series([
+    function (done) {
+      if (i === 0) {
+        spawn('git', ['submodule', 'update', '--init'])
+          .on('exit', function (status) {
+            done(status ? new Error('Unable to init submodules.') : void 0);
+          });
+        return;
+      }
+
+      done();
+    },
+    function (done) {
+      spawn('git', ['submodule', 'foreach', [
+        'git fetch origin master', 'git reset --hard', 'git clean -fdx', 'git checkout origin/' + branch
+      ].join(' && ')])
+        .on('exit', function (status) {
+          done(status ? new Error('Unable to checkout ' + branch) : void 0);
+        });
+    },
+    function (done) {
+      var tasks = [];
+
+      if (argv.api) {
+        tasks.push(
+          async.apply(require('./js_api'), branch)
+        );
+      }
+      if (argv.tests) {
+        tasks.push(
+          async.apply(require('./yaml_tests'), branch)
+        );
+      }
+
+      async.parallel(tasks, done);
+    }
+  ], done);
+}
 
 async.series([
-  function (done) {
-    cp.spawn('git', ['submodule', 'update', '--init'], {
-      stdio: stdio
-    }).on('exit', function (status) {
-      done(status ? new Error('Unable to init submodules.') : void 0);
-    });
-  },
-  function (done) {
-    // checkout branch and clean it
-    cp.spawn('git', ['submodule', 'foreach', 'git fetch origin master && git checkout origin/' + branch + ' && git clean -f'], {
-      stdio: stdio
-    }).on('exit', function (status) {
-      done(status ? new Error('Unable to checkout ' + branch) : void 0);
-    });
-  },
-  function (done) {
-    var tasks = [];
-
-    if (argv.api) {
-      tasks.push(require('./js_api'));
-    }
-    if (argv.tests) {
-      tasks.push(require('./yaml_tests'));
-    }
-
-    async.parallel(tasks, done);
-  }
+  async.apply(generateBranch, 'master', 0),
+  async.apply(generateBranch, '0.90', 1)
 ], function (err) {
   if (err) {
     throw err;

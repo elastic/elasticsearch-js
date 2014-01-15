@@ -1,40 +1,44 @@
-var Log = require('../../src/lib/log');
-var FileLogger = require('../../src/lib/loggers/file');
-var once = require('events').EventEmitter.prototype.once;
-var _ = require('lodash');
-var parentLog;
-var logger;
-var fs = require('fs');
-
-beforeEach(function () {
-  parentLog = new Log();
-});
-
-afterEach(function () {
-  parentLog.close();
-
-  if (logger
-    && logger.stream
-    && logger.stream._writableState
-    && logger.stream._writableState.buffer.length
-  ) {
-    // empty the buffer manually
-    logger.stream._writableState.buffer.splice(0);
-  }
-});
-
-function makeLogger(parent, levels) {
-  parent = parent || parentLog;
-  logger = new FileLogger(parent, {
-    levels: Log.parseLevels(levels || 'trace'),
-    path: 'test.log'
-  });
-  return logger;
-}
-
-var stub = require('./auto_release_stub').make();
-
 describe('File Logger', function () {
+  var Log = require('../../src/lib/log');
+  var FileLogger = require('../../src/lib/loggers/file');
+  var once = require('events').EventEmitter.prototype.once;
+  var _ = require('lodash');
+  var parentLog;
+  var logger;
+  var expect = require('expect.js');
+  var fs = require('fs');
+  var stub = require('../utils/auto_release_stub').make();
+
+  beforeEach(function () {
+    parentLog = new Log();
+  });
+
+  afterEach(function () {
+    parentLog.close();
+
+    if (logger
+      && logger.stream
+      && logger.stream._writableState
+      && logger.stream._writableState.buffer.length
+    ) {
+      // empty the buffer manually
+      logger.stream._writableState.buffer.splice(0);
+    }
+  });
+
+  function makeLogger(parent, levels) {
+    parent = parent || parentLog;
+    logger = new FileLogger(parent, {
+      levels: Log.parseLevels(levels || 'trace'),
+      path: 'test.log'
+    });
+    return logger;
+  }
+
+  after(function () {
+    fs.unlinkSync('test.log');
+  });
+
   require('./generic_logger_tests')(makeLogger);
 
   describe('buffer flush', function () {
@@ -67,8 +71,8 @@ describe('File Logger', function () {
         exitHandler.call(process);
 
         // the first line is sent immediately to _write and there is nothing we can do about that
-        flushedOutput.should.match(new RegExp(line));
-        flushedOutput.match(new RegExp(line, 'g')).length.should.eql(9);
+        expect(flushedOutput).to.match(new RegExp(line));
+        expect(flushedOutput.match(new RegExp(line, 'g')).length).to.be(9);
       });
     } else {
       it('does not fall apart with non streams2 streams', function () {
@@ -82,10 +86,10 @@ describe('File Logger', function () {
 
         var logger = makeLogger();
 
-        (function () {
+        expect(function () {
           // call the event handler
           exitHandler.call(process);
-        }).should.not.throw();
+        }).to.not.throwError();
       });
     }
   });
