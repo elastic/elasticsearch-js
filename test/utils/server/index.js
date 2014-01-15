@@ -6,14 +6,20 @@ var path = require('path');
 var root = path.join(__dirname, '../../..');
 var glob = require('glob');
 var browserify = require('browserify');
-
 var pkg = require(root + '/package.json');
+var testFiles = 'test/unit/test_!(' + [
+  'file_logger',
+  'http_connector',
+  'stdio_logger',
+  'console_logger',
+  'stream_logger',
+  'tracer_logger',
+  'transport_with_server',
+].join('') + ')*';
 
-var defaultFiles = _.transform(pkg.testling.files, function (files, pattern) {
-  [].push.apply(files, _.map(glob.sync(pattern), function (filename) {
-    return path.resolve(root, filename);
-  }));
-}, []);
+var defaultFiles = _.map(glob.sync(testFiles), function (filename) {
+  return path.resolve(root, filename);
+});
 
 var aliasify = require('aliasify').configure({
   aliases: pkg.browser,
@@ -23,12 +29,12 @@ var aliasify = require('aliasify').configure({
 });
 
 function browserBuild(name) {
+  var files = _.union(defaultFiles, [path.resolve(root, 'test/unit/browser_test_' + name + '_build.js')]);
+
   return function (req, res, next) {
     res.set('Content-Type', 'application/javascript');
 
-    var b = browserify(_.union(defaultFiles, [
-      path.resolve(root, 'test/unit/browser_test_' + name + '_build.js')
-    ]));
+    var b = browserify(files);
     b.transform(aliasify);
     b.bundle({
       insertGlobals: true

@@ -63,31 +63,6 @@
     "type": "git",
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
-  "testling": {
-    "scripts": [
-      "test/unit/angular-*.js"
-    ],
-    "files": [
-      "test/unit/test_!(file_logger|http_connector|stdio_logger|console_logger|stream_logger|tracer_logger|transport_with_server)*"
-    ],
-    "harness": "mocha",
-    "browsers": {
-      "firefox": [
-        24,
-        "nightly"
-      ],
-      "chrome": [
-        30,
-        "canary"
-      ],
-      "safari": [
-        5.1
-      ],
-      "opera": [
-        12
-      ]
-    }
-  },
   "scripts": {
     "test": "grunt test",
     "blanket": {

@@ -62,7 +62,7 @@ function manage_es {
         if [ ! -x "$ES_BIN" ]; then
           echo "Downloading Elasticsearch $ES_VERSION"
           call rm -rf ${SNAPSHOTS}/${ES_VERSION}*
-          call curl -#O $ES_URL
+          call curl --silent -O $ES_URL
           unzip -q elasticsearch-*.zip
           rm elasticsearch-*.zip
           mv elasticsearch-*/ $ES_DIR
