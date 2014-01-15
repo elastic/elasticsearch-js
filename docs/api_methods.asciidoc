@@ -250,12 +250,22 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
+`completionFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+`fielddataFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` index metric (supports wildcards)
 `fields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `indices` metric family (supports wildcards)
-`metricFamily`::
-`String` -- Limit the information returned to a certain metric family
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+`groups`::
+`Boolean` -- A comma-separated list of search groups for `search` index metric
+`[level=node]`::
+`String` -- Return indices stats aggregated at node, index or shard level
+`types`::
+`String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
 `metric`::
-`String` -- Limit the information returned for `indices` family to a specific metric. Isn't used if `indices` (or `all`) metric family isn't specified.
+`String, String[], Boolean` -- Limit the information returned to the specified metrics
+`indexMetric`::
+`String, String[], Boolean` -- Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -321,24 +331,16 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`filterBlocks`::
-`Boolean` -- Do not return information about blocks
-`filterIndexTemplates`::
-`Boolean` -- Do not return information about index templates
-`filterIndices`::
-`String, String[], Boolean` -- Limit returned metadata information to specific indices
-`filterMetadata`::
-`Boolean` -- Do not return information about indices metadata
-`filterNodes`::
-`Boolean` -- Do not return information about nodes
-`filterRoutingTable`::
-`Boolean` -- Do not return information about shard allocation (`routing_table` and `routing_nodes`)
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`metric`::
+`String, String[], Boolean` -- Limit the information returned to the specified metrics
 
 [[api-count]]
 === `count`
@@ -1327,6 +1329,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Date, Number` -- Explicit operation timeout
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+`name`::
+`String, String[], Boolean` -- A comma-separated list of alias names to filter
 
 [[api-indices-getfieldmapping]]
 === `indices.getFieldMapping`
@@ -1420,6 +1424,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return settings in flat format (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`name`::
+`String` -- The name of the settings that should be included
 
 [[api-indices-gettemplate]]
 === `indices.getTemplate`
@@ -1803,58 +1809,22 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`all`::
-`Boolean` -- Return all available information
-`clear`::
-`Boolean` -- Reset the default level of detail
-`completion`::
-`Boolean` -- Return information about completion suggester stats
 `completionFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `completion` metric (supports wildcards)
-`docs`::
-`Boolean` -- Return information about indexed and deleted documents
-`fielddata`::
-`Boolean` -- Return information about field data
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
 `fielddataFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` metric (supports wildcards)
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` index metric (supports wildcards)
 `fields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `search` statistics
-`filterCache`::
-`Boolean` -- Return information about filter cache
-`flush`::
-`Boolean` -- Return information about flush operations
-`get`::
-`Boolean` -- Return information about get operations
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
 `groups`::
-`Boolean` -- A comma-separated list of search groups for `search` statistics
-`idCache`::
-`Boolean` -- Return information about ID cache
-`ignoreUnavailable`::
-`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
-`allowNoIndices`::
-`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-`[expandWildcards=open]`::
-`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
-`indexing`::
-`Boolean` -- Return information about indexing operations
-`merge`::
-`Boolean` -- Return information about merge operations
-`refresh`::
-`Boolean` -- Return information about refresh operations
-`search`::
-`Boolean` -- Return information about search operations; use the `groups` parameter to include information for specific search groups
-`store`::
-`Boolean` -- Return information about the size of the index
-`warmer`::
-`Boolean` -- Return information about warmers
+`Boolean` -- A comma-separated list of search groups for `search` index metric
+`[level=indices]`::
+`String` -- Return stats aggregated at cluster, index or shard level
+`types`::
+`String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`indexingTypes`::
-`String, String[], Boolean` -- A comma-separated list of document types to include in the `indexing` statistics
-`metricFamily`::
-`String` -- Limit the information returned to a specific metric
-`searchGroups`::
-`String, String[], Boolean` -- A comma-separated list of search groups to include in the `search` statistics
+`metric`::
+`String, String[], Boolean` -- Limit the information returned the specific metrics.
 
 [[api-indices-status]]
 === `indices.status`
@@ -2067,13 +2037,13 @@ client.mlt({
 `Number` -- The word occurrence frequency as count: words with higher occurrence in the corpus will be ignored
 `maxQueryTerms`::
 `Number` -- The maximum query terms to be included in the generated query
-`maxWordLen`::
+`maxWordLength`::
 `Number` -- The minimum length of the word: longer words will be ignored
 `minDocFreq`::
 `Number` -- The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
 `minTermFreq`::
 `Number` -- The term frequency as percent: terms with lower occurence in the source document will be ignored
-`minWordLen`::
+`minWordLength`::
 `Number` -- The minimum length of the word: shorter words will be ignored
 `mltFields`::
 `String, String[], Boolean` -- Specific fields to perform the query against

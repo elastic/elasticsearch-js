@@ -29,7 +29,11 @@ AngularConnector.prototype.request = function (params, cb) {
   }).then(function (response) {
     cb(null, response.data, response.status, response.headers());
   }, function (err) {
-    cb(new ConnectionFault(err.message));
+    if (err.status) {
+      cb(null, err.data, err.status, err.headers());
+    } else {
+      cb(new ConnectionFault(err.message));
+    }
   });
 
   return function () {

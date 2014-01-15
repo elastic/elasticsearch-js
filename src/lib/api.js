@@ -339,28 +339,57 @@ api.cluster.prototype.nodeShutdown = ca({
  * Perform a [cluster.nodeStats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return detailed information for, when returning the `indices` metric family (supports wildcards)
- * @param {String} params.metricFamily - Limit the information returned to a certain metric family
- * @param {String} params.metric - Limit the information returned for `indices` family to a specific metric. Isn't used if `indices` (or `all`) metric family isn't specified.
+ * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+ * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
+ * @param {String} [params.level=node] - Return indices stats aggregated at node, index or shard level
+ * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
+ * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
+ * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.nodeStats = ca({
   params: {
+    completionFields: {
+      type: 'list',
+      name: 'completion_fields'
+    },
+    fielddataFields: {
+      type: 'list',
+      name: 'fielddata_fields'
+    },
     fields: {
+      type: 'list'
+    },
+    groups: {
+      type: 'boolean'
+    },
+    level: {
+      type: 'enum',
+      'default': 'node',
+      options: [
+        'node',
+        'indices',
+        'shards'
+      ]
+    },
+    types: {
       type: 'list'
     }
   },
   urls: [
     {
-      fmt: '/_nodes/<%=nodeId%>/stats/<%=metricFamily%>/<%=metric%>',
+      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>/<%=indexMetric%>',
       req: {
         nodeId: {
           type: 'list'
         },
-        metricFamily: {
-          type: 'enum',
+        metric: {
+          type: 'list',
           options: [
-            'all',
+            '_all',
+            'breaker',
             'fs',
             'http',
             'indices',
@@ -372,9 +401,10 @@ api.cluster.prototype.nodeStats = ca({
             'transport'
           ]
         },
-        metric: {
-          type: 'enum',
+        indexMetric: {
+          type: 'list',
           options: [
+            '_all',
             'completion',
             'docs',
             'fielddata',
@@ -383,9 +413,11 @@ api.cluster.prototype.nodeStats = ca({
             'get',
             'id_cache',
             'indexing',
-            'merges',
+            'merge',
+            'percolate',
             'refresh',
             'search',
+            'segments',
             'store',
             'warmer'
           ]
@@ -393,12 +425,37 @@ api.cluster.prototype.nodeStats = ca({
       }
     },
     {
-      fmt: '/_nodes/stats/<%=metricFamily%>/<%=metric%>',
+      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>',
       req: {
-        metricFamily: {
-          type: 'enum',
+        nodeId: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
           options: [
-            'all',
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/stats/<%=metric%>/<%=indexMetric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
             'fs',
             'http',
             'indices',
@@ -410,9 +467,10 @@ api.cluster.prototype.nodeStats = ca({
             'transport'
           ]
         },
-        metric: {
-          type: 'enum',
+        indexMetric: {
+          type: 'list',
           options: [
+            '_all',
             'completion',
             'docs',
             'fielddata',
@@ -421,9 +479,11 @@ api.cluster.prototype.nodeStats = ca({
             'get',
             'id_cache',
             'indexing',
-            'merges',
+            'merge',
+            'percolate',
             'refresh',
             'search',
+            'segments',
             'store',
             'warmer'
           ]
@@ -435,6 +495,27 @@ api.cluster.prototype.nodeStats = ca({
       req: {
         nodeId: {
           type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/stats/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
         }
       }
     },
@@ -491,42 +572,14 @@ api.cluster.prototype.reroute = ca({
  * Perform a [cluster.state](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.filterBlocks - Do not return information about blocks
- * @param {Boolean} params.filterIndexTemplates - Do not return information about index templates
- * @param {String, String[], Boolean} params.filterIndices - Limit returned metadata information to specific indices
- * @param {Boolean} params.filterMetadata - Do not return information about indices metadata
- * @param {Boolean} params.filterNodes - Do not return information about nodes
- * @param {Boolean} params.filterRoutingTable - Do not return information about shard allocation (`routing_table` and `routing_nodes`)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
  */
 api.cluster.prototype.state = ca({
   params: {
-    filterBlocks: {
-      type: 'boolean',
-      name: 'filter_blocks'
-    },
-    filterIndexTemplates: {
-      type: 'boolean',
-      name: 'filter_index_templates'
-    },
-    filterIndices: {
-      type: 'list',
-      name: 'filter_indices'
-    },
-    filterMetadata: {
-      type: 'boolean',
-      name: 'filter_metadata'
-    },
-    filterNodes: {
-      type: 'boolean',
-      name: 'filter_nodes'
-    },
-    filterRoutingTable: {
-      type: 'boolean',
-      name: 'filter_routing_table'
-    },
     local: {
       type: 'boolean'
     },
@@ -539,9 +592,46 @@ api.cluster.prototype.state = ca({
       name: 'flat_settings'
     }
   },
-  url: {
-    fmt: '/_cluster/state'
-  }
+  urls: [
+    {
+      fmt: '/_cluster/state/<%=metric%>/<%=index%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'blocks',
+            'index_templates',
+            'metadata',
+            'nodes',
+            'routing_table'
+          ]
+        },
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cluster/state/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'blocks',
+            'index_templates',
+            'metadata',
+            'nodes',
+            'routing_table'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_cluster/state'
+    }
+  ]
 });
 
 /**
@@ -1468,18 +1558,30 @@ api.indices.prototype.deleteAlias = ca({
       name: 'master_timeout'
     }
   },
-  url: {
-    fmt: '/<%=index%>/_alias/<%=name%>',
-    req: {
-      index: {
-        type: 'string'
-      },
-      name: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/_alias/<%=name%>',
+      req: {
+        index: {
+          type: 'string'
+        },
+        name: {
+          type: 'string'
+        }
       }
     },
-    sortOrder: -2
-  },
+    {
+      fmt: '/<%=index%>/_aliases/<%=name%>',
+      req: {
+        index: {
+          type: 'string'
+        },
+        name: {
+          type: 'string'
+        }
+      }
+    }
+  ],
   method: 'DELETE'
 });
 
@@ -1498,18 +1600,52 @@ api.indices.prototype.deleteMapping = ca({
       name: 'master_timeout'
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>',
-    req: {
-      index: {
-        type: 'list'
-      },
-      type: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
       }
     },
-    sortOrder: -2
-  },
+    {
+      fmt: '/<%=index%>/_mapping/<%=type%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_mappings',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mappings/<%=type%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    }
+  ],
   method: 'DELETE'
 });
 
@@ -1559,41 +1695,18 @@ api.indices.prototype.deleteWarmer = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_warmer/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        },
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_warmer/<%=name%>',
+    req: {
+      index: {
+        type: 'list'
+      },
+      name: {
+        type: 'string'
       }
     },
-    {
-      fmt: '/<%=index%>/_warmer/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_warmer',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    }
-  ],
+    sortOrder: -2
+  },
   method: 'DELETE'
 });
 
@@ -1865,6 +1978,9 @@ api.indices.prototype.getAlias = ca({
           type: 'list'
         }
       }
+    },
+    {
+      fmt: '/_alias'
     }
   ]
 });
@@ -1875,6 +1991,7 @@ api.indices.prototype.getAlias = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
+ * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to filter
  */
 api.indices.prototype.getAliases = ca({
   params: {
@@ -1884,9 +2001,28 @@ api.indices.prototype.getAliases = ca({
   },
   urls: [
     {
+      fmt: '/<%=index%>/_aliases/<%=name%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        name: {
+          type: 'list'
+        }
+      }
+    },
+    {
       fmt: '/<%=index%>/_aliases',
       req: {
         index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_aliases/<%=name%>',
+      req: {
+        name: {
           type: 'list'
         }
       }
@@ -1935,7 +2071,7 @@ api.indices.prototype.getFieldMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_mapping/field/<%=field%>',
+      fmt: '/<%=index%>/_mapping/<%=type%>/field/<%=field%>',
       req: {
         index: {
           type: 'list'
@@ -1952,6 +2088,17 @@ api.indices.prototype.getFieldMapping = ca({
       fmt: '/<%=index%>/_mapping/field/<%=field%>',
       req: {
         index: {
+          type: 'list'
+        },
+        field: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_mapping/<%=type%>/field/<%=field%>',
+      req: {
+        type: {
           type: 'list'
         },
         field: {
@@ -2002,7 +2149,7 @@ api.indices.prototype.getMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_mapping',
+      fmt: '/<%=index%>/_mapping/<%=type%>',
       req: {
         index: {
           type: 'list'
@@ -2016,6 +2163,14 @@ api.indices.prototype.getMapping = ca({
       fmt: '/<%=index%>/_mapping',
       req: {
         index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_mapping/<%=type%>',
+      req: {
+        type: {
           type: 'list'
         }
       }
@@ -2036,6 +2191,7 @@ api.indices.prototype.getMapping = ca({
  * @param {String} params.prefix - The prefix all settings must have in order to be included
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.name - The name of the settings that should be included
  */
 api.indices.prototype.getSettings = ca({
   params: {
@@ -2069,12 +2225,12 @@ api.indices.prototype.getSettings = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=prefix%>/_settings',
+      fmt: '/<%=index%>/_settings/<%=name%>',
       req: {
         index: {
           type: 'list'
         },
-        prefix: {
+        name: {
           type: 'string'
         }
       }
@@ -2084,6 +2240,14 @@ api.indices.prototype.getSettings = ca({
       req: {
         index: {
           type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_settings/<%=name%>',
+      req: {
+        name: {
+          type: 'string'
         }
       }
     },
@@ -2186,6 +2350,17 @@ api.indices.prototype.getWarmer = ca({
           type: 'list'
         }
       }
+    },
+    {
+      fmt: '/_warmer/<%=name%>',
+      req: {
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_warmer'
     }
   ]
 });
@@ -2344,6 +2519,17 @@ api.indices.prototype.putAlias = ca({
       }
     },
     {
+      fmt: '/<%=index%>/_aliases/<%=name%>',
+      req: {
+        index: {
+          type: 'string'
+        },
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
       fmt: '/_alias/<%=name%>',
       req: {
         name: {
@@ -2352,15 +2538,12 @@ api.indices.prototype.putAlias = ca({
       }
     },
     {
-      fmt: '/<%=index%>/_alias',
+      fmt: '/_aliases/<%=name%>',
       req: {
-        index: {
+        name: {
           type: 'string'
         }
       }
-    },
-    {
-      fmt: '/_alias'
     }
   ],
   method: 'PUT'
@@ -2410,18 +2593,68 @@ api.indices.prototype.putMapping = ca({
       name: 'expand_wildcards'
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>/_mapping',
-    req: {
-      index: {
-        type: 'list'
-      },
-      type: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_mapping',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
       }
     },
-    sortOrder: -2
-  },
+    {
+      fmt: '/<%=index%>/_mapping/<%=type%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_mappings',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mappings/<%=type%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_mapping/<%=type%>',
+      req: {
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_mappings/<%=type%>',
+      req: {
+        type: {
+          type: 'string'
+        }
+      }
+    }
+  ],
   method: 'PUT'
 });
 
@@ -2571,11 +2804,52 @@ api.indices.prototype.putWarmer = ca({
       }
     },
     {
+      fmt: '/<%=index%>/<%=type%>/_warmers/<%=name%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        },
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
       fmt: '/<%=index%>/_warmer/<%=name%>',
       req: {
         index: {
           type: 'list'
         },
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_warmers/<%=name%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_warmer/<%=name%>',
+      req: {
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_warmers/<%=name%>',
+      req: {
         name: {
           type: 'string'
         }
@@ -2731,53 +3005,20 @@ api.indices.prototype.snapshotIndex = ca({
  * Perform a [indices.stats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.all - Return all available information
- * @param {Boolean} params.clear - Reset the default level of detail
- * @param {Boolean} params.completion - Return information about completion suggester stats
- * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `completion` metric (supports wildcards)
- * @param {Boolean} params.docs - Return information about indexed and deleted documents
- * @param {Boolean} params.fielddata - Return information about field data
- * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` metric (supports wildcards)
- * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return detailed information for, when returning the `search` statistics
- * @param {Boolean} params.filterCache - Return information about filter cache
- * @param {Boolean} params.flush - Return information about flush operations
- * @param {Boolean} params.get - Return information about get operations
- * @param {Boolean} params.groups - A comma-separated list of search groups for `search` statistics
- * @param {Boolean} params.idCache - Return information about ID cache
- * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
- * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {Boolean} params.indexing - Return information about indexing operations
- * @param {Boolean} params.merge - Return information about merge operations
- * @param {Boolean} params.refresh - Return information about refresh operations
- * @param {Boolean} params.search - Return information about search operations; use the `groups` parameter to include information for specific search groups
- * @param {Boolean} params.store - Return information about the size of the index
- * @param {Boolean} params.warmer - Return information about warmers
+ * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+ * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
+ * @param {String} [params.level=indices] - Return stats aggregated at cluster, index or shard level
+ * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String, String[], Boolean} params.indexingTypes - A comma-separated list of document types to include in the `indexing` statistics
- * @param {String} params.metricFamily - Limit the information returned to a specific metric
- * @param {String, String[], Boolean} params.searchGroups - A comma-separated list of search groups to include in the `search` statistics
+ * @param {String, String[], Boolean} params.metric - Limit the information returned the specific metrics.
  */
 api.indices.prototype.stats = ca({
   params: {
-    all: {
-      type: 'boolean'
-    },
-    clear: {
-      type: 'boolean'
-    },
-    completion: {
-      type: 'boolean'
-    },
     completionFields: {
       type: 'list',
       name: 'completion_fields'
-    },
-    docs: {
-      type: 'boolean'
-    },
-    fielddata: {
-      type: 'boolean'
     },
     fielddataFields: {
       type: 'list',
@@ -2786,60 +3027,78 @@ api.indices.prototype.stats = ca({
     fields: {
       type: 'list'
     },
-    filterCache: {
-      type: 'boolean',
-      name: 'filter_cache'
-    },
-    flush: {
-      type: 'boolean'
-    },
-    get: {
-      type: 'boolean'
-    },
     groups: {
       type: 'boolean'
     },
-    idCache: {
-      type: 'boolean',
-      name: 'id_cache'
-    },
-    ignoreUnavailable: {
-      type: 'boolean',
-      name: 'ignore_unavailable'
-    },
-    allowNoIndices: {
-      type: 'boolean',
-      name: 'allow_no_indices'
-    },
-    expandWildcards: {
+    level: {
       type: 'enum',
-      'default': 'open',
+      'default': 'indices',
       options: [
-        'open',
-        'closed'
-      ],
-      name: 'expand_wildcards'
+        'cluster',
+        'indices',
+        'shards'
+      ]
     },
-    indexing: {
-      type: 'boolean'
-    },
-    merge: {
-      type: 'boolean'
-    },
-    refresh: {
-      type: 'boolean'
-    },
-    search: {
-      type: 'boolean'
-    },
-    store: {
-      type: 'boolean'
-    },
-    warmer: {
-      type: 'boolean'
+    types: {
+      type: 'list'
     }
   },
   urls: [
+    {
+      fmt: '/<%=index%>/_stats/<%=metric%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'completion',
+            'docs',
+            'fielddata',
+            'filter_cache',
+            'flush',
+            'get',
+            'id_cache',
+            'indexing',
+            'merge',
+            'percolate',
+            'refresh',
+            'search',
+            'segments',
+            'store',
+            'warmer'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_stats/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'completion',
+            'docs',
+            'fielddata',
+            'filter_cache',
+            'flush',
+            'get',
+            'id_cache',
+            'indexing',
+            'merge',
+            'percolate',
+            'refresh',
+            'search',
+            'segments',
+            'store',
+            'warmer'
+          ]
+        }
+      }
+    },
     {
       fmt: '/<%=index%>/_stats',
       req: {
@@ -3092,10 +3351,10 @@ api.mget = ca({
  * @param {Number} params.boostTerms - The boost factor
  * @param {Number} params.maxDocFreq - The word occurrence frequency as count: words with higher occurrence in the corpus will be ignored
  * @param {Number} params.maxQueryTerms - The maximum query terms to be included in the generated query
- * @param {Number} params.maxWordLen - The minimum length of the word: longer words will be ignored
+ * @param {Number} params.maxWordLength - The minimum length of the word: longer words will be ignored
  * @param {Number} params.minDocFreq - The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
  * @param {Number} params.minTermFreq - The term frequency as percent: terms with lower occurence in the source document will be ignored
- * @param {Number} params.minWordLen - The minimum length of the word: shorter words will be ignored
+ * @param {Number} params.minWordLength - The minimum length of the word: shorter words will be ignored
  * @param {String, String[], Boolean} params.mltFields - Specific fields to perform the query against
  * @param {Number} params.percentTermsToMatch - How many terms have to match in order to consider the document a match (default: 0.3)
  * @param {String} params.routing - Specific routing value
@@ -3126,9 +3385,9 @@ api.mlt = ca({
       type: 'number',
       name: 'max_query_terms'
     },
-    maxWordLen: {
+    maxWordLength: {
       type: 'number',
-      name: 'max_word_len'
+      name: 'max_word_length'
     },
     minDocFreq: {
       type: 'number',
@@ -3138,9 +3397,9 @@ api.mlt = ca({
       type: 'number',
       name: 'min_term_freq'
     },
-    minWordLen: {
+    minWordLength: {
       type: 'number',
-      name: 'min_word_len'
+      name: 'min_word_length'
     },
     mltFields: {
       type: 'list',

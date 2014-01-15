@@ -338,6 +338,11 @@ aliases = {
   'indices.deleteMapping': [
     '/{index}/{type}/_mapping'
   ],
+  'indices.deleteWarmer': [
+    '/{index}/_warmer',
+    '/{index}/_warmers',
+    '/{index}/_warmers/{name}'
+  ],
   'indices.stats': [
     '_stats/{metric_family}',
     '/_stats/indexing',
@@ -348,8 +353,5 @@ aliases = {
     '/{index}/_stats/indexing',
     '/{index}/_stats/search/{search_groups}',
     '/{index}/_stats/fielddata/{fields}'
-  ],
-  // 'search': [
-  //   '/_search'
-  // ]
+  ]
 };

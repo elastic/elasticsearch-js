@@ -8,6 +8,7 @@ describe('Http Connector', function () {
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
+  var KeepAliveAgent = require('agentkeepalive');
 
   var http = require('http');
   var https = require('https');
@@ -55,8 +56,8 @@ describe('Http Connector', function () {
       // requestTimeout
     });
 
-    it('expects one the host to have a protocol of http or https', function () {
-      expect(function () {
+    it('expects the host to have a protocol of http or https', function () {
+      (function () {
         var con = new HttpConnection(new Host('thrifty://es.com/stuff'));
       }).to.throwError(/invalid protocol/i);
     });
@@ -171,8 +172,9 @@ describe('Http Connector', function () {
     it('calls http based on the host', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
       con.request({}, function () {
-        expect(http.request.callCount).to.eql(1);
-        expect(https.request.callCount).to.eql(0);
+        http.request.callCount.should.eql(1);
+        https.request.callCount.should.eql(0);
+        http.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent);
         done();
       });
     });
@@ -180,8 +182,9 @@ describe('Http Connector', function () {
     it('calls https based on the host', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
       con.request({}, function () {
-        expect(http.request.callCount).to.eql(0);
-        expect(https.request.callCount).to.eql(1);
+        http.request.callCount.should.eql(0);
+        https.request.callCount.should.eql(1);
+        https.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent.HttpsAgent);
         done();
       });
     });
