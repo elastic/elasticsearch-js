@@ -4,15 +4,51 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
 1. Lint your codes
 
-  While developing, be sure to run JSHint on the files you modify. This is simple with most IDE's and the project has .jshintrc files in the proper places, make sure jshint is using them.
+  While developing, be sure to run JSHint on the files you modify. This is simple with most IDE's and the project has [.jshintrc files](http://www.jshint.com/docs/) in the proper places, make sure jshint is using them.
 
 2. Write tests
 
   Please write test cases to exercise your changes.
 
-2. When you're ready to run the tests
+2. When you are ready, run the test suite
 
-  Integration and unit tests can be run by simply calling `npm test` or `grunt test`, but the integration tests require a running instance of elasticsearch and ***WILL WIPE ALL DATA FROM ELASTICSEARCH***. If you only want to run the unit tests, run `grunt unit_test` instead. Travis and Jenkins run the integration tests so your changes can be verified before they are merged.
+    1. Install dev dependenies.
+
+      ```sh
+      npm install
+      ```
+
+    2. Install Grunt.
+
+      ```sh
+      npm install -g grunt-cli
+      ```
+    3. Run the tests This will lint the code, run the unit tests, install local versions of elasticsearch, and run the integration tests using those installations.
+
+      ***WARNING***: If you are running Elasticsearch on your machine, and it is using port 9200, shut it down.
+
+      ```sh
+      grunt test
+      ```
+
+      Or to skip the integration tests:
+
+      ```sh
+      grunt test_unit
+      ```
+    4. Optionally, run the browser tests. While this step is automated and simple, it can take several minutes for the test to complete. Unless you are making changes to browser specific portions of the code you can probably let Travis run the browser tests for you.
+
+      Quick Option: Run them locally in your browser
+      ```sh
+      grunt run:browser_test_server
+      # open http://localhost:8000/browser.html, angular.html, or jquery.html
+      ```
+
+      Run them on Sauce Labs across several browsers, operating systems, and browser versions
+      ```sh
+      grunt saucelabs-mocha
+      ```
+
 
 3. Submit a pull request
 

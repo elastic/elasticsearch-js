@@ -23,17 +23,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('unit_test', [
     'jshint',
-    'mochacov:unit'
+    'run:generate',
+    'mochacov:unit',
   ]);
 
   grunt.registerTask('coverage', [
     'mochacov:make_coverage_html',
     'open:coverage'
-  ]);
-
-  grunt.registerTask('travis', [
-    'test',
-    'browser_clients:test',
-    'mochacov:ship_coverage'
   ]);
 };
