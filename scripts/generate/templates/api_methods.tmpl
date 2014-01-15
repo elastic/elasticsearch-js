@@ -1,5 +1,5 @@
-[[api-reference]]
-== API Method Reference
+[[api-reference<%= branch === 'master' ? '' : branchSuffix.replace(/_/g, '-') %>]]
+== <%= branch === 'master' ? '' : branch + ' ' %>API Method Reference
 <%
 _.each(actions, function (action) {
 var actionId = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-');

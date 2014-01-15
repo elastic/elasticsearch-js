@@ -8,6 +8,8 @@ include::api_conventions.asciidoc[]
 
 include::api_methods.asciidoc[]
 
+include::api_methods_0_90.asciidoc[]
+
 include::configuration.asciidoc[]
 
 include::extending_core_components.asciidoc[]

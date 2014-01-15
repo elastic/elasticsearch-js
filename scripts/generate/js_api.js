@@ -101,6 +101,8 @@ module.exports = function (branch, done) {
       [].concat(apiSpec.actions).concat(apiSpec.proxies),
       'name'
     );
+    docVars.branch = branch;
+    docVars.branchSuffix = branchSuffix;
     done();
   }
 
