@@ -15,6 +15,10 @@
     </script>
     <script src="angular.js"></script>
     <script src="angular_build.js"></script>
-    <script>var mochaRunner = mocha.run();</script>
+    <script>
+      mocha.run().on('end', function(){
+        window.mochaResults = runner.stats;
+      });
+    </script>
   </body>
 </html>

@@ -14,6 +14,10 @@
       mocha.globals(['mochaRunner', 'elasticsearch']);
     </script>
     <script src="browser_build.js"></script>
-    <script>var mochaRunner = mocha.run();</script>
+    <script>
+      mocha.run().on('end', function(){
+        window.mochaResults = runner.stats;
+      });
+    </script>
   </body>
 </html>

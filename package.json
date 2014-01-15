@@ -34,7 +34,6 @@
     "sinon": "~1.7.3",
     "nock": "0.27.0",
     "open": "0.0.4",
-    "testling": "git://github.com/spenceralger/testling.git",
     "load-grunt-tasks": "~0.2.0",
     "load-grunt-config": "~0.7.0",
     "grunt-s3": "~0.2.0-alpha.3",
@@ -49,7 +48,7 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.1",
     "express": "~3.4.7",
-    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git#stable_mocha_runner"
+    "grunt-saucelabs": "https://github.com/axemclion/grunt-saucelabs/archive/master.tar.gz"
   },
   "license": "Apache 2.0",
   "dependencies": {
