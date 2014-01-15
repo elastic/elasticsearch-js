@@ -36,12 +36,14 @@ The process for contributing to any of the Elasticsearch repositories is similar
       ```sh
       grunt test_unit
       ```
-    4. Optionally, run the browser tests. While this step is automated and simple, it can take several minutes for the test to complete. Unless you are making changes to browser specific portions of the code you can probably let Travis run the browser tests for you.
+    4. Optionally, run the browser tests. While this step is automated and simple, it can take several minutes for the tests to complete. Unless you are making changes to browser specific portions of the code you can probably let Travis run the browser tests for you.
 
       Quick Option: Run them locally in your browser
       ```sh
       node ./test/utils/server
-      # open http://localhost:8000/browser.html, angular.html, or jquery.html
+      grunt browser_clients:build
+      # open http://127.0.0.1:8000/unit.html
+      # open http://127.0.0.1:8000/builds.html
       ```
 
       Run them on Sauce Labs across several browsers, operating systems, and browser versions
