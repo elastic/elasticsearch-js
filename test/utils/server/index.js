@@ -2,6 +2,7 @@ var express = require('express');
 var http = require('http');
 var fs = require('fs');
 var _ = require('lodash');
+var async = require('async');
 var path = require('path');
 var root = path.join(__dirname, '../../..');
 var glob = require('glob');
@@ -15,7 +16,7 @@ var testFiles = 'test/unit/test_!(' + [
   'stream_logger',
   'tracer_logger',
   'transport_with_server',
-].join('') + ')*';
+].join('|') + ')*';
 
 var defaultFiles = _.map(glob.sync(testFiles), function (filename) {
   return path.resolve(root, filename);
@@ -28,17 +29,28 @@ var aliasify = require('aliasify').configure({
   configDir: root
 });
 
+var bundleQueue = async.queue(function (task, done) {
+  task(done);
+}, 1);
+
+
 function browserBuild(name) {
   var files = _.union(defaultFiles, [path.resolve(root, 'test/unit/browser_test_' + name + '_build.js')]);
 
   return function (req, res, next) {
-    res.set('Content-Type', 'application/javascript');
+    bundleQueue.push(function (done) {
+      res.set('Content-Type', 'application/javascript');
 
-    var b = browserify(files);
-    b.transform(aliasify);
-    b.bundle({
-      insertGlobals: true
-    }).pipe(res);
+      var b = browserify(files);
+      b.transform(aliasify);
+      var str = b.bundle({
+        insertGlobals: true
+      });
+
+      str.pipe(res);
+      str.on('error', done);
+      str.on('end', done);
+    });
   };
 }
 

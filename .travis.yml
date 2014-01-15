@@ -10,12 +10,12 @@ matrix:
       env: ES_RELEASE=0.90.10 ES_BRANCH=0.90 NODE_UNIT=0
     - node_js: "0.10"
       env: ES_RELEASE=0.90.9 ES_BRANCH=0.90 NODE_UNIT=0
-    # - node_js: "0.10"
-    #   env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER='chrome'
-    # - node_js: "0.10"
-    #   env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER='firefox'
-    # - node_js: "0.10"
-    #   env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER='ie'
+    - node_js: "0.10"
+      env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER=chrome
+    - node_js: "0.10"
+      env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER=firefox
+    - node_js: "0.10"
+      env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER=ie
   exclude:
     - node_js: false
 

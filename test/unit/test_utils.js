@@ -25,7 +25,7 @@ describe('Utils', function () {
         not: Infinity
       },
       Function: {
-        is: [console.error, console.log],
+        is: [function () {}, function () {}],
       },
       RegExp: {
         is: [/.*/, new RegExp('a')],

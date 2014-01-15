@@ -65,7 +65,7 @@ _.each([
   'Function',
   'RegExp'
 ], function (type) {
-  var check = _.bindKey(_, 'is' + type);
+  var check = _['is' + type];
 
   utils['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays

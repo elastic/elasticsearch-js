@@ -2,7 +2,7 @@
 # Start or stop a group for travis
 #####
 function group {
-  if [ $1 =~ "^start"]; then
+  if [ $1 =~ "^start" ]; then
     echo -e "\n--------- $1"
   else
     echo -e "--------- $1\n"

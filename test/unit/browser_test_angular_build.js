@@ -45,7 +45,12 @@ describe('Angular esFactory', function () {
   it('returns a new client when it is called', function (done) {
     directive(function (esFactory) {
       return function () {
-        expect(esFactory({ log: null })).to.be.a(Client);
+        try {
+          var client = esFactory({ log: null });
+          expect(client).to.have.keys('ping', 'transport', 'indices', 'cluster');
+        } catch (e) {
+          return done(e);
+        }
         done();
       };
     });
