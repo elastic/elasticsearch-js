@@ -15,10 +15,10 @@ module.exports = function (grunt) {
     'mochacov:integration_master',
     'stop:es_master',
 
-    'run:install_es_0_90',
-    'run:es_0_90',
-    'mochacov:integration_0_90',
-    'stop:es_0_90'
+    'run:install_es_0.90',
+    'run:es_0.90',
+    'mochacov:integration_0.90',
+    'stop:es_0.90'
   ]);
 
   grunt.registerTask('unit_test', [

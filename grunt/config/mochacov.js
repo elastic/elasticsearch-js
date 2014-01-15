@@ -9,7 +9,7 @@ module.exports = {
     src: 'test/integration/yaml_suite/index.js'
   },
 
-  integration_0_90: {
+  'integration_0.90': {
     src: 'test/integration/yaml_suite/index_0_90.js'
   },
 

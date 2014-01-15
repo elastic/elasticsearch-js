@@ -18,14 +18,6 @@ module.exports = {
       ]
     }
   },
-  generate_yaml_tests: {
-    exec: 'node ./scripts/generate/index.js --no-api',
-    options: {
-      passArgs: [
-        'verbose'
-      ]
-    }
-  },
   browser_test_server: {
     exec: 'node ./test/utils/server',
     options: {
@@ -49,10 +41,10 @@ module.exports = {
       }
     }
   },
-  install_es_0_90: {
+  'install_es_0.90': {
     exec: './scripts/es.sh install 0.90',
   },
-  es_0_90: {
+  'es_0.90': {
     exec: './.snapshots/0.90_nightly/bin/elasticsearch -f ' + esOpts,
     options: {
       wait: false,

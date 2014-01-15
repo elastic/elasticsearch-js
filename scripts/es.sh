@@ -17,3 +17,4 @@ fi
 source scripts/_utils.sh
 
 manage_es $*
+exit $?

@@ -59,7 +59,7 @@ function manage_es {
 
     case "$DO" in
       install)
-        if [ ! -d "$ES_DIR" ]; then
+        if [ ! -x "$ES_BIN" ]; then
           echo "Downloading Elasticsearch $ES_VERSION"
           call rm -rf ${SNAPSHOTS}/${ES_VERSION}*
           call curl -#O $ES_URL
@@ -69,6 +69,8 @@ function manage_es {
           if [ -z "$ES_RELEASE" ]; then
             ln -sf $ES_DIR "${SNAPSHOTS}/${ES_VERSION}"
           fi
+        else
+          echo "$ES_VERSION installed"
         fi
       ;;
       start)
@@ -80,7 +82,7 @@ function manage_es {
 
           if [ $RUNNING -eq 0 ]; then
             echo "Already running $ES_VERSION"
-            exit 1
+            return 1
           else
             echo "PID file was left behind by ES"
             call rm $PIDFILE
@@ -91,10 +93,14 @@ function manage_es {
 
         if [ ! -x "$ES_BIN" ]; then
           echo "Unable to find elasticsearch executable"
-          exit 1
+          return 1
         fi
 
         local ES_OPTS="-p $PIDFILE -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
+
+        if [ -n "$ES_NODE_NAME" ]; then
+          ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
+        fi
 
         if [ "$ES_BRANCH" = "0.90" ]; then
           echo "Starting Elasticsearch $ES_VERSION"
@@ -113,13 +119,13 @@ function manage_es {
           if [ $RUNNING -eq 0 ]; then
             kill $PID
             echo "Elasticsearch $ES_VERSION stopped"
-            exit 0
+            return 0
           fi
 
           rm $PIDFILE
         fi
         echo "Elasticsearch $ES_VERSION is not running."
-        exit 1
+        return 1
       ;;
     esac
   group "end:$DO es"

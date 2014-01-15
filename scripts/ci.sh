@@ -15,7 +15,10 @@
 #
 ###########
 
-source _utils.sh
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ES_NODE_NAME="elasticsearch_js_test_runner"
+
+source $HERE/_utils.sh
 
 #####
 # call grunt, but make sure it's installed first
@@ -33,11 +36,16 @@ function grunt_ {
   call grunt $DO
 }
 
-
 if [ -n "$ES_BRANCH" ]; then
   TESTING_BRANCH=$ES_BRANCH
 elif [ -n "$ES_V" ]; then
-  TESTING_BRANCH=$ES_V
+  re='^(.*)_nightly$';
+  if [[ $ES_V =~ $re ]]; then
+    TESTING_BRANCH=${BASH_REMATCH[1]}
+  else
+    echo "unable to parse ES_V $ES_V"
+    exit 1
+  fi
 else
   TESTING_BRANCH="master"
 fi
@@ -47,15 +55,14 @@ if [[ "$NODE_UNIT" != "0" ]]; then
 fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
-  if [[ -n "$ES_BRANCH" ]] && [[ "$USER" != "jenkins" ]]; then
-    manage_es start $ES_BRANCH $ES_RELEASE
+  call node scripts/generate --no-api
+
+  if [[ "$USER" != "jenkins" ]]; then
+    manage_es start $TESTING_BRANCH $ES_RELEASE
   fi
-
-  call node scripts/generate --no-api --es_branch=\"$TESTING_BRANCH\"
-  grunt_ mochacov:integration
-
-  if [[ -n "$ES_BRANCH" ]] && [[ "$USER" != "jenkins" ]]; then
-    manage_es stop $ES_BRANCH $ES_RELEASE
+  grunt_ mochacov:integration_$TESTING_BRANCH
+  if [[ "$USER" != "jenkins" ]]; then
+    manage_es stop $TESTING_BRANCH $ES_RELEASE
   fi
 fi
 
