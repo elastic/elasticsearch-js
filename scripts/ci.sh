@@ -28,7 +28,7 @@ source $HERE/_utils.sh
 function grunt_ {
   local DO="$*"
 
-  if [ ! -x "`which grunt`" ]; then
+  if [[ ! -x "`which grunt`" ]]; then
     group "start:install_grunt"
       echo "installing grunt-cli"
       call npm install -g grunt-cli
@@ -38,9 +38,10 @@ function grunt_ {
   call grunt $DO
 }
 
-if [ -n "$ES_BRANCH" ]; then
+# normalize ES_BRANCH into TESTING_BRANCH
+if [[ -n "$ES_BRANCH" ]]; then
   TESTING_BRANCH=$ES_BRANCH
-elif [ -n "$ES_V" ]; then
+elif [[ -n "$ES_V" ]]; then
   re='^(.*)_nightly$';
   if [[ $ES_V =~ $re ]]; then
     TESTING_BRANCH=${BASH_REMATCH[1]}
@@ -52,6 +53,21 @@ else
   TESTING_BRANCH="master"
 fi
 
+# convert TESTING_BRANCH into BRANCH_SUFFIX
+if [[ $TESTING_BRANCH = 'master' ]]; then
+  BRANCH_SUFFIX=''
+else
+  BRANCH_SUFFIX=${TESTING_BRANCH//./_}
+fi
+
+# find value of ES_PORT
+if [[ -n "$es_port" ]]; then
+  # jenkins
+  ES_PORT=$es_port
+else
+  ES_PORT=9200
+fi
+
 if [[ "$NODE_UNIT" != "0" ]]; then
   grunt_ jshint mochacov:unit
 fi
@@ -61,11 +77,22 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
     call node scripts/generate --no-api
   group "end:generate_tests"
 
-  if [[ "$USER" != "jenkins" ]]; then
+  MOCHA_EXE="./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
+    --require should
+    --host localhost
+    --port $ES_PORT"
+
+  if [[ -n "$JENKINS" ]]; then
+    MOCHA_EXE="$MOCHA_EXE
+    --reporter ../../../test/utils/jenkins-reporter.js
+    2> test/junit-node-integration.xml"
+  else
     manage_es start $TESTING_BRANCH $ES_RELEASE
   fi
-  grunt_ mochacov:integration_$TESTING_BRANCH
-  if [[ "$USER" != "jenkins" ]]; then
+
+  call $MOCHA_EXE
+
+  if [[ -z "$JENKINS" ]]; then
     manage_es stop $TESTING_BRANCH $ES_RELEASE
   fi
 fi

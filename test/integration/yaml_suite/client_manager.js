@@ -1,5 +1,6 @@
 var BROWSER = process.env.browser;
 var VERBOSE = process.env.VERBOSE;
+var JENKINS = process.env.JENKINS;
 
 if (BROWSER) {
   /* jshint browser: true */
@@ -35,7 +36,7 @@ module.exports = {
             setTimeout(ping, timeout);
           } else if (err) {
             cb(new Error('unable to establish contact with ES'));
-          } else if (resp.name !== 'elasticsearch_js_test_runner') {
+          } else if (!JENKINS && resp.name !== 'elasticsearch_js_test_runner') {
             console.log(resp);
             cb(new Error('Almosted wiped out another es node. Shut-down all instances of ES and try again.'));
           } else {
