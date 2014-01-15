@@ -37,7 +37,6 @@ function manage_es {
   local PIDS="$ROOT/.snapshots/pids"
 
   group "start:$DO es"
-
     if [ ! -d "$PIDS" ]; then
       call mkdir -p $PIDS
     fi
@@ -82,32 +81,30 @@ function manage_es {
 
           if [ $RUNNING -eq 0 ]; then
             echo "Already running $ES_VERSION"
-            return 1
           else
             echo "PID file was left behind by ES"
             call rm $PIDFILE
           fi
         fi
 
-        ./scripts/es.sh install $ES_BRANCH $ES_RELEASE
-
         if [ ! -x "$ES_BIN" ]; then
           echo "Unable to find elasticsearch executable"
-          return 1
-        fi
+        elif [ ! -f $PIDFILE ]; then
+          ./scripts/es.sh install $ES_BRANCH $ES_RELEASE
 
-        local ES_OPTS="-p $PIDFILE -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
+          local ES_OPTS="-p $PIDFILE -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
 
-        if [ -n "$ES_NODE_NAME" ]; then
-          ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
-        fi
+          if [ -n "$ES_NODE_NAME" ]; then
+            ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
+          fi
 
-        if [ "$ES_BRANCH" = "0.90" ]; then
-          echo "Starting Elasticsearch $ES_VERSION"
-          call $ES_BIN $ES_OPTS
-        else
-          echo "Starting Elasticsearch $ES_VERSION as a deamon"
-          call $ES_BIN -d $ES_OPTS
+          if [ "$ES_BRANCH" = "0.90" ]; then
+            echo "Starting Elasticsearch $ES_VERSION"
+            call $ES_BIN $ES_OPTS
+          else
+            echo "Starting Elasticsearch $ES_VERSION as a deamon"
+            call $ES_BIN -d $ES_OPTS
+          fi
         fi
       ;;
       stop)
@@ -119,13 +116,14 @@ function manage_es {
           if [ $RUNNING -eq 0 ]; then
             kill $PID
             echo "Elasticsearch $ES_VERSION stopped"
-            return 0
+          else
+            echo "PID file was left behind by ES"
           fi
 
           rm $PIDFILE
+        else
+          echo "Elasticsearch $ES_VERSION is not running."
         fi
-        echo "Elasticsearch $ES_VERSION is not running."
-        return 1
       ;;
     esac
   group "end:$DO es"

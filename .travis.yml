@@ -1,9 +1,5 @@
 language: node_js
 node_js: false
-env:
-  global:
-    - SAUCE_ACCESS_KEY=3259dd1e-a9f2-41cc-afd7-855d80588aeb
-    - SAUCE_USERNAME=elasticsearch-js
 matrix:
   include:
     - node_js: "0.8"
@@ -11,11 +7,9 @@ matrix:
     - node_js: "0.10"
       env: ES_BRANCH=master COVERAGE=1
     - node_js: "0.10"
-      env: ES_BRANCH=0.90 NODE_UNIT=0
+      env: ES_RELEASE=0.90.10 ES_BRANCH=0.90 NODE_UNIT=0
     - node_js: "0.10"
       env: ES_RELEASE=0.90.9 ES_BRANCH=0.90 NODE_UNIT=0
-    - node_js: "0.10"
-      env: ES_RELEASE=0.90.8 ES_BRANCH=0.90 NODE_UNIT=0
     # - node_js: "0.10"
     #   env: NODE_UNIT=0 NODE_INTEGRATION=0 TEST_BROWSER='chrome'
     # - node_js: "0.10"
