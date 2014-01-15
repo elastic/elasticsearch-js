@@ -2,10 +2,12 @@
 # Start or stop a group for travis
 #####
 function group {
-  if [ $1 =~ "^start" ]; then
-    echo -e "\n--------- $1"
+  re='start:'
+
+  if [[ $1 =~ $re ]]; then
+    echo -e "\n\033[4m\033[1m$1\033[0m\033[0m"
   else
-    echo -e "--------- $1\n"
+    echo -e "-- $1 --\n"
   fi
 }
 

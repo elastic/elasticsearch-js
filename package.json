@@ -48,7 +48,7 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.1",
     "express": "~3.4.7",
-    "grunt-saucelabs": "https://github.com/axemclion/grunt-saucelabs/archive/master.tar.gz"
+    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git#mocha_pending_pass"
   },
   "license": "Apache 2.0",
   "dependencies": {
