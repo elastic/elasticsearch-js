@@ -100,7 +100,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     for (; i < string.length; i++) {
       code = string.charCodeAt(i);
       c = string.charAt(i);
-      lower = code >= 97 && code <= 122;
+      lower = (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
       upper = code >= 65 && code <= 90;
 
       if (upper || !lower) {

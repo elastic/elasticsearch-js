@@ -1,12 +1,16 @@
 var unitTests = ['test/unit/test_*.js'];
-var integrationTests = ['test/integration/yaml_suite/index.js'];
 
 module.exports = {
   unit: {
     src: unitTests
   },
-  integration: {
-    src: integrationTests
+
+  integration_master: {
+    src: 'test/integration/yaml_suite/index.js'
+  },
+
+  integration_0_90: {
+    src: 'test/integration/yaml_suite/index_0_90.js'
   },
 
   // run the unit tests, and update coverage.html

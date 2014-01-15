@@ -57,7 +57,7 @@ describe('Http Connector', function () {
     });
 
     it('expects the host to have a protocol of http or https', function () {
-      (function () {
+      expect(function () {
         var con = new HttpConnection(new Host('thrifty://es.com/stuff'));
       }).to.throwError(/invalid protocol/i);
     });
@@ -172,9 +172,9 @@ describe('Http Connector', function () {
     it('calls http based on the host', function (done) {
       var con = new HttpConnection(new Host('http://google.com'));
       con.request({}, function () {
-        http.request.callCount.should.eql(1);
-        https.request.callCount.should.eql(0);
-        http.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent);
+        expect(http.request.callCount).to.be(1);
+        expect(https.request.callCount).to.be(0);
+        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
         done();
       });
     });
@@ -182,9 +182,9 @@ describe('Http Connector', function () {
     it('calls https based on the host', function (done) {
       var con = new HttpConnection(new Host('https://google.com'));
       con.request({}, function () {
-        http.request.callCount.should.eql(0);
-        https.request.callCount.should.eql(1);
-        https.request.lastCall.args[0].agent.should.be.an.instanceOf(KeepAliveAgent.HttpsAgent);
+        expect(http.request.callCount).to.be(0);
+        expect(https.request.callCount).to.be(1);
+        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.HttpsAgent);
         done();
       });
     });

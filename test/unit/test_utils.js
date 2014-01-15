@@ -138,6 +138,10 @@ describe('Utils', function () {
       it('handles leading _', function () {
         expect(_.camelCase('_thing_one_')).to.eql('_thingOne');
       });
+
+      it('works on numbers', function () {
+        expect(_.camelCase('version 1.0')).to.eql('version10');
+      });
     });
 
     describe('#studlyCase', function () {
@@ -152,6 +156,10 @@ describe('Utils', function () {
       it('handles leading _', function () {
         expect(_.studlyCase('_thing_one_')).to.eql('_ThingOne');
       });
+
+      it('works on numbers', function () {
+        expect(_.studlyCase('version 1.0')).to.eql('Version10');
+      });
     });
 
     describe('#snakeCase', function () {
@@ -165,6 +173,10 @@ describe('Utils', function () {
 
       it('handles leading _', function () {
         expect(_.snakeCase('_thing_one_')).to.eql('_thing_one');
+      });
+
+      it('works on numbers', function () {
+        expect(_.snakeCase('version 1.0')).to.eql('version_1_0');
       });
     });
 

@@ -1,0 +1,9274 @@
+{
+ "bulk/10_basic.yaml": [
+  {
+   "Array of objects": [
+    {
+     "do": {
+      "bulk": {
+       "refresh": true,
+       "body": [
+        {
+         "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id"
+         }
+        },
+        {
+         "f1": "v1",
+         "f2": 42
+        },
+        {
+         "index": {
+          "_index": "test_index",
+          "_type": "test_type",
+          "_id": "test_id2"
+         }
+        },
+        {
+         "f1": "v2",
+         "f2": 47
+        }
+       ]
+      }
+     }
+    },
+    {
+     "do": {
+      "count": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "count": 2
+     }
+    }
+   ]
+  }
+ ],
+ "bulk/20_list_of_strings.yaml": [
+  {
+   "List of strings": [
+    {
+     "do": {
+      "bulk": {
+       "refresh": true,
+       "body": [
+        "{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id\"}}",
+        "{\"f1\": \"v1\", \"f2\": 42}",
+        "{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id2\"}}",
+        "{\"f1\": \"v2\", \"f2\": 47}"
+       ]
+      }
+     }
+    },
+    {
+     "do": {
+      "count": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "count": 2
+     }
+    }
+   ]
+  }
+ ],
+ "bulk/30_big_string.yaml": [
+  {
+   "One big string": [
+    {
+     "do": {
+      "bulk": {
+       "refresh": true,
+       "body": "\n{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id\"}}\n{\"f1\": \"v1\", \"f2\": 42}\n{\"index\": {\"_index\": \"test_index\", \"_type\": \"test_type\", \"_id\": \"test_id2\"}}\n{\"f1\": \"v2\", \"f2\": 47}\n"
+      }
+     }
+    },
+    {
+     "do": {
+      "count": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "count": 2
+     }
+    }
+   ]
+  }
+ ],
+ "cluster.node_info/10_basic.yaml": [
+  {
+   "node_info test": [
+    {
+     "do": {
+      "cluster.node_info": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "is_true": "nodes"
+    },
+    {
+     "is_true": "cluster_name"
+    }
+   ]
+  }
+ ],
+ "cluster.node_stats/10_basic.yaml": [
+  {
+   "Nodes stats": [
+    {
+     "do": {
+      "cluster.node_stats": {
+       "indices": true,
+       "transport": true
+      }
+     }
+    },
+    {
+     "is_true": "cluster_name"
+    },
+    {
+     "is_true": "nodes"
+    }
+   ]
+  }
+ ],
+ "cluster.put_settings/10_basic.yaml": [
+  {
+   "Test put settings": [
+    {
+     "do": {
+      "cluster.put_settings": {
+       "body": {
+        "transient": {
+         "discovery.zen.minimum_master_nodes": 1
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "transient": {
+       "discovery.zen.minimum_master_nodes": "1"
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.get_settings": {}
+     }
+    },
+    {
+     "match": {
+      "transient": {
+       "discovery.zen.minimum_master_nodes": "1"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "cluster.reroute/10_basic.yaml": [
+  {
+   "Basic sanity check": [
+    {
+     "do": {
+      "cluster.reroute": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "cluster.state/10_basic.yaml": [
+  {
+   "cluster state test": [
+    {
+     "do": {
+      "cluster.state": {}
+     }
+    },
+    {
+     "is_true": "master_node"
+    }
+   ]
+  }
+ ],
+ "create/10_with_id.yaml": [
+  {
+   "Create with ID": [
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/15_without_id.yaml": [
+  {
+   "Create without ID": [
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "is_true": "_id"
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "set": {
+      "_id": "id"
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": "$id"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "$id"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/30_internal_version.yaml": [
+  {
+   "Internal version": [
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/35_external_version.yaml": [
+  {
+   "External version": [
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 5
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 5
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 6
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "fields": [
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/50_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/RoutingMissingException/",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "4"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "create/60_refresh.yaml": [
+  {
+   "Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index.refresh_interval": -1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 1
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 0
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "refresh": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 2
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 1
+     }
+    }
+   ]
+  }
+ ],
+ "create/70_timestamp.yaml": [
+  {
+   "Timestamp": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_timestamp": {
+           "enabled": 1,
+           "store": "yes"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "is_true": "fields._timestamp"
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "timestamp": 1372011280000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    }
+   ]
+  }
+ ],
+ "create/75_ttl.yaml": [
+  {
+   "TTL": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_ttl": {
+           "enabled": 1,
+           "store": "yes",
+           "default": "10s"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 0
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": 100000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 100000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": "20s"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 20000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/AlreadyExpiredException/",
+      "create": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": "20s",
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "delete/10_basic.yaml": [
+  {
+   "Basic": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    }
+   ]
+  }
+ ],
+ "delete/20_internal_version.yaml": [
+  {
+   "Internal version": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "version": 2
+      }
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "version": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    }
+   ]
+  }
+ ],
+ "delete/25_external_version.yaml": [
+  {
+   "External version": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 5
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 5
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "version_type": "external",
+       "version": 4
+      }
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "version_type": "external",
+       "version": 6
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 6
+     }
+    }
+   ]
+  }
+ ],
+ "delete/30_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "delete/40_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Delete ignores the parent param"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "delete/45_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "delete/50_refresh.yaml": [
+  {
+   "Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index.refresh_interval": -1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "body": {
+        "foo": "bar"
+       },
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "terms": {
+          "_id": [
+           1,
+           2
+          ]
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 2
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "terms": {
+          "_id": [
+           1,
+           2
+          ]
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 2
+     }
+    },
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "terms": {
+          "_id": [
+           1,
+           2
+          ]
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 1
+     }
+    }
+   ]
+  }
+ ],
+ "delete/60_missing.yaml": [
+  {
+   "Missing document with catch": [
+    {
+     "do": {
+      "catch": "missing",
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Missing document with ignore": [
+    {
+     "do": {
+      "delete": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "ignore": 404
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "delete_by_query/10_basic.yaml": [
+  {
+   "Basic delete_by_query": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "body": {
+        "foo": "baz"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 3,
+       "body": {
+        "foo": "foo"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "delete_by_query": {
+       "index": "test_1",
+       "body": {
+        "match": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "count": {
+       "index": "test_1"
+      }
+     }
+    },
+    {
+     "match": {
+      "count": 2
+     }
+    }
+   ]
+  }
+ ],
+ "exists/10_basic.yaml": [
+  {
+   "Basic": [
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "exists/30_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Parent not supported in exists https://github.com/elasticsearch/elasticsearch/issues/3276"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "is_false": ""
+    }
+   ]
+  }
+ ],
+ "exists/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "is_false": ""
+    }
+   ]
+  }
+ ],
+ "exists/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Parent not supported in exists https://github.com/elasticsearch/elasticsearch/issues/3276"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "exists/60_realtime_refresh.yaml": [
+  {
+   "Realtime Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index": {
+          "refresh_interval": -1,
+          "number_of_replicas": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 1
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0,
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "exists/70_defaults.yaml": [
+  {
+   "Client-side default type": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "exists": {
+       "index": "test_1",
+       "type": "_all",
+       "id": 1
+      }
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "explain/10_basic.yaml": [
+  {
+   "Basic mlt": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar",
+        "title": "howdy"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "explain": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "query": {
+         "match_all": {}
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_true": "matched"
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "match": {
+      "explanation.value": 1
+     }
+    }
+   ]
+  }
+ ],
+ "get/10_basic.yaml": [
+  {
+   "Basic": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": "中文",
+       "body": {
+        "foo": "Hello: 中文"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": "中文"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "中文"
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "Hello: 中文"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "_all",
+       "id": "中文"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "中文"
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "Hello: 中文"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get/15_default_values.yaml": [
+  {
+   "Default values": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "_all",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get/20_fields.yaml": [
+  {
+   "Fields": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar",
+        "count": 1
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "foo"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "_source"
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": [
+        "foo",
+        "count"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "fields.count": 1
+     }
+    },
+    {
+     "is_false": "_source"
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": [
+        "foo",
+        "count",
+        "_source"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "fields.count": 1
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "bar"
+     }
+    }
+   ]
+  }
+ ],
+ "get/30_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": "中文",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": "中文",
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "中文"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "中文"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "fields": [
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "4"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get/60_realtime_refresh.yaml": [
+  {
+   "Realtime Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index": {
+          "refresh_interval": -1,
+          "number_of_replicas": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 1
+      }
+     }
+    },
+    {
+     "is_true": "exists"
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0,
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "is_true": "exists"
+    }
+   ]
+  }
+ ],
+ "get/80_missing.yaml": [
+  {
+   "Missing document with catch": [
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Missing document with ignore": [
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "ignore": 404
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/10_basic.yaml": [
+  {
+   "Basic": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "_all",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/15_default_values.yaml": [
+  {
+   "Default values": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "_all",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/30_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/60_realtime_refresh.yaml": [
+  {
+   "Realtime": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0
+      }
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "realtime": 0,
+       "refresh": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "get_source/80_missing.yaml": [
+  {
+   "Missing document with catch": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Missing document with ignore": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Get source not supported in pre 0.90.1 versions."
+     }
+    },
+    {
+     "do": {
+      "get_source": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "ignore": 404
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/10_with_id.yaml": [
+  {
+   "Index with ID": [
+    {
+     "do": {
+      "index": {
+       "index": "test-weird-index-中文",
+       "type": "weird.type",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "match": {
+      "_index": "test-weird-index-中文"
+     }
+    },
+    {
+     "match": {
+      "_type": "weird.type"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test-weird-index-中文",
+       "type": "weird.type",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test-weird-index-中文"
+     }
+    },
+    {
+     "match": {
+      "_type": "weird.type"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/15_without_id.yaml": [
+  {
+   "Index without ID": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "is_true": "_id"
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "set": {
+      "_id": "id"
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": "$id"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "$id"
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "match": {
+      "_source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/20_optype.yaml": [
+  {
+   "Optype": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "op_type": "create",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "op_type": "create",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "op_type": "index",
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    }
+   ]
+  }
+ ],
+ "index/30_internal_version.yaml": [
+  {
+   "Internal version": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 1
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version": 1
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version": 2
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 3
+     }
+    }
+   ]
+  }
+ ],
+ "index/35_external_version.yaml": [
+  {
+   "External version": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 5
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 5
+     }
+    },
+    {
+     "do": {
+      "catch": "conflict",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "version_type": "external",
+       "version": 6
+      }
+     }
+    },
+    {
+     "match": {
+      "_version": 6
+     }
+    }
+   ]
+  }
+ ],
+ "index/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "fields": [
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/50_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/RoutingMissingException/",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "4"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "index/60_refresh.yaml": [
+  {
+   "Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index.refresh_interval": -1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 1
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 0
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "refresh": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 2
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 1
+     }
+    }
+   ]
+  }
+ ],
+ "index/70_timestamp.yaml": [
+  {
+   "Timestamp": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_timestamp": {
+           "enabled": 1,
+           "store": "yes"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "is_true": "fields._timestamp"
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "timestamp": 1372011280000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    }
+   ]
+  }
+ ],
+ "index/75_ttl.yaml": [
+  {
+   "TTL": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_ttl": {
+           "enabled": 1,
+           "store": "yes",
+           "default": "10s"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 0
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": 100000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 100000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": "20s"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 20000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "catch": "/AlreadyExpiredException/",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": "20s",
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.analyze/10_analyze.yaml": [
+  {
+   "setup": [
+    {
+     "do": {
+      "ping": {}
+     }
+    }
+   ]
+  },
+  {
+   "Basic test": [
+    {
+     "do": {
+      "indices.analyze": {
+       "text": "Foo Bar"
+      }
+     }
+    },
+    {
+     "length": {
+      "tokens": 2
+     }
+    },
+    {
+     "match": {
+      "tokens.0.token": "foo"
+     }
+    },
+    {
+     "match": {
+      "tokens.1.token": "bar"
+     }
+    }
+   ]
+  },
+  {
+   "Tokenizer and filter": [
+    {
+     "do": {
+      "indices.analyze": {
+       "filters": "lowercase",
+       "text": "Foo Bar",
+       "tokenizer": "keyword"
+      }
+     }
+    },
+    {
+     "length": {
+      "tokens": 1
+     }
+    },
+    {
+     "match": {
+      "tokens.0.token": "foo bar"
+     }
+    }
+   ]
+  },
+  {
+   "Index and field": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test",
+       "body": {
+        "mappings": {
+         "test": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.analyze": {
+       "field": "text",
+       "index": "test",
+       "text": "Foo Bar!"
+      }
+     }
+    },
+    {
+     "length": {
+      "tokens": 2
+     }
+    },
+    {
+     "match": {
+      "tokens.0.token": "Foo"
+     }
+    },
+    {
+     "match": {
+      "tokens.1.token": "Bar!"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.analyze/20_analyze_text_format.yaml": [
+  {
+   "Text format": [
+    {
+     "do": {
+      "indices.analyze": {
+       "format": "text",
+       "text": "tHE BLACK and white! AND red"
+      }
+     }
+    },
+    {
+     "match": {
+      "tokens": "[black:4->9:<ALPHANUM>]\n\n4: \n[white:14->19:<ALPHANUM>]\n\n6: \n[red:25->28:<ALPHANUM>]\n"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.clear_cache/10_basic.yaml": [
+  {
+   "clear_cache test": [
+    {
+     "do": {
+      "indices.clear_cache": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "indices.delete_alias/10_basic.yaml": [
+  {
+   "Basic test for delete alias": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Delete alias not supported before 0.90.1"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "testind"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.put_alias": {
+       "index": "testind",
+       "name": "testali",
+       "body": {
+        "routing": "routing value"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_alias": {
+       "name": "testali"
+      }
+     }
+    },
+    {
+     "match": {
+      "testind.aliases.testali.search_routing": "routing value"
+     }
+    },
+    {
+     "match": {
+      "testind.aliases.testali.index_routing": "routing value"
+     }
+    },
+    {
+     "do": {
+      "indices.delete_alias": {
+       "index": "testind",
+       "name": "testali"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_alias": {
+       "index": "testind",
+       "name": "testali"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.delete_mapping/10_basic.yaml": [
+  {
+   "delete mapping tests": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.exists_type": {
+       "index": "test_index",
+       "type": "test_type"
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "indices.delete_mapping": {
+       "index": "test_index",
+       "type": "test_type"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.exists_type": {
+       "index": "test_index",
+       "type": "test_type"
+      }
+     }
+    },
+    {
+     "is_false": ""
+    }
+   ]
+  }
+ ],
+ "indices.exists/10_basic.yaml": [
+  {
+   "Test indices.exists": [
+    {
+     "do": {
+      "indices.exists": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.exists": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "indices.get_field_mapping/10_basic.yaml": [
+  {
+   "setup": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping with no index and type": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "The API was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "field": "text"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.type": "string"
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping by index only": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "The API was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "field": "text"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.type": "string"
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping by type & field": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "The API was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "field": "text"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.type": "string"
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping by type & field, with another field that doesn't exist": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "The API was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "field": [
+        "text",
+        "text1"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.type": "string"
+     }
+    },
+    {
+     "is_false": "test_index.test_type.text1"
+    }
+   ]
+  },
+  {
+   "Get field mapping with include_defaults": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "The API was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "field": "text",
+       "include_defaults": true
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.type": "string"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.text.mapping.text.analyzer": "default"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_field_mapping/20_missing_field.yaml": [
+  {
+   "Raise 404 when field doesn't exist": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "get field mapping was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "field": "not_text"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_field_mapping/30_missing_type.yaml": [
+  {
+   "Raise 404 when type doesn't exist": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "get field mapping was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "not_test_type",
+       "field": "text"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_field_mapping/40_missing_index.yaml": [
+  {
+   "Raise 404 when index doesn't exist": [
+    {
+     "skip": {
+      "version": "0 - 0.90.5",
+      "reason": "get field mapping was added in 0.90.6"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_field_mapping": {
+       "index": "test_index",
+       "type": "type",
+       "field": "field"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_field_mapping/50_field_wildcards.yaml": [
+  {
+   "setup": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "t1": {
+            "type": "string"
+           },
+           "t2": {
+            "type": "string"
+           },
+           "obj": {
+            "path": "just_name",
+            "properties": {
+             "t1": {
+              "type": "string"
+             },
+             "i_t1": {
+              "type": "string",
+              "index_name": "t1"
+             },
+             "i_t3": {
+              "type": "string",
+              "index_name": "t3"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping with * for fields": [
+    {
+     "skip": {
+      "version": "0 - 0.90.7",
+      "reason": "The API was added in 0.90.8"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "field": "*"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t1.full_name": "t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t2.full_name": "t2"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.obj\\.t1.full_name": "obj.t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.obj\\.i_t1.full_name": "obj.i_t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.obj\\.i_t3.full_name": "obj.i_t3"
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping with t* for fields": [
+    {
+     "skip": {
+      "version": "0 - 0.90.7",
+      "reason": "The API was added in 0.90.8"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "field": "t*"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t1.full_name": "t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t2.full_name": "t2"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t3.full_name": "obj.i_t3"
+     }
+    },
+    {
+     "length": {
+      "test_index.test_type": 3
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping with *t1 for fields": [
+    {
+     "skip": {
+      "version": "0 - 0.90.7",
+      "reason": "The API was added in 0.90.8"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "field": "*t1"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.t1.full_name": "t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.obj\\.t1.full_name": "obj.t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.obj\\.i_t1.full_name": "obj.i_t1"
+     }
+    },
+    {
+     "length": {
+      "test_index.test_type": 3
+     }
+    }
+   ]
+  },
+  {
+   "Get field mapping with wildcarded relative names": [
+    {
+     "skip": {
+      "version": "0 - 0.90.7",
+      "reason": "The API was added in 0.90.8"
+     }
+    },
+    {
+     "do": {
+      "indices.get_field_mapping": {
+       "field": "i_*"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.i_t1.full_name": "obj.i_t1"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.i_t3.full_name": "obj.i_t3"
+     }
+    },
+    {
+     "length": {
+      "test_index.test_type": 2
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_mapping/10_basic.yaml": [
+  {
+   "setup": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get index mapping": [
+    {
+     "do": {
+      "indices.get_mapping": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.type": "string"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.analyzer": "whitespace"
+     }
+    }
+   ]
+  },
+  {
+   "Get type mapping": [
+    {
+     "do": {
+      "indices.get_mapping": {
+       "index": "test_index",
+       "type": "test_type"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_type.properties.text.type": "string"
+     }
+    },
+    {
+     "match": {
+      "test_type.properties.text.analyzer": "whitespace"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_mapping/20_missing_type.yaml": [
+  {
+   "Raise 404 when type doesn't exist": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index",
+       "body": {
+        "mappings": {
+         "test_type": {
+          "properties": {
+           "text": {
+            "type": "string",
+            "analyzer": "whitespace"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_mapping": {
+       "index": "test_index",
+       "type": "not_test_type"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_mapping/30_missing_index.yaml": [
+  {
+   "Raise 404 when index doesn't exist": [
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_mapping": {
+       "index": "test_index",
+       "type": "not_test_type"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_template/10_basic.yaml": [
+  {
+   "Get template": [
+    {
+     "do": {
+      "indices.put_template": {
+       "name": "test",
+       "body": {
+        "template": "test-*",
+        "settings": {
+         "number_of_shards": 1,
+         "number_of_replicas": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_template": {
+       "name": "test"
+      }
+     }
+    },
+    {
+     "match": {
+      "test.template": "test-*"
+     }
+    },
+    {
+     "match": {
+      "test.settings": {
+       "index.number_of_shards": "1",
+       "index.number_of_replicas": "0"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get all templates": [
+    {
+     "skip": {
+      "version": "0 - 0.90.3",
+      "reason": "Get all templates not available before 0.90.4"
+     }
+    },
+    {
+     "do": {
+      "indices.put_template": {
+       "name": "test",
+       "body": {
+        "template": "test-*",
+        "settings": {
+         "number_of_shards": 1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.put_template": {
+       "name": "test2",
+       "body": {
+        "template": "test2-*",
+        "settings": {
+         "number_of_shards": 1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_template": {}
+     }
+    },
+    {
+     "match": {
+      "test.template": "test-*"
+     }
+    },
+    {
+     "match": {
+      "test2.template": "test2-*"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.get_template/20_get_missing.yaml": [
+  {
+   "setup": [
+    {
+     "do": {
+      "indices.delete_template": {
+       "name": "*",
+       "ignore": 404
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get missing template - post 0.90.3": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Missing templates throw 404 from 0.90.3"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_template": {
+       "name": "test"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Get missing template - pre 0.90.3": [
+    {
+     "skip": {
+      "version": "0.90.3 - 999",
+      "reason": "Missing templates didn't throw 404 before 0.90.3"
+     }
+    },
+    {
+     "do": {
+      "indices.delete_template": {
+       "name": "test",
+       "ignore": 404
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_template": {
+       "name": "test"
+      }
+     }
+    },
+    {
+     "match": {
+      "": {}
+     }
+    }
+   ]
+  }
+ ],
+ "indices.open/10_basic.yaml": [
+  {
+   "Basic test for index open/close": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.close": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "forbidden",
+      "search": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.open": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_index"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.optimize/10_basic.yaml": [
+  {
+   "Optimize index tests": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "testing"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.optimize": {
+       "index": "testing",
+       "max_num_segments": 1
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "indices.put_alias/10_basic.yaml": [
+  {
+   "Basic test for put alias": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Put alias not supported before 0.90.1"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.exists_alias": {
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "indices.put_alias": {
+       "index": "test_index",
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "indices.exists_alias": {
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "indices.get_alias": {
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.aliases.test_alias": {}
+     }
+    }
+   ]
+  }
+ ],
+ "indices.put_mapping/10_basic.yaml": [
+  {
+   "Test Create and update mapping": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.put_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "body": {
+        "test_type": {
+         "properties": {
+          "text": {
+           "type": "string",
+           "analyzer": "whitespace"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_mapping": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.type": "string"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.analyzer": "whitespace"
+     }
+    },
+    {
+     "do": {
+      "indices.put_mapping": {
+       "index": "test_index",
+       "type": "test_type",
+       "body": {
+        "test_type": {
+         "properties": {
+          "text": {
+           "type": "multi_field",
+           "fields": {
+            "text": {
+             "type": "string",
+             "analyzer": "whitespace"
+            },
+            "text_raw": {
+             "type": "string",
+             "index": "not_analyzed"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_mapping": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.type": "multi_field"
+     }
+    },
+    {
+     "match": {
+      "test_index.test_type.properties.text.fields.text_raw.index": "not_analyzed"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.put_settings/10_basic.yaml": [
+  {
+   "Test indices settings": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test-index",
+       "body": {
+        "settings": {
+         "index": {
+          "number_of_replicas": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_settings": {
+       "index": "test-index"
+      }
+     }
+    },
+    {
+     "match": {
+      "test-index.settings.index\\.number_of_replicas": "0"
+     }
+    },
+    {
+     "do": {
+      "indices.put_settings": {
+       "body": {
+        "number_of_replicas": 1
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.get_settings": {}
+     }
+    },
+    {
+     "match": {
+      "test-index.settings.index\\.number_of_replicas": "1"
+     }
+    }
+   ]
+  }
+ ],
+ "indices.put_template/10_basic.yaml": [
+  {
+   "Put template": [
+    {
+     "do": {
+      "indices.put_template": {
+       "name": "test",
+       "body": {
+        "template": "test-*",
+        "settings": {
+         "number_of_shards": 1,
+         "number_of_replicas": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "indices.get_template": {
+       "name": "test"
+      }
+     }
+    },
+    {
+     "match": {
+      "test.template": "test-*"
+     }
+    },
+    {
+     "match": {
+      "test.settings": {
+       "index.number_of_shards": "1",
+       "index.number_of_replicas": "0"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.put_warmer/10_basic.yaml": [
+  {
+   "Basic test for warmers": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_warmer": {
+       "index": "test_index",
+       "name": "test_warmer"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.put_warmer": {
+       "index": "test_index",
+       "name": "test_warmer",
+       "body": {
+        "query": {
+         "match_all": {}
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "indices.get_warmer": {
+       "index": "test_index",
+       "name": "test_warmer"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.warmers.test_warmer.source.query.match_all": {}
+     }
+    },
+    {
+     "do": {
+      "indices.delete_warmer": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.get_warmer": {
+       "index": "test_index",
+       "name": "test_warmer"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.segments/10_basic.yaml": [
+  {
+   "segments test": [
+    {
+     "do": {
+      "indices.segments": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "indices.snapshot_index/10_basic.yaml": [
+  {
+   "snapshot_index test": [
+    {
+     "do": {
+      "indices.snapshot_index": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "indices.stats/10_basic.yaml": [
+  {
+   "stats test": [
+    {
+     "do": {
+      "indices.stats": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    }
+   ]
+  }
+ ],
+ "indices.status/10_basic.yaml": [
+  {
+   "Indices status test": [
+    {
+     "do": {
+      "indices.status": {}
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "indices.status": {
+       "index": "not_here"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.update_aliases/10_basic.yaml": [
+  {
+   "Basic test for aliases": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Exists alias not supported before 0.90.1"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.exists_alias": {
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "is_false": ""
+    },
+    {
+     "do": {
+      "indices.update_aliases": {
+       "body": {
+        "actions": [
+         {
+          "add": {
+           "index": "test_index",
+           "alias": "test_alias",
+           "routing": "routing_value"
+          }
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "do": {
+      "indices.exists_alias": {
+       "name": "test_alias"
+      }
+     }
+    },
+    {
+     "is_true": ""
+    },
+    {
+     "do": {
+      "indices.get_aliases": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "match": {
+      "test_index.aliases.test_alias": {
+       "index_routing": "routing_value",
+       "search_routing": "routing_value"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "indices.validate_query/10_basic.yaml": [
+  {
+   "Validate query api": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "testing"
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.validate_query": {
+       "q": "query string"
+      }
+     }
+    },
+    {
+     "is_true": "valid"
+    },
+    {
+     "do": {
+      "indices.validate_query": {
+       "body": {
+        "query": {
+         "invalid_query": {}
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_false": "valid"
+    }
+   ]
+  }
+ ],
+ "info/10_info.yaml": [
+  {
+   "Info": [
+    {
+     "do": {
+      "info": {}
+     }
+    },
+    {
+     "match": {
+      "status": 200
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "is_true": "name"
+    },
+    {
+     "is_true": "tagline"
+    },
+    {
+     "is_true": "version"
+    },
+    {
+     "is_true": "version.number"
+    }
+   ]
+  }
+ ],
+ "info/20_lucene_version.yaml": [
+  {
+   "Lucene Version": [
+    {
+     "skip": {
+      "version": "0 - 0.90.0",
+      "reason": "Lucene version not included in info before 0.90.1: https://github.com/elasticsearch/elasticsearch/issues/2988"
+     }
+    },
+    {
+     "do": {
+      "info": {}
+     }
+    },
+    {
+     "match": {
+      "status": 200
+     }
+    },
+    {
+     "is_true": "version.lucene_version"
+    }
+   ]
+  }
+ ],
+ "mget/10_basic.yaml": [
+  {
+   "Basic multi-get": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_2"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.flush": {
+       "refresh": true
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "body": {
+        "docs": [
+         {
+          "_index": "test_2",
+          "_type": "test",
+          "_id": 1
+         },
+         {
+          "_index": "test_1",
+          "_type": "none",
+          "_id": 1
+         },
+         {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": 2
+         },
+         {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_2"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "match": {
+      "docs.1._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.1._type": "none"
+     }
+    },
+    {
+     "match": {
+      "docs.1._id": "1"
+     }
+    },
+    {
+     "is_false": "docs.2.exists"
+    },
+    {
+     "match": {
+      "docs.2._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.2._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.2._id": "2"
+     }
+    },
+    {
+     "is_true": "docs.3.exists"
+    },
+    {
+     "match": {
+      "docs.3._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.3._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.3._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.3._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/11_default_index_type.yaml": [
+  {
+   "Default index/type": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_2"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "docs": [
+         {
+          "_index": "test_2",
+          "_id": 1
+         },
+         {
+          "_type": "none",
+          "_id": 1
+         },
+         {
+          "_id": 2
+         },
+         {
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_2"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "match": {
+      "docs.1._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.1._type": "none"
+     }
+    },
+    {
+     "match": {
+      "docs.1._id": "1"
+     }
+    },
+    {
+     "is_false": "docs.2.exists"
+    },
+    {
+     "match": {
+      "docs.2._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.2._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.2._id": "2"
+     }
+    },
+    {
+     "is_true": "docs.3.exists"
+    },
+    {
+     "match": {
+      "docs.3._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.3._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.3._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.3._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/12_non_existent_index.yaml": [
+  {
+   "Non-existent index": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "See https://github.com/elasticsearch/elasticsearch/issues/3267"
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "body": {
+        "docs": [
+         {
+          "_index": "test_2",
+          "_type": "test",
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_2"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "body": {
+        "index": "test_2",
+        "docs": [
+         {
+          "_index": "test_1",
+          "_type": "test",
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    }
+   ]
+  }
+ ],
+ "mget/13_missing_metadata.yaml": [
+  {
+   "Missing metadata": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ id is missing/",
+      "mget": {
+       "body": {
+        "docs": [
+         {
+          "_index": "test_1",
+          "_type": "test"
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ index is missing/",
+      "mget": {
+       "body": {
+        "docs": [
+         {
+          "_type": "test",
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ no documents to get/",
+      "mget": {
+       "body": {
+        "docs": []
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ no documents to get/",
+      "mget": {
+       "body": {}
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "body": {
+        "docs": [
+         {
+          "_index": "test_1",
+          "_id": 1
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/15_ids.yaml": [
+  {
+   "IDs": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test_2",
+       "id": 2,
+       "body": {
+        "foo": "baz"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "ids": [
+         1,
+         2
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "match": {
+      "docs.1._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.1._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.1._id": "2"
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "body": {
+        "ids": [
+         1,
+         2
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    },
+    {
+     "match": {
+      "docs.0._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.0._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.0._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "is_true": "docs.1.exists"
+    },
+    {
+     "match": {
+      "docs.1._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.1._type": "test_2"
+     }
+    },
+    {
+     "match": {
+      "docs.1._id": "2"
+     }
+    },
+    {
+     "match": {
+      "docs.1._version": 1
+     }
+    },
+    {
+     "match": {
+      "docs.1._source": {
+       "foo": "baz"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ no documents to get/",
+      "mget": {
+       "index": "test_1",
+       "body": {
+        "ids": []
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/ActionRequestValidationException.+ no documents to get/",
+      "mget": {
+       "index": "test_1",
+       "body": {}
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/20_fields.yaml": [
+  {
+   "Fields": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Single string fields not supported pre 0.90.3. See https://github.com/elasticsearch/elasticsearch/issues/3270"
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.fields"
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": "foo",
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.0._source"
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "foo"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.0._source"
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "foo",
+        "_source"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/20_fields_pre_0.90.3.yaml": [
+  {
+   "Fields": [
+    {
+     "skip": {
+      "version": "0.90.3 - 999",
+      "reason": "Tests pre 0.90.2 for single string fields"
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.fields"
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": "foo",
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.0._source"
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "foo"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.0._source"
+    },
+    {
+     "match": {
+      "docs.1.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.1._source"
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "foo",
+        "_source"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "fields": "foo"
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo"
+          ]
+         },
+         {
+          "_id": 1,
+          "fields": [
+           "foo",
+           "_source"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.0.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.0._source": {
+       "foo": "bar"
+      }
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "docs.2._source"
+    },
+    {
+     "match": {
+      "docs.3.fields.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "docs.3._source": {
+       "foo": "bar"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "mget/30_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Parent not supported in mget. https://github.com/elasticsearch/elasticsearch/issues/3274"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 4,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "parent": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "parent": 5,
+          "fields": [
+           "_parent",
+           "_routing"
+          ]
+         },
+         {
+          "_id": 1,
+          "parent": 4,
+          "fields": [
+           "_parent",
+           "_routing"
+          ]
+         },
+         {
+          "_id": 2,
+          "parent": 5,
+          "fields": [
+           "_parent",
+           "_routing"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "is_true": "docs.2.exists"
+    },
+    {
+     "match": {
+      "docs.2._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.2._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.2._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields._parent": "4"
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields._routing": "4"
+     }
+    },
+    {
+     "is_true": "docs.3.exists"
+    },
+    {
+     "match": {
+      "docs.3._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.3._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.3._id": "2"
+     }
+    },
+    {
+     "match": {
+      "docs.3.fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "docs.3.fields._routing": "5"
+     }
+    }
+   ]
+  }
+ ],
+ "mget/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "_routing"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "routing": 4
+         },
+         {
+          "_id": 1,
+          "routing": 5
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "is_true": "docs.2.exists"
+    },
+    {
+     "match": {
+      "docs.2._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.2._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.2._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields._routing": "5"
+     }
+    }
+   ]
+  }
+ ],
+ "mget/55_parent_with_routing.yaml": [
+  {
+   "Parent": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Parent not supported in mget. https://github.com/elasticsearch/elasticsearch/issues/3274"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 4,
+       "routing": 5,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "fields": [
+        "_routing",
+        "_parent"
+       ],
+       "body": {
+        "docs": [
+         {
+          "_id": 1
+         },
+         {
+          "_id": 1,
+          "parent": 4
+         },
+         {
+          "_id": 1,
+          "parent": 4,
+          "routing": 5
+         }
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "is_false": "docs.1.exists"
+    },
+    {
+     "is_true": "docs.2.exists"
+    },
+    {
+     "match": {
+      "docs.2._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "docs.2._type": "test"
+     }
+    },
+    {
+     "match": {
+      "docs.2._id": "1"
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields._parent": "4"
+     }
+    },
+    {
+     "match": {
+      "docs.2.fields._routing": "5"
+     }
+    }
+   ]
+  }
+ ],
+ "mget/60_realtime_refresh.yaml": [
+  {
+   "Realtime Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index": {
+          "refresh_interval": -1,
+          "number_of_replicas": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "realtime": 0,
+       "body": {
+        "ids": [
+         1
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_false": "docs.0.exists"
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "realtime": 1,
+       "body": {
+        "ids": [
+         1
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    },
+    {
+     "do": {
+      "mget": {
+       "index": "test_1",
+       "type": "test",
+       "realtime": 0,
+       "refresh": 1,
+       "body": {
+        "ids": [
+         1
+        ]
+       }
+      }
+     }
+    },
+    {
+     "is_true": "docs.0.exists"
+    }
+   ]
+  }
+ ],
+ "mlt/10_basic.yaml": [
+  {
+   "Basic mlt": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar",
+        "title": "howdy"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "mlt": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "mlt_fields": "title"
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 0
+     }
+    }
+   ]
+  }
+ ],
+ "msearch/10_basic.yaml": [
+  {
+   "Basic multi-search": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "body": {
+        "foo": "baz"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 3,
+       "body": {
+        "foo": "foo"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "msearch": {
+       "body": [
+        {
+         "index": "test_1"
+        },
+        {
+         "query": {
+          "match_all": {}
+         }
+        },
+        {
+         "index": "test_2"
+        },
+        {
+         "query": {
+          "match_all": {}
+         }
+        },
+        {
+         "search_type": "count",
+         "index": "test_1"
+        },
+        {
+         "query": {
+          "match": {
+           "foo": "bar"
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "responses.0.hits.total": 3
+     }
+    },
+    {
+     "match": {
+      "responses.1.error": "IndexMissingException[[test_2] missing]"
+     }
+    },
+    {
+     "match": {
+      "responses.2.hits.total": 1
+     }
+    }
+   ]
+  }
+ ],
+ "percolate/10_old.yaml": [
+  {
+   "Basic percolation tests": [
+    {
+     "skip": {
+      "version": "0.90.9 - 999",
+      "reason": "Percolator redesign"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_index"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "_percolator",
+       "type": "test_index",
+       "id": "test_percolator",
+       "body": {
+        "query": {
+         "match_all": {}
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "percolate": {
+       "index": "test_index",
+       "type": "test_type",
+       "body": {
+        "doc": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "is_true": "ok"
+    },
+    {
+     "match": {
+      "matches": [
+       "test_percolator"
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "ping/10_ping.yaml": [
+  {
+   "Ping": [
+    {
+     "do": {
+      "ping": {}
+     }
+    },
+    {
+     "is_true": ""
+    }
+   ]
+  }
+ ],
+ "scroll/10_basic.yaml": [
+  {
+   "Basic scroll": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_scroll"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_scroll",
+       "type": "test",
+       "id": 42,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_scroll",
+       "search_type": "scan",
+       "scroll": "1m",
+       "body": {
+        "query": {
+         "match_all": {}
+        }
+       }
+      }
+     }
+    },
+    {
+     "set": {
+      "_scroll_id": "scroll_id"
+     }
+    },
+    {
+     "do": {
+      "scroll": {
+       "scroll_id": "$scroll_id"
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 1
+     }
+    },
+    {
+     "match": {
+      "hits.hits.0._id": "42"
+     }
+    }
+   ]
+  }
+ ],
+ "search/20_default_values.yaml": [
+  {
+   "Default index": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_2"
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1"
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test_2",
+       "type": "test",
+       "id": 42,
+       "body": {
+        "foo": "bar"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {
+       "index": [
+        "test_1",
+        "test_2"
+       ]
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "_all",
+       "type": "test",
+       "body": {
+        "query": {
+         "match": {
+          "foo": "bar"
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 2
+     }
+    },
+    {
+     "match": {
+      "hits.hits.0._index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "hits.hits.0._type": "test"
+     }
+    },
+    {
+     "match": {
+      "hits.hits.0._id": "1"
+     }
+    },
+    {
+     "match": {
+      "hits.hits.1._index": "test_2"
+     }
+    },
+    {
+     "match": {
+      "hits.hits.1._type": "test"
+     }
+    },
+    {
+     "match": {
+      "hits.hits.1._id": "42"
+     }
+    }
+   ]
+  }
+ ],
+ "suggest/10_basic.yaml": [
+  {
+   "setup": [
+    {
+     "skip": {
+      "version": "0 - 0.90.2",
+      "reason": "Suggest is broken on 0.90.2 - see #3246"
+     }
+    },
+    {
+     "do": {
+      "index": {
+       "index": "test",
+       "type": "test",
+       "id": "testing_document",
+       "body": {
+        "body": "Amsterdam meetup"
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "indices.refresh": {}
+     }
+    }
+   ]
+  },
+  {
+   "Basic tests for suggest API": [
+    {
+     "do": {
+      "suggest": {
+       "body": {
+        "test_suggestion": {
+         "text": "The Amsterdma meetpu",
+         "term": {
+          "field": "body"
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "test_suggestion.0.options.0.text": "amsterdam"
+     }
+    },
+    {
+     "match": {
+      "test_suggestion.1.options.0.text": "meetup"
+     }
+    }
+   ]
+  }
+ ],
+ "update/10_doc.yaml": [
+  {
+   "Partial document": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar",
+        "count": 1,
+        "nested": {
+         "one": 1,
+         "two": 2
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz",
+         "nested": {
+          "one": 3
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "baz"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 1
+     }
+    },
+    {
+     "match": {
+      "_source.nested.one": 3
+     }
+    },
+    {
+     "match": {
+      "_source.nested.two": 2
+     }
+    }
+   ]
+  }
+ ],
+ "update/15_script.yaml": [
+  {
+   "Script": [
+    {
+     "do": {
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar",
+        "count": 1
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "script": "1",
+       "body": {
+        "lang": "mvel",
+        "script": "ctx._source.foo = bar",
+        "params": {
+         "bar": "xxx"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 2
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "xxx"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 1
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "lang": "mvel",
+       "script": "ctx._source.foo = 'yyy'"
+      }
+     }
+    },
+    {
+     "match": {
+      "_index": "test_1"
+     }
+    },
+    {
+     "match": {
+      "_type": "test"
+     }
+    },
+    {
+     "match": {
+      "_id": "1"
+     }
+    },
+    {
+     "match": {
+      "_version": 3
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "yyy"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 1
+     }
+    },
+    {
+     "do": {
+      "catch": "/script_lang not supported \\[doesnotexist\\]/",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "script": "1",
+        "lang": "doesnotexist",
+        "params": {
+         "bar": "xxx"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/script_lang not supported \\[doesnotexist\\]/",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "lang": "doesnotexist",
+       "script": "1"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "update/20_doc_upsert.yaml": [
+  {
+   "Doc upsert": [
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "bar",
+         "count": 1
+        },
+        "upsert": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "baz"
+     }
+    },
+    {
+     "is_false": "_source.count"
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "bar",
+         "count": 1
+        },
+        "upsert": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 1
+     }
+    }
+   ]
+  }
+ ],
+ "update/22_doc_as_upsert.yaml": [
+  {
+   "Doc as upsert": [
+    {
+     "skip": {
+      "version": "0-0.90.1",
+      "reason": "doc_as_upsert added in 0.90.2"
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "bar",
+         "count": 1
+        },
+        "doc_as_upsert": 1
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 1
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "count": 2
+        },
+        "doc_as_upsert": 1
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "_source.count": 2
+     }
+    }
+   ]
+  }
+ ],
+ "update/25_script_upsert.yaml": [
+  {
+   "Script upsert": [
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "script": "ctx._source.foo = bar",
+        "params": {
+         "bar": "xxx"
+        },
+        "upsert": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "baz"
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "script": "ctx._source.foo = bar",
+        "params": {
+         "bar": "xxx"
+        },
+        "upsert": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1
+      }
+     }
+    },
+    {
+     "match": {
+      "_source.foo": "xxx"
+     }
+    }
+   ]
+  }
+ ],
+ "update/40_routing.yaml": [
+  {
+   "Routing": [
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "fields": "_routing"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 5,
+       "fields": "foo",
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "get.fields.foo": "baz"
+     }
+    }
+   ]
+  }
+ ],
+ "update/50_parent.yaml": [
+  {
+   "Parent": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "catch": "/RoutingMissingException/",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "5"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": "foo",
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "get.fields.foo": "baz"
+     }
+    }
+   ]
+  }
+ ],
+ "update/55_parent_with_routing.yaml": [
+  {
+   "Parent with routing": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "routing": 4,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing"
+       ]
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "fields._routing": "4"
+     }
+    },
+    {
+     "do": {
+      "catch": "missing",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "routing": 4,
+       "fields": "foo",
+       "body": {
+        "doc": {
+         "foo": "baz"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "get.fields.foo": "baz"
+     }
+    }
+   ]
+  }
+ ],
+ "update/60_refresh.yaml": [
+  {
+   "Refresh": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "settings": {
+         "index.refresh_interval": -1
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 1
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 0
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 2,
+       "refresh": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "search": {
+       "index": "test_1",
+       "type": "test",
+       "body": {
+        "query": {
+         "term": {
+          "_id": 2
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "hits.total": 1
+     }
+    }
+   ]
+  }
+ ],
+ "update/70_timestamp.yaml": [
+  {
+   "Timestamp": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_timestamp": {
+           "enabled": 1,
+           "store": "yes"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "is_true": "fields._timestamp"
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       },
+       "timestamp": 1372011280000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       },
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_timestamp"
+      }
+     }
+    },
+    {
+     "match": {
+      "fields._timestamp": 1372011280000
+     }
+    }
+   ]
+  }
+ ],
+ "update/75_ttl.yaml": [
+  {
+   "TTL": [
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_ttl": {
+           "enabled": 1,
+           "store": "yes",
+           "default": "10s"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 0
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       },
+       "ttl": 100000
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 100000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       },
+       "ttl": "20s"
+      }
+     }
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "_ttl"
+      }
+     }
+    },
+    {
+     "lt": {
+      "fields._ttl": 20000
+     }
+    },
+    {
+     "gt": {
+      "fields._ttl": 10000
+     }
+    },
+    {
+     "do": {
+      "catch": "/AlreadyExpiredException/",
+      "index": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "foo": "bar"
+       },
+       "ttl": "20s",
+       "timestamp": "2013-06-23T18:14:40.000Z"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "update/80_fields.yaml": [
+  {
+   "Fields": [
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "fields": "foo,bar,_source",
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "get._source.foo": "bar"
+     }
+    },
+    {
+     "match": {
+      "get.fields.foo": "bar"
+     }
+    },
+    {
+     "is_false": "get.fields.bar"
+    }
+   ]
+  }
+ ],
+ "update/85_fields_meta.yaml": [
+  {
+   "Metadata Fields": [
+    {
+     "skip": {
+      "version": "0 - 999",
+      "reason": "Update doesn't return metadata fields, waiting for #3259"
+     }
+    },
+    {
+     "do": {
+      "indices.create": {
+       "index": "test_1",
+       "body": {
+        "mappings": {
+         "test": {
+          "_parent": {
+           "type": "foo"
+          },
+          "_timestamp": {
+           "enabled": 1,
+           "store": "yes"
+          },
+          "_ttl": {
+           "enabled": 1,
+           "store": "yes",
+           "default": "10s"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "cluster.health": {
+       "wait_for_status": "yellow"
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing",
+        "_timestamp",
+        "_ttl"
+       ],
+       "body": {
+        "doc": {
+         "foo": "baz"
+        },
+        "upsert": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "match": {
+      "get.fields._parent": "5"
+     }
+    },
+    {
+     "match": {
+      "get.fields._routing": "5"
+     }
+    },
+    {
+     "is_true": "get.fields._timestamp"
+    },
+    {
+     "is_true": "get.fields._ttl"
+    },
+    {
+     "do": {
+      "get": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "parent": 5,
+       "fields": [
+        "_parent",
+        "_routing",
+        "_timestamp",
+        "_ttl"
+       ]
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "update/90_missing.yaml": [
+  {
+   "Missing document (partial doc)": [
+    {
+     "do": {
+      "catch": "missing",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "bar"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "doc": {
+         "foo": "bar"
+        }
+       },
+       "ignore": 404
+      }
+     }
+    }
+   ]
+  },
+  {
+   "Missing document (script)": [
+    {
+     "do": {
+      "catch": "missing",
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "body": {
+        "script": "ctx._source.foo = bar",
+        "params": {
+         "bar": "xxx"
+        }
+       }
+      }
+     }
+    },
+    {
+     "do": {
+      "update": {
+       "index": "test_1",
+       "type": "test",
+       "id": 1,
+       "ignore": 404,
+       "body": {
+        "script": "ctx._source.foo = bar",
+        "params": {
+         "bar": "xxx"
+        }
+       }
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
