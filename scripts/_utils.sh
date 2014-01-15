@@ -2,9 +2,9 @@
 # Start or stop a group for travis
 #####
 function group {
-  if [ -n "$TRAVIS" ]; then
-    echo -e "travis_fold:${1// /_}"
-  fi
+  # if [ -n "$TRAVIS" ]; then
+  #   echo -e "travis_fold:${1// /_}"
+  # fi
 }
 
 #####
