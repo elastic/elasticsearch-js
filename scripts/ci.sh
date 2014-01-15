@@ -15,11 +15,11 @@
 #
 ###########
 
-HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ES_NODE_NAME="elasticsearch_js_test_runner"
-SAUCE_ACCESS_KEY="3259dd1e-a9f2-41cc-afd7-855d80588aeb"
-SAUCE_USERNAME="elasticsearch-js"
+export ES_NODE_NAME="elasticsearch_js_test_runner"
+export SAUCE_USERNAME="elasticsearch-js"
+export SAUCE_ACCESS_KEY="3259dd1e-a9f2-41cc-afd7-855d80588aeb"
 
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $HERE/_utils.sh
 
 #####
