@@ -9,7 +9,6 @@ module.exports = function (branch, done) {
   var chalk = require('chalk');
   var path = require('path');
   var templates = require('./templates');
-  var castExistsRE = /exists/;
   var usesBulkBodyRE = /^(bulk|msearch)$/;
   var urlParamRE = /\{(\w+)\}/g;
 
@@ -167,10 +166,6 @@ module.exports = function (branch, done) {
         spec.bulkBody = true;
       }
 
-      if (castExistsRE.test(name)) {
-        spec.castExists = true;
-      }
-
       var urls = _.difference(def.url.paths, aliases[name]);
       var urlSignatures = [];
       urls = _.map(urls, function (url) {
@@ -240,9 +235,7 @@ module.exports = function (branch, done) {
           'url',
           'urls',
           'needBody',
-          'bulkBody',
-          'castExists',
-          'castNotFound'
+          'bulkBody'
         ]),
         location: location,
         docUrl: def.documentation,
@@ -283,11 +276,7 @@ module.exports = function (branch, done) {
           method = 'POST';
         }
         else if (methodsAre('GET', 'HEAD')) {
-          if (action.spec.castExists) {
-            method = 'HEAD';
-          } else {
-            method = 'GET';
-          }
+          method = 'GET';
         }
       }
 

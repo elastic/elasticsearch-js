@@ -29,11 +29,6 @@ module.exports = Client;
 var Transport = require('./transport');
 var ca = require('./client_action');
 var _ = require('./utils');
-var defaultApi = 'master';
-var apis = {
-  '0.90': require('./api_0_90'),
-  'master': require('./api')
-};
 
 function Client(config) {
   config = config || {};
@@ -48,14 +43,17 @@ function Client(config) {
       config.host = 'http://localhost:9200';
     }
 
-    this.ping = ca({
-      method: 'HEAD',
-      url: {
-        fmt: '/'
-      },
-      castExists: true,
-      requestTimeout: 100
-    });
+    if (!this.ping) {
+      // 0.90 api does not include ping
+      this.ping = ca({
+        method: 'HEAD',
+        url: {
+          fmt: '/'
+        },
+        castExists: true,
+        requestTimeout: 100
+      });
+    }
 
     this.close = function () {
       this.transport.close();
@@ -71,12 +69,11 @@ function Client(config) {
     delete this._namespaces;
   }
 
-  var apiVersion = config.apiVersion || defaultApi;
-  if (apis.hasOwnProperty(apiVersion)) {
-    EsApiClient.prototype = apis[apiVersion];
-  } else {
-    throw new Error('Invalid apiVersion "' + apiVersion + '", expected one of ' + _.keys(apis).join(', '));
-  }
-
+  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, 'master');
   return new EsApiClient(config);
 }
+
+Client.apis = {
+  'master': require('./api'),
+  '0.90': require('./api_0_90')
+};

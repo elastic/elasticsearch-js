@@ -775,7 +775,6 @@ api.exists = ca({
     },
     sortOrder: -3
   },
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -1512,7 +1511,6 @@ api.indices.prototype.exists = ca({
     },
     sortOrder: -1
   },
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -1557,7 +1555,6 @@ api.indices.prototype.existsAlias = ca({
       }
     }
   ],
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -1593,7 +1590,6 @@ api.indices.prototype.existsType = ca({
     },
     sortOrder: -2
   },
-  castExists: true,
   method: 'HEAD'
 });
 

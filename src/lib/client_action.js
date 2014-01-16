@@ -196,8 +196,13 @@ function exec(transport, spec, params, cb) {
   }
 
   // control params
-  spec.bulkBody && (request.bulkBody = true);
-  spec.castExists && (request.castExists = true);
+  if (spec.bulkBody) {
+    request.bulkBody = true;
+  }
+
+  if (spec.method === 'HEAD') {
+    request.castExists = true;
+  }
 
   // pick the url
   if (spec.url) {

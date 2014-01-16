@@ -185,6 +185,53 @@ api.cat.prototype.allocation = ca({
 });
 
 /**
+ * Perform a [cat.count](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
+ */
+api.cat.prototype.count = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/count/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/count'
+    }
+  ]
+});
+
+/**
  * Perform a [cat.health](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-health.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -192,6 +239,7 @@ api.cat.prototype.allocation = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
+ * @param {Boolean} [params.ts=true] - Set to false to disable timestamping
  * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.health = ca({
@@ -209,6 +257,10 @@ api.cat.prototype.health = ca({
     help: {
       type: 'boolean',
       'default': false
+    },
+    ts: {
+      type: 'boolean',
+      'default': true
     },
     v: {
       type: 'boolean',
@@ -247,6 +299,7 @@ api.cat.prototype.help = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.pri - Set to true to return stats only for primary shards
  * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
@@ -272,6 +325,10 @@ api.cat.prototype.indices = ca({
       type: 'list'
     },
     help: {
+      type: 'boolean',
+      'default': false
+    },
+    pri: {
       type: 'boolean',
       'default': false
     },
@@ -401,6 +458,63 @@ api.cat.prototype.pendingTasks = ca({
   url: {
     fmt: '/_cat/pending_tasks'
   }
+});
+
+/**
+ * Perform a [cat.recovery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.bytes - The unit in which to display byte values
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
+ */
+api.cat.prototype.recovery = ca({
+  params: {
+    bytes: {
+      type: 'enum',
+      options: [
+        'b',
+        'k',
+        'm',
+        'g'
+      ]
+    },
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/recovery/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/recovery'
+    }
+  ]
 });
 
 /**
@@ -1607,7 +1721,6 @@ api.exists = ca({
     },
     sortOrder: -3
   },
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -2415,7 +2528,6 @@ api.indices.prototype.exists = ca({
     },
     sortOrder: -1
   },
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -2481,7 +2593,6 @@ api.indices.prototype.existsAlias = ca({
       }
     }
   ],
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -2501,7 +2612,6 @@ api.indices.prototype.existsTemplate = ca({
     },
     sortOrder: -1
   },
-  castExists: true,
   method: 'HEAD'
 });
 
@@ -2547,7 +2657,6 @@ api.indices.prototype.existsType = ca({
     },
     sortOrder: -2
   },
-  castExists: true,
   method: 'HEAD'
 });
 
