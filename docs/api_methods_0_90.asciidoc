@@ -2,7 +2,7 @@
 == 0.90 API Method Reference
 
 
-[[api-bulk]]
+[[api-bulk-0-90]]
 === `bulk`
 
 [source,js]
@@ -53,7 +53,7 @@ client.bulk({
 `index`::
 `String` -- Default index for items which don't provide one
 
-[[api-clearscroll]]
+[[api-clearscroll-0-90]]
 === `clearScroll`
 
 [source,js]
@@ -74,7 +74,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `scrollId`::
 `String, String[], Boolean` -- A comma-separated list of scroll IDs to clear
 
-[[api-cluster-getsettings]]
+[[api-cluster-getsettings-0-90]]
 === `cluster.getSettings`
 
 [source,js]
@@ -90,7 +90,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 
 
-[[api-cluster-health]]
+[[api-cluster-health-0-90]]
 === `cluster.health`
 
 [source,js]
@@ -127,7 +127,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `index`::
 `String` -- Limit the information returned to a specific index
 
-[[api-cluster-nodehotthreads]]
+[[api-cluster-nodehotthreads-0-90]]
 === `cluster.nodeHotThreads`
 
 [source,js]
@@ -168,7 +168,7 @@ client.cluster.nodeHotThreads({
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
-[[api-cluster-nodeinfo]]
+[[api-cluster-nodeinfo-0-90]]
 === `cluster.nodeInfo`
 
 [source,js]
@@ -222,7 +222,7 @@ client.cluster.nodeInfo({ jvm: true })
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
-[[api-cluster-nodeshutdown]]
+[[api-cluster-nodeshutdown-0-90]]
 === `cluster.nodeShutdown`
 
 [source,js]
@@ -247,7 +247,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
 
-[[api-cluster-nodestats]]
+[[api-cluster-nodestats-0-90]]
 === `cluster.nodeStats`
 
 [source,js]
@@ -296,7 +296,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
-[[api-cluster-putsettings]]
+[[api-cluster-putsettings-0-90]]
 === `cluster.putSettings`
 
 [source,js]
@@ -312,7 +312,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 
 
-[[api-cluster-reroute]]
+[[api-cluster-reroute-0-90]]
 === `cluster.reroute`
 
 [source,js]
@@ -335,7 +335,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `filterMetadata`::
 `Boolean` -- Don't return cluster state metadata (default: false)
 
-[[api-cluster-state]]
+[[api-cluster-state-0-90]]
 === `cluster.state`
 
 [source,js]
@@ -370,7 +370,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 
-[[api-count]]
+[[api-count-0-90]]
 === `count`
 
 [source,js]
@@ -439,7 +439,7 @@ client.count(
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the results
 
-[[api-create]]
+[[api-create-0-90]]
 === `create`
 
 [source,js]
@@ -503,7 +503,7 @@ client.create({
 `type`::
 `String` -- The type of the document
 
-[[api-delete]]
+[[api-delete-0-90]]
 === `delete`
 
 [source,js]
@@ -554,7 +554,7 @@ client.delete({
 `type`::
 `String` -- The type of the document
 
-[[api-deletebyquery]]
+[[api-deletebyquery-0-90]]
 === `deleteByQuery`
 
 [source,js]
@@ -619,7 +619,7 @@ client.delete_by_query({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the operation
 
-[[api-exists]]
+[[api-exists-0-90]]
 === `exists`
 
 [source,js]
@@ -668,7 +668,7 @@ client.exists({
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 
-[[api-explain]]
+[[api-explain-0-90]]
 === `explain`
 
 [source,js]
@@ -754,7 +754,7 @@ client.explain({
 `type`::
 `String` -- The type of the document
 
-[[api-get]]
+[[api-get-0-90]]
 === `get`
 
 [source,js]
@@ -807,7 +807,7 @@ client.get({
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 
-[[api-getsource]]
+[[api-getsource-0-90]]
 === `getSource`
 
 [source,js]
@@ -846,7 +846,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `type`::
 `String` -- The type of the document; use `_all` to fetch the first document matching the ID across all types
 
-[[api-index]]
+[[api-index-0-90]]
 === `index`
 
 [source,js]
@@ -915,7 +915,7 @@ client.index({
 `type`::
 `String` -- The type of the document
 
-[[api-indices-analyze]]
+[[api-indices-analyze-0-90]]
 === `indices.analyze`
 
 [source,js]
@@ -950,7 +950,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `[format=detailed]`::
 `String` -- Format of the output
 
-[[api-indices-clearcache]]
+[[api-indices-clearcache-0-90]]
 === `indices.clearCache`
 
 [source,js]
@@ -991,7 +991,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `recycler`::
 `Boolean` -- Clear the recycler cache
 
-[[api-indices-close]]
+[[api-indices-close-0-90]]
 === `indices.close`
 
 [source,js]
@@ -1016,7 +1016,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String` -- The name of the index
 
-[[api-indices-create]]
+[[api-indices-create-0-90]]
 === `indices.create`
 
 [source,js]
@@ -1041,7 +1041,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String` -- The name of the index
 
-[[api-indices-delete]]
+[[api-indices-delete-0-90]]
 === `indices.delete`
 
 [source,js]
@@ -1066,7 +1066,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
 
-[[api-indices-deletealias]]
+[[api-indices-deletealias-0-90]]
 === `indices.deleteAlias`
 
 [source,js]
@@ -1093,7 +1093,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `name`::
 `String` -- The name of the alias to be deleted
 
-[[api-indices-deletemapping]]
+[[api-indices-deletemapping-0-90]]
 === `indices.deleteMapping`
 
 [source,js]
@@ -1118,7 +1118,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `type`::
 `String` -- The name of the document type to delete
 
-[[api-indices-deletetemplate]]
+[[api-indices-deletetemplate-0-90]]
 === `indices.deleteTemplate`
 
 [source,js]
@@ -1143,7 +1143,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `name`::
 `String` -- The name of the template
 
-[[api-indices-deletewarmer]]
+[[api-indices-deletewarmer-0-90]]
 === `indices.deleteWarmer`
 
 [source,js]
@@ -1170,7 +1170,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
 
-[[api-indices-exists]]
+[[api-indices-exists-0-90]]
 === `indices.exists`
 
 [source,js]
@@ -1191,7 +1191,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to check
 
-[[api-indices-existsalias]]
+[[api-indices-existsalias-0-90]]
 === `indices.existsAlias`
 
 [source,js]
@@ -1216,7 +1216,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `name`::
 `String, String[], Boolean` -- A comma-separated list of alias names to return
 
-[[api-indices-existstype]]
+[[api-indices-existstype-0-90]]
 === `indices.existsType`
 
 [source,js]
@@ -1241,7 +1241,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to check
 
-[[api-indices-flush]]
+[[api-indices-flush-0-90]]
 === `indices.flush`
 
 [source,js]
@@ -1270,7 +1270,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
-[[api-indices-getalias]]
+[[api-indices-getalias-0-90]]
 === `indices.getAlias`
 
 [source,js]
@@ -1295,7 +1295,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `name`::
 `String, String[], Boolean` -- A comma-separated list of alias names to return
 
-[[api-indices-getaliases]]
+[[api-indices-getaliases-0-90]]
 === `indices.getAliases`
 
 [source,js]
@@ -1318,7 +1318,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 
-[[api-indices-getfieldmapping]]
+[[api-indices-getfieldmapping-0-90]]
 === `indices.getFieldMapping`
 
 [source,js]
@@ -1345,7 +1345,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `field`::
 `String, String[], Boolean` -- A comma-separated list of fields
 
-[[api-indices-getmapping]]
+[[api-indices-getmapping-0-90]]
 === `indices.getMapping`
 
 [source,js]
@@ -1368,7 +1368,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types
 
-[[api-indices-getsettings]]
+[[api-indices-getsettings-0-90]]
 === `indices.getSettings`
 
 [source,js]
@@ -1389,7 +1389,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-gettemplate]]
+[[api-indices-gettemplate-0-90]]
 === `indices.getTemplate`
 
 [source,js]
@@ -1410,7 +1410,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `name`::
 `String` -- The name of the template
 
-[[api-indices-getwarmer]]
+[[api-indices-getwarmer-0-90]]
 === `indices.getWarmer`
 
 [source,js]
@@ -1435,7 +1435,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
 
-[[api-indices-open]]
+[[api-indices-open-0-90]]
 === `indices.open`
 
 [source,js]
@@ -1460,7 +1460,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String` -- The name of the index
 
-[[api-indices-optimize]]
+[[api-indices-optimize-0-90]]
 === `indices.optimize`
 
 [source,js]
@@ -1495,7 +1495,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-putalias]]
+[[api-indices-putalias-0-90]]
 === `indices.putAlias`
 
 [source,js]
@@ -1522,7 +1522,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `name`::
 `String` -- The name of the alias to be created or updated
 
-[[api-indices-putmapping]]
+[[api-indices-putmapping-0-90]]
 === `indices.putMapping`
 
 [source,js]
@@ -1551,7 +1551,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `type`::
 `String` -- The name of the document type
 
-[[api-indices-putsettings]]
+[[api-indices-putsettings-0-90]]
 === `indices.putSettings`
 
 [source,js]
@@ -1574,7 +1574,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-puttemplate]]
+[[api-indices-puttemplate-0-90]]
 === `indices.putTemplate`
 
 [source,js]
@@ -1601,7 +1601,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `name`::
 `String` -- The name of the template
 
-[[api-indices-putwarmer]]
+[[api-indices-putwarmer-0-90]]
 === `indices.putWarmer`
 
 [source,js]
@@ -1628,7 +1628,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
 
-[[api-indices-refresh]]
+[[api-indices-refresh-0-90]]
 === `indices.refresh`
 
 [source,js]
@@ -1653,7 +1653,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-segments]]
+[[api-indices-segments-0-90]]
 === `indices.segments`
 
 [source,js]
@@ -1678,7 +1678,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-snapshotindex]]
+[[api-indices-snapshotindex-0-90]]
 === `indices.snapshotIndex`
 
 [source,js]
@@ -1701,7 +1701,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
-[[api-indices-stats]]
+[[api-indices-stats-0-90]]
 === `indices.stats`
 
 [source,js]
@@ -1768,7 +1768,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `searchGroups`::
 `String, String[], Boolean` -- A comma-separated list of search groups to include in the `search` statistics
 
-[[api-indices-status]]
+[[api-indices-status-0-90]]
 === `indices.status`
 
 [source,js]
@@ -1797,7 +1797,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
-[[api-indices-updatealiases]]
+[[api-indices-updatealiases-0-90]]
 === `indices.updateAliases`
 
 [source,js]
@@ -1822,7 +1822,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 
-[[api-indices-validatequery]]
+[[api-indices-validatequery-0-90]]
 === `indices.validateQuery`
 
 [source,js]
@@ -1855,7 +1855,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
 
-[[api-info]]
+[[api-info-0-90]]
 === `info`
 
 [source,js]
@@ -1871,7 +1871,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 
 
-[[api-mget]]
+[[api-mget-0-90]]
 === `mget`
 
 [source,js]
@@ -1936,7 +1936,7 @@ client.mget({
 `type`::
 `String` -- The type of the document
 
-[[api-mlt]]
+[[api-mlt-0-90]]
 === `mlt`
 
 [source,js]
@@ -2010,7 +2010,7 @@ client.mlt({
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 
-[[api-msearch]]
+[[api-msearch-0-90]]
 === `msearch`
 
 [source,js]
@@ -2049,7 +2049,7 @@ client.msearch({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to use as default
 
-[[api-percolate]]
+[[api-percolate-0-90]]
 === `percolate`
 
 [source,js]
@@ -2142,7 +2142,7 @@ client.percolate({
 `type`::
 `String` -- The document type
 
-[[api-scroll]]
+[[api-scroll-0-90]]
 === `scroll`
 
 [source,js]
@@ -2193,7 +2193,7 @@ client.search({
 `scrollId`::
 `String` -- The scroll ID
 
-[[api-search]]
+[[api-search-0-90]]
 === `search`
 
 [source,js]
@@ -2311,7 +2311,7 @@ client.search({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 
-[[api-suggest]]
+[[api-suggest-0-90]]
 === `suggest`
 
 [source,js]
@@ -2373,7 +2373,7 @@ body: {
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
 
-[[api-update]]
+[[api-update-0-90]]
 === `update`
 
 [source,js]

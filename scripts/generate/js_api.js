@@ -102,7 +102,7 @@ module.exports = function (branch, done) {
       'name'
     );
     docVars.branch = branch;
-    docVars.branchSuffix = branchSuffix;
+    docVars.branchSuffix = branchSuffix.replace(/_/g, '-');
     done();
   }
 
