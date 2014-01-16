@@ -20,6 +20,9 @@ export SAUCE_USERNAME="elasticsearch-js"
 export SAUCE_ACCESS_KEY="3259dd1e-a9f2-41cc-afd7-855d80588aeb"
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MOCHA="./node_modules/.bin/mocha"
+MOCHA_REPORTER="../../../test/utils/jenkins-reporter.js"
+
 source $HERE/_utils.sh
 
 #####
@@ -56,7 +59,7 @@ fi
 if [[ "$NODE_UNIT" != "0" ]]; then
   group "start:unit_tests"
     if [[ -n "$JENKINS" ]]; then
-      ./node_modules/.bin/mocha test/unit/test_*.js --reporter ../../../test/utils/jenkins-reporter.js 2> test/junit-node-unit.xml
+      $MOCHA test/unit/test_*.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
       if [ "$?" -gt "0" ]; then
         echo "non-zero exit code: $RESULT"
         cat test/junit-node-unit.xml
@@ -89,11 +92,8 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
         ES_PORT=9200
       fi
 
-      ./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js \
-        --host localhost \
-        --port $ES_PORT \
-        --reporter ../../../test/utils/jenkins-reporter.js
-        2> test/junit-node-integration.xml
+      FILES=test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
+      $MOCHA $FILES --host localhost --port $ES_PORT --reporter $MOCHA_REPORTER 2> test/junit-node-integration.xml
       if [ "$?" -gt "0" ]; then
         echo "non-zero exit code: $RESULT"
         cat test/junit-node-unit.xml

@@ -1,4 +1,3 @@
-require('poop');
 describe('Client instances creation', function () {
   var es = require('../../src/elasticsearch');
   var api = require('../../src/lib/api');
