@@ -89,9 +89,9 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
         ES_PORT=9200
       fi
 
-      ./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
-        --host localhost
-        --port $ES_PORT
+      ./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js \
+        --host localhost \
+        --port $ES_PORT \
         --reporter ../../../test/utils/jenkins-reporter.js
         2> test/junit-node-integration.xml
       if [ "$?" -gt "0" ]; then
