@@ -56,7 +56,11 @@ fi
 if [[ "$NODE_UNIT" != "0" ]]; then
   group "start:unit_tests"
     if [[ -n "$JENKINS" ]]; then
-      call "./node_modules/.bin/mocha test/unit/test_*.js --reporter ../../../test/utils/jenkins-reporter.js 2> test/junit-node-unit.xml"
+      ./node_modules/.bin/mocha test/unit/test_*.js --reporter ../../../test/utils/jenkins-reporter.js 2> test/junit-node-unit.xml
+      if [ "$?" -gt "0" ]; then
+        echo "non-zero exit code: $RESULT"
+        cat test/junit-node-unit.xml
+      fi
     else
       grunt_ jshint mochacov:unit
     fi
@@ -85,11 +89,15 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
         ES_PORT=9200
       fi
 
-      call "./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
+      ./node_modules/.bin/mocha test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
         --host localhost
         --port $ES_PORT
         --reporter ../../../test/utils/jenkins-reporter.js
-        2> test/junit-node-integration.xml"
+        2> test/junit-node-integration.xml
+      if [ "$?" -gt "0" ]; then
+        echo "non-zero exit code: $RESULT"
+        cat test/junit-node-unit.xml
+      fi
     else
       manage_es start $TESTING_BRANCH $ES_RELEASE
       grunt_ mochacov:integration_$TESTING_BRANCH
