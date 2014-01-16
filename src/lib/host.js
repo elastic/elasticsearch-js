@@ -135,7 +135,11 @@ Host.prototype.makeUrl = function (params) {
     auth = this.auth + '@';
   }
 
-  return this.protocol + '://' + auth + this.host + port + path + (query ? '?' + query : '');
+  if (this.host) {
+    return this.protocol + '://' + auth + this.host + port + path + (query ? '?' + query : '');
+  } else {
+    return path + (query ? '?' + query : '');
+  }
 };
 
 Host.prototype.toString = function () {
