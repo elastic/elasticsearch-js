@@ -119,6 +119,37 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information
 
+[[api-cat-count]]
+=== `cat.count`
+
+[source,js]
+--------
+client.cat.count([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`h`::
+`String, String[], Boolean` -- Comma-separated list of column names to display
+`help`::
+`Boolean` -- Return help information
+`v`::
+`Boolean` -- Verbose mode. Display column headers
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
+
 [[api-cat-health]]
 === `cat.health`
 
@@ -145,6 +176,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
+`[ts=true]`::
+`Boolean` -- Set to false to disable timestamping
 `v`::
 `Boolean` -- Verbose mode. Display column headers
 
@@ -197,6 +230,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
+`pri`::
+`Boolean` -- Set to true to return stats only for primary shards
 `v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
@@ -288,6 +323,39 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return help information
 `v`::
 `Boolean` -- Verbose mode. Display column headers
+
+[[api-cat-recovery]]
+=== `cat.recovery`
+
+[source,js]
+--------
+client.cat.recovery([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`bytes`::
+`String` -- The unit in which to display byte values
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`h`::
+`String, String[], Boolean` -- Comma-separated list of column names to display
+`help`::
+`Boolean` -- Return help information
+`v`::
+`Boolean` -- Verbose mode. Display column headers
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
 
 [[api-cat-shards]]
 === `cat.shards`

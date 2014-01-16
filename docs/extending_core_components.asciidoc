@@ -12,6 +12,21 @@ Coming Soon
 see <<logging>>.
 
 === Client/API
-The Client's only real purpose (as you may be able to tell from client.js) is to hold the API methods, set a few default values, and instantiate the transport. The transport is where all the networking, retry, and cluster discovery takes place and including it in your client is as simple as `transport = new es.Transport({});`. This way, you can benefit from the core features of our client.
+Extending or replacing the API that Elasticsearch.js provides is a simple as it should be in JS. To provide an entirely new API, just add it to the Client constructor's `api` property like so:
 
-NOTE: In the near future the entire transport level will be abstracted into a separate module, as well as the API.
+[source,js]
+--------------
+var myApi = {
+  getDog: function () { ... }
+};
+
+elasticsearch.Client.apis.mine = myApi;
+
+var client = new elasticsearch.Client({
+  apiVersion: 'mine'
+});
+
+client.getDog( ... );
+--------------
+
+When the client is created, it's prototype is set to the API version selected, and therefore you can access the client via the `this` variable within your API methods. Make requests within your methods using `this.transport.request(params, cb)`. For more information about the transport, see <<transport-reference>>.
