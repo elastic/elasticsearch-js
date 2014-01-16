@@ -46,7 +46,7 @@
     "grunt-open": "~0.2.2",
     "glob": "~3.2.7",
     "expect.js": "~0.2.0",
-    "aliasify": "~1.2.1",
+    "aliasify": "1.2.2",
     "express": "~3.4.7",
     "grunt-saucelabs": "git://github.com/axemclion/grunt-saucelabs.git#01b68705a6823ff86930f28296ac6467fbea244b"
   },
