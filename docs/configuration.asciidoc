@@ -45,7 +45,7 @@ Default in Node:::
 
 `apiVersion`[[config-api-version]]:: `String` -- Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.
 
-Default ::: `master`
+Default ::: `"master"`
 
 Options :::
   * `"master"`
