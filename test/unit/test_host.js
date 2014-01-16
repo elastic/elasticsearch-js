@@ -149,6 +149,16 @@ describe('Host class', function () {
       host = new Host({ host: 'italy', path: '/pie', auth: 'user:pass'});
       expect(host.makeUrl()).to.be('http://user:pass@italy:9200/pie');
     });
+
+    it('outputs valid relative urls when the host is empty', function () {
+      var host = new Host({
+        host: false,
+        path: '/path',
+        query: { this: 'that' }
+      });
+
+      expect(host + '').to.be('/path?this=that');
+    });
   });
 
   describe('#toString', function () {
