@@ -559,9 +559,9 @@ describe('Client Action runner', function () {
       });
     });
 
-    it('passes castExists', function (done) {
+    it('sets castExists when the method in the spec is HEAD', function (done) {
       var action = makeClientAction({
-        castExists: true
+        method: 'HEAD'
       });
 
       action({}, function (err, params) {
