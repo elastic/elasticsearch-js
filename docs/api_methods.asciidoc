@@ -1,5 +1,5 @@
 [[api-reference]]
-== API Method Reference
+== API
 
 
 [[api-bulk]]

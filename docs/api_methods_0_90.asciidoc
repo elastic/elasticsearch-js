@@ -1,5 +1,5 @@
 [[api-reference-0-90]]
-== 0.90 API Method Reference
+== 0.90 API
 
 
 [[api-bulk-0-90]]

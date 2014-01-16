@@ -1,5 +1,5 @@
 [[errors]]
-== Error Reference
+== Errors
 These are the standard Error types which may be passed back from the client. To access the constructors is provided via `require('elasticsearch').errors`.
 
 [horizontal]
