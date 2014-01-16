@@ -6,28 +6,45 @@ Every application needs to have some solution for logging, and there isn't a sta
 When the client receives a function for the `log:` config value, it expects that the function is a constructor for a custom log class. This is the simplest way to integrate other logging libraries into the elasticsearch client at this time. The contract for this Log class is pretty straight-forward. See https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/log.js[our implementation] for additional details.
 
 ==== `new Constructor(config)`
-  * `config` -- The object that was passed to the client constructor, use to determine the log level.
+[horizontal]
+`config`::
+The object that was passed to the client constructor, use to determine the log level.
 
 ==== `error(error)`
-  * error -- `Error` The error that occurred
+[horizontal]
+`error`::
+`Error` -- The error that occurred
 
 ==== `warning(message)`
-  * message -- `String` The message to be logged
+[horizontal]
+`message`::
+`String` -- The message to be logged
 
 ==== `info(message)`
-  * message -- `String` The message to be logged
+[horizontal]
+`message`::
+`String` -- The message to be logged
 
 ==== `debug(message)`
-  * message -- `String` The message to be logged
+[horizontal]
+`message`::
+`String` -- The message to be logged
 
 ==== `trace(httpMethod, requestUrl, requestBody, responseBody, responseStatus)`
-
 Called after every HTTP request.
 
-  * httpMethod -- `String` The request's HTTP method
-  * requestUrl -- `Object, String` Depending on the connector in use, this will either be a url string or the        object passed to node's http.request.
-  * requestBody -- `String, false-y` The body of the http request, if the body is false-y no body was sent
-  * responseStatus -- `Integrer, false-y` The HTTP response status
+[horizontal]
+`httpMethod`::
+`String` -- The request's HTTP method
+
+`requestUrl`::
+`Object, String` -- Depending on the connector in use, this will either be a url string or the        object passed to node's http.request.
+
+`requestBody`::
+`String, false-y` -- The body of the http request, if the body is false-y no body was sent
+
+`responseStatus`::
+`Integrer, false-y` -- The HTTP response status
 
 === Bunyan Example
 In the future we may add loggers for some of the more common libraries, but for now this is an exercise for the user. Here is a hint to get you started implementing a https://github.com/trentm/node-bunyan[Bunyan] log class. Be sure to check out the Bunyan repo for more info about setting things up.
@@ -69,7 +86,7 @@ var client = new elasticsearch.Client({ log: LogClass });
 ----------------
 
 [[logging-customization]]
-== Using the default loggers
+=== Using the default loggers
 
 By default, the client creates a `"warning"` level, Console or Stdio logger. To change this, specify the client's `log:` config value to either an array of logger config's, a single logger config, a log level, an array of log levels, or a constructor for your own logger. That's a lot of options, so here is an example of each.
 
@@ -118,24 +135,32 @@ var client = new elasticsearch.Client({
 });
 ----------------
 
-=== Logger Types
-==== "stdio"
+==== Logger Types
+
+[horizontal]
+`"stdio"`::
 The default logger for in Node, writes log messages for "info", "debug", and "trace" to stdout and "error" and "warning" to stderr.
++
+Options:
 
-===== Options
-  * `[color=false]` -- `Boolean` Write with a bit of flair. The default value is intelligently chosen by https://github.com/sindresorhus/chalk[chalk] based on the details of your environment.
+`color`:::
+`Boolean` -- Write with a bit of flair. The default value is intelligently chosen by https://github.com/sindresorhus/chalk[chalk] based on the details of your environment. Default is true.
 
-==== "file"
+`"file"`::
 Append the log messages to a file.
++
+Options:
 
-===== Options
-  * `[path="elasticsearch.log"]` -- `String` Location of the file. It is created if it does not exists
+`path`:::
+`String` -- Location of the file to write log messages to. It is created if it does not exists. Default is `"elasticsearch.log"`
 
-==== "stream"
+`"stream"`::
 Send log messages to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">WriteableStream</a>
++
+Options:
 
-===== Options
-  * `stream` -- `WriteableStream` The object to write to.
+`stream`:::
+`WriteableStream` -- object to write to.
 
-==== "console"
+`"console"`::
 Default logger for the browser build, logs to the console when one exists.
