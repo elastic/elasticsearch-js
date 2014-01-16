@@ -5,6 +5,7 @@ module.exports = function (branch, done) {
   var jsYaml = require('js-yaml');
   var fs = require('relative-fs').relativeTo(__dirname);
   var async = require('async');
+  var chalk = require('chalk');
   var _ = require('../../src/lib/utils');
   var path = require('path');
   var tests = {}; // populated in readYamlTests
@@ -42,7 +43,7 @@ module.exports = function (branch, done) {
   function writeYamlTests(done) {
     var testFile = require('path').resolve(__dirname, '../../test/integration/yaml_suite/yaml_tests' + branchSuffix + '.json');
     fs.writeFileSync(testFile, JSON.stringify(tests, null, ' '), 'utf8');
-    console.log('wrote YAML tests as JSON to', testFile);
+    console.log(chalk.white.bold('wrote') + ' YAML tests as JSON to', testFile);
     done();
   }
 };

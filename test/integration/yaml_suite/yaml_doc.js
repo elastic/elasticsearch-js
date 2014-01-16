@@ -135,15 +135,19 @@ function YamlDoc(doc, file) {
           if (err) {
             err.message += ' in ' + action.name;
           }
-          done(err);
+          process.nextTick(function () {
+            done(err);
+          });
         });
       } else {
         try {
           action.bound();
-          done();
+          process.nextTick(done);
         } catch (err) {
           err.message += ' in ' + action.name;
-          done(err);
+          process.nextTick(function () {
+            done(err);
+          });
         }
       }
     };

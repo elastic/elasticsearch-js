@@ -91,5 +91,8 @@ module.exports = {
     '/{index}/_stats/indexing',
     '/{index}/_stats/search/{search_groups}',
     '/{index}/_stats/fielddata/{fields}'
+  ],
+  'cluster.createSnapshot': [
+    '/_snapshot/{repository}/{snapshot}/_create'
   ]
 };

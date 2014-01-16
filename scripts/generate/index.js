@@ -64,22 +64,27 @@ function spawn(cmd, args) {
   return proc;
 }
 
-function generateBranch(branch, i, done) {
+function initSubmodule(done) {
+  spawn('git', ['submodule', 'update', '--init'])
+    .on('exit', function (status) {
+      done(status ? new Error('Unable to init submodules.') : void 0);
+    });
+  return;
+}
+
+function fetch(done) {
+  spawn('git', ['submodule', 'foreach', 'git fetch origin'])
+    .on('exit', function (status) {
+      done(status ? new Error('Unable fetch lastest changes.') : void 0);
+    });
+  return;
+}
+
+function generateBranch(branch, done) {
   async.series([
     function (done) {
-      if (i === 0) {
-        spawn('git', ['submodule', 'update', '--init'])
-          .on('exit', function (status) {
-            done(status ? new Error('Unable to init submodules.') : void 0);
-          });
-        return;
-      }
-
-      done();
-    },
-    function (done) {
       spawn('git', ['submodule', 'foreach', [
-        'git fetch origin master', 'git reset --hard', 'git clean -fdx', 'git checkout origin/' + branch
+        'git reset --hard', 'git clean -fdx', 'git checkout origin/' + branch
       ].join(' && ')])
         .on('exit', function (status) {
           done(status ? new Error('Unable to checkout ' + branch) : void 0);
@@ -105,8 +110,10 @@ function generateBranch(branch, i, done) {
 }
 
 async.series([
-  async.apply(generateBranch, '0.90', 0),
-  async.apply(generateBranch, 'master', 1)
+  initSubmodule,
+  fetch,
+  async.apply(generateBranch, '0.90'),
+  async.apply(generateBranch, 'master')
 ], function (err) {
   if (err) {
     throw err;

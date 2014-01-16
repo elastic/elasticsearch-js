@@ -54,18 +54,20 @@ module.exports = {
         cb = options, options = {};
       }
 
-      var logConfig = _.has(options, 'logConfig')
-        ? options.logConfig
-        : {
-          type: BROWSER
-            ? 'console'
-            : VERBOSE
-              ? 'tracer'
-              : 'stdio',
-          level: VERBOSE
-            ? 'trace'
-            : 'warning'
-        };
+      var logConfig = {};
+      if (_.has(options, 'logConfig')) {
+        logConfig = options.logConfig;
+      } else {
+        if (BROWSER) {
+          logConfig.type = 'console';
+        } else if (JENKINS || !VERBOSE) {
+          logConfig.type = 'stdio';
+        } else {
+          logConfig.type = 'tracer';
+        }
+
+        logConfig.level = VERBOSE ? 'trace' : 'error';
+      }
 
       if (logConfig && logConfig.type === 'tracer') {
         try {

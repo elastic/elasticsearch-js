@@ -6,6 +6,8 @@ module.exports = function (branch, done) {
   var _ = require('../../src/lib/utils');
   var fs = require('relative-fs').relativeTo(__dirname);
   var async = require('async');
+  var chalk = require('chalk');
+  var path = require('path');
   var templates = require('./templates');
   var castExistsRE = /exists/;
   var usesBulkBodyRE = /^(bulk|msearch)$/;
@@ -26,7 +28,10 @@ module.exports = function (branch, done) {
     ensureDocsDir,
     formatDocVars,
     writeMethodDocs
-  ], done);
+  ], function (err) {
+    console.log('');
+    done(err);
+  });
 
   function readSpecFiles(done) {
     var apiDir = require('path').join(__dirname, '../../src/elasticsearch/rest-api-spec/api/');
@@ -73,7 +78,7 @@ module.exports = function (branch, done) {
   function writeApiFile(done) {
     var outputPath = require('path').join(__dirname, '../../src/lib/api' + branchSuffix + '.js');
     fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
-    console.log('wrote', apiSpec.actions.length, 'api actions to', outputPath);
+    console.log(chalk.white.bold('wrote'), apiSpec.actions.length, 'api actions to', outputPath);
     done();
   }
 
@@ -107,10 +112,16 @@ module.exports = function (branch, done) {
   }
 
   function writeMethodDocs(done) {
+    var filename = path.resolve(__dirname, '../../docs/api_methods' + branchSuffix + '.asciidoc');
     fs.writeFile(
-      '../../docs/api_methods' + branchSuffix + '.asciidoc',
+      filename,
       templates.apiMethods(docVars),
-      done
+      function (err) {
+        if (!err) {
+          console.log(chalk.white.bold('wrote'), branch + ' method docs to', filename);
+        }
+        done(err);
+      }
     );
   }
 
