@@ -133,6 +133,10 @@ module.exports = function (branch, done) {
       //camelcase the name
       name = _.map(name.split('.'), _.camelCase).join('.');
 
+      if (name === 'cat.aliases') {
+        def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
+      }
+
       var steps = name.split('.');
 
       function transformParamKeys(note, param, key) {
