@@ -105,8 +105,8 @@ function generateBranch(branch, i, done) {
 }
 
 async.series([
-  async.apply(generateBranch, '0.90', 1),
-  async.apply(generateBranch, 'master', 0)
+  async.apply(generateBranch, '0.90', 0),
+  async.apply(generateBranch, 'master', 1)
 ], function (err) {
   if (err) {
     throw err;
