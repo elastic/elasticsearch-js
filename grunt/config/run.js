@@ -1,4 +1,5 @@
 var esOpts = [
+  '-D es.http.port=9400',
   '-D es.network.host=localhost',
   '-D es.cluster.name=elasticsearch_js_test_runners',
   '-D es.node.name=elasticsearch_js_test_runner',

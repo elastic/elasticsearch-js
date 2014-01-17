@@ -166,6 +166,10 @@ module.exports = function (branch, done) {
         spec.bulkBody = true;
       }
 
+      if (name === 'ping') {
+        spec.requestTimeout = 100;
+      }
+
       var urls = _.difference(def.url.paths, aliases[name]);
       var urlSignatures = [];
       urls = _.map(urls, function (url) {
@@ -210,7 +214,7 @@ module.exports = function (branch, done) {
           return _.omit(url, 'sortOrder');
         });
       } else {
-        spec.url = urls[0];
+        spec.url = _.omit(urls[0], 'sortOrder');
       }
 
       spec.params = _.transform(spec.params, function (note, param, name) {

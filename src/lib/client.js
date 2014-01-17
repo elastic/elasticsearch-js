@@ -27,7 +27,6 @@
 module.exports = Client;
 
 var Transport = require('./transport');
-var ca = require('./client_action');
 var _ = require('./utils');
 
 function Client(config) {
@@ -41,18 +40,6 @@ function Client(config) {
 
     if (!config.hosts && !config.host) {
       config.host = 'http://localhost:9200';
-    }
-
-    if (!this.ping) {
-      // 0.90 api does not include ping
-      this.ping = ca({
-        method: 'HEAD',
-        url: {
-          fmt: '/'
-        },
-        castExists: true,
-        requestTimeout: 100
-      });
     }
 
     this.close = function () {

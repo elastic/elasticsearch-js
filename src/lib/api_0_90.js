@@ -85,8 +85,7 @@ api.clearScroll = ca({
       scrollId: {
         type: 'list'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'DELETE'
 });
@@ -627,8 +626,7 @@ api['delete'] = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   },
   method: 'DELETE'
 });
@@ -772,8 +770,7 @@ api.exists = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   },
   method: 'HEAD'
 });
@@ -871,8 +868,7 @@ api.explain = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   },
   method: 'POST'
 });
@@ -938,8 +934,7 @@ api.get = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   }
 });
 
@@ -994,8 +989,7 @@ api.getSource = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   }
 });
 
@@ -1277,8 +1271,7 @@ api.indices.prototype.close = ca({
       index: {
         type: 'string'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'POST'
 });
@@ -1307,8 +1300,7 @@ api.indices.prototype.create = ca({
       index: {
         type: 'string'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'POST'
 });
@@ -1375,8 +1367,7 @@ api.indices.prototype.deleteAlias = ca({
       name: {
         type: 'string'
       }
-    },
-    sortOrder: -2
+    }
   },
   method: 'DELETE'
 });
@@ -1405,8 +1396,7 @@ api.indices.prototype.deleteMapping = ca({
       type: {
         type: 'string'
       }
-    },
-    sortOrder: -2
+    }
   },
   method: 'DELETE'
 });
@@ -1435,8 +1425,7 @@ api.indices.prototype.deleteTemplate = ca({
       name: {
         type: 'string'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'DELETE'
 });
@@ -1508,8 +1497,7 @@ api.indices.prototype.exists = ca({
       index: {
         type: 'list'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'HEAD'
 });
@@ -1587,8 +1575,7 @@ api.indices.prototype.existsType = ca({
       type: {
         type: 'list'
       }
-    },
-    sortOrder: -2
+    }
   },
   method: 'HEAD'
 });
@@ -1912,8 +1899,7 @@ api.indices.prototype.open = ca({
       index: {
         type: 'string'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'POST'
 });
@@ -2067,8 +2053,7 @@ api.indices.prototype.putMapping = ca({
       type: {
         type: 'string'
       }
-    },
-    sortOrder: -2
+    }
   },
   method: 'PUT'
 });
@@ -2131,8 +2116,7 @@ api.indices.prototype.putTemplate = ca({
       name: {
         type: 'string'
       }
-    },
-    sortOrder: -1
+    }
   },
   method: 'PUT'
 });
@@ -2740,8 +2724,7 @@ api.mlt = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   },
   method: 'POST'
 });
@@ -2821,10 +2804,21 @@ api.percolate = ca({
       type: {
         type: 'string'
       }
-    },
-    sortOrder: -2
+    }
   },
   method: 'POST'
+});
+
+/**
+ * Perform a [ping](http://www.elasticsearch.org/guide/) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.ping = ca({
+  url: {
+    fmt: '/'
+  },
+  method: 'HEAD'
 });
 
 /**
@@ -3190,8 +3184,7 @@ api.update = ca({
       id: {
         type: 'string'
       }
-    },
-    sortOrder: -3
+    }
   },
   method: 'POST'
 });
