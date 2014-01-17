@@ -4,13 +4,11 @@
 # Run the tests, and setup es if needed
 #
 # ENV VARS:
-#  TRAVIS - Identifies that we're running on travis-ci
-#  ES_V - version identifier set by Jenkins
 #  ES_BRANCH - the ES branch we should use to generate the tests and download es
-#  ES_VERSION - a specific ES version to download in use for testing
+#  ES_RELEASE - a specific ES release to download in use for testing
 #  NODE_UNIT=1 - 0/1 run the unit tests in node
 #  NODE_INTEGRATION=1 - 0/1 run the integration tests in node
-#  TEST_BROWSER - the browser to run using selemium '{{name}}:{{version}}:{{OS}}'
+#  TEST_BROWSER - the browser to test in using, sauce labs. One of 'ie', 'firefox', 'chrome'
 #  COVERAGE - 0/1 check for coverage and ship it to coveralls
 #
 ###########
@@ -44,14 +42,6 @@ function grunt_ {
 # normalize ES_BRANCH into TESTING_BRANCH
 if [[ -n "$ES_BRANCH" ]]; then
   TESTING_BRANCH=$ES_BRANCH
-elif [[ -n "$ES_V" ]]; then
-  re='^(.*)_nightly$';
-  if [[ $ES_V =~ $re ]]; then
-    TESTING_BRANCH=${BASH_REMATCH[1]}
-  else
-    echo "unable to parse ES_V $ES_V"
-    exit 1
-  fi
 else
   TESTING_BRANCH="master"
 fi
