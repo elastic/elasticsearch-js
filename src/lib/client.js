@@ -69,7 +69,7 @@ function Client(config) {
     delete this._namespaces;
   }
 
-  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, 'master');
+  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '0.90');
   return new EsApiClient(config);
 }
 
