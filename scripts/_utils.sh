@@ -100,7 +100,7 @@ function manage_es {
           return 1
         fi
 
-        local ES_OPTS="-p $PIDFILE -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
+        local ES_OPTS="-p $PIDFILE -Des.http.port=9400 -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
 
         if [ -n "$ES_NODE_NAME" ]; then
           ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
