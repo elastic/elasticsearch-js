@@ -2,7 +2,9 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.org/spenceralger/elasticsearch-js.png?branch=master)](https://travis-ci.org/spenceralger/elasticsearch-js) [![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png)](https://coveralls.io/r/elasticsearch/elasticsearch-js) [![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
+[![Build Status](https://www.codeship.io/projects/f0c2b4a0-61c9-0131-3fd3-367b94dc0d60/status?branch=master)](https://www.codeship.io/projects/12289)
+[![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
+[![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png)](https://coveralls.io/r/elasticsearch/elasticsearch-js)
 
 ## Features
 
