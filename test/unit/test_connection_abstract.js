@@ -131,7 +131,7 @@ describe('Connection Abstract', function () {
       });
     });
 
-    it('ignores the response from the request if it already aborted');
+    // it('ignores the response from the request if it already aborted');
   });
 
   describe('#setStatus', function () {
