@@ -1,6 +1,7 @@
 [[api-reference]]
-== API
+== 1.0 API
 
+NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` config parameter.
 
 [[api-bulk]]
 === `bulk`

@@ -75,5 +75,6 @@ function Client(config) {
 
 Client.apis = {
   'master': require('./api'),
+  '1.0': require('./api'),
   '0.90': require('./api_0_90')
 };

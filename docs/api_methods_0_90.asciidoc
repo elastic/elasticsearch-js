@@ -1,6 +1,7 @@
 [[api-reference-0-90]]
 == 0.90 API
 
+NOTE: This is currently the default API, but with the upcoming release of Elasticsearch 1.0 that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change when the default does.
 
 [[api-bulk-0-90]]
 === `bulk`
@@ -2141,6 +2142,22 @@ client.percolate({
 `String` -- The name of the index with a registered percolator query
 `type`::
 `String` -- The document type
+
+[[api-ping-0-90]]
+=== `ping`
+
+[source,js]
+--------
+client.ping([params, [callback]])
+--------
+
+// no description
+
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
 
 [[api-scroll-0-90]]
 === `scroll`

@@ -1,6 +1,15 @@
-[[api-reference<%= branchSuffix %>]]
-== <%= branch === 'master' ? '' : branch + ' ' %>API
-<%
+[[api-reference<%= branchSuffix %>]]<%
+
+if ( branch === 'master' ) {%>
+== 1.0 API
+
+NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` config parameter.<%
+} else {%>
+== 0.90 API
+
+NOTE: This is currently the default API, but with the upcoming release of Elasticsearch 1.0 that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change when the default does.<%
+}
+
 _.each(actions, function (action) {
 %>
 
