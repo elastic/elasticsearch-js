@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -z "$2" ]; then
   echo "Usage:
 From the root of the elasticsearch-js project call:

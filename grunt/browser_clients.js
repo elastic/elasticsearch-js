@@ -2,7 +2,7 @@ module.exports = function (grunt) {
   grunt.registerTask('browser_clients:test', [
     'browser_clients:build',
     'run:browser_test_server',
-    'saucelabs-mocha'
+    'saucelabs-mocha:all'
   ]);
 
   grunt.registerTask('browser_clients:build', [

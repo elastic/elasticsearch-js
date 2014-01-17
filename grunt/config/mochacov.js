@@ -28,7 +28,9 @@ module.exports = {
     options: {
       reporter: 'mocha-lcov-reporter',
       coveralls: {
-        serviceName: 'travis-ci'
+        serviceName: 'codeship',
+        serviceJobId: process.env.CI_BUILD_NUMBER,
+        repoToken: process.env.COVERALLS_TOKEN
       }
     }
   }

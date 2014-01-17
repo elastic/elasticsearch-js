@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #####
 # Start or stop a group for travis
 #####

@@ -17,7 +17,7 @@
     </script>
     <script src="unit_tests.js"></script>
     <script>
-      mocha.run().on('end', function(){
+      mochaRunner = mocha.run().on('end', function(){
         window.mochaResults = this.stats;
       });
     </script>

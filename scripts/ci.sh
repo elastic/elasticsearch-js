@@ -8,14 +8,12 @@
 #  ES_RELEASE - a specific ES release to download in use for testing
 #  NODE_UNIT=1 - 0/1 run the unit tests in node
 #  NODE_INTEGRATION=1 - 0/1 run the integration tests in node
-#  TEST_BROWSER - the browser to test in using, sauce labs. One of 'ie', 'firefox', 'chrome'
+#  BROWSER_UNIT - the browser to test in using, sauce labs. One of 'ie', 'firefox', 'chrome'
 #  COVERAGE - 0/1 check for coverage and ship it to coveralls
 #
 ###########
 
 export ES_NODE_NAME="elasticsearch_js_test_runner"
-export SAUCE_USERNAME="elasticsearch-js"
-export SAUCE_ACCESS_KEY="3259dd1e-a9f2-41cc-afd7-855d80588aeb"
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MOCHA="./node_modules/.bin/mocha"
@@ -96,9 +94,9 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
   group "end:integration tests"
 fi
 
-if [[ -n "$TEST_BROWSER" ]]; then
+if [[ "$BROWSER_UNIT" == "1" ]]; then
   group "start:browser tests"
-    grunt_ browser_clients:build run:browser_test_server saucelabs-mocha:${TEST_BROWSER}
+    grunt_ browser_clients:build run:browser_test_server saucelabs-mocha
   group "end:browser tests"
 fi
 
