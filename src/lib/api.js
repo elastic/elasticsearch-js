@@ -4320,6 +4320,18 @@ api.snapshot.prototype.create = ca({
       name: 'wait_for_completion'
     }
   },
+  url: {
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
+    req: {
+      repository: {
+        type: 'string'
+      },
+      snapshot: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  },
   method: 'POST'
 });
 

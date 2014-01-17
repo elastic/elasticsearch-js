@@ -92,11 +92,7 @@ module.exports = {
     '/{index}/_stats/search/{search_groups}',
     '/{index}/_stats/fielddata/{fields}'
   ],
-  'cluster.createSnapshot': [
-    '/_snapshot/{repository}/{snapshot}/_create'
-  ],
   'snapshot.create': [
-    '/_snapshot/{repository}/{snapshot}',
     '/_snapshot/{repository}/{snapshot}/_create'
   ]
 };
