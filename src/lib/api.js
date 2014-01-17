@@ -3,7 +3,7 @@
 var ca = require('./client_action');
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices'];
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html) request
@@ -588,161 +588,6 @@ api.cluster = function ClusterNS(transport) {
 };
 
 /**
- * Perform a [cluster.createRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {String} params.repository - A repository name
- */
-api.cluster.prototype.createRepository = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    },
-    timeout: {
-      type: 'time'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>',
-    req: {
-      repository: {
-        type: 'string'
-      }
-    },
-    sortOrder: -1
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [cluster.createSnapshot](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
- * @param {String} params.repository - A repository name
- * @param {String} params.snapshot - A snapshot name
- */
-api.cluster.prototype.createSnapshot = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    },
-    waitForCompletion: {
-      type: 'boolean',
-      'default': false,
-      name: 'wait_for_completion'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
-    req: {
-      repository: {
-        type: 'string'
-      },
-      snapshot: {
-        type: 'string'
-      }
-    },
-    sortOrder: -2
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [cluster.deleteRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
- */
-api.cluster.prototype.deleteRepository = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    },
-    timeout: {
-      type: 'time'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>',
-    req: {
-      repository: {
-        type: 'list'
-      }
-    },
-    sortOrder: -1
-  },
-  method: 'DELETE'
-});
-
-/**
- * Perform a [cluster.deleteSnapshot](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {String} params.repository - A repository name
- * @param {String} params.snapshot - A snapshot name
- */
-api.cluster.prototype.deleteSnapshot = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
-    req: {
-      repository: {
-        type: 'string'
-      },
-      snapshot: {
-        type: 'string'
-      }
-    },
-    sortOrder: -2
-  },
-  method: 'DELETE'
-});
-
-/**
- * Perform a [cluster.getRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
- */
-api.cluster.prototype.getRepository = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    }
-  },
-  urls: [
-    {
-      fmt: '/_snapshot/<%=repository%>',
-      req: {
-        repository: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_snapshot'
-    }
-  ]
-});
-
-/**
  * Perform a [cluster.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -766,35 +611,6 @@ api.cluster.prototype.getSettings = ca({
   },
   url: {
     fmt: '/_cluster/settings'
-  }
-});
-
-/**
- * Perform a [cluster.getSnapshot](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
- * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
- */
-api.cluster.prototype.getSnapshot = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
-    req: {
-      repository: {
-        type: 'list'
-      },
-      snapshot: {
-        type: 'list'
-      }
-    },
-    sortOrder: -2
   }
 });
 
@@ -872,355 +688,6 @@ api.cluster.prototype.health = ca({
 });
 
 /**
- * Perform a [cluster.nodeHotThreads](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.interval - The interval for the second sampling of threads
- * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
- * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
- * @param {String} params.type - The type to sample (default: cpu)
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
- */
-api.cluster.prototype.nodeHotThreads = ca({
-  params: {
-    interval: {
-      type: 'time'
-    },
-    snapshots: {
-      type: 'number'
-    },
-    threads: {
-      type: 'number'
-    },
-    type: {
-      type: 'enum',
-      options: [
-        'cpu',
-        'wait',
-        'block'
-      ]
-    }
-  },
-  urls: [
-    {
-      fmt: '/_nodes/<%=nodeId%>/hotthreads',
-      req: {
-        nodeId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/hotthreads'
-    }
-  ]
-});
-
-/**
- * Perform a [cluster.nodeInfo](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
- * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
- * @param {String, String[], Boolean} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
- */
-api.cluster.prototype.nodeInfo = ca({
-  params: {
-    flatSettings: {
-      type: 'boolean',
-      name: 'flat_settings'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
-    }
-  },
-  urls: [
-    {
-      fmt: '/_nodes/<%=nodeId%>/<%=metric%>',
-      req: {
-        nodeId: {
-          type: 'list'
-        },
-        metric: {
-          type: 'list',
-          options: [
-            'settings',
-            'os',
-            'process',
-            'jvm',
-            'thread_pool',
-            'network',
-            'transport',
-            'http',
-            'plugin'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/<%=nodeId%>',
-      req: {
-        nodeId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/<%=metric%>',
-      req: {
-        metric: {
-          type: 'list',
-          options: [
-            'settings',
-            'os',
-            'process',
-            'jvm',
-            'thread_pool',
-            'network',
-            'transport',
-            'http',
-            'plugin'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes'
-    }
-  ]
-});
-
-/**
- * Perform a [cluster.nodeShutdown](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.delay - Set the delay for the operation (default: 1s)
- * @param {Boolean} params.exit - Exit the JVM as well (default: true)
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
- */
-api.cluster.prototype.nodeShutdown = ca({
-  params: {
-    delay: {
-      type: 'time'
-    },
-    exit: {
-      type: 'boolean'
-    }
-  },
-  urls: [
-    {
-      fmt: '/_cluster/nodes/<%=nodeId%>/_shutdown',
-      req: {
-        nodeId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_shutdown'
-    }
-  ],
-  method: 'POST'
-});
-
-/**
- * Perform a [cluster.nodeStats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
- * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
- * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
- * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
- * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
- * @param {String} [params.level=node] - Return indices stats aggregated at node, index or shard level
- * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
- * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
- * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
- */
-api.cluster.prototype.nodeStats = ca({
-  params: {
-    completionFields: {
-      type: 'list',
-      name: 'completion_fields'
-    },
-    fielddataFields: {
-      type: 'list',
-      name: 'fielddata_fields'
-    },
-    fields: {
-      type: 'list'
-    },
-    groups: {
-      type: 'boolean'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
-    },
-    level: {
-      type: 'enum',
-      'default': 'node',
-      options: [
-        'node',
-        'indices',
-        'shards'
-      ]
-    },
-    types: {
-      type: 'list'
-    }
-  },
-  urls: [
-    {
-      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>/<%=indexMetric%>',
-      req: {
-        nodeId: {
-          type: 'list'
-        },
-        metric: {
-          type: 'list',
-          options: [
-            '_all',
-            'breaker',
-            'fs',
-            'http',
-            'indices',
-            'jvm',
-            'network',
-            'os',
-            'process',
-            'thread_pool',
-            'transport'
-          ]
-        },
-        indexMetric: {
-          type: 'list',
-          options: [
-            '_all',
-            'completion',
-            'docs',
-            'fielddata',
-            'filter_cache',
-            'flush',
-            'get',
-            'id_cache',
-            'indexing',
-            'merge',
-            'percolate',
-            'refresh',
-            'search',
-            'segments',
-            'store',
-            'warmer'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>',
-      req: {
-        nodeId: {
-          type: 'list'
-        },
-        metric: {
-          type: 'list',
-          options: [
-            '_all',
-            'breaker',
-            'fs',
-            'http',
-            'indices',
-            'jvm',
-            'network',
-            'os',
-            'process',
-            'thread_pool',
-            'transport'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/stats/<%=metric%>/<%=indexMetric%>',
-      req: {
-        metric: {
-          type: 'list',
-          options: [
-            '_all',
-            'breaker',
-            'fs',
-            'http',
-            'indices',
-            'jvm',
-            'network',
-            'os',
-            'process',
-            'thread_pool',
-            'transport'
-          ]
-        },
-        indexMetric: {
-          type: 'list',
-          options: [
-            '_all',
-            'completion',
-            'docs',
-            'fielddata',
-            'filter_cache',
-            'flush',
-            'get',
-            'id_cache',
-            'indexing',
-            'merge',
-            'percolate',
-            'refresh',
-            'search',
-            'segments',
-            'store',
-            'warmer'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/<%=nodeId%>/stats',
-      req: {
-        nodeId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/stats/<%=metric%>',
-      req: {
-        metric: {
-          type: 'list',
-          options: [
-            '_all',
-            'breaker',
-            'fs',
-            'http',
-            'indices',
-            'jvm',
-            'network',
-            'os',
-            'process',
-            'thread_pool',
-            'transport'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/stats'
-    }
-  ]
-});
-
-/**
  * Perform a [cluster.tasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-pending.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -1279,42 +746,6 @@ api.cluster.prototype.reroute = ca({
   },
   url: {
     fmt: '/_cluster/reroute'
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [cluster.restoreSnapshot](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
- * @param {String} params.repository - A repository name
- * @param {String} params.snapshot - A snapshot name
- */
-api.cluster.prototype.restoreSnapshot = ca({
-  params: {
-    masterTimeout: {
-      type: 'time',
-      name: 'master_timeout'
-    },
-    waitForCompletion: {
-      type: 'boolean',
-      'default': false,
-      name: 'wait_for_completion'
-    }
-  },
-  url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_restore',
-    req: {
-      repository: {
-        type: 'string'
-      },
-      snapshot: {
-        type: 'string'
-      }
-    },
-    sortOrder: -2
   },
   method: 'POST'
 });
@@ -1906,8 +1337,6 @@ api.get = ca({
  * Perform a [getSource](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.exclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.include - A list of fields to extract and return from the _source field
  * @param {String} params.parent - The ID of the parent document
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
@@ -1924,12 +1353,6 @@ api.get = ca({
  */
 api.getSource = ca({
   params: {
-    exclude: {
-      type: 'list'
-    },
-    include: {
-      type: 'list'
-    },
     parent: {
       type: 'string'
     },
@@ -4245,6 +3668,359 @@ api.msearch = ca({
   method: 'POST'
 });
 
+api.nodes = function NodesNS(transport) {
+  this.transport = transport;
+};
+
+/**
+ * Perform a [nodes.hotThreads](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.interval - The interval for the second sampling of threads
+ * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
+ * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
+ * @param {String} params.type - The type to sample (default: cpu)
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ */
+api.nodes.prototype.hotThreads = ca({
+  params: {
+    interval: {
+      type: 'time'
+    },
+    snapshots: {
+      type: 'number'
+    },
+    threads: {
+      type: 'number'
+    },
+    type: {
+      type: 'enum',
+      options: [
+        'cpu',
+        'wait',
+        'block'
+      ]
+    }
+  },
+  urls: [
+    {
+      fmt: '/_nodes/<%=nodeId%>/hotthreads',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/hotthreads'
+    }
+  ]
+});
+
+/**
+ * Perform a [nodes.info](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {String, String[], Boolean} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
+ */
+api.nodes.prototype.info = ca({
+  params: {
+    flatSettings: {
+      type: 'boolean',
+      name: 'flat_settings'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/_nodes/<%=nodeId%>/<%=metric%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
+          options: [
+            'settings',
+            'os',
+            'process',
+            'jvm',
+            'thread_pool',
+            'network',
+            'transport',
+            'http',
+            'plugin'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/<%=nodeId%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            'settings',
+            'os',
+            'process',
+            'jvm',
+            'thread_pool',
+            'network',
+            'transport',
+            'http',
+            'plugin'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes'
+    }
+  ]
+});
+
+/**
+ * Perform a [nodes.shutdown](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.delay - Set the delay for the operation (default: 1s)
+ * @param {Boolean} params.exit - Exit the JVM as well (default: true)
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
+ */
+api.nodes.prototype.shutdown = ca({
+  params: {
+    delay: {
+      type: 'time'
+    },
+    exit: {
+      type: 'boolean'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cluster/nodes/<%=nodeId%>/_shutdown',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_shutdown'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
+ * Perform a [nodes.stats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+ * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
+ * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {String} [params.level=node] - Return indices stats aggregated at node, index or shard level
+ * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
+ * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
+ * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ */
+api.nodes.prototype.stats = ca({
+  params: {
+    completionFields: {
+      type: 'list',
+      name: 'completion_fields'
+    },
+    fielddataFields: {
+      type: 'list',
+      name: 'fielddata_fields'
+    },
+    fields: {
+      type: 'list'
+    },
+    groups: {
+      type: 'boolean'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
+    },
+    level: {
+      type: 'enum',
+      'default': 'node',
+      options: [
+        'node',
+        'indices',
+        'shards'
+      ]
+    },
+    types: {
+      type: 'list'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>/<%=indexMetric%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
+        },
+        indexMetric: {
+          type: 'list',
+          options: [
+            '_all',
+            'completion',
+            'docs',
+            'fielddata',
+            'filter_cache',
+            'flush',
+            'get',
+            'id_cache',
+            'indexing',
+            'merge',
+            'percolate',
+            'refresh',
+            'search',
+            'segments',
+            'store',
+            'warmer'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/<%=nodeId%>/stats/<%=metric%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/stats/<%=metric%>/<%=indexMetric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
+        },
+        indexMetric: {
+          type: 'list',
+          options: [
+            '_all',
+            'completion',
+            'docs',
+            'fielddata',
+            'filter_cache',
+            'flush',
+            'get',
+            'id_cache',
+            'indexing',
+            'merge',
+            'percolate',
+            'refresh',
+            'search',
+            'segments',
+            'store',
+            'warmer'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/<%=nodeId%>/stats',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/stats/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'breaker',
+            'fs',
+            'http',
+            'indices',
+            'jvm',
+            'network',
+            'os',
+            'process',
+            'thread_pool',
+            'transport'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/stats'
+    }
+  ]
+});
+
 /**
  * Perform a [percolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html) request
  *
@@ -4516,6 +4292,218 @@ api.search = ca({
       fmt: '/_search'
     }
   ],
+  method: 'POST'
+});
+
+api.snapshot = function SnapshotNS(transport) {
+  this.transport = transport;
+};
+
+/**
+ * Perform a [snapshot.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
+ * @param {String} params.repository - A repository name
+ * @param {String} params.snapshot - A snapshot name
+ */
+api.snapshot.prototype.create = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      'default': false,
+      name: 'wait_for_completion'
+    }
+  },
+  method: 'POST'
+});
+
+/**
+ * Perform a [snapshot.createRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.repository - A repository name
+ */
+api.snapshot.prototype.createRepository = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>',
+    req: {
+      repository: {
+        type: 'string'
+      }
+    },
+    sortOrder: -1
+  },
+  method: 'POST'
+});
+
+/**
+ * Perform a [snapshot.delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String} params.repository - A repository name
+ * @param {String} params.snapshot - A snapshot name
+ */
+api.snapshot.prototype['delete'] = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
+    req: {
+      repository: {
+        type: 'string'
+      },
+      snapshot: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  },
+  method: 'DELETE'
+});
+
+/**
+ * Perform a [snapshot.deleteRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
+ */
+api.snapshot.prototype.deleteRepository = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>',
+    req: {
+      repository: {
+        type: 'list'
+      }
+    },
+    sortOrder: -1
+  },
+  method: 'DELETE'
+});
+
+/**
+ * Perform a [snapshot.get](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
+ * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
+ */
+api.snapshot.prototype.get = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
+    req: {
+      repository: {
+        type: 'list'
+      },
+      snapshot: {
+        type: 'list'
+      }
+    },
+    sortOrder: -2
+  }
+});
+
+/**
+ * Perform a [snapshot.getRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
+ */
+api.snapshot.prototype.getRepository = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_snapshot/<%=repository%>',
+      req: {
+        repository: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_snapshot'
+    }
+  ]
+});
+
+/**
+ * Perform a [snapshot.restore](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
+ * @param {String} params.repository - A repository name
+ * @param {String} params.snapshot - A snapshot name
+ */
+api.snapshot.prototype.restore = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      'default': false,
+      name: 'wait_for_completion'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_restore',
+    req: {
+      repository: {
+        type: 'string'
+      },
+      snapshot: {
+        type: 'string'
+      }
+    },
+    sortOrder: -2
+  },
   method: 'POST'
 });
 

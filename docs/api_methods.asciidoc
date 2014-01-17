@@ -409,131 +409,6 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `scrollId`::
 `String, String[], Boolean` -- A comma-separated list of scroll IDs to clear
 
-[[api-cluster-createrepository]]
-=== `cluster.createRepository`
-
-[source,js]
---------
-client.cluster.createRepository([params, [callback]])
---------
-
-// no description
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`repository`::
-`String` -- A repository name
-
-[[api-cluster-createsnapshot]]
-=== `cluster.createSnapshot`
-
-[source,js]
---------
-client.cluster.createSnapshot([params, [callback]])
---------
-
-// no description
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`waitForCompletion`::
-`Boolean` -- Should this request wait until the operation has completed before returning
-`repository`::
-`String` -- A repository name
-`snapshot`::
-`String` -- A snapshot name
-
-[[api-cluster-deleterepository]]
-=== `cluster.deleteRepository`
-
-[source,js]
---------
-client.cluster.deleteRepository([params, [callback]])
---------
-
-// no description
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`repository`::
-`String, String[], Boolean` -- A comma-separated list of repository names
-
-[[api-cluster-deletesnapshot]]
-=== `cluster.deleteSnapshot`
-
-[source,js]
---------
-client.cluster.deleteSnapshot([params, [callback]])
---------
-
-// no description
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`repository`::
-`String` -- A repository name
-`snapshot`::
-`String` -- A snapshot name
-
-[[api-cluster-getrepository]]
-=== `cluster.getRepository`
-
-[source,js]
---------
-client.cluster.getRepository([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`repository`::
-`String, String[], Boolean` -- A comma-separated list of repository names
-
 [[api-cluster-getsettings]]
 === `cluster.getSettings`
 
@@ -558,31 +433,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Date, Number` -- Explicit operation timeout for connection to master node
 `timeout`::
 `Date, Number` -- Explicit operation timeout
-
-[[api-cluster-getsnapshot]]
-=== `cluster.getSnapshot`
-
-[source,js]
---------
-client.cluster.getSnapshot([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`repository`::
-`String, String[], Boolean` -- A comma-separated list of repository names
-`snapshot`::
-`String, String[], Boolean` -- A comma-separated list of snapshot names
 
 [[api-cluster-health]]
 === `cluster.health`
@@ -620,147 +470,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String` -- Wait until cluster is in a specific state
 `index`::
 `String` -- Limit the information returned to a specific index
-
-[[api-cluster-nodehotthreads]]
-=== `cluster.nodeHotThreads`
-
-[source,js]
---------
-client.cluster.nodeHotThreads([params, [callback]])
---------
-
-Returns information about the hottest threads in the cluster or on a specific node as a String. The information is returned as text, and allows you to understand what are currently the most taxing operations happening in the cluster, for debugging or monitoring purposes.
-
-WARNING: This endpoint returns plain text
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
-
-.Return 10 hottest threads
-[source,js]
----------
-client.cluster.nodeHotThreads({
-  threads: 10
-  nodeId: 'mymisbehavingnode',
-  maxRetries: 10
-}, function (error, response) {
-  console.log(response);
-})
----------
-
-
-==== Params
-
-[horizontal]
-`interval`::
-`Date, Number` -- The interval for the second sampling of threads
-`snapshots`::
-`Number` -- Number of samples of thread stacktrace (default: 10)
-`threads`::
-`Number` -- Specify the number of threads to provide information for (default: 3)
-`type`::
-`String` -- The type to sample (default: cpu)
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-[[api-cluster-nodeinfo]]
-=== `cluster.nodeInfo`
-
-[source,js]
---------
-client.cluster.nodeInfo([params, [callback]])
---------
-
-Retrieve one or more (or all) of the cluster nodes' information.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
-
-.Return information about JVM
-[source,js]
----------
-client.cluster.nodeInfo({ jvm: true })
-  .then(function (response) {
-    // enjoy your sweet info!
-  }, function (error) {
-    // scream!
-  })
----------
-
-
-==== Params
-
-[horizontal]
-`flatSettings`::
-`Boolean` -- Return settings in flat format (default: false)
-`human`::
-`Boolean` -- Whether to return time and byte values in human-readable format.
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-`metric`::
-`String, String[], Boolean` -- A comma-separated list of metrics you wish returned. Leave empty to return all.
-
-[[api-cluster-nodeshutdown]]
-=== `cluster.nodeShutdown`
-
-[source,js]
---------
-client.cluster.nodeShutdown([params, [callback]])
---------
-
-Shutdown one or more (or all) nodes in the cluster.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`delay`::
-`Date, Number` -- Set the delay for the operation (default: 1s)
-`exit`::
-`Boolean` -- Exit the JVM as well (default: true)
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
-
-[[api-cluster-nodestats]]
-=== `cluster.nodeStats`
-
-[source,js]
---------
-client.cluster.nodeStats([params, [callback]])
---------
-
-Retrieve one or more (or all) of the cluster nodes statistics.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`completionFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-`fielddataFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-`fields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-`groups`::
-`Boolean` -- A comma-separated list of search groups for `search` index metric
-`human`::
-`Boolean` -- Whether to return time and byte values in human-readable format.
-`[level=node]`::
-`String` -- Return indices stats aggregated at node, index or shard level
-`types`::
-`String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
-`metric`::
-`String, String[], Boolean` -- Limit the information returned to the specified metrics
-`indexMetric`::
-`String, String[], Boolean` -- Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
 [[api-cluster-putsettings]]
 === `cluster.putSettings`
@@ -809,33 +518,6 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Date, Number` -- Explicit operation timeout for connection to master node
 `timeout`::
 `Date, Number` -- Explicit operation timeout
-
-[[api-cluster-restoresnapshot]]
-=== `cluster.restoreSnapshot`
-
-[source,js]
---------
-client.cluster.restoreSnapshot([params, [callback]])
---------
-
-// no description
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`waitForCompletion`::
-`Boolean` -- Should this request wait until the operation has completed before returning
-`repository`::
-`String` -- A repository name
-`snapshot`::
-`String` -- A snapshot name
 
 [[api-cluster-state]]
 === `cluster.state`
@@ -1374,10 +1056,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`exclude`::
-`String, String[], Boolean` -- A list of fields to exclude from the returned _source field
-`include`::
-`String, String[], Boolean` -- A list of fields to extract and return from the _source field
 `parent`::
 `String` -- The ID of the parent document
 `preference`::
@@ -2719,6 +2397,126 @@ client.msearch({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to use as default
 
+[[api-nodes-hotthreads]]
+=== `nodes.hotThreads`
+
+[source,js]
+--------
+client.nodes.hotThreads([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`interval`::
+`Date, Number` -- The interval for the second sampling of threads
+`snapshots`::
+`Number` -- Number of samples of thread stacktrace (default: 10)
+`threads`::
+`Number` -- Specify the number of threads to provide information for (default: 3)
+`type`::
+`String` -- The type to sample (default: cpu)
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+[[api-nodes-info]]
+=== `nodes.info`
+
+[source,js]
+--------
+client.nodes.info([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`flatSettings`::
+`Boolean` -- Return settings in flat format (default: false)
+`human`::
+`Boolean` -- Whether to return time and byte values in human-readable format.
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+`metric`::
+`String, String[], Boolean` -- A comma-separated list of metrics you wish returned. Leave empty to return all.
+
+[[api-nodes-shutdown]]
+=== `nodes.shutdown`
+
+[source,js]
+--------
+client.nodes.shutdown([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`delay`::
+`Date, Number` -- Set the delay for the operation (default: 1s)
+`exit`::
+`Boolean` -- Exit the JVM as well (default: true)
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
+
+[[api-nodes-stats]]
+=== `nodes.stats`
+
+[source,js]
+--------
+client.nodes.stats([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`completionFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+`fielddataFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+`groups`::
+`Boolean` -- A comma-separated list of search groups for `search` index metric
+`human`::
+`Boolean` -- Whether to return time and byte values in human-readable format.
+`[level=node]`::
+`String` -- Return indices stats aggregated at node, index or shard level
+`types`::
+`String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
+`metric`::
+`String, String[], Boolean` -- Limit the information returned to the specified metrics
+`indexMetric`::
+`String, String[], Boolean` -- Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
 [[api-percolate]]
 === `percolate`
 
@@ -3000,6 +2798,183 @@ client.search({
 `String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
+
+[[api-snapshot-create]]
+=== `snapshot.create`
+
+[source,js]
+--------
+client.snapshot.create([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`waitForCompletion`::
+`Boolean` -- Should this request wait until the operation has completed before returning
+`repository`::
+`String` -- A repository name
+`snapshot`::
+`String` -- A snapshot name
+
+[[api-snapshot-createrepository]]
+=== `snapshot.createRepository`
+
+[source,js]
+--------
+client.snapshot.createRepository([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`repository`::
+`String` -- A repository name
+
+[[api-snapshot-delete]]
+=== `snapshot.delete`
+
+[source,js]
+--------
+client.snapshot.delete([params, [callback]])
+--------
+
+// no description
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`repository`::
+`String` -- A repository name
+`snapshot`::
+`String` -- A snapshot name
+
+[[api-snapshot-deleterepository]]
+=== `snapshot.deleteRepository`
+
+[source,js]
+--------
+client.snapshot.deleteRepository([params, [callback]])
+--------
+
+// no description
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`repository`::
+`String, String[], Boolean` -- A comma-separated list of repository names
+
+[[api-snapshot-get]]
+=== `snapshot.get`
+
+[source,js]
+--------
+client.snapshot.get([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`repository`::
+`String, String[], Boolean` -- A comma-separated list of repository names
+`snapshot`::
+`String, String[], Boolean` -- A comma-separated list of snapshot names
+
+[[api-snapshot-getrepository]]
+=== `snapshot.getRepository`
+
+[source,js]
+--------
+client.snapshot.getRepository([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`repository`::
+`String, String[], Boolean` -- A comma-separated list of repository names
+
+[[api-snapshot-restore]]
+=== `snapshot.restore`
+
+[source,js]
+--------
+client.snapshot.restore([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`waitForCompletion`::
+`Boolean` -- Should this request wait until the operation has completed before returning
+`repository`::
+`String` -- A repository name
+`snapshot`::
+`String` -- A snapshot name
 
 [[api-suggest]]
 === `suggest`

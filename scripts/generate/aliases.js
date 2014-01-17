@@ -1,5 +1,5 @@
 module.exports = {
-  'cluster.nodeHotThreads': [
+  'nodes.hotThreads': [
     '/_cluster/nodes/hotthreads',
     '/_cluster/nodes/hot_threads',
     '/_nodes/hot_threads',
@@ -7,7 +7,7 @@ module.exports = {
     '/_cluster/nodes/{node_id}/hot_threads',
     '/_nodes/{node_id}/hot_threads'
   ],
-  'cluster.nodeInfo': [
+  'nodes.info': [
     '/_cluster/nodes',
     '/_nodes/settings',
     '/_nodes/os',
@@ -29,10 +29,10 @@ module.exports = {
     '/_nodes/{node_id}/http',
     '/_nodes/{node_id}/plugin'
   ],
-  'cluster.nodeShutdown': [
+  'nodes.shutdown': [
     '/_cluster/nodes/_shutdown'
   ],
-  'cluster.nodeStats': [
+  'nodes.stats': [
     '/_cluster/nodes/stats',
     '/_nodes/stats/{metric_family}',
     '/_nodes/stats/indices/{metric}/{fields}',
@@ -93,6 +93,10 @@ module.exports = {
     '/{index}/_stats/fielddata/{fields}'
   ],
   'cluster.createSnapshot': [
+    '/_snapshot/{repository}/{snapshot}/_create'
+  ],
+  'snapshot.create': [
+    '/_snapshot/{repository}/{snapshot}',
     '/_snapshot/{repository}/{snapshot}/_create'
   ]
 };
