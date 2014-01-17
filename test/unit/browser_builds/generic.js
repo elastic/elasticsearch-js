@@ -1,5 +1,6 @@
 /* jshint browser:true */
 var expect = require('expect.js');
+var Transport = require('../../../src/lib/transport');
 
 describe('elasticsearch namespace', function () {
   var es = window.elasticsearch;
@@ -11,7 +12,8 @@ describe('elasticsearch namespace', function () {
   });
   it('can create a client', function () {
     var client = new es.Client({ hosts: null });
-    expect(client).to.have.keys('ping', 'transport', 'indices', 'cluster');
+    expect(client).to.have.keys('transport');
+    expect(client.transport).to.be.a(es.Transport);
     client.close();
   });
 });

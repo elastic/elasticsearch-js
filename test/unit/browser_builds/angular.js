@@ -46,7 +46,8 @@ describe('Angular esFactory', function () {
       return function () {
         try {
           var client = esFactory({ hosts: null });
-          expect(client).to.have.keys('ping', 'transport', 'indices', 'cluster');
+          expect(client).to.have.keys('transport');
+          expect(client.transport).to.be.a(esFactory.Transport);
           client.close();
         } catch (e) {
           return done(e);
