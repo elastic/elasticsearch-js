@@ -21,22 +21,6 @@ MOCHA_REPORTER="../../../test/utils/jenkins-reporter.js"
 
 source $HERE/_utils.sh
 
-#####
-# call grunt, but make sure it's installed first
-#####
-function grunt_ {
-  local DO="$*"
-
-  if [[ ! -x "`which grunt`" ]]; then
-    group "start:install_grunt"
-      echo "installing grunt-cli"
-      call npm install -g grunt-cli
-    group "end:install_grunt"
-  fi
-
-  call grunt $DO
-}
-
 # normalize ES_BRANCH into TESTING_BRANCH
 if [[ -n "$ES_BRANCH" ]]; then
   TESTING_BRANCH=$ES_BRANCH
@@ -53,7 +37,7 @@ if [[ "$NODE_UNIT" != "0" ]]; then
         cat test/junit-node-unit.xml
       fi
     else
-      grunt_ jshint mochacov:unit
+      _grunt jshint mochacov:unit
     fi
   group "end:unit_tests"
 fi
@@ -88,7 +72,7 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
       fi
     else
       manage_es start $TESTING_BRANCH $ES_RELEASE
-      grunt_ mochacov:integration_$TESTING_BRANCH
+      _grunt mochacov:integration_$TESTING_BRANCH
       manage_es stop $TESTING_BRANCH $ES_RELEASE
     fi
   group "end:integration tests"
@@ -96,12 +80,13 @@ fi
 
 if [[ "$BROWSER_UNIT" == "1" ]]; then
   group "start:browser tests"
-    grunt_ browser_clients:build run:browser_test_server saucelabs-mocha
+    _grunt browser_clients:build run:browser_test_server saucelabs-mocha
   group "end:browser tests"
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
   group "start:ship coverage"
-    grunt_ mochacov:ship_coverage
+    ensure_grunt
+    grunt mochacov:ship_coverage
   group "stop:ship coverage"
 fi

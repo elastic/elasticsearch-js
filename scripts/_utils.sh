@@ -27,6 +27,23 @@ function call {
   fi
 }
 
+function ensure_grunt {
+  if [[ ! -x "`which grunt`" ]]; then
+    group "start:install_grunt"
+      echo "installing grunt-cli"
+      call npm install -g grunt-cli
+    group "end:install_grunt"
+  fi
+}
+
+#####
+# call grunt, but make sure it's installed first
+#####
+function _grunt {
+  ensure_grunt
+  call grunt $*
+}
+
 #####
 # Download a version of ES and get it running
 # @arg ES_BRANCH - The branch to run off of
