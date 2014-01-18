@@ -3,7 +3,7 @@
 The official low-level Elasticsearch client for Node.js and the browser.
 
 [![Build Status](https://www.codeship.io/projects/f0c2b4a0-61c9-0131-3fd3-367b94dc0d60/status?branch=master)](https://www.codeship.io/projects/12289)
-[![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
+<br>
 [![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png)](https://coveralls.io/r/elasticsearch/elasticsearch-js)
 
 ## Features
@@ -20,7 +20,12 @@ The official low-level Elasticsearch client for Node.js and the browser.
 npm install elasticsearch
 ```
 
+<!-- wow bling -->
+[![NPM](https://nodei.co/npm/ecstatic.png?downloads=true)](https://npmjs.org/package/elasticsearch)
+
 ## Browser Builds
+
+<!-- [![Selenium Tests Status](https://saucelabs.com/browser-matrix/elasticsearch-js.svg)](https://saucelabs.com/u/elasticsearch-js) -->
 
 We also provide builds of the elasticsearch.js client for use in the browser. If your project uses Angular or jQuery we also provide specifc builds for you, simply include the `elasticsearch.{{lib}}.js` files in your project instead.
 
@@ -35,6 +40,12 @@ We also provide builds of the elasticsearch.js client for use in the browser. If
  - [Extending Core Components](http://elasticsearch.github.io/elasticsearch-js/index.html#extending)
  - [Logging](http://elasticsearch.github.io/elasticsearch-js/index.html#logging)
 
+## Supported Elasticsearch Versions
+
+[![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
+
+Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases **0.90.5 and greater**. We also test against the latest changes in the 0.90 and master branches of the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVerson` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
+
 ## Examples
 
 Create a client instance
@@ -46,10 +57,12 @@ var client = new elasticsearch.Client({
 });
 ```
 
-Send a HEAD request to "/?hello=elasticsearch" and allow up to 1 second for it to complete.
+Send a HEAD request to `/?hello=elasticsearch` and allow up to 1 second for it to complete.
 ```js
 client.ping({
+  // ping usually has a 100ms timeout
   requestTimeout: 1000,
+
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
 }, function (error) {
@@ -97,7 +110,7 @@ client.search({
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2013 Elasticsearch <http://www.elasticsearch.org>
+    Copyright (c) 2014 Elasticsearch <http://www.elasticsearch.org>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
