@@ -6,7 +6,7 @@
   "name": "elasticsearch",
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
-  "homepage": "http://elasticsearch.github.io/elasticsearch-js/",
+  "homepage": "http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "1.2.0",
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
@@ -48,7 +48,7 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.4",
     "express": "~3.4.7",
-    "grunt-saucelabs": "~4.1.2"
+    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git"
   },
   "license": "Apache 2.0",
   "dependencies": {
