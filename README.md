@@ -104,7 +104,7 @@ client.search({
 });
 ```
 
-~~More examples and detailed information about each method are available [here](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/master/index.html)~~
+More examples and detailed information about each method are available [here](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/master/index.html)
 
 ## License
 
