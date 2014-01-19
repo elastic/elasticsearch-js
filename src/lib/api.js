@@ -1700,19 +1700,14 @@ api.indices.prototype.close = ca({
       name: 'expand_wildcards'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_close',
-      req: {
-        index: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_close',
+    req: {
+      index: {
+        type: 'string'
       }
-    },
-    {
-      fmt: '/_close'
     }
-  ],
+  },
   method: 'POST'
 });
 
@@ -1763,19 +1758,14 @@ api.indices.prototype['delete'] = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>',
+    req: {
+      index: {
+        type: 'list'
       }
-    },
-    {
-      fmt: '/'
     }
-  ],
+  },
   method: 'DELETE'
 });
 

@@ -244,6 +244,7 @@ module.exports = function (branch, done) {
         location: location,
         docUrl: def.documentation,
         name: spec.name,
+        namespace: spec.name.split('.').slice(0, -1).join('.'),
         allParams: allParams
       };
 

@@ -3,6 +3,73 @@
 
 NOTE: This is currently the default API, but with the upcoming release of Elasticsearch 1.0 that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change when the default does.
 
+
+[[js-api-method-index]]
+* <<api-bulk-0-90,bulk>>
+* <<api-clearscroll-0-90,clearScroll>>
+* <<api-count-0-90,count>>
+* <<api-create-0-90,create>>
+* <<api-delete-0-90,delete>>
+* <<api-deletebyquery-0-90,deleteByQuery>>
+* <<api-exists-0-90,exists>>
+* <<api-explain-0-90,explain>>
+* <<api-get-0-90,get>>
+* <<api-getsource-0-90,getSource>>
+* <<api-index-0-90,index>>
+* <<api-info-0-90,info>>
+* <<api-mget-0-90,mget>>
+* <<api-mlt-0-90,mlt>>
+* <<api-msearch-0-90,msearch>>
+* <<api-percolate-0-90,percolate>>
+* <<api-ping-0-90,ping>>
+* <<api-scroll-0-90,scroll>>
+* <<api-search-0-90,search>>
+* <<api-suggest-0-90,suggest>>
+* <<api-update-0-90,update>>
+* <<api-cluster-getsettings-0-90,cluster.getSettings>>
+* <<api-cluster-health-0-90,cluster.health>>
+* <<api-cluster-nodehotthreads-0-90,cluster.nodeHotThreads>>
+* <<api-cluster-nodeinfo-0-90,cluster.nodeInfo>>
+* <<api-cluster-nodeshutdown-0-90,cluster.nodeShutdown>>
+* <<api-cluster-nodestats-0-90,cluster.nodeStats>>
+* <<api-cluster-putsettings-0-90,cluster.putSettings>>
+* <<api-cluster-reroute-0-90,cluster.reroute>>
+* <<api-cluster-state-0-90,cluster.state>>
+* <<api-indices-analyze-0-90,indices.analyze>>
+* <<api-indices-clearcache-0-90,indices.clearCache>>
+* <<api-indices-close-0-90,indices.close>>
+* <<api-indices-create-0-90,indices.create>>
+* <<api-indices-delete-0-90,indices.delete>>
+* <<api-indices-deletealias-0-90,indices.deleteAlias>>
+* <<api-indices-deletemapping-0-90,indices.deleteMapping>>
+* <<api-indices-deletetemplate-0-90,indices.deleteTemplate>>
+* <<api-indices-deletewarmer-0-90,indices.deleteWarmer>>
+* <<api-indices-exists-0-90,indices.exists>>
+* <<api-indices-existsalias-0-90,indices.existsAlias>>
+* <<api-indices-existstype-0-90,indices.existsType>>
+* <<api-indices-flush-0-90,indices.flush>>
+* <<api-indices-getalias-0-90,indices.getAlias>>
+* <<api-indices-getaliases-0-90,indices.getAliases>>
+* <<api-indices-getfieldmapping-0-90,indices.getFieldMapping>>
+* <<api-indices-getmapping-0-90,indices.getMapping>>
+* <<api-indices-getsettings-0-90,indices.getSettings>>
+* <<api-indices-gettemplate-0-90,indices.getTemplate>>
+* <<api-indices-getwarmer-0-90,indices.getWarmer>>
+* <<api-indices-open-0-90,indices.open>>
+* <<api-indices-optimize-0-90,indices.optimize>>
+* <<api-indices-putalias-0-90,indices.putAlias>>
+* <<api-indices-putmapping-0-90,indices.putMapping>>
+* <<api-indices-putsettings-0-90,indices.putSettings>>
+* <<api-indices-puttemplate-0-90,indices.putTemplate>>
+* <<api-indices-putwarmer-0-90,indices.putWarmer>>
+* <<api-indices-refresh-0-90,indices.refresh>>
+* <<api-indices-segments-0-90,indices.segments>>
+* <<api-indices-snapshotindex-0-90,indices.snapshotIndex>>
+* <<api-indices-stats-0-90,indices.stats>>
+* <<api-indices-status-0-90,indices.status>>
+* <<api-indices-updatealiases-0-90,indices.updateAliases>>
+* <<api-indices-validatequery-0-90,indices.validateQuery>>
+
 [[api-bulk-0-90]]
 === `bulk`
 
@@ -54,6 +121,8 @@ client.bulk({
 `index`::
 `String` -- Default index for items which don't provide one
 
+link:#[back to top]
+
 [[api-clearscroll-0-90]]
 === `clearScroll`
 
@@ -75,301 +144,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `scrollId`::
 `String, String[], Boolean` -- A comma-separated list of scroll IDs to clear
 
-[[api-cluster-getsettings-0-90]]
-=== `cluster.getSettings`
-
-[source,js]
---------
-client.cluster.getSettings([params, [callback]])
---------
-
-Get cluster settings (previously set with `putSettings()`)
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-
-[[api-cluster-health-0-90]]
-=== `cluster.health`
-
-[source,js]
---------
-client.cluster.health([params, [callback]])
---------
-
-Get a very simple status on the health of the cluster.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-health.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[level=cluster]`::
-`String` -- Specify the level of detail for returned information
-`local`::
-`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
-`masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`waitForActiveShards`::
-`Number` -- Wait until the specified number of shards is active
-`waitForNodes`::
-`String` -- Wait until the specified number of nodes is available
-`waitForRelocatingShards`::
-`Number` -- Wait until the specified number of relocating shards is finished
-`waitForStatus`::
-`String` -- Wait until cluster is in a specific state
-`index`::
-`String` -- Limit the information returned to a specific index
-
-[[api-cluster-nodehotthreads-0-90]]
-=== `cluster.nodeHotThreads`
-
-[source,js]
---------
-client.cluster.nodeHotThreads([params, [callback]])
---------
-
-Returns information about the hottest threads in the cluster or on a specific node as a String. The information is returned as text, and allows you to understand what are currently the most taxing operations happening in the cluster, for debugging or monitoring purposes.
-
-WARNING: This endpoint returns plain text
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
-
-.Return 10 hottest threads
-[source,js]
----------
-client.cluster.nodeHotThreads({
-  threads: 10
-  nodeId: 'mymisbehavingnode',
-  maxRetries: 10
-}, function (error, response) {
-  console.log(response);
-})
----------
-
-
-==== Params
-
-[horizontal]
-`interval`::
-`Date, Number` -- The interval for the second sampling of threads
-`snapshots`::
-`Number` -- Number of samples of thread stacktrace (default: 10)
-`threads`::
-`Number` -- Specify the number of threads to provide information for (default: 3)
-`type`::
-`String` -- The type to sample (default: cpu)
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-[[api-cluster-nodeinfo-0-90]]
-=== `cluster.nodeInfo`
-
-[source,js]
---------
-client.cluster.nodeInfo([params, [callback]])
---------
-
-Retrieve one or more (or all) of the cluster nodes' information.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
-
-.Return information about JVM
-[source,js]
----------
-client.cluster.nodeInfo({ jvm: true })
-  .then(function (response) {
-    // enjoy your sweet info!
-  }, function (error) {
-    // scream!
-  })
----------
-
-
-==== Params
-
-[horizontal]
-`all`::
-`Boolean` -- Return all available information
-`clear`::
-`Boolean` -- Reset the default settings
-`http`::
-`Boolean` -- Return information about HTTP
-`jvm`::
-`Boolean` -- Return information about the JVM
-`network`::
-`Boolean` -- Return information about network
-`os`::
-`Boolean` -- Return information about the operating system
-`plugin`::
-`Boolean` -- Return information about plugins
-`process`::
-`Boolean` -- Return information about the Elasticsearch process
-`settings`::
-`Boolean` -- Return information about node settings
-`threadPool`::
-`Boolean` -- Return information about the thread pool
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`transport`::
-`Boolean` -- Return information about transport
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-[[api-cluster-nodeshutdown-0-90]]
-=== `cluster.nodeShutdown`
-
-[source,js]
---------
-client.cluster.nodeShutdown([params, [callback]])
---------
-
-Shutdown one or more (or all) nodes in the cluster.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`delay`::
-`Date, Number` -- Set the delay for the operation (default: 1s)
-`exit`::
-`Boolean` -- Exit the JVM as well (default: true)
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
-
-[[api-cluster-nodestats-0-90]]
-=== `cluster.nodeStats`
-
-[source,js]
---------
-client.cluster.nodeStats([params, [callback]])
---------
-
-Retrieve one or more (or all) of the cluster nodes statistics.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`all`::
-`Boolean` -- Return all available information
-`clear`::
-`Boolean` -- Reset the default level of detail
-`fields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `indices` metric family (supports wildcards)
-`fs`::
-`Boolean` -- Return information about the filesystem
-`http`::
-`Boolean` -- Return information about HTTP
-`indices`::
-`Boolean` -- Return information about indices
-`jvm`::
-`Boolean` -- Return information about the JVM
-`network`::
-`Boolean` -- Return information about network
-`os`::
-`Boolean` -- Return information about the operating system
-`process`::
-`Boolean` -- Return information about the Elasticsearch process
-`threadPool`::
-`Boolean` -- Return information about the thread pool
-`transport`::
-`Boolean` -- Return information about transport
-`metricFamily`::
-`String` -- Limit the information returned to a certain metric family
-`metric`::
-`String` -- Limit the information returned for `indices` family to a specific metric
-`nodeId`::
-`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-[[api-cluster-putsettings-0-90]]
-=== `cluster.putSettings`
-
-[source,js]
---------
-client.cluster.putSettings([params, [callback]])
---------
-
-Update cluster wide specific settings.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-
-[[api-cluster-reroute-0-90]]
-=== `cluster.reroute`
-
-[source,js]
---------
-client.cluster.reroute([params, [callback]])
---------
-
-Explicitly execute a cluster reroute allocation command including specific commands.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-reroute.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`dryRun`::
-`Boolean` -- Simulate the operation only and return the resulting state
-`filterMetadata`::
-`Boolean` -- Don't return cluster state metadata (default: false)
-
-[[api-cluster-state-0-90]]
-=== `cluster.state`
-
-[source,js]
---------
-client.cluster.state([params, [callback]])
---------
-
-Get comprehensive details about the state of the whole cluster (indices settings, allocations, etc).
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-state.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`filterBlocks`::
-`Boolean` -- Do not return information about blocks
-`filterIndexTemplates`::
-`Boolean` -- Do not return information about index templates
-`filterIndices`::
-`String, String[], Boolean` -- Limit returned metadata information to specific indices
-`filterMetadata`::
-`Boolean` -- Do not return information about indices metadata
-`filterNodes`::
-`Boolean` -- Do not return information about nodes
-`filterRoutingTable`::
-`Boolean` -- Do not return information about shard allocation (`routing_table` and `routing_nodes`)
-`local`::
-`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+link:#[back to top]
 
 [[api-count-0-90]]
 === `count`
@@ -440,6 +215,8 @@ client.count(
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the results
 
+link:#[back to top]
+
 [[api-create-0-90]]
 === `create`
 
@@ -504,6 +281,8 @@ client.create({
 `type`::
 `String` -- The type of the document
 
+link:#[back to top]
+
 [[api-delete-0-90]]
 === `delete`
 
@@ -554,6 +333,8 @@ client.delete({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+
+link:#[back to top]
 
 [[api-deletebyquery-0-90]]
 === `deleteByQuery`
@@ -620,6 +401,8 @@ client.delete_by_query({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the operation
 
+link:#[back to top]
+
 [[api-exists-0-90]]
 === `exists`
 
@@ -668,6 +451,8 @@ client.exists({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
+
+link:#[back to top]
 
 [[api-explain-0-90]]
 === `explain`
@@ -755,6 +540,8 @@ client.explain({
 `type`::
 `String` -- The type of the document
 
+link:#[back to top]
+
 [[api-get-0-90]]
 === `get`
 
@@ -808,6 +595,8 @@ client.get({
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 
+link:#[back to top]
+
 [[api-getsource-0-90]]
 === `getSource`
 
@@ -846,6 +635,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document; use `_all` to fetch the first document matching the ID across all types
+
+link:#[back to top]
 
 [[api-index-0-90]]
 === `index`
@@ -916,945 +707,7 @@ client.index({
 `type`::
 `String` -- The type of the document
 
-[[api-indices-analyze-0-90]]
-=== `indices.analyze`
-
-[source,js]
---------
-client.indices.analyze([params, [callback]])
---------
-
-Perform the analysis process on a text and return the tokens breakdown of the text.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-analyze.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`analyzer`::
-`String` -- The name of the analyzer to use
-`field`::
-`String` -- Use the analyzer configured for this field (instead of passing the analyzer name)
-`filters`::
-`String, String[], Boolean` -- A comma-separated list of filters to use for the analysis
-`index`::
-`String` -- The name of the index to scope the operation
-`preferLocal`::
-`Boolean` -- With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
-`text`::
-`String` -- The text on which the analysis should be performed (when request body is not used)
-`tokenizer`::
-`String` -- The name of the tokenizer to use for the analysis
-`[format=detailed]`::
-`String` -- Format of the output
-
-[[api-indices-clearcache-0-90]]
-=== `indices.clearCache`
-
-[source,js]
---------
-client.indices.clearCache([params, [callback]])
---------
-
-Clear either all caches or specific cached associated with one ore more indices.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-clearcache.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`fieldData`::
-`Boolean` -- Clear field data
-`fielddata`::
-`Boolean` -- Clear field data
-`fields`::
-`String, String[], Boolean` -- A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
-`filter`::
-`Boolean` -- Clear filter caches
-`filterCache`::
-`Boolean` -- Clear filter caches
-`filterKeys`::
-`Boolean` -- A comma-separated list of keys to clear when using the `filter_cache` parameter (default: all)
-`id`::
-`Boolean` -- Clear ID caches for parent/child
-`idCache`::
-`Boolean` -- Clear ID caches for parent/child
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index name to limit the operation
-`recycler`::
-`Boolean` -- Clear the recycler cache
-
-[[api-indices-close-0-90]]
-=== `indices.close`
-
-[source,js]
---------
-client.indices.close([params, [callback]])
---------
-
-Close an index to remove it's overhead from the cluster. Closed index is blocked for read/write operations.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String` -- The name of the index
-
-[[api-indices-create-0-90]]
-=== `indices.create`
-
-[source,js]
---------
-client.indices.create([params, [callback]])
---------
-
-Create an index in Elasticsearch.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-create-index.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String` -- The name of the index
-
-[[api-indices-delete-0-90]]
-=== `indices.delete`
-
-[source,js]
---------
-client.indices.delete([params, [callback]])
---------
-
-Delete an index in Elasticsearch
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-index.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
-
-[[api-indices-deletealias-0-90]]
-=== `indices.deleteAlias`
-
-[source,js]
---------
-client.indices.deleteAlias([params, [callback]])
---------
-
-Delete a specific alias.
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit timestamp for the document
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String` -- The name of the index with an alias
-`name`::
-`String` -- The name of the alias to be deleted
-
-[[api-indices-deletemapping-0-90]]
-=== `indices.deleteMapping`
-
-[source,js]
---------
-client.indices.deleteMapping([params, [callback]])
---------
-
-Delete a mapping (type definition) along with its data.
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` for all indices
-`type`::
-`String` -- The name of the document type to delete
-
-[[api-indices-deletetemplate-0-90]]
-=== `indices.deleteTemplate`
-
-[source,js]
---------
-client.indices.deleteTemplate([params, [callback]])
---------
-
-Delete an index template by its name.
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`name`::
-`String` -- The name of the template
-
-[[api-indices-deletewarmer-0-90]]
-=== `indices.deleteWarmer`
-
-[source,js]
---------
-client.indices.deleteWarmer([params, [callback]])
---------
-
-Delete an index warmer.
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
-`name`::
-`String` -- The name of the warmer (supports wildcards); leave empty to delete all warmers
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
-
-[[api-indices-exists-0-90]]
-=== `indices.exists`
-
-[source,js]
---------
-client.indices.exists([params, [callback]])
---------
-
-Return a boolean indicating whether given index exists.
-
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-settings.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of indices to check
-
-[[api-indices-existsalias-0-90]]
-=== `indices.existsAlias`
-
-[source,js]
---------
-client.indices.existsAlias([params, [callback]])
---------
-
-Return a boolean indicating whether given alias exists.
-
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
-`name`::
-`String, String[], Boolean` -- A comma-separated list of alias names to return
-
-[[api-indices-existstype-0-90]]
-=== `indices.existsType`
-
-[source,js]
---------
-client.indices.existsType([params, [callback]])
---------
-
-Check if a type/types exists in an index/indices.
-
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-types-exists.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to check
-
-[[api-indices-flush-0-90]]
-=== `indices.flush`
-
-[source,js]
---------
-client.indices.flush([params, [callback]])
---------
-
-Explicitly flush one or more indices.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-flush.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`force`::
-`Boolean` -- Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
-`full`::
-`Boolean` -- If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`refresh`::
-`Boolean` -- Refresh the index after performing the operation
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
-
-[[api-indices-getalias-0-90]]
-=== `indices.getAlias`
-
-[source,js]
---------
-client.indices.getAlias([params, [callback]])
---------
-
-Retrieve a specified alias.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
-`name`::
-`String, String[], Boolean` -- A comma-separated list of alias names to return
-
-[[api-indices-getaliases-0-90]]
-=== `indices.getAliases`
-
-[source,js]
---------
-client.indices.getAliases([params, [callback]])
---------
-
-Retrieve specified aliases
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
-
-[[api-indices-getfieldmapping-0-90]]
-=== `indices.getFieldMapping`
-
-[source,js]
---------
-client.indices.getFieldMapping([params, [callback]])
---------
-
-Retrieve mapping definition of a specific field.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-field-mapping.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`includeDefaults`::
-`Boolean` -- Whether the default mapping values should be returned as well
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types
-`field`::
-`String, String[], Boolean` -- A comma-separated list of fields
-
-[[api-indices-getmapping-0-90]]
-=== `indices.getMapping`
-
-[source,js]
---------
-client.indices.getMapping([params, [callback]])
---------
-
-Retrieve mapping definition of index or index/type.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types
-
-[[api-indices-getsettings-0-90]]
-=== `indices.getSettings`
-
-[source,js]
---------
-client.indices.getSettings([params, [callback]])
---------
-
-Retrieve settings for one or more (or all) indices.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-gettemplate-0-90]]
-=== `indices.getTemplate`
-
-[source,js]
---------
-client.indices.getTemplate([params, [callback]])
---------
-
-Retrieve an index template by its name.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`name`::
-`String` -- The name of the template
-
-[[api-indices-getwarmer-0-90]]
-=== `indices.getWarmer`
-
-[source,js]
---------
-client.indices.getWarmer([params, [callback]])
---------
-
-Retreieve an index warmer.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
-`name`::
-`String` -- The name of the warmer (supports wildcards); leave empty to get all warmers
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
-
-[[api-indices-open-0-90]]
-=== `indices.open`
-
-[source,js]
---------
-client.indices.open([params, [callback]])
---------
-
-Open a closed index, making it available for search.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String` -- The name of the index
-
-[[api-indices-optimize-0-90]]
-=== `indices.optimize`
-
-[source,js]
---------
-client.indices.optimize([params, [callback]])
---------
-
-Explicitly optimize one or more indices.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-optimize.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`flush`::
-`Boolean` -- Specify whether the index should be flushed after performing the operation (default: true)
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`maxNumSegments`::
-`Number` -- The number of segments the index should be merged into (default: dynamic)
-`onlyExpungeDeletes`::
-`Boolean` -- Specify whether the operation should only expunge deleted documents
-`operationThreading`::
-`Anything` -- TODO: ?
-`refresh`::
-`Boolean` -- Specify whether the index should be refreshed after performing the operation (default: true)
-`waitForMerge`::
-`Boolean` -- Specify whether the request should block until the merge process is finished (default: true)
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-putalias-0-90]]
-=== `indices.putAlias`
-
-[source,js]
---------
-client.indices.putAlias([params, [callback]])
---------
-
-Create an alias for a specific index/indices.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Explicit timestamp for the document
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String` -- The name of the index with an alias
-`name`::
-`String` -- The name of the alias to be created or updated
-
-[[api-indices-putmapping-0-90]]
-=== `indices.putMapping`
-
-[source,js]
---------
-client.indices.putMapping([params, [callback]])
---------
-
-Register specific mapping definition for a specific type.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-put-mapping.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`ignoreConflicts`::
-`Boolean` -- Specify whether to ignore conflicts while updating the mapping (default: false)
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` to perform the operation on all indices
-`type`::
-`String` -- The name of the document type
-
-[[api-indices-putsettings-0-90]]
-=== `indices.putSettings`
-
-[source,js]
---------
-client.indices.putSettings([params, [callback]])
---------
-
-Change specific index level settings in real time.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-update-settings.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-puttemplate-0-90]]
-=== `indices.putTemplate`
-
-[source,js]
---------
-client.indices.putTemplate([params, [callback]])
---------
-
-Create an index template that will automatically be applied to new indices created.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`order`::
-`Number` -- The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`name`::
-`String` -- The name of the template
-
-[[api-indices-putwarmer-0-90]]
-=== `indices.putWarmer`
-
-[source,js]
---------
-client.indices.putWarmer([params, [callback]])
---------
-
-Create an index warmer to run registered search requests to warm up the index before it is available for search.
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
-`name`::
-`String` -- The name of the warmer
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
-
-[[api-indices-refresh-0-90]]
-=== `indices.refresh`
-
-[source,js]
---------
-client.indices.refresh([params, [callback]])
---------
-
-Explicitly refresh one or more index, making all operations performed since the last refresh available for search.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-refresh.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`operationThreading`::
-`Anything` -- TODO: ?
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-segments-0-90]]
-=== `indices.segments`
-
-[source,js]
---------
-client.indices.segments([params, [callback]])
---------
-
-Retrieve low level segments information that a Lucene index (shard level) is built with.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-segments.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`operationThreading`::
-`Anything` -- TODO: ?
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-snapshotindex-0-90]]
-=== `indices.snapshotIndex`
-
-[source,js]
---------
-client.indices.snapshotIndex([params, [callback]])
---------
-
-Initiate a snapshot through the gateway of one or more indices.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
-
-[[api-indices-stats-0-90]]
-=== `indices.stats`
-
-[source,js]
---------
-client.indices.stats([params, [callback]])
---------
-
-Retrieve statistics on different operations happening on an index.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-stats.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`all`::
-`Boolean` -- Return all available information
-`clear`::
-`Boolean` -- Reset the default level of detail
-`completion`::
-`Boolean` -- Return information about completion suggester stats
-`completionFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `completion` metric (supports wildcards)
-`docs`::
-`Boolean` -- Return information about indexed and deleted documents
-`fielddata`::
-`Boolean` -- Return information about field data
-`fielddataFields`::
-`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` metric (supports wildcards)
-`fields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `search` statistics
-`filterCache`::
-`Boolean` -- Return information about filter cache
-`flush`::
-`Boolean` -- Return information about flush operations
-`get`::
-`Boolean` -- Return information about get operations
-`groups`::
-`Boolean` -- A comma-separated list of search groups for `search` statistics
-`idCache`::
-`Boolean` -- Return information about ID cache
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`indexing`::
-`Boolean` -- Return information about indexing operations
-`merge`::
-`Boolean` -- Return information about merge operations
-`refresh`::
-`Boolean` -- Return information about refresh operations
-`search`::
-`Boolean` -- Return information about search operations; use the `groups` parameter to include information for specific search groups
-`store`::
-`Boolean` -- Return information about the size of the index
-`warmer`::
-`Boolean` -- Return information about warmers
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`indexingTypes`::
-`String, String[], Boolean` -- A comma-separated list of document types to include in the `indexing` statistics
-`metricFamily`::
-`String` -- Limit the information returned to a specific metric
-`searchGroups`::
-`String, String[], Boolean` -- A comma-separated list of search groups to include in the `search` statistics
-
-[[api-indices-status-0-90]]
-=== `indices.status`
-
-[source,js]
---------
-client.indices.status([params, [callback]])
---------
-
-Get a comprehensive status information of one or more indices.
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-status.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`operationThreading`::
-`Anything` -- TODO: ?
-`recovery`::
-`Boolean` -- Return information about shard recovery
-`snapshot`::
-`Boolean` -- TODO: ?
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-[[api-indices-updatealiases-0-90]]
-=== `indices.updateAliases`
-
-[source,js]
---------
-client.indices.updateAliases([params, [callback]])
---------
-
-Update specified aliases.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`timeout`::
-`Date, Number` -- Request timeout
-`masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
-
-[[api-indices-validatequery-0-90]]
-=== `indices.validateQuery`
-
-[source,js]
---------
-client.indices.validateQuery([params, [callback]])
---------
-
-Validate a potentially expensive query without executing it.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-validate.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`explain`::
-`Boolean` -- Return detailed information about the error
-`[ignoreIndices=none]`::
-`String` -- When performed on multiple indices, allows to ignore `missing` ones
-`operationThreading`::
-`Anything` -- TODO: ?
-`source`::
-`String` -- The URL-encoded query definition (instead of using the request body)
-`q`::
-`String` -- Query in the Lucene query string syntax
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
-`type`::
-`String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
+link:#[back to top]
 
 [[api-info-0-90]]
 === `info`
@@ -1937,6 +790,8 @@ client.mget({
 `type`::
 `String` -- The type of the document
 
+link:#[back to top]
+
 [[api-mlt-0-90]]
 === `mlt`
 
@@ -2011,6 +866,8 @@ client.mlt({
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 
+link:#[back to top]
+
 [[api-msearch-0-90]]
 === `msearch`
 
@@ -2049,6 +906,8 @@ client.msearch({
 `String, String[], Boolean` -- A comma-separated list of index names to use as default
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to use as default
+
+link:#[back to top]
 
 [[api-percolate-0-90]]
 === `percolate`
@@ -2143,6 +1002,8 @@ client.percolate({
 `type`::
 `String` -- The document type
 
+link:#[back to top]
+
 [[api-ping-0-90]]
 === `ping`
 
@@ -2209,6 +1070,8 @@ client.search({
 `Duration` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `scrollId`::
 `String` -- The scroll ID
+
+link:#[back to top]
 
 [[api-search-0-90]]
 === `search`
@@ -2328,6 +1191,8 @@ client.search({
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 
+link:#[back to top]
+
 [[api-suggest-0-90]]
 === `suggest`
 
@@ -2389,6 +1254,8 @@ body: {
 `String` -- The URL-encoded request definition (instead of using request body)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
 
 [[api-update-0-90]]
 === `update`
@@ -2515,3 +1382,1323 @@ client.update({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+
+link:#[back to top]
+
+[[api-cluster-getsettings-0-90]]
+=== `cluster.getSettings`
+
+[source,js]
+--------
+client.cluster.getSettings([params, [callback]])
+--------
+
+Get cluster settings (previously set with `putSettings()`)
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+
+[[api-cluster-health-0-90]]
+=== `cluster.health`
+
+[source,js]
+--------
+client.cluster.health([params, [callback]])
+--------
+
+Get a very simple status on the health of the cluster.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-health.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[level=cluster]`::
+`String` -- Specify the level of detail for returned information
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`waitForActiveShards`::
+`Number` -- Wait until the specified number of shards is active
+`waitForNodes`::
+`String` -- Wait until the specified number of nodes is available
+`waitForRelocatingShards`::
+`Number` -- Wait until the specified number of relocating shards is finished
+`waitForStatus`::
+`String` -- Wait until cluster is in a specific state
+`index`::
+`String` -- Limit the information returned to a specific index
+
+link:#[back to top]
+
+[[api-cluster-nodehotthreads-0-90]]
+=== `cluster.nodeHotThreads`
+
+[source,js]
+--------
+client.cluster.nodeHotThreads([params, [callback]])
+--------
+
+Returns information about the hottest threads in the cluster or on a specific node as a String. The information is returned as text, and allows you to understand what are currently the most taxing operations happening in the cluster, for debugging or monitoring purposes.
+
+WARNING: This endpoint returns plain text
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
+
+.Return 10 hottest threads
+[source,js]
+---------
+client.cluster.nodeHotThreads({
+  threads: 10
+  nodeId: 'mymisbehavingnode',
+  maxRetries: 10
+}, function (error, response) {
+  console.log(response);
+})
+---------
+
+
+==== Params
+
+[horizontal]
+`interval`::
+`Date, Number` -- The interval for the second sampling of threads
+`snapshots`::
+`Number` -- Number of samples of thread stacktrace (default: 10)
+`threads`::
+`Number` -- Specify the number of threads to provide information for (default: 3)
+`type`::
+`String` -- The type to sample (default: cpu)
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+link:#[back to top]
+
+[[api-cluster-nodeinfo-0-90]]
+=== `cluster.nodeInfo`
+
+[source,js]
+--------
+client.cluster.nodeInfo([params, [callback]])
+--------
+
+Retrieve one or more (or all) of the cluster nodes' information.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
+
+.Return information about JVM
+[source,js]
+---------
+client.cluster.nodeInfo({ jvm: true })
+  .then(function (response) {
+    // enjoy your sweet info!
+  }, function (error) {
+    // scream!
+  })
+---------
+
+
+==== Params
+
+[horizontal]
+`all`::
+`Boolean` -- Return all available information
+`clear`::
+`Boolean` -- Reset the default settings
+`http`::
+`Boolean` -- Return information about HTTP
+`jvm`::
+`Boolean` -- Return information about the JVM
+`network`::
+`Boolean` -- Return information about network
+`os`::
+`Boolean` -- Return information about the operating system
+`plugin`::
+`Boolean` -- Return information about plugins
+`process`::
+`Boolean` -- Return information about the Elasticsearch process
+`settings`::
+`Boolean` -- Return information about node settings
+`threadPool`::
+`Boolean` -- Return information about the thread pool
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`transport`::
+`Boolean` -- Return information about transport
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+link:#[back to top]
+
+[[api-cluster-nodeshutdown-0-90]]
+=== `cluster.nodeShutdown`
+
+[source,js]
+--------
+client.cluster.nodeShutdown([params, [callback]])
+--------
+
+Shutdown one or more (or all) nodes in the cluster.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`delay`::
+`Date, Number` -- Set the delay for the operation (default: 1s)
+`exit`::
+`Boolean` -- Exit the JVM as well (default: true)
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
+
+link:#[back to top]
+
+[[api-cluster-nodestats-0-90]]
+=== `cluster.nodeStats`
+
+[source,js]
+--------
+client.cluster.nodeStats([params, [callback]])
+--------
+
+Retrieve one or more (or all) of the cluster nodes statistics.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`all`::
+`Boolean` -- Return all available information
+`clear`::
+`Boolean` -- Reset the default level of detail
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `indices` metric family (supports wildcards)
+`fs`::
+`Boolean` -- Return information about the filesystem
+`http`::
+`Boolean` -- Return information about HTTP
+`indices`::
+`Boolean` -- Return information about indices
+`jvm`::
+`Boolean` -- Return information about the JVM
+`network`::
+`Boolean` -- Return information about network
+`os`::
+`Boolean` -- Return information about the operating system
+`process`::
+`Boolean` -- Return information about the Elasticsearch process
+`threadPool`::
+`Boolean` -- Return information about the thread pool
+`transport`::
+`Boolean` -- Return information about transport
+`metricFamily`::
+`String` -- Limit the information returned to a certain metric family
+`metric`::
+`String` -- Limit the information returned for `indices` family to a specific metric
+`nodeId`::
+`String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+link:#[back to top]
+
+[[api-cluster-putsettings-0-90]]
+=== `cluster.putSettings`
+
+[source,js]
+--------
+client.cluster.putSettings([params, [callback]])
+--------
+
+Update cluster wide specific settings.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+
+[[api-cluster-reroute-0-90]]
+=== `cluster.reroute`
+
+[source,js]
+--------
+client.cluster.reroute([params, [callback]])
+--------
+
+Explicitly execute a cluster reroute allocation command including specific commands.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-reroute.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`dryRun`::
+`Boolean` -- Simulate the operation only and return the resulting state
+`filterMetadata`::
+`Boolean` -- Don't return cluster state metadata (default: false)
+
+link:#[back to top]
+
+[[api-cluster-state-0-90]]
+=== `cluster.state`
+
+[source,js]
+--------
+client.cluster.state([params, [callback]])
+--------
+
+Get comprehensive details about the state of the whole cluster (indices settings, allocations, etc).
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-state.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`filterBlocks`::
+`Boolean` -- Do not return information about blocks
+`filterIndexTemplates`::
+`Boolean` -- Do not return information about index templates
+`filterIndices`::
+`String, String[], Boolean` -- Limit returned metadata information to specific indices
+`filterMetadata`::
+`Boolean` -- Do not return information about indices metadata
+`filterNodes`::
+`Boolean` -- Do not return information about nodes
+`filterRoutingTable`::
+`Boolean` -- Do not return information about shard allocation (`routing_table` and `routing_nodes`)
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+
+link:#[back to top]
+
+[[api-indices-analyze-0-90]]
+=== `indices.analyze`
+
+[source,js]
+--------
+client.indices.analyze([params, [callback]])
+--------
+
+Perform the analysis process on a text and return the tokens breakdown of the text.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-analyze.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`analyzer`::
+`String` -- The name of the analyzer to use
+`field`::
+`String` -- Use the analyzer configured for this field (instead of passing the analyzer name)
+`filters`::
+`String, String[], Boolean` -- A comma-separated list of filters to use for the analysis
+`index`::
+`String` -- The name of the index to scope the operation
+`preferLocal`::
+`Boolean` -- With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+`text`::
+`String` -- The text on which the analysis should be performed (when request body is not used)
+`tokenizer`::
+`String` -- The name of the tokenizer to use for the analysis
+`[format=detailed]`::
+`String` -- Format of the output
+
+link:#[back to top]
+
+[[api-indices-clearcache-0-90]]
+=== `indices.clearCache`
+
+[source,js]
+--------
+client.indices.clearCache([params, [callback]])
+--------
+
+Clear either all caches or specific cached associated with one ore more indices.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-clearcache.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`fieldData`::
+`Boolean` -- Clear field data
+`fielddata`::
+`Boolean` -- Clear field data
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
+`filter`::
+`Boolean` -- Clear filter caches
+`filterCache`::
+`Boolean` -- Clear filter caches
+`filterKeys`::
+`Boolean` -- A comma-separated list of keys to clear when using the `filter_cache` parameter (default: all)
+`id`::
+`Boolean` -- Clear ID caches for parent/child
+`idCache`::
+`Boolean` -- Clear ID caches for parent/child
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index name to limit the operation
+`recycler`::
+`Boolean` -- Clear the recycler cache
+
+link:#[back to top]
+
+[[api-indices-close-0-90]]
+=== `indices.close`
+
+[source,js]
+--------
+client.indices.close([params, [callback]])
+--------
+
+Close an index to remove it's overhead from the cluster. Closed index is blocked for read/write operations.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String` -- The name of the index
+
+link:#[back to top]
+
+[[api-indices-create-0-90]]
+=== `indices.create`
+
+[source,js]
+--------
+client.indices.create([params, [callback]])
+--------
+
+Create an index in Elasticsearch.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-create-index.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String` -- The name of the index
+
+link:#[back to top]
+
+[[api-indices-delete-0-90]]
+=== `indices.delete`
+
+[source,js]
+--------
+client.indices.delete([params, [callback]])
+--------
+
+Delete an index in Elasticsearch
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-index.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
+
+link:#[back to top]
+
+[[api-indices-deletealias-0-90]]
+=== `indices.deleteAlias`
+
+[source,js]
+--------
+client.indices.deleteAlias([params, [callback]])
+--------
+
+Delete a specific alias.
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit timestamp for the document
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String` -- The name of the index with an alias
+`name`::
+`String` -- The name of the alias to be deleted
+
+link:#[back to top]
+
+[[api-indices-deletemapping-0-90]]
+=== `indices.deleteMapping`
+
+[source,js]
+--------
+client.indices.deleteMapping([params, [callback]])
+--------
+
+Delete a mapping (type definition) along with its data.
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` for all indices
+`type`::
+`String` -- The name of the document type to delete
+
+link:#[back to top]
+
+[[api-indices-deletetemplate-0-90]]
+=== `indices.deleteTemplate`
+
+[source,js]
+--------
+client.indices.deleteTemplate([params, [callback]])
+--------
+
+Delete an index template by its name.
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`name`::
+`String` -- The name of the template
+
+link:#[back to top]
+
+[[api-indices-deletewarmer-0-90]]
+=== `indices.deleteWarmer`
+
+[source,js]
+--------
+client.indices.deleteWarmer([params, [callback]])
+--------
+
+Delete an index warmer.
+
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
+`name`::
+`String` -- The name of the warmer (supports wildcards); leave empty to delete all warmers
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
+
+link:#[back to top]
+
+[[api-indices-exists-0-90]]
+=== `indices.exists`
+
+[source,js]
+--------
+client.indices.exists([params, [callback]])
+--------
+
+Return a boolean indicating whether given index exists.
+
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-settings.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of indices to check
+
+link:#[back to top]
+
+[[api-indices-existsalias-0-90]]
+=== `indices.existsAlias`
+
+[source,js]
+--------
+client.indices.existsAlias([params, [callback]])
+--------
+
+Return a boolean indicating whether given alias exists.
+
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+`name`::
+`String, String[], Boolean` -- A comma-separated list of alias names to return
+
+link:#[back to top]
+
+[[api-indices-existstype-0-90]]
+=== `indices.existsType`
+
+[source,js]
+--------
+client.indices.existsType([params, [callback]])
+--------
+
+Check if a type/types exists in an index/indices.
+
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-types-exists.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to check
+
+link:#[back to top]
+
+[[api-indices-flush-0-90]]
+=== `indices.flush`
+
+[source,js]
+--------
+client.indices.flush([params, [callback]])
+--------
+
+Explicitly flush one or more indices.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-flush.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`force`::
+`Boolean` -- Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
+`full`::
+`Boolean` -- If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`refresh`::
+`Boolean` -- Refresh the index after performing the operation
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
+
+link:#[back to top]
+
+[[api-indices-getalias-0-90]]
+=== `indices.getAlias`
+
+[source,js]
+--------
+client.indices.getAlias([params, [callback]])
+--------
+
+Retrieve a specified alias.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+`name`::
+`String, String[], Boolean` -- A comma-separated list of alias names to return
+
+link:#[back to top]
+
+[[api-indices-getaliases-0-90]]
+=== `indices.getAliases`
+
+[source,js]
+--------
+client.indices.getAliases([params, [callback]])
+--------
+
+Retrieve specified aliases
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+
+link:#[back to top]
+
+[[api-indices-getfieldmapping-0-90]]
+=== `indices.getFieldMapping`
+
+[source,js]
+--------
+client.indices.getFieldMapping([params, [callback]])
+--------
+
+Retrieve mapping definition of a specific field.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-field-mapping.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`includeDefaults`::
+`Boolean` -- Whether the default mapping values should be returned as well
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types
+`field`::
+`String, String[], Boolean` -- A comma-separated list of fields
+
+link:#[back to top]
+
+[[api-indices-getmapping-0-90]]
+=== `indices.getMapping`
+
+[source,js]
+--------
+client.indices.getMapping([params, [callback]])
+--------
+
+Retrieve mapping definition of index or index/type.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types
+
+link:#[back to top]
+
+[[api-indices-getsettings-0-90]]
+=== `indices.getSettings`
+
+[source,js]
+--------
+client.indices.getSettings([params, [callback]])
+--------
+
+Retrieve settings for one or more (or all) indices.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-gettemplate-0-90]]
+=== `indices.getTemplate`
+
+[source,js]
+--------
+client.indices.getTemplate([params, [callback]])
+--------
+
+Retrieve an index template by its name.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`name`::
+`String` -- The name of the template
+
+link:#[back to top]
+
+[[api-indices-getwarmer-0-90]]
+=== `indices.getWarmer`
+
+[source,js]
+--------
+client.indices.getWarmer([params, [callback]])
+--------
+
+Retreieve an index warmer.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
+`name`::
+`String` -- The name of the warmer (supports wildcards); leave empty to get all warmers
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
+
+link:#[back to top]
+
+[[api-indices-open-0-90]]
+=== `indices.open`
+
+[source,js]
+--------
+client.indices.open([params, [callback]])
+--------
+
+Open a closed index, making it available for search.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String` -- The name of the index
+
+link:#[back to top]
+
+[[api-indices-optimize-0-90]]
+=== `indices.optimize`
+
+[source,js]
+--------
+client.indices.optimize([params, [callback]])
+--------
+
+Explicitly optimize one or more indices.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-optimize.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`flush`::
+`Boolean` -- Specify whether the index should be flushed after performing the operation (default: true)
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`maxNumSegments`::
+`Number` -- The number of segments the index should be merged into (default: dynamic)
+`onlyExpungeDeletes`::
+`Boolean` -- Specify whether the operation should only expunge deleted documents
+`operationThreading`::
+`Anything` -- TODO: ?
+`refresh`::
+`Boolean` -- Specify whether the index should be refreshed after performing the operation (default: true)
+`waitForMerge`::
+`Boolean` -- Specify whether the request should block until the merge process is finished (default: true)
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-putalias-0-90]]
+=== `indices.putAlias`
+
+[source,js]
+--------
+client.indices.putAlias([params, [callback]])
+--------
+
+Create an alias for a specific index/indices.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Explicit timestamp for the document
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String` -- The name of the index with an alias
+`name`::
+`String` -- The name of the alias to be created or updated
+
+link:#[back to top]
+
+[[api-indices-putmapping-0-90]]
+=== `indices.putMapping`
+
+[source,js]
+--------
+client.indices.putMapping([params, [callback]])
+--------
+
+Register specific mapping definition for a specific type.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-put-mapping.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`ignoreConflicts`::
+`Boolean` -- Specify whether to ignore conflicts while updating the mapping (default: false)
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` to perform the operation on all indices
+`type`::
+`String` -- The name of the document type
+
+link:#[back to top]
+
+[[api-indices-putsettings-0-90]]
+=== `indices.putSettings`
+
+[source,js]
+--------
+client.indices.putSettings([params, [callback]])
+--------
+
+Change specific index level settings in real time.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-update-settings.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-puttemplate-0-90]]
+=== `indices.putTemplate`
+
+[source,js]
+--------
+client.indices.putTemplate([params, [callback]])
+--------
+
+Create an index template that will automatically be applied to new indices created.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`order`::
+`Number` -- The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+`timeout`::
+`Date, Number` -- Explicit operation timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`name`::
+`String` -- The name of the template
+
+link:#[back to top]
+
+[[api-indices-putwarmer-0-90]]
+=== `indices.putWarmer`
+
+[source,js]
+--------
+client.indices.putWarmer([params, [callback]])
+--------
+
+Create an index warmer to run registered search requests to warm up the index before it is available for search.
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
+`name`::
+`String` -- The name of the warmer
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
+
+link:#[back to top]
+
+[[api-indices-refresh-0-90]]
+=== `indices.refresh`
+
+[source,js]
+--------
+client.indices.refresh([params, [callback]])
+--------
+
+Explicitly refresh one or more index, making all operations performed since the last refresh available for search.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-refresh.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`operationThreading`::
+`Anything` -- TODO: ?
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-segments-0-90]]
+=== `indices.segments`
+
+[source,js]
+--------
+client.indices.segments([params, [callback]])
+--------
+
+Retrieve low level segments information that a Lucene index (shard level) is built with.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-segments.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`operationThreading`::
+`Anything` -- TODO: ?
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-snapshotindex-0-90]]
+=== `indices.snapshotIndex`
+
+[source,js]
+--------
+client.indices.snapshotIndex([params, [callback]])
+--------
+
+Initiate a snapshot through the gateway of one or more indices.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
+
+link:#[back to top]
+
+[[api-indices-stats-0-90]]
+=== `indices.stats`
+
+[source,js]
+--------
+client.indices.stats([params, [callback]])
+--------
+
+Retrieve statistics on different operations happening on an index.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-stats.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`all`::
+`Boolean` -- Return all available information
+`clear`::
+`Boolean` -- Reset the default level of detail
+`completion`::
+`Boolean` -- Return information about completion suggester stats
+`completionFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `completion` metric (supports wildcards)
+`docs`::
+`Boolean` -- Return information about indexed and deleted documents
+`fielddata`::
+`Boolean` -- Return information about field data
+`fielddataFields`::
+`String, String[], Boolean` -- A comma-separated list of fields for `fielddata` metric (supports wildcards)
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return detailed information for, when returning the `search` statistics
+`filterCache`::
+`Boolean` -- Return information about filter cache
+`flush`::
+`Boolean` -- Return information about flush operations
+`get`::
+`Boolean` -- Return information about get operations
+`groups`::
+`Boolean` -- A comma-separated list of search groups for `search` statistics
+`idCache`::
+`Boolean` -- Return information about ID cache
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`indexing`::
+`Boolean` -- Return information about indexing operations
+`merge`::
+`Boolean` -- Return information about merge operations
+`refresh`::
+`Boolean` -- Return information about refresh operations
+`search`::
+`Boolean` -- Return information about search operations; use the `groups` parameter to include information for specific search groups
+`store`::
+`Boolean` -- Return information about the size of the index
+`warmer`::
+`Boolean` -- Return information about warmers
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`indexingTypes`::
+`String, String[], Boolean` -- A comma-separated list of document types to include in the `indexing` statistics
+`metricFamily`::
+`String` -- Limit the information returned to a specific metric
+`searchGroups`::
+`String, String[], Boolean` -- A comma-separated list of search groups to include in the `search` statistics
+
+link:#[back to top]
+
+[[api-indices-status-0-90]]
+=== `indices.status`
+
+[source,js]
+--------
+client.indices.status([params, [callback]])
+--------
+
+Get a comprehensive status information of one or more indices.
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-status.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`operationThreading`::
+`Anything` -- TODO: ?
+`recovery`::
+`Boolean` -- Return information about shard recovery
+`snapshot`::
+`Boolean` -- TODO: ?
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-indices-updatealiases-0-90]]
+=== `indices.updateAliases`
+
+[source,js]
+--------
+client.indices.updateAliases([params, [callback]])
+--------
+
+Update specified aliases.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`timeout`::
+`Date, Number` -- Request timeout
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+
+link:#[back to top]
+
+[[api-indices-validatequery-0-90]]
+=== `indices.validateQuery`
+
+[source,js]
+--------
+client.indices.validateQuery([params, [callback]])
+--------
+
+Validate a potentially expensive query without executing it.
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-validate.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`explain`::
+`Boolean` -- Return detailed information about the error
+`[ignoreIndices=none]`::
+`String` -- When performed on multiple indices, allows to ignore `missing` ones
+`operationThreading`::
+`Anything` -- TODO: ?
+`source`::
+`String` -- The URL-encoded query definition (instead of using the request body)
+`q`::
+`String` -- Query in the Lucene query string syntax
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
+
+link:#[back to top]

@@ -2,6 +2,7 @@ var cp = require('child_process');
 var async = require('async');
 var estream = require('event-stream');
 var chalk = require('chalk');
+var _ = require('lodash');
 var argv = require('optimist')
   .options({
     force: {
@@ -22,10 +23,9 @@ var argv = require('optimist')
       default: true,
       boolean: true
     },
-    es_branch: {
-      default: 'master',
-      string: true,
-      alias: 'b'
+    update: {
+      default: true,
+      boolean: true
     }
   });
 
@@ -109,12 +109,18 @@ function generateBranch(branch, done) {
   ], done);
 }
 
-async.series([
+var steps = [
   initSubmodule,
   fetch,
   async.apply(generateBranch, '0.90'),
   async.apply(generateBranch, 'master')
-], function (err) {
+];
+
+if (!argv.update) {
+  steps = _.without(steps, fetch);
+}
+
+async.series(steps, function (err) {
   if (err) {
     throw err;
   }

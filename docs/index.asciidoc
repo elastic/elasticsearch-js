@@ -6,10 +6,6 @@ include::quick_start.asciidoc[]
 
 include::api_conventions.asciidoc[]
 
-include::api_methods.asciidoc[]
-
-include::api_methods_0_90.asciidoc[]
-
 include::configuration.asciidoc[]
 
 include::extending_core_components.asciidoc[]
@@ -17,6 +13,10 @@ include::extending_core_components.asciidoc[]
 include::logging.asciidoc[]
 
 include::development.asciidoc[]
+
+include::api_methods.asciidoc[]
+
+include::api_methods_0_90.asciidoc[]
 
 include::errors.asciidoc[]
 
