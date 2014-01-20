@@ -4,7 +4,7 @@
 NOTE: This is currently the default API, but with the upcoming release of Elasticsearch 1.0 that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change when the default does.
 
 
-[[js-api-method-index]]
+[[js-api-method-index-090]]
 * <<api-bulk-0-90,bulk>>
 * <<api-clearscroll-0-90,clearScroll>>
 * <<api-count-0-90,count>>
