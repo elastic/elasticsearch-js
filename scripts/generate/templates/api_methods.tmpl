@@ -15,7 +15,7 @@ NOTE: This is currently the default API, but with the upcoming release of Elasti
 }
 
 // method index%>
-[[js-api-method-index]]<%
+[[js-api-method-index<%= branchSuffix %>]]<%
 actions = _.sortBy(actions, 'namespace');
 _.each(actions, function (action) {
 action.index = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-') + branchSuffix; %>
@@ -46,12 +46,19 @@ The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-c
 _.each(action.allParams, function (param, paramName) { %>
 `<%= paramWithDefault(paramName, param.default) %>`::
 `<%= paramType(param.type) %>` -- <%= joinParagraphs(param.description || '', 4) %><%
+if (param.type === 'enum') {%>
+Options:::<%
+_.each(param.options, function (opt) {%>
+ * `"<%= opt %>"`<%
+});%>
+<%
+} // endif enum
 
-  }); // endeach %>
+}); // endeach param %>
 
 link:#[back to top]<%
 
-} // endif
+} // endif size allParams
 
 }); // endeach
 %>

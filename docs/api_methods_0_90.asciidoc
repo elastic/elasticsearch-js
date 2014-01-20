@@ -4,7 +4,7 @@
 NOTE: This is currently the default API, but with the upcoming release of Elasticsearch 1.0 that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change when the default does.
 
 
-[[js-api-method-index]]
+[[js-api-method-index-0-90]]
 * <<api-bulk-0-90,bulk>>
 * <<api-clearscroll-0-90,clearScroll>>
 * <<api-count-0-90,count>>
@@ -110,10 +110,19 @@ client.bulk({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Explicitely set the replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `type`::
 `String` -- Default document type for items which don't provide one
 `timeout`::
@@ -202,6 +211,10 @@ client.count(
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `minScore`::
 `Number` -- Include only documents with a specific `_score` value in the result
 `preference`::
@@ -254,8 +267,11 @@ client.create({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
-`id`::
-`String` -- Document ID
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of the parent document
 `percolate`::
@@ -264,6 +280,10 @@ client.create({
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -276,6 +296,12 @@ client.create({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
+`id`::
+`String` -- Document ID
 `index`::
 `String` -- The name of the index
 `type`::
@@ -313,12 +339,21 @@ client.delete({
 [horizontal]
 `consistency`::
 `String` -- Specific write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of parent document
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -327,6 +362,10 @@ client.delete({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- The document ID
 `index`::
@@ -380,14 +419,31 @@ client.delete_by_query({
 `String` -- The analyzer to use for the query string
 `consistency`::
 `String` -- Specific write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `q`::
 `String` -- Query in the Lucene query string syntax
 `routing`::
@@ -509,6 +565,10 @@ client.explain({
 `String` -- The analyzer for the query string query
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The default field for query string query (default: _all)
 `fields`::
@@ -615,10 +675,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 ==== Params
 
 [horizontal]
-`exclude`::
-`String, String[], Boolean` -- A list of fields to exclude from the returned _source field
-`include`::
-`String, String[], Boolean` -- A list of fields to extract and return from the _source field
 `parent`::
 `String` -- The ID of the parent document
 `preference`::
@@ -629,6 +685,20 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Refresh the shard containing the document before performing the operation
 `routing`::
 `String` -- Specific routing value
+`_source`::
+`String, String[], Boolean` -- True or false to return the _source field or not, or a list of fields to return
+`_sourceExclude`::
+`String, String[], Boolean` -- A list of fields to exclude from the returned _source field
+`_sourceInclude`::
+`String, String[], Boolean` -- A list of fields to extract and return from the _source field
+`version`::
+`Number` -- Explicit version number for concurrency control
+`versionType`::
+`String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- The document ID
 `index`::
@@ -678,8 +748,11 @@ client.index({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
-`[opType=index]`::
-`String` -- Explicit operation type
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of the parent document
 `percolate`::
@@ -688,6 +761,10 @@ client.index({
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -700,6 +777,10 @@ client.index({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- Document ID
 `index`::
@@ -902,6 +983,14 @@ client.msearch({
 [horizontal]
 `searchType`::
 `String` -- Search operation type
+Options:::
+ * `"query_then_fetch"`
+ * `"query_and_fetch"`
+ * `"dfs_query_then_fetch"`
+ * `"dfs_query_and_fetch"`
+ * `"count"`
+ * `"scan"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to use as default
 `type`::
@@ -1134,6 +1223,10 @@ client.search({
 `Boolean` -- Specify whether wildcard and prefix queries should be analyzed (default: false)
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
 `explain`::
@@ -1144,6 +1237,10 @@ client.search({
 `Number` -- Starting offset (default: 0)
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `indicesBoost`::
 `String, String[], Boolean` -- Comma-separated list of index boosts
 `lenient`::
@@ -1160,6 +1257,14 @@ client.search({
 `Duration` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `searchType`::
 `String` -- Search operation type
+Options:::
+ * `"query_then_fetch"`
+ * `"query_and_fetch"`
+ * `"dfs_query_then_fetch"`
+ * `"dfs_query_and_fetch"`
+ * `"count"`
+ * `"scan"`
+
 `size`::
 `Number` -- Number of hits to return (default: 10)
 `sort`::
@@ -1178,6 +1283,11 @@ client.search({
 `String` -- Specify which field to use for suggestions
 `[suggestMode=missing]`::
 `String` -- Specify suggest mode
+Options:::
+ * `"missing"`
+ * `"popular"`
+ * `"always"`
+
 `suggestSize`::
 `Number` -- How many suggestions to return in response
 `suggestText`::
@@ -1246,6 +1356,10 @@ body: {
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `preference`::
 `String` -- Specify the node or shard the operation should be performed on (default: random)
 `routing`::
@@ -1348,6 +1462,11 @@ client.update({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields to return in the response
 `lang`::
@@ -1360,6 +1479,10 @@ client.update({
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `retryOnConflict`::
 `Number` -- Specify how many times should the operation be retried when a conflict occurs (default: 0)
 `routing`::
@@ -1376,6 +1499,10 @@ client.update({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- Document ID
 `index`::
@@ -1421,6 +1548,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `[level=cluster]`::
 `String` -- Specify the level of detail for returned information
+Options:::
+ * `"cluster"`
+ * `"indices"`
+ * `"shards"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -1435,6 +1567,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Number` -- Wait until the specified number of relocating shards is finished
 `waitForStatus`::
 `String` -- Wait until cluster is in a specific state
+Options:::
+ * `"green"`
+ * `"yellow"`
+ * `"red"`
+
 `index`::
 `String` -- Limit the information returned to a specific index
 
@@ -1478,6 +1615,11 @@ client.cluster.nodeHotThreads({
 `Number` -- Specify the number of threads to provide information for (default: 3)
 `type`::
 `String` -- The type to sample (default: cpu)
+Options:::
+ * `"cpu"`
+ * `"wait"`
+ * `"block"`
+
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -1610,8 +1752,35 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return information about transport
 `metricFamily`::
 `String` -- Limit the information returned to a certain metric family
+Options:::
+ * `"all"`
+ * `"fs"`
+ * `"http"`
+ * `"indices"`
+ * `"jvm"`
+ * `"network"`
+ * `"os"`
+ * `"process"`
+ * `"thread_pool"`
+ * `"transport"`
+
 `metric`::
 `String` -- Limit the information returned for `indices` family to a specific metric
+Options:::
+ * `"completion"`
+ * `"docs"`
+ * `"fielddata"`
+ * `"filter_cache"`
+ * `"flush"`
+ * `"get"`
+ * `"id_cache"`
+ * `"indexing"`
+ * `"merges"`
+ * `"refresh"`
+ * `"search"`
+ * `"store"`
+ * `"warmer"`
+
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -1729,6 +1898,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `String` -- The name of the tokenizer to use for the analysis
 `[format=detailed]`::
 `String` -- Format of the output
+Options:::
+ * `"detailed"`
+ * `"text"`
+
 
 link:#[back to top]
 
@@ -1768,6 +1941,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Clear ID caches for parent/child
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index name to limit the operation
 `recycler`::
@@ -2011,6 +2188,10 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -2038,6 +2219,10 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
 `type`::
@@ -2069,6 +2254,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `index`::
@@ -2096,6 +2285,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -2304,6 +2497,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Specify whether the index should be flushed after performing the operation (default: true)
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `maxNumSegments`::
 `Number` -- The number of segments the index should be merged into (default: dynamic)
 `onlyExpungeDeletes`::
@@ -2482,6 +2679,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `operationThreading`::
 `Anything` -- TODO: ?
 `index`::
@@ -2509,6 +2710,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `operationThreading`::
 `Anything` -- TODO: ?
 `index`::
@@ -2536,6 +2741,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
@@ -2587,6 +2796,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return information about ID cache
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `indexing`::
 `Boolean` -- Return information about indexing operations
 `merge`::
@@ -2605,6 +2818,23 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- A comma-separated list of document types to include in the `indexing` statistics
 `metricFamily`::
 `String` -- Limit the information returned to a specific metric
+Options:::
+ * `"completion"`
+ * `"docs"`
+ * `"fielddata"`
+ * `"filter_cache"`
+ * `"flush"`
+ * `"get"`
+ * `"groups"`
+ * `"id_cache"`
+ * `"ignore_indices"`
+ * `"indexing"`
+ * `"merge"`
+ * `"refresh"`
+ * `"search"`
+ * `"store"`
+ * `"warmer"`
+
 `searchGroups`::
 `String, String[], Boolean` -- A comma-separated list of search groups to include in the `search` statistics
 
@@ -2630,6 +2860,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `operationThreading`::
 `Anything` -- TODO: ?
 `recovery`::
@@ -2690,6 +2924,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Return detailed information about the error
 `[ignoreIndices=none]`::
 `String` -- When performed on multiple indices, allows to ignore `missing` ones
+Options:::
+ * `"none"`
+ * `"missing"`
+
 `operationThreading`::
 `Anything` -- TODO: ?
 `source`::

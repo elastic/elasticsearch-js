@@ -687,11 +687,22 @@ api.cluster.prototype.health = ca({
 });
 
 /**
- * Perform a [cluster.tasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-pending.html) request
+ * Perform a [cluster.pendingTasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-pending.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  */
-api.cluster.prototype.tasks = ca({
+api.cluster.prototype.pendingTasks = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
   url: {
     fmt: '/_cluster/pending_tasks'
   }
@@ -1407,7 +1418,6 @@ api.getSource = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {String} [params.opType=index] - Explicit operation type
  * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
@@ -1899,6 +1909,7 @@ api.indices.prototype.deleteWarmer = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to check
  */
 api.indices.prototype.exists = ca({
@@ -1919,6 +1930,9 @@ api.indices.prototype.exists = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   url: {
@@ -1939,6 +1953,7 @@ api.indices.prototype.exists = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
@@ -1963,6 +1978,9 @@ api.indices.prototype.existsAlias = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2001,9 +2019,15 @@ api.indices.prototype.existsAlias = ca({
  * Perform a [indices.existsTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.existsTemplate = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    }
+  },
   url: {
     fmt: '/_template/<%=name%>',
     req: {
@@ -2022,6 +2046,7 @@ api.indices.prototype.existsTemplate = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` to check the types across all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to check
  */
@@ -2043,6 +2068,9 @@ api.indices.prototype.existsType = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   url: {
@@ -2119,6 +2147,7 @@ api.indices.prototype.flush = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
@@ -2140,6 +2169,9 @@ api.indices.prototype.getAlias = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2181,6 +2213,7 @@ api.indices.prototype.getAlias = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to filter
  */
@@ -2188,6 +2221,9 @@ api.indices.prototype.getAliases = ca({
   params: {
     timeout: {
       type: 'time'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2387,10 +2423,10 @@ api.indices.prototype.getMapping = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String} params.prefix - The prefix all settings must have in order to be included
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.name - The name of the settings that should be included
+ * @param {String, String[], Boolean} params.name - The name of the settings that should be included
  */
 api.indices.prototype.getSettings = ca({
   params: {
@@ -2414,12 +2450,12 @@ api.indices.prototype.getSettings = ca({
       ],
       name: 'expand_wildcards'
     },
-    prefix: {
-      type: 'string'
-    },
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2430,7 +2466,7 @@ api.indices.prototype.getSettings = ca({
           type: 'list'
         },
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -2446,7 +2482,7 @@ api.indices.prototype.getSettings = ca({
       fmt: '/_settings/<%=name%>',
       req: {
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -2461,6 +2497,7 @@ api.indices.prototype.getSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.getTemplate = ca({
@@ -2468,6 +2505,9 @@ api.indices.prototype.getTemplate = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2492,8 +2532,9 @@ api.indices.prototype.getTemplate = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
- * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to get all warmers
+ * @param {String, String[], Boolean} params.name - The name of the warmer (supports wildcards); leave empty to get all warmers
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
 api.indices.prototype.getWarmer = ca({
@@ -2514,6 +2555,9 @@ api.indices.prototype.getWarmer = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -2527,7 +2571,7 @@ api.indices.prototype.getWarmer = ca({
           type: 'list'
         },
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -2538,7 +2582,7 @@ api.indices.prototype.getWarmer = ca({
           type: 'list'
         },
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -2554,7 +2598,7 @@ api.indices.prototype.getWarmer = ca({
       fmt: '/_warmer/<%=name%>',
       req: {
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -3295,7 +3339,6 @@ api.indices.prototype.status = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Request timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.updateAliases = ca({
   params: {
@@ -4422,6 +4465,7 @@ api.snapshot.prototype.get = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
  */
 api.snapshot.prototype.getRepository = ca({
@@ -4429,6 +4473,9 @@ api.snapshot.prototype.getRepository = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    local: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -4641,9 +4688,7 @@ api.update = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {String} params.id - Document ID
  * @param {String} params.parent - ID of the parent document
- * @param {String} params.percolate - Percolator queries to execute while indexing the document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
@@ -4652,6 +4697,7 @@ api.update = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */

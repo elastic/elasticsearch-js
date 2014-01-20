@@ -942,25 +942,22 @@ api.get = ca({
  * Perform a [getSource](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.exclude - A list of fields to exclude from the returned _source field
- * @param {String, String[], Boolean} params.include - A list of fields to extract and return from the _source field
  * @param {String} params.parent - The ID of the parent document
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {String} params.routing - Specific routing value
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - The document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document; use `_all` to fetch the first document matching the ID across all types
  */
 api.getSource = ca({
   params: {
-    exclude: {
-      type: 'list'
-    },
-    include: {
-      type: 'list'
-    },
     parent: {
       type: 'string'
     },
@@ -975,6 +972,28 @@ api.getSource = ca({
     },
     routing: {
       type: 'string'
+    },
+    _source: {
+      type: 'list'
+    },
+    _sourceExclude: {
+      type: 'list',
+      name: '_source_exclude'
+    },
+    _sourceInclude: {
+      type: 'list',
+      name: '_source_include'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external'
+      ],
+      name: 'version_type'
     }
   },
   url: {
@@ -998,7 +1017,6 @@ api.getSource = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {String} [params.opType=index] - Explicit operation type
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.percolate - Percolator queries to execute while indexing the document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
@@ -3194,7 +3212,6 @@ api.update = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {String} params.id - Document ID
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.percolate - Percolator queries to execute while indexing the document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
@@ -3205,6 +3222,7 @@ api.update = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */

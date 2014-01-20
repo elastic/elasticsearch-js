@@ -66,10 +66,23 @@ module.exports = function (branch, done) {
     });
 
     apiSpec = {
-      actions: groups.normal,
-      proxies: groups.proxies,
+      actions: groups.normal || [],
+      proxies: groups.proxies || [],
       namespaces: _.unique(namespaces.sort(), true)
     };
+
+    var create = _.assign({}, _.find(apiSpec.actions, { name: 'index' }), {
+      name: 'create',
+      location: 'create',
+      proxy: 'index',
+      transformBody: 'params.op_type = \'create\';'
+    });
+
+    if (create.allParams && create.allParams.opType) {
+      delete create.allParams.opType;
+    }
+
+    apiSpec.proxies.push(create);
 
     done();
   }
@@ -100,6 +113,7 @@ module.exports = function (branch, done) {
   function formatDocVars(done) {
     // merge the actions and proxies to make
     // itteration easir and keep them in order
+
     docVars = _.omit(apiSpec, 'proxies');
     docVars.actions = _.sortBy(
       [].concat(apiSpec.actions).concat(apiSpec.proxies),
@@ -291,11 +305,6 @@ module.exports = function (branch, done) {
         }
       } else {
         throw new Error('unable to pick a method for ' + JSON.stringify(action, null, '  '));
-      }
-
-      if (action.name === 'create') {
-        action.proxy = 'index';
-        action.transformBody = 'params.op_type = \'create\';';
       }
 
       actions.push(action);

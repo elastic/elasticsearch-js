@@ -39,11 +39,11 @@ NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` con
 * <<api-cat-shards,cat.shards>>
 * <<api-cluster-getsettings,cluster.getSettings>>
 * <<api-cluster-health,cluster.health>>
+* <<api-cluster-pendingtasks,cluster.pendingTasks>>
 * <<api-cluster-putsettings,cluster.putSettings>>
 * <<api-cluster-reroute,cluster.reroute>>
 * <<api-cluster-state,cluster.state>>
 * <<api-cluster-stats,cluster.stats>>
-* <<api-cluster-tasks,cluster.tasks>>
 * <<api-indices-analyze,indices.analyze>>
 * <<api-indices-clearcache,indices.clearCache>>
 * <<api-indices-close,indices.close>>
@@ -131,10 +131,19 @@ client.bulk({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Explicitely set the replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -229,6 +238,10 @@ client.count(
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `minScore`::
 `Number` -- Include only documents with a specific `_score` value in the result
 `preference`::
@@ -281,16 +294,21 @@ client.create({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
-`id`::
-`String` -- Document ID
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of the parent document
-`percolate`::
-`String` -- Percolator queries to execute while indexing the document
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -303,6 +321,12 @@ client.create({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
+`id`::
+`String` -- Document ID
 `index`::
 `String` -- The name of the index
 `type`::
@@ -340,12 +364,21 @@ client.delete({
 [horizontal]
 `consistency`::
 `String` -- Specific write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of parent document
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -354,6 +387,10 @@ client.delete({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- The document ID
 `index`::
@@ -407,8 +444,17 @@ client.delete_by_query({
 `String` -- The analyzer to use for the query string
 `consistency`::
 `String` -- Specific write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
 `ignoreUnavailable`::
@@ -417,8 +463,16 @@ client.delete_by_query({
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `q`::
 `String` -- Query in the Lucene query string syntax
 `routing`::
@@ -540,6 +594,10 @@ client.explain({
 `String` -- The analyzer for the query string query
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The default field for query string query (default: _all)
 `fields`::
@@ -623,6 +681,10 @@ client.get({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- The document ID
 `index`::
@@ -670,6 +732,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- The document ID
 `index`::
@@ -719,14 +785,21 @@ client.index({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
-`[opType=index]`::
-`String` -- Explicit operation type
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `parent`::
 `String` -- ID of the parent document
 `refresh`::
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `routing`::
 `String` -- Specific routing value
 `timeout`::
@@ -739,6 +812,10 @@ client.index({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- Document ID
 `index`::
@@ -941,6 +1018,14 @@ client.msearch({
 [horizontal]
 `searchType`::
 `String` -- Search operation type
+Options:::
+ * `"query_then_fetch"`
+ * `"query_and_fetch"`
+ * `"dfs_query_then_fetch"`
+ * `"dfs_query_and_fetch"`
+ * `"count"`
+ * `"scan"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to use as default
 `type`::
@@ -1173,6 +1258,10 @@ client.search({
 `Boolean` -- Specify whether wildcard and prefix queries should be analyzed (default: false)
 `[defaultOperator=OR]`::
 `String` -- The default operator for query string query (AND or OR)
+Options:::
+ * `"AND"`
+ * `"OR"`
+
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
 `explain`::
@@ -1187,6 +1276,10 @@ client.search({
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `indicesBoost`::
 `String, String[], Boolean` -- Comma-separated list of index boosts
 `lenient`::
@@ -1203,6 +1296,14 @@ client.search({
 `Duration` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `searchType`::
 `String` -- Search operation type
+Options:::
+ * `"query_then_fetch"`
+ * `"query_and_fetch"`
+ * `"dfs_query_then_fetch"`
+ * `"dfs_query_and_fetch"`
+ * `"count"`
+ * `"scan"`
+
 `size`::
 `Number` -- Number of hits to return (default: 10)
 `sort`::
@@ -1221,6 +1322,11 @@ client.search({
 `String` -- Specify which field to use for suggestions
 `[suggestMode=missing]`::
 `String` -- Specify suggest mode
+Options:::
+ * `"missing"`
+ * `"popular"`
+ * `"always"`
+
 `suggestSize`::
 `Number` -- How many suggestions to return in response
 `suggestText`::
@@ -1293,6 +1399,10 @@ body: {
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `preference`::
 `String` -- Specify the node or shard the operation should be performed on (default: random)
 `routing`::
@@ -1395,6 +1505,11 @@ client.update({
 [horizontal]
 `consistency`::
 `String` -- Explicit write consistency setting for the operation
+Options:::
+ * `"one"`
+ * `"quorum"`
+ * `"all"`
+
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields to return in the response
 `lang`::
@@ -1405,6 +1520,10 @@ client.update({
 `Boolean` -- Refresh the index after performing the operation
 `[replication=sync]`::
 `String` -- Specific replication type
+Options:::
+ * `"sync"`
+ * `"async"`
+
 `retryOnConflict`::
 `Number` -- Specify how many times should the operation be retried when a conflict occurs (default: 0)
 `routing`::
@@ -1421,6 +1540,10 @@ client.update({
 `Number` -- Explicit version number for concurrency control
 `versionType`::
 `String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `id`::
 `String` -- Document ID
 `index`::
@@ -1483,6 +1606,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `bytes`::
 `String` -- The unit in which to display byte values
+Options:::
+ * `"b"`
+ * `"k"`
+ * `"m"`
+ * `"g"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -1607,6 +1736,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `bytes`::
 `String` -- The unit in which to display byte values
+Options:::
+ * `"b"`
+ * `"k"`
+ * `"m"`
+ * `"g"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -1737,6 +1872,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `bytes`::
 `String` -- The unit in which to display byte values
+Options:::
+ * `"b"`
+ * `"k"`
+ * `"m"`
+ * `"g"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -1832,6 +1973,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `[level=cluster]`::
 `String` -- Specify the level of detail for returned information
+Options:::
+ * `"cluster"`
+ * `"indices"`
+ * `"shards"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -1846,8 +1992,38 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Number` -- Wait until the specified number of relocating shards is finished
 `waitForStatus`::
 `String` -- Wait until cluster is in a specific state
+Options:::
+ * `"green"`
+ * `"yellow"`
+ * `"red"`
+
 `index`::
 `String` -- Limit the information returned to a specific index
+
+link:#[back to top]
+
+[[api-cluster-pendingtasks]]
+=== `cluster.pendingTasks`
+
+[source,js]
+--------
+client.cluster.pendingTasks([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-pending.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
 
 link:#[back to top]
 
@@ -1961,22 +2137,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-tasks]]
-=== `cluster.tasks`
-
-[source,js]
---------
-client.cluster.tasks([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-pending.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-
 [[api-indices-analyze]]
 === `indices.analyze`
 
@@ -2011,6 +2171,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `String` -- The name of the tokenizer to use for the analysis
 `[format=detailed]`::
 `String` -- Format of the output
+Options:::
+ * `"detailed"`
+ * `"text"`
+
 
 link:#[back to top]
 
@@ -2054,6 +2218,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index name to limit the operation
 `recycler`::
@@ -2089,6 +2257,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String` -- The name of the index
 
@@ -2282,6 +2454,12 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to check
 
@@ -2311,6 +2489,12 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open,closed]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -2336,6 +2520,8 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `name`::
 `String` -- The name of the template
 
@@ -2365,6 +2551,12 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
 `type`::
@@ -2400,6 +2592,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
@@ -2429,6 +2625,12 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -2456,6 +2658,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `timeout`::
 `Date, Number` -- Explicit operation timeout
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
@@ -2489,6 +2693,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
@@ -2524,6 +2732,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
@@ -2557,14 +2769,18 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open,closed]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
-`prefix`::
-`String` -- The prefix all settings must have in order to be included
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `name`::
-`String` -- The name of the settings that should be included
+`String, String[], Boolean` -- The name of the settings that should be included
 
 link:#[back to top]
 
@@ -2588,6 +2804,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `name`::
 `String` -- The name of the template
 
@@ -2617,10 +2835,16 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
 `name`::
-`String` -- The name of the warmer (supports wildcards); leave empty to get all warmers
+`String, String[], Boolean` -- The name of the warmer (supports wildcards); leave empty to get all warmers
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
 
@@ -2654,6 +2878,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=closed]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String` -- The name of the index
 
@@ -2685,6 +2913,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `maxNumSegments`::
 `Number` -- The number of segments the index should be merged into (default: dynamic)
 `onlyExpungeDeletes`::
@@ -2757,6 +2989,10 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
 `type`::
@@ -2790,6 +3026,10 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `index`::
@@ -2854,6 +3094,10 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices in the search request to warm. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both, in the search request to warm.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
 `name`::
@@ -2887,6 +3131,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `force`::
 `Boolean` -- Force a refresh even if not required
 `operationThreading`::
@@ -2920,6 +3168,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `operationThreading`::
@@ -2953,6 +3205,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
@@ -2988,6 +3244,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `[level=indices]`::
 `String` -- Return stats aggregated at cluster, index or shard level
+Options:::
+ * `"cluster"`
+ * `"indices"`
+ * `"shards"`
+
 `types`::
 `String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
 `index`::
@@ -3021,6 +3282,10 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `operationThreading`::
@@ -3056,8 +3321,6 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Date, Number` -- Request timeout
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 
 link:#[back to top]
 
@@ -3087,6 +3350,10 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
 `operationThreading`::
 `Anything` -- TODO: ?
 `source`::
@@ -3126,6 +3393,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Number` -- Specify the number of threads to provide information for (default: 3)
 `type`::
 `String` -- The type to sample (default: cpu)
+Options:::
+ * `"cpu"`
+ * `"wait"`
+ * `"block"`
+
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -3217,6 +3489,11 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `[level=node]`::
 `String` -- Return indices stats aggregated at node, index or shard level
+Options:::
+ * `"node"`
+ * `"indices"`
+ * `"shards"`
+
 `types`::
 `String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
 `metric`::
@@ -3385,6 +3662,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `masterTimeout`::
 `Date, Number` -- Explicit operation timeout for connection to master node
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `repository`::
 `String, String[], Boolean` -- A comma-separated list of repository names
 
