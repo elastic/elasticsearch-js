@@ -18,5 +18,9 @@ fi
 
 source scripts/_utils.sh
 
+if [[ -z "$ES_NODE_NAME" ]]; then
+  export ES_NODE_NAME="elasticsearch_js_test_runner"
+fi
+
 manage_es $*
 exit $?

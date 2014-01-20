@@ -81,10 +81,17 @@ function manage_es {
 
 
     case "$DO" in
+      reinstall)
+        if [ -x "$ES_BIN" ]; then
+          echo "removing $ES_VERSION"
+          rm -rf ${SNAPSHOTS}/${ES_VERSION}*
+        fi
+        manage_es install $ES_BRANCH $ES_RELEASE
+      ;;
       install)
         if [ ! -x "$ES_BIN" ]; then
           echo "Downloading Elasticsearch $ES_VERSION"
-          call rm -rf ${SNAPSHOTS}/${ES_VERSION}*
+          rm -rf ${SNAPSHOTS}/${ES_VERSION}*
           call curl --silent -O $ES_URL
           unzip -q elasticsearch-*.zip
           rm elasticsearch-*.zip
@@ -108,11 +115,11 @@ function manage_es {
             return 1
           else
             echo "PID file was left behind by ES"
-            call rm $PIDFILE
+            rm $PIDFILE
           fi
         fi
 
-        ./scripts/es.sh install $ES_BRANCH $ES_RELEASE
+        manage_es install $ES_BRANCH $ES_RELEASE
 
         if [ ! -x "$ES_BIN" ]; then
           echo "Unable to find elasticsearch executable"

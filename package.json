@@ -64,6 +64,7 @@
   },
   "scripts": {
     "test": "grunt test",
+    "generate": "node scripts/generate",
     "blanket": {
       "pattern": [
         "src"

@@ -935,6 +935,98 @@ api.count = ca({
 });
 
 /**
+ * Perform a [countPercolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} params.percolateIndex - The index to count percolate the document into. Defaults to index.
+ * @param {String} params.percolateType - The type to count percolate document into. Defaults to type.
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
+ * @param {String} params.index - The index of the document being count percolated.
+ * @param {String} params.type - The type of the document being count percolated.
+ * @param {String} params.id - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
+ */
+api.countPercolate = ca({
+  params: {
+    routing: {
+      type: 'list'
+    },
+    preference: {
+      type: 'string'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    percolateIndex: {
+      type: 'string',
+      name: 'percolate_index'
+    },
+    percolateType: {
+      type: 'string',
+      name: 'percolate_type'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external'
+      ],
+      name: 'version_type'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/<%=id%>/_percolate/count',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        },
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_percolate/count',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3630,6 +3722,63 @@ api.mlt = ca({
 });
 
 /**
+ * Perform a [mpercolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} params.index - The index of the document being count percolated to use as default
+ * @param {String} params.type - The type of the document being percolated to use as default.
+ */
+api.mpercolate = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_mpercolate',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mpercolate',
+      req: {
+        index: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_mpercolate'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [msearch](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-multi-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -4037,28 +4186,91 @@ api.nodes.prototype.stats = ca({
  * Perform a [percolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
- * @param {String} params.index - The name of the index with a registered percolator query
- * @param {String} params.type - The document type
+ * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} params.percolateIndex - The index to percolate the document into. Defaults to index.
+ * @param {String} params.percolateType - The type to percolate document into. Defaults to type.
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
+ * @param {String} params.index - The index of the document being percolated.
+ * @param {String} params.type - The type of the document being percolated.
+ * @param {String} params.id - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
  */
 api.percolate = ca({
   params: {
-    preferLocal: {
+    routing: {
+      type: 'list'
+    },
+    preference: {
+      type: 'string'
+    },
+    ignoreUnavailable: {
       type: 'boolean',
-      name: 'prefer_local'
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    percolateIndex: {
+      type: 'string',
+      name: 'percolate_index'
+    },
+    percolateType: {
+      type: 'string',
+      name: 'percolate_type'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external'
+      ],
+      name: 'version_type'
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>/_percolate',
-    req: {
-      index: {
-        type: 'string'
-      },
-      type: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/<%=id%>/_percolate',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        },
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_percolate',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
       }
     }
-  },
+  ],
   method: 'POST'
 });
 
@@ -4437,7 +4649,7 @@ api.snapshot.prototype.deleteRepository = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
+ * @param {String} params.repository - A repository name
  * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
  */
 api.snapshot.prototype.get = ca({
@@ -4451,7 +4663,7 @@ api.snapshot.prototype.get = ca({
     fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
     req: {
       repository: {
-        type: 'list'
+        type: 'string'
       },
       snapshot: {
         type: 'list'

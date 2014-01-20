@@ -8,6 +8,7 @@ NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` con
 * <<api-bulk,bulk>>
 * <<api-clearscroll,clearScroll>>
 * <<api-count,count>>
+* <<api-countpercolate,countPercolate>>
 * <<api-create,create>>
 * <<api-delete,delete>>
 * <<api-deletebyquery,deleteByQuery>>
@@ -19,6 +20,7 @@ NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` con
 * <<api-info,info>>
 * <<api-mget,mget>>
 * <<api-mlt,mlt>>
+* <<api-mpercolate,mpercolate>>
 * <<api-msearch,msearch>>
 * <<api-percolate,percolate>>
 * <<api-ping,ping>>
@@ -254,6 +256,59 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of indices to restrict the results
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the results
+
+link:#[back to top]
+
+[[api-countpercolate]]
+=== `countPercolate`
+
+[source,js]
+--------
+client.countPercolate([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`routing`::
+`String, String[], Boolean` -- A comma-separated list of specific routing values
+`preference`::
+`String` -- Specify the node or shard the operation should be performed on (default: random)
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`percolateIndex`::
+`String` -- The index to count percolate the document into. Defaults to index.
+`percolateType`::
+`String` -- The type to count percolate document into. Defaults to type.
+`version`::
+`Number` -- Explicit version number for concurrency control
+`versionType`::
+`String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
+`index`::
+`String` -- The index of the document being count percolated.
+`type`::
+`String` -- The type of the document being count percolated.
+`id`::
+`String` -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 
 link:#[back to top]
 
@@ -984,6 +1039,41 @@ client.mlt({
 
 link:#[back to top]
 
+[[api-mpercolate]]
+=== `mpercolate`
+
+[source,js]
+--------
+client.mpercolate([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`index`::
+`String` -- The index of the document being count percolated to use as default
+`type`::
+`String` -- The type of the document being percolated to use as default.
+
+link:#[back to top]
+
 [[api-msearch]]
 === `msearch`
 
@@ -1119,12 +1209,38 @@ client.percolate({
 ==== Params
 
 [horizontal]
-`preferLocal`::
-`Boolean` -- With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+`routing`::
+`String, String[], Boolean` -- A comma-separated list of specific routing values
+`preference`::
+`String` -- Specify the node or shard the operation should be performed on (default: random)
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`percolateIndex`::
+`String` -- The index to percolate the document into. Defaults to index.
+`percolateType`::
+`String` -- The type to percolate document into. Defaults to type.
+`version`::
+`Number` -- Explicit version number for concurrency control
+`versionType`::
+`String` -- Specific version type
+Options:::
+ * `"internal"`
+ * `"external"`
+
 `index`::
-`String` -- The name of the index with a registered percolator query
+`String` -- The index of the document being percolated.
 `type`::
-`String` -- The document type
+`String` -- The type of the document being percolated.
+`id`::
+`String` -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 
 link:#[back to top]
 
@@ -3636,7 +3752,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `masterTimeout`::
 `Date, Number` -- Explicit operation timeout for connection to master node
 `repository`::
-`String, String[], Boolean` -- A comma-separated list of repository names
+`String` -- A repository name
 `snapshot`::
 `String, String[], Boolean` -- A comma-separated list of snapshot names
 
