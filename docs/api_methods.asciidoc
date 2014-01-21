@@ -22,11 +22,13 @@ NOTE: At this time, you must opt into the 1.0 API by setting the `apiVerion` con
 * <<api-mlt,mlt>>
 * <<api-mpercolate,mpercolate>>
 * <<api-msearch,msearch>>
+* <<api-mtermvectors,mtermvectors>>
 * <<api-percolate,percolate>>
 * <<api-ping,ping>>
 * <<api-scroll,scroll>>
 * <<api-search,search>>
 * <<api-suggest,suggest>>
+* <<api-termvector,termvector>>
 * <<api-update,update>>
 * <<api-cat-aliases,cat.aliases>>
 * <<api-cat-allocation,cat.allocation>>
@@ -1123,6 +1125,53 @@ Options:::
 
 link:#[back to top]
 
+[[api-mtermvectors]]
+=== `mtermvectors`
+
+[source,js]
+--------
+client.mtermvectors([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`ids`::
+`String, String[], Boolean` -- A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
+`termStatistics`::
+`Boolean` -- Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`[fieldStatistics=true]`::
+`Boolean` -- Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`[offsets=true]`::
+`Boolean` -- Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`[positions=true]`::
+`Boolean` -- Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`[payloads=true]`::
+`Boolean` -- Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`preference`::
+`String` -- Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`routing`::
+`String` -- Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`parent`::
+`String` -- Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+`index`::
+`String` -- The index in which the document resides.
+`type`::
+`String` -- The type of the document.
+`id`::
+`String` -- The id of the document.
+
+link:#[back to top]
+
 [[api-percolate]]
 === `percolate`
 
@@ -1527,6 +1576,51 @@ Options:::
 `String` -- The URL-encoded request definition (instead of using request body)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
+[[api-termvector]]
+=== `termvector`
+
+[source,js]
+--------
+client.termvector([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`termStatistics`::
+`Boolean` -- Specifies if total term frequency and document frequency should be returned.
+`[fieldStatistics=true]`::
+`Boolean` -- Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
+`fields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return.
+`[offsets=true]`::
+`Boolean` -- Specifies if term offsets should be returned.
+`[positions=true]`::
+`Boolean` -- Specifies if term positions should be returned.
+`[payloads=true]`::
+`Boolean` -- Specifies if term payloads should be returned.
+`preference`::
+`String` -- Specify the node or shard the operation should be performed on (default: random).
+`routing`::
+`String` -- Specific routing value.
+`parent`::
+`String` -- Parent id of documents.
+`index`::
+`String` -- The index in which the document resides.
+`type`::
+`String` -- The type of the document.
+`id`::
+`String` -- The id of the document.
 
 link:#[back to top]
 

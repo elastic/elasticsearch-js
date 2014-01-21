@@ -9,7 +9,6 @@ module.exports = function (branch, done) {
   var chalk = require('chalk');
   var path = require('path');
   var templates = require('./templates');
-  var usesBulkBodyRE = /^(bulk|msearch)$/;
   var urlParamRE = /\{(\w+)\}/g;
 
   var files; // populated in readSpecFiles
@@ -172,11 +171,11 @@ module.exports = function (branch, done) {
         path2lib: _.repeat('../', steps.length + 1) + 'lib/'
       };
 
-      if (def.body && def.body.requires) {
+      if (def.body && def.body.required) {
         spec.needBody = true;
       }
 
-      if (usesBulkBodyRE.test(name)) {
+      if (def.body && def.body.serialize === 'bulk') {
         spec.bulkBody = true;
       }
 

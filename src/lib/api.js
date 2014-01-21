@@ -72,6 +72,7 @@ api.bulk = ca({
       fmt: '/_bulk'
     }
   ],
+  needBody: true,
   bulkBody: true,
   method: 'POST'
 });
@@ -1607,6 +1608,7 @@ api.index = ca({
       }
     }
   ],
+  needBody: true,
   method: 'POST'
 });
 
@@ -2925,6 +2927,7 @@ api.indices.prototype.putMapping = ca({
       }
     }
   ],
+  needBody: true,
   method: 'PUT'
 });
 
@@ -2980,6 +2983,7 @@ api.indices.prototype.putSettings = ca({
       fmt: '/_settings'
     }
   ],
+  needBody: true,
   method: 'PUT'
 });
 
@@ -3018,6 +3022,7 @@ api.indices.prototype.putTemplate = ca({
       }
     }
   },
+  needBody: true,
   method: 'PUT'
 });
 
@@ -3092,6 +3097,7 @@ api.indices.prototype.putWarmer = ca({
       }
     }
   ],
+  needBody: true,
   method: 'PUT'
 });
 
@@ -3445,6 +3451,7 @@ api.indices.prototype.updateAliases = ca({
   url: {
     fmt: '/_aliases'
   },
+  needBody: true,
   method: 'POST'
 });
 
@@ -3596,6 +3603,7 @@ api.mget = ca({
       fmt: '/_mget'
     }
   ],
+  needBody: true,
   method: 'POST'
 });
 
@@ -3775,6 +3783,8 @@ api.mpercolate = ca({
       fmt: '/_mpercolate'
     }
   ],
+  needBody: true,
+  bulkBody: true,
   method: 'POST'
 });
 
@@ -3825,7 +3835,103 @@ api.msearch = ca({
       fmt: '/_msearch'
     }
   ],
+  needBody: true,
   bulkBody: true,
+  method: 'POST'
+});
+
+/**
+ * Perform a [mtermvectors](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.ids - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
+ * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {Boolean} [params.fieldStatistics=true] - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {Boolean} [params.offsets=true] - Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {Boolean} [params.positions=true] - Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {Boolean} [params.payloads=true] - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {String} params.routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {String} params.parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {String} params.index - The index in which the document resides.
+ * @param {String} params.type - The type of the document.
+ * @param {String} params.id - The id of the document.
+ */
+api.mtermvectors = ca({
+  params: {
+    ids: {
+      type: 'list',
+      required: false
+    },
+    termStatistics: {
+      type: 'boolean',
+      'default': false,
+      required: false,
+      name: 'term_statistics'
+    },
+    fieldStatistics: {
+      type: 'boolean',
+      'default': true,
+      required: false,
+      name: 'field_statistics'
+    },
+    fields: {
+      type: 'list',
+      required: false
+    },
+    offsets: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    positions: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    payloads: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    preference: {
+      type: 'string',
+      required: false
+    },
+    routing: {
+      type: 'string',
+      required: false
+    },
+    parent: {
+      type: 'string',
+      required: false
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_mtermvectors',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mtermvectors',
+      req: {
+        index: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_mtermvectors'
+    }
+  ],
   method: 'POST'
 });
 
@@ -4583,6 +4689,7 @@ api.snapshot.prototype.createRepository = ca({
       }
     }
   },
+  needBody: true,
   method: 'POST'
 });
 
@@ -4794,6 +4901,87 @@ api.suggest = ca({
       fmt: '/_suggest'
     }
   ],
+  needBody: true,
+  method: 'POST'
+});
+
+/**
+ * Perform a [termvector](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned.
+ * @param {Boolean} [params.fieldStatistics=true] - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return.
+ * @param {Boolean} [params.offsets=true] - Specifies if term offsets should be returned.
+ * @param {Boolean} [params.positions=true] - Specifies if term positions should be returned.
+ * @param {Boolean} [params.payloads=true] - Specifies if term payloads should be returned.
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random).
+ * @param {String} params.routing - Specific routing value.
+ * @param {String} params.parent - Parent id of documents.
+ * @param {String} params.index - The index in which the document resides.
+ * @param {String} params.type - The type of the document.
+ * @param {String} params.id - The id of the document.
+ */
+api.termvector = ca({
+  params: {
+    termStatistics: {
+      type: 'boolean',
+      'default': false,
+      required: false,
+      name: 'term_statistics'
+    },
+    fieldStatistics: {
+      type: 'boolean',
+      'default': true,
+      required: false,
+      name: 'field_statistics'
+    },
+    fields: {
+      type: 'list',
+      required: false
+    },
+    offsets: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    positions: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    payloads: {
+      type: 'boolean',
+      'default': true,
+      required: false
+    },
+    preference: {
+      type: 'string',
+      required: false
+    },
+    routing: {
+      type: 'string',
+      required: false
+    },
+    parent: {
+      type: 'string',
+      required: false
+    }
+  },
+  url: {
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
+    req: {
+      index: {
+        type: 'string'
+      },
+      type: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    }
+  },
   method: 'POST'
 });
 

@@ -68,6 +68,7 @@ api.bulk = ca({
       fmt: '/_bulk'
     }
   ],
+  needBody: true,
   bulkBody: true,
   method: 'POST'
 });
@@ -1118,6 +1119,7 @@ api.index = ca({
       }
     }
   ],
+  needBody: true,
   method: 'POST'
 });
 
@@ -2073,6 +2075,7 @@ api.indices.prototype.putMapping = ca({
       }
     }
   },
+  needBody: true,
   method: 'PUT'
 });
 
@@ -2103,6 +2106,7 @@ api.indices.prototype.putSettings = ca({
       fmt: '/_settings'
     }
   ],
+  needBody: true,
   method: 'PUT'
 });
 
@@ -2136,6 +2140,7 @@ api.indices.prototype.putTemplate = ca({
       }
     }
   },
+  needBody: true,
   method: 'PUT'
 });
 
@@ -2182,6 +2187,7 @@ api.indices.prototype.putWarmer = ca({
       }
     }
   ],
+  needBody: true,
   method: 'PUT'
 });
 
@@ -2481,6 +2487,7 @@ api.indices.prototype.updateAliases = ca({
   url: {
     fmt: '/_aliases'
   },
+  needBody: true,
   method: 'POST'
 });
 
@@ -2622,6 +2629,7 @@ api.mget = ca({
       fmt: '/_mget'
     }
   ],
+  needBody: true,
   method: 'POST'
 });
 
@@ -2794,6 +2802,7 @@ api.msearch = ca({
       fmt: '/_msearch'
     }
   ],
+  needBody: true,
   bulkBody: true,
   method: 'POST'
 });
@@ -2824,6 +2833,7 @@ api.percolate = ca({
       }
     }
   },
+  needBody: true,
   method: 'POST'
 });
 

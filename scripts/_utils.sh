@@ -31,7 +31,7 @@ function ensure_grunt {
   if [[ ! -x "`which grunt`" ]]; then
     group "start:install_grunt"
       echo "installing grunt-cli"
-      call npm install -g grunt-cli
+      call npm install --silent -g grunt-cli
     group "end:install_grunt"
   fi
 }
