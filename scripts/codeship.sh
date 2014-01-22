@@ -22,14 +22,14 @@ case $1 in
     group "test node 0.8"
       nvm use 0.8
       echo "rebuilding npm deps"
-      npm --silent rebuild
+      npm rebuild &> /dev/null
       call ES_BRANCH=master ./scripts/ci.sh
       call ES_BRANCH=0.90 ./scripts/ci.sh
 
     group "test node 0.10"
       nvm use 0.10
       echo "rebuilding npm deps"
-      npm --silent rebuild
+      npm rebuild &> /dev/null
       call ES_BRANCH=master COVERAGE=1 ./scripts/ci.sh
       call ES_BRANCH=0.90 ./scripts/ci.sh
 
