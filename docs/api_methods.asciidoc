@@ -1589,7 +1589,7 @@ client.termvector([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
