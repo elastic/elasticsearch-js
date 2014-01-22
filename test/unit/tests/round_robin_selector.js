@@ -1,5 +1,5 @@
 describe('Round Robin Selector', function () {
-  var selector = require('../../src/lib/selectors/round_robin');
+  var selector = require('../../../src/lib/selectors/round_robin');
   var _ = require('lodash');
   var expect = require('expect.js');
 

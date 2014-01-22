@@ -1,5 +1,5 @@
-var Log = require('../../src/lib/log');
-var ConsoleLogger = require('../../src/lib/loggers/console');
+var Log = require('../../../src/lib/log');
+var ConsoleLogger = require('../../../src/lib/loggers/console');
 var sinon = require('sinon');
 var expect = require('expect.js');
 var parentLog;
@@ -20,11 +20,11 @@ function makeLogger(parent, levels) {
   return new ConsoleLogger(parent, config);
 }
 
-var stub = require('../utils/auto_release_stub').make();
+var stub = require('../../utils/auto_release_stub').make();
 
 describe('Console Logger', function () {
 
-  require('./generic_logger_tests')(makeLogger);
+  require('../generic_logger_tests')(makeLogger);
 
   it('checks before using unique logging functions, falls back to #log()', function () {
     var _warning = console.warn;

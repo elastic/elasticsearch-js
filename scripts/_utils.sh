@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
 #####
-# Start or stop a group for travis
+# Start a group of log output
 #####
 function group {
   re='start:'
 
-  if [[ $1 =~ $re ]]; then
-    echo -e "\n\033[4m\033[1m$1\033[0m\033[0m"
+  if [[ $CI_NAME = "codeship" ]]; then
+    style='..'
+    reset='..'
   else
-    echo -e "-- $1 --\n"
+    style='\x1b[1m\x1b[37m\x1b[4m'
+    reset='\x1b[24m\x1b[39m\x1b[22m'
   fi
+
+  echo -en "\n\n${style}${1}${reset}\n"
 }
 
 #####
@@ -29,10 +33,8 @@ function call {
 
 function ensure_grunt {
   if [[ ! -x "`which grunt`" ]]; then
-    group "start:install_grunt"
-      echo "installing grunt-cli"
+    group "installing grunt"
       call npm install --silent -g grunt-cli
-    group "end:install_grunt"
   fi
 }
 
@@ -59,7 +61,7 @@ function manage_es {
   local SNAPSHOTS="$ROOT/.snapshots"
   local PIDS="$ROOT/.snapshots/pids"
 
-  group "start:$DO es"
+  group "${DO}ing es"
 
     if [ ! -d "$PIDS" ]; then
       call mkdir -p $PIDS
@@ -158,5 +160,4 @@ function manage_es {
         return 1
       ;;
     esac
-  group "end:$DO es"
 }

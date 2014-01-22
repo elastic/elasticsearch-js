@@ -1,4 +1,4 @@
-var errors = require('../../src/lib/errors');
+var errors = require('../../../src/lib/errors');
 var expect = require('expect.js');
 var _ = require('lodash');
 

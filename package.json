@@ -14,6 +14,11 @@
     "./test/mocks/server.js": "./test/mocks/browser_server.js",
     "lodash": "./node_modules/lodash/dist/lodash.compat.js"
   },
+  "config": {
+    "blanket": {
+      "pattern": "specified in test/unit/coverage.js"
+    }
+  },
   "devDependencies": {
     "mocha": "~1.14.0",
     "async": "~0.2.9",
@@ -42,7 +47,7 @@
     "grunt-contrib-compress": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
-    "grunt-mocha-cov": "~0.1.1",
+    "grunt-mocha-cov": "~0.2.0",
     "grunt-open": "~0.2.2",
     "glob": "~3.2.7",
     "expect.js": "~0.2.0",
@@ -64,11 +69,9 @@
   },
   "scripts": {
     "test": "grunt test",
-    "generate": "node scripts/generate",
-    "blanket": {
-      "pattern": [
-        "src"
-      ]
-    }
+    "generate": "node scripts/generate"
+  },
+  "engines": {
+    "node" : ">=0.8 <0.11"
   }
 }

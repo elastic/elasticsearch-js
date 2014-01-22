@@ -1,13 +1,13 @@
 describe('File Logger', function () {
-  var Log = require('../../src/lib/log');
-  var FileLogger = require('../../src/lib/loggers/file');
+  var Log = require('../../../src/lib/log');
+  var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
   var _ = require('lodash');
   var parentLog;
   var logger;
   var expect = require('expect.js');
   var fs = require('fs');
-  var stub = require('../utils/auto_release_stub').make();
+  var stub = require('../../utils/auto_release_stub').make();
 
   beforeEach(function () {
     parentLog = new Log();
@@ -39,7 +39,7 @@ describe('File Logger', function () {
     fs.unlinkSync('test.log');
   });
 
-  require('./generic_logger_tests')(makeLogger);
+  require('../generic_logger_tests')(makeLogger);
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {

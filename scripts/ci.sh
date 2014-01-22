@@ -29,9 +29,9 @@ else
 fi
 
 if [[ "$NODE_UNIT" != "0" ]]; then
-  group "start:unit_tests"
+  group "running unit tests"
     if [[ -n "$JENKINS" ]]; then
-      $MOCHA test/unit/test_*.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
+      $MOCHA test/unit/tests/*.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
       if [ "$?" -gt "0" ]; then
         echo "non-zero exit code: $RESULT"
         cat test/junit-node-unit.xml
@@ -39,15 +39,13 @@ if [[ "$NODE_UNIT" != "0" ]]; then
     else
       _grunt jshint mochacov:unit
     fi
-  group "end:unit_tests"
 fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
-  group "start:generate tests"
+  group "generating tests"
     call node scripts/generate --no-api
-  group "end:generate tests"
 
-  group "start:integration tests"
+  group "running integration tests"
     if [[ -n "$JENKINS" ]]; then
       # convert TESTING_BRANCH into BRANCH_SUFFIX
       if [[ $TESTING_BRANCH = 'master' ]]; then
@@ -75,18 +73,15 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
       _grunt mochacov:integration_$TESTING_BRANCH
       manage_es stop $TESTING_BRANCH $ES_RELEASE
     fi
-  group "end:integration tests"
 fi
 
 if [[ "$BROWSER_UNIT" == "1" ]]; then
-  group "start:browser tests"
+  group "running browser tests"
     _grunt browser_clients:build run:browser_test_server saucelabs-mocha
-  group "end:browser tests"
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
-  group "start:ship coverage"
+  group "shipping coverage"
     ensure_grunt
     grunt mochacov:ship_coverage
-  group "stop:ship coverage"
 fi

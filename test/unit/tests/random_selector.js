@@ -1,5 +1,5 @@
 describe('Random Selector', function () {
-  var randomSelector = require('../../src/lib/selectors/random');
+  var randomSelector = require('../../../src/lib/selectors/random');
   var _ = require('lodash');
   var expect = require('expect.js');
 
