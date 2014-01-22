@@ -1,14 +1,14 @@
 describe('Stream Logger', function () {
-  var Log = require('../../src/lib/log');
-  var StreamLogger = require('../../src/lib/loggers/stream');
-  var MockWritableStream = require('../mocks/writable_stream');
+  var Log = require('../../../src/lib/log');
+  var StreamLogger = require('../../../src/lib/loggers/stream');
+  var MockWritableStream = require('../../mocks/writable_stream');
   var once = require('events').EventEmitter.prototype.once;
   var stream = new MockWritableStream();
   var _ = require('lodash');
   var expect = require('expect.js');
   var parentLog;
 
-  var stub = require('../utils/auto_release_stub').make();
+  var stub = require('../../utils/auto_release_stub').make();
 
   beforeEach(function () {
     stub(stream, 'write');
@@ -35,7 +35,7 @@ describe('Stream Logger', function () {
     return new StreamLogger(parent, config);
   }
 
-  require('./generic_logger_tests')(makeLogger);
+  require('../generic_logger_tests')(makeLogger);
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {

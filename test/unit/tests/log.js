@@ -1,4 +1,4 @@
-var Log = require('../../src/lib/log');
+var Log = require('../../../src/lib/log');
 var _ = require('lodash');
 var expect = require('expect.js');
 

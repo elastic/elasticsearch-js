@@ -1,9 +1,9 @@
 describe('Nodes to host callback', function () {
-  var callback = require('../../src/lib/nodes_to_host');
+  var callback = require('../../../src/lib/nodes_to_host');
   var expect = require('expect.js');
 
   // example node list that would come back from "GET _cluster/nodes"
-  var nodes = require('../fixtures/short_node_list.json');
+  var nodes = require('../../fixtures/short_node_list.json');
 
   it('properly creates host objects', function () {
     var hosts = callback(nodes);

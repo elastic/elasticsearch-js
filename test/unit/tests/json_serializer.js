@@ -1,8 +1,8 @@
 describe('JSON serializer', function () {
-  var JsonSerializer = require('../../src/lib/serializers/json');
+  var JsonSerializer = require('../../../src/lib/serializers/json');
   var expect = require('expect.js');
   var sinon = require('sinon');
-  var stub = require('../utils/auto_release_stub').make();
+  var stub = require('../../utils/auto_release_stub').make();
 
   function makeSerializer() {
     return new JsonSerializer();

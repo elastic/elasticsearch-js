@@ -1,10 +1,10 @@
 describe('Http Connector', function () {
 
   var expect = require('expect.js');
-  var Host = require('../../src/lib/host');
-  var errors = require('../../src/lib/errors');
-  var HttpConnection = require('../../src/lib/connectors/http');
-  var ConnectionAbstract = require('../../src/lib/connection');
+  var Host = require('../../../src/lib/host');
+  var errors = require('../../../src/lib/errors');
+  var HttpConnection = require('../../../src/lib/connectors/http');
+  var ConnectionAbstract = require('../../../src/lib/connection');
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
@@ -13,12 +13,12 @@ describe('Http Connector', function () {
   var http = require('http');
   var https = require('https');
 
-  var MockRequest = require('../mocks/request');
-  var MockIncommingMessage = require('../mocks/incomming_message');
+  var MockRequest = require('../../mocks/request');
+  var MockIncommingMessage = require('../../mocks/incomming_message');
 
   nock.disableNetConnect();
 
-  var stub = require('../utils/auto_release_stub').make();
+  var stub = require('../../utils/auto_release_stub').make();
 
   function makeStubReqMethod(prep) {
     return function (params, cb) {

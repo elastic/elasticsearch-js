@@ -10,7 +10,7 @@ var browserify = require('browserify');
 var pkg = require(root + '/package.json');
 
 var testFiles = {
-  unit: 'test/unit/test_!(' + [
+  unit: 'test/unit/tests/!(' + [
     'file_logger',
     'http_connector',
     'stdio_logger',
@@ -18,7 +18,7 @@ var testFiles = {
     'stream_logger',
     'tracer_logger',
     'transport_with_server',
-  ].join('|') + ')*',
+  ].join('|') + ')*.js',
   build: 'test/unit/browser_builds/*.js'
 };
 

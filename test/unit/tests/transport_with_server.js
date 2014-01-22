@@ -1,14 +1,14 @@
-var Transport = require('../../src/lib/transport');
-var Host = require('../../src/lib/host');
-var errors = require('../../src/lib/errors');
+var Transport = require('../../../src/lib/transport');
+var Host = require('../../../src/lib/host');
+var errors = require('../../../src/lib/errors');
 var when = require('when');
 var expect = require('expect.js');
 
 var sinon = require('sinon');
-var nock = require('../mocks/server.js');
+var nock = require('../../mocks/server.js');
 var _ = require('lodash');
-var nodeList = require('../fixtures/short_node_list.json');
-var stub = require('../utils/auto_release_stub').make();
+var nodeList = require('../../fixtures/short_node_list.json');
+var stub = require('../../utils/auto_release_stub').make();
 
 /**
  * Allows the tests call #request() without it doing anything past trying to select

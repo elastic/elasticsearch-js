@@ -1,7 +1,7 @@
-var _ = require('../../src/lib/utils');
+var _ = require('../../../src/lib/utils');
 var expect = require('expect.js');
 
-var stub = require('../utils/auto_release_stub').make();
+var stub = require('../../utils/auto_release_stub').make();
 
 describe('Utils', function () {
 
@@ -398,7 +398,7 @@ describe('Utils', function () {
     });
 
     if (require('stream').Writable) {
-      var MockWritableStream = require('../mocks/writable_stream');
+      var MockWritableStream = require('../../mocks/writable_stream');
       it('ignores empty stream', function () {
         var stream = new MockWritableStream();
         expect(_.getUnwrittenFromStream(stream)).to.be('');

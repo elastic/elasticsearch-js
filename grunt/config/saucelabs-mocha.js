@@ -1,5 +1,4 @@
-var keys = require('../../test/utils/keys');
-
+var slk = require('../../test/utils/slk');
 module.exports = {
   all: {
     options: {
@@ -8,8 +7,8 @@ module.exports = {
         'http://127.0.0.1:8000/builds.html'
       ],
       testname: process.env.CI_BUILD_NUMBER ? 'build_' + process.env.CI_BUILD_NUMBER : 'local_' + Date.now(),
-      username: keys.saucelabs_user,
-      key: keys.saucelabs,
+      username: slk.user,
+      key: slk.key,
       browsers: [
         {
           browserName: 'chrome',

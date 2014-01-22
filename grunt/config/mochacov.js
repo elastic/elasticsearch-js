@@ -1,8 +1,6 @@
-var unitTests = ['test/unit/test_*.js'];
-
 module.exports = {
   unit: {
-    src: unitTests
+    src: 'test/unit'
   },
 
   integration_master: {
@@ -15,23 +13,21 @@ module.exports = {
 
   // run the unit tests, and update coverage.html
   make_coverage_html: {
-    src: unitTests,
+    src: 'test/unit/coverage.js',
     options: {
       reporter: 'html-cov',
-      output: 'coverage.html'
+      output: 'coverage.html',
+      instrument: false
     }
   },
 
   // for use by travis
   ship_coverage: {
-    src: unitTests,
+    src: 'test/unit/coverage.js',
     options: {
       reporter: 'mocha-lcov-reporter',
-      coveralls: {
-        serviceName: 'codeship',
-        serviceJobId: process.env.CI_BUILD_NUMBER,
-        repoToken: process.env.COVERALLS_TOKEN
-      }
+      coveralls: true,
+      instrument: false
     }
   }
 };

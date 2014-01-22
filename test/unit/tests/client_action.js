@@ -1,4 +1,4 @@
-var ca = require('../../src/lib/client_action');
+var ca = require('../../../src/lib/client_action');
 var expect = require('expect.js');
 var _ = require('lodash');
 var when = require('when');
