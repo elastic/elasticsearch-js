@@ -2311,6 +2311,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
+`indexTemplates`::
+`String, String[], Boolean` -- A comma separated list to return specific index templates when returning metadata
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `index`::

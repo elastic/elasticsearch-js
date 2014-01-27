@@ -767,6 +767,7 @@ api.cluster.prototype.reroute = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {String, String[], Boolean} params.indexTemplates - A comma separated list to return specific index templates when returning metadata
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
@@ -779,6 +780,10 @@ api.cluster.prototype.state = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    indexTemplates: {
+      type: 'list',
+      name: 'index_templates'
     },
     flatSettings: {
       type: 'boolean',
@@ -794,7 +799,6 @@ api.cluster.prototype.state = ca({
           options: [
             '_all',
             'blocks',
-            'index_templates',
             'metadata',
             'nodes',
             'routing_table'
@@ -813,7 +817,6 @@ api.cluster.prototype.state = ca({
           options: [
             '_all',
             'blocks',
-            'index_templates',
             'metadata',
             'nodes',
             'routing_table'

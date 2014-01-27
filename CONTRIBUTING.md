@@ -23,9 +23,7 @@ The process for contributing to any of the Elasticsearch repositories is similar
       ```sh
       npm install -g grunt-cli
       ```
-    3. Run the tests This will lint the code, run the unit tests, install local versions of elasticsearch, and run the integration tests using those installations.
-
-      ***WARNING***: If you are running Elasticsearch on your machine, and it is using port 9200, shut it down.
+    3. Run the tests. Testing the code will lint the project, run the unit tests, install local versions of elasticsearch, and run the integration tests using those installations.
 
       ```sh
       grunt test
