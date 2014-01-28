@@ -39,7 +39,7 @@ Tracer.prototype._formatTraceMessage = function (req) {
   var originalHost = url.format(_.pick(reqUrl, 'protocol', 'hostname', 'port'));
 
   reqUrl.port = this.curlPort;
-  reqUrl.host = this.curlHost;
+  reqUrl.hostname = this.curlHost;
   reqUrl.query = _.defaults(reqUrl.query || {}, { pretty: true });
 
   /* jshint quotmark: double */
