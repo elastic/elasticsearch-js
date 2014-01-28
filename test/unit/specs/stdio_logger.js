@@ -57,10 +57,10 @@ describe('Stdio Logger', function () {
       var logger = makeLogger();
 
       stub(process.stdout, 'write');
-      var withoutColor = 'Elasticsearch TRACE: ' + now + '\n  curl\n  msg\n\n';
+      var withoutColor = 'Elasticsearch DEBUG: ' + now + '\n  be weary\n\n';
 
       logger.color = true;
-      logger.onTrace('msg', 'curl');
+      logger.onDebug('be weary');
       expect(process.stdout.write.lastCall.args[0]).to.not.eql(withoutColor);
       expect(chalk.stripColor(process.stdout.write.lastCall.args[0])).to.eql(withoutColor);
     });

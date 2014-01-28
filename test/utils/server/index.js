@@ -5,29 +5,13 @@ var _ = require('lodash');
 var async = require('async');
 var path = require('path');
 var root = path.join(__dirname, '../../..');
-var glob = require('glob');
 var browserify = require('browserify');
 var pkg = require(root + '/package.json');
 
 var testFiles = {
-  unit: 'test/unit/tests/!(' + [
-    'file_logger',
-    'http_connector',
-    'stdio_logger',
-    'console_logger',
-    'stream_logger',
-    'tracer_logger',
-    'transport_with_server',
-  ].join('|') + ')*.js',
-  build: 'test/unit/browser_builds/*.js'
+  unit: 'test/unit/browser.js',
+  build: 'test/unit/browser_builds/index.js'
 };
-
-// resolve the test file globs
-_.transform(testFiles, function (out, pattern, name) {
-  out[name] = _.map(glob.sync(pattern), function (filename) {
-    return path.resolve(root, filename);
-  });
-}, testFiles);
 
 // generic aliasify instance
 var aliasify = require('aliasify').configure({

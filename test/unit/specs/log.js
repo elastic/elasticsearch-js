@@ -182,12 +182,13 @@ describe('Log class', function () {
       expect(call.args[0]).to.eql('here');
     });
 
-    it('should emit a trace event for trace events, with message and curlCall args', function () {
+    it('should emit a trace event for trace events, with normalized request details arg', function () {
       log.trace('GET', 'http://localhost:9200/_cluster/nodes', '', '', 200);
       expect(call.event).to.eql('trace');
-      expect(call.args.length).to.be(2);
-      expect(call.args[0]).to.match(/^<- 200/);
-      expect(call.args[1]).to.match(/^curl /);
+      expect(call.args.length).to.be(1);
+      expect(call.args[0]).to.have.property('method', 'GET');
+      expect(call.args[0]).to.have.property('url', 'http://localhost:9200/_cluster/nodes');
+      expect(call.args[0]).to.have.property('status', 200);
     });
   });
 

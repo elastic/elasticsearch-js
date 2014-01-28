@@ -508,14 +508,15 @@ describe('Transport Class', function () {
       it('promise is always pulled from the defer created by this.defer()', function () {
         var fakePromise = {};
         var origDefer = Transport.prototype.defer;
-        Transport.prototype.defer = function () {
-          return {
-            resolve: _.noop,
-            reject: _.noop,
-            promise: fakePromise
-          };
-        };
-        var tran = new Transport({});
+        var tran = new Transport({
+          defer: function () {
+            return {
+              resolve: _.noop,
+              reject: _.noop,
+              promise: fakePromise
+            };
+          }
+        });
         shortCircuitRequest(tran);
         var ret = tran.request({});
         Transport.prototype.defer = origDefer;

@@ -1,3 +1,5 @@
-require('fs').readdirSync(__dirname + '/tests').forEach(function (file) {
-  require(__dirname + '/tests/' + file);
+var specDir = __dirname + '/specs';
+
+require('fs').readdirSync(specDir).forEach(function (file) {
+  require(specDir + '/' + file);
 });

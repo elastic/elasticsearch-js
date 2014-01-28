@@ -94,6 +94,6 @@ Console.prototype.onDebug = _.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Console.prototype.onTrace = _.handler(function (msg, curlCall) {
-  this.write('TRACE', curlCall + '\n' + msg, 'log');
+Console.prototype.onTrace = _.handler(function (msg) {
+  this.write('TRACE', this._formatTraceMessage(msg), 'log');
 });

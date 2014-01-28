@@ -31,7 +31,7 @@ fi
 if [[ "$NODE_UNIT" != "0" ]]; then
   group "running unit tests"
     if [[ -n "$JENKINS" ]]; then
-      $MOCHA test/unit/tests/*.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
+      $MOCHA test/unit/index.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
       if [ "$?" -gt "0" ]; then
         echo "non-zero exit code: $RESULT"
         cat test/junit-node-unit.xml
