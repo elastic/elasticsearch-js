@@ -21,7 +21,7 @@ npm install elasticsearch
 ```
 
 <!-- wow bling -->
-[![NPM](https://nodei.co/npm/ecstatic.png?downloads=true)](https://npmjs.org/package/elasticsearch)
+[![NPM](https://nodei.co/npm/elasticsearch.png?downloads=true)](https://npmjs.org/package/elasticsearch)
 
 ## Browser Builds
 
