@@ -76,9 +76,8 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
 fi
 
 if [[ "$BROWSER_UNIT" == "1" ]]; then
-echo "disabled temporarily"
-#  group "running browser tests"
-#    _grunt browser_clients:build run:browser_test_server saucelabs-mocha
+  group "running browser tests"
+  _grunt browser_clients:build run:browser_test_server saucelabs-mocha
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
