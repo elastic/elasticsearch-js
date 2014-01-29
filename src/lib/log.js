@@ -269,45 +269,32 @@ Log.prototype.debug = function (/* ...msg */) {
  */
 Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
   if (this.listenerCount('trace')) {
-    if (typeof requestUrl === 'string') {
-      requestUrl = url.parse(requestUrl, true, true);
-    } else if (requestUrl.path) {
-      requestUrl.query = url.parse(requestUrl.path, true, false).query;
-    }
-
-    requestUrl = _.defaults({
-      host: 'localhost:9200',
-      query: _.defaults(requestUrl.query || {}, {
-        pretty: true
-      })
-    }, requestUrl);
-    delete requestUrl.auth;
-
-    if (!requestUrl.pathname && requestUrl.path) {
-      requestUrl.pathname = requestUrl.path.split('?').shift();
-    }
-
-    requestUrl = url.format(requestUrl);
-
-    var message = '<- ' + responseStatus + '\n' + prettyJSON(responseBody);
-
-    /* jshint quotmark: double */
-    var curlCall = "curl '" + requestUrl.replace(/'/g, "\\'") + "' -X" + method.toUpperCase();
-    if (body) {
-      curlCall += " -d '" + prettyJSON(body) + "'";
-    }
-    /* jshint quotmark: single */
-
-    return this.emit('trace', message, curlCall);
+    return this.emit('trace', Log.normalizeTraceArgs(method, requestUrl, body, responseBody, responseStatus));
   }
 };
 
-function prettyJSON(body) {
-  try {
-    return JSON.stringify(JSON.parse(body), null, '  ').replace(/'/g, '\\u0027');
-  } catch (e) {
-    return body || '';
+Log.normalizeTraceArgs = function (method, requestUrl, body, responseBody, responseStatus) {
+  if (typeof requestUrl === 'string') {
+    requestUrl = url.parse(requestUrl, true, true);
+  } else {
+    requestUrl = _.clone(requestUrl);
+    if (requestUrl.path) {
+      requestUrl.query = url.parse(requestUrl.path, true, false).query;
+    }
+    if (!requestUrl.pathname && requestUrl.path) {
+      requestUrl.pathname = requestUrl.path.split('?').shift();
+    }
   }
-}
+
+  delete requestUrl.auth;
+
+  return {
+    method: method,
+    url: url.format(requestUrl),
+    body: body,
+    status: responseStatus,
+    response: responseBody
+  };
+};
 
 module.exports = Log;

@@ -230,22 +230,8 @@ module.exports = function (makeLogger) {
       stub(logger, 'write', function (label, msg) {
         expect(label).to.eql('TRACE');
       });
-      logger.onTrace('message');
+      logger.onTrace(Log.normalizeTraceArgs('GET', 'http://place/thing?me=true', '{}', '{"ok": true}', 200));
       expect(logger.write.callCount).to.eql(1);
-    });
-
-    it('joins the message and curl call with a newline', function () {
-      var logger = makeLogger();
-
-      // tracer logger has custom trace logic...
-      if (!(logger instanceof TracerLogger)) {
-        stub(logger, 'write', function (label, msg) {
-          expect(msg).to.eql('curlcall\nmessage');
-        });
-
-        logger.onTrace('message', 'curlcall');
-        expect(logger.write.callCount).to.eql(1);
-      }
     });
   });
 };

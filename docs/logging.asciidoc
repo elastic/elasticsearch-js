@@ -154,6 +154,16 @@ Options:
 `path`:::
 `String` -- Location of the file to write log messages to. It is created if it does not exists. Default is `"elasticsearch.log"`
 
+`"tracer"`::
+Logs in a format that can be executed with bash, where everything is commented except the trace commands which are formatted as curl calls. By default all of the urls are rewritten to protect production systems and to making the scripts easier to reuse/send to other people. In order to control the urls written specify the curlHost and curlPort configs.
++
+Options:
+
+`curlHost`:::
+`Sting` --  Default is `"localhost"`.
+`curlPort`:::
+`Sting` --  Default is `9200`.
+
 `"stream"`::
 Send log messages to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">WriteableStream</a>
 +

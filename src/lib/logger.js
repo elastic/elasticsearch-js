@@ -38,7 +38,7 @@ LoggerAbstract.prototype.timestamp = function () {
 
 function indent(text, spaces) {
   var space = _.repeat(' ', spaces || 2);
-  return text.split(/\r?\n/).map(function (line) {
+  return (text || '').split(/\r?\n/).map(function (line) {
     return space + line;
   }).join('\n');
 }
@@ -144,9 +144,37 @@ LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = _.handler(function (message, curlCall) {
-  this.write('TRACE', curlCall + '\n' + message);
+LoggerAbstract.prototype.onTrace = _.handler(function (requestDetails) {
+  this.write('TRACE', this._formatTraceMessage(requestDetails));
 });
 
+LoggerAbstract.prototype._formatTraceMessage = function (req) {
+  return '-> ' + req.method + ' ' + req.url + '\n' +
+    this._prettyJson(req.body) + '\n' +
+    '<- ' + req.status + '\n' +
+    this._prettyJson(req.response);
+/*
+-> GET https://sldfkjsdlfksjdf:9200/slsdkfjlxckvxhclks?sdlkj=sdlfkje
+{
+  asdflksjdf
+}
+
+<- 502
+{
+  sldfksjdlf
+}
+*/
+};
+
+LoggerAbstract.prototype._prettyJson = function (body) {
+  try {
+    if (typeof object === 'string') {
+      body = JSON.parse(body);
+    }
+    return JSON.stringify(body, null, '  ').replace(/'/g, '\\u0027');
+  } catch (e) {
+    return typeof body === 'string' ? body : '';
+  }
+};
 
 module.exports = LoggerAbstract;

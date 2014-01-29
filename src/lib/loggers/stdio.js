@@ -112,6 +112,6 @@ Stdio.prototype.onDebug = _.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Stdio.prototype.onTrace = _.handler(function (message, curlCall) {
-  this.write('TRACE', curlCall + '\n' + message, process.stdout, this.colors.trace);
+Stdio.prototype.onTrace = _.handler(function (message) {
+  this.write('TRACE', this._formatTraceMessage(message), process.stdout, this.colors.trace);
 });

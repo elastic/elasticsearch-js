@@ -1,6 +1,6 @@
 module.exports = {
   unit: {
-    src: 'test/unit'
+    src: 'test/unit/index.js'
   },
 
   integration_master: {
