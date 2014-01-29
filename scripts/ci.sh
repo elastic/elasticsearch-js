@@ -82,7 +82,6 @@ fi
 
 if [[ "$COVERAGE" == "1" ]]; then
   group "shipping coverage"
-    ensure_grunt
-    grunt mochacov:ship_coverage
-    exit 0
+    # don't fail even if this does
+    _grunt --force mochacov:ship_coverage
 fi

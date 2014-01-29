@@ -23,6 +23,7 @@ module.exports = {
     exec: 'node ./test/utils/server',
     options: {
       wait: false,
+      quiet: true,
       ready: /listening/
     }
   },

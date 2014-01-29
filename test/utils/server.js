@@ -3,15 +3,34 @@ var http = require('http');
 var fs = require('fs');
 var _ = require('lodash');
 var async = require('async');
-var path = require('path');
-var root = path.join(__dirname, '../../..');
+var root = require('path').join(__dirname, '../..');
 var browserify = require('browserify');
 var pkg = require(root + '/package.json');
+var unitSpecDir = root + '/test/unit/specs';
+var browserBuildsDir = root + '/test/unit/browser_builds';
 
-var testFiles = {
-  unit: 'test/unit/browser.js',
-  build: 'test/unit/browser_builds/index.js'
-};
+var testFiles = {};
+
+testFiles.unit = _(fs.readdirSync(unitSpecDir))
+  .difference([
+    'file_logger.js',
+    'http_connector.js',
+    'stdio_logger.js',
+    'console_logger.js',
+    'stream_logger.js',
+    'tracer_logger.js',
+    'transport_with_server.js'
+  ])
+  .map(function (file) {
+    return unitSpecDir + '/' + file;
+  })
+  .value();
+
+testFiles.build = _(fs.readdirSync(browserBuildsDir))
+  .map(function (file) {
+    return browserBuildsDir + '/' + file;
+  })
+  .value();
 
 // generic aliasify instance
 var aliasify = require('aliasify').configure({

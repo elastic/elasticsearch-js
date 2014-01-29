@@ -38,8 +38,8 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
       Quick Option: Run them locally in your browser
       ```sh
-      node ./test/utils/server
       grunt browser_clients:build
+      node ./test/utils/server
       # open http://127.0.0.1:8000/unit.html
       # open http://127.0.0.1:8000/builds.html
       ```
