@@ -35,7 +35,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('_upload_archive', function (type) {
-    grunt.run([
+    grunt.task.run([
       'browser_clients:build',
       'copy:dist_to_named_dir',
       'compress:' + type + '_zip',

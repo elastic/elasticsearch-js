@@ -18,16 +18,20 @@ npm install --save elasticsearch
 
 === Browser Builds
 
-To download a build of elasticsearch.js which functions well within modern browsers, use the links
-below. These versions of the client are currently ***experimental***. They will break from time to time
-and should probably not be used on public-facing websites (it's a whopping 150kb of code).
+We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using https://saucelabs.com/u/elasticsearch-js[saucelabs] in Chrome, Firefox, and Internet Explorer 10, and 11. We also test in IE 9, but there is a known issue with making non-standard (get/post) requests across domains.
 
-  *  v1.4.0 [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.zip[zip]] [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.tar.gz[tarball]]
-  *  master [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.zip[zip]] [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.tar.gz[tarball]]
+==== Bower
+If you use bower to manage your dependencies, then just run:
 
-WARNING: The entire API is compatible with IE 10+, Chrome, Firefox, Safari, and Opera. The majority of the API will
-also work in IE 8 &amp; 9, but those browsers limit cross domain requests to just GET and POST. IE versions
-before 8 do not support cross-domain requests nativly.
+[source,shell]
+---------
+bower install elasticsearch
+---------
+
+==== Download
+
+ * v1.4.0: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.tar.gz[tar.gz]
+ * master: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.tar.gz[tar.gz]
 
 ==== Angular Build (elasticsearch.angular.js)
   * Registers the elasticsearch object as a factory `esFactory`

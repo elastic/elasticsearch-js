@@ -14,7 +14,7 @@ The official low-level Elasticsearch client for Node.js and the browser.
  - Persistent, Keep-Alive connections
  - Load balancing (with pluggable selection strategy) across all available nodes.
 
-## Install
+## Install in Node.js
 
 ```
 npm install elasticsearch
@@ -27,7 +27,15 @@ npm install elasticsearch
 
 <!-- [![Selenium Tests Status](https://saucelabs.com/browser-matrix/elasticsearch-js.svg)](https://saucelabs.com/u/elasticsearch-js) -->
 
-We also provide builds of the elasticsearch.js client for use in the browser. Each of the archives listed below contain a generic version of Elasticsearch.js, as well as versions for users of jQuery and Angular.js.
+We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using [saucelabs](https://saucelabs.com/u/elasticsearch-js) in Chrome, Firefox, and Internet Explorer 10, and 11. We also test in IE 9, but there is a known issue with making non-standard (get/post) requests across domains.
+
+### Bower
+If you use bower to manage your dependencies, then just run:
+```
+bower install elasticsearch
+```
+
+### Download
 
  - v1.4.0: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.tar.gz)
  - master: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.tar.gz)
