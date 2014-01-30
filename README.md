@@ -21,7 +21,7 @@ npm install elasticsearch
 ```
 
 <!-- wow bling -->
-[![NPM Stats](https://nodei.co/npm/elasticsearch.png?downloads=true)](https://npmjs.org/package/elasticsearch)
+<!-- [![NPM Stats](https://nodei.co/npm/elasticsearch.png?downloads=true)](https://npmjs.org/package/elasticsearch) -->
 
 ## Browser Builds
 
@@ -42,7 +42,7 @@ We also provide builds of the elasticsearch.js client for use in the browser. Ea
 
 ## Supported Elasticsearch Versions
 
-[![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/)
+<!-- [![Build Status](https://build.elasticsearch.org/job/es-js_nightly/badge/icon)](https://build.elasticsearch.org/job/es-js_nightly/) -->
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases **0.90.5 and greater**. We also test against the latest changes in the 0.90 and master branches of the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVerson` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
 

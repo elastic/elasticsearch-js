@@ -1,6 +1,10 @@
 # elasticsearch-js changelog
 
-## 1.2 (Jan 17 2014)
+## 1.4 (Jan 30 2014)
+- The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
+- API Updated with latest changes awaiting 1.0 release
+
+## 1.2/1.3 (Jan 17 2014)
 - `apiVersion` config parameter was added. Use this to specify which API the client should provide, we currently offer support for elasticsearch branches "0.90", "1.0", and "master"
 
 
