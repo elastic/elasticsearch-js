@@ -6,7 +6,9 @@ module.exports = {
         'http://127.0.0.1:8000/unit.html',
         'http://127.0.0.1:8000/builds.html'
       ],
-      testname: process.env.CI_BUILD_NUMBER ? 'build_' + process.env.CI_BUILD_NUMBER : 'local_' + Date.now(),
+      testname: 'es.js client tests',
+      build: process.env.CI_BUILD_NUMBER,
+      concurrency: 10,
       username: slk.user,
       key: slk.key,
       browsers: [
