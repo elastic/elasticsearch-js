@@ -22,7 +22,7 @@ To download a build of elasticsearch.js which functions well within modern brows
 below. These versions of the client are currently ***experimental***. They will break from time to time
 and should probably not be used on public-facing websites (it's a whopping 150kb of code).
 
-  *  v1.1.0 [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.1.0.zip[zip]] [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.1.0.tar.gz[tarball]]
+  *  v1.4.0 [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.zip[zip]] [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.4.0.tar.gz[tarball]]
   *  master [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.zip[zip]] [https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-master.tar.gz[tarball]]
 
 WARNING: The entire API is compatible with IE 10+, Chrome, Firefox, Safari, and Opera. The majority of the API will
