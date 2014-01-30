@@ -1,8 +1,6 @@
-var cp = require('child_process');
 var async = require('async');
-var estream = require('event-stream');
-var chalk = require('chalk');
 var _ = require('lodash');
+var spawn = require('../_spawn');
 var argv = require('optimist')
   .options({
     force: {
@@ -41,54 +39,32 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
   argv.force = argv.f = process.env.FORCE || process.env.FORCE_GEN;
 }
 
-function spawn(cmd, args) {
-  console.log(chalk.white.bold('$ ' + cmd + ' ' + args.join(' ')));
-
-  var proc = cp.spawn(cmd, args, { stdio: 'pipe'});
-  var out = estream.split();
-
-  if (argv.verbose) {
-    proc.stdout.pipe(out);
-  } else {
-    proc.stdout.resume();
-  }
-
-  proc.stderr.pipe(out);
-
-  out
-    .pipe(estream.mapSync(function indent(line) {
-      return '    ' + line + '\n';
-    }))
-    .pipe(process.stdout);
-
-  return proc;
-}
-
 function initSubmodule(done) {
-  spawn('git', ['submodule', 'update', '--init'])
-    .on('exit', function (status) {
-      done(status ? new Error('Unable to init submodules.') : void 0);
-    });
+  spawn('git', ['submodule', 'update', '--init'], argv, function (status) {
+    done(status ? new Error('Unable to init submodules.') : void 0);
+  });
   return;
 }
 
 function fetch(done) {
-  spawn('git', ['submodule', 'foreach', 'git fetch origin'])
-    .on('exit', function (status) {
-      done(status ? new Error('Unable fetch lastest changes.') : void 0);
-    });
+  spawn('git', ['submodule', 'foreach', 'git fetch origin'], argv, function (status) {
+    done(status ? new Error('Unable fetch lastest changes.') : void 0);
+  });
   return;
 }
 
 function generateBranch(branch, done) {
   async.series([
     function (done) {
-      spawn('git', ['submodule', 'foreach', [
-        'git reset --hard', 'git clean -fdx', 'git checkout origin/' + branch
-      ].join(' && ')])
-        .on('exit', function (status) {
-          done(status ? new Error('Unable to checkout ' + branch) : void 0);
-        });
+      var cmd = [
+        'git reset --hard',
+        'git clean -fdx',
+        'git checkout origin/' + branch
+      ].join(' && ');
+
+      spawn('git', ['submodule', 'foreach', cmd], function (status) {
+        done(status ? new Error('Unable to checkout ' + branch) : void 0);
+      });
     },
     function (done) {
       var tasks = [];

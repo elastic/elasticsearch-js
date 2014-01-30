@@ -52,5 +52,14 @@ module.exports = {
       wait: false,
       quiet: true
     }
+  },
+  init_submodules: {
+    exec: 'git submodule update --init',
+    options: {
+      quiet: true
+    }
+  },
+  release_bower_subm_tag: {
+    exec: 'node ./scripts/release/bower'
   }
 };
