@@ -4,10 +4,11 @@
 module.exports = function (grunt) {
   // load plugins
   require('load-grunt-config')(grunt, {
-    configPath: require('path').join(__dirname, 'grunt/config'),
+    configPath: __dirname + '/grunt/config',
     init: true,
     config: {
-      distDir: 'dist',
+      distDir: __dirname + '/dist',
+      bowerSubmodule: __dirname + '/src/bower-elasticsearch-js',
       meta: {
         banner: '/*! <%= package.name %> - v<%= package.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %>\n' +

@@ -5,34 +5,46 @@ module.exports = function (grunt) {
     'saucelabs-mocha:all'
   ]);
 
-  grunt.registerTask('browser_clients:build', [
-    'clean:dist',
-    'browserify:browser_client',
-    'browserify:angular_client',
-    'browserify:jquery_client',
-    'uglify:dist',
-    'concat:dist_banners'
-  ]);
+  grunt.registerTask('browser_clients:build', function () {
+    // prevent this from running more than once accidentally
+    grunt.task.renameTask('browser_clients:build', 'browser_clients:rebuild');
+    grunt.task.registerTask('browser_clients:build', []);
+
+    grunt.task.run([
+      'clean:dist',
+      'browserify:browser_client',
+      'browserify:angular_client',
+      'browserify:jquery_client',
+      'uglify:dist',
+      'concat:dist_banners'
+    ]);
+  });
 
   grunt.registerTask('browser_clients:distribute', [
-    'browser_clients:build',
-    'copy:dist_to_named_dir',
-    'compress:master_zip',
-    'compress:master_tarball',
-    's3:upload_archives'
+    '_upload_archive:master'
   ]);
 
   grunt.registerTask('browser_clients:release', [
     'prompt:confirm_release',
-    '__check_for_confirmation',
+    '_check_for_confirmation',
+    '_upload_archive:release',
     'browser_clients:build',
-    'copy:dist_to_named_dir',
-    'compress:release_zip',
-    'compress:release_tarball',
-    's3:upload_archives'
+    'run:init_submodules',
+    'copy:dist_to_bower',
+    'run:release_bower_subm_tag'
   ]);
 
-  grunt.registerTask('__check_for_confirmation', function () {
+  grunt.registerTask('_upload_archive', function (type) {
+    grunt.run([
+      'browser_clients:build',
+      'copy:dist_to_named_dir',
+      'compress:' + type + '_zip',
+      'compress:' + type + '_tarball',
+      's3:upload_archives'
+    ]);
+  });
+
+  grunt.registerTask('_check_for_confirmation', function () {
     if (grunt.config.get('confirm.release')) {
       grunt.log.verbose.writeln('release confirmed');
     } else {
