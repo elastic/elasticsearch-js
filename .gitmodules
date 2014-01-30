@@ -3,4 +3,4 @@
 	url = https://github.com/elasticsearch/elasticsearch.git
 [submodule "src/bower-elasticsearch-js"]
 	path = src/bower-elasticsearch-js
-	url = git@github.com:elasticsearch/bower-elasticsearch-js.git
+	url = https://github.com/elasticsearch/bower-elasticsearch-js.git

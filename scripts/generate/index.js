@@ -1,5 +1,4 @@
 var async = require('async');
-var _ = require('lodash');
 var spawn = require('../_spawn');
 var argv = require('optimist')
   .options({
@@ -27,6 +26,9 @@ var argv = require('optimist')
     }
   });
 
+var root = require('path').join(__dirname, '../..');
+var esSubModule = root + '/src/elasticsearch';
+
 if (process.env.npm_config_argv) {
   // when called by NPM
   argv = argv.parse(JSON.parse(process.env.npm_config_argv).original);
@@ -39,33 +41,22 @@ if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
   argv.force = argv.f = process.env.FORCE || process.env.FORCE_GEN;
 }
 
-function initSubmodule(done) {
-  spawn('git', ['submodule', 'update', '--init'], argv, function (status) {
-    done(status ? new Error('Unable to init submodules.') : void 0);
-  });
-  return;
-}
-
-function fetch(done) {
-  spawn('git', ['submodule', 'foreach', 'git fetch origin'], argv, function (status) {
-    done(status ? new Error('Unable fetch lastest changes.') : void 0);
-  });
-  return;
+function makeSpawn(cmd, args, cwd) {
+  return function (done) {
+    spawn(cmd, args, {
+      verbose: argv.versbose,
+      cwd: cwd || esSubModule
+    }, function (status) {
+      done(status ? new Error('Non-zero exit code: %d', status) : void 0);
+    });
+  };
 }
 
 function generateBranch(branch, done) {
   async.series([
-    function (done) {
-      var cmd = [
-        'git reset --hard',
-        'git clean -fdx',
-        'git checkout origin/' + branch
-      ].join(' && ');
-
-      spawn('git', ['submodule', 'foreach', cmd], function (status) {
-        done(status ? new Error('Unable to checkout ' + branch) : void 0);
-      });
-    },
+    makeSpawn('git', ['reset', '--hard']),
+    makeSpawn('git', ['clean', '-fdx']),
+    makeSpawn('git', ['checkout', 'origin/' + branch]),
     function (done) {
       var tasks = [];
 
@@ -86,15 +77,15 @@ function generateBranch(branch, done) {
 }
 
 var steps = [
-  initSubmodule,
-  fetch,
+  makeSpawn('git', ['submodule', 'update', '--', esSubModule], root)
+];
+if (argv.update) {
+  steps.push(makeSpawn('git', ['fetch', 'origin'], esSubModule));
+}
+steps.push(
   async.apply(generateBranch, '0.90'),
   async.apply(generateBranch, 'master')
-];
-
-if (!argv.update) {
-  steps = _.without(steps, fetch);
-}
+);
 
 async.series(steps, function (err) {
   if (err) {

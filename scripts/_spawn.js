@@ -3,16 +3,24 @@ module.exports = spawn;
 var estream = require('event-stream');
 var chalk = require('chalk');
 var cp = require('child_process');
+var path = require('path');
+var root = path.resolve(__dirname, '../');
 
 function spawn(cmd, args, opts, cb) {
   opts = opts || {};
+  var conf = {
+    stdio: 'pipe'
+  };
 
-  console.log(chalk.white.bold('$ ' + cmd + ' ' + args.join(' ')));
+  var subdir;
 
-  var proc = cp.spawn(cmd, args, {
-    stdio: 'pipe',
-    cwd: opts.cwd
-  });
+  if (opts.cwd) {
+    conf.cwd = opts.cwd;
+    subdir = path.relative(root, opts.cwd) + ' ';
+  }
+  console.log(chalk.white.bold((subdir || '') + '$ ') + cmd + ' ' + args.join(' '));
+
+  var proc = cp.spawn(cmd, args, opts);
   var out = estream.split();
 
   if (opts.verbose) {
