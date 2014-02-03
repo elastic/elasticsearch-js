@@ -260,6 +260,9 @@ YamlDoc.prototype = {
    * @param done
    */
   do_skip: function (args, done) {
+    if (!args.version) {
+      return done();
+    }
     rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
       if (match) {
         if (this.description === 'setup') {
@@ -416,10 +419,18 @@ YamlDoc.prototype = {
    */
   do_match: function (args) {
     _.forOwn(args, function (val, path) {
-      if (val[0] === '$') {
-        val = this.get(val);
+      var isRef = _.isString(val) && val[0] === '$';
+      var isRE = _.isString(val) && val[0] === '/' && path[path.length - 1] === '/';
+
+      if (isRef) {
+        val = this.get(val === '$body' ? '' : val);
+      } else if (isRE) {
+        val = new RegExp(val);
+      } else {
+        val = this.get(path);
       }
-      expect(this.get(path)).to.eql(val, 'path: ' + path);
+
+      var assert = expect(val).to[isRE ? 'match' : 'eql'](val, 'path: ' + path);
     }, this);
   },
 
