@@ -1,6 +1,0 @@
-[submodule "src/elasticsearch"]
-	path = src/elasticsearch
-	url = https://github.com/elasticsearch/elasticsearch.git
-[submodule "src/bower-elasticsearch-js"]
-	path = src/bower-elasticsearch-js
-	url = https://github.com/elasticsearch/bower-elasticsearch-js.git
