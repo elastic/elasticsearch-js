@@ -33,7 +33,7 @@ function spawn(cmd, args, opts, cb) {
 
   out
     .pipe(estream.mapSync(function indent(line) {
-      return '    ' + line + '\n';
+      return line ? '    ' + line + '\n' : '';
     }))
     .pipe(process.stdout);
 

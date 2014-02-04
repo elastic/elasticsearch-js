@@ -34,13 +34,7 @@ module.exports = {
     exec: './.snapshots/master_nightly/bin/elasticsearch ' + esOpts,
     options: {
       wait: false,
-      quiet: true,
-      onClose: function () {
-
-      },
-      onReady: function () {
-
-      }
+      quiet: true
     }
   },
   'install_es_0.90': {
@@ -53,8 +47,11 @@ module.exports = {
       quiet: true
     }
   },
-  init_submodules: {
-    exec: 'git submodule update --init',
+  clone_bower_repo: {
+    exec: [
+      'test -d src/elasticsearch',
+      'git clone git@github.com:elasticsearch/bower-elasticsearch-js.git src/bower_es_js'
+    ].join(' || '),
     options: {
       quiet: true
     }

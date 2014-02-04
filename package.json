@@ -43,7 +43,6 @@
     "load-grunt-config": "~0.7.0",
     "grunt-s3": "~0.2.0-alpha.3",
     "grunt-run": "*",
-    "relative-fs": "0.0.1",
     "grunt-contrib-compress": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
@@ -53,7 +52,8 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.4",
     "express": "~3.4.7",
-    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git"
+    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git",
+    "find-root": "~0.1.1"
   },
   "license": "Apache 2.0",
   "dependencies": {
@@ -72,6 +72,6 @@
     "generate": "node scripts/generate"
   },
   "engines": {
-    "node" : ">=0.8 <0.11"
+    "node": ">=0.8 <0.11"
   }
 }

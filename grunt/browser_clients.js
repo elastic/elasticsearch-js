@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     '_check_for_confirmation',
     '_upload_archive:release',
     'browser_clients:build',
-    'run:init_submodules',
+    'run:clone_bower_repo',
     'copy:dist_to_bower',
     'run:release_bower_subm_tag'
   ]);
