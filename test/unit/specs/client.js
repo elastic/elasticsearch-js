@@ -1,11 +1,7 @@
 describe('Client instances creation', function () {
   var path = require('path');
-  var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-  var rootRequire = function (path) {
-    return require(fromRoot(path));
-  };
-  var es = rootRequire('src/elasticsearch');
-  var apis = rootRequire('src/lib/apis');
+  var es = require('../../../src/elasticsearch');
+  var apis = require('../../../src/lib/apis');
   var expect = require('expect.js');
   var client;
 
@@ -29,13 +25,13 @@ describe('Client instances creation', function () {
     expect(client.cluster.nodeStats).to.eql(apis['0.90'].cluster.prototype.nodeStats);
   });
 
-  it('inherits the master API when specified', function () {
+  it('inherits the 1.0 API when specified', function () {
     client.close();
     client = es.Client({
-      apiVersion: 'master'
+      apiVersion: '1.0'
     });
-    expect(client.bulk).to.eql(apis.master.bulk);
-    expect(client.nodes.stats).to.eql(apis.master.nodes.prototype.stats);
+    expect(client.bulk).to.eql(apis['1.0'].bulk);
+    expect(client.nodes.stats).to.eql(apis['1.0'].nodes.prototype.stats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {
