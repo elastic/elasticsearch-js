@@ -4,6 +4,7 @@ module.exports = function (branch, done) {
    * @type {[type]}
    */
   var _ = require('../../src/lib/utils');
+  var utils = require('../../grunt/utils');
   var fs = require('fs');
   var async = require('async');
   var chalk = require('chalk');
@@ -16,9 +17,15 @@ module.exports = function (branch, done) {
   var apiSpec; // populated by parseSpecFiles
   var docVars; // slightly modified clone of apiSpec for the docs
 
-  var branchSuffix = branch === 'master' ? '' : '_' + _.snakeCase(branch);
+  var branchSuffix = utils.branchSuffix(branch);
   var esDir = fromRoot('src/elasticsearch' + branchSuffix);
-  var aliases = require('./aliases' + branchSuffix);
+  var aliases;
+  try {
+    aliases = require('./aliases_' + _.snakeCase(branch));
+  } catch (e) {
+    // fall back to the master aliases
+    aliases = require('./aliases');
+  }
 
   // generate the API
   async.series([
@@ -89,7 +96,7 @@ module.exports = function (branch, done) {
   }
 
   function writeApiFile(done) {
-    var outputPath = fromRoot('src/lib/api' + branchSuffix + '.js');
+    var outputPath = fromRoot('src/lib/apis/' + _.snakeCase(branch) + '.js');
     fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
     console.log(chalk.white.bold('wrote'), apiSpec.actions.length, 'api actions to', outputPath);
     done();

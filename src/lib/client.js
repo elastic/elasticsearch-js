@@ -60,8 +60,4 @@ function Client(config) {
   return new EsApiClient(config);
 }
 
-Client.apis = {
-  'master': require('./api'),
-  '1.0': require('./api'),
-  '0.90': require('./api_0_90')
-};
+Client.apis = require('./apis');

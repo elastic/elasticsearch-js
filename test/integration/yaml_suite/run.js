@@ -3,11 +3,14 @@ module.exports = function (branch) {
   var async = require('async');
   var jsYaml = require('js-yaml');
   var YamlFile = require('./yaml_file');
-  var _ = require('../../../src/lib/utils');
-  var es = require('../../../src/elasticsearch');
+  var root = require('find-root')(__dirname);
+  var rootReq = function (loc) { return require(path.join(root, loc)); };
+  var _ = rootReq('src/lib/utils');
+  var utils = rootReq('grunt/utils');
+  var es = rootReq('src/elasticsearch');
   var clientManager = require('./client_manager');
   var argv = require('./argv');
-  var branchSuffix = branch === 'master' ? '' : '_' + _.snakeCase(branch);
+  var branchSuffix = utils.branchSuffix(branch);
 
   describe('integration', function () {
     this.timeout(30000);

@@ -11,13 +11,21 @@
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
+    "./src/lib/apis/index.js": "./src/lib/apis/browser_index.js",
     "./test/mocks/server.js": "./test/mocks/browser_server.js",
     "lodash": "./node_modules/lodash/dist/lodash.compat.js"
   },
   "config": {
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
-    }
+    },
+    "supported_es_branches": [
+      "master",
+      "1.x",
+      "1.0",
+      "0.90"
+    ],
+    "default_api_branch": "0.90"
   },
   "devDependencies": {
     "mocha": "~1.14.0",

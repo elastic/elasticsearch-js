@@ -8,16 +8,17 @@ module.exports = function (branch, done) {
   var chalk = require('chalk');
   var path = require('path');
   var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-  var _ = require(fromRoot('src/lib/utils'));
+  var utils = require(fromRoot('grunt/utils'));
   var tests = {}; // populated in readYamlTests
 
-  var branchSuffix = branch === 'master' ? '' : '_' + _.snakeCase(branch);
+  var branchSuffix = utils.branchSuffix(branch);
   var esDir = fromRoot('src/elasticsearch' + branchSuffix);
 
   // generate the yaml tests
   async.series([
     readYamlTests,
-    writeYamlTests
+    writeYamlTests,
+    writeTestIndex
   ], done);
 
   function readYamlTests(done) {
@@ -46,6 +47,13 @@ module.exports = function (branch, done) {
     var testFile = fromRoot('test/integration/yaml_suite/yaml_tests' + branchSuffix + '.json');
     fs.writeFileSync(testFile, JSON.stringify(tests, null, ' '), 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML tests as JSON to', testFile);
+    done();
+  }
+
+  function writeTestIndex(done) {
+    var file = fromRoot('test/integration/yaml_suite/index' + branchSuffix + '.js');
+    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');', 'utf8');
+    console.log(chalk.white.bold('wrote') + ' YAML index to', file);
     done();
   }
 };

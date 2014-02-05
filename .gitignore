@@ -8,10 +8,10 @@ test/integration/yaml_suite/log
 
 ## generated files
 test/integration/yaml_suite/yaml_tests*.json
-src/elasticsearch/
-src/elasticsearch_0_90/
+src/elasticsearch*/
 junit-*.xml
 elasticsearch*.log
 sauce_connect.lo*
 coverage.html
 .snapshots
+html_docs

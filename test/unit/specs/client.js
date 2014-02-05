@@ -1,7 +1,11 @@
 describe('Client instances creation', function () {
-  var es = require('../../../src/elasticsearch');
-  var api = require('../../../src/lib/api');
-  var api090 = require('../../../src/lib/api_0_90');
+  var path = require('path');
+  var fromRoot = path.join.bind(path, require('find-root')(__dirname));
+  var rootRequire = function (path) {
+    return require(fromRoot(path));
+  };
+  var es = rootRequire('src/elasticsearch');
+  var apis = rootRequire('src/lib/apis');
   var expect = require('expect.js');
   var client;
 
@@ -21,8 +25,8 @@ describe('Client instances creation', function () {
   });
 
   it('inherits the 0.90 API by default', function () {
-    expect(client.bulk).to.eql(api090.bulk);
-    expect(client.cluster.nodeStats).to.eql(api090.cluster.prototype.nodeStats);
+    expect(client.bulk).to.eql(apis['0.90'].bulk);
+    expect(client.cluster.nodeStats).to.eql(apis['0.90'].cluster.prototype.nodeStats);
   });
 
   it('inherits the master API when specified', function () {
@@ -30,8 +34,8 @@ describe('Client instances creation', function () {
     client = es.Client({
       apiVersion: 'master'
     });
-    expect(client.bulk).to.eql(api.bulk);
-    expect(client.nodes.stats).to.eql(api.nodes.prototype.stats);
+    expect(client.bulk).to.eql(apis.master.bulk);
+    expect(client.nodes.stats).to.eql(apis.master.nodes.prototype.stats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {

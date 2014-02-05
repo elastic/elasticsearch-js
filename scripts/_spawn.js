@@ -16,9 +16,9 @@ function spawn(cmd, args, opts, cb) {
 
   if (opts.cwd) {
     conf.cwd = opts.cwd;
-    subdir = path.relative(root, opts.cwd) + ' ';
+    subdir = path.relative(root, opts.cwd);
   }
-  console.log(chalk.white.bold((subdir || '') + '$ ') + cmd + ' ' + args.join(' '));
+  console.log(chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') + cmd + ' ' + args.join(' '));
 
   var proc = cp.spawn(cmd, args, opts);
   var out = estream.split();

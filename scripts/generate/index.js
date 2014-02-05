@@ -25,8 +25,15 @@ var argv = require('optimist')
 var path = require('path');
 var root = require('find-root')(__dirname);
 var fromRoot = path.join.bind(path, root);
-var _ = require(fromRoot('src/lib/utils'));
+var utils = require(fromRoot('grunt/utils'));
 var esUrl = 'https://github.com/elasticsearch/elasticsearch.git';
+var branches;
+
+if (process.env.ES_GIT_BRANCH) {
+  branches = [process.env.ES_GIT_BRANCH.split('/').slice(1).join('/')];
+} else {
+  branches = utils.branches;
+}
 
 if (process.env.npm_config_argv) {
   // when called by NPM
@@ -43,8 +50,7 @@ function isDirectory(dir) {
 }
 
 function storeDir(branch) {
-  var suffix = branch === 'master' ? '' : '_' + _.snakeCase(branch);
-  return fromRoot('src/elasticsearch' + suffix);
+  return fromRoot('src/elasticsearch' + utils.branchSuffix(branch));
 }
 
 function spawnStep(cmd, args, cwd) {
@@ -98,7 +104,7 @@ function generateStep(branch) {
 }
 
 var steps = [];
-['master', '0.90'].forEach(function (branch) {
+branches.forEach(function (branch) {
   steps.push(
     checkoutStep(branch),
     updateStep(branch),
