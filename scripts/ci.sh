@@ -43,7 +43,7 @@ fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
   group "generating tests"
-    call node scripts/generate --no-api
+    call node scripts/generate --no-api --branch $TESTING_BRANCH
 
   group "running integration tests"
     if [[ -n "$JENKINS" ]]; then

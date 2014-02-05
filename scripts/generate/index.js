@@ -19,6 +19,10 @@ var argv = require('optimist')
     update: {
       default: true,
       boolean: true
+    },
+    branch: {
+      default: null,
+      string: true
     }
   });
 
@@ -29,12 +33,6 @@ var utils = require(fromRoot('grunt/utils'));
 var esUrl = 'https://github.com/elasticsearch/elasticsearch.git';
 var branches;
 
-if (process.env.ES_GIT_BRANCH) {
-  branches = [process.env.ES_GIT_BRANCH.split('/').slice(1).join('/')];
-} else {
-  branches = utils.branches;
-}
-
 if (process.env.npm_config_argv) {
   // when called by NPM
   argv = argv.parse(JSON.parse(process.env.npm_config_argv).original);
@@ -42,6 +40,13 @@ if (process.env.npm_config_argv) {
   // when called directly
   argv = argv.argv;
 }
+
+if (argv.branch) {
+  branches = [argv.branch];
+} else {
+  branches = utils.branches;
+}
+
 
 function isDirectory(dir) {
   var stat;
