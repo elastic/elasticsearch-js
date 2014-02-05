@@ -13,11 +13,11 @@ module.exports = {
       key: slk.key,
       browsers: [
         {
-          browserName: 'chrome',
-          platform: 'Windows 8'
+          browserName: 'googlechrome',
+          platform: 'XP'
         },
         {
-          browserName: 'chrome',
+          browserName: 'firefox',
           platform: 'Linux'
         },
         {
@@ -34,14 +34,6 @@ module.exports = {
           browserName: 'internet explorer',
           version: '9',
           platform: 'Windows 7'
-        },
-        {
-          browserName: 'firefox',
-          platform: 'Windows 7'
-        },
-        {
-          browserName: 'firefox',
-          platform: 'Linux'
         }
       ]
     }
