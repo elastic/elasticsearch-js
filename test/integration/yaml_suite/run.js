@@ -10,7 +10,6 @@ module.exports = function (branch) {
   var es = rootReq('src/elasticsearch');
   var clientManager = require('./client_manager');
   var argv = require('./argv');
-  var branchSuffix = utils.branchSuffix(branch);
 
   describe('integration', function () {
     this.timeout(30000);
@@ -30,7 +29,7 @@ module.exports = function (branch) {
       }, done);
     });
 
-    var files = _.map(require('./yaml_tests' + branchSuffix + '.json'), function (docs, filename) {
+    var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
       return new YamlFile(filename, docs);
     });
 

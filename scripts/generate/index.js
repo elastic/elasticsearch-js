@@ -30,6 +30,7 @@ var path = require('path');
 var root = require('find-root')(__dirname);
 var fromRoot = path.join.bind(path, root);
 var utils = require(fromRoot('grunt/utils'));
+var _ = require(fromRoot('src/lib/utils'));
 var esUrl = 'https://github.com/elasticsearch/elasticsearch.git';
 var branches;
 
@@ -55,7 +56,7 @@ function isDirectory(dir) {
 }
 
 function storeDir(branch) {
-  return fromRoot('src/elasticsearch' + utils.branchSuffix(branch));
+  return fromRoot('src/elasticsearch_' + _.snakeCase(branch));
 }
 
 function spawnStep(cmd, args, cwd) {

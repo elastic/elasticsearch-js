@@ -18,7 +18,7 @@ module.exports = function (branch, done) {
   var docVars; // slightly modified clone of apiSpec for the docs
 
   var branchSuffix = utils.branchSuffix(branch);
-  var esDir = fromRoot('src/elasticsearch' + branchSuffix);
+  var esDir = fromRoot('src/elasticsearch_' + _.snakeCase(branch));
   var aliases;
   try {
     aliases = require('./aliases_' + _.snakeCase(branch));

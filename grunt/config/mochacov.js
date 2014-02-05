@@ -1,5 +1,7 @@
 var root = require('find-root')(__dirname);
-var utils = require(root + '/grunt/utils');
+var rootReq = function (p) { return require(require('path').resolve(root, p)); };
+var utils = rootReq('grunt/utils');
+var _ = rootReq('src/lib/utils');
 
 var config = {
   unit: {
@@ -29,7 +31,7 @@ var config = {
 
 utils.branches.forEach(function (branch) {
   config['integration_' + branch] = {
-    src: 'test/integration/yaml_suite/index' + utils.branchSuffix(branch) + '.js'
+    src: 'test/integration/yaml_suite/index' + _.snakeCase(branch) + '.js'
   };
 });
 

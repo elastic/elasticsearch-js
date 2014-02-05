@@ -31,7 +31,7 @@ var config = {
   },
   clone_bower_repo: {
     exec: [
-      'test -d src/elasticsearch',
+      'test -d src/bower_es_js',
       'git clone git@github.com:elasticsearch/bower-elasticsearch-js.git src/bower_es_js'
     ].join(' || '),
     options: {

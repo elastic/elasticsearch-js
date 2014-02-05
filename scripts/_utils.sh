@@ -57,7 +57,6 @@ function manage_es {
   local ES_RELEASE=$3
 
   local ROOT="$PWD"
-  local ES_SUBMODULE="$ROOT/src/elasticsearch"
   local SNAPSHOTS="$ROOT/.snapshots"
   local PIDS="$ROOT/.snapshots/pids"
 
