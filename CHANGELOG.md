@@ -1,5 +1,10 @@
 # elasticsearch-js changelog
 
+## 1.5 (Feb 6 2014)
+- Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler.
+- The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `forever`, which will keep connections open "forever". See: http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#configuration
+- Closing the client with `forever` turned on will allow the process to exit. #40
+
 ## 1.4 (Jan 30 2014)
 - The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
 - API Updated with latest changes awaiting 1.0 release
