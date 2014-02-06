@@ -31,7 +31,7 @@ var config = {
 
 utils.branches.forEach(function (branch) {
   config['integration_' + branch] = {
-    src: 'test/integration/yaml_suite/index' + _.snakeCase(branch) + '.js'
+    src: 'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
   };
 });
 
