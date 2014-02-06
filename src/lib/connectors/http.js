@@ -14,7 +14,7 @@ var handles = {
 };
 var _ = require('../utils');
 var qs = require('querystring');
-var KeepAliveAgent = require('agentkeepalive');
+var ForeverAgent = require('forever-agent');
 var ConnectionAbstract = require('../connection');
 
 /**
@@ -34,17 +34,17 @@ function HttpConnector(host, config) {
   }
 
   config = _.defaults(config || {}, {
-    maxSockets: 10,
-    maxKeepAliveRequests: 0,
-    maxKeepAliveTime: 3e5 // 5 minutes
+    forever: true,
+    maxSockets: 10
   });
 
-  var KeepAliveAgent_ = this.host.protocol === 'https' ? KeepAliveAgent.HttpsAgent : KeepAliveAgent;
+  var Agent = this.hand.Agent; // the class
+  if (config.forever) {
+    Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
+  }
 
-  this.agent = new KeepAliveAgent_({
-    maxSockets: config.maxSockets,
-    maxKeepAliveRequests: config.maxKeepAliveRequests,
-    maxKeepAliveTime: config.maxKeepAliveTime
+  this.agent = new Agent({
+    maxSockets: config.maxSockets
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);

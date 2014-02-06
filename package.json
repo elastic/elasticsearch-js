@@ -67,16 +67,16 @@
   "dependencies": {
     "when": "~2.6.0",
     "lodash": "~2.3.0",
-    "agentkeepalive": "~0.1",
     "chalk": "~0.3.0",
-    "event-stream": "~3.1.0"
+    "event-stream": "~3.1.0",
+    "forever-agent": "~0.5.2"
   },
   "repository": {
     "type": "git",
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "scripts": {
-    "test": "grunt test",
+    "test": "node scripts/generate --branch default && grunt test",
     "generate": "node scripts/generate"
   },
   "engines": {
