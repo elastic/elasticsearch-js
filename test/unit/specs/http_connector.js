@@ -8,7 +8,7 @@ describe('Http Connector', function () {
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
-  var KeepAliveAgent = require('agentkeepalive');
+  var ForeverAgent = require('forever-agent');
 
   var http = require('http');
   var https = require('https');
@@ -174,7 +174,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
-        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
+        expect(http.request.lastCall.args[0].agent).to.be.a(ForeverAgent);
         done();
       });
     });
@@ -184,7 +184,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
-        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.HttpsAgent);
+        expect(https.request.lastCall.args[0].agent).to.be.a(ForeverAgent.SSL);
         done();
       });
     });
