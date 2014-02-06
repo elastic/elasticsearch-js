@@ -17,7 +17,7 @@ case $1 in
       nvm use 0.10
       echo "rebuilding npm deps"
       npm rebuild &> /dev/null
-      call ES_BRANCH=master NODE_UNIT=0 COVERAGE=1 ./scripts/ci.sh
+      call ES_BRANCH=master COVERAGE=1 ./scripts/ci.sh
       call ES_BRANCH=1.0 NODE_UNIT=0 ./scripts/ci.sh
       call ES_BRANCH=0.90 NODE_UNIT=0 ./scripts/ci.sh
 
