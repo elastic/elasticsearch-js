@@ -2,7 +2,7 @@
 == 1.x API
 
 
-NOTE: At this time, you must opt into the 1.x API by setting the `apiVerion` config parameter.
+NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` config parameter.
 
 [[js-api-method-index-1-x]]
 * <<api-bulk-1-x,bulk>>
