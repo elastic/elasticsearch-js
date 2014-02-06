@@ -3,6 +3,7 @@ describe('Client instances creation', function () {
   var es = require('../../../src/elasticsearch');
   var apis = require('../../../src/lib/apis');
   var expect = require('expect.js');
+  var stub = require('../../utils/auto_release_stub').make();
   var client;
 
   beforeEach(function () {
@@ -49,5 +50,14 @@ describe('Client instances creation', function () {
     expect(client.transport.log.listenerCount('info')).to.eql(0);
     expect(client.transport.log.listenerCount('debug')).to.eql(0);
     expect(client.transport.log.listenerCount('trace')).to.eql(0);
+  });
+
+  describe('#ping', function () {
+    it('sets the default requestTimeout to 100', function () {
+      stub(client.transport, 'request');
+      client.ping();
+      expect(client.transport.request.callCount).to.be(1);
+      expect(client.transport.request.lastCall.args[0].requestTimeout).to.be(100);
+    });
   });
 });

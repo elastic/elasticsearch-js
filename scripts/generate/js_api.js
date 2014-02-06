@@ -261,6 +261,7 @@ module.exports = function (branch, done) {
           'url',
           'urls',
           'needBody',
+          'requestTimeout',
           'bulkBody'
         ]),
         location: location,
