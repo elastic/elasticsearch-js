@@ -4,7 +4,7 @@ var async = require('async');
 var _ = require('lodash');
 
 var root = require('path').join(__dirname, '../..');
-var bowerDir = root + '/src/bower-elasticsearch-js';
+var bowerDir = root + '/src/bower_es_js';
 
 // get both the bower and node package files
 var bowerJson = require(bowerDir + '/bower.json');
