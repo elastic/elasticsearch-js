@@ -10,6 +10,7 @@ test/integration/yaml_suite/log
 test/integration/yaml_suite/yaml_tests*.json
 test/integration/yaml_suite/index*.js
 src/elasticsearch*/
+src/bower*/
 junit-*.xml
 elasticsearch*.log
 sauce_connect.lo*
