@@ -31,7 +31,7 @@ module.exports = function (grunt) {
     'browser_clients:build',
     'run:clone_bower_repo',
     'copy:dist_to_bower',
-    'run:release_bower_subm_tag'
+    'run:release_bower_tag'
   ]);
 
   grunt.registerTask('_upload_archive', function (type) {
