@@ -34,13 +34,19 @@ function HttpConnector(host, config) {
   }
 
   config = _.defaults(config || {}, {
-    forever: true,
+    keepAlive: true,
+    minSockets: 10,
     maxSockets: 10
   });
 
   var Agent = this.hand.Agent; // the class
   if (config.forever) {
+    config.keepAlive = config.forever;
+  }
+
+  if (config.keepAlive) {
     Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
+    this.on('status set', this.bound.onStatusSet);
   }
 
   this.agent = new Agent({
@@ -48,6 +54,24 @@ function HttpConnector(host, config) {
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);
+
+HttpConnector.prototype.onStatusSet = _.handler(function (status) {
+  if (status === 'closed') {
+    this.agent.minSockets = this.agent.maxSockets = 0;
+
+    _.each(this.agent.sockets, function (sockets) {
+      _.each(sockets, function (s) {
+        s.destroy();
+      });
+    });
+
+    _.each(this.agent.freeSockets, function (sockets) {
+      _.each(sockets, function (s) {
+        s.destroy();
+      });
+    });
+  }
+});
 
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};

@@ -369,4 +369,26 @@ describe('Http Connector', function () {
     });
   });
 
+  describe('Connection cleanup', function () {
+    it('destroys any connections created', function (done) {
+      this.timeout(1000);
+      var cp = require('child_process');
+      var path = require('path');
+      var es = require('event-stream');
+
+      var proc = cp.fork(path.join(__dirname, '../../fixtures/keepalive.js'), {
+        silent: true
+      });
+
+      es.merge(
+        proc.stdout,
+        proc.stderr
+      ).pipe(es.wait(function (err, output) {
+        expect(err).to.eql(null);
+        expect(output.trim()).to.eql('1');
+        done();
+      }));
+    });
+  });
+
 });

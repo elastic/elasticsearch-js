@@ -102,18 +102,21 @@ Default::: `30000`
 
 
 
+`keepAlive`:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
+
+Default::: `true`
 
 
-`maxSockets`:: `Number` -- Number of sockets each connection should keep to it's corresponding node. This will also be the maximum number of concurrent requests that could be made to that node.
+
+`maxSockets`:: `Number` -- Maximum number of concurrent requests that can be made to any node.
 
 Default::: `10`
 
 
 
+`minSockets`:: `Number` -- Minimum number of sockets to keep connected to a node, only applies when `keepAlive` is true
 
-`forever`:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
-
-Default::: `true`
+Default::: `10`
 
 
 
