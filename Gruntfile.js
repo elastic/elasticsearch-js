@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     init: true,
     config: {
       distDir: __dirname + '/dist',
-      bowerSubmodule: __dirname + '/src/bower-elasticsearch-js',
+      bowerSubmodule: __dirname + '/src/bower_es_js',
       meta: {
         banner: '/*! <%= package.name %> - v<%= package.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
