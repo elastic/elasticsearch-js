@@ -376,7 +376,7 @@ describe('Http Connector', function () {
       var path = require('path');
       var es = require('event-stream');
 
-      var proc = cp.fork(path.join(__dirname, '../../fixtures/keepalive.js'), {
+      var proc = cp.spawn('node', [path.join(__dirname, '../../fixtures/keepalive.js')], {
         silent: true
       });
 
@@ -385,7 +385,7 @@ describe('Http Connector', function () {
         proc.stderr
       ).pipe(es.wait(function (err, output) {
         expect(err).to.eql(null);
-        expect(output.trim()).to.eql('1');
+        expect(parseInt(output.trim(), 10) <= 1).to.be.ok();
         done();
       }));
     });
