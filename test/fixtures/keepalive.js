@@ -24,6 +24,8 @@ es.search({
     console.log(clock);
   }
 
+  clock.restore();
+
   var destroyedSockets = 0;
   function countDestroyed(sockets) {
     destroyedSockets += _.where(sockets, { destroyed: true}).length;
