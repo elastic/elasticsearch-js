@@ -56,4 +56,17 @@ describe('Angular esFactory', function () {
       };
     });
   });
+  it('returns an error created by calling a method incorrectly', function (done) {
+    directive(function (esFactory) {
+      return function () {
+        var client = esFactory({ hosts: null });
+        client.get().then(function () {
+          expect.fail('promise should have been rejected');
+        }, function (err) {
+          expect(err.message).to.match(/unable/);
+          done();
+        });
+      };
+    });
+  });
 });
