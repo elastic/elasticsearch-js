@@ -5,6 +5,7 @@
 - The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `keepAlive`, which will keeps at least `minSockets` connections open forever. See: http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#configuration
 - Closing the client with `keepAlive` turned on will allow the process to exit. https://github.com/elasticsearch/elasticsearch-js/issues/40
 - Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises.
+- added the cat.threadPool to the master/1.0/1.x apis
 
 ## 1.4 (Jan 30 2014)
 - The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
