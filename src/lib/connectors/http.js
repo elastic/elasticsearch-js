@@ -57,17 +57,21 @@ _.inherits(HttpConnector, ConnectionAbstract);
 
 HttpConnector.prototype.onStatusSet = _.handler(function (status) {
   if (status === 'closed') {
-    this.agent.minSockets = this.agent.maxSockets = 0;
+    var agent = this.agent;
+    agent.minSockets = agent.maxSockets = 0;
+    agent.requests = {};
 
-    _.each(this.agent.sockets, function (sockets) {
+    _.each(agent.sockets, function (sockets, group) {
       _.each(sockets, function (s) {
-        s.destroy();
+        s && agent.removeSocket(s, group);
+        s && s.destroy();
       });
     });
 
-    _.each(this.agent.freeSockets, function (sockets) {
+    _.each(agent.freeSockets, function (sockets, group) {
       _.each(sockets, function (s) {
-        s.destroy();
+        s && agent.removeSocket(s, group);
+        s && s.destroy();
       });
     });
   }

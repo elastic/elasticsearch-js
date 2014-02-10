@@ -41,6 +41,7 @@ NOTE: At this time, you must opt into the 1.0 API by setting the `apiVersion` co
 * <<api-cat-pendingtasks-1-0,cat.pendingTasks>>
 * <<api-cat-recovery-1-0,cat.recovery>>
 * <<api-cat-shards-1-0,cat.shards>>
+* <<api-cat-threadpool-1-0,cat.threadPool>>
 * <<api-cluster-getsettings-1-0,cluster.getSettings>>
 * <<api-cluster-health-1-0,cluster.health>>
 * <<api-cluster-pendingtasks-1-0,cluster.pendingTasks>>
@@ -2133,6 +2134,39 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
+
+link:#[back to top]
+
+[[api-cat-threadpool-1-0]]
+=== `cat.threadPool`
+
+[source,js]
+--------
+client.cat.threadPool([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`h`::
+`String, String[], Boolean` -- Comma-separated list of column names to display
+`help`::
+`Boolean` -- Return help information
+`v`::
+`Boolean` -- Verbose mode. Display column headers
+`fullId`::
+`Boolean` -- Enables displaying the complete node ids
 
 link:#[back to top]
 
