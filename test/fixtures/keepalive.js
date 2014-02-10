@@ -1,5 +1,7 @@
 var elasticsearch = require('../../src/elasticsearch');
 var _ = require('lodash');
+var clock = require('sinon').useFakeTimers();
+
 var es = elasticsearch.Client({
   host: 'localhost:5555',
   log: false
@@ -16,6 +18,12 @@ es.search({
 }, function (err, resp) {
   var conn = _.union(es.transport.connectionPool._conns.dead, es.transport.connectionPool._conns.alive).pop();
   es.close();
+
+  if (_.size(clock.timeouts)) {
+    console.log('Timeouts were left behind');
+    console.log(clock);
+  }
+
   var destroyedSockets = 0;
   function countDestroyed(sockets) {
     destroyedSockets += _.where(sockets, { destroyed: true}).length;
@@ -24,3 +32,5 @@ es.search({
   _.each(conn.agent.freeSockets, countDestroyed);
   console.log(destroyedSockets);
 });
+
+clock.tick(1);
