@@ -566,6 +566,48 @@ api.cat.prototype.shards = ca({
 });
 
 /**
+ * Perform a [cat.threadPool](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} params.fullId - Enables displaying the complete node ids
+ */
+api.cat.prototype.threadPool = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    },
+    fullId: {
+      type: 'boolean',
+      'default': false,
+      name: 'full_id'
+    }
+  },
+  url: {
+    fmt: '/_cat/thread_pool'
+  }
+});
+
+/**
  * Perform a [clearScroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
