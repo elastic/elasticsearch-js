@@ -5,7 +5,7 @@ var when = require('when');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-node');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 

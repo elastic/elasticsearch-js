@@ -3,7 +3,7 @@ module.exports = function (makeLogger) {
   var stub = require('../utils/auto_release_stub').make();
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
-  var _ = require('lodash');
+  var _ = require('lodash-node');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
