@@ -36,7 +36,7 @@ bower install elasticsearch
 ```
 
 ### Download
- - v1.5.3: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.5.3.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.5.3.tar.gz)
+ - v1.5.4: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.5.4.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-1.5.4.tar.gz)
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
