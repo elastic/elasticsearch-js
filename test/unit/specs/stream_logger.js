@@ -4,7 +4,7 @@ describe('Stream Logger', function () {
   var MockWritableStream = require('../../mocks/writable_stream');
   var once = require('events').EventEmitter.prototype.once;
   var stream = new MockWritableStream();
-  var _ = require('lodash');
+  var _ = require('lodash-node');
   var expect = require('expect.js');
   var parentLog;
 

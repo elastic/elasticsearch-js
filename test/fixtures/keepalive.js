@@ -1,5 +1,5 @@
 var elasticsearch = require('../../src/elasticsearch');
-var _ = require('lodash');
+var _ = require('lodash-node');
 var clock = require('sinon').useFakeTimers();
 
 var es = elasticsearch.Client({

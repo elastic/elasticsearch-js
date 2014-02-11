@@ -1,6 +1,6 @@
 var ca = require('../../../src/lib/client_action');
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-node');
 var when = require('when');
 
 /**

@@ -32,7 +32,7 @@ var _ = require('./utils');
 function Client(config) {
   config = config || {};
 
-  function EsApiClient(config) {
+  function EsApiClient() {
     // our client will log minimally by default
     if (!config.hasOwnProperty('log')) {
       config.log = 'warning';
@@ -57,7 +57,11 @@ function Client(config) {
   }
 
   EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '0.90');
-  return new EsApiClient(config);
+  if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
+    config.sniffEndpoint = '/_cluster/nodes';
+  }
+
+  return new EsApiClient();
 }
 
 Client.apis = require('./apis');

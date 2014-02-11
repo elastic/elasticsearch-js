@@ -1,5 +1,5 @@
 var Host = require('../../../src/lib/host');
-var _ = require('lodash');
+var _ = require('lodash-node');
 var expect = require('expect.js');
 var url = require('url');
 

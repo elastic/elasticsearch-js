@@ -1,6 +1,6 @@
 var errors = require('../../../src/lib/errors');
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-node');
 
 _.each(errors, function (CustomError, name) {
   if (name.charAt(0) !== '_') {
