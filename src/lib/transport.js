@@ -30,6 +30,9 @@ function Transport(config) {
   // setup max retries
   this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
+  // setup endpoint to use for sniffing
+  this.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/clear';
+
   // setup requestTimeout default
   this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
 
@@ -332,7 +335,7 @@ Transport.prototype.sniff = function (cb) {
   cb = typeof cb === 'function' ? cb : _.noop;
 
   this.request({
-    path: '/_cluster/nodes',
+    path: this.sniffEndpoint,
     method: 'GET'
   }, function (err, resp, status) {
     if (!err && resp && resp.nodes) {
