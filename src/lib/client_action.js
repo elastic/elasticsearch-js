@@ -5,7 +5,6 @@
 module.exports = ClientAction;
 
 var _ = require('./utils');
-var when = require('when');
 
 function ClientAction(spec) {
   if (!_.isPlainObject(spec.params)) {
@@ -31,7 +30,9 @@ function ClientAction(spec) {
       if (typeof cb === 'function') {
         _.nextTick(cb, e);
       } else {
-        return when.reject(e);
+        var def = this.transport.defer();
+        def.reject(e);
+        return def.promise;
       }
     }
   }
