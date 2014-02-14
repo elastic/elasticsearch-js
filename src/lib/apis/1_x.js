@@ -4067,7 +4067,7 @@ api.nodes.prototype.info = ca({
             'network',
             'transport',
             'http',
-            'plugin'
+            'plugins'
           ]
         }
       }
@@ -4094,7 +4094,7 @@ api.nodes.prototype.info = ca({
             'network',
             'transport',
             'http',
-            'plugin'
+            'plugins'
           ]
         }
       }

@@ -406,6 +406,28 @@ api.cluster.prototype.nodeStats = ca({
 });
 
 /**
+ * Perform a [cluster.pendingTasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-pending.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ */
+api.cluster.prototype.pendingTasks = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_cluster/pending_tasks'
+  }
+});
+
+/**
  * Perform a [cluster.putSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action

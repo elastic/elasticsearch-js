@@ -32,6 +32,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-cluster-nodeinfo,cluster.nodeInfo>>
 * <<api-cluster-nodeshutdown,cluster.nodeShutdown>>
 * <<api-cluster-nodestats,cluster.nodeStats>>
+* <<api-cluster-pendingtasks,cluster.pendingTasks>>
 * <<api-cluster-putsettings,cluster.putSettings>>
 * <<api-cluster-reroute,cluster.reroute>>
 * <<api-cluster-state,cluster.state>>
@@ -1783,6 +1784,31 @@ Options:::
 
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+link:#[back to top]
+
+[[api-cluster-pendingtasks]]
+=== `cluster.pendingTasks`
+
+[source,js]
+--------
+client.cluster.pendingTasks([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-pending.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Specify timeout for connection to master
 
 link:#[back to top]
 
