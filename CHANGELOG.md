@@ -6,6 +6,7 @@
 - Closing the client with `keepAlive` turned on will allow the process to exit. https://github.com/elasticsearch/elasticsearch-js/issues/40
 - Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises.
 - added the cat.threadPool to the master/1.0/1.x apis
+- Enabled Basic auth in the Angular connector -- Thanks @jeff-french!
 
 ## 1.4 (Jan 30 2014)
 - The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
