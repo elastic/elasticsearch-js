@@ -11,6 +11,7 @@ describe('Angular esFactory', function () {
   var uuid = (function () { var i = 0; return function () { return ++i; }; }());
   function directive(makeDirective) {
     var root = document.createElement('div');
+    root.setAttribute('ng-controller', 'empty-controller');
     var id = uuid();
     root.setAttribute('test-directive-' + id, 'test-directive');
     document.body.appendChild(root);
@@ -20,7 +21,11 @@ describe('Angular esFactory', function () {
       root = null;
     });
 
-    angular.module('mod' + id, ['elasticsearch']).directive('testDirective' + id, makeDirective);
+    angular
+      .module('mod' + id, ['elasticsearch'])
+      .controller('empty-controller', function () {})
+      .directive('testDirective' + id, makeDirective);
+
     angular.bootstrap(root, ['mod' + id]);
   }
 
@@ -60,10 +65,11 @@ describe('Angular esFactory', function () {
     directive(function (esFactory) {
       return function () {
         var client = esFactory({ hosts: null });
+
         client.get().then(function () {
           expect.fail('promise should have been rejected');
         }, function (err) {
-          expect(err.message).to.match(/unable/);
+          expect(err.message).to.match(/unable/i);
           done();
         });
       };
