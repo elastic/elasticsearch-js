@@ -3086,6 +3086,9 @@ api.search = ca({
           type: 'list'
         }
       }
+    },
+    {
+      fmt: '/_search'
     }
   ],
   method: 'POST'

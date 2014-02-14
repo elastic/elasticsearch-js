@@ -20,6 +20,9 @@ function mockClient() {
         } else {
           return when.resolve(params);
         }
+      },
+      defer: function () {
+        return when.defer();
       }
     }
   };
