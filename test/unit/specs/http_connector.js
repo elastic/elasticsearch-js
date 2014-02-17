@@ -389,6 +389,25 @@ describe('Http Connector', function () {
         done();
       }));
     });
+
+    it('properly removes all elements from the socket', function () {
+      var con = new HttpConnection(new Host('localhost'));
+      var sockets = [
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} }
+      ];
+      con.agent.sockets['http://localhost/'] = sockets;
+      con.setStatus('closed');
+      expect(sockets).to.eql([]);
+    });
   });
 
 });
