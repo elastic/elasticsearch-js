@@ -25,7 +25,7 @@ function ClientAction(spec) {
     }
 
     try {
-      return exec(this.transport, spec, params, cb);
+      return exec(this.transport, spec, _.clone(params), cb);
     } catch (e) {
       if (typeof cb === 'function') {
         _.nextTick(cb, e);
@@ -118,7 +118,7 @@ var castType = {
 };
 
 function resolveUrl(url, params) {
-  var vars = {}, i, key, params = _.clone(params);
+  var vars = {}, i, key;
 
   if (url.req) {
     // url has required params
