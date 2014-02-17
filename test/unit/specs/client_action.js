@@ -813,6 +813,16 @@ describe('Client Action runner', function () {
         done();
       });
     });
+
+    it('does not modify the incoming params object', function () {
+      var action = makeClientAction({ url: { req: { index: { type: 'string' } } } }),
+          params = { index: 'index' },
+          before = JSON.stringify(params);
+
+      action(params);
+
+      expect(JSON.stringify(params)).to.equal(before);
+    });
   });
 
 });

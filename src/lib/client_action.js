@@ -118,7 +118,7 @@ var castType = {
 };
 
 function resolveUrl(url, params) {
-  var vars = {}, i, key;
+  var vars = {}, i, key, params = _.clone(params);
 
   if (url.req) {
     // url has required params
