@@ -61,6 +61,22 @@ function makeClientActionProxy(fn, spec) {
 describe('Client Action runner', function () {
   var action;
 
+  // used to check that params are not clobbered
+  var params = (function () {
+    var _stash = {};
+    afterEach(function () { _stash = {}; });
+    var make = function (params) {
+      _stash.orig = params;
+      _stash.copy = _.clone(params);
+      return params;
+    };
+    make.check = function () {
+      expect(_stash.orig).to.eql(_stash.copy);
+    };
+
+    return make;
+  }());
+
   describe('argument juggling', function () {
     it('creates an empty param set when no params are sent', function (done) {
       action = makeClientAction();
@@ -395,6 +411,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects objects', function (done) {
         action({
           one: {}
@@ -403,6 +420,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects arrays', function (done) {
         action({
           one: []
@@ -411,6 +429,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
@@ -463,6 +482,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects objects', function (done) {
         action({
           one: {}
@@ -471,6 +491,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects arrays', function (done) {
         action({
           one: []
@@ -479,6 +500,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
@@ -531,6 +553,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects arrays', function (done) {
         action({
           one: []
@@ -539,6 +562,7 @@ describe('Client Action runner', function () {
           done();
         });
       });
+
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
@@ -667,7 +691,7 @@ describe('Client Action runner', function () {
 
   describe('url resolver', function () {
 
-    var action =  makeClientAction({
+    var action = makeClientAction({
       urls: [
         {
           fmt: '/<%=index%>/<%=type%>/<%=id%>/<%=thing%>',
@@ -695,34 +719,37 @@ describe('Client Action runner', function () {
 
     // match a url to the parameters passed in.
     it('rejects a url if it required params that are not present', function (done) {
-      action({
+      action(params({
         type: ['type1', 'type2']
-      }, function (err, params) {
+      }), function (err, resp) {
         expect(err).to.be.a(TypeError);
+        params.check();
         done();
       });
     });
 
     it('uses the default value for optional params', function (done) {
-      action({
+      action(params({
         index: 'index1',
         id: '1'
-      }, function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.path).to.be('/index1/_all/1/');
+        expect(resp.path).to.be('/index1/_all/1/');
+        params.check();
         done();
       });
     });
 
     it('casts both optional and required args', function (done) {
-      action({
+      action(params({
         index: ['index1', 'index2'],
         id: '123',
         type: ['_all', '-pizza'],
         thing: 'poo'
-      }, function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.path).to.be('/index1%2Cindex2/_all%2C-pizza/123/poo');
+        expect(resp.path).to.be('/index1%2Cindex2/_all%2C-pizza/123/poo');
+        params.check();
         done();
       });
     });
@@ -738,53 +765,53 @@ describe('Client Action runner', function () {
     });
 
     it('collects all of the params into params.query', function (done) {
-      action({
+      action(params({
         a: 'pizza',
         b: '1M'
-      },
-      function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.query).to.eql({
+        expect(resp.query).to.eql({
           a: 'pizza',
           b: '1M'
         });
+        params.check();
         done();
       });
     });
 
     it('includes extra params', function (done) {
-      action({
+      action(params({
         a: 'pizza',
         b: '3w',
         c: 'popular',
-      },
-      function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.query).to.eql({
+        expect(resp.query).to.eql({
           a: 'pizza',
           b: '3w',
           c: 'popular'
         });
+        params.check();
         done();
       });
     });
 
     it('excludes default values', function (done) {
-      action({
+      action(params({
         a: 'pizza',
         b: '15m',
-      },
-      function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.query).to.eql({
+        expect(resp.query).to.eql({
           a: 'pizza'
         });
+        params.check();
         done();
       });
     });
 
     it('does not include non-query param keys', function (done) {
-      action({
+      action(params({
         a: 'pizza',
         b: '3w',
         q: 'beep',
@@ -792,25 +819,46 @@ describe('Client Action runner', function () {
         requestTimeout: 1000,
         method: 'head',
         ignore: 201
-      },
-      function (err, params) {
+      }), function (err, resp) {
         if (err) { throw err; }
-        expect(params.query).to.eql({
+        expect(resp.query).to.eql({
           a: 'pizza',
           b: '3w',
           q: 'beep'
         });
+        params.check();
         done();
       });
     });
 
     it('enforces required params', function (done) {
-      action({
+      action(params({
         b: '3w'
-      },
-      function (err, params) {
+      }), function (err, resp) {
         expect(err).to.be.a(TypeError);
+        params.check();
         done();
+      });
+    });
+
+    it('does not modify the incoming params object', function () {
+      var action = makeClientAction({
+        url: {
+          req: {
+            index: { type: 'string' }
+          },
+          fmt: '/<%= index %>'
+        }
+      });
+      action(params({
+        index: 'index'
+      }), function (err, resp) {
+        expect(resp).to.eql({
+          method: 'GET',
+          path: '/index',
+          query: {}
+        });
+        params.check();
       });
     });
   });

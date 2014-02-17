@@ -25,7 +25,7 @@ function ClientAction(spec) {
     }
 
     try {
-      return exec(this.transport, spec, params, cb);
+      return exec(this.transport, spec, _.clone(params), cb);
     } catch (e) {
       if (typeof cb === 'function') {
         _.nextTick(cb, e);

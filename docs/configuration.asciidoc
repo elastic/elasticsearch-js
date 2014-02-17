@@ -45,7 +45,7 @@ Default in Node:::
 
 `apiVersion`[[config-api-version]]:: `String` -- Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.
 +
-WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used durring development. It is highly recommended that you set this parameter in all code that is headed to production.
+WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
 Default ::: `"0.90"`
 
