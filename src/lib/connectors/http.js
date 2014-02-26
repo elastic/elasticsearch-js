@@ -36,7 +36,9 @@ function HttpConnector(host, config) {
   config = _.defaults(config || {}, {
     keepAlive: true,
     minSockets: 10,
-    maxSockets: 10
+    // 10 makes sense but 11 actually keeps 10 sockets around
+    // https://github.com/mikeal/forever-agent/issues/8
+    maxSockets: 11
   });
 
   var Agent = this.hand.Agent; // the class
@@ -50,7 +52,8 @@ function HttpConnector(host, config) {
   }
 
   this.agent = new Agent({
-    maxSockets: config.maxSockets
+    maxSockets: config.maxSockets,
+    minSockets: config.minSockets
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);
