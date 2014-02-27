@@ -76,7 +76,7 @@
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "scripts": {
-    "test": "node scripts/generate --branch default && grunt test",
+    "test": "grunt test",
     "generate": "node scripts/generate"
   },
   "engines": {

@@ -2314,6 +2314,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `dryRun`::
 `Boolean` -- Simulate the operation only and return the resulting state
+`explain`::
+`Boolean` -- Return an explanation of why the commands can or cannot be executed
 `filterMetadata`::
 `Boolean` -- Don't return cluster state metadata (default: false)
 `masterTimeout`::
