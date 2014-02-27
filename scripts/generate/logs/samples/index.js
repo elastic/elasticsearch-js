@@ -9,6 +9,18 @@ exports.make = function (startingMoment, endingMoment) {
 
   var sets = {};
 
+  sets.days = (function () {
+    var days = [];
+    var moving = startingMoment.clone();
+
+    while (moving <= endingMoment) {
+      days.push(moving.clone());
+      moving.add('day', 1);
+    }
+
+    return days;
+  }());
+
   sets.randomMsInDayRange = new Stochator({
     min: startingMoment.toDate().getTime(),
     max: endingMoment.toDate().getTime()
@@ -87,6 +99,10 @@ exports.make = function (startingMoment, endingMoment) {
   });
 
   return _.transform(sets, function (note, set, name) {
+    if (name === 'days') {
+      return note[name] = set;
+    }
+
     note[name] = _.bindKey(set, 'get');
   }, {});
 };

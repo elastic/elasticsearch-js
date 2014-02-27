@@ -12,7 +12,6 @@ function WeightedList(list) {
 
   _.forEach(list, _.bindKey(this, 'push'));
 
-  console.log(this);
 }
 _.inherits(WeightedList, Array);
 

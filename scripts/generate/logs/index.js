@@ -25,8 +25,10 @@ var async = require('async');
 var path = require('path');
 var moment = require('moment');
 var makeSamples = require('./samples').make;
-var startingMoment = moment().startOf('day').subtract('days', argv.days);
-var endingMoment = moment().endOf('day').add('days', argv.days);
+
+var startingMoment = moment().utc().startOf('day').subtract('days', argv.days);
+var endingMoment = moment().utc().endOf('day').add('days', argv.days);
+
 var clientConfig = {
   log: {
     level: 'trace',
@@ -42,14 +44,14 @@ if (argv.host) {
 }
 
 var client = new es.Client(clientConfig);
+var samples = makeSamples(startingMoment, endingMoment);
 
 console.log('Generating', argv.count, 'events across ±', argv.days, 'days');
 
 fillIndecies(function () {
   var actions = [];
-  var samples = makeSamples(startingMoment, endingMoment);
 
-  async.times(argv.count, function (i, done) {
+  async.timesSeries(argv.count, function (i, done) {
     // random date, plus less random time
     var date = moment(samples.randomMsInDayRange())
       .utc()
@@ -110,7 +112,6 @@ fillIndecies(function () {
 });
 
 function fillIndecies(cb) {
-  var movingDate = moment(startingMoment);
   var indexBody = {
     mappings: {
       _default_: {
@@ -143,12 +144,14 @@ function fillIndecies(cb) {
           },
           ip: {
             type: 'ip'
+          },
+          memory: {
+            type: 'double'
           }
         }
       }
     }
-  },
-  indexPushActions = [];
+  };
 
   function createDateIndex(indexName) {
     return function (done) {
@@ -166,10 +169,9 @@ function fillIndecies(cb) {
     };
   }
 
-  while (movingDate.unix() < endingMoment.unix()) {
-    indexPushActions.push(createDateIndex(movingDate.format('[logstash-]YYYY.MM.DD')));
-    movingDate.add('day', 1);
-  }
+  var indexPushActions = samples.days.map(function (moment) {
+    return createDateIndex(moment.format('[logstash-]YYYY.MM.DD'));
+  });
 
   async.parallel(indexPushActions, function (err, responses) {
     if (err) {
