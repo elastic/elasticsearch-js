@@ -71,8 +71,14 @@ function manage_es {
       local ES_URL="https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_RELEASE}.zip"
       local ES_DIR="${SNAPSHOTS}/${ES_VERSION}"
     else
+      if [[ $ES_BRANCH == "master" ]]; then
+        local JDK='JDK7'
+      else
+        local JDK='JDK6'
+      fi
+
       local ES_VERSION="${ES_BRANCH}_nightly"
-      local ES_URL="http://s3-us-west-2.amazonaws.com/build.elasticsearch.org/origin/$ES_BRANCH/nightly/JDK6/elasticsearch-latest-SNAPSHOT.zip"
+      local ES_URL="http://s3-us-west-2.amazonaws.com/build.elasticsearch.org/origin/$ES_BRANCH/nightly/$JDK/elasticsearch-latest-SNAPSHOT.zip"
       local DATE=`date +%Y_%m_%d`
       local ES_DIR="${SNAPSHOTS}/${ES_VERSION}_${DATE}"
     fi
