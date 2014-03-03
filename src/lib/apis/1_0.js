@@ -843,7 +843,9 @@ api.cluster.prototype.state = ca({
             'blocks',
             'metadata',
             'nodes',
-            'routing_table'
+            'routing_table',
+            'master_node',
+            'version'
           ]
         },
         index: {
@@ -861,7 +863,9 @@ api.cluster.prototype.state = ca({
             'blocks',
             'metadata',
             'nodes',
-            'routing_table'
+            'routing_table',
+            'master_node',
+            'version'
           ]
         }
       }

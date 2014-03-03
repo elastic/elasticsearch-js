@@ -402,10 +402,12 @@ client.deleteByQuery({
 .Deleting documents using the Query DSL
 [source,js]
 ---------
-client.delete_by_query({
+client.deleteByQuery({
   index: 'posts',
   body: {
-    term: { published: false }
+    query: {
+      term: { published: false }
+    }
   }
 }, function (error, response) {
   // ...
