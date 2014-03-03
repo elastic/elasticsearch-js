@@ -775,6 +775,7 @@ api.cluster.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.dryRun - Simulate the operation only and return the resulting state
+ * @param {Boolean} params.explain - Return an explanation of why the commands can or cannot be executed
  * @param {Boolean} params.filterMetadata - Don't return cluster state metadata (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
@@ -784,6 +785,9 @@ api.cluster.prototype.reroute = ca({
     dryRun: {
       type: 'boolean',
       name: 'dry_run'
+    },
+    explain: {
+      type: 'boolean'
     },
     filterMetadata: {
       type: 'boolean',
@@ -843,7 +847,9 @@ api.cluster.prototype.state = ca({
             'blocks',
             'metadata',
             'nodes',
-            'routing_table'
+            'routing_table',
+            'master_node',
+            'version'
           ]
         },
         index: {
@@ -861,7 +867,9 @@ api.cluster.prototype.state = ca({
             'blocks',
             'metadata',
             'nodes',
-            'routing_table'
+            'routing_table',
+            'master_node',
+            'version'
           ]
         }
       }

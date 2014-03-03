@@ -87,6 +87,10 @@ exports.make = function (startingMoment, endingMoment) {
   });
 
   return _.transform(sets, function (note, set, name) {
+    if (name === 'days') {
+      return note[name] = set;
+    }
+
     note[name] = _.bindKey(set, 'get');
   }, {});
 };

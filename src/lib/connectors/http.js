@@ -164,6 +164,7 @@ HttpConnector.prototype.request = function (params, cb) {
   request.setNoDelay(true);
   request.setSocketKeepAlive(true);
   request.chunkedEncoding = false;
+  request.useChunkedEncodingByDefault = false;
 
   if (params.body) {
     request.setHeader('Content-Length', Buffer.byteLength(params.body, 'utf8'));
