@@ -331,8 +331,31 @@ YamlDoc.prototype = {
         paramName = camelName;
       }
 
-      params[paramName] = (typeof val === 'string' && val[0] === '$') ? this.get(val) : val;
+      // for ercursively traversing the params to replace '$stashed' vars
+      var transformObject = function (vals, val, i) {
+        switch (typeof val) {
+        case 'string':
+          val = (val[0] === '$') ? this.get(val) : val;
+          break;
+        case 'object':
+          val = _.transform(val, transformObject);
+        }
+        vals[i] = val;
+      }.bind(this);
+
+      // start with the initial param, only traverse traversables
+      switch (typeof val) {
+      case 'string':
+        val = (val[0] === '$') ? this.get(val) : val;
+        break;
+      case 'object':
+        val = _.transform(val, transformObject);
+        break;
+      }
+
+      params[paramName] = val;
     }, {}, this);
+
 
     expect(clientAction || clientActionName).to.be.a('function');
 
