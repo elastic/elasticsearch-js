@@ -17,11 +17,11 @@ re_10='^1\.0\..*$';
 if [[ "$ES_V" =~ $re_nightly ]]; then
   export ES_BRANCH=${BASH_REMATCH[1]}
 elif [[ "$ES_V" =~ $re_090 ]]; then
-  ES_BRANCH='0.90'
-  ES_RELEASE=$ES_V
+  export ES_BRANCH='0.90'
+  export ES_RELEASE=$ES_V
 elif [[ "$ES_V" =~ $re_10 ]]; then
-  ES_BRANCH='1.0'
-  ES_RELEASE=$ES_V
+  export ES_BRANCH='1.0'
+  export ES_RELEASE=$ES_V
 else
   echo "unable to parse ES_V $ES_V"
   exit 1

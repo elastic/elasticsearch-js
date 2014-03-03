@@ -1,14 +1,11 @@
-module.exports = {
+var root = require('find-root')(__dirname);
+var rootReq = function (p) { return require(require('path').resolve(root, p)); };
+var utils = rootReq('grunt/utils');
+var _ = rootReq('src/lib/utils');
+
+var config = {
   unit: {
     src: 'test/unit/index.js'
-  },
-
-  integration_master: {
-    src: 'test/integration/yaml_suite/index.js'
-  },
-
-  'integration_0.90': {
-    src: 'test/integration/yaml_suite/index_0_90.js'
   },
 
   // run the unit tests, and update coverage.html
@@ -31,3 +28,11 @@ module.exports = {
     }
   }
 };
+
+utils.branches.forEach(function (branch) {
+  config['integration_' + branch] = {
+    src: 'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+  };
+});
+
+module.exports = config;

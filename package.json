@@ -7,17 +7,25 @@
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
   "homepage": "http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "1.4.0",
+  "version": "1.5.8",
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
+    "./src/lib/apis/index.js": "./src/lib/apis/browser_index.js",
     "./test/mocks/server.js": "./test/mocks/browser_server.js",
     "lodash": "./node_modules/lodash/dist/lodash.compat.js"
   },
   "config": {
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
-    }
+    },
+    "supported_es_branches": [
+      "master",
+      "1.x",
+      "1.0",
+      "0.90"
+    ],
+    "default_api_branch": "0.90"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
@@ -43,7 +51,6 @@
     "load-grunt-config": "~0.7.0",
     "grunt-s3": "~0.2.0-alpha.3",
     "grunt-run": "*",
-    "relative-fs": "0.0.1",
     "grunt-contrib-compress": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
@@ -53,25 +60,26 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.4",
     "express": "~3.4.7",
-    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git"
+    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git",
+    "find-root": "~0.1.1",
+    "event-stream": "~3.1.0"
   },
   "license": "Apache 2.0",
   "dependencies": {
-    "when": "~2.6.0",
-    "lodash": "~2.3.0",
-    "agentkeepalive": "~0.1",
     "chalk": "~0.3.0",
-    "event-stream": "~3.1.0"
+    "forever-agent": "~0.5.2",
+    "lodash-node": "~2.3.0",
+    "when": "~2.6.0"
   },
   "repository": {
     "type": "git",
     "url": "http://github.com/elasticsearch/elasticsearch-js.git"
   },
   "scripts": {
-    "test": "grunt test",
+    "test": "node scripts/generate --branch default && grunt test",
     "generate": "node scripts/generate"
   },
   "engines": {
-    "node" : ">=0.8 <0.11"
+    "node": ">=0.8 <0.11"
   }
 }

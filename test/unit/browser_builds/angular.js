@@ -9,8 +9,24 @@ describe('Angular esFactory', function () {
   });
 
   var uuid = (function () { var i = 0; return function () { return ++i; }; }());
+
+  /**
+   * Perform promise based async code in a way that mocha will understand
+   * @param  {Function} cb   - node style callback
+   * @param  {Function} body - function that executes async and returns a promise/value
+   */
+  var prom = function (cb, body) {
+    expect(cb).to.be.a('function');
+    expect(body).to.be.a('function');
+
+    var promise = body();
+    expect(promise.then).to.be.a('function');
+    promise.then(function () { cb(); }, cb);
+  };
+
   function directive(makeDirective) {
     var root = document.createElement('div');
+    root.setAttribute('ng-controller', 'empty-controller');
     var id = uuid();
     root.setAttribute('test-directive-' + id, 'test-directive');
     document.body.appendChild(root);
@@ -20,7 +36,11 @@ describe('Angular esFactory', function () {
       root = null;
     });
 
-    angular.module('mod' + id, ['elasticsearch']).directive('testDirective' + id, makeDirective);
+    angular
+      .module('mod' + id, ['elasticsearch'])
+      .controller('empty-controller', function () {})
+      .directive('testDirective' + id, makeDirective);
+
     angular.bootstrap(root, ['mod' + id]);
   }
 
@@ -32,6 +52,7 @@ describe('Angular esFactory', function () {
       };
     });
   });
+
   it('has Transport and ConnectionPool properties', function (done) {
     directive(function (esFactory) {
       return function () {
@@ -41,11 +62,15 @@ describe('Angular esFactory', function () {
       };
     });
   });
+
   it('returns a new client when it is called', function (done) {
     directive(function (esFactory) {
       return function () {
         try {
-          var client = esFactory({ hosts: null });
+          var client = esFactory({
+            hosts: null
+          });
+
           expect(client).to.have.keys('transport');
           expect(client.transport).to.be.a(esFactory.Transport);
           client.close();
@@ -53,6 +78,40 @@ describe('Angular esFactory', function () {
           return done(e);
         }
         done();
+      };
+    });
+  });
+
+  it('returns an error created by calling a method incorrectly', function (done) {
+    directive(function (esFactory) {
+      return function () {
+        prom(done, function () {
+          var client = esFactory({ hosts: null });
+          return client.get().then(function () {
+            expect.fail('promise should have been rejected');
+          }, function (err) {
+            expect(err.message).to.match(/unable/i);
+          });
+        });
+      };
+    });
+  });
+
+  it('ping\'s properly', function (done) {
+    directive(function (esFactory) {
+      return function () {
+        prom(done, function () {
+          var client = esFactory({
+            hosts: 'not-a-valid-es-host.es'
+          });
+
+          return client.ping().then(function () {
+            expect.fail('promise should have been rejected');
+          }, function (err) {
+            // this error should be "NoConnections", but in some browsers it will be a Timeout due to testing proxy or because it's IE
+            expect(err).to.be.ok();
+          });
+        });
       };
     });
   });

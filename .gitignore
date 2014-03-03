@@ -7,12 +7,13 @@ test/integration/yaml_suite/log
 .idea
 
 ## generated files
-scripts/last_rest_spec_update.sha
-test/integration/browser_yaml_suite/yaml_tests.js
 test/integration/yaml_suite/yaml_tests*.json
+test/integration/yaml_suite/index*.js
+src/elasticsearch*/
+src/bower*/
 junit-*.xml
-test.log
 elasticsearch*.log
 sauce_connect.lo*
 coverage.html
 .snapshots
+html_docs

@@ -1,6 +1,6 @@
 /* jshint maxlen: false */
 
-var ca = require('./client_action');
+var ca = require('../client_action');
 var api = module.exports = {};
 
 api._namespaces = ['cluster', 'indices'];
@@ -403,6 +403,28 @@ api.cluster.prototype.nodeStats = ca({
       fmt: '/_nodes/stats'
     }
   ]
+});
+
+/**
+ * Perform a [cluster.pendingTasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-pending.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ */
+api.cluster.prototype.pendingTasks = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_cluster/pending_tasks'
+  }
 });
 
 /**
@@ -2846,6 +2868,7 @@ api.ping = ca({
   url: {
     fmt: '/'
   },
+  requestTimeout: 100,
   method: 'HEAD'
 });
 
@@ -3063,6 +3086,9 @@ api.search = ca({
           type: 'list'
         }
       }
+    },
+    {
+      fmt: '/_search'
     }
   ],
   method: 'POST'

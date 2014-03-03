@@ -1,12 +1,8 @@
 var async = require('async');
+var fs = require('fs');
 var spawn = require('../_spawn');
 var argv = require('optimist')
   .options({
-    force: {
-      alias: 'f',
-      default: false,
-      boolean: true
-    },
     verbose: {
       alias: 'v',
       default: false,
@@ -23,11 +19,20 @@ var argv = require('optimist')
     update: {
       default: true,
       boolean: true
+    },
+    branch: {
+      default: null,
+      string: true
     }
   });
 
-var root = require('path').join(__dirname, '../..');
-var esSubModule = root + '/src/elasticsearch';
+var path = require('path');
+var root = require('find-root')(__dirname);
+var fromRoot = path.join.bind(path, root);
+var utils = require(fromRoot('grunt/utils'));
+var _ = require(fromRoot('src/lib/utils'));
+var esUrl = 'https://github.com/elasticsearch/elasticsearch.git';
+var branches;
 
 if (process.env.npm_config_argv) {
   // when called by NPM
@@ -37,55 +42,81 @@ if (process.env.npm_config_argv) {
   argv = argv.argv;
 }
 
-if (!argv.force && process.env.FORCE || process.env.FORCE_GEN) {
-  argv.force = argv.f = process.env.FORCE || process.env.FORCE_GEN;
+if (argv.branch) {
+  branches = [argv.branch];
+} else {
+  branches = utils.branches;
 }
 
-function makeSpawn(cmd, args, cwd) {
+
+function isDirectory(dir) {
+  var stat;
+  try { stat = fs.statSync(dir); } catch (e) {}
+  return (stat && stat.isDirectory());
+}
+
+function storeDir(branch) {
+  return fromRoot('src/elasticsearch_' + _.snakeCase(branch));
+}
+
+function spawnStep(cmd, args, cwd) {
   return function (done) {
     spawn(cmd, args, {
       verbose: argv.versbose,
-      cwd: cwd || esSubModule
+      cwd: cwd
     }, function (status) {
       done(status ? new Error('Non-zero exit code: %d', status) : void 0);
     });
   };
 }
 
-function generateBranch(branch, done) {
-  async.series([
-    makeSpawn('git', ['reset', '--hard']),
-    makeSpawn('git', ['clean', '-fdx']),
-    makeSpawn('git', ['checkout', 'origin/' + branch]),
-    function (done) {
-      var tasks = [];
+function checkoutStep(branch) {
+  return function (done) {
+    var dir = storeDir(branch);
 
-      if (argv.api) {
-        tasks.push(
-          async.apply(require('./js_api'), branch)
-        );
-      }
-      if (argv.tests) {
-        tasks.push(
-          async.apply(require('./yaml_tests'), branch)
-        );
-      }
-
-      async.parallel(tasks, done);
+    if (isDirectory(dir)) {
+      return done();
     }
-  ], done);
+
+    spawnStep('git', [
+      'clone', '--depth', '50', '--branch', branch, '--', esUrl, dir
+    ], root)(done);
+  };
 }
 
-var steps = [
-  makeSpawn('git', ['submodule', 'update', '--', esSubModule], root)
-];
-if (argv.update) {
-  steps.push(makeSpawn('git', ['fetch', 'origin'], esSubModule));
+function updateStep(branch) {
+  return function (done) {
+    if (!argv.update) {
+      return done();
+    }
+
+    var dir = storeDir(branch);
+
+    async.series([
+      spawnStep('git', ['fetch', 'origin', branch], dir),
+      spawnStep('git', ['reset', '--hard', 'origin/' + branch], dir),
+      spawnStep('git', ['clean', '-fdx'], dir)
+    ], done);
+  };
 }
-steps.push(
-  async.apply(generateBranch, '0.90'),
-  async.apply(generateBranch, 'master')
-);
+
+function generateStep(branch) {
+  return function (done) {
+    async.parallel([
+      argv.api && async.apply(require('./js_api'), branch),
+      argv.tests && async.apply(require('./yaml_tests'), branch)
+    ].filter(Boolean), done);
+  };
+}
+
+var steps = [];
+branches.forEach(function (branch) {
+  steps.push(
+    checkoutStep(branch),
+    updateStep(branch),
+    generateStep(branch)
+  );
+});
 
 async.series(steps, function (err) {
   if (err) {

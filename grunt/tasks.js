@@ -1,25 +1,31 @@
 module.exports = function (grunt) {
+  var utils = require('./utils');
 
   // Default task runs the build process.
   grunt.registerTask('default', [
     'test'
   ]);
 
-  grunt.registerTask('test', [
-    'jshint',
-    'run:generate',
-    'mochacov:unit',
+  grunt.registerTask('test', function (branch) {
+    var tasks = [
+      'jshint',
+      'run:generate',
+      'mochacov:unit'
+    ];
 
-    'run:install_es_master',
-    'run:es_master',
-    'mochacov:integration_master',
-    'stop:es_master',
+    var branches = branch ? [branch] : utils.branches;
 
-    'run:install_es_0.90',
-    'run:es_0.90',
-    'mochacov:integration_0.90',
-    'stop:es_0.90'
-  ]);
+    branches.forEach(function (branch) {
+      tasks.push(
+        'run:install_es_' + branch,
+        'run:es_' + branch,
+        'mochacov:integration_' + branch,
+        'stop:es_' + branch
+      );
+    });
+
+    grunt.task.run(tasks);
+  });
 
   grunt.registerTask('unit_test', [
     'jshint',

@@ -14,7 +14,7 @@ var handles = {
 };
 var _ = require('../utils');
 var qs = require('querystring');
-var KeepAliveAgent = require('agentkeepalive');
+var ForeverAgent = require('forever-agent');
 var ConnectionAbstract = require('../connection');
 
 /**
@@ -34,20 +34,52 @@ function HttpConnector(host, config) {
   }
 
   config = _.defaults(config || {}, {
-    maxSockets: 10,
-    maxKeepAliveRequests: 0,
-    maxKeepAliveTime: 3e5 // 5 minutes
+    keepAlive: true,
+    minSockets: 10,
+    // 10 makes sense but 11 actually keeps 10 sockets around
+    // https://github.com/mikeal/forever-agent/issues/8
+    maxSockets: 11
   });
 
-  var KeepAliveAgent_ = this.host.protocol === 'https' ? KeepAliveAgent.HttpsAgent : KeepAliveAgent;
+  var Agent = this.hand.Agent; // the class
+  if (config.forever) {
+    config.keepAlive = config.forever;
+  }
 
-  this.agent = new KeepAliveAgent_({
+  if (config.keepAlive) {
+    Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
+    this.on('status set', this.bound.onStatusSet);
+  }
+
+  this.agent = new Agent({
     maxSockets: config.maxSockets,
-    maxKeepAliveRequests: config.maxKeepAliveRequests,
-    maxKeepAliveTime: config.maxKeepAliveTime
+    minSockets: config.minSockets
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);
+
+HttpConnector.prototype.onStatusSet = _.handler(function (status) {
+  if (status === 'closed') {
+    var agent = this.agent;
+    var toRemove = [];
+    var collectSockets = function (sockets, host) {
+      _.each(sockets, function (s) {
+        s && toRemove.push([host, s]);
+      });
+    };
+
+    agent.minSockets = agent.maxSockets = 0;
+    agent.requests = {};
+
+    _.each(agent.sockets, collectSockets);
+    _.each(agent.freeSockets, collectSockets);
+    _.each(toRemove, function (args) {
+      var host = args[0], socket = args[1];
+      agent.removeSocket(socket, host);
+      socket.destroy();
+    });
+  }
+});
 
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};

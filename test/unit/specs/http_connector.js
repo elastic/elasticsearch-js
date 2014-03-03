@@ -8,7 +8,7 @@ describe('Http Connector', function () {
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
-  var KeepAliveAgent = require('agentkeepalive');
+  var ForeverAgent = require('forever-agent');
 
   var http = require('http');
   var https = require('https');
@@ -174,7 +174,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
-        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
+        expect(http.request.lastCall.args[0].agent).to.be.a(ForeverAgent);
         done();
       });
     });
@@ -184,7 +184,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
-        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.HttpsAgent);
+        expect(https.request.lastCall.args[0].agent).to.be.a(ForeverAgent.SSL);
         done();
       });
     });
@@ -366,6 +366,47 @@ describe('Http Connector', function () {
         server.done();
         done();
       });
+    });
+  });
+
+  describe('Connection cleanup', function () {
+    it('destroys any connections created', function (done) {
+      this.timeout(4000);
+      var cp = require('child_process');
+      var path = require('path');
+      var es = require('event-stream');
+
+      var proc = cp.spawn('node', [path.join(__dirname, '../../fixtures/keepalive.js')], {
+        silent: true
+      });
+
+      es.merge(
+        proc.stdout,
+        proc.stderr
+      ).pipe(es.wait(function (err, output) {
+        expect(err).to.eql(null);
+        expect(parseInt(output.trim(), 10) <= 1).to.be.ok();
+        done();
+      }));
+    });
+
+    it('properly removes all elements from the socket', function () {
+      var con = new HttpConnection(new Host('localhost'));
+      var sockets = [
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} },
+        { destroy: function () {} }
+      ];
+      con.agent.sockets['http://localhost/'] = sockets;
+      con.setStatus('closed');
+      expect(sockets).to.eql([]);
     });
   });
 
