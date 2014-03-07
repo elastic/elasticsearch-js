@@ -21,7 +21,6 @@ var argv = require('optimist')
 
 var es = require('../../../src/elasticsearch');
 var async = require('async');
-var path = require('path');
 var moment = require('moment');
 var makeSamples = require('./samples').make;
 
