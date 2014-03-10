@@ -1045,7 +1045,9 @@ api.countPercolate = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -1133,7 +1135,9 @@ api['delete'] = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -1464,7 +1468,9 @@ api.get = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -1538,7 +1544,9 @@ api.getSource = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -1629,7 +1637,9 @@ api.index = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -4398,7 +4408,9 @@ api.percolate = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }
@@ -5115,7 +5127,9 @@ api.update = ca({
       type: 'enum',
       options: [
         'internal',
-        'external'
+        'external',
+        'external_gte',
+        'force'
       ],
       name: 'version_type'
     }

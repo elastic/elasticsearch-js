@@ -305,6 +305,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `index`::
 `String` -- The index of the document being count percolated.
@@ -382,6 +384,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
@@ -448,6 +452,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -744,6 +750,8 @@ client.get({
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -795,6 +803,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -875,6 +885,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
@@ -1286,6 +1298,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `index`::
 `String` -- The index of the document being percolated.
@@ -1756,6 +1770,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
