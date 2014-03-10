@@ -11,3 +11,4 @@ email:
     - spencer.alger@elasticsearch.com
   on_success: change
   on_failure: always
+
