@@ -38,8 +38,8 @@ bower install elasticsearch
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
- - [API](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference-0-90.html)
- - [Configuration](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-conventions.html)
+ - [API](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
+ - [Configuration](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html)
  - [Development/Contributing](https://github.com/elasticsearch/elasticsearch-js/blob/master/CONTRIBUTING.md)
  - [Extending Core Components](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/extending_core_components.html)
  - [Logging](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/logging.html)
