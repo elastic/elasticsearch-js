@@ -41,20 +41,7 @@ function HttpConnector(host, config) {
     maxSockets: 11
   });
 
-  var Agent = this.hand.Agent; // the class
-  if (config.forever) {
-    config.keepAlive = config.forever;
-  }
-
-  if (config.keepAlive) {
-    Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
-    this.on('status set', this.bound.onStatusSet);
-  }
-
-  this.agent = new Agent({
-    maxSockets: config.maxSockets,
-    minSockets: config.minSockets
-  });
+  this.agent = this.createAgent(config);
 }
 _.inherits(HttpConnector, ConnectionAbstract);
 
@@ -80,6 +67,28 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     });
   }
 });
+
+HttpConnector.prototype.createAgent = function (config) {
+  var Agent = this.hand.Agent; // the class
+
+  if (config.forever) {
+    config.keepAlive = config.forever;
+  }
+
+  if (config.keepAlive) {
+    Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
+    this.on('status set', this.bound.onStatusSet);
+  }
+
+  return new Agent(this.makeAgentConfig(config));
+};
+
+HttpConnector.prototype.makeAgentConfig = function (config) {
+  return {
+    maxSockets: config.maxSockets,
+    minSockets: config.minSockets
+  };
+};
 
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};
