@@ -38,7 +38,8 @@ function HttpConnector(host, config) {
     minSockets: 10,
     // 10 makes sense but 11 actually keeps 10 sockets around
     // https://github.com/mikeal/forever-agent/issues/8
-    maxSockets: 11
+    maxSockets: 11,
+    rejectUnauthorized: true
   });
 
   var Agent = this.hand.Agent; // the class
@@ -54,6 +55,7 @@ function HttpConnector(host, config) {
   this.agent = new Agent({
     maxSockets: config.maxSockets,
     minSockets: config.minSockets
+    rejectUnauthorized: config.rejectUnauthorized
   });
 }
 _.inherits(HttpConnector, ConnectionAbstract);
