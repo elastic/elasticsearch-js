@@ -14,7 +14,7 @@ var handles = {
 };
 var _ = require('../utils');
 var qs = require('querystring');
-var ForeverAgent = require('forever-agent');
+var ForeverAgent = require('./_custom_forever_agent');
 var ConnectionAbstract = require('../connection');
 
 /**
@@ -163,8 +163,6 @@ HttpConnector.prototype.request = function (params, cb) {
 
   request.setNoDelay(true);
   request.setSocketKeepAlive(true);
-  request.chunkedEncoding = false;
-  request.useChunkedEncodingByDefault = false;
 
   if (params.body) {
     request.setHeader('Content-Length', Buffer.byteLength(params.body, 'utf8'));

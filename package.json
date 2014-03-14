@@ -67,7 +67,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "chalk": "~0.4",
-    "forever-agent": "~0.5",
+    "forever-agent": "0.5.2",
     "lodash-node": "~2.4",
     "when": "~2.8"
   },
