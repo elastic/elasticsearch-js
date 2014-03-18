@@ -39,6 +39,7 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-cat-master-1-x,cat.master>>
 * <<api-cat-nodes-1-x,cat.nodes>>
 * <<api-cat-pendingtasks-1-x,cat.pendingTasks>>
+* <<api-cat-plugins-1-x,cat.plugins>>
 * <<api-cat-recovery-1-x,cat.recovery>>
 * <<api-cat-shards-1-x,cat.shards>>
 * <<api-cat-threadpool-1-x,cat.threadPool>>
@@ -95,6 +96,7 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-snapshot-get-1-x,snapshot.get>>
 * <<api-snapshot-getrepository-1-x,snapshot.getRepository>>
 * <<api-snapshot-restore-1-x,snapshot.restore>>
+* <<api-snapshot-status-1-x,snapshot.status>>
 
 [[api-bulk-1-x]]
 === `bulk`
@@ -2081,6 +2083,37 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
+[[api-cat-plugins-1-x]]
+=== `cat.plugins`
+
+[source,js]
+--------
+client.cat.plugins([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-plugins.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`h`::
+`String, String[], Boolean` -- Comma-separated list of column names to display
+`help`::
+`Boolean` -- Return help information
+`v`::
+`Boolean` -- Verbose mode. Display column headers
+
+link:#[back to top]
+
 [[api-cat-recovery-1-x]]
 === `cat.recovery`
 
@@ -3191,6 +3224,8 @@ Options:::
 `Anything` -- TODO: ?
 `waitForMerge`::
 `Boolean` -- Specify whether the request should block until the merge process is finished (default: true)
+`force`::
+`Boolean` -- Force a merge operation to run, even if there is a single segment in the index (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
@@ -3961,5 +3996,32 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `String` -- A repository name
 `snapshot`::
 `String` -- A snapshot name
+
+link:#[back to top]
+
+[[api-snapshot-status-1-x]]
+=== `snapshot.status`
+
+[source,js]
+--------
+client.snapshot.status([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`repository`::
+`String` -- A repository name
+`snapshot`::
+`String, String[], Boolean` -- A comma-separated list of snapshot names
 
 link:#[back to top]

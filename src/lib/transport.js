@@ -330,6 +330,7 @@ Transport.prototype._timeout = function (cb, delay) {
 Transport.prototype.sniff = function (cb) {
   var connectionPool = this.connectionPool;
   var nodesToHostCallback = this.nodesToHostCallback;
+  var log = this.log;
 
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
@@ -339,10 +340,19 @@ Transport.prototype.sniff = function (cb) {
     method: 'GET'
   }, function (err, resp, status) {
     if (!err && resp && resp.nodes) {
-      var hosts = _.map(nodesToHostCallback(resp.nodes), function (hostConfig) {
+      var hostsConfigs;
+
+      try {
+        hostsConfigs = nodesToHostCallback(resp.nodes);
+      } catch (e) {
+        log.error(new Error('Unable to convert node list from ' + this.sniffEndpoint +
+          ' to hosts durring sniff. Encountered error:\n' + (e.stack || e.message)));
+        return;
+      }
+
+      connectionPool.setHosts(_.map(hostsConfigs, function (hostConfig) {
         return new Host(hostConfig);
-      });
-      connectionPool.setHosts(hosts);
+      }));
     }
     cb(err, resp, status);
   });

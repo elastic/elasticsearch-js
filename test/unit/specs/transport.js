@@ -251,6 +251,17 @@ describe('Transport Class', function () {
       };
       trans.sniff();
     });
+
+    it('logs an error if nodes to host throws one', function (done) {
+      trans.nodesToHostCallback = function (nodes) {
+        throw new Error('I failed');
+      };
+      trans.log.error = function (err) {
+        done();
+      };
+      trans.sniff();
+    });
+
     it('takes the host configs, converts them into Host objects, and passes them to connectionPool.setHosts',
     function (done) {
       trans.sniff(function () {
