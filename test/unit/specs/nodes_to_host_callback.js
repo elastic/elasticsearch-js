@@ -30,4 +30,24 @@ describe('Nodes to host callback', function () {
     });
   });
 
+  it('ignores hosts that don\'t have an http_host property', function () {
+    var hosts = callback({
+      node_id: {
+        not: 'much of a node'
+      }
+    });
+
+    expect(hosts.length).to.be(0);
+  });
+
+  it('throws an error when the host property is not formatted properly', function () {
+    expect(function () {
+      var hosts = callback({
+        node_id: {
+          http_address: 'not actually an http host'
+        }
+      });
+    }).to.throwException(/does not match the expected pattern/);
+  });
+
 });

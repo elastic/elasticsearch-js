@@ -462,6 +462,42 @@ api.cat.prototype.pendingTasks = ca({
 });
 
 /**
+ * Perform a [cat.plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-plugins.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ */
+api.cat.prototype.plugins = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  url: {
+    fmt: '/_cat/plugins'
+  }
+});
+
+/**
  * Perform a [cat.recovery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -2826,6 +2862,7 @@ api.indices.prototype.open = ca({
  * @param {Boolean} params.onlyExpungeDeletes - Specify whether the operation should only expunge deleted documents
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {Boolean} params.waitForMerge - Specify whether the request should block until the merge process is finished (default: true)
+ * @param {Boolean} params.force - Force a merge operation to run, even if there is a single segment in the index (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.optimize = ca({
@@ -2864,6 +2901,9 @@ api.indices.prototype.optimize = ca({
     waitForMerge: {
       type: 'boolean',
       name: 'wait_for_merge'
+    },
+    force: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -4911,6 +4951,47 @@ api.snapshot.prototype.restore = ca({
     }
   },
   method: 'POST'
+});
+
+/**
+ * Perform a [snapshot.status](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String} params.repository - A repository name
+ * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
+ */
+api.snapshot.prototype.status = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_status',
+      req: {
+        repository: {
+          type: 'string'
+        },
+        snapshot: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_snapshot/<%=repository%>/_status',
+      req: {
+        repository: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_snapshot/_status'
+    }
+  ]
 });
 
 /**
