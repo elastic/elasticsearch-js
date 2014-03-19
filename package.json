@@ -25,7 +25,7 @@
       "1.0",
       "0.90"
     ],
-    "default_api_branch": "0.90"
+    "default_api_branch": "1.0"
   },
   "devDependencies": {
     "mocha": "~1.14.0",

@@ -26,7 +26,6 @@ var makeSamples = require('./samples').make;
 
 var startingMoment = moment().utc().startOf('day').subtract('days', argv.days);
 var endingMoment = moment().utc().endOf('day').add('days', argv.days);
-
 var clientConfig = {
   // log: {
   //   level: 'trace',
