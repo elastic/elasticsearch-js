@@ -3,6 +3,7 @@
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
 - Promises are now supported using the Bluebird module.
+- If you try to reuse a configuration object, an error will be thrown. https://github.com/elasticsearch/elasticsearch-js/issues/33
 
 ## 1.5 (Feb 6 2014)
 - Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler.
@@ -11,6 +12,7 @@
 - Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises.
 - added the cat.threadPool to the master/1.0/1.x apis
 - Enabled Basic auth in the Angular connector -- Thanks @jeff-french!
+- Fixed a bug that was preventing index requests (and any other POST/PUT request) from using connections in the connection pool.
 
 ## 1.4 (Jan 30 2014)
 - The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
