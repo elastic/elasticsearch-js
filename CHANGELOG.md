@@ -3,6 +3,7 @@
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
 - Promises are now supported using the Bluebird module.
+- If you try to reuse a configuration object, an error will be thrown. https://github.com/elasticsearch/elasticsearch-js/issues/33
 
 ## 1.5 (Feb 6 2014)
 - Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler.
