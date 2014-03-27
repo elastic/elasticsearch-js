@@ -376,18 +376,16 @@ describe('Http Connector', function () {
       var path = require('path');
       var es = require('event-stream');
 
-      var proc = cp.spawn('node', [path.join(__dirname, '../../fixtures/keepalive.js')], {
-        silent: true
-      });
+      var proc = cp.fork(path.join(__dirname, '../../fixtures/keepalive.js'));
 
-      es.merge(
-        proc.stdout,
-        proc.stderr
-      ).pipe(es.wait(function (err, output) {
-        expect(err).to.eql(null);
-        expect(parseInt(output.trim(), 10) <= 1).to.be.ok();
+      proc.on('message', function (output) {
+        proc.kill();
+
+        expect(output).to.have.property('remaining', 0);
+        expect(output).to.have.property('timeouts', 0);
+
         done();
-      }));
+      });
     });
 
     it('properly removes all elements from the socket', function () {
