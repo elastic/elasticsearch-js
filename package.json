@@ -60,9 +60,9 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.4",
     "express": "~3.4.7",
-    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git",
     "find-root": "~0.1.1",
-    "event-stream": "~3.1.0"
+    "event-stream": "~3.1.0",
+    "grunt-saucelabs": "^5.1.0"
   },
   "license": "Apache 2.0",
   "dependencies": {

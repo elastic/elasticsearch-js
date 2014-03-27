@@ -7,7 +7,7 @@ module.exports = {
         'http://127.0.0.1:8000/builds.html'
       ],
       testname: 'es.js client tests',
-      build: process.env.CI_BUILD_NUMBER,
+      build: process.env.TRAVIS_BUILD_ID,
       concurrency: 10,
       username: slk.user,
       key: slk.key,
