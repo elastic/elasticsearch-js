@@ -1,16 +1,19 @@
 [[configuration]]
 == Configuration
 
-The `Client` constructor accepts a single object as it's argument, and the following keys can be used to configure that client instance.
+The `Client` constructor accepts a single object as it's argument. In the <<config-options>> section all of the available options/keys are listed.
 
 [source,js]
 ------
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  ...
+  ... config options ...
 });
 ------
 
+WARNING: Due to the complex nature of the configuration, the config object you pass in will be modified and can only be used to create one `Client` instance. Sorry for the inconvenience. Related Github issue: https://github.com/elasticsearch/elasticsearch-js/issues/33
+
+[[config-options]]
 === Config options
 [horizontal]
 `host or hosts`[[config-hosts]]::
