@@ -1,5 +1,5 @@
 [[api-reference]]
-== 1.0 API
+== 1.1 API
 
 
 NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
@@ -27,6 +27,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-ping,ping>>
 * <<api-scroll,scroll>>
 * <<api-search,search>>
+* <<api-searchtemplate,searchTemplate>>
 * <<api-suggest,suggest>>
 * <<api-termvector,termvector>>
 * <<api-update,update>>
@@ -39,6 +40,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-cat-master,cat.master>>
 * <<api-cat-nodes,cat.nodes>>
 * <<api-cat-pendingtasks,cat.pendingTasks>>
+* <<api-cat-plugins,cat.plugins>>
 * <<api-cat-recovery,cat.recovery>>
 * <<api-cat-shards,cat.shards>>
 * <<api-cat-threadpool,cat.threadPool>>
@@ -77,6 +79,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-indices-putsettings,indices.putSettings>>
 * <<api-indices-puttemplate,indices.putTemplate>>
 * <<api-indices-putwarmer,indices.putWarmer>>
+* <<api-indices-recovery,indices.recovery>>
 * <<api-indices-refresh,indices.refresh>>
 * <<api-indices-segments,indices.segments>>
 * <<api-indices-snapshotindex,indices.snapshotIndex>>
@@ -95,6 +98,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-snapshot-get,snapshot.get>>
 * <<api-snapshot-getrepository,snapshot.getRepository>>
 * <<api-snapshot-restore,snapshot.restore>>
+* <<api-snapshot-status,snapshot.status>>
 
 [[api-bulk]]
 === `bulk`
@@ -305,6 +309,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `index`::
 `String` -- The index of the document being count percolated.
@@ -382,6 +388,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
@@ -448,6 +456,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -744,6 +754,8 @@ client.get({
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -795,6 +807,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- The document ID
@@ -875,6 +889,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
@@ -1286,6 +1302,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `index`::
 `String` -- The index of the document being percolated.
@@ -1503,6 +1521,31 @@ Options:::
 `Date, Number` -- Explicit operation timeout
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
+
+link:#[back to top]
+
+[[api-searchtemplate]]
+=== `searchTemplate`
+
+[source,js]
+--------
+client.searchTemplate([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-search.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 `type`::
@@ -1756,6 +1799,8 @@ Options:::
 Options:::
  * `"internal"`
  * `"external"`
+ * `"external_gte"`
+ * `"force"`
 
 `id`::
 `String` -- Document ID
@@ -2065,6 +2110,37 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
+[[api-cat-plugins]]
+=== `cat.plugins`
+
+[source,js]
+--------
+client.cat.plugins([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-plugins.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`h`::
+`String, String[], Boolean` -- Comma-separated list of column names to display
+`help`::
+`Boolean` -- Return help information
+`v`::
+`Boolean` -- Verbose mode. Display column headers
+
+link:#[back to top]
+
 [[api-cat-recovery]]
 === `cat.recovery`
 
@@ -2091,8 +2167,6 @@ Options:::
  * `"m"`
  * `"g"`
 
-`local`::
-`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
 `Date, Number` -- Explicit operation timeout for connection to master node
 `h`::
@@ -2316,6 +2390,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `dryRun`::
 `Boolean` -- Simulate the operation only and return the resulting state
+`explain`::
+`Boolean` -- Return an explanation of why the commands can or cannot be executed
 `filterMetadata`::
 `Boolean` -- Don't return cluster state metadata (default: false)
 `masterTimeout`::
@@ -3173,6 +3249,8 @@ Options:::
 `Anything` -- TODO: ?
 `waitForMerge`::
 `Boolean` -- Specify whether the request should block until the merge process is finished (default: true)
+`force`::
+`Boolean` -- Force a merge operation to run, even if there is a single segment in the index (default: false)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
@@ -3355,6 +3433,35 @@ Options:::
 
 link:#[back to top]
 
+[[api-indices-recovery]]
+=== `indices.recovery`
+
+[source,js]
+--------
+client.indices.recovery([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`detailed`::
+`Boolean` -- Whether to display detailed information about shard recovery
+`activeOnly`::
+`Boolean` -- Display only those recoveries that are currently on-going
+`human`::
+`Boolean` -- Whether to return time and byte values in human-readable format.
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
 [[api-indices-refresh]]
 === `indices.refresh`
 
@@ -3439,7 +3546,7 @@ client.indices.snapshotIndex([params, [callback]])
 
 Initiate a snapshot through the gateway of one or more indices.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot/.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3943,5 +4050,32 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `String` -- A repository name
 `snapshot`::
 `String` -- A snapshot name
+
+link:#[back to top]
+
+[[api-snapshot-status]]
+=== `snapshot.status`
+
+[source,js]
+--------
+client.snapshot.status([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`masterTimeout`::
+`Date, Number` -- Explicit operation timeout for connection to master node
+`repository`::
+`String` -- A repository name
+`snapshot`::
+`String, String[], Boolean` -- A comma-separated list of snapshot names
 
 link:#[back to top]

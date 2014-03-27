@@ -21,18 +21,18 @@ describe('Client instances creation', function () {
     }).to.throwError(/previous "elasticsearch" module/);
   });
 
-  it('inherits the 0.90 API by default', function () {
-    expect(client.bulk).to.eql(apis['0.90'].bulk);
-    expect(client.cluster.nodeStats).to.eql(apis['0.90'].cluster.prototype.nodeStats);
-  });
-
-  it('inherits the 1.0 API when specified', function () {
-    client.close();
-    client = es.Client({
-      apiVersion: '1.0'
-    });
+  it('inherits the 1.0 API by default', function () {
     expect(client.bulk).to.eql(apis['1.0'].bulk);
     expect(client.nodes.stats).to.eql(apis['1.0'].nodes.prototype.stats);
+  });
+
+  it('inherits the 0.90 API when specified', function () {
+    client.close();
+    client = es.Client({
+      apiVersion: '0.90'
+    });
+    expect(client.bulk).to.eql(apis['0.90'].bulk);
+    expect(client.cluster.nodeStats).to.eql(apis['0.90'].cluster.prototype.nodeStats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {

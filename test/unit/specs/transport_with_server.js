@@ -1,7 +1,6 @@
 var Transport = require('../../../src/lib/transport');
 var Host = require('../../../src/lib/host');
 var errors = require('../../../src/lib/errors');
-var when = require('when');
 var expect = require('expect.js');
 
 var sinon = require('sinon');
@@ -254,7 +253,7 @@ describe('Transport + Mock server', function () {
             good: 'day'
           });
           done();
-        });
+        }, done);
       });
     });
 

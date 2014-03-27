@@ -27,6 +27,7 @@ NOTE: At this time, you must opt into the master API by setting the `apiVersion`
 * <<api-ping-master,ping>>
 * <<api-scroll-master,scroll>>
 * <<api-search-master,search>>
+* <<api-searchtemplate-master,searchTemplate>>
 * <<api-suggest-master,suggest>>
 * <<api-termvector-master,termvector>>
 * <<api-update-master,update>>
@@ -78,9 +79,9 @@ NOTE: At this time, you must opt into the master API by setting the `apiVersion`
 * <<api-indices-putsettings-master,indices.putSettings>>
 * <<api-indices-puttemplate-master,indices.putTemplate>>
 * <<api-indices-putwarmer-master,indices.putWarmer>>
+* <<api-indices-recovery-master,indices.recovery>>
 * <<api-indices-refresh-master,indices.refresh>>
 * <<api-indices-segments-master,indices.segments>>
-* <<api-indices-snapshotindex-master,indices.snapshotIndex>>
 * <<api-indices-stats-master,indices.stats>>
 * <<api-indices-status-master,indices.status>>
 * <<api-indices-updatealiases-master,indices.updateAliases>>
@@ -1526,6 +1527,31 @@ Options:::
 
 link:#[back to top]
 
+[[api-searchtemplate-master]]
+=== `searchTemplate`
+
+[source,js]
+--------
+client.searchTemplate([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-search.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+`type`::
+`String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
+
+link:#[back to top]
+
 [[api-suggest-master]]
 === `suggest`
 
@@ -2140,8 +2166,6 @@ Options:::
  * `"m"`
  * `"g"`
 
-`local`::
-`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
 `Date, Number` -- Explicit operation timeout for connection to master node
 `h`::
@@ -3408,6 +3432,35 @@ Options:::
 
 link:#[back to top]
 
+[[api-indices-recovery-master]]
+=== `indices.recovery`
+
+[source,js]
+--------
+client.indices.recovery([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`detailed`::
+`Boolean` -- Whether to display detailed information about shard recovery
+`activeOnly`::
+`Boolean` -- Display only those recoveries that are currently on-going
+`human`::
+`Boolean` -- Whether to return time and byte values in human-readable format.
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
 [[api-indices-refresh-master]]
 === `indices.refresh`
 
@@ -3479,39 +3532,6 @@ Options:::
 `Anything` -- TODO: ?
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-link:#[back to top]
-
-[[api-indices-snapshotindex-master]]
-=== `indices.snapshotIndex`
-
-[source,js]
---------
-client.indices.snapshotIndex([params, [callback]])
---------
-
-Initiate a snapshot through the gateway of one or more indices.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot/.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`ignoreUnavailable`::
-`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
-`allowNoIndices`::
-`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-`[expandWildcards=open]`::
-`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
-Options:::
- * `"open"`
- * `"closed"`
-
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
 
 link:#[back to top]
 

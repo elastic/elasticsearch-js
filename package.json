@@ -21,11 +21,11 @@
     },
     "supported_es_branches": [
       "master",
-      "1.x",
+      "1.1",
       "1.0",
       "0.90"
     ],
-    "default_api_branch": "1.0"
+    "default_api_branch": "1.1"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
@@ -60,16 +60,16 @@
     "expect.js": "~0.2.0",
     "aliasify": "~1.2.4",
     "express": "~3.4.7",
-    "grunt-saucelabs": "git://github.com/spenceralger/grunt-saucelabs.git",
     "find-root": "~0.1.1",
-    "event-stream": "~3.1.0"
+    "event-stream": "~3.1.0",
+    "grunt-saucelabs": "^5.1.0"
   },
   "license": "Apache 2.0",
   "dependencies": {
     "chalk": "~0.4",
     "forever-agent": "0.5.2",
     "lodash-node": "~2.4",
-    "when": "~2.8"
+    "bluebird": "^1.1.1"
   },
   "repository": {
     "type": "git",
