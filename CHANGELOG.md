@@ -1,5 +1,9 @@
 # elasticsearch-js changelog
 
+## 2.0 (Mar 27 2014)
+- The default API version is now `'1.0'`
+- Promises are now supported using the Bluebird module.
+
 ## 1.5 (Feb 6 2014)
 - Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler.
 - The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `keepAlive`, which will keeps at least `minSockets` connections open forever. See: http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#configuration

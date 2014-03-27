@@ -1,38 +1,41 @@
+var clock = require('sinon').useFakeTimers();
 var elasticsearch = require('../../src/elasticsearch');
 var _ = require('lodash-node');
-var clock = require('sinon').useFakeTimers();
+var times = require('async').times;
 
 var es = elasticsearch.Client({
-  host: 'localhost:5555',
+  host: 'no-a-real-host-for-sure.bike:5555',
   log: false
 });
 
-es.search({
-  index: '_all',
-  type: '_all',
-  body: {
-    query: {
-      match_all: {}
+times(100, function (i, done) {
+  es.search({
+    index: '_all',
+    type: '_all',
+    body: {
+      query: {
+        match_all: {}
+      }
     }
-  }
-}, function (err, resp) {
-  var conn = _.union(es.transport.connectionPool._conns.dead, es.transport.connectionPool._conns.alive).pop();
+  }, _.partial(done, null)); // ignore errors
+  clock.tick(10);
+}, function () {
+  var sockets = _(es.transport.connectionPool._conns.dead)
+    .concat(es.transport.connectionPool._conns.alive)
+    .transform(function (sockets, conn) {
+      [].push.apply(sockets, _.values(conn.agent.sockets));
+      [].push.apply(sockets, _.values(conn.agent.freeSockets));
+    }, [])
+    .flatten()
+    .value();
+
   es.close();
-
-  if (_.size(clock.timeouts)) {
-    console.log('Timeouts were left behind');
-    console.log(clock);
-  }
-
   clock.restore();
 
-  var destroyedSockets = 0;
-  function countDestroyed(sockets) {
-    destroyedSockets += _.where(sockets, { destroyed: true}).length;
-  }
-  _.each(conn.agent.sockets, countDestroyed);
-  _.each(conn.agent.freeSockets, countDestroyed);
-  console.log(destroyedSockets);
+  var out = {
+    socketCount: sockets.length,
+    remaining: _.where(sockets, { destroyed: true }).length - sockets.length,
+    timeouts: _.size(clock.timeouts)
+  };
+  process.connected ? process.send(out) : console.log(out);
 });
-
-clock.tick(1);

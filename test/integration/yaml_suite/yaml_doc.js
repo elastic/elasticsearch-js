@@ -11,6 +11,8 @@ var _ = require('../../../src/lib/utils');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 
+var implementedFeatures = ['gtelte', 'regex'];
+
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
  * @type {String}
@@ -114,7 +116,7 @@ function YamlDoc(doc, file) {
     var method = self['do_' + action.name];
 
     // check that it's a function
-    expect(method).to.be.a('function');
+    expect(method || 'YamlDoc#' + action.name).to.be.a('function');
 
     if (_.isPlainObject(action.args)) {
       action.name += '(' + JSON.stringify(action.args) + ')';
@@ -260,24 +262,39 @@ YamlDoc.prototype = {
    * @param done
    */
   do_skip: function (args, done) {
-    if (!args.version) {
-      return done();
+    if (args.version) {
+      return rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
+        if (match) {
+          if (this.description === 'setup') {
+            this.file.skipping = true;
+            // console.log('skipping this file' + (args.reason ? ' because ' + args.reason : ''));
+          } else {
+            this.skipping = true;
+            // console.log('skipping the rest of this doc' + (args.reason ? ' because ' + args.reason : ''));
+          }
+        } else {
+          this.skipping = false;
+          this.file.skipping = false;
+        }
+        done();
+      }, this));
     }
-    rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
-      if (match) {
+
+    if (args.features) {
+      var features = Array.isArray(args.features) ? args.features : [args.features];
+      var notImplemented = _.difference(features, implementedFeatures);
+
+      if (notImplemented.length) {
         if (this.description === 'setup') {
           this.file.skipping = true;
-          // console.log('skipping this file' + (args.reason ? ' because ' + args.reason : ''));
+          console.log('skipping this file because ' + notImplemented.join(' & ') + ' are not implemented');
         } else {
           this.skipping = true;
-          // console.log('skipping the rest of this doc' + (args.reason ? ' because ' + args.reason : ''));
+          console.log('skipping the rest of this doc because ' + notImplemented.join(' & ') + ' are not implemented');
         }
-      } else {
-        this.skipping = false;
-        this.file.skipping = false;
       }
-      done();
-    }, this));
+      return done();
+    }
   },
 
   /**
@@ -470,6 +487,18 @@ YamlDoc.prototype = {
   },
 
   /**
+   * Test that the response field (arg key) is less than the value specified
+   *
+   * @param  {Object} args - Hash of fields->values that need to be checked
+   * @return {undefined}
+   */
+  do_lte: function (args) {
+    _.forOwn(args, function (num, path) {
+      expect(this.get(path) <= num).to.be.ok('path: ' + path);
+    }, this);
+  },
+
+  /**
    * Test that the response field (arg key) is greater than the value specified
    *
    * @param  {Object} args - Hash of fields->values that need to be checked
@@ -478,6 +507,18 @@ YamlDoc.prototype = {
   do_gt: function (args) {
     _.forOwn(args, function (num, path) {
       expect(this.get(path)).to.be.above(num, 'path: ' + path);
+    }, this);
+  },
+
+  /**
+   * Test that the response field (arg key) is greater than the value specified
+   *
+   * @param  {Object} args - Hash of fields->values that need to be checked
+   * @return {undefined}
+   */
+  do_gte: function (args) {
+    _.forOwn(args, function (num, path) {
+      expect(this.get(path) >= num).to.be.ok('path: ' + path);
     }, this);
   },
 

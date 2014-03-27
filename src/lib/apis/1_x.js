@@ -502,7 +502,6 @@ api.cat.prototype.plugins = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.bytes - The unit in which to display byte values
- * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
@@ -519,9 +518,6 @@ api.cat.prototype.recovery = ca({
         'm',
         'g'
       ]
-    },
-    local: {
-      type: 'boolean'
     },
     masterTimeout: {
       type: 'time',
@@ -3205,6 +3201,46 @@ api.indices.prototype.putWarmer = ca({
 });
 
 /**
+ * Perform a [indices.recovery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.detailed - Whether to display detailed information about shard recovery
+ * @param {Boolean} params.activeOnly - Display only those recoveries that are currently on-going
+ * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ */
+api.indices.prototype.recovery = ca({
+  params: {
+    detailed: {
+      type: 'boolean',
+      'default': false
+    },
+    activeOnly: {
+      type: 'boolean',
+      'default': false,
+      name: 'active_only'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/_recovery',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_recovery'
+    }
+  ]
+});
+
+/**
  * Perform a [indices.refresh](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-refresh.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3309,51 +3345,6 @@ api.indices.prototype.segments = ca({
       fmt: '/_segments'
     }
   ]
-});
-
-/**
- * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-gateway-snapshot.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
- * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
- */
-api.indices.prototype.snapshotIndex = ca({
-  params: {
-    ignoreUnavailable: {
-      type: 'boolean',
-      name: 'ignore_unavailable'
-    },
-    allowNoIndices: {
-      type: 'boolean',
-      name: 'allow_no_indices'
-    },
-    expandWildcards: {
-      type: 'enum',
-      'default': 'open',
-      options: [
-        'open',
-        'closed'
-      ],
-      name: 'expand_wildcards'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/_gateway/snapshot',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_gateway/snapshot'
-    }
-  ],
-  method: 'POST'
 });
 
 /**
@@ -4725,6 +4716,41 @@ api.search = ca({
     },
     {
       fmt: '/_search'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
+ * Perform a [searchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-search.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+ * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
+ */
+api.searchTemplate = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_search/template',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_search/template',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_search/template'
     }
   ],
   method: 'POST'

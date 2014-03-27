@@ -7,7 +7,7 @@ module.exports = Transport;
 var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
-var when = require('when');
+var Promise = require('bluebird');
 
 function Transport(config) {
   var self = this;
@@ -96,7 +96,7 @@ Transport.nodesToHostCallbacks = {
 };
 
 Transport.prototype.defer = function () {
-  return when.defer();
+  return Promise.defer();
 };
 
 /**

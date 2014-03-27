@@ -1,7 +1,7 @@
 var Transport = require('../../../src/lib/transport');
 var Host = require('../../../src/lib/host');
 var errors = require('../../../src/lib/errors');
-var when = require('when');
+var Promise = require('bluebird');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
@@ -213,7 +213,7 @@ describe('Transport Class', function () {
 
   describe('#defer', function () {
     it('returns a when.js promise by default', function () {
-      expect(Transport.prototype.defer().constructor).to.be(when.defer().constructor);
+      expect(Transport.prototype.defer().constructor).to.be(Promise.defer().constructor);
     });
   });
 
@@ -513,8 +513,9 @@ describe('Transport Class', function () {
         var tran = new Transport();
         shortCircuitRequest(tran);
         var ret = tran.request({});
-        expect(when.isPromise(ret)).to.be(true);
+        expect(Promise.is(ret)).to.be(true);
         expect(ret.abort).to.be.a('function');
+        ret.then(_.noop, _.noop); // prevent complaining from bluebird
       });
       it('promise is always pulled from the defer created by this.defer()', function () {
         var fakePromise = {};
@@ -591,7 +592,9 @@ describe('Transport Class', function () {
         var tran = new Transport({});
         var err;
 
-        tran.request({});
+        var prom = tran.request({});
+        // disregard promise, prevent bluebird's warnings
+        prom.then(_.noop, _.noop);
 
         expect(_.size(clock.timeouts)).to.eql(1);
         _.each(clock.timeouts, function (timer, id) {
@@ -607,7 +610,9 @@ describe('Transport Class', function () {
         });
         var err;
 
-        tran.request({});
+        var prom = tran.request({});
+        // disregard promise, prevent bluebird's warnings
+        prom.then(_.noop, _.noop);
 
         expect(_.size(clock.timeouts)).to.eql(1);
         _.each(clock.timeouts, function (timer, id) {

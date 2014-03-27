@@ -26,7 +26,6 @@ var makeSamples = require('./samples').make;
 
 var startingMoment = moment().utc().startOf('day').subtract('days', argv.days);
 var endingMoment = moment().utc().endOf('day').add('days', argv.days);
-
 var clientConfig = {
   // log: {
   //   level: 'trace',
@@ -55,6 +54,12 @@ var eventElementsPerBulk = eventsPerBulk * 2; // events are stored next to their
 function createIndex(indexName, done) {
   console.log('made index', indexName);
   var indexBody = {
+    settings: {
+      index: {
+        number_of_shards: 1,
+        number_of_replicas: 0
+      }
+    },
     mappings: {
       _default_: {
         properties: {
