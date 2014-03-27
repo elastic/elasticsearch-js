@@ -21,9 +21,10 @@ describe('Client instances creation', function () {
     }).to.throwError(/previous "elasticsearch" module/);
   });
 
-  it('inherits the 1.0 API by default', function () {
-    expect(client.bulk).to.eql(apis['1.0'].bulk);
-    expect(client.nodes.stats).to.eql(apis['1.0'].nodes.prototype.stats);
+  var def = require('../../../package.json').config.default_api_branch;
+  it('inherits the ' + def + ' API by default', function () {
+    expect(client.bulk).to.eql(apis[def].bulk);
+    expect(client.nodes.stats).to.eql(apis[def].nodes.prototype.stats);
   });
 
   it('inherits the 0.90 API when specified', function () {

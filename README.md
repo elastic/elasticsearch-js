@@ -2,7 +2,7 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.png?branch=2.0)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.0) [![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png?branch=2.0?branch=2.0)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.0) [![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.png)](https://david-dm.org/elasticsearch/elasticsearch-js)
+[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.png?branch=2.1)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.1) [![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png?branch=2.1)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.1) [![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.png)](https://david-dm.org/elasticsearch/elasticsearch-js)
 
 ## Features
 
@@ -34,7 +34,7 @@ bower install elasticsearch
 ```
 
 ### Download
- - v2.0.0: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.0.0.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.0.0.tar.gz)
+ - v2.1.0: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.0.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.0.tar.gz)
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)

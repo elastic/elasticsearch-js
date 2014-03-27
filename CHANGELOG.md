@@ -1,5 +1,8 @@
 # elasticsearch-js changelog
 
+## 2.1 (Mar 27 2014)
+- The default API version is now `'1.1'`
+
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
 - Promises are now supported using the Bluebird module.
