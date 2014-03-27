@@ -1,7 +1,7 @@
 var ca = require('../../../src/lib/client_action');
 var expect = require('expect.js');
 var _ = require('lodash-node');
-var when = require('when');
+var Promise = require('bluebird');
 
 /**
  * Creates a simple mock of the client, whose "transport" has a request
@@ -18,11 +18,11 @@ function mockClient() {
             cb(void 0, params);
           });
         } else {
-          return when.resolve(params);
+          return Promise.resolve(params);
         }
       },
       defer: function () {
-        return when.defer();
+        return Promise.defer();
       }
     }
   };

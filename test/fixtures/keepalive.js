@@ -1,6 +1,6 @@
+var clock = require('sinon').useFakeTimers();
 var elasticsearch = require('../../src/elasticsearch');
 var _ = require('lodash-node');
-var clock = require('sinon').useFakeTimers();
 
 var es = elasticsearch.Client({
   host: 'localhost:5555',
@@ -35,4 +35,4 @@ es.search({
   console.log(destroyedSockets);
 });
 
-clock.tick(1);
+clock.tick(10);
