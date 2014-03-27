@@ -371,7 +371,7 @@ describe('Http Connector', function () {
 
   describe('Connection cleanup', function () {
     it('destroys any connections created', function (done) {
-      this.timeout(4000);
+      this.timeout(10000);
       var cp = require('child_process');
       var path = require('path');
       var es = require('event-stream');
