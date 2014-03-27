@@ -3258,7 +3258,7 @@ api.indices.prototype.segments = ca({
 });
 
 /**
- * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-gateway-snapshot.html) request
+ * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
