@@ -48,11 +48,7 @@ if [[ "$NODE_INTEGRATION" != "0" ]]; then
   group "running integration tests"
     if [[ -n "$JENKINS" ]]; then
       # convert TESTING_BRANCH into BRANCH_SUFFIX
-      if [[ $TESTING_BRANCH = 'master' ]]; then
-        BRANCH_SUFFIX=''
-      else
-        BRANCH_SUFFIX="_${TESTING_BRANCH//./_}"
-      fi
+      BRANCH_SUFFIX="_${TESTING_BRANCH//./_}"
 
       # find value of ES_PORT
       if [[ -n "$es_port" ]]; then

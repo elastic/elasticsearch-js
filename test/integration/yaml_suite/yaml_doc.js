@@ -128,28 +128,27 @@ function YamlDoc(doc, file) {
     action.bound = _.bind(method, self, action.args);
 
     // create a function that can be passed to mocha or async
-    action.testable = function (done) {
+    action.testable = function (_cb) {
+      function done(err) {
+        process.nextTick(function () {
+          if (err) {
+            err.message += ' in ' + action.name;
+          }
+          _cb(err);
+        });
+      }
+
       if (self.skipping || self.file.skipping) {
         return done();
       }
       if (method.length > 1) {
-        action.bound(function (err) {
-          if (err) {
-            err.message += ' in ' + action.name;
-          }
-          process.nextTick(function () {
-            done(err);
-          });
-        });
+        action.bound(done);
       } else {
         try {
           action.bound();
           process.nextTick(done);
         } catch (err) {
-          err.message += ' in ' + action.name;
-          process.nextTick(function () {
-            done(err);
-          });
+          done(err);
         }
       }
     };

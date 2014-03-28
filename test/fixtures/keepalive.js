@@ -3,33 +3,24 @@ var Client = require('../../src/elasticsearch').Client;
 var _ = require('lodash-node');
 var times = require('async').times;
 
-var app = require('express')();
-app.post('/_search', function (req, res) {
-  res.json(200, { hits: { hits: [] } });
-});
-
-var server = require('http').createServer(app);
-server.listen(function () {
+process.once('message', function (port) {
   var es = new Client({
-    host: 'http://127.0.0.1:' + server.address().port,
+    host: 'http://127.0.0.1:' + port,
     log: false
   });
 
-  var matchAll = {
-    query: {
-      match_all: {}
-    }
-  };
-
-  times(1000, function (i, done) {
+  times(1000, function (n, done) {
     es.search({
-      body: matchAll
-    }, _.partial(done, null)); // ignore errors
+      body: {
+        query: {
+          match_all: {}
+        }
+      }
+    }, done);
     clock.tick(10);
-  }, function () {
-
-    var sockets = _(es.transport.connectionPool._conns.dead)
-      .concat(es.transport.connectionPool._conns.alive)
+  }, function (err) {
+    var conns = es.transport.connectionPool._conns;
+    var sockets = _([].concat(conns.dead, conns.alive))
       .transform(function (sockets, conn) {
         [].push.apply(sockets, _.values(conn.agent.sockets));
         [].push.apply(sockets, _.values(conn.agent.freeSockets));
@@ -37,13 +28,12 @@ server.listen(function () {
       .flatten()
       .value();
 
-    server.close();
     es.close();
 
     var out = {
-      socketCount: sockets.length,
+      socketCount: err || sockets.length,
       remaining: _.where(sockets, { destroyed: true }).length - sockets.length,
-      timeouts: _.size(clock.timeouts) && clock.timeouts
+      timeouts: _.size(clock.timeouts) && _.pluck(clock.timeouts, 'func').map(String)
     };
 
     clock.restore();

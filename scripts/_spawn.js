@@ -1,12 +1,12 @@
-module.exports = spawn;
+module.exports = _spawn;
 
 var estream = require('event-stream');
 var chalk = require('chalk');
-var cp = require('child_process');
+var spawn = require('child_process').spawn;
 var path = require('path');
 var root = path.resolve(__dirname, '../');
 
-function spawn(cmd, args, opts, cb) {
+function _spawn(cmd, args, opts, cb) {
   opts = opts || {};
   var conf = {
     stdio: 'pipe'
@@ -20,26 +20,26 @@ function spawn(cmd, args, opts, cb) {
   }
   console.log(chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') + cmd + ' ' + args.join(' '));
 
-  var proc = cp.spawn(cmd, args, opts);
-  var out = estream.split();
+  var cp = spawn(cmd, args, opts);
+  var split = estream.split();
 
   if (opts.verbose) {
-    proc.stdout.pipe(out);
+    cp.stdout.pipe(split);
   } else {
-    proc.stdout.resume();
+    cp.stdout.resume();
   }
 
-  proc.stderr.pipe(out);
+  cp.stderr.pipe(split);
 
-  out
+  split
     .pipe(estream.mapSync(function indent(line) {
       return line ? '    ' + line + '\n' : '';
     }))
     .pipe(process.stdout);
 
   if (typeof cb === 'function') {
-    proc.on('exit', cb);
+    cp.on('exit', cb);
   }
 
-  return proc;
+  return cp;
 }

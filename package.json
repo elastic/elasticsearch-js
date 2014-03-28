@@ -21,6 +21,7 @@
     },
     "supported_es_branches": [
       "master",
+      "1.x",
       "1.1",
       "1.0",
       "0.90"
