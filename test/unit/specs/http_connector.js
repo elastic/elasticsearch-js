@@ -371,19 +371,35 @@ describe('Http Connector', function () {
 
   describe('Connection cleanup', function () {
     it('destroys any connections created', function (done) {
-      this.timeout(10000);
+      this.timeout(null);
       var cp = require('child_process');
       var path = require('path');
-      var es = require('event-stream');
+      var fixtures = path.join(__dirname, '../../fixtures/');
+      var timeout; // start the timeout once we hear back from the client
 
-      var proc = cp.fork(path.join(__dirname, '../../fixtures/keepalive.js'));
+      var server = cp.fork(fixtures + 'keepalive_server.js');
+      var client = cp.fork(fixtures + 'keepalive.js');
 
-      proc.on('message', function (output) {
-        proc.kill();
+      server.on('message', function (port) {
+        client.send(port);
+      });
 
+      client.on('message', function (output) {
         expect(output).to.have.property('remaining', 0);
         expect(output).to.have.property('timeouts', 0);
+        server.kill('SIGKILL');
+        if (client.connected) {
+          client.disconnect();
+        }
 
+        timeout = setTimeout(function () {
+          client.removeListener('exit');
+          done(new Error('process should have closed by now'));
+        }, 2000);
+      });
+
+      client.on('exit', function () {
+        clearTimeout(timeout);
         done();
       });
     });
