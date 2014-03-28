@@ -62,14 +62,14 @@
     "express": "~3.4.7",
     "find-root": "~0.1.1",
     "event-stream": "~3.1.0",
-    "grunt-saucelabs": "^5.1.0"
+    "grunt-saucelabs": "~5.1.0"
   },
   "license": "Apache 2.0",
   "dependencies": {
     "chalk": "~0.4",
     "forever-agent": "0.5.2",
     "lodash-node": "~2.4",
-    "bluebird": "^1.1.1"
+    "bluebird": "~1.1.1"
   },
   "repository": {
     "type": "git",
