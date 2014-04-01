@@ -18,6 +18,8 @@ WARNING: Due to the complex nature of the configuration, the config object you p
 [horizontal]
 `host or hosts`[[config-hosts]]::
 `String, String[], Object[]` -- Specify the hosts that this client will connect to. If sniffing is enabled, or you call `client.sniff()`, this list will be used as seeds to discover the rest of your cluster.
++
+The value(s) are passed to the <<host-reference,`Host`>> constructor. `Host` objects can help enforce path-prefixes, default headers and query strings, and can be helpfull in making more intellegent selection algorithms; Head over to <<host-reference,the `Host` docs>> for more information.
 
 Default:::
 +
@@ -25,7 +27,6 @@ Default:::
 ------
 'http://localhost:9200'
 ------
-
 
 
 
@@ -60,7 +61,7 @@ Options :::
 
 
 
-`sniffOnStart`:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
+`sniffOnStart`[[config-sniff-on-start]]:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
 
 Default::: `false`
 
@@ -68,7 +69,7 @@ Default::: `false`
 
 
 
-`sniffInterval`:: `Number, false` -- Every `n` milliseconds, perform a sniff operation and make sure our list of nodes is complete.
+`sniffInterval`[[config-sniff-interval]]:: `Number, false` -- Every `n` milliseconds, perform a sniff operation and make sure our list of nodes is complete.
 
 Default::: `false`
 
@@ -76,7 +77,7 @@ Default::: `false`
 
 
 
-`sniffOnConnectionFault`:: `Boolean` -- Should the client immediately sniff for a more current list of nodes when a connection dies?
+`sniffOnConnectionFault`[[config-sniff-on-connection-fault]]:: `Boolean` -- Should the client immediately sniff for a more current list of nodes when a connection dies?
 
 Default::: `false`
 
@@ -99,32 +100,32 @@ Default::: `30000`
 
 
 
-`deadTimeout`:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
+`deadTimeout`[[config-dead-timeout]]:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
 
 Default::: `30000`
 
 
 
-`keepAlive`:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
+`keepAlive`[[config-keep-alive]]:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
 
 Default::: `true`
 
 
 
-`maxSockets`:: `Number` -- Maximum number of concurrent requests that can be made to any node.
+`maxSockets`[[config-max-sockets]]:: `Number` -- Maximum number of concurrent requests that can be made to any node.
 
 Default::: `10`
 
 
 
-`minSockets`:: `Number` -- Minimum number of sockets to keep connected to a node, only applies when `keepAlive` is true
+`minSockets`[[config-min-sockets]]:: `Number` -- Minimum number of sockets to keep connected to a node, only applies when `keepAlive` is true
 
 Default::: `10`
 
 
 
 
-`connectionClass`[[config-connectionClass]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
+`connectionClass`[[config-connection-class]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
 
 Defaults:::
   * Node: `"http"`
@@ -135,7 +136,7 @@ Defaults:::
 
 
 
-`selector`:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
+`selector`[[config-selector]]:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
 +
 To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style with a possible error like: `cb(err, selectedConnection)`.
 
@@ -149,7 +150,7 @@ Options:::
 
 
 
-`defer`:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
+`defer`[[config-defer]]:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
 
 Default:::
 +
@@ -162,7 +163,7 @@ function () {
 
 
 
-`nodesToHostCallback`:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
+`nodesToHostCallback`[[config-nodes-to-host-callback]]:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
 
 Default:::
 see https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/nodes_to_host.js[nodes_to_host.js]
