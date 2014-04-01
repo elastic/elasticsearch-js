@@ -129,7 +129,7 @@ function resolveUrl(url, params) {
 
     for (i = 0; i < url.reqParamKeys.length; i ++) {
       key = url.reqParamKeys[i];
-      if (!params.hasOwnProperty(key)) {
+      if (!params.hasOwnProperty(key) || params[key] == null) {
         // missing a required param
         return false;
       } else {
@@ -152,7 +152,7 @@ function resolveUrl(url, params) {
     for (i = 0; i < url.optParamKeys.length; i ++) {
       key = url.optParamKeys[i];
       if (params[key]) {
-        if (castType[url.opt[key].type]) {
+        if (castType[url.opt[key].type] || params[key] == null) {
           vars[key] = castType[url.opt[key].type](url.opt[key], params[key], key);
         } else {
           vars[key] = params[key];
