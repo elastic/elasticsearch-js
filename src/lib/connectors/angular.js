@@ -14,8 +14,8 @@ function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
   this.defer = config.defer;
   this.$http = config.$http;
-  if(this.host.auth) {
-    this.$http.defaults.headers.common.Authorization = 'Basic ' + Buffer(this.host.auth, 'utf8').toString('base64');
+  if (this.host.auth) {
+    this.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(this.host.auth, 'utf8')).toString('base64');
   }
 }
 _.inherits(AngularConnector, ConnectionAbstract);
@@ -27,6 +27,7 @@ AngularConnector.prototype.request = function (params, cb) {
     url: this.host.makeUrl(params),
     data: params.body,
     cache: false,
+    headers: this.host.getHeaders(params.headers),
     transformRequest: [],
     transformResponse: []
   }).then(function (response) {

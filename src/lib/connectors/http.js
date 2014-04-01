@@ -101,7 +101,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
     hostname: host.host,
     port: host.port,
     path: (host.path || '') + (params.path || ''),
-    headers: host.headers,
+    headers: host.getHeaders(params.headers),
     agent: this.agent
   };
 
@@ -109,13 +109,8 @@ HttpConnector.prototype.makeReqParams = function (params) {
     reqParams.path = '/';
   }
 
-  var query = this.host.query ? _.clone(this.host.query) : {};
-
-  if (params.query) {
-    _.extend(query, typeof params.query === 'string' ? qs.parse(params.query) : params.query);
-  }
-
-  if (_.size(query)) {
+  var query = host.getQuery(params.query);
+  if (query) {
     reqParams.path = reqParams.path + '?' + qs.stringify(query);
   }
 

@@ -22,7 +22,7 @@ JqueryConnector.prototype.request = function (params, cb) {
     data: params.body,
     method: params.method,
     dataType: 'text',
-    headers: params.headers,
+    headers: this.host.getHeaders(params.headers),
     done: cb
   };
 

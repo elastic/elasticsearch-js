@@ -33,6 +33,7 @@ function Host(config) {
   this.port = 9200;
   this.auth = null;
   this.query = null;
+  this.headers = null;
 
   if (typeof config === 'string') {
     if (!startsWithProtocolRE.test(config)) {
@@ -117,16 +118,7 @@ Host.prototype.makeUrl = function (params) {
   }
 
   // build the query string
-  var query = '';
-  if (params.query) {
-    // if the user passed in a query, merge it with the defaults from the host
-    query = qs.stringify(
-      _.defaults(typeof params.query === 'string' ? qs.parse(params.query) : params.query, this.query)
-    );
-  } else if (this.query) {
-    // just stringify the hosts query
-    query = qs.stringify(this.query);
-  }
+  var query = qs.stringify(this.getQuery(params.query));
 
   var auth = '';
   if (params.auth) {
@@ -141,6 +133,30 @@ Host.prototype.makeUrl = function (params) {
     return path + (query ? '?' + query : '');
   }
 };
+
+function objectPropertyGetter(prop, preOverride) {
+  return function (overrides) {
+    if (preOverride) {
+      overrides = preOverride(overrides);
+    }
+
+    var obj = this[prop];
+    if (!obj && !overrides) {
+      return null;
+    }
+
+    if (overrides) {
+      obj = _.assign({}, obj, overrides);
+    }
+
+    return _.size(obj) ? obj : null;
+  };
+}
+
+Host.prototype.getHeaders = objectPropertyGetter('headers');
+Host.prototype.getQuery = objectPropertyGetter('query', function (query) {
+  return typeof query === 'string' ? qs.parse(query) : query;
+});
 
 Host.prototype.toString = function () {
   return this.makeUrl();

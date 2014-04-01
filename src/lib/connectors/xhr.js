@@ -51,6 +51,8 @@ XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
   var timeoutId;
   var url = this.host.makeUrl(params);
+  var headers = this.host.getHeaders(params.headers);
+
   var log = this.log;
   var async = params.async === false ? false : asyncDefault;
 
@@ -68,6 +70,14 @@ XhrConnector.prototype.request = function (params, cb) {
       cb(err, xhr.responseText, xhr.status);
     }
   };
+
+  if (headers) {
+    for (var key in headers) {
+      if (headers[key] !== void 0) {
+        xhr.setRequestHeader(key, headers[key]);
+      }
+    }
+  }
 
   xhr.send(params.body || void 0);
 
