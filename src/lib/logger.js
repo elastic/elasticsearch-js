@@ -168,7 +168,7 @@ LoggerAbstract.prototype._formatTraceMessage = function (req) {
 
 LoggerAbstract.prototype._prettyJson = function (body) {
   try {
-    if (typeof object === 'string') {
+    if (typeof body === 'string') {
       body = JSON.parse(body);
     }
     return JSON.stringify(body, null, '  ').replace(/'/g, '\\u0027');

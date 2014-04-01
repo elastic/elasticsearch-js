@@ -1,10 +1,12 @@
 var Transport = require('../../../src/lib/transport');
+var ConnectionPool = require('../../../src/lib/connection_pool');
 var Host = require('../../../src/lib/host');
 var errors = require('../../../src/lib/errors');
 var expect = require('expect.js');
 
 var sinon = require('sinon');
 var nock = require('../../mocks/server.js');
+var estr = require('event-stream');
 var _ = require('lodash-node');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
@@ -300,6 +302,47 @@ describe('Transport + Mock server', function () {
           // clock.restore();
           done();
         });
+      });
+    });
+
+    describe('sniffOnConnectionFault', function () {
+      it('schedules a sniff when sniffOnConnectionFault is set and a connection failes', function (done) {
+        var clock = sinon.useFakeTimers('setTimeout');
+        var serverMock = nock('http://esbox.1.com')
+          .get('/')
+          .reply(200, function () {
+            var str = estr.readable(function (count, cb) {
+              cb(new Error('force error'));
+            });
+            str.setEncoding = function () {}; // force nock's isStream detection
+            return str;
+          });
+
+        stub(ConnectionPool.prototype, '_onConnectionDied');
+        stub(Transport.prototype, 'sniff');
+        var tran = new Transport({
+          hosts: 'http://esbox.1.com',
+          sniffOnConnectionFault: true,
+          maxRetries: 0
+        });
+
+        expect(tran.connectionPool._onConnectionDied).to.not.be(ConnectionPool.prototype._onConnectionDied);
+
+        tran.request({
+          requestTimeout: Infinity
+        }).then(
+          _.partial(done, new Error('expected the request to fail')),
+          function (err) {
+            expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
+            expect(tran.sniff.callCount).to.eql(0);
+            expect(_.size(clock.timeouts)).to.eql(1);
+            var timeout = _.values(clock.timeouts).pop();
+            timeout.func();
+            expect(tran.sniff.callCount).to.eql(1);
+            clock.restore();
+            done();
+          }
+        );
       });
     });
   });

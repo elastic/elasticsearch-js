@@ -8,6 +8,7 @@ var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
 var Promise = require('bluebird');
+var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
 
 function Transport(config) {
   var self = this;
@@ -80,7 +81,9 @@ function Transport(config) {
     }, config.sniffInterval);
   }
 
-  this.sniffAfterConnectionFault = config.sniffAfterConnectionFault;
+  if (config.sniffOnConnectionFault) {
+    patchSniffOnConnectionFault(this);
+  }
 }
 
 Transport.connectionPools = {
@@ -116,7 +119,6 @@ Transport.prototype.defer = function () {
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
  */
 Transport.prototype.request = function (params, cb) {
-
   var self = this;
   var remainingRetries = this.maxRetries;
   var requestTimeout = this.requestTimeout;

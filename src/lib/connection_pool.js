@@ -200,7 +200,7 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
 
   var ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
   timeout.id = setTimeout(timeout.revive, ms);
-  timeout.runAt = Date.now() + ms;
+  timeout.runAt = _.now() + ms;
 };
 
 ConnectionPool.prototype._selectDeadConnection = function (cb) {

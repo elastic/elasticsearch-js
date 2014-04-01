@@ -418,4 +418,11 @@ _.getUnwrittenFromStream = function (stream) {
   }
 };
 
+/**
+ * return the current time in milliseconds since epoch
+ */
+_.now = function () {
+  return (typeof Date.now === 'function') ? Date.now() : (new Date()).getTime();
+};
+
 module.exports = utils;
