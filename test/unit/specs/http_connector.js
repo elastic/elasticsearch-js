@@ -1,18 +1,19 @@
 describe('Http Connector', function () {
 
   var expect = require('expect.js');
-  var Host = require('../../../src/lib/host');
-  var errors = require('../../../src/lib/errors');
-  var HttpConnection = require('../../../src/lib/connectors/http');
-  var ConnectionAbstract = require('../../../src/lib/connection');
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
   var ForeverAgent = require('forever-agent');
-
   var http = require('http');
   var https = require('https');
 
+  var Host = require('../../../src/lib/host');
+  var errors = require('../../../src/lib/errors');
+  var HttpConnection = require('../../../src/lib/connectors/http');
+  var ConnectionAbstract = require('../../../src/lib/connection');
+
+  var expectSubObject = require('../../utils/expect_sub_object');
   var MockRequest = require('../../mocks/request');
   var MockIncommingMessage = require('../../mocks/incomming_message');
 
@@ -97,7 +98,7 @@ describe('Http Connector', function () {
       expect(reqParams.path).to.eql('/?user_id=123&jvm=yes');
     });
 
-    it('merges the path prefex', function () {
+    it('merges the path prefix', function () {
       var con = new HttpConnection(new Host('https://google.com/path/prefix/for/user/1'));
       var reqParams = con.makeReqParams({
         method: 'GET',
@@ -107,15 +108,8 @@ describe('Http Connector', function () {
         }
       });
 
-      expect(reqParams).to.eql({
-        method: 'GET',
-        protocol: 'https:',
-        auth: null,
-        hostname: 'google.com',
-        port: 443,
+      expectSubObject(reqParams, {
         path: '/path/prefix/for/user/1/items?q=pizza',
-        headers: undefined,
-        agent: con.agent
       });
     });
 
@@ -130,15 +124,8 @@ describe('Http Connector', function () {
         }
       });
 
-      expect(reqParams).to.eql({
-        method: 'PUT',
-        protocol: 'http:',
-        auth: null,
-        hostname: 'google.com',
-        port: 80,
+      expectSubObject(reqParams, {
         path: '/pref-x/stuff?userId=12345&token=42069&q=pizza',
-        headers: undefined,
-        agent: con.agent
       });
     });
 
@@ -157,7 +144,7 @@ describe('Http Connector', function () {
         hostname: 'google.com',
         port: 80,
         path: '/stuff',
-        headers: undefined,
+        headers: null,
         agent: con.agent
       });
     });

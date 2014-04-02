@@ -2,19 +2,23 @@ var Host = require('../../../src/lib/host');
 var _ = require('lodash-node');
 var expect = require('expect.js');
 var url = require('url');
+var expectSubObject = require('../../utils/expect_sub_object');
+
+var hostDefaults = {
+  protocol: 'http',
+  host: 'localhost',
+  port: 9200,
+  path: '',
+  auth: null,
+  query: {},
+  headers: null
+};
 
 describe('Host class', function () {
   describe('construction', function () {
     it('properly sets the defaults', function () {
       var host = new Host();
-      expect(host).to.eql({
-        protocol: 'http',
-        host: 'localhost',
-        port: 9200,
-        path: '',
-        auth: null,
-        query: {}
-      });
+      expect(host).to.eql(hostDefaults);
     });
 
     it('accepts a string for query', function () {
@@ -36,7 +40,7 @@ describe('Host class', function () {
       it('accepts a string for the entire url', function () {
         var host = new Host('john:dude@pizza.com:420/pizza/cheese?shrooms=true');
 
-        expect(host).to.eql({
+        expectSubObject(host, {
           protocol: 'http',
           host: 'pizza.com',
           port: 420,
@@ -95,14 +99,7 @@ describe('Host class', function () {
     it('ignores anything that\'s not a string or object-y', function () {
       var host = new Host(1234);
 
-      expect(host).to.eql({
-        protocol: 'http',
-        host: 'localhost',
-        port: 9200,
-        path: '',
-        auth: null,
-        query: {}
-      });
+      expect(host).to.eql(hostDefaults);
     });
   });
 
@@ -121,7 +118,7 @@ describe('Host class', function () {
           param: 1
         },
         auth: 'user:pass'
-      })).to.be('http://user:pass@localhost:9200/prefix/this and that?param=1&user_id=123');
+      })).to.be('http://user:pass@localhost:9200/prefix/this and that?user_id=123&param=1');
     });
 
     it('ensures that path starts with a forward-slash', function () {
