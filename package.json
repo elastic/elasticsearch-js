@@ -70,7 +70,7 @@
     "chalk": "~0.4",
     "forever-agent": "0.5.2",
     "lodash-node": "~2.4",
-    "bluebird": "~1.1.1"
+    "bluebird": "^1.2.1"
   },
   "repository": {
     "type": "git",
