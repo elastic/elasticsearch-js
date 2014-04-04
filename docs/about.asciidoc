@@ -6,7 +6,7 @@
   * Persistent, Keep-Alive connections
   * Intelligent handling of node/connection failure
   * Load balancing (with plug-able selection strategy) across all available nodes.
-  * Works great in node, as well as modern browsers (many thanks to https://github com/substack/node-browserify[browserify]!!).
+  * Works great in node, as well as modern browsers (many thanks to https://github.com/substack/node-browserify[browserify]!).
   * Generalized, plug-able, and highly configurable architecture. You can change anything! See <<extending_core_components>>
 
 === Install in Node
