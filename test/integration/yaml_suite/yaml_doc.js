@@ -341,9 +341,19 @@ YamlDoc.prototype = {
     var clientAction = this.get(clientActionName, client);
     var params = _.transform(args[action], function (params, val, name) {
       var camelName = _.camelCase(name);
-      // undocumented params should be passed through as-is
+
+      // search through the params and url peices to find this param name
       var paramName = name;
-      if (clientAction && clientAction.spec && clientAction.spec.params && clientAction.spec.params[camelName]) {
+      var spec = clientAction && clientAction.spec;
+      var knownParam = spec && spec.params && spec.params[camelName];
+      var knownUrlParam = spec && !knownParam && !!_.find(spec.url ? [spec.url] : spec.urls, function (url) {
+        if ((url.opt && url.opt[camelName]) || (url.req && url.req[camelName])) {
+          return true;
+        }
+      });
+
+      // if we do know this param name, use the camelCase verison
+      if (knownParam || knownUrlParam) {
         paramName = camelName;
       }
 
@@ -375,41 +385,36 @@ YamlDoc.prototype = {
 
     expect(clientAction || clientActionName).to.be.a('function');
 
-    if (typeof clientAction === 'function') {
-      if (_.isNumeric(catcher)) {
-        params.ignore = _.union(params.ignore || [], [catcher]);
-        catcher = null;
-      }
-
-      var cb =  _.bind(function (error, body, status) {
-        this._last_requests_response = body;
-
-        if (error) {
-          if (catcher) {
-            if (catcher instanceof RegExp) {
-              // error message should match the regexp
-              expect(error.message).to.match(catcher);
-              error = null;
-            } else if (typeof catcher === 'function') {
-              // error should be an instance of
-              expect(error).to.be.a(catcher);
-              error = null;
-            } else {
-              return done(new Error('Invalid catcher ' + catcher));
-            }
-          } else {
-            return done(error);
-          }
-        }
-
-        done(error);
-      }, this);
-
-      clientAction.call(client, params, cb);
-    } else {
-      done(new Error('stepped in do_do, did not find a function'));
+    if (_.isNumeric(catcher)) {
+      params.ignore = _.union(params.ignore || [], [catcher]);
+      catcher = null;
     }
 
+    var cb =  _.bind(function (error, body, status) {
+      this._last_requests_response = body;
+
+      if (error) {
+        if (catcher) {
+          if (catcher instanceof RegExp) {
+            // error message should match the regexp
+            expect(error.message).to.match(catcher);
+            error = null;
+          } else if (typeof catcher === 'function') {
+            // error should be an instance of
+            expect(error).to.be.a(catcher);
+            error = null;
+          } else {
+            return done(new Error('Invalid catcher ' + catcher));
+          }
+        } else {
+          return done(error);
+        }
+      }
+
+      done(error);
+    }, this);
+
+    clientAction.call(client, params, cb);
   },
 
   /**

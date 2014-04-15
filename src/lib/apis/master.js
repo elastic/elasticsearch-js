@@ -3,7 +3,104 @@
 var ca = require('../client_action');
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
+api._namespaces = ['benchmark', 'cat', 'cluster', 'indices', 'nodes', 'snapshot'];
+
+api.benchmark = function BenchmarkNS(transport) {
+  this.transport = transport;
+};
+
+/**
+ * Perform a [benchmark.abort](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.name - A benchmark name
+ */
+api.benchmark.prototype.abort = ca({
+  url: {
+    fmt: '/_bench/abort/<%=name%>',
+    req: {
+      name: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'POST'
+});
+
+/**
+ * Perform a [benchmark.list](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.type - The name of the document type
+ */
+api.benchmark.prototype.list = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_bench'
+    }
+  ]
+});
+
+/**
+ * Perform a [benchmark.submit](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.verbose - Specify whether to return verbose statistics about each iteration (default: false)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.type - The name of the document type
+ */
+api.benchmark.prototype.submit = ca({
+  params: {
+    verbose: {
+      type: 'boolean'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_bench'
+    }
+  ],
+  method: 'PUT'
+});
 
 /**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -4726,13 +4823,60 @@ api.search = ca({
 });
 
 /**
- * Perform a [searchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-search.html) request
+ * Perform a [searchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
+ * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {String} params.searchType - Search operation type
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
 api.searchTemplate = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    preference: {
+      type: 'string'
+    },
+    routing: {
+      type: 'list'
+    },
+    scroll: {
+      type: 'duration'
+    },
+    searchType: {
+      type: 'enum',
+      options: [
+        'query_then_fetch',
+        'query_and_fetch',
+        'dfs_query_then_fetch',
+        'dfs_query_and_fetch',
+        'count',
+        'scan'
+      ],
+      name: 'search_type'
+    }
+  },
   urls: [
     {
       fmt: '/<%=index%>/<%=type%>/_search/template',
