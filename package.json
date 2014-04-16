@@ -46,7 +46,7 @@
     "mocha-lcov-reporter": "0.0.1",
     "blanket": "~1.1.5",
     "sinon": "~1.7.3",
-    "nock": "git://github.com/spenceralger/nock#emit_stream_errors",
+    "nock": "^0.28.1",
     "open": "0.0.4",
     "load-grunt-tasks": "~0.2.0",
     "load-grunt-config": "~0.7.0",
