@@ -8,7 +8,7 @@ var esOpts = [
   '-D es.discovery.zen.ping.multicast.enabled=false',
   '-D es.discovery.zen.ping_timeout=1',
   '-D es.logger.level=ERROR'
-].join(' ');
+];
 
 var utils = require('../utils');
 
@@ -49,11 +49,20 @@ utils.branches.forEach(function (branch) {
     exec: './scripts/es.sh install ' + branch,
   };
 
+  var args = esOpts.slice(0);
+
+  switch (branch) {
+  case '0.90':
+    args.push('-f');
+    break;
+  case 'master':
+  case '1.x':
+    args.push('-Des.node.bench=true');
+    break;
+  }
+
   config['es_' + branch] = {
-    exec:
-      './.snapshots/' + branch + '_nightly/bin/elasticsearch ' +
-      (branch === '0.90' ? '-f ' : '') +
-      esOpts,
+    exec: './.snapshots/' + branch + '_nightly/bin/elasticsearch ' + args.join(' '),
     options: {
       wait: false,
       quiet: true
