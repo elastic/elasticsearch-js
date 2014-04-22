@@ -5,6 +5,8 @@
 NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` config parameter.
 
 [[js-api-method-index-1-x]]
+* <<api-abortbenchmark-1-x,abortBenchmark>>
+* <<api-benchmark-1-x,benchmark>>
 * <<api-bulk-1-x,bulk>>
 * <<api-clearscroll-1-x,clearScroll>>
 * <<api-count-1-x,count>>
@@ -18,6 +20,7 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-getsource-1-x,getSource>>
 * <<api-index-1-x,index>>
 * <<api-info-1-x,info>>
+* <<api-listbenchmarks-1-x,listBenchmarks>>
 * <<api-mget-1-x,mget>>
 * <<api-mlt-1-x,mlt>>
 * <<api-mpercolate-1-x,mpercolate>>
@@ -31,9 +34,6 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-suggest-1-x,suggest>>
 * <<api-termvector-1-x,termvector>>
 * <<api-update-1-x,update>>
-* <<api-benchmark-abort-1-x,benchmark.abort>>
-* <<api-benchmark-list-1-x,benchmark.list>>
-* <<api-benchmark-submit-1-x,benchmark.submit>>
 * <<api-cat-aliases-1-x,cat.aliases>>
 * <<api-cat-allocation-1-x,cat.allocation>>
 * <<api-cat-count-1-x,cat.count>>
@@ -101,6 +101,56 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-snapshot-getrepository-1-x,snapshot.getRepository>>
 * <<api-snapshot-restore-1-x,snapshot.restore>>
 * <<api-snapshot-status-1-x,snapshot.status>>
+
+[[api-abortbenchmark-1-x]]
+=== `abortBenchmark`
+
+[source,js]
+--------
+client.abortBenchmark([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`name`::
+`String` -- A benchmark name
+
+link:#[back to top]
+
+[[api-benchmark-1-x]]
+=== `benchmark`
+
+[source,js]
+--------
+client.benchmark([params, [callback]])
+--------
+
+// no description
+
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`verbose`::
+`Boolean` -- Specify whether to return verbose statistics about each iteration (default: false)
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`type`::
+`String` -- The name of the document type
+
+link:#[back to top]
 
 [[api-bulk-1-x]]
 === `bulk`
@@ -918,6 +968,31 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 // no examples
 
 
+
+[[api-listbenchmarks-1-x]]
+=== `listBenchmarks`
+
+[source,js]
+--------
+client.listBenchmarks([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`type`::
+`String` -- The name of the document type
+
+link:#[back to top]
 
 [[api-mget-1-x]]
 === `mget`
@@ -1836,81 +1911,6 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
-
-link:#[back to top]
-
-[[api-benchmark-abort-1-x]]
-=== `benchmark.abort`
-
-[source,js]
---------
-client.benchmark.abort([params, [callback]])
---------
-
-// no description
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`name`::
-`String` -- A benchmark name
-
-link:#[back to top]
-
-[[api-benchmark-list-1-x]]
-=== `benchmark.list`
-
-[source,js]
---------
-client.benchmark.list([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`type`::
-`String` -- The name of the document type
-
-link:#[back to top]
-
-[[api-benchmark-submit-1-x]]
-=== `benchmark.submit`
-
-[source,js]
---------
-client.benchmark.submit([params, [callback]])
---------
-
-// no description
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`verbose`::
-`Boolean` -- Specify whether to return verbose statistics about each iteration (default: false)
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`type`::
-`String` -- The name of the document type
 
 link:#[back to top]
 
@@ -3736,7 +3736,20 @@ Update specified aliases.
 
 The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
 
-// no examples
+.Perform an atomic alias swap, for a rotating index
+[source,js]
+---------
+client.indices.updateAliases({
+  body: {
+    actions: [
+      { remove: { index: 'logstash-2014.04', alias: 'logstash-current' } },
+      { add:    { index: 'logstash-2014.05', alias: 'logstash-current' } }
+    ]
+  }
+}).then(function (response) {
+  // ...
+}, errorHandler);
+---------
 
 
 ==== Params

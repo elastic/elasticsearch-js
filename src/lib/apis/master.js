@@ -3,19 +3,15 @@
 var ca = require('../client_action');
 var api = module.exports = {};
 
-api._namespaces = ['benchmark', 'cat', 'cluster', 'indices', 'nodes', 'snapshot'];
-
-api.benchmark = function BenchmarkNS(transport) {
-  this.transport = transport;
-};
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
- * Perform a [benchmark.abort](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.name - A benchmark name
  */
-api.benchmark.prototype.abort = ca({
+api.abortBenchmark = ca({
   url: {
     fmt: '/_bench/abort/<%=name%>',
     req: {
@@ -28,48 +24,14 @@ api.benchmark.prototype.abort = ca({
 });
 
 /**
- * Perform a [benchmark.list](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.benchmark.prototype.list = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ]
-});
-
-/**
- * Perform a [benchmark.submit](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ * Perform a [benchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.verbose - Specify whether to return verbose statistics about each iteration (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String} params.type - The name of the document type
  */
-api.benchmark.prototype.submit = ca({
+api.benchmark = ca({
   params: {
     verbose: {
       type: 'boolean'
@@ -743,14 +705,19 @@ api.cat.prototype.threadPool = ca({
  * @param {String, String[], Boolean} params.scrollId - A comma-separated list of scroll IDs to clear
  */
 api.clearScroll = ca({
-  url: {
-    fmt: '/_search/scroll/<%=scrollId%>',
-    req: {
-      scrollId: {
-        type: 'list'
+  urls: [
+    {
+      fmt: '/_search/scroll/<%=scrollId%>',
+      req: {
+        scrollId: {
+          type: 'list'
+        }
       }
+    },
+    {
+      fmt: '/_search/scroll'
     }
-  },
+  ],
   method: 'DELETE'
 });
 
@@ -3730,6 +3697,40 @@ api.info = ca({
   url: {
     fmt: '/'
   }
+});
+
+/**
+ * Perform a [listBenchmarks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ * @param {String} params.type - The name of the document type
+ */
+api.listBenchmarks = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_bench',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_bench'
+    }
+  ]
 });
 
 /**

@@ -646,14 +646,19 @@ api.cat.prototype.threadPool = ca({
  * @param {String, String[], Boolean} params.scrollId - A comma-separated list of scroll IDs to clear
  */
 api.clearScroll = ca({
-  url: {
-    fmt: '/_search/scroll/<%=scrollId%>',
-    req: {
-      scrollId: {
-        type: 'list'
+  urls: [
+    {
+      fmt: '/_search/scroll/<%=scrollId%>',
+      req: {
+        scrollId: {
+          type: 'list'
+        }
       }
+    },
+    {
+      fmt: '/_search/scroll'
     }
-  },
+  ],
   method: 'DELETE'
 });
 
