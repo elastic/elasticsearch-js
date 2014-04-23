@@ -12,16 +12,24 @@ var ConnectionFault = require('../errors').ConnectionFault;
 
 function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
-  this.defer = config.defer;
-  this.$http = config.$http;
-  if (this.host.auth) {
-    this.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(this.host.auth, 'utf8')).toString('base64');
-  }
+  var connector = this;
+
+  config.$injector.invoke(function ($http, $q) {
+    connector.$q = $q;
+    connector.$http = $http;
+
+    if (connector.host.auth) {
+      connector.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(connector.host.auth, 'utf8')).toString('base64');
+    }
+  });
+
+
 }
 _.inherits(AngularConnector, ConnectionAbstract);
 
 AngularConnector.prototype.request = function (params, cb) {
-  var abort = this.defer();
+  var abort = this.$q.defer();
+
   this.$http({
     method: params.method,
     url: this.host.makeUrl(params),
