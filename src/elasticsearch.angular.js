@@ -11,12 +11,12 @@ process.angular_build = true;
 
 /* global angular */
 angular.module('elasticsearch', [])
-  .factory('esFactory', ['$http', '$q', function ($http, $q) {
+  .factory('esFactory', ['$injector', '$q', function ($injector, $q) {
 
     var factory = function (config) {
       config = config || {};
       config.connectionClass = AngularConnector;
-      config.$http = $http;
+      config.$injector = $injector;
       config.defer = function () {
         return $q.defer();
       };
