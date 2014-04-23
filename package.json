@@ -46,12 +46,12 @@
     "mocha-lcov-reporter": "0.0.1",
     "blanket": "~1.1.5",
     "sinon": "~1.7.3",
-    "nock": "^0.28.1",
+    "nock": "~0.28.1",
     "open": "0.0.4",
     "load-grunt-tasks": "~0.2.0",
     "load-grunt-config": "~0.7.0",
     "grunt-s3": "~0.2.0-alpha.3",
-    "grunt-run": "^0.2.2",
+    "grunt-run": "~0.2.2",
     "grunt-contrib-compress": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-prompt": "~0.1.2",
@@ -70,7 +70,7 @@
     "chalk": "~0.4",
     "forever-agent": "0.5.2",
     "lodash-node": "~2.4",
-    "bluebird": "^1.2.1"
+    "bluebird": "~1.2.1"
   },
   "repository": {
     "type": "git",
