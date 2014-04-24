@@ -8,11 +8,12 @@ var dayMs = 86400000;
 exports.make = function (startingMoment, endingMoment) {
 
   var sets = {};
+  var startms = startingMoment.toDate().getTime();
+  var endms = endingMoment.toDate().getTime();
 
-  sets.randomMsInDayRange = new Stochator({
-    min: startingMoment.toDate().getTime(),
-    max: endingMoment.toDate().getTime()
-  }, 'get');
+  sets.randomMsInDayRange = function () {
+    return _.random(startms, endms);
+  };
 
   sets.lessRandomRespSize = new Stochator({
     mean: 4500,
@@ -86,11 +87,9 @@ exports.make = function (startingMoment, endingMoment) {
     'apache': 4
   });
 
-  return _.transform(sets, function (note, set, name) {
-    if (name === 'days') {
-      return note[name] = set;
-    }
-
-    note[name] = _.bindKey(set, 'get');
-  }, {});
+  return _.mapValues(sets, function (set) {
+    return (typeof set === 'function') ? set : function () {
+      return set.get();
+    };
+  });
 };

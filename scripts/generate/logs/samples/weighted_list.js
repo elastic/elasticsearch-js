@@ -111,7 +111,7 @@ WeightedList.prototype._update = function () {
     sum = 0,
     totals = [];
 
-  _.each(me, function (item) {
+  me.forEach(function (item) {
     sum += item.weight;
     totals.push(sum);
   });

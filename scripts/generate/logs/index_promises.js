@@ -1,4 +1,4 @@
-/* jshint curly:false */
+/* jshint curly:false, latedef:false */
 // args
 var argv = require('optimist')
   .usage('node scripts/generate/logs [-h|--host localhost:9200] [-c|--count 14000] [-d|--days 7]')
@@ -24,7 +24,7 @@ var es = require('../../../src/elasticsearch');
 var async = require('async');
 var moment = require('moment');
 var makeSamples = require('./samples').make;
-// var Promise = require('bluebird');
+var Promise = require('bluebird');
 
 var startingMoment = moment().utc().startOf('day').subtract('days', argv.days);
 var endingMoment = moment().utc().endOf('day').add('days', argv.days);
@@ -51,7 +51,7 @@ var total = argv.count;
 
 console.log('Generating', total, 'events across ±', argv.days, 'days');
 
-function createIndex(indexName, done) {
+function createIndex(indexName) {
   // console.log('ensuring index "%s" exists', indexName);
 
   var indexBody = {
@@ -103,19 +103,19 @@ function createIndex(indexName, done) {
     }
   };
 
-  client.indices.create({
+  return client.indices.create({
     ignore: 400,
     index: indexName,
     body: indexBody
-  }, function (err) {
-    if (err) return done(err);
-
-    client.cluster.health({
+  })
+  .then(function () {
+    return client.cluster.health({
       index: indexName,
       waitForStatus: 'yellow'
-    }, done);
+    });
   });
 }
+
 
 var queue = async.queue(function (events, done) {
 
@@ -127,53 +127,64 @@ var queue = async.queue(function (events, done) {
     event = event.body;
 
     if (indices[event.index] !== true) {
-      deps.push(async.apply(createIndex, event.index));
+      deps.push(createIndex(event.index));
       indices[event.index] = true;
     }
 
     body.push({ index: header }, event);
   });
 
-  async.parallel(deps, function (err) {
-    if (err) return done(err);
+  Promise.all(deps)
+  .then(function () {
+    if (body.length) {
+      return client.bulk({
+        body: body
+      });
+    } else {
+      return {};
+    }
+  })
+  .then(function (resp) {
+    if (resp.errors) {
+      var errors = [];
 
-    client.bulk({
-      body: body
-    }, function (err, resp) {
-      if (err) return done(err);
+      resp.items.forEach(function (item, i) {
+        if (item.index.error) {
+          errors.push(item.index.error);
+          eventBuffer.push(events[i]);
+        }
+      });
 
-      if (resp.errors) {
-        console.log(resp);
-        console.log(JSON.stringify(body, null, '  '));
-        console.log(JSON.stringify(resp, null, '  '));
-        process.exit();
-      }
-
-      process.stdout.write('.');
-      done();
-    });
-  });
+      console.log('\n - errors - \n' + errors.join('\n') + '\n');
+    }
+  })
+  .finally(function () {
+    process.stdout.write('.');
+  })
+  .nodeify(done);
 
 }, 1);
 
+var eventBuffer = [];
+eventBuffer.flush = function () {
+  if (eventBuffer.length === 3500 || doneCreatingEvents) {
+    queue.push([eventBuffer.splice(0)], function (err) {
+      if (err) {
+        console.error(err.resp);
+        console.error(err.stack);
+        process.exit();
+      }
+    });
+  }
+};
+
 queue.drain = function () {
-  if (doneCreatingEvents) {
+  if (doneCreatingEvents && eventBuffer.length === 0) {
     client.close();
     process.stdout.write('.\n\ncreated ' + total + ' events\n\n');
+  } else {
+    eventBuffer.flush();
   }
-};
-
-var topLevelErrorHandler = function (err) {
-  if (err) {
-    console.error(err.resp);
-    console.error(err.stack);
-    process.exit();
-  }
-};
-
-var unqueuedEvents = [];
-unqueuedEvents.queue = function () {
-  queue.push([unqueuedEvents.splice(0)], topLevelErrorHandler);
 };
 
 async.timesSeries(total, function (i, done) {
@@ -225,7 +236,7 @@ async.timesSeries(total, function (i, done) {
   event['@message'] = event.ip + ' - - [' + dateAsIso + '] "GET ' + event.request + ' HTTP/1.1" ' +
       event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
 
-  unqueuedEvents.push({
+  eventBuffer.push({
     header: {
       _index: event.index,
       _type: samples.types(),
@@ -234,9 +245,9 @@ async.timesSeries(total, function (i, done) {
     body: event
   });
 
-  unqueuedEvents.length === 3500 && unqueuedEvents.queue();
+  eventBuffer.flush();
   setImmediate(done);
 }, function () {
-  unqueuedEvents.length && unqueuedEvents.queue();
   doneCreatingEvents = true;
+  eventBuffer.flush();
 });
