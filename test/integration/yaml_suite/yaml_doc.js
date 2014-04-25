@@ -390,8 +390,10 @@ YamlDoc.prototype = {
       catcher = null;
     }
 
+    var timeoutId;
     var cb =  _.bind(function (error, body, status) {
       this._last_requests_response = body;
+      clearTimeout(timeoutId);
 
       if (error) {
         if (catcher) {
@@ -414,7 +416,14 @@ YamlDoc.prototype = {
       done(error);
     }, this);
 
-    clientAction.call(client, params, cb);
+    var req = clientAction.call(client, params, cb);
+    timeoutId = setTimeout(function () {
+      // request timed out, so we will skip the rest of the tests and continue
+      req.abort();
+      this.skipping = true;
+      this._last_requests_response = {};
+      done();
+    }.bind(this), 20000);
   },
 
   /**

@@ -59,6 +59,15 @@ function createIndex(indexName) {
       index: {
         number_of_shards: 1,
         number_of_replicas: 0
+      },
+      analysis: {
+        analyzer: {
+          url: {
+            type: 'standard',
+            tokenizer: 'uax_url_email',
+            max_token_length: 1000
+          }
+        }
       }
     },
     mappings: {
@@ -97,6 +106,10 @@ function createIndex(indexName) {
           },
           memory: {
             type: 'double'
+          },
+          referer: {
+            type: 'string',
+            index: 'not_analyzed'
           }
         }
       }
