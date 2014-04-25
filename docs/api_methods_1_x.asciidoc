@@ -30,6 +30,7 @@ NOTE: At this time, you must opt into the 1.x API by setting the `apiVersion` co
 * <<api-ping-1-x,ping>>
 * <<api-scroll-1-x,scroll>>
 * <<api-search-1-x,search>>
+* <<api-searchshards-1-x,searchShards>>
 * <<api-searchtemplate-1-x,searchTemplate>>
 * <<api-suggest-1-x,suggest>>
 * <<api-termvector-1-x,termvector>>
@@ -1605,6 +1606,47 @@ Options:::
 
 link:#[back to top]
 
+[[api-searchshards-1-x]]
+=== `searchShards`
+
+[source,js]
+--------
+client.searchShards([params, [callback]])
+--------
+
+// no description
+
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`preference`::
+`String` -- Specify the node or shard the operation should be performed on (default: random)
+`routing`::
+`String` -- Specific routing value
+`local`::
+`Boolean` -- Return local information, do not retrieve the state from master node (default: false)
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`index`::
+`String` -- The name of the index
+`type`::
+`String` -- The type of the document
+
+link:#[back to top]
+
 [[api-searchtemplate-1-x]]
 === `searchTemplate`
 
@@ -1901,8 +1943,6 @@ Options:::
 `String` -- Specific version type
 Options:::
  * `"internal"`
- * `"external"`
- * `"external_gte"`
  * `"force"`
 
 `id`::

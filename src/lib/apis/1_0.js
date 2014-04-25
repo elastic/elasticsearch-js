@@ -4679,6 +4679,75 @@ api.search = ca({
   method: 'POST'
 });
 
+/**
+ * Perform a [searchShards](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.routing - Specific routing value
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} params.index - The name of the index
+ * @param {String} params.type - The type of the document
+ */
+api.searchShards = ca({
+  params: {
+    preference: {
+      type: 'string'
+    },
+    routing: {
+      type: 'string'
+    },
+    local: {
+      type: 'boolean'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_search_shards',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_search_shards',
+      req: {
+        index: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_search_shards'
+    }
+  ],
+  method: 'POST'
+});
+
 api.snapshot = function SnapshotNS(transport) {
   this.transport = transport;
 };
