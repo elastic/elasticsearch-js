@@ -1943,8 +1943,6 @@ Options:::
 `String` -- Specific version type
 Options:::
  * `"internal"`
- * `"external"`
- * `"external_gte"`
  * `"force"`
 
 `id`::

@@ -5452,8 +5452,6 @@ api.update = ca({
       type: 'enum',
       options: [
         'internal',
-        'external',
-        'external_gte',
         'force'
       ],
       name: 'version_type'
