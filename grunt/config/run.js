@@ -7,7 +7,7 @@ var esOpts = [
   '-D es.index.store.type=memory',
   '-D es.discovery.zen.ping.multicast.enabled=false',
   '-D es.discovery.zen.ping_timeout=1',
-  '-D es.logger.level=ERROR'
+  '-D es.logger.level=ERROR',
 ];
 
 var utils = require('../utils');
@@ -57,7 +57,7 @@ utils.branches.forEach(function (branch) {
     break;
   case 'master':
   case '1.x':
-    args.push('-Des.node.bench=true');
+    args.push('-Des.node.bench=true', '-Des.script.disable_dynamic=false');
     break;
   }
 
