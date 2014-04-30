@@ -82,15 +82,18 @@ function execStep(cmd, cwd) {
   };
 }
 
-function cloneStep() {
+function initStep() {
   return function (done) {
     if (isDirectory(sourceDir)) return done();
-    spawnStep('git', ['clone', '--depth', '50', '--mirror', esUrl, sourceDir], root)(done);
+    async.series([
+      spawnStep('git', ['init', '--bare', sourceDir], root),
+      spawnStep('git', ['remote', 'add', 'origin', esUrl], sourceDir)
+    ], done);
   };
 }
 
 function fetchBranchesStep() {
-  return spawnStep('git', ['fetch', '--depth', '50', 'origin'].concat(branches), sourceDir);
+  return spawnStep('git', ['fetch', '--no-tags', 'origin'].concat(branches.map(function (b) { return b + ':' + b; })), sourceDir);
 }
 
 function removePrevArchive(branch) {
@@ -123,7 +126,7 @@ function generateStep(branch) {
 }
 
 var steps = [
-  cloneStep(),
+  initStep(),
   fetchBranchesStep()
 ];
 branches.forEach(function (branch) {
