@@ -1,24 +1,48 @@
 /* jshint curly:false, latedef:false */
 // args
-var argv = require('optimist')
-  .usage('node scripts/generate/logs [-h|--host localhost:9200] [-c|--count 14000] [-d|--days 7]')
+var optimist = require('optimist')
+  .usage("A utility to generate sample log data.\n\nUsage: $0 [options]")
   .options({
     count: {
       alias: 'c',
       type: 'number',
-      default: 14000
+      default: 14000,
+      describe: 'The number of total records'
     },
     days: {
       alias: 'd',
       type: 'number',
-      required: true
+      required: true,
+      describe: 'The number of days before and after today, 1 will equal 3 days total.',
+      default: 1 
     },
     host: {
       alias: 'h',
+      describe: 'The host name and port',
       default: 'localhost:9200'
+    },
+    shards: {
+      alias: 's',
+      describe: 'The number of primary shards',
+      default: 1
+    },
+    replicas: {
+      alias: 'r',
+      describe: 'The number of replica shards',
+      default: 0
+    },
+    help: {
+      describe: 'This help message',
+      type: 'boolean'
     }
-  })
-  .argv;
+  });
+
+var argv = optimist.argv;
+
+if (argv.help) {
+  optimist.showHelp(console.log);
+  process.exit();
+}
 
 var es = require('../../../src/elasticsearch');
 var async = require('async');
@@ -57,8 +81,8 @@ function createIndex(indexName) {
   var indexBody = {
     settings: {
       index: {
-        number_of_shards: 1,
-        number_of_replicas: 0
+        number_of_shards: argv.shards,
+        number_of_replicas: argv.replicas 
       },
       analysis: {
         analyzer: {
