@@ -85,12 +85,12 @@ function execStep(cmd, cwd) {
 function cloneStep() {
   return function (done) {
     if (isDirectory(sourceDir)) return done();
-    spawnStep('git', ['clone', '--depth', '1', '--mirror', esUrl, sourceDir], root)(done);
+    spawnStep('git', ['clone', '--depth', '50', '--mirror', esUrl, sourceDir], root)(done);
   };
 }
 
 function fetchBranchesStep() {
-  return spawnStep('git', ['fetch', '--depth', '1', 'origin'].concat(branches), sourceDir);
+  return spawnStep('git', ['fetch', '--depth', '50', 'origin'].concat(branches), sourceDir);
 }
 
 function removePrevArchive(branch) {
