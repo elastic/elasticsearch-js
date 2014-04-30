@@ -1,3 +1,4 @@
+/*jshint curly: false */
 var async = require('async');
 var fs = require('fs');
 var spawn = require('../_spawn');
@@ -48,6 +49,10 @@ if (argv.branch) {
   branches = utils.branches;
 }
 
+var sourceDir = fromRoot('src/_elasticsearch_');
+function storeDir(branch) {
+  return fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+}
 
 function isDirectory(dir) {
   var stat;
@@ -55,47 +60,55 @@ function isDirectory(dir) {
   return (stat && stat.isDirectory());
 }
 
-function storeDir(branch) {
-  return fromRoot('src/elasticsearch_' + _.snakeCase(branch));
-}
-
 function spawnStep(cmd, args, cwd) {
   return function (done) {
     spawn(cmd, args, {
-      verbose: argv.versbose,
+      verbose: argv.verbose,
       cwd: cwd
     }, function (status) {
-      done(status ? new Error('Non-zero exit code: %d', status) : void 0);
+      done(status ? new Error('Non-zero exit code: ' + status) : void 0);
     });
   };
 }
 
-function checkoutStep(branch) {
+function execStep(cmd, cwd) {
   return function (done) {
-    var dir = storeDir(branch);
-
-    if (isDirectory(dir)) {
-      return done();
-    }
-
-    spawnStep('git', [
-      'clone', '--depth', '50', '--branch', branch, '--', esUrl, dir
-    ], root)(done);
+    spawn.exec(cmd, {
+      verbose: argv.verbose,
+      cwd: cwd
+    }, function (status) {
+      done(status ? new Error('Non-zero exit code: ' + status) : void 0);
+    });
   };
 }
 
-function updateStep(branch) {
+function cloneStep() {
   return function (done) {
-    if (!argv.update) {
-      return done();
-    }
+    if (isDirectory(sourceDir)) return done();
+    spawnStep('git', ['clone', '--depth', '1', '--mirror', esUrl, sourceDir], root)(done);
+  };
+}
 
+function fetchBranchStep(branch) {
+  return spawnStep('git', ['fetch', '--depth', '1', 'origin', branch], sourceDir);
+}
+
+function removePrevArchive(branch) {
+  return function (done) {
     var dir = storeDir(branch);
 
+    if (!isDirectory(dir)) return done();
+    else spawnStep('rm', ['-rf', dir], root)(done);
+  };
+}
+
+function createArchive(branch) {
+  return function (done) {
+    var dir = storeDir(branch);
+    if (isDirectory(dir)) return done();
     async.series([
-      spawnStep('git', ['fetch', 'origin', branch], dir),
-      spawnStep('git', ['reset', '--hard', 'origin/' + branch], dir),
-      spawnStep('git', ['clean', '-fdx'], dir)
+      spawnStep('mkdir', [dir], root),
+      execStep('git archive --format tar ' + branch + ' rest-api-spec | tar -x -C ' + dir, sourceDir)
     ], done);
   };
 }
@@ -109,11 +122,14 @@ function generateStep(branch) {
   };
 }
 
-var steps = [];
+var steps = [
+  cloneStep()
+];
 branches.forEach(function (branch) {
+  if (argv.update) steps.push(removePrevArchive(branch));
   steps.push(
-    checkoutStep(branch),
-    updateStep(branch),
+    fetchBranchStep(branch),
+    createArchive(branch),
     generateStep(branch)
   );
 });
