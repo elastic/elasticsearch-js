@@ -89,8 +89,8 @@ function cloneStep() {
   };
 }
 
-function fetchBranchStep(branch) {
-  return spawnStep('git', ['fetch', '--depth', '1', 'origin', branch], sourceDir);
+function fetchBranchesStep() {
+  return spawnStep('git', ['fetch', '--depth', '1', 'origin'].concat(branches), sourceDir);
 }
 
 function removePrevArchive(branch) {
@@ -123,12 +123,12 @@ function generateStep(branch) {
 }
 
 var steps = [
-  cloneStep()
+  cloneStep(),
+  fetchBranchesStep()
 ];
 branches.forEach(function (branch) {
   if (argv.update) steps.push(removePrevArchive(branch));
   steps.push(
-    fetchBranchStep(branch),
     createArchive(branch),
     generateStep(branch)
   );

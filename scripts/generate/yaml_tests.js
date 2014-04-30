@@ -11,7 +11,7 @@ module.exports = function (branch, done) {
   var _ = require(fromRoot('src/lib/utils'));
   var tests = {}; // populated in readYamlTests
 
-  var esDir = fromRoot('src/elasticsearch_' + _.snakeCase(branch));
+  var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
 
   // generate the yaml tests
   async.series([
