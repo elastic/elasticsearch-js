@@ -1,7 +1,7 @@
 /* jshint curly:false, latedef:false */
 // args
 var optimist = require('optimist')
-  .usage("A utility to generate sample log data.\n\nUsage: $0 [options]")
+  .usage('A utility to generate sample log data.\n\nUsage: $0 [options]')
   .options({
     count: {
       alias: 'c',
@@ -14,7 +14,7 @@ var optimist = require('optimist')
       type: 'number',
       required: true,
       describe: 'The number of days before and after today, 1 will equal 3 days total.',
-      default: 1 
+      default: 1
     },
     host: {
       alias: 'h',
@@ -82,7 +82,7 @@ function createIndex(indexName) {
     settings: {
       index: {
         number_of_shards: argv.shards,
-        number_of_replicas: argv.replicas 
+        number_of_replicas: argv.replicas
       },
       analysis: {
         analyzer: {
