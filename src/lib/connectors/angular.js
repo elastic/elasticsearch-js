@@ -14,14 +14,14 @@ function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
   var connector = this;
 
-  config.$injector.invoke(function ($http, $q) {
+  config.$injector.invoke(['$http', '$q', function ($http, $q) {
     connector.$q = $q;
     connector.$http = $http;
 
     if (connector.host.auth) {
       connector.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(connector.host.auth, 'utf8')).toString('base64');
     }
-  });
+  }]);
 
 
 }
