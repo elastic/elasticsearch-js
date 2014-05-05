@@ -3733,7 +3733,7 @@ client.indices.status([params, [callback]])
 
 Get a comprehensive status information of one or more indices.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-status.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-status.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
