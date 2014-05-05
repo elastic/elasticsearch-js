@@ -909,7 +909,6 @@ api.cluster.prototype.reroute = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.indexTemplates - A comma separated list to return specific index templates when returning metadata
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
@@ -922,10 +921,6 @@ api.cluster.prototype.state = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
-    },
-    indexTemplates: {
-      type: 'list',
-      name: 'index_templates'
     },
     flatSettings: {
       type: 'boolean',
@@ -1780,6 +1775,7 @@ api.indices = function IndicesNS(transport) {
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
+ * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
  * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
@@ -1792,6 +1788,10 @@ api.indices.prototype.analyze = ca({
   params: {
     analyzer: {
       type: 'string'
+    },
+    charFilters: {
+      type: 'list',
+      name: 'char_filters'
     },
     field: {
       type: 'string'
