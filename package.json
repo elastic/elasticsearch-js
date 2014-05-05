@@ -31,7 +31,7 @@
     "default_api_branch": "1.1"
   },
   "devDependencies": {
-    "mocha": "~1.14.0",
+    "mocha": "^1.18.2",
     "async": "~0.2.9",
     "moment": "~2.4.0",
     "js-yaml": "~2.1.3",
