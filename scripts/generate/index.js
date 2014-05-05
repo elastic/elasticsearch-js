@@ -93,7 +93,8 @@ function initStep() {
 }
 
 function fetchBranchesStep() {
-  return spawnStep('git', ['fetch', '--no-tags', 'origin'].concat(branches.map(function (b) { return b + ':' + b; })), sourceDir);
+  var branchArgs = branches.map(function (b) { return b + ':' + b; });
+  return spawnStep('git', ['fetch', '--no-tags', '--force', 'origin'].concat(branchArgs), sourceDir);
 }
 
 function removePrevArchive(branch) {
@@ -121,7 +122,10 @@ function generateStep(branch) {
     async.parallel([
       argv.api && async.apply(require('./js_api'), branch),
       argv.tests && async.apply(require('./yaml_tests'), branch)
-    ].filter(Boolean), done);
+    ].filter(Boolean), function () {
+      console.log('----\n');
+      done();
+    });
   };
 }
 

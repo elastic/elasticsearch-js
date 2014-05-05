@@ -27,16 +27,22 @@ module.exports = function (branch, done) {
     aliases = require('./aliases');
   }
 
-  // generate the API
-  async.series([
+  var steps = [
     readSpecFiles,
     parseSpecFiles,
-    writeApiFile,
-    ensureDocsDir,
-    formatDocVars,
-    writeMethodDocs
-  ], function (err) {
-    console.log('');
+    writeApiFile
+  ];
+
+  if (!~utils.unstableBranches.indexOf(branch)) {
+    steps.push(
+      ensureDocsDir,
+      formatDocVars,
+      writeMethodDocs
+    );
+  }
+
+  // generate the API
+  async.series(steps, function (err) {
     done(err);
   });
 

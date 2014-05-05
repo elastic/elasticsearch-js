@@ -2,12 +2,18 @@ var _ = require('../src/lib/utils');
 
 var root = require('find-root')(__dirname);
 var pkg = require(root + '/package.json');
-var branches = pkg.config.supported_es_branches;
-branches._default = pkg.config.default_api_branch;
+var stable = pkg.config.supported_es_branches;
+var unstable = pkg.config.unstable_es_branches;
 
-module.exports = {
+var utils = {
   branchSuffix: function (branch) {
-    return branch === branches._default ? '' : '_' + _.snakeCase(branch);
+    return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
   },
-  branches: branches
+  branches: [].concat(stable, unstable),
+  stableBranches: stable,
+  unstableBranches: unstable
 };
+
+utils.branches._default = pkg.config.default_api_branch;
+
+module.exports = utils;
