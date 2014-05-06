@@ -112,7 +112,7 @@ NOTE: In this example, `request` and `response` are http://expressjs.com/api.htm
 
 [source,js]
 -----------------
-var pageNum = request.param('page', 0);
+var pageNum = request.param('page', 1);
 var perPage = request.param('per_page', 15);
 var userQuery = request.param('search_query');
 var userId = request.session.userId;
