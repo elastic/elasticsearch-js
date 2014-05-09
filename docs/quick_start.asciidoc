@@ -70,7 +70,7 @@ client.indices.delete({
 -----------------
 
 === Searching for documents
-A very common use-case for elasticsearch is to sort through through large collections of documents in order to find ones that are relavent to a query. In most cases you will use the client's `search()` method to accomplish this.
+A very common use-case for elasticsearch is to sort through large collections of documents in order to find ones that are relavent to a query. In most cases you will use the client's `search()` method to accomplish this.
 
 ==== Elasticsearch Query DSL
 
