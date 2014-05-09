@@ -1,0 +1,47 @@
+[browser-builds]
+==== Browser Builds
+
+We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using https://saucelabs.com/u/elasticsearch-js[saucelabs] in Chrome, Firefox, and Internet Explorer 10, and 11.
+
+While there is https://github.com/elasticsearch/elasticsearch-js/issues/96#issuecomment-42617480[a way to get it working in IE 9], the browser severly limits what you can do with cross-domain requests. Because of these limits, many of the API calls and other functionality do not work.
+
+===== Bower
+If you use bower to manage your dependencies, then just run:
+
+[source,shell]
+---------
+bower install elasticsearch
+---------
+
+===== Download
+ * v2.1.4: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.tar.gz[tar.gz]
+
+
+===== Angular Build (elasticsearch.angular.js)
+  * Registers the elasticsearch object as a factory `esFactory`
+  * Uses Angular's `$http` service
+  * Returns promises using Angular's `$q` service to properly trigger digest cycles within Angular
+
+.Create a client instance and register it as a service
+[source,js]
+-------------------
+module.service('es', function (esFactory) {
+  return esFactory({
+    host: 'localhost:9200',
+    // ...
+  });
+});
+-------------------
+
+===== jQuery Build (elasticsearch.jquery.js)
+  * Uses jQuery's `.ajax()` functionality
+  * Returns jQuery "promises"
+  * Registers the module at `jQuery.es`
+
+.Create a client with the jQuery build
+[source,js]
+-------------------
+var client = new $.es.Client({
+  hosts: 'localhost:9200'
+});
+-------------------

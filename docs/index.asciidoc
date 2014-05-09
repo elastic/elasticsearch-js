@@ -2,6 +2,8 @@
 
 include::about.asciidoc[]
 
+include::browser_builds.asciidoc[]
+
 include::quick_start.asciidoc[]
 
 include::api_conventions.asciidoc[]
