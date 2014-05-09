@@ -25,7 +25,7 @@ npm install elasticsearch
 
 [![Selenium Tests Status](https://saucelabs.com/browser-matrix/elasticsearch-js.svg)](https://saucelabs.com/u/elasticsearch-js)
 
-We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently *experimental*.
+We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently *experimental*. More information is available [here](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html).
 
 ### Bower
 If you use bower to manage your dependencies, then just run:
@@ -38,6 +38,7 @@ bower install elasticsearch
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
+ - [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html)
  - [API](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
  - [Configuration](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html)
  - [Development/Contributing](https://github.com/elasticsearch/elasticsearch-js/blob/master/CONTRIBUTING.md)
