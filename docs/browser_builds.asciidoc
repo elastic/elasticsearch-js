@@ -1,4 +1,4 @@
-[browser-builds]
+[[browser-builds]]
 ==== Browser Builds
 
 We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using https://saucelabs.com/u/elasticsearch-js[saucelabs] in Chrome, Firefox, and Internet Explorer 10, and 11.
