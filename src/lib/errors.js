@@ -69,6 +69,14 @@ errors.Serialization = function Serialization(msg) {
 _.inherits(errors.Serialization, ErrorAbstract);
 
 
+/**
+ * Thrown when a browser compatability issue is detected (cough, IE, cough)
+ */
+errors.RequestTypeError = function RequestTypeError(feature) {
+  ErrorAbstract.call(this, 'Cross-domain AJAX requests ' + feature + ' are not supported', errors.RequestTypeError);
+};
+_.inherits(errors.RequestTypeError, ErrorAbstract);
+
 var statusCodes = {
 
   /**
