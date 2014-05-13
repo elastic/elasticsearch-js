@@ -135,6 +135,47 @@ function createIndex(indexName) {
             type: 'string',
             index: 'not_analyzed'
           }
+        },
+        geo: {
+          properties: {
+            srcdst: {
+              type: 'string',
+              index: 'not_analyzed'
+            },
+            dst: {
+              type: 'string',
+              index: 'not_analyzed'
+            },
+            src: {
+              type: 'string',
+              index: 'not_analyzed'
+            },
+            coordinates: {
+              type: 'geo_point'
+            }
+          }
+        },
+        meta: {
+          properties: {
+            related: {
+              type: 'string',
+            },
+            char: {
+              type: 'string',
+              index: 'not_analyzed'
+            },
+            user: {
+              properties: {
+                firstname: {
+                  type: 'string',
+                },
+                lastname: {
+                  type: 'integer',
+                  index: 'not_analyzed'
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -251,19 +292,25 @@ async.timesSeries(total, function (i, done) {
   var event = {};
 
   event.index = indexName;
-  event['@timestamp'] =  dateAsIso;
-  event.ip =  samples.ips();
-  event.extension =  samples.extensions();
-  event.response =  samples.responseCodes();
-  event.country =  samples.countries();
-  event.point =  samples.airports();
+  event['@timestamp'] = dateAsIso;
+  event.ip = samples.ips();
+  event.extension = samples.extensions();
+  event.response = samples.responseCodes();
+
+  event.geo = {
+    coordinates: samples.airports(),
+    src: samples.countries(),
+    dest: samples.countries()
+  };
+  event.geo.srcdest = event.geo.src + ':' + event.geo.dest;
+
   event['@tags'] = [
     samples.tags(),
     samples.tags2()
   ];
-  event.utc_time =  dateAsIso;
-  event.referer =  'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts();
-  event.agent =  samples.userAgents();
+  event.utc_time = dateAsIso;
+  event.referer = 'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts();
+  event.agent = samples.userAgents();
   event.clientip = event.ip;
   event.bytes = event.response < 500 ? samples.lessRandomRespSize() : 0;
   event.request = '/' + samples.astronauts() + '.' + event.extension;
@@ -272,6 +319,22 @@ async.timesSeries(total, function (i, done) {
   }
   event['@message'] = event.ip + ' - - [' + dateAsIso + '] "GET ' + event.request + ' HTTP/1.1" ' +
       event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
+  event.spaces = 'this   is   a   thing    with lots of     spaces       wwwwoooooo';
+  event.xss = '<script>console.log("xss")</script>';
+  event.headings = [
+    '<h3>' + samples.astronauts() + '</h5>',
+    'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts()
+  ];
+  event.links = [
+    samples.astronauts() + '@' + samples.referrers(),
+    'http://' + samples.referrers() + '/' + samples.tags2() + '/' + samples.astronauts(),
+    'www.' + samples.referrers()
+  ];
+
+  event.machine = {
+    os: samples.randomOs(),
+    ram: samples.randomRam()
+  };
 
   eventBuffer.push({
     header: {
