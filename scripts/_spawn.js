@@ -43,3 +43,7 @@ function _spawn(cmd, args, opts, cb) {
 
   return cp;
 }
+
+_spawn.exec = function (cmd, opts, cb) {
+  return _spawn('/bin/sh', ['-c', cmd], opts, cb);
+};

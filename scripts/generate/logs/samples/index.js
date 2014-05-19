@@ -29,6 +29,9 @@ exports.make = function (startingMoment, endingMoment) {
     stdev: dayMs * 0.15,
   }, 'get');
 
+  sets.randomRam = new RandomList(require('./ram'));
+  sets.randomOs = new RandomList(require('./os'));
+
   sets.astronauts = new RandomList(require('./astronauts').map(function (name) {
     return name.replace(/\W+/g, '-').toLowerCase();
   }));

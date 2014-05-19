@@ -28,7 +28,8 @@ async.series([
   make('git', ['commit', '-m', 'version ' + bowerJson.version]),
   make('git', ['tag', '-a', 'v' + bowerJson.version, '-m', 'version ' + bowerJson.version]),
   make('git', ['push', 'origin', 'master']),
-  make('git', ['push', '--tags', 'origin'])
+  make('git', ['push', '--tags', 'origin']),
+  make('npm', ['publish'])
 ], function (err) {
   if (err) {
     if (_.isNumber(err)) {

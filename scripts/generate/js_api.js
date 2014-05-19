@@ -18,7 +18,7 @@ module.exports = function (branch, done) {
   var docVars; // slightly modified clone of apiSpec for the docs
 
   var branchSuffix = utils.branchSuffix(branch);
-  var esDir = fromRoot('src/elasticsearch_' + _.snakeCase(branch));
+  var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
   var aliases;
   try {
     aliases = require('./aliases_' + _.snakeCase(branch));
@@ -27,16 +27,22 @@ module.exports = function (branch, done) {
     aliases = require('./aliases');
   }
 
-  // generate the API
-  async.series([
+  var steps = [
     readSpecFiles,
     parseSpecFiles,
-    writeApiFile,
-    ensureDocsDir,
-    formatDocVars,
-    writeMethodDocs
-  ], function (err) {
-    console.log('');
+    writeApiFile
+  ];
+
+  if (!~utils.unstableBranches.indexOf(branch)) {
+    steps.push(
+      ensureDocsDir,
+      formatDocVars,
+      writeMethodDocs
+    );
+  }
+
+  // generate the API
+  async.series(steps, function (err) {
     done(err);
   });
 

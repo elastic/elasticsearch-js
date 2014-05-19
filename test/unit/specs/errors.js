@@ -22,6 +22,6 @@ describe('Error Abstract', function () {
     var err = new errors._Abstract();
     process.browser = isBrowser;
 
-    expect(err.stack).to.be('');
+    expect(err.stack).to.be.a('string');
   });
 });
