@@ -2,6 +2,9 @@
 
 ## 2.1 (Mar 27 2014)
 - The default API version is now `'1.1'`
+- Errors generated in the browser will now have stack traces
+- Clarified IE-support
+- Improvements to the bundled log-generator
 
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
