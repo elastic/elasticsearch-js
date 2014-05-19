@@ -105,10 +105,6 @@ function createIndex(indexName) {
             index: 'not_analyzed',
             include_in_all: false
           },
-          country: {
-            type: 'string',
-            index: 'not_analyzed'
-          },
           agent: {
             type: 'multi_field',
             fields: {
@@ -196,9 +192,9 @@ function createIndex(indexName) {
 
 
 var queue = async.queue(function (events, done) {
-
   var body = [];
   var deps = [];
+  var esBulkQueueOverflow = 0;
 
   events.forEach(function (event) {
     var header = event.header;
@@ -224,23 +220,31 @@ var queue = async.queue(function (events, done) {
   })
   .then(function (resp) {
     if (resp.errors) {
-      var errors = [];
-
       resp.items.forEach(function (item, i) {
         if (item.index.error) {
-          errors.push(item.index.error);
-          eventBuffer.push(events[i]);
+          if (item.index.error.match(/^EsRejectedExecutionException/)) {
+            esBulkQueueOverflow ++;
+            eventBuffer.push(events[i]);
+          }
         }
       });
-
-      console.log('\n - errors - \n' + errors.join('\n') + '\n');
     }
   })
   .finally(function () {
-    process.stdout.write('.');
+    if (esBulkQueueOverflow) {
+      process.stdout.write('w' + esBulkQueueOverflow + '-');
+
+      // pause for 10ms per queue overage
+      queue.pause();
+      setTimeout(function () {
+        queue.resume();
+      }, 10 * esBulkQueueOverflow);
+
+    } else {
+      process.stdout.write('.');
+    }
   })
   .nodeify(done);
-
 }, 1);
 
 var eventBuffer = [];
@@ -265,89 +269,107 @@ queue.drain = function () {
   }
 };
 
-async.timesSeries(total, function (i, done) {
+async.series([
+  function (done) {
+    client.cluster.putSettings({
+      body: {
+        transient: {
+          threadpool: {
+            bulk: {
+              queue_size: -1
+            }
+          }
+        }
+      }
+    }, done);
+  },
+  function (done) {
+    async.timesSeries(total, function (i, done) {
+      // random date, plus less random time
+      var date = new Date(samples.randomMsInDayRange());
 
-  // random date, plus less random time
-  var date = new Date(samples.randomMsInDayRange());
+      var ms = samples.lessRandomMsInDay();
 
-  var ms = samples.lessRandomMsInDay();
+      // extract number of hours from the milliseconds
+      var hours = Math.floor(ms / 3600000);
+      ms = ms - hours * 3600000;
 
-  // extract number of hours from the milliseconds
-  var hours = Math.floor(ms / 3600000);
-  ms = ms - hours * 3600000;
+      // extract number of minutes from the milliseconds
+      var minutes = Math.floor(ms / 60000);
+      ms = ms - minutes * 60000;
 
-  // extract number of minutes from the milliseconds
-  var minutes = Math.floor(ms / 60000);
-  ms = ms - minutes * 60000;
+      // extract number of seconds from the milliseconds
+      var seconds = Math.floor(ms / 1000);
+      ms = ms - seconds * 1000;
 
-  // extract number of seconds from the milliseconds
-  var seconds = Math.floor(ms / 1000);
-  ms = ms - seconds * 1000;
+      // apply the values found to the date
+      date.setUTCHours(hours, minutes, seconds, ms);
 
-  // apply the values found to the date
-  date.setUTCHours(hours, minutes, seconds, ms);
+      var dateAsIso = date.toISOString();
+      var indexName = 'logstash-' +
+        dateAsIso.substr(0, 4) + '.' + dateAsIso.substr(5, 2) + '.' + dateAsIso.substr(8, 2);
+      var event = {};
 
-  var dateAsIso = date.toISOString();
-  var indexName = 'logstash-' + dateAsIso.substr(0, 4) + '.' + dateAsIso.substr(5, 2) + '.' + dateAsIso.substr(8, 2);
-  var event = {};
+      event.index = indexName;
+      event['@timestamp'] = dateAsIso;
+      event.ip = samples.ips();
+      event.extension = samples.extensions();
+      event.response = samples.responseCodes();
 
-  event.index = indexName;
-  event['@timestamp'] = dateAsIso;
-  event.ip = samples.ips();
-  event.extension = samples.extensions();
-  event.response = samples.responseCodes();
+      event.geo = {
+        coordinates: samples.airports(),
+        src: samples.countries(),
+        dest: samples.countries()
+      };
+      event.geo.srcdest = event.geo.src + ':' + event.geo.dest;
 
-  event.geo = {
-    coordinates: samples.airports(),
-    src: samples.countries(),
-    dest: samples.countries()
-  };
-  event.geo.srcdest = event.geo.src + ':' + event.geo.dest;
+      event['@tags'] = [
+        samples.tags(),
+        samples.tags2()
+      ];
+      event.utc_time = dateAsIso;
+      event.referer = 'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts();
+      event.agent = samples.userAgents();
+      event.clientip = event.ip;
+      event.bytes = event.response < 500 ? samples.lessRandomRespSize() : 0;
+      event.request = '/' + samples.astronauts() + '.' + event.extension;
+      if (event.extension === 'php') {
+        event.phpmemory = event.memory = event.bytes * 40;
+      }
+      event['@message'] = event.ip + ' - - [' + dateAsIso + '] "GET ' + event.request + ' HTTP/1.1" ' +
+          event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
+      event.spaces = 'this   is   a   thing    with lots of     spaces       wwwwoooooo';
+      event.xss = '<script>console.log("xss")</script>';
+      event.headings = [
+        '<h3>' + samples.astronauts() + '</h5>',
+        'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts()
+      ];
+      event.links = [
+        samples.astronauts() + '@' + samples.referrers(),
+        'http://' + samples.referrers() + '/' + samples.tags2() + '/' + samples.astronauts(),
+        'www.' + samples.referrers()
+      ];
 
-  event['@tags'] = [
-    samples.tags(),
-    samples.tags2()
-  ];
-  event.utc_time = dateAsIso;
-  event.referer = 'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts();
-  event.agent = samples.userAgents();
-  event.clientip = event.ip;
-  event.bytes = event.response < 500 ? samples.lessRandomRespSize() : 0;
-  event.request = '/' + samples.astronauts() + '.' + event.extension;
-  if (event.extension === 'php') {
-    event.phpmemory = event.memory = event.bytes * 40;
+      event.machine = {
+        os: samples.randomOs(),
+        ram: samples.randomRam()
+      };
+
+      eventBuffer.push({
+        header: {
+          _index: event.index,
+          _type: samples.types(),
+          _id: i,
+        },
+        body: event
+      });
+
+      eventBuffer.flush();
+      setImmediate(done);
+    }, done);
   }
-  event['@message'] = event.ip + ' - - [' + dateAsIso + '] "GET ' + event.request + ' HTTP/1.1" ' +
-      event.response + ' ' + event.bytes + ' "-" "' + event.agent + '"';
-  event.spaces = 'this   is   a   thing    with lots of     spaces       wwwwoooooo';
-  event.xss = '<script>console.log("xss")</script>';
-  event.headings = [
-    '<h3>' + samples.astronauts() + '</h5>',
-    'http://' + samples.referrers() + '/' + samples.tags() + '/' + samples.astronauts()
-  ];
-  event.links = [
-    samples.astronauts() + '@' + samples.referrers(),
-    'http://' + samples.referrers() + '/' + samples.tags2() + '/' + samples.astronauts(),
-    'www.' + samples.referrers()
-  ];
-
-  event.machine = {
-    os: samples.randomOs(),
-    ram: samples.randomRam()
-  };
-
-  eventBuffer.push({
-    header: {
-      _index: event.index,
-      _type: samples.types(),
-      _id: i,
-    },
-    body: event
-  });
-
-  eventBuffer.flush();
-  setImmediate(done);
-}, function () {
+], function (err) {
+  if (err) throw err;
   doneCreatingEvents = true;
   eventBuffer.flush();
 });
