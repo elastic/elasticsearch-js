@@ -180,6 +180,12 @@ Transport.prototype.request = function (params, cb) {
 
     requestAborter = void 0;
 
+    if (err instanceof errors.RequestTypeError) {
+      self.log.error('Connection refused to execute the request', err);
+      respond(err, body, status, headers);
+      return;
+    }
+
     if (err) {
       connection.setStatus('dead');
       if (remainingRetries) {

@@ -21,22 +21,24 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('browser_clients:distribute', [
+    'browser_clients:build',
     '_upload_archive:master'
   ]);
 
   grunt.registerTask('browser_clients:release', [
     'prompt:confirm_release',
     '_check_for_confirmation',
-    '_upload_archive:release',
     'browser_clients:build',
+    '_upload_archive:release',
     'run:clone_bower_repo',
     'copy:dist_to_bower',
     'run:release_bower_tag'
   ]);
 
   grunt.registerTask('_upload_archive', function (type) {
+    this.requires(['browser_clients:build']);
+
     grunt.task.run([
-      'browser_clients:build',
       'copy:dist_to_named_dir',
       'compress:' + type + '_zip',
       'compress:' + type + '_tarball',

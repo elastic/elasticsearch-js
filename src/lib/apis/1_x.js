@@ -292,6 +292,66 @@ api.cat.prototype.count = ca({
 });
 
 /**
+ * Perform a [cat.fielddata](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.bytes - The unit in which to display byte values
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return the fielddata size
+ */
+api.cat.prototype.fielddata = ca({
+  params: {
+    bytes: {
+      type: 'enum',
+      options: [
+        'b',
+        'k',
+        'm',
+        'g'
+      ]
+    },
+    local: {
+      type: 'boolean'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    },
+    fields: {
+      type: 'list'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/fielddata/<%=fields%>',
+      req: {
+        fields: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/fielddata'
+    }
+  ]
+});
+
+/**
  * Perform a [cat.health](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-health.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -909,7 +969,6 @@ api.cluster.prototype.reroute = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.indexTemplates - A comma separated list to return specific index templates when returning metadata
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
@@ -922,10 +981,6 @@ api.cluster.prototype.state = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
-    },
-    indexTemplates: {
-      type: 'list',
-      name: 'index_templates'
     },
     flatSettings: {
       type: 'boolean',
@@ -1780,6 +1835,7 @@ api.indices = function IndicesNS(transport) {
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
+ * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
  * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
@@ -1792,6 +1848,10 @@ api.indices.prototype.analyze = ca({
   params: {
     analyzer: {
       type: 'string'
+    },
+    charFilters: {
+      type: 'list',
+      name: 'char_filters'
     },
     field: {
       type: 'string'

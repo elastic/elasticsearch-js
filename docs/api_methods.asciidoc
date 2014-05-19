@@ -2,7 +2,7 @@
 == 1.1 API
 
 
-NOTE: This is currently the default API, but in upcoming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
+NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
 
 [[js-api-method-index]]
 * <<api-bulk,bulk>>
@@ -2523,6 +2523,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `analyzer`::
 `String` -- The name of the analyzer to use
+`charFilters`::
+`String, String[], Boolean` -- A comma-separated list of character filters to use for the analysis
 `field`::
 `String` -- Use the analyzer configured for this field (instead of passing the analyzer name)
 `filters`::
@@ -3665,7 +3667,7 @@ client.indices.status([params, [callback]])
 
 Get a comprehensive status information of one or more indices.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-status.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-status.html[the elasticsearch docs] for more about this method.
 
 // no examples
 

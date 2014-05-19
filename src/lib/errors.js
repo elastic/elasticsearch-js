@@ -1,14 +1,22 @@
 var _ = require('./utils');
 var errors = module.exports;
 
+var canCapture = (typeof Error.captureStackTrace === 'function');
+var canStack = !!(new Error()).stack;
+
 function ErrorAbstract(msg, constructor) {
   this.message = msg;
 
   Error.call(this, this.message);
-  if (process.browser) {
-    this.stack = '';
-  } else {
+
+  if (canCapture) {
     Error.captureStackTrace(this, constructor);
+  }
+  else if (canStack) {
+    this.stack = (new Error()).stack;
+  }
+  else {
+    this.stack = '';
   }
 }
 errors._Abstract = ErrorAbstract;
@@ -60,6 +68,14 @@ errors.Serialization = function Serialization(msg) {
 };
 _.inherits(errors.Serialization, ErrorAbstract);
 
+
+/**
+ * Thrown when a browser compatability issue is detected (cough, IE, cough)
+ */
+errors.RequestTypeError = function RequestTypeError(feature) {
+  ErrorAbstract.call(this, 'Cross-domain AJAX requests ' + feature + ' are not supported', errors.RequestTypeError);
+};
+_.inherits(errors.RequestTypeError, ErrorAbstract);
 
 var statusCodes = {
 

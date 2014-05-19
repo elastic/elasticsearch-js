@@ -1721,6 +1721,7 @@ api.indices = function IndicesNS(transport) {
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
+ * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
  * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
@@ -1733,6 +1734,10 @@ api.indices.prototype.analyze = ca({
   params: {
     analyzer: {
       type: 'string'
+    },
+    charFilters: {
+      type: 'list',
+      name: 'char_filters'
     },
     field: {
       type: 'string'
