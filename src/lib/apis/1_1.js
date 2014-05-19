@@ -3012,7 +3012,7 @@ api.indices.prototype.putMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/_mapping/<%=type%>',
+      fmt: '/<%=index%>/<%=type%>/_mapping',
       req: {
         index: {
           type: 'list'
@@ -3023,7 +3023,7 @@ api.indices.prototype.putMapping = ca({
       }
     },
     {
-      fmt: '/_mapping/<%=type%>',
+      fmt: '/<%=type%>/_mapping',
       req: {
         type: {
           type: 'string'
