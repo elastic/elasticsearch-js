@@ -18,6 +18,8 @@ include::development.asciidoc[]
 
 include::api_methods.asciidoc[]
 
+include::api_methods_1_1.asciidoc[]
+
 include::api_methods_1_0.asciidoc[]
 
 include::api_methods_0_90.asciidoc[]
