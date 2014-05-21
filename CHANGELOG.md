@@ -1,5 +1,10 @@
 # elasticsearch-js changelog
 
+## 2.2 (Mar 27 2014)
+- The default API version is now `'1.2'`
+- Node clinet now supports master, 1.x, 1.2, 1.1, 1.0, and 0.90
+- Browser client now supports versions 1.0, 1.1, and 1.2
+
 ## 2.1 (Mar 27 2014)
 - The default API version is now `'1.1'`
 

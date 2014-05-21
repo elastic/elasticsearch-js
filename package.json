@@ -20,6 +20,7 @@
       "pattern": "specified in test/unit/coverage.js"
     },
     "supported_es_branches": [
+      "1.2",
       "1.1",
       "1.0",
       "0.90"
@@ -28,7 +29,7 @@
       "master",
       "1.x"
     ],
-    "default_api_branch": "1.1"
+    "default_api_branch": "1.2"
   },
   "devDependencies": {
     "mocha": "^1.18.2",
