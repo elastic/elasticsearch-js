@@ -8,13 +8,17 @@ var bowerDir = root + '/src/bower_es_js';
 
 // get both the bower and node package files
 var bowerJson = require(bowerDir + '/bower.json');
+var bowerPackageJson = require(bowerDir + '/package.json');
 var esjsJson = require(root + '/package.json');
 
 // update the version to match the node version
 bowerJson.version = esjsJson.version;
+bowerPackageJson.version = esjsJson.version;
 
 // write the new bower.json file
 fs.writeFileSync(bowerDir + '/bower.json', JSON.stringify(bowerJson, null, '  '));
+// write the new package.json file
+fs.writeFileSync(bowerDir + '/package.json', JSON.stringify(bowerPackageJson, null, '  '));
 
 function make(cmd, args) {
   return _.bind(spawn, null, cmd, args, {

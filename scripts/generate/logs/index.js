@@ -34,6 +34,10 @@ var optimist = require('optimist')
     help: {
       describe: 'This help message',
       type: 'boolean'
+    },
+    reset: {
+      describe: 'Clear all logstash-* indices before genrating logs',
+      type: 'boolean'
     }
   });
 
@@ -270,6 +274,15 @@ queue.drain = function () {
 };
 
 async.series([
+  function (done) {
+    if (argv.reset) {
+      client.indices.delete({
+        index: 'logstash-*'
+      }, done);
+    } else {
+      done();
+    }
+  },
   function (done) {
     client.cluster.putSettings({
       body: {

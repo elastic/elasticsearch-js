@@ -55,8 +55,11 @@ utils.branches.forEach(function (branch) {
   case '0.90':
     args.push('-f');
     break;
-  case 'master':
-  case '1.x':
+  case '1.0':
+  case '1.1':
+    // no special treatment
+    break;
+  default:
     args.push('-Des.node.bench=true', '-Des.script.disable_dynamic=false');
     break;
   }
