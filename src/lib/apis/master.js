@@ -4637,7 +4637,6 @@ api.scroll = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String, String[], Boolean} params.indicesBoost - Comma-separated list of index boosts
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
@@ -4707,10 +4706,6 @@ api.search = ca({
         'closed'
       ],
       name: 'expand_wildcards'
-    },
-    indicesBoost: {
-      type: 'list',
-      name: 'indices_boost'
     },
     lenient: {
       type: 'boolean'
