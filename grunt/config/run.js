@@ -56,6 +56,7 @@ utils.branches.forEach(function (branch) {
     args.push('-f');
     break;
   case 'master':
+  case '1.2':
   case '1.x':
     args.push('-Des.node.bench=true', '-Des.script.disable_dynamic=false');
     break;

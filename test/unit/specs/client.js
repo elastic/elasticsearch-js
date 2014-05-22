@@ -23,17 +23,17 @@ describe('Client instances creation', function () {
 
   var def = require('../../../package.json').config.default_api_branch;
   it('inherits the ' + def + ' API by default', function () {
-    expect(client.bulk).to.eql(apis[def].bulk);
-    expect(client.nodes.stats).to.eql(apis[def].nodes.prototype.stats);
+    expect(client.bulk).to.be(apis[def].bulk);
+    expect(client.nodes.stats).to.be(apis[def].nodes.prototype.stats);
   });
 
-  it('inherits the 0.90 API when specified', function () {
+  it('inherits the 1.0 API when specified', function () {
     client.close();
     client = es.Client({
-      apiVersion: '0.90'
+      apiVersion: '1.0'
     });
-    expect(client.bulk).to.eql(apis['0.90'].bulk);
-    expect(client.cluster.nodeStats).to.eql(apis['0.90'].cluster.prototype.nodeStats);
+    expect(client.bulk).to.be(apis['1.0'].bulk);
+    expect(client.cluster.nodeStats).to.be(apis['1.0'].cluster.prototype.nodeStats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {

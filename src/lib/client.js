@@ -63,7 +63,7 @@ function Client(config) {
     delete this._namespaces;
   }
 
-  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '1.1');
+  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '1.2');
   if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
     config.sniffEndpoint = '/_cluster/nodes';
   }
