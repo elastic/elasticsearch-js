@@ -134,19 +134,23 @@ function manage_es {
           return 1
         fi
 
-        local ES_OPTS="-p $PIDFILE -Des.http.port=9400 -Des.network.host=localhost -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping_timeout=1"
+        local ES_OPTS="-p $PIDFILE -D es.http.port=9400 -D es.network.host=localhost -D es.cluster.name=elasticsearch_js_test_runners -D es.node.name=elasticsearch_js_test_runner -D es.gateway.type=none -D es.index.store.type=memory -D es.discovery.zen.ping.multicast.enabled=false -D es.discovery.zen.ping_timeout=1 -D es.logger.level=ERROR"
 
         if [ -n "$ES_NODE_NAME" ]; then
           ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
         fi
 
-        if [ "$ES_BRANCH" = "0.90" ]; then
-          echo "Starting Elasticsearch $ES_VERSION"
-          call $ES_BIN $ES_OPTS
-        else
-          echo "Starting Elasticsearch $ES_VERSION as a deamon"
-          call $ES_BIN -d $ES_OPTS
+        if [[ $ES_BRANCH != "0.90" ]]; then
+          # explicitly run as deamon
+          ES_OPTS="-d $ES_OPTS"
         fi
+
+        if [[ $ES_BRANCH != "1.0" && $ES_BRANCH != "1.1" ]]; then
+          # enable scripting and benchmarks
+          ES_OPTS="$ES_OPTS -D es.node.bench=true -D es.script.disable_dynamic=false"
+        fi
+
+        call $ES_BIN $ES_OPTS
       ;;
       stop)
         if [ -e $PIDFILE ]; then
