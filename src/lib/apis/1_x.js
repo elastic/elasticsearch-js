@@ -5070,7 +5070,7 @@ api.snapshot.prototype.create = ca({
       }
     }
   },
-  method: 'POST'
+  method: 'PUT'
 });
 
 /**
