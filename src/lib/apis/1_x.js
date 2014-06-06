@@ -3215,6 +3215,7 @@ api.indices.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+ * @param {Boolean} params.create - Whether the index template should only be added if new or can also replace an existing one
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
@@ -3224,6 +3225,10 @@ api.indices.prototype.putTemplate = ca({
   params: {
     order: {
       type: 'number'
+    },
+    create: {
+      type: 'boolean',
+      'default': false
     },
     timeout: {
       type: 'time'

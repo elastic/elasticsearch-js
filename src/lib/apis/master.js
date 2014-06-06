@@ -3215,6 +3215,7 @@ api.indices.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+ * @param {Boolean} params.create - Whether the index template should only be added if new or can also replace an existing one
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
@@ -3224,6 +3225,10 @@ api.indices.prototype.putTemplate = ca({
   params: {
     order: {
       type: 'number'
+    },
+    create: {
+      type: 'boolean',
+      'default': false
     },
     timeout: {
       type: 'time'
@@ -4494,6 +4499,7 @@ api.nodes.prototype.stats = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.percolateIndex - The index to percolate the document into. Defaults to index.
  * @param {String} params.percolateType - The type to percolate document into. Defaults to type.
+ * @param {String} params.percolateFormat - Return an array of matching query IDs instead of objects
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.index - The index of the document being percolated.
@@ -4532,6 +4538,13 @@ api.percolate = ca({
     percolateType: {
       type: 'string',
       name: 'percolate_type'
+    },
+    percolateFormat: {
+      type: 'enum',
+      options: [
+        'ids'
+      ],
+      name: 'percolate_format'
     },
     version: {
       type: 'number'
