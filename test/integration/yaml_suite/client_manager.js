@@ -13,6 +13,7 @@ var _ = require('../../../src/lib/utils');
 var argv = require('./argv');
 var path = require('path');
 var fs = require('fs');
+var async = require('async');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
 
 // current client
@@ -93,6 +94,17 @@ module.exports = {
         ],
         log: logConfig
       });
+
+      client.clearEs = function (done) {
+        async.parallel([
+          function (done) {
+            client.indices.delete({ index: '*', ignore: 404 }, done);
+          },
+          function (done) {
+            client.indices.deleteTemplate({ name: '*', ignore: 404 }, done);
+          }
+        ], done);
+      };
 
       _.nextTick(cb);
     }

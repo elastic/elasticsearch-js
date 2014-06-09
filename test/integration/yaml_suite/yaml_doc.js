@@ -96,10 +96,7 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 
 // empty all of the indices in ES please
 function clearIndices(done) {
-  clientManager.get().indices.delete({
-    index: '*',
-    ignore: 404
-  }, done);
+  clientManager.get().clearEs(done);
 }
 
 function YamlDoc(doc, file) {
