@@ -23,10 +23,15 @@ module.exports = function (branch) {
 
     before(function (done) {
       // make sure ES is empty
-      clientManager.get().indices.delete({
-        index: '*',
-        ignore: 404
-      }, done);
+      var client = clientManager.get();
+      async.parallel([
+        function (done) {
+          client.indices.delete({ index: '*', ignore: 404 }, done);
+        },
+        function (done) {
+          client.indices.deleteTemplate({ name: '*', ignore: 404 }, done);
+        }
+      ], done);
     });
 
     var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
