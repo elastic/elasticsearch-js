@@ -153,7 +153,7 @@ client.search({
   response.render('search_results', {
     results: response.hits.hits,
     page: pageNum,
-    pages: Math.ceil(response.hists.total / perPage)
+    pages: Math.ceil(response.hits.total / perPage)
   })
 });
 -----------------
