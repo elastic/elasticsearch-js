@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', function (branch) {
     var tasks = [
       'jshint',
-      'run:generate',
+      branch ? 'run:generate_' + branch : 'run:generate',
       'mochacov:unit'
     ];
 
