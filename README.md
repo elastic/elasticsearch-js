@@ -2,7 +2,9 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.png?branch=2.1)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.1) [![Coverage Status](https://coveralls.io/repos/elasticsearch/elasticsearch-js/badge.png?branch=2.1)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.1) [![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.png)](https://david-dm.org/elasticsearch/elasticsearch-js)
+[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.svg?branch=2.1)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.1)
+[![Coverage Status](http://img.shields.io/coveralls/elasticsearch/elasticsearch-js.svg?branch=2.1)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.1)
+[![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.svg)](https://david-dm.org/elasticsearch/elasticsearch-js)
 
 ## Features
 
@@ -12,29 +14,31 @@ The official low-level Elasticsearch client for Node.js and the browser.
  - Persistent, Keep-Alive connections
  - Load balancing (with pluggable selection strategy) across all available nodes.
 
-## Install in Node.js
+## Use in Node.js
 
 ```
 npm install elasticsearch
 ```
 
-<!-- wow bling -->
 [![NPM Stats](https://nodei.co/npm/elasticsearch.png?downloads=true)](https://npmjs.org/package/elasticsearch)
 
-## Browser Builds
+## Use in the Browser
 
-[![Selenium Tests Status](https://saucelabs.com/browser-matrix/elasticsearch-js.svg)](https://saucelabs.com/u/elasticsearch-js)
+Check out the [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html) doc page for help downloading and setting up the client for use in the browser.
 
-We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently *experimental*.
-
-### Bower
-If you use bower to manage your dependencies, then just run:
-```
-bower install elasticsearch
-```
-
-### Download
- - v2.1.4: [zip](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.zip), [tar.gz](https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.tar.gz)
+<table><tr>
+<td>bower:</td>
+<td colspan="2"><code>bower install elasticsearch</code></td>
+</tr><tr>
+<td>download:</td>
+<td align="center">
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.zip">zip</a>
+</td>
+<td align="center">
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.tar.gz">tar.gz</a>
+</td>
+</tr>
+</table>
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
@@ -46,9 +50,9 @@ bower install elasticsearch
 
 ## Supported Elasticsearch Versions
 
-[Jenkins](https://build.elasticsearch.org/job/es-js_nightly/)
+[![Supporting Elasticsearch Version 0.90 to 1.2](http://img.shields.io/badge/elasticsearch-0.90--1.2-green.svg)](https://build.elasticsearch.org/job/es-js_nightly/)
 
-Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases **0.90.5 and greater**. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
+Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
 
 ## Examples
 
