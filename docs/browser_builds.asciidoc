@@ -18,15 +18,22 @@ bower install elasticsearch
 
 
 === Angular Build
-  * use the file named `elasticsearch.angular.js` or `elasticsearch.angular.min.js`
-  * Registers the elasticsearch object as a factory `esFactory`
+  * Registers the an `esFactory` factory in the `"elasticsearch"` module
   * Uses Angular's `$http` service
   * Returns promises using Angular's `$q` service to properly trigger digest cycles within Angular
+
+NOTE: Checkout an example that integrates elasticsearch.js with angular https://github.com/spenceralger/elasticsearch-angular-example[on GitHub]
+
+.Include the `"elasticsearch"` module in your app
+[source,js]
+-------------------
+var myApp = angular.module('myApp', ['elasticsearch']);
+-------------------
 
 .Create a client instance and register it as a service
 [source,js]
 -------------------
-module.service('es', function (esFactory) {
+module.service('client', function (esFactory) {
   return esFactory({
     host: 'localhost:9200',
     // ...
@@ -35,7 +42,6 @@ module.service('es', function (esFactory) {
 -------------------
 
 === jQuery Build
-  * use the file named `elasticsearch.jquery.js` or `elasticsearch.jquery.min.js`
   * Uses jQuery's `.ajax()` functionality
   * Returns jQuery "promises"
   * Registers the module at `jQuery.es`
