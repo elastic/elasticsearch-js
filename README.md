@@ -20,6 +20,8 @@ The official low-level Elasticsearch client for Node.js and the browser.
 npm install elasticsearch
 ```
 
+Supported node versions include 0.8, 0.10, and now 0.11
+
 [![NPM Stats](https://nodei.co/npm/elasticsearch.png?downloads=true)](https://npmjs.org/package/elasticsearch)
 
 ## Use in the Browser
