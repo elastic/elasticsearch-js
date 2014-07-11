@@ -1,12 +1,13 @@
 describe('Http Connector', function () {
 
+  var _ = require('lodash-node');
   var expect = require('expect.js');
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
-  var ForeverAgent = require('forever-agent');
   var http = require('http');
   var https = require('https');
+  var CustomAgent = require('../../../src/lib/connectors/_custom_agent');
 
   var Host = require('../../../src/lib/host');
   var errors = require('../../../src/lib/errors');
@@ -161,7 +162,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
-        expect(http.request.lastCall.args[0].agent).to.be.a(ForeverAgent);
+        expect(http.request.lastCall.args[0].agent).to.be.a(CustomAgent);
         done();
       });
     });
@@ -171,7 +172,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
-        expect(https.request.lastCall.args[0].agent).to.be.a(ForeverAgent.SSL);
+        expect(https.request.lastCall.args[0].agent).to.be.a(CustomAgent.SSL);
         done();
       });
     });
@@ -357,38 +358,47 @@ describe('Http Connector', function () {
   });
 
   describe('Connection cleanup', function () {
+    // skip these tests if native keep alive requests are supported
+    if (CustomAgent.supportsNativeKeepAlive) {
+      return;
+    }
+
     it('destroys any connections created', function (done) {
       this.timeout(null);
       var cp = require('child_process');
       var path = require('path');
-      var fixtures = path.join(__dirname, '../../fixtures/');
+      var fixture = _.partial(path.join, __dirname, '../../fixtures');
       var timeout; // start the timeout once we hear back from the client
 
-      var server = cp.fork(fixtures + 'keepalive_server.js');
-      var client = cp.fork(fixtures + 'keepalive.js');
+      var server = cp.fork(fixture('keepalive_server.js'))
+        .on('message', function (port) {
+          console.log('server sent port number', port);
+          client.send(port);
+        })
+        .once('exit', function () {
+          console.log('server closed');
+        });
 
-      server.on('message', function (port) {
-        client.send(port);
-      });
+      var client = cp.fork(fixture('keepalive.js'))
+        .on('message', function (output) {
+          console.log('client sent output', output);
+          expect(output).to.have.property('remaining', 0);
+          expect(output).to.have.property('timeouts', 0);
+          server.kill('SIGKILL');
+          if (client.connected) {
+            client.disconnect();
+          }
 
-      client.on('message', function (output) {
-        expect(output).to.have.property('remaining', 0);
-        expect(output).to.have.property('timeouts', 0);
-        server.kill('SIGKILL');
-        if (client.connected) {
-          client.disconnect();
-        }
-
-        timeout = setTimeout(function () {
-          client.removeListener('exit');
-          done(new Error('process should have closed by now'));
-        }, 2000);
-      });
-
-      client.on('exit', function () {
-        clearTimeout(timeout);
-        done();
-      });
+          timeout = setTimeout(function () {
+            client.removeListener('exit');
+            done(new Error('process should have closed by now'));
+          }, 2000);
+        })
+        .on('exit', function () {
+          console.log('client closed');
+          clearTimeout(timeout);
+          done();
+        });
     });
 
     it('properly removes all elements from the socket', function () {

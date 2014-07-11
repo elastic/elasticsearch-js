@@ -14,7 +14,7 @@ var handles = {
 };
 var _ = require('../utils');
 var qs = require('querystring');
-var ForeverAgent = require('./_custom_forever_agent');
+var ForeverAgent = require('./_custom_agent');
 var ConnectionAbstract = require('../connection');
 
 /**
