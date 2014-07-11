@@ -740,7 +740,7 @@ client.index({
     tags: ['y', 'z'],
     published: true,
   }
-}, function (error response) {
+}, function (error, response) {
 
 });
 ---------

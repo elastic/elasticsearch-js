@@ -3215,6 +3215,7 @@ api.indices.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+ * @param {Boolean} params.create - Whether the index template should only be added if new or can also replace an existing one
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
@@ -3224,6 +3225,10 @@ api.indices.prototype.putTemplate = ca({
   params: {
     order: {
       type: 'number'
+    },
+    create: {
+      type: 'boolean',
+      'default': false
     },
     timeout: {
       type: 'time'
@@ -3478,7 +3483,7 @@ api.indices.prototype.segments = ca({
  * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
  * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
- * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
+ * @param {String, String[], Boolean} params.groups - A comma-separated list of search groups for `search` index metric
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {String} [params.level=indices] - Return stats aggregated at cluster, index or shard level
  * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
@@ -3499,7 +3504,7 @@ api.indices.prototype.stats = ca({
       type: 'list'
     },
     groups: {
-      type: 'boolean'
+      type: 'list'
     },
     human: {
       type: 'boolean',
@@ -4494,6 +4499,7 @@ api.nodes.prototype.stats = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.percolateIndex - The index to percolate the document into. Defaults to index.
  * @param {String} params.percolateType - The type to percolate document into. Defaults to type.
+ * @param {String} params.percolateFormat - Return an array of matching query IDs instead of objects
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.index - The index of the document being percolated.
@@ -4532,6 +4538,13 @@ api.percolate = ca({
     percolateType: {
       type: 'string',
       name: 'percolate_type'
+    },
+    percolateFormat: {
+      type: 'enum',
+      options: [
+        'ids'
+      ],
+      name: 'percolate_format'
     },
     version: {
       type: 'number'
@@ -4637,7 +4650,6 @@ api.scroll = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String, String[], Boolean} params.indicesBoost - Comma-separated list of index boosts
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
@@ -4657,6 +4669,7 @@ api.scroll = ca({
  * @param {Number} params.suggestSize - How many suggestions to return in response
  * @param {Text} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -4707,10 +4720,6 @@ api.search = ca({
         'closed'
       ],
       name: 'expand_wildcards'
-    },
-    indicesBoost: {
-      type: 'list',
-      name: 'indices_boost'
     },
     lenient: {
       type: 'boolean'
@@ -4790,6 +4799,10 @@ api.search = ca({
     },
     timeout: {
       type: 'time'
+    },
+    trackScores: {
+      type: 'boolean',
+      name: 'track_scores'
     },
     version: {
       type: 'boolean'
@@ -5381,7 +5394,7 @@ api.termvector = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
- * @param {String} params.lang - The script language (default: mvel)
+ * @param {String} params.lang - The script language (default: groovy)
  * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type

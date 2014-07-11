@@ -849,7 +849,7 @@ client.index({
     tags: ['y', 'z'],
     published: true,
   }
-}, function (error response) {
+}, function (error, response) {
 
 });
 ---------
@@ -1520,6 +1520,8 @@ Options:::
 `Text` -- The source text for which the suggestions should be returned
 `timeout`::
 `Date, Number` -- Explicit operation timeout
+`trackScores`::
+`Boolean` -- Whether to calculate and return scores even if they are not used for sorting
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
 `index`::

@@ -3215,6 +3215,7 @@ api.indices.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+ * @param {Boolean} params.create - Whether the index template should only be added if new or can also replace an existing one
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
@@ -3224,6 +3225,10 @@ api.indices.prototype.putTemplate = ca({
   params: {
     order: {
       type: 'number'
+    },
+    create: {
+      type: 'boolean',
+      'default': false
     },
     timeout: {
       type: 'time'
@@ -3478,7 +3483,7 @@ api.indices.prototype.segments = ca({
  * @param {String, String[], Boolean} params.completionFields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
  * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
- * @param {Boolean} params.groups - A comma-separated list of search groups for `search` index metric
+ * @param {String, String[], Boolean} params.groups - A comma-separated list of search groups for `search` index metric
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {String} [params.level=indices] - Return stats aggregated at cluster, index or shard level
  * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
@@ -3499,7 +3504,7 @@ api.indices.prototype.stats = ca({
       type: 'list'
     },
     groups: {
-      type: 'boolean'
+      type: 'list'
     },
     human: {
       type: 'boolean',
@@ -4718,6 +4723,7 @@ api.scroll = ca({
  * @param {Number} params.suggestSize - How many suggestions to return in response
  * @param {Text} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -4851,6 +4857,10 @@ api.search = ca({
     },
     timeout: {
       type: 'time'
+    },
+    trackScores: {
+      type: 'boolean',
+      name: 'track_scores'
     },
     version: {
       type: 'boolean'

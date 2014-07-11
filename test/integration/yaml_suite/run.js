@@ -1,6 +1,5 @@
 module.exports = function (branch) {
   var path = require('path');
-  var async = require('async');
   var jsYaml = require('js-yaml');
   var YamlFile = require('./yaml_file');
   var root = require('find-root')(__dirname);
@@ -23,10 +22,7 @@ module.exports = function (branch) {
 
     before(function (done) {
       // make sure ES is empty
-      clientManager.get().indices.delete({
-        index: '*',
-        ignore: 404
-      }, done);
+      clientManager.get().clearEs(done);
     });
 
     var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {

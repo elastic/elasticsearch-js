@@ -45,6 +45,10 @@ var config = {
 
 utils.branches.forEach(function (branch) {
 
+  config['generate_' + branch] = {
+    exec: 'node ./scripts/generate/index.js --branch=' + branch
+  };
+
   config['install_es_' + branch] = {
     exec: './scripts/es.sh install ' + branch,
   };

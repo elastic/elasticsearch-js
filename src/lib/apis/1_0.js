@@ -4514,6 +4514,7 @@ api.scroll = ca({
  * @param {Number} params.suggestSize - How many suggestions to return in response
  * @param {Text} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -4647,6 +4648,10 @@ api.search = ca({
     },
     timeout: {
       type: 'time'
+    },
+    trackScores: {
+      type: 'boolean',
+      name: 'track_scores'
     },
     version: {
       type: 'boolean'

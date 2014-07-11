@@ -874,7 +874,7 @@ client.index({
     tags: ['y', 'z'],
     published: true,
   }
-}, function (error response) {
+}, function (error, response) {
 
 });
 ---------
@@ -1570,6 +1570,8 @@ Options:::
 `Text` -- The source text for which the suggestions should be returned
 `timeout`::
 `Date, Number` -- Explicit operation timeout
+`trackScores`::
+`Boolean` -- Whether to calculate and return scores even if they are not used for sorting
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
 `index`::
@@ -3718,7 +3720,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
 `groups`::
-`Boolean` -- A comma-separated list of search groups for `search` index metric
+`String, String[], Boolean` -- A comma-separated list of search groups for `search` index metric
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `[level=indices]`::

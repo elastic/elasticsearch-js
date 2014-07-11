@@ -30,10 +30,7 @@ function YamlFile(filename, docs) {
     });
 
     afterEach(/* doc */function (done) {
-      clientManager.get().indices.delete({
-        index: '*',
-        ignore: 404
-      }, done);
+      clientManager.get().clearEs(done);
     });
   });
 

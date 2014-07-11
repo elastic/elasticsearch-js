@@ -11,7 +11,7 @@ var _ = require('../../../src/lib/utils');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 
-var implementedFeatures = ['gtelte', 'regex'];
+var implementedFeatures = ['gtelte', 'regex', 'benchmark'];
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
@@ -96,10 +96,7 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 
 // empty all of the indices in ES please
 function clearIndices(done) {
-  clientManager.get().indices.delete({
-    index: '*',
-    ignore: 404
-  }, done);
+  clientManager.get().clearEs(done);
 }
 
 function YamlDoc(doc, file) {
