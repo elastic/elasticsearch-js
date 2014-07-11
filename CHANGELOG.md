@@ -1,5 +1,9 @@
 # elasticsearch-js changelog
 
+## 2.3 (Jul 11 2014)
+ - Added support for Node 0.11
+ - Updated `bluebird`, which modified the [promise api](https://github.com/petkaantonov/bluebird/blob/v2.2.1/API.md) somewhat
+
 ## 2.2 (Mar 27 2014)
 - The default API version is now `'1.2'`
 - Node clinet now supports master, 1.x, 1.2, 1.1, 1.0, and 0.90
