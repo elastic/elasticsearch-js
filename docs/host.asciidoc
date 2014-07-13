@@ -1,7 +1,7 @@
 [[host-reference]]
 == Host
 
-The host class is used to represent a single node/host/endpoint. These objects are created automatically by the Client constructor, as well as durring sniff operations.
+The host class is used to represent a single node/host/endpoint. These objects are created automatically by the Client constructor, as well as during sniff operations.
 
 === Constructor(params)
 
