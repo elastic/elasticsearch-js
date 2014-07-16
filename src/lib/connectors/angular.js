@@ -17,7 +17,7 @@ function AngularConnector(host, config) {
   config.$injector.invoke(['$http', '$q','$rootScope', function ($http, $q, $rootScope) {
     connector.$q = $q;
     connector.$http = $http;
-    connector.$roootSScope = $rootScope;
+    connector.$rootScope = $rootScope;
 
     if (connector.host.auth) {
       connector.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(connector.host.auth, 'utf8')).toString('base64');
