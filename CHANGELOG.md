@@ -1,5 +1,8 @@
 # elasticsearch-js changelog
 
+## 2.4 (Jul ?? 2014)
+ - Added apiVersion `"1.3"`, which is now the default
+
 ## 2.3 (Jul 11 2014)
  - Added support for Node 0.11
  - Updated `bluebird`, which modified the [promise api](https://github.com/petkaantonov/bluebird/blob/v2.2.1/API.md) somewhat

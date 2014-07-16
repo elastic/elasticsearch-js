@@ -75,6 +75,7 @@ function manage_es {
       if [[ $ES_BRANCH == "master" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.x" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.2" ]]; then local JDK='JDK7'
+      elif [[ $ES_BRANCH == "1.3" ]]; then local JDK='JDK7'
       else local JDK='JDK6'
       fi
 

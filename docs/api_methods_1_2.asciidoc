@@ -1,115 +1,109 @@
-[[api-reference]]
-== 1.3 API
+[[api-reference-1-2]]
+== 1.2 API
 
 
-NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
+NOTE: At this time, you must opt into the 1.2 API by setting the `apiVersion` config parameter.
 
-[[js-api-method-index]]
-* <<api-abortbenchmark,abortBenchmark>>
-* <<api-bulk,bulk>>
-* <<api-clearscroll,clearScroll>>
-* <<api-count,count>>
-* <<api-countpercolate,countPercolate>>
-* <<api-create,create>>
-* <<api-delete,delete>>
-* <<api-deletebyquery,deleteByQuery>>
-* <<api-deletescript,deleteScript>>
-* <<api-deletetemplate,deleteTemplate>>
-* <<api-exists,exists>>
-* <<api-explain,explain>>
-* <<api-get,get>>
-* <<api-getscript,getScript>>
-* <<api-getsource,getSource>>
-* <<api-gettemplate,getTemplate>>
-* <<api-index,index>>
-* <<api-info,info>>
-* <<api-listbenchmarks,listBenchmarks>>
-* <<api-mget,mget>>
-* <<api-mlt,mlt>>
-* <<api-mpercolate,mpercolate>>
-* <<api-msearch,msearch>>
-* <<api-mtermvectors,mtermvectors>>
-* <<api-percolate,percolate>>
-* <<api-ping,ping>>
-* <<api-putscript,putScript>>
-* <<api-puttemplate,putTemplate>>
-* <<api-scroll,scroll>>
-* <<api-search,search>>
-* <<api-searchshards,searchShards>>
-* <<api-searchtemplate,searchTemplate>>
-* <<api-suggest,suggest>>
-* <<api-termvector,termvector>>
-* <<api-update,update>>
-* <<api-cat-aliases,cat.aliases>>
-* <<api-cat-allocation,cat.allocation>>
-* <<api-cat-count,cat.count>>
-* <<api-cat-fielddata,cat.fielddata>>
-* <<api-cat-health,cat.health>>
-* <<api-cat-help,cat.help>>
-* <<api-cat-indices,cat.indices>>
-* <<api-cat-master,cat.master>>
-* <<api-cat-nodes,cat.nodes>>
-* <<api-cat-pendingtasks,cat.pendingTasks>>
-* <<api-cat-plugins,cat.plugins>>
-* <<api-cat-recovery,cat.recovery>>
-* <<api-cat-shards,cat.shards>>
-* <<api-cat-threadpool,cat.threadPool>>
-* <<api-cluster-getsettings,cluster.getSettings>>
-* <<api-cluster-health,cluster.health>>
-* <<api-cluster-pendingtasks,cluster.pendingTasks>>
-* <<api-cluster-putsettings,cluster.putSettings>>
-* <<api-cluster-reroute,cluster.reroute>>
-* <<api-cluster-state,cluster.state>>
-* <<api-cluster-stats,cluster.stats>>
-* <<api-indices-analyze,indices.analyze>>
-* <<api-indices-clearcache,indices.clearCache>>
-* <<api-indices-close,indices.close>>
-* <<api-indices-create,indices.create>>
-* <<api-indices-delete,indices.delete>>
-* <<api-indices-deletealias,indices.deleteAlias>>
-* <<api-indices-deletemapping,indices.deleteMapping>>
-* <<api-indices-deletetemplate,indices.deleteTemplate>>
-* <<api-indices-deletewarmer,indices.deleteWarmer>>
-* <<api-indices-exists,indices.exists>>
-* <<api-indices-existsalias,indices.existsAlias>>
-* <<api-indices-existstemplate,indices.existsTemplate>>
-* <<api-indices-existstype,indices.existsType>>
-* <<api-indices-flush,indices.flush>>
-* <<api-indices-getalias,indices.getAlias>>
-* <<api-indices-getaliases,indices.getAliases>>
-* <<api-indices-getfieldmapping,indices.getFieldMapping>>
-* <<api-indices-getmapping,indices.getMapping>>
-* <<api-indices-getsettings,indices.getSettings>>
-* <<api-indices-gettemplate,indices.getTemplate>>
-* <<api-indices-getwarmer,indices.getWarmer>>
-* <<api-indices-open,indices.open>>
-* <<api-indices-optimize,indices.optimize>>
-* <<api-indices-putalias,indices.putAlias>>
-* <<api-indices-putmapping,indices.putMapping>>
-* <<api-indices-putsettings,indices.putSettings>>
-* <<api-indices-puttemplate,indices.putTemplate>>
-* <<api-indices-putwarmer,indices.putWarmer>>
-* <<api-indices-recovery,indices.recovery>>
-* <<api-indices-refresh,indices.refresh>>
-* <<api-indices-segments,indices.segments>>
-* <<api-indices-stats,indices.stats>>
-* <<api-indices-status,indices.status>>
-* <<api-indices-updatealiases,indices.updateAliases>>
-* <<api-indices-validatequery,indices.validateQuery>>
-* <<api-nodes-hotthreads,nodes.hotThreads>>
-* <<api-nodes-info,nodes.info>>
-* <<api-nodes-shutdown,nodes.shutdown>>
-* <<api-nodes-stats,nodes.stats>>
-* <<api-snapshot-create,snapshot.create>>
-* <<api-snapshot-createrepository,snapshot.createRepository>>
-* <<api-snapshot-delete,snapshot.delete>>
-* <<api-snapshot-deleterepository,snapshot.deleteRepository>>
-* <<api-snapshot-get,snapshot.get>>
-* <<api-snapshot-getrepository,snapshot.getRepository>>
-* <<api-snapshot-restore,snapshot.restore>>
-* <<api-snapshot-status,snapshot.status>>
+[[js-api-method-index-1-2]]
+* <<api-abortbenchmark-1-2,abortBenchmark>>
+* <<api-bulk-1-2,bulk>>
+* <<api-clearscroll-1-2,clearScroll>>
+* <<api-count-1-2,count>>
+* <<api-countpercolate-1-2,countPercolate>>
+* <<api-create-1-2,create>>
+* <<api-delete-1-2,delete>>
+* <<api-deletebyquery-1-2,deleteByQuery>>
+* <<api-exists-1-2,exists>>
+* <<api-explain-1-2,explain>>
+* <<api-get-1-2,get>>
+* <<api-getsource-1-2,getSource>>
+* <<api-index-1-2,index>>
+* <<api-info-1-2,info>>
+* <<api-listbenchmarks-1-2,listBenchmarks>>
+* <<api-mget-1-2,mget>>
+* <<api-mlt-1-2,mlt>>
+* <<api-mpercolate-1-2,mpercolate>>
+* <<api-msearch-1-2,msearch>>
+* <<api-mtermvectors-1-2,mtermvectors>>
+* <<api-percolate-1-2,percolate>>
+* <<api-ping-1-2,ping>>
+* <<api-scroll-1-2,scroll>>
+* <<api-search-1-2,search>>
+* <<api-searchshards-1-2,searchShards>>
+* <<api-searchtemplate-1-2,searchTemplate>>
+* <<api-suggest-1-2,suggest>>
+* <<api-termvector-1-2,termvector>>
+* <<api-update-1-2,update>>
+* <<api-cat-aliases-1-2,cat.aliases>>
+* <<api-cat-allocation-1-2,cat.allocation>>
+* <<api-cat-count-1-2,cat.count>>
+* <<api-cat-fielddata-1-2,cat.fielddata>>
+* <<api-cat-health-1-2,cat.health>>
+* <<api-cat-help-1-2,cat.help>>
+* <<api-cat-indices-1-2,cat.indices>>
+* <<api-cat-master-1-2,cat.master>>
+* <<api-cat-nodes-1-2,cat.nodes>>
+* <<api-cat-pendingtasks-1-2,cat.pendingTasks>>
+* <<api-cat-plugins-1-2,cat.plugins>>
+* <<api-cat-recovery-1-2,cat.recovery>>
+* <<api-cat-shards-1-2,cat.shards>>
+* <<api-cat-threadpool-1-2,cat.threadPool>>
+* <<api-cluster-getsettings-1-2,cluster.getSettings>>
+* <<api-cluster-health-1-2,cluster.health>>
+* <<api-cluster-pendingtasks-1-2,cluster.pendingTasks>>
+* <<api-cluster-putsettings-1-2,cluster.putSettings>>
+* <<api-cluster-reroute-1-2,cluster.reroute>>
+* <<api-cluster-state-1-2,cluster.state>>
+* <<api-cluster-stats-1-2,cluster.stats>>
+* <<api-indices-analyze-1-2,indices.analyze>>
+* <<api-indices-clearcache-1-2,indices.clearCache>>
+* <<api-indices-close-1-2,indices.close>>
+* <<api-indices-create-1-2,indices.create>>
+* <<api-indices-delete-1-2,indices.delete>>
+* <<api-indices-deletealias-1-2,indices.deleteAlias>>
+* <<api-indices-deletemapping-1-2,indices.deleteMapping>>
+* <<api-indices-deletetemplate-1-2,indices.deleteTemplate>>
+* <<api-indices-deletewarmer-1-2,indices.deleteWarmer>>
+* <<api-indices-exists-1-2,indices.exists>>
+* <<api-indices-existsalias-1-2,indices.existsAlias>>
+* <<api-indices-existstemplate-1-2,indices.existsTemplate>>
+* <<api-indices-existstype-1-2,indices.existsType>>
+* <<api-indices-flush-1-2,indices.flush>>
+* <<api-indices-getalias-1-2,indices.getAlias>>
+* <<api-indices-getaliases-1-2,indices.getAliases>>
+* <<api-indices-getfieldmapping-1-2,indices.getFieldMapping>>
+* <<api-indices-getmapping-1-2,indices.getMapping>>
+* <<api-indices-getsettings-1-2,indices.getSettings>>
+* <<api-indices-gettemplate-1-2,indices.getTemplate>>
+* <<api-indices-getwarmer-1-2,indices.getWarmer>>
+* <<api-indices-open-1-2,indices.open>>
+* <<api-indices-optimize-1-2,indices.optimize>>
+* <<api-indices-putalias-1-2,indices.putAlias>>
+* <<api-indices-putmapping-1-2,indices.putMapping>>
+* <<api-indices-putsettings-1-2,indices.putSettings>>
+* <<api-indices-puttemplate-1-2,indices.putTemplate>>
+* <<api-indices-putwarmer-1-2,indices.putWarmer>>
+* <<api-indices-recovery-1-2,indices.recovery>>
+* <<api-indices-refresh-1-2,indices.refresh>>
+* <<api-indices-segments-1-2,indices.segments>>
+* <<api-indices-stats-1-2,indices.stats>>
+* <<api-indices-status-1-2,indices.status>>
+* <<api-indices-updatealiases-1-2,indices.updateAliases>>
+* <<api-indices-validatequery-1-2,indices.validateQuery>>
+* <<api-nodes-hotthreads-1-2,nodes.hotThreads>>
+* <<api-nodes-info-1-2,nodes.info>>
+* <<api-nodes-shutdown-1-2,nodes.shutdown>>
+* <<api-nodes-stats-1-2,nodes.stats>>
+* <<api-snapshot-create-1-2,snapshot.create>>
+* <<api-snapshot-createrepository-1-2,snapshot.createRepository>>
+* <<api-snapshot-delete-1-2,snapshot.delete>>
+* <<api-snapshot-deleterepository-1-2,snapshot.deleteRepository>>
+* <<api-snapshot-get-1-2,snapshot.get>>
+* <<api-snapshot-getrepository-1-2,snapshot.getRepository>>
+* <<api-snapshot-restore-1-2,snapshot.restore>>
+* <<api-snapshot-status-1-2,snapshot.status>>
 
-[[api-abortbenchmark]]
+[[api-abortbenchmark-1-2]]
 === `abortBenchmark`
 
 [source,js]
@@ -132,7 +126,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-bulk]]
+[[api-bulk-1-2]]
 === `bulk`
 
 [source,js]
@@ -196,7 +190,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-clearscroll]]
+[[api-clearscroll-1-2]]
 === `clearScroll`
 
 [source,js]
@@ -219,7 +213,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-count]]
+[[api-count-1-2]]
 === `count`
 
 [source,js]
@@ -298,7 +292,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-countpercolate]]
+[[api-countpercolate-1-2]]
 === `countPercolate`
 
 [source,js]
@@ -353,7 +347,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-create]]
+[[api-create-1-2]]
 === `create`
 
 [source,js]
@@ -432,7 +426,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-delete]]
+[[api-delete-1-2]]
 === `delete`
 
 [source,js]
@@ -500,7 +494,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletebyquery]]
+[[api-deletebyquery-1-2]]
 === `deleteByQuery`
 
 [source,js]
@@ -590,55 +584,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletescript]]
-=== `deleteScript`
-
-[source,js]
---------
-client.deleteScript([params, [callback]])
---------
-
-// no description
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Script ID
-`lang`::
-`String` -- Script language
-
-link:#[back to top]
-
-[[api-deletetemplate]]
-=== `deleteTemplate`
-
-[source,js]
---------
-client.deleteTemplate([params, [callback]])
---------
-
-// no description
-
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Template ID
-
-link:#[back to top]
-
-[[api-exists]]
+[[api-exists-1-2]]
 === `exists`
 
 [source,js]
@@ -689,7 +635,7 @@ client.exists({
 
 link:#[back to top]
 
-[[api-explain]]
+[[api-explain-1-2]]
 === `explain`
 
 [source,js]
@@ -781,7 +727,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-get]]
+[[api-get-1-2]]
 === `get`
 
 [source,js]
@@ -846,32 +792,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-getscript]]
-=== `getScript`
-
-[source,js]
---------
-client.getScript([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Script ID
-`lang`::
-`String` -- Script language
-
-link:#[back to top]
-
-[[api-getsource]]
+[[api-getsource-1-2]]
 === `getSource`
 
 [source,js]
@@ -924,30 +845,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-gettemplate]]
-=== `getTemplate`
-
-[source,js]
---------
-client.getTemplate([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Template ID
-
-link:#[back to top]
-
-[[api-index]]
+[[api-index-1-2]]
 === `index`
 
 [source,js]
@@ -1029,7 +927,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-info]]
+[[api-info-1-2]]
 === `info`
 
 [source,js]
@@ -1045,7 +943,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 
 
-[[api-listbenchmarks]]
+[[api-listbenchmarks-1-2]]
 === `listBenchmarks`
 
 [source,js]
@@ -1070,7 +968,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-mget]]
+[[api-mget-1-2]]
 === `mget`
 
 [source,js]
@@ -1137,7 +1035,7 @@ client.mget({
 
 link:#[back to top]
 
-[[api-mlt]]
+[[api-mlt-1-2]]
 === `mlt`
 
 [source,js]
@@ -1213,7 +1111,7 @@ client.mlt({
 
 link:#[back to top]
 
-[[api-mpercolate]]
+[[api-mpercolate-1-2]]
 === `mpercolate`
 
 [source,js]
@@ -1248,7 +1146,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-msearch]]
+[[api-msearch-1-2]]
 === `msearch`
 
 [source,js]
@@ -1297,7 +1195,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-mtermvectors]]
+[[api-mtermvectors-1-2]]
 === `mtermvectors`
 
 [source,js]
@@ -1344,7 +1242,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-percolate]]
+[[api-percolate-1-2]]
 === `percolate`
 
 [source,js]
@@ -1467,7 +1365,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-ping]]
+[[api-ping-1-2]]
 === `ping`
 
 [source,js]
@@ -1483,55 +1381,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 
 
 
-[[api-putscript]]
-=== `putScript`
-
-[source,js]
---------
-client.putScript([params, [callback]])
---------
-
-// no description
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Script ID
-`lang`::
-`String` -- Script language
-
-link:#[back to top]
-
-[[api-puttemplate]]
-=== `putTemplate`
-
-[source,js]
---------
-client.putTemplate([params, [callback]])
---------
-
-// no description
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`id`::
-`String` -- Template ID
-
-link:#[back to top]
-
-[[api-scroll]]
+[[api-scroll-1-2]]
 === `scroll`
 
 [source,js]
@@ -1584,7 +1434,7 @@ client.search({
 
 link:#[back to top]
 
-[[api-search]]
+[[api-search-1-2]]
 === `search`
 
 [source,js]
@@ -1731,7 +1581,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchshards]]
+[[api-searchshards-1-2]]
 === `searchShards`
 
 [source,js]
@@ -1772,7 +1622,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchtemplate]]
+[[api-searchtemplate-1-2]]
 === `searchTemplate`
 
 [source,js]
@@ -1823,7 +1673,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-suggest]]
+[[api-suggest-1-2]]
 === `suggest`
 
 [source,js]
@@ -1895,7 +1745,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-termvector]]
+[[api-termvector-1-2]]
 === `termvector`
 
 [source,js]
@@ -1940,7 +1790,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-update]]
+[[api-update-1-2]]
 === `update`
 
 [source,js]
@@ -2079,7 +1929,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-aliases]]
+[[api-cat-aliases-1-2]]
 === `cat.aliases`
 
 [source,js]
@@ -2112,7 +1962,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-allocation]]
+[[api-cat-allocation-1-2]]
 === `cat.allocation`
 
 [source,js]
@@ -2153,7 +2003,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-count]]
+[[api-cat-count-1-2]]
 === `cat.count`
 
 [source,js]
@@ -2186,7 +2036,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-fielddata]]
+[[api-cat-fielddata-1-2]]
 === `cat.fielddata`
 
 [source,js]
@@ -2227,7 +2077,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-health]]
+[[api-cat-health-1-2]]
 === `cat.health`
 
 [source,js]
@@ -2260,7 +2110,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-help]]
+[[api-cat-help-1-2]]
 === `cat.help`
 
 [source,js]
@@ -2283,7 +2133,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-indices]]
+[[api-cat-indices-1-2]]
 === `cat.indices`
 
 [source,js]
@@ -2326,7 +2176,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-master]]
+[[api-cat-master-1-2]]
 === `cat.master`
 
 [source,js]
@@ -2357,7 +2207,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-nodes]]
+[[api-cat-nodes-1-2]]
 === `cat.nodes`
 
 [source,js]
@@ -2388,7 +2238,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-pendingtasks]]
+[[api-cat-pendingtasks-1-2]]
 === `cat.pendingTasks`
 
 [source,js]
@@ -2419,7 +2269,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-plugins]]
+[[api-cat-plugins-1-2]]
 === `cat.plugins`
 
 [source,js]
@@ -2450,7 +2300,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-recovery]]
+[[api-cat-recovery-1-2]]
 === `cat.recovery`
 
 [source,js]
@@ -2489,7 +2339,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-shards]]
+[[api-cat-shards-1-2]]
 === `cat.shards`
 
 [source,js]
@@ -2522,7 +2372,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-threadpool]]
+[[api-cat-threadpool-1-2]]
 === `cat.threadPool`
 
 [source,js]
@@ -2555,7 +2405,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-getsettings]]
+[[api-cluster-getsettings-1-2]]
 === `cluster.getSettings`
 
 [source,js]
@@ -2582,7 +2432,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-health]]
+[[api-cluster-health-1-2]]
 === `cluster.health`
 
 [source,js]
@@ -2631,7 +2481,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-pendingtasks]]
+[[api-cluster-pendingtasks-1-2]]
 === `cluster.pendingTasks`
 
 [source,js]
@@ -2656,7 +2506,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-putsettings]]
+[[api-cluster-putsettings-1-2]]
 === `cluster.putSettings`
 
 [source,js]
@@ -2679,7 +2529,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-reroute]]
+[[api-cluster-reroute-1-2]]
 === `cluster.reroute`
 
 [source,js]
@@ -2710,7 +2560,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-cluster-state]]
+[[api-cluster-state-1-2]]
 === `cluster.state`
 
 [source,js]
@@ -2741,7 +2591,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-stats]]
+[[api-cluster-stats-1-2]]
 === `cluster.stats`
 
 [source,js]
@@ -2768,7 +2618,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-analyze]]
+[[api-indices-analyze-1-2]]
 === `indices.analyze`
 
 [source,js]
@@ -2811,7 +2661,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-clearcache]]
+[[api-indices-clearcache-1-2]]
 === `indices.clearCache`
 
 [source,js]
@@ -2862,7 +2712,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-close]]
+[[api-indices-close-1-2]]
 === `indices.close`
 
 [source,js]
@@ -2899,7 +2749,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-create]]
+[[api-indices-create-1-2]]
 === `indices.create`
 
 [source,js]
@@ -2926,7 +2776,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-indices-delete]]
+[[api-indices-delete-1-2]]
 === `indices.delete`
 
 [source,js]
@@ -2953,7 +2803,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletealias]]
+[[api-indices-deletealias-1-2]]
 === `indices.deleteAlias`
 
 [source,js]
@@ -2982,7 +2832,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletemapping]]
+[[api-indices-deletemapping-1-2]]
 === `indices.deleteMapping`
 
 [source,js]
@@ -3009,7 +2859,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletetemplate]]
+[[api-indices-deletetemplate-1-2]]
 === `indices.deleteTemplate`
 
 [source,js]
@@ -3036,7 +2886,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletewarmer]]
+[[api-indices-deletewarmer-1-2]]
 === `indices.deleteWarmer`
 
 [source,js]
@@ -3063,7 +2913,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-exists]]
+[[api-indices-exists-1-2]]
 === `indices.exists`
 
 [source,js]
@@ -3098,7 +2948,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existsalias]]
+[[api-indices-existsalias-1-2]]
 === `indices.existsAlias`
 
 [source,js]
@@ -3135,7 +2985,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existstemplate]]
+[[api-indices-existstemplate-1-2]]
 === `indices.existsTemplate`
 
 [source,js]
@@ -3160,7 +3010,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-indices-existstype]]
+[[api-indices-existstype-1-2]]
 === `indices.existsType`
 
 [source,js]
@@ -3197,7 +3047,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-flush]]
+[[api-indices-flush-1-2]]
 === `indices.flush`
 
 [source,js]
@@ -3234,7 +3084,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getalias]]
+[[api-indices-getalias-1-2]]
 === `indices.getAlias`
 
 [source,js]
@@ -3271,7 +3121,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getaliases]]
+[[api-indices-getaliases-1-2]]
 === `indices.getAliases`
 
 [source,js]
@@ -3300,7 +3150,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-getfieldmapping]]
+[[api-indices-getfieldmapping-1-2]]
 === `indices.getFieldMapping`
 
 [source,js]
@@ -3341,7 +3191,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getmapping]]
+[[api-indices-getmapping-1-2]]
 === `indices.getMapping`
 
 [source,js]
@@ -3378,7 +3228,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getsettings]]
+[[api-indices-getsettings-1-2]]
 === `indices.getSettings`
 
 [source,js]
@@ -3417,7 +3267,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-gettemplate]]
+[[api-indices-gettemplate-1-2]]
 === `indices.getTemplate`
 
 [source,js]
@@ -3444,7 +3294,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-getwarmer]]
+[[api-indices-getwarmer-1-2]]
 === `indices.getWarmer`
 
 [source,js]
@@ -3483,7 +3333,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-open]]
+[[api-indices-open-1-2]]
 === `indices.open`
 
 [source,js]
@@ -3520,7 +3370,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-optimize]]
+[[api-indices-optimize-1-2]]
 === `indices.optimize`
 
 [source,js]
@@ -3565,7 +3415,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putalias]]
+[[api-indices-putalias-1-2]]
 === `indices.putAlias`
 
 [source,js]
@@ -3594,7 +3444,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-putmapping]]
+[[api-indices-putmapping-1-2]]
 === `indices.putMapping`
 
 [source,js]
@@ -3635,7 +3485,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putsettings]]
+[[api-indices-putsettings-1-2]]
 === `indices.putSettings`
 
 [source,js]
@@ -3672,7 +3522,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-puttemplate]]
+[[api-indices-puttemplate-1-2]]
 === `indices.putTemplate`
 
 [source,js]
@@ -3692,8 +3542,6 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 [horizontal]
 `order`::
 `Number` -- The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-`create`::
-`Boolean` -- Whether the index template should only be added if new or can also replace an existing one
 `timeout`::
 `Date, Number` -- Explicit operation timeout
 `masterTimeout`::
@@ -3705,7 +3553,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-putwarmer]]
+[[api-indices-putwarmer-1-2]]
 === `indices.putWarmer`
 
 [source,js]
@@ -3744,7 +3592,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-recovery]]
+[[api-indices-recovery-1-2]]
 === `indices.recovery`
 
 [source,js]
@@ -3773,7 +3621,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-refresh]]
+[[api-indices-refresh-1-2]]
 === `indices.refresh`
 
 [source,js]
@@ -3810,7 +3658,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-segments]]
+[[api-indices-segments-1-2]]
 === `indices.segments`
 
 [source,js]
@@ -3847,7 +3695,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-stats]]
+[[api-indices-stats-1-2]]
 === `indices.stats`
 
 [source,js]
@@ -3891,7 +3739,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-status]]
+[[api-indices-status-1-2]]
 === `indices.status`
 
 [source,js]
@@ -3932,7 +3780,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-updatealiases]]
+[[api-indices-updatealiases-1-2]]
 === `indices.updateAliases`
 
 [source,js]
@@ -3970,7 +3818,7 @@ client.indices.updateAliases({
 
 link:#[back to top]
 
-[[api-indices-validatequery]]
+[[api-indices-validatequery-1-2]]
 === `indices.validateQuery`
 
 [source,js]
@@ -4013,7 +3861,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-nodes-hotthreads]]
+[[api-nodes-hotthreads-1-2]]
 === `nodes.hotThreads`
 
 [source,js]
@@ -4049,7 +3897,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-nodes-info]]
+[[api-nodes-info-1-2]]
 === `nodes.info`
 
 [source,js]
@@ -4078,7 +3926,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-nodes-shutdown]]
+[[api-nodes-shutdown-1-2]]
 === `nodes.shutdown`
 
 [source,js]
@@ -4105,7 +3953,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-nodes-stats]]
+[[api-nodes-stats-1-2]]
 === `nodes.stats`
 
 [source,js]
@@ -4151,7 +3999,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-snapshot-create]]
+[[api-snapshot-create-1-2]]
 === `snapshot.create`
 
 [source,js]
@@ -4180,7 +4028,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-createrepository]]
+[[api-snapshot-createrepository-1-2]]
 === `snapshot.createRepository`
 
 [source,js]
@@ -4207,7 +4055,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-delete]]
+[[api-snapshot-delete-1-2]]
 === `snapshot.delete`
 
 [source,js]
@@ -4234,7 +4082,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-snapshot-deleterepository]]
+[[api-snapshot-deleterepository-1-2]]
 === `snapshot.deleteRepository`
 
 [source,js]
@@ -4261,7 +4109,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-snapshot-get]]
+[[api-snapshot-get-1-2]]
 === `snapshot.get`
 
 [source,js]
@@ -4288,7 +4136,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-snapshot-getrepository]]
+[[api-snapshot-getrepository-1-2]]
 === `snapshot.getRepository`
 
 [source,js]
@@ -4315,7 +4163,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-snapshot-restore]]
+[[api-snapshot-restore-1-2]]
 === `snapshot.restore`
 
 [source,js]
@@ -4344,7 +4192,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-status]]
+[[api-snapshot-status-1-2]]
 === `snapshot.status`
 
 [source,js]

@@ -3,7 +3,7 @@
 var ca = require('../client_action');
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indexedScript', 'indexedTemplate', 'indices', 'nodes', 'snapshot'];
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
  * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
@@ -1826,20 +1826,16 @@ api.index = ca({
   method: 'POST'
 });
 
-api.indexedScript = function IndexedScriptNS(transport) {
-  this.transport = transport;
-};
-
 /**
- * Perform a [indexedScript.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [putScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
-api.indexedScript.prototype.create = ca({
+api.putScript = ca({
   url: {
-    fmt: '/_search/script/<%=lang%>/<%=id%>',
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
       lang: {
         type: 'string'
@@ -1850,19 +1846,19 @@ api.indexedScript.prototype.create = ca({
     }
   },
   needBody: true,
-  method: 'POST'
+  method: 'PUT'
 });
 
 /**
- * Perform a [indexedScript.delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [deleteScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
-api.indexedScript.prototype['delete'] = ca({
+api.deleteScript = ca({
   url: {
-    fmt: '/_search/script/<%=lang%>/<%=id%>',
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
       lang: {
         type: 'string'
@@ -1876,15 +1872,15 @@ api.indexedScript.prototype['delete'] = ca({
 });
 
 /**
- * Perform a [indexedScript.get](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [getScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
-api.indexedScript.prototype.get = ca({
+api.getScript = ca({
   url: {
-    fmt: '/_search/script/<%=lang%>/<%=id%>',
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
       lang: {
         type: 'string'
@@ -1896,17 +1892,13 @@ api.indexedScript.prototype.get = ca({
   }
 });
 
-api.indexedTemplate = function IndexedTemplateNS(transport) {
-  this.transport = transport;
-};
-
 /**
- * Perform a [indexedTemplate.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Template ID
  */
-api.indexedTemplate.prototype.create = ca({
+api.putTemplate = ca({
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -1916,16 +1908,16 @@ api.indexedTemplate.prototype.create = ca({
     }
   },
   needBody: true,
-  method: 'POST'
+  method: 'PUT'
 });
 
 /**
- * Perform a [indexedTemplate.delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Template ID
  */
-api.indexedTemplate.prototype['delete'] = ca({
+api.deleteTemplate = ca({
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -1938,12 +1930,12 @@ api.indexedTemplate.prototype['delete'] = ca({
 });
 
 /**
- * Perform a [indexedTemplate.get](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indexed-scripts.html) request
+ * Perform a [getTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.id - Template ID
  */
-api.indexedTemplate.prototype.get = ca({
+api.getTemplate = ca({
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
