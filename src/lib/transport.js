@@ -197,7 +197,7 @@ Transport.prototype.request = function (params, cb) {
         respond(new errors.ConnectionFault(err));
       }
     } else {
-      self.log.info('Request complete');
+      self.log.debug('Request complete');
       respond(void 0, body, status, headers);
     }
   }
