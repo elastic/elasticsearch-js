@@ -51,7 +51,6 @@ AngularConnector.prototype.request = function (params, cb) {
             }
         });
     });
-  });
 
   return function () {
     abort.resolve();
