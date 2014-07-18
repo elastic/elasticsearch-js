@@ -1,0 +1,3 @@
+describe('Thrift Connector', function () {
+
+});
