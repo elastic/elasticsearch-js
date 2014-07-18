@@ -3,7 +3,7 @@
   "node": true,
   "white": true,
   "bitwise": false,
-  "curly": true,
+  "curly": false,
   "eqnull": true,
   "eqeqeq": true,
   "forin": true,
