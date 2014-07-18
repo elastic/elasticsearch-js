@@ -24,7 +24,6 @@ var ConnectionAbstract = require('../connection');
  *
  * @param {Host} host - The host object representing the elasticsearch node we will be talking to
  * @param {Object} [config] - Configuration options (extends the configuration options for ConnectionAbstract)
- * @param {Number} [config.concurrency=10] - the maximum number of sockets that will be opened to this node
  */
 function ThriftConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
@@ -38,8 +37,11 @@ function ThriftConnector(host, config) {
     transport : thrift.TBufferedTransport(),
     protocol : thrift.TBinaryProtocol()
   });
-  config['onThriftError'] && connection.on('error', config['onThriftError']);
-  config['onThriftConnect'] && connection.on('connect', config['onThriftConnect']);
+
+  if(config) {
+    config['onThriftError'] && connection.on('error', config['onThriftError']);
+    config['onThriftConnect'] && connection.on('connect', config['onThriftConnect']);
+  }
 
   handles[this.host.protocol] = thrift.createClient(elasticsearch_thrift_rest, connection);
 
