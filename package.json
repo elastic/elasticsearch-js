@@ -73,7 +73,8 @@
     "bluebird": "~2.2.1",
     "chalk": "~0.5.1",
     "forever-agent": "~0.5.2",
-    "lodash-node": "~2.4"
+    "lodash-node": "~2.4",
+    "thrift": "~0.9.1"
   },
   "repository": {
     "type": "git",
