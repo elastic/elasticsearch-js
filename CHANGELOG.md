@@ -4,6 +4,7 @@
  - Added support for Node 0.11
  - Updated `bluebird`, which modified the [promise api](https://github.com/petkaantonov/bluebird/blob/v2.2.1/API.md) somewhat
  - moved the log generator into it's own package [makelogs](https://www.npmjs.org/package/makelogs)
+ - [Lower the logging level of `Request complete`](https://github.com/elasticsearch/elasticsearch-js/pull/122)
 
 ## 2.2 (Mar 27 2014)
 - The default API version is now `'1.2'`
