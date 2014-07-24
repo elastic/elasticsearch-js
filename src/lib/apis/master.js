@@ -1417,6 +1417,46 @@ api.deleteByQuery = ca({
 });
 
 /**
+ * Perform a [deleteScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Script ID
+ * @param {String} params.lang - Script language
+ */
+api.deleteScript = ca({
+  url: {
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
+    req: {
+      lang: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'DELETE'
+});
+
+/**
+ * Perform a [deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Template ID
+ */
+api.deleteTemplate = ca({
+  url: {
+    fmt: '/_search/template/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'DELETE'
+});
+
+/**
  * Perform a [exists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -1643,6 +1683,27 @@ api.get = ca({
 });
 
 /**
+ * Perform a [getScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Script ID
+ * @param {String} params.lang - Script language
+ */
+api.getScript = ca({
+  url: {
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
+    req: {
+      lang: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    }
+  }
+});
+
+/**
  * Perform a [getSource](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -1711,6 +1772,23 @@ api.getSource = ca({
       type: {
         type: 'string'
       },
+      id: {
+        type: 'string'
+      }
+    }
+  }
+});
+
+/**
+ * Perform a [getTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Template ID
+ */
+api.getTemplate = ca({
+  url: {
+    fmt: '/_search/template/<%=id%>',
+    req: {
       id: {
         type: 'string'
       }
@@ -1824,126 +1902,6 @@ api.index = ca({
   ],
   needBody: true,
   method: 'POST'
-});
-
-/**
- * Perform a [putScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Script ID
- * @param {String} params.lang - Script language
- */
-api.putScript = ca({
-  url: {
-    fmt: '/_scripts/<%=lang%>/<%=id%>',
-    req: {
-      lang: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
-      }
-    }
-  },
-  needBody: true,
-  method: 'PUT'
-});
-
-/**
- * Perform a [deleteScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Script ID
- * @param {String} params.lang - Script language
- */
-api.deleteScript = ca({
-  url: {
-    fmt: '/_scripts/<%=lang%>/<%=id%>',
-    req: {
-      lang: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'DELETE'
-});
-
-/**
- * Perform a [getScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Script ID
- * @param {String} params.lang - Script language
- */
-api.getScript = ca({
-  url: {
-    fmt: '/_scripts/<%=lang%>/<%=id%>',
-    req: {
-      lang: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
-      }
-    }
-  }
-});
-
-/**
- * Perform a [putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Template ID
- */
-api.putTemplate = ca({
-  url: {
-    fmt: '/_search/template/<%=id%>',
-    req: {
-      id: {
-        type: 'string'
-      }
-    }
-  },
-  needBody: true,
-  method: 'PUT'
-});
-
-/**
- * Perform a [deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Template ID
- */
-api.deleteTemplate = ca({
-  url: {
-    fmt: '/_search/template/<%=id%>',
-    req: {
-      id: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'DELETE'
-});
-
-/**
- * Perform a [getTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.id - Template ID
- */
-api.getTemplate = ca({
-  url: {
-    fmt: '/_search/template/<%=id%>',
-    req: {
-      id: {
-        type: 'string'
-      }
-    }
-  }
 });
 
 api.indices = function IndicesNS(transport) {
@@ -2526,6 +2484,7 @@ api.indices.prototype.existsType = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.force - Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
  * @param {Boolean} params.full - If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
+ * @param {Boolean} params.waitIfOngoing - If set to true the flush operation will block until the flush can be executed if another flush operation is already executing. The default is false and will cause an exception to be thrown on the shard level if another flush operation is already running.
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -2538,6 +2497,10 @@ api.indices.prototype.flush = ca({
     },
     full: {
       type: 'boolean'
+    },
+    waitIfOngoing: {
+      type: 'boolean',
+      name: 'wait_if_ongoing'
     },
     ignoreUnavailable: {
       type: 'boolean',
@@ -4721,6 +4684,48 @@ api.ping = ca({
   },
   requestTimeout: 100,
   method: 'HEAD'
+});
+
+/**
+ * Perform a [putScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Script ID
+ * @param {String} params.lang - Script language
+ */
+api.putScript = ca({
+  url: {
+    fmt: '/_scripts/<%=lang%>/<%=id%>',
+    req: {
+      lang: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  needBody: true,
+  method: 'PUT'
+});
+
+/**
+ * Perform a [putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - Template ID
+ */
+api.putTemplate = ca({
+  url: {
+    fmt: '/_search/template/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  needBody: true,
+  method: 'PUT'
 });
 
 /**
