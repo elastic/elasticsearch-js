@@ -471,16 +471,16 @@ YamlDoc.prototype = {
     _.forOwn(args, function (val, path) {
       var isRef = _.isString(val) && val[0] === '$';
       var isRE = _.isString(val) && val[0] === '/' && path[path.length - 1] === '/';
-
+      var response_val;
       if (isRef) {
-        val = this.get(val === '$body' ? '' : val);
+        response_val = this.get(val === '$body' ? '' : val);
       } else if (isRE) {
-        val = new RegExp(val);
+        response_val = new RegExp(val);
       } else {
-        val = this.get(path);
+        response_val = this.get(path);
       }
 
-      var assert = expect(val).to[isRE ? 'match' : 'eql'](val, 'path: ' + path);
+      var assert = expect(response_val).to[isRE ? 'match' : 'eql'](val, 'path: ' + path);
     }, this);
   },
 
