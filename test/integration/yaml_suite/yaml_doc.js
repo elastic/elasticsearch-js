@@ -10,6 +10,7 @@ module.exports = YamlDoc;
 var _ = require('../../../src/lib/utils');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
+var inspect = require('util').inspect;
 
 var implementedFeatures = ['gtelte', 'regex', 'benchmark'];
 
@@ -219,6 +220,11 @@ YamlDoc.prototype = {
 
     var log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {};
     var i;
+
+    if (path === '$body') {
+      // shortcut, the test just wants the whole body
+      return this._last_requests_response;
+    }
 
     if (!from) {
       if (path[0] === '$') {
@@ -468,19 +474,59 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_match: function (args) {
-    _.forOwn(args, function (val, path) {
-      var isRef = _.isString(val) && val[0] === '$';
-      var isRE = _.isString(val) && val[0] === '/' && path[path.length - 1] === '/';
-
-      if (isRef) {
-        val = this.get(val === '$body' ? '' : val);
-      } else if (isRE) {
-        val = new RegExp(val);
-      } else {
-        val = this.get(path);
+    _.forOwn(args, function (match, path) {
+      var matchPastRef = _.isString(match) && match[0] === '$';
+      if (matchPastRef) {
+        // we are trying to match against a value stored in the stack
+        match = this.get(match);
       }
 
-      var assert = expect(val).to[isRE ? 'match' : 'eql'](val, 'path: ' + path);
+      if (_.isObject(match)) {
+        var self = this;
+        // we need to check all sub values for $var
+        _.each(match, function recurse(val, key, lvl) {
+          if (_.isObject(val)) {
+            return _.each(val, recurse);
+          }
+
+          if (_.isString(val) && val[0] === '$') {
+            lvl[key] = self.get(val);
+          }
+        });
+      }
+
+      var notRE = match;
+      var maybeRE = _.isString(match) && match.replace(/#[^\n]*\n/g, '\n').replace(/\s+/g, '');
+      var usedRE = false;
+      if (maybeRE && maybeRE[0] === '/' && maybeRE[maybeRE.length - 1] === '/') {
+        usedRE = true;
+        // replace anymore than one space with a single space
+        match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
+      }
+
+      var val;
+      try {
+        if (match instanceof RegExp) {
+          val = this.get(path) || '';
+          expect(val).to.match(match, 'path: ' + path);
+        } else {
+          val = this.get(path);
+          expect(val).to.eql(match, 'path: ' + path);
+        }
+      } catch (e) {
+        var msg = [
+          '\nUnable to match',
+          inspect(match),
+          'with the path',
+          inspect(path),
+          'and value',
+          inspect(val),
+          'and original RE',
+          '|' + notRE,
+          ''
+        ];
+        throw new Error(msg.slice(0, usedRE ? void 0 : -3).join('\n'));
+      }
     }, this);
   },
 
