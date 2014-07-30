@@ -17,9 +17,34 @@
     </script>
     <script src="unit_tests.js"></script>
     <script>
-      mochaRunner = mocha.run().on('end', function(){
-        window.mochaResults = this.stats;
-      });
+      (function (root) {
+        var failedTests = [];
+
+        var flattenTitles = function (test) {
+          var titles = [];
+          while (test && test.parent && test.parent.title) {
+            titles.unshift(test.parent.title);
+            test = test.parent
+          }
+          return titles;
+        };
+
+        var runner = root.mochaRunner = mocha.run()
+          .on('end', function(){
+            window.mochaResults = runner.stats;
+            window.mochaResults.reports = failedTests;
+          })
+          .on('fail', function logFailure(test, err){
+            failedTests.push({
+              name: test.title,
+              result: false,
+              message: err.message,
+              stack: err.stack,
+              titles: flattenTitles(test)
+            });
+          });
+
+      }(window));
     </script>
   </body>
 </html>

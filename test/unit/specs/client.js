@@ -27,13 +27,13 @@ describe('Client instances creation', function () {
     expect(client.nodes.stats).to.be(apis[def].nodes.prototype.stats);
   });
 
-  it('inherits the 1.0 API when specified', function () {
+  it('inherits the 1.2 API when specified', function () {
     client.close();
     client = es.Client({
-      apiVersion: '1.0'
+      apiVersion: '1.2'
     });
-    expect(client.bulk).to.be(apis['1.0'].bulk);
-    expect(client.cluster.nodeStats).to.be(apis['1.0'].cluster.prototype.nodeStats);
+    expect(client.bulk).to.be(apis['1.2'].bulk);
+    expect(client.cluster.nodeStats).to.be(apis['1.2'].cluster.prototype.nodeStats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {

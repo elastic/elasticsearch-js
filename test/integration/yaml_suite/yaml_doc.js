@@ -23,6 +23,13 @@ var ES_VERSION = null;
 // core expression for finding a version
 var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
 
+// match all whitespace within a "regexp" match arg
+var reWhitespace_RE = /\s+/g;
+
+// match all comments within a "regexp" match arg
+var reComments_RE = /([\S\s]?)#[^\n]*\n/g;
+
+
 /**
  * Regular Expression to extract a version number from a string
  * @type {RegExp}
@@ -468,36 +475,68 @@ YamlDoc.prototype = {
   },
 
   /**
-   * Test that the response field (arg key) matches the value specified
+   * Test that the response field (arg key) matches the value specified.
    *
-   * @param  {Object} args - Hash of fields->values that need to be checked
+   * @param  {Object} args - Args can be specified in a number of formats:
+   *
+   *   object{ <path>: <string|number|obj> }
+   *     - used to match simple values against properties of the last response body
+   *     - keys are "paths" to values in the previous response
+   *     - values are what they should match
+   *     example:
+   *       resp:
+   *       {
+   *         hits: {
+   *           total: 100,
+   *           hits: [ ... ]
+   *         }
+   *       }
+   *       args:
+   *       {
+   *         "hits.total": 100,
+   *       }
+   *
+   *
+   *   object{ <path>: <RegExp> }
+   *     - regexp is expressed as a string that starts and ends with a /
+   *     - we have to make several replacements on the string before converting
+   *     it into a regexp because javascript doesn't support the "verbose" mode
+   *     they are written for.
+   *
    * @return {undefined}
    */
   do_match: function (args) {
+    var self = this;
+
+    // recursively replace all $var within args
+    _.forOwn(args, function recurse(val, key, lvl) {
+      if (_.isObject(val)) {
+        return _.each(val, recurse);
+      }
+
+      if (_.isString(val) && val[0] === '$') {
+        lvl[key] = self.get(val);
+      }
+    });
+
     _.forOwn(args, function (match, path) {
-      var matchPastRef = _.isString(match) && match[0] === '$';
-      if (matchPastRef) {
-        // we are trying to match against a value stored in the stack
-        match = this.get(match);
-      }
+      var origMatch = match;
 
-      if (_.isObject(match)) {
-        var self = this;
-        // we need to check all sub values for $var
-        _.each(match, function recurse(val, key, lvl) {
-          if (_.isObject(val)) {
-            return _.each(val, recurse);
-          }
-
-          if (_.isString(val) && val[0] === '$') {
-            lvl[key] = self.get(val);
-          }
-        });
-      }
-
-      var notRE = match;
-      var maybeRE = _.isString(match) && match.replace(/#[^\n]*\n/g, '\n').replace(/\s+/g, '');
+      var maybeRE = false;
       var usedRE = false;
+
+      if (_.isString(match)) {
+        maybeRE = match
+          .replace(reComments_RE, function (match, prevChar) {
+            if (prevChar === '\\') {
+              return match;
+            } else {
+              return prevChar + '\n';
+            }
+          })
+          .replace(reWhitespace_RE, '');
+      }
+
       if (maybeRE && maybeRE[0] === '/' && maybeRE[maybeRE.length - 1] === '/') {
         usedRE = true;
         // replace anymore than one space with a single space
@@ -521,8 +560,8 @@ YamlDoc.prototype = {
           inspect(path),
           'and value',
           inspect(val),
-          'and original RE',
-          '|' + notRE,
+          'and original matcher',
+          '|' + origMatch,
           ''
         ];
         throw new Error(msg.slice(0, usedRE ? void 0 : -3).join('\n'));
