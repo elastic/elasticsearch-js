@@ -526,7 +526,9 @@ YamlDoc.prototype = {
       var usedRE = false;
 
       if (_.isString(match)) {
+        // convert the matcher into a compatible string for building a regexp
         maybeRE = match
+          // replace comments, but allow the # to be escaped like \#
           .replace(reComments_RE, function (match, prevChar) {
             if (prevChar === '\\') {
               return match;
@@ -534,24 +536,32 @@ YamlDoc.prototype = {
               return prevChar + '\n';
             }
           })
+          // remove all whitespace from the expression, all meaningful
+          // whitespace is represented with \s
           .replace(reWhitespace_RE, '');
-      }
 
-      if (maybeRE && maybeRE[0] === '/' && maybeRE[maybeRE.length - 1] === '/') {
-        usedRE = true;
-        // replace anymore than one space with a single space
-        match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
-      }
+        var startsWithSlash = maybeRE[0] === '/';
+        var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';
 
-      var val;
-      try {
-        if (match instanceof RegExp) {
-          val = this.get(path) || '';
-          expect(val).to.match(match, 'path: ' + path);
-        } else {
-          val = this.get(path);
-          expect(val).to.eql(match, 'path: ' + path);
+        if (startsWithSlash && endsWithSlash) {
+          usedRE = true;
+          match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
         }
+      }
+
+      var val = this.get(path);
+      var test = 'eql';
+
+      if (match instanceof RegExp) {
+        test = 'match';
+
+        // convert falsy values to an empty string so that regexp doesn't
+        // cast them to the strings "false", "undefined", etc.
+        val = val || '';
+      }
+
+      try {
+        expect(val).to[test](match);
       } catch (e) {
         var msg = [
           '\nUnable to match',
@@ -559,12 +569,22 @@ YamlDoc.prototype = {
           'with the path',
           inspect(path),
           'and value',
-          inspect(val),
-          'and original matcher',
-          '|' + origMatch,
-          ''
+          inspect(val)
         ];
-        throw new Error(msg.slice(0, usedRE ? void 0 : -3).join('\n'));
+
+        if (usedRE) {
+          msg.push(
+            'and original matcher',
+            '|' + origMatch
+          );
+        }
+
+        msg.push(
+          'original error',
+          e.message
+        );
+
+        throw new Error(msg.join('\n'));
       }
     }, this);
   },
