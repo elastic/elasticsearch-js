@@ -16,7 +16,7 @@ module.exports = function (branch) {
     // before running any tests...
     before(function (done) {
       // start our personal ES Server
-      this.timeout(null);
+      this.timeout(0);
       clientManager.create(branch, done);
     });
 
