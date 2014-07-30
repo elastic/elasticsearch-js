@@ -2,7 +2,7 @@
 == Quick Start
 
 === Creating a client
-Start using Elasticsearch.js by creating an instance of the `elasticsearch.Client` class. The constructor accepts a config object/hash where you can define defaults values, or even entire classes, for the client to use. For a full list of config options check out the the <<configuration,section deicated to configuration>>.
+Start using Elasticsearch.js by creating an instance of the `elasticsearch.Client` class. The constructor accepts a config object/hash where you can define defaults values, or even entire classes, for the client to use. For a full list of config options check out the the <<configuration,section dedicated to configuration>>.
 
 [source,js]
 -----------------
