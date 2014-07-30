@@ -364,7 +364,7 @@ describe('Http Connector', function () {
     }
 
     it('destroys any connections created', function (done) {
-      this.timeout(0);
+      this.timeout(5 * 60 * 1000);
       var cp = require('child_process');
       var path = require('path');
       var fixture = _.partial(path.join, __dirname, '../../fixtures');
