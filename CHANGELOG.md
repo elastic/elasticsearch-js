@@ -1,6 +1,6 @@
 # elasticsearch-js changelog
 
-## 2.4 (Jul ?? 2014)
+## 2.4 (Jul 30 2014)
  - Added apiVersion `"1.3"`, which is now the default
 
 ## 2.3 (Jul 11 2014)
