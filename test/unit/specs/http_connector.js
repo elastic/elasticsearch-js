@@ -364,7 +364,7 @@ describe('Http Connector', function () {
     }
 
     it('destroys any connections created', function (done) {
-      this.timeout(null);
+      this.timeout(5 * 60 * 1000);
       var cp = require('child_process');
       var path = require('path');
       var fixture = _.partial(path.join, __dirname, '../../fixtures');
@@ -372,16 +372,11 @@ describe('Http Connector', function () {
 
       var server = cp.fork(fixture('keepalive_server.js'))
         .on('message', function (port) {
-          console.log('server sent port number', port);
           client.send(port);
-        })
-        .once('exit', function () {
-          console.log('server closed');
         });
 
       var client = cp.fork(fixture('keepalive.js'))
         .on('message', function (output) {
-          console.log('client sent output', output);
           expect(output).to.have.property('remaining', 0);
           expect(output).to.have.property('timeouts', 0);
           server.kill('SIGKILL');
@@ -395,7 +390,6 @@ describe('Http Connector', function () {
           }, 2000);
         })
         .on('exit', function () {
-          console.log('client closed');
           clearTimeout(timeout);
           done();
         });

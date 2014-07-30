@@ -10,6 +10,7 @@ module.exports = YamlDoc;
 var _ = require('../../../src/lib/utils');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
+var inspect = require('util').inspect;
 
 var implementedFeatures = ['gtelte', 'regex', 'benchmark'];
 
@@ -21,6 +22,13 @@ var ES_VERSION = null;
 
 // core expression for finding a version
 var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
+
+// match all whitespace within a "regexp" match arg
+var reWhitespace_RE = /\s+/g;
+
+// match all comments within a "regexp" match arg
+var reComments_RE = /([\S\s]?)#[^\n]*\n/g;
+
 
 /**
  * Regular Expression to extract a version number from a string
@@ -219,6 +227,11 @@ YamlDoc.prototype = {
 
     var log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {};
     var i;
+
+    if (path === '$body') {
+      // shortcut, the test just wants the whole body
+      return this._last_requests_response;
+    }
 
     if (!from) {
       if (path[0] === '$') {
@@ -462,25 +475,117 @@ YamlDoc.prototype = {
   },
 
   /**
-   * Test that the response field (arg key) matches the value specified
+   * Test that the response field (arg key) matches the value specified.
    *
-   * @param  {Object} args - Hash of fields->values that need to be checked
+   * @param  {Object} args - Args can be specified in a number of formats:
+   *
+   *   object{ <path>: <string|number|obj> }
+   *     - used to match simple values against properties of the last response body
+   *     - keys are "paths" to values in the previous response
+   *     - values are what they should match
+   *     example:
+   *       resp:
+   *       {
+   *         hits: {
+   *           total: 100,
+   *           hits: [ ... ]
+   *         }
+   *       }
+   *       args:
+   *       {
+   *         "hits.total": 100,
+   *       }
+   *
+   *
+   *   object{ <path>: <RegExp> }
+   *     - regexp is expressed as a string that starts and ends with a /
+   *     - we have to make several replacements on the string before converting
+   *     it into a regexp because javascript doesn't support the "verbose" mode
+   *     they are written for.
+   *
    * @return {undefined}
    */
   do_match: function (args) {
-    _.forOwn(args, function (val, path) {
-      var isRef = _.isString(val) && val[0] === '$';
-      var isRE = _.isString(val) && val[0] === '/' && path[path.length - 1] === '/';
+    var self = this;
 
-      if (isRef) {
-        val = this.get(val === '$body' ? '' : val);
-      } else if (isRE) {
-        val = new RegExp(val);
-      } else {
-        val = this.get(path);
+    // recursively replace all $var within args
+    _.forOwn(args, function recurse(val, key, lvl) {
+      if (_.isObject(val)) {
+        return _.each(val, recurse);
       }
 
-      var assert = expect(val).to[isRE ? 'match' : 'eql'](val, 'path: ' + path);
+      if (_.isString(val) && val[0] === '$') {
+        lvl[key] = self.get(val);
+      }
+    });
+
+    _.forOwn(args, function (match, path) {
+      var origMatch = match;
+
+      var maybeRE = false;
+      var usedRE = false;
+
+      if (_.isString(match)) {
+        // convert the matcher into a compatible string for building a regexp
+        maybeRE = match
+          // replace comments, but allow the # to be escaped like \#
+          .replace(reComments_RE, function (match, prevChar) {
+            if (prevChar === '\\') {
+              return match;
+            } else {
+              return prevChar + '\n';
+            }
+          })
+          // remove all whitespace from the expression, all meaningful
+          // whitespace is represented with \s
+          .replace(reWhitespace_RE, '');
+
+        var startsWithSlash = maybeRE[0] === '/';
+        var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';
+
+        if (startsWithSlash && endsWithSlash) {
+          usedRE = true;
+          match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
+        }
+      }
+
+      var val = this.get(path);
+      var test = 'eql';
+
+      if (match instanceof RegExp) {
+        test = 'match';
+
+        // convert falsy values to an empty string so that regexp doesn't
+        // cast them to the strings "false", "undefined", etc.
+        val = val || '';
+      }
+
+      try {
+        expect(val).to[test](match);
+      } catch (e) {
+        var msg = [
+          '\nUnable to match',
+          inspect(match),
+          'with the path',
+          inspect(path),
+          'and value',
+          inspect(val)
+        ];
+
+        if (usedRE) {
+          msg.push(
+            'and original matcher',
+            '|' + origMatch
+          );
+        }
+
+        msg.push(
+          'original error',
+          e.message
+        );
+
+        throw new Error(msg.join('\n'));
+      }
     }, this);
   },
 

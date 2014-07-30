@@ -53,7 +53,7 @@ Check out the [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsear
 
 ## Supported Elasticsearch Versions
 
-[![Supporting Elasticsearch Version 0.90 to 1.2](http://img.shields.io/badge/elasticsearch-0.90--1.2-green.svg)](http://build.elasticsearch.com/job/es-js_nightly/)
+[![Supporting Elasticsearch Version 0.90 to 1.3](http://img.shields.io/badge/elasticsearch-0.90--1.3-green.svg)](http://build.elasticsearch.com/job/es-js_nightly/)
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
 
