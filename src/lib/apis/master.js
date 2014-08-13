@@ -1992,6 +1992,7 @@ api.indices.prototype.analyze = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index name to limit the operation
  * @param {Boolean} params.recycler - Clear the recycler cache
+ * @param {Boolean} params.queryCache - Clear query cache
  */
 api.indices.prototype.clearCache = ca({
   params: {
@@ -2045,6 +2046,10 @@ api.indices.prototype.clearCache = ca({
     },
     recycler: {
       type: 'boolean'
+    },
+    queryCache: {
+      type: 'boolean',
+      name: 'query_cache'
     }
   },
   urls: [
@@ -3627,6 +3632,7 @@ api.indices.prototype.stats = ca({
             'indexing',
             'merge',
             'percolate',
+            'query_cache',
             'refresh',
             'search',
             'segments',
@@ -3654,6 +3660,7 @@ api.indices.prototype.stats = ca({
             'indexing',
             'merge',
             'percolate',
+            'query_cache',
             'refresh',
             'search',
             'segments',
@@ -4459,6 +4466,7 @@ api.nodes.prototype.stats = ca({
             'indexing',
             'merge',
             'percolate',
+            'query_cache',
             'refresh',
             'search',
             'segments',
@@ -4526,6 +4534,7 @@ api.nodes.prototype.stats = ca({
             'indexing',
             'merge',
             'percolate',
+            'query_cache',
             'refresh',
             'search',
             'segments',
@@ -4796,6 +4805,7 @@ api.scroll = ca({
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
+ * @param {Boolean} params.queryCache - Specify if query cache should be used for this request or not, defaults to index level setting
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -4931,6 +4941,10 @@ api.search = ca({
     },
     version: {
       type: 'boolean'
+    },
+    queryCache: {
+      type: 'boolean',
+      name: 'query_cache'
     }
   },
   urls: [
@@ -4955,6 +4969,80 @@ api.search = ca({
     },
     {
       fmt: '/_search'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
+ * Perform a [searchExists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/exists.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Number} params.minScore - Include only documents with a specific `_score` value in the result
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.routing - Specific routing value
+ * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of indices to restrict the results
+ * @param {String, String[], Boolean} params.type - A comma-separated list of types to restrict the results
+ */
+api.searchExists = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    minScore: {
+      type: 'number',
+      name: 'min_score'
+    },
+    preference: {
+      type: 'string'
+    },
+    routing: {
+      type: 'string'
+    },
+    source: {
+      type: 'string'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_search/exists',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_search/exists',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_search/exists'
     }
   ],
   method: 'POST'
@@ -5526,6 +5614,8 @@ api.termvector = ca({
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
  * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
+ * @param {Anything} params.scriptId - The id of a stored script
+ * @param {Boolean} params.scriptedUpsert - True if the script referenced in script or script_id should be called to perform inserts - defaults to false
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
  * @param {Duration} params.ttl - Expiration time for the document
@@ -5573,6 +5663,13 @@ api.update = ca({
       type: 'string'
     },
     script: {},
+    scriptId: {
+      name: 'script_id'
+    },
+    scriptedUpsert: {
+      type: 'boolean',
+      name: 'scripted_upsert'
+    },
     timeout: {
       type: 'time'
     },
