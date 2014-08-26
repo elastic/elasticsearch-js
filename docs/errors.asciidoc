@@ -7,7 +7,7 @@ These are the standard Error types which may be passed back from the client. To 
 `ConnectionFault`:: The connection was unable to initiate or complete a request with the Elasticsearch node.
 `NoConnections`:: All of the connections in the ConnectionPool are dead.
 `RequestTimeout`:: The request timed-out.
-`Serialization`:: The response received from Elasticsearch could not be deserilaized.
+`Serialization`:: The response received from Elasticsearch could not be deserialized.
 `503` or `ServiceUnavailable`:: Elasticsearch responded with a 503 status.
 `500` or `InternalServerError`:: Elasticsearch responded with a 500 status.
 `412` or `PreconditionFailed`:: Elasticsearch responded with a 412 status.
