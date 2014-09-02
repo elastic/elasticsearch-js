@@ -17,6 +17,8 @@ describe('Http Connector', function () {
   var expectSubObject = require('../../utils/expect_sub_object');
   var MockRequest = require('../../mocks/request');
   var MockIncommingMessage = require('../../mocks/incomming_message');
+  var zlib = require('zlib');
+  var estr = require('event-stream');
 
   nock.disableNetConnect();
 
@@ -295,6 +297,48 @@ describe('Http Connector', function () {
         path: '/users/1'
       }, function (err, resp, status) {
         expect(err).to.be(undefined);
+        expect(resp).to.eql(body);
+        expect(status).to.eql(200);
+        server.done();
+        done();
+      });
+    });
+
+    it('collects the whole request body (compressed)', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var body = '{ "USER": "doc" }';
+      zlib.deflate(body, function(err, compressedBody) {
+        server
+          .get('/users/1')
+          .reply(200, compressedBody, {'Content-Encoding': 'gzip'});
+
+        con.request({
+          method: 'GET',
+          path: '/users/1'
+        }, function (err, resp, status) {
+          expect(err).to.be(undefined);
+          expect(resp).to.eql(body);
+          expect(status).to.eql(200);
+          server.done();
+          done();
+        });
+      });
+    });
+
+    it('Can handle uncompress errors', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var body = 'blah';
+      server
+        .get('/users/1')
+        .reply(200, body, {'Content-Encoding': 'gzip'});
+
+      con.request({
+        method: 'GET',
+        path: '/users/1'
+      }, function (err, resp, status) {
+        expect(err.errno).to.be(-3);
         expect(resp).to.eql(body);
         expect(status).to.eql(200);
         server.done();
