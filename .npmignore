@@ -9,7 +9,7 @@ test/integration/yaml_suite/log
 ## generated files
 test/integration/yaml_suite/yaml_tests*.json
 test/integration/yaml_suite/index*.js
-src/elasticsearch*/
+src/_elasticsearch*/
 src/bower*/
 junit-*.xml
 elasticsearch*.log

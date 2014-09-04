@@ -1,7 +1,7 @@
 [[api-conventions]]
 == API Conventions
 === Generic Parameters
-By default, all api methods accept the following parameters. They are omitted from the param lists of each method, just because.
+By default, all api methods accept the following parameters. They are omitted from the param lists of each method for brevity.
 
 [horizontal]
 `method`::

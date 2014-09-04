@@ -1,11 +1,11 @@
-[browser-builds]
-==== Browser Builds
+[[browser-builds]]
+== Browser Builds
 
 We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using https://saucelabs.com/u/elasticsearch-js[saucelabs] in Chrome, Firefox, and Internet Explorer 10, and 11.
 
 While there is https://github.com/elasticsearch/elasticsearch-js/issues/96#issuecomment-42617480[a way to get it working in IE 9], the browser severly limits what you can do with cross-domain requests. Because of these limits, many of the API calls and other functionality do not work.
 
-===== Bower
+=== Bower
 If you use bower to manage your dependencies, then just run:
 
 [source,shell]
@@ -13,19 +13,27 @@ If you use bower to manage your dependencies, then just run:
 bower install elasticsearch
 ---------
 
-===== Download
- * v2.1.4: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.tar.gz[tar.gz]
+=== Download
+ * v2.4.0: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.4.0.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.4.0.tar.gz[tar.gz]
 
 
-===== Angular Build (elasticsearch.angular.js)
-  * Registers the elasticsearch object as a factory `esFactory`
+=== Angular Build
+  * Registers the an `esFactory` factory in the `"elasticsearch"` module
   * Uses Angular's `$http` service
   * Returns promises using Angular's `$q` service to properly trigger digest cycles within Angular
+
+NOTE: Checkout an example that integrates elasticsearch.js with angular https://github.com/spenceralger/elasticsearch-angular-example[on GitHub]
+
+.Include the `"elasticsearch"` module in your app
+[source,js]
+-------------------
+var myApp = angular.module('myApp', ['elasticsearch']);
+-------------------
 
 .Create a client instance and register it as a service
 [source,js]
 -------------------
-module.service('es', function (esFactory) {
+module.service('client', function (esFactory) {
   return esFactory({
     host: 'localhost:9200',
     // ...
@@ -33,7 +41,7 @@ module.service('es', function (esFactory) {
 });
 -------------------
 
-===== jQuery Build (elasticsearch.jquery.js)
+=== jQuery Build
   * Uses jQuery's `.ajax()` functionality
   * Returns jQuery "promises"
   * Registers the module at `jQuery.es`

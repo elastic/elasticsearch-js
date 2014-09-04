@@ -2,8 +2,8 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.svg?branch=2.3)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.3)
-[![Coverage Status](http://img.shields.io/coveralls/elasticsearch/elasticsearch-js.svg?branch=2.3)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.3)
+[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.svg?branch=2.4)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.4)
+[![Coverage Status](http://img.shields.io/coveralls/elasticsearch/elasticsearch-js.svg?branch=2.4)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.4)
 [![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.svg)](https://david-dm.org/elasticsearch/elasticsearch-js)
 
 ## Features
@@ -34,16 +34,17 @@ Check out the [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsear
 </tr><tr>
 <td>download:</td>
 <td align="center">
-<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.zip">zip</a>
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.4.0.zip">zip</a>
 </td>
 <td align="center">
-<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.1.4.tar.gz">tar.gz</a>
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-2.4.0.tar.gz">tar.gz</a>
 </td>
 </tr>
 </table>
 
 ## Docs
  - [Quick Start](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
+ - [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html)
  - [API](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
  - [Configuration](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html)
  - [Development/Contributing](https://github.com/elasticsearch/elasticsearch-js/blob/master/CONTRIBUTING.md)
