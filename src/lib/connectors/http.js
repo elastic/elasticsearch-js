@@ -147,7 +147,8 @@ HttpConnector.prototype.request = function (params, cb) {
       cb(err);
     } else {
       response = Buffer.concat(buffers);
-      if (headers['content-encoding'] && headers['content-encoding'].match(/gzip/i)) {
+      var zipHdr = headers['content-encoding'];
+      if (zipHdr && (zipHdr.match(/gzip/i) || zipHdr.match(/deflate/i))) {
         zlib.unzip(response, function(gzErr, uncompressedResponse) {
           if(gzErr) {
             err = gzErr;

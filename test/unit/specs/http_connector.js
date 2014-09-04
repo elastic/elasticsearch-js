@@ -304,14 +304,44 @@ describe('Http Connector', function () {
       });
     });
 
-    it('collects the whole request body (compressed)', function (done) {
+    it('collects the whole request body (gzip compressed)', function (done) {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var body = '{ "USER": "doc" }';
-      zlib.deflate(body, function(err, compressedBody) {
+      var elements = [];
+      for(var i = 0; i < 500; i++) {
+        elements.push({ "USER": "doc" });
+      }
+      var body = JSON.stringify(elements);
+      zlib.gzip(body, function(err, compressedBody) {
         server
           .get('/users/1')
           .reply(200, compressedBody, {'Content-Encoding': 'gzip'});
+
+        con.request({
+          method: 'GET',
+          path: '/users/1'
+        }, function (err, resp, status) {
+          expect(err).to.be(undefined);
+          expect(resp).to.eql(body);
+          expect(status).to.eql(200);
+          server.done();
+          done();
+        });
+      });
+    });
+
+    it('collects the whole request body (deflate compressed)', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var elements = [];
+      for(var i = 0; i < 500; i++) {
+        elements.push({ "USER": "doc" });
+      }
+      var body = JSON.stringify(elements);
+      zlib.deflate(body, function(err, compressedBody) {
+        server
+          .get('/users/1')
+          .reply(200, compressedBody, {'Content-Encoding': 'deflate'});
 
         con.request({
           method: 'GET',
