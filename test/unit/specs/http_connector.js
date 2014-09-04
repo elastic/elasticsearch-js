@@ -308,11 +308,11 @@ describe('Http Connector', function () {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var elements = [];
-      for(var i = 0; i < 500; i++) {
-        elements.push({ "USER": "doc" });
+      for (var i = 0; i < 500; i++) {
+        elements.push({ USER: 'doc' });
       }
       var body = JSON.stringify(elements);
-      zlib.gzip(body, function(err, compressedBody) {
+      zlib.gzip(body, function (err, compressedBody) {
         server
           .get('/users/1')
           .reply(200, compressedBody, {'Content-Encoding': 'gzip'});
@@ -334,11 +334,11 @@ describe('Http Connector', function () {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var elements = [];
-      for(var i = 0; i < 500; i++) {
-        elements.push({ "USER": "doc" });
+      for (var i = 0; i < 500; i++) {
+        elements.push({ USER: 'doc' });
       }
       var body = JSON.stringify(elements);
-      zlib.deflate(body, function(err, compressedBody) {
+      zlib.deflate(body, function (err, compressedBody) {
         server
           .get('/users/1')
           .reply(200, compressedBody, {'Content-Encoding': 'deflate'});
@@ -368,9 +368,9 @@ describe('Http Connector', function () {
         method: 'GET',
         path: '/users/1'
       }, function (err, resp, status) {
-        expect(err.errno).to.be(-3);
-        expect(resp).to.eql(body);
-        expect(status).to.eql(200);
+        expect(err).to.be.an(Error);
+        expect(resp).to.eql(undefined);
+        expect(status).to.eql(undefined);
         server.done();
         done();
       });
