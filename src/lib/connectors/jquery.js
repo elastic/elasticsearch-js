@@ -20,7 +20,7 @@ JqueryConnector.prototype.request = function (params, cb) {
   var ajax = {
     url: this.host.makeUrl(params),
     data: params.body,
-    method: params.method,
+    type: params.method,
     dataType: 'text',
     headers: this.host.getHeaders(params.headers),
     done: cb
