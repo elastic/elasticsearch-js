@@ -16,6 +16,7 @@ var _ = require('../utils');
 var qs = require('querystring');
 var ForeverAgent = require('./_custom_agent');
 var ConnectionAbstract = require('../connection');
+var zlib = require('zlib');
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -123,8 +124,9 @@ HttpConnector.prototype.request = function (params, cb) {
   var request;
   var response;
   var status = 0;
-  var headers;
+  var headers = {};
   var log = this.log;
+  var buffers = [];
 
   var reqParams = this.makeReqParams(params);
 
@@ -144,7 +146,21 @@ HttpConnector.prototype.request = function (params, cb) {
     if (err) {
       cb(err);
     } else {
-      cb(err, response, status, headers);
+      response = Buffer.concat(buffers);
+      var zipHdr = headers['content-encoding'];
+      if (zipHdr && (zipHdr.match(/gzip/i) || zipHdr.match(/deflate/i))) {
+        zlib.unzip(response, function(gzErr, uncompressedResponse) {
+          if(gzErr) {
+            err = gzErr;
+            response = response.toString('binary');
+          } else {
+            response = uncompressedResponse.toString('utf8');
+          }
+          cb(err, response, status, headers);
+        });
+      } else {
+        cb(err, response.toString('utf8'), status, headers);
+      }
     }
   }, this);
 
@@ -152,11 +168,10 @@ HttpConnector.prototype.request = function (params, cb) {
     incoming = _incoming;
     status = incoming.statusCode;
     headers = incoming.headers;
-    incoming.setEncoding('utf8');
     response = '';
-
+    buffers = [];
     incoming.on('data', function (d) {
-      response += d;
+      buffers.push(new Buffer(d));
     });
 
     incoming.on('error', cleanUp);
