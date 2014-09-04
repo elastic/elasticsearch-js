@@ -11,7 +11,8 @@ var hostDefaults = {
   path: '',
   auth: null,
   query: {},
-  headers: null
+  headers: null,
+  suggestCompression: false
 };
 
 describe('Host class', function () {
@@ -166,6 +167,38 @@ describe('Host class', function () {
       });
 
       expect(host.toString()).to.eql(host.makeUrl());
+    });
+  });
+
+  describe('#getHeaders', function () {
+    it('merges the passed in headers with the default headers', function () {
+      var host = new Host({ headers: { 'Joe-Smith': 'present' } });
+
+      expect(host.getHeaders({
+        'John-Smith': 'present'
+      })).to.eql({
+        'John-Smith': 'present',
+        'Joe-Smith': 'present'
+      });
+    });
+
+    it('overrides the default headers with the passed in headers', function () {
+      var host = new Host({ headers: { 'Joe-Smith': 'present' } });
+
+      expect(host.getHeaders({
+        'John-Smith': 'present',
+        'Joe-Smith': 'absent'
+      })).to.eql({
+        'John-Smith': 'present',
+        'Joe-Smith': 'absent'
+      });
+    });
+
+    it('adds Accept-Encoding header when the suggestCompression setting is true', function () {
+      var host = new Host({ suggestCompression: true });
+      expect(host.getHeaders()).to.eql({
+        'Accept-Encoding': 'gzip,deflate'
+      });
     });
   });
 
