@@ -243,7 +243,8 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
  * and sniffing, where using the selector to get all of the living connections
  * is not reasonable.
  *
- * @param {Number} limit - Max number to return
+ * @param {string} [status] - optional status of the connection to fetch
+ * @param {Number} [limit] - optional limit on the number of connections to return
  */
 ConnectionPool.prototype.getConnections = function (status, limit) {
   var list;
@@ -253,7 +254,11 @@ ConnectionPool.prototype.getConnections = function (status, limit) {
     list = this._conns[this._conns.alive.length ? 'alive' : 'dead'];
   }
 
-  return _.shuffle(list).slice(0, typeof limit === 'undefined' ? list.length : limit);
+  if (limit == null) {
+    return list.slice(0);
+  } else {
+    return _.shuffle(list).slice(0, limit);
+  }
 };
 
 /**

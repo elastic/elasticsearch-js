@@ -122,11 +122,10 @@ HttpConnector.prototype.request = function (params, cb) {
   var incoming;
   var timeoutId;
   var request;
-  var response;
   var status = 0;
   var headers = {};
   var log = this.log;
-  var buffers = [];
+  var response;
 
   var reqParams = this.makeReqParams(params);
 
@@ -146,21 +145,7 @@ HttpConnector.prototype.request = function (params, cb) {
     if (err) {
       cb(err);
     } else {
-      response = Buffer.concat(buffers);
-      var zipHdr = headers['content-encoding'];
-      if (zipHdr && (zipHdr.match(/gzip/i) || zipHdr.match(/deflate/i))) {
-        zlib.unzip(response, function(gzErr, uncompressedResponse) {
-          if(gzErr) {
-            err = gzErr;
-            response = response.toString('binary');
-          } else {
-            response = uncompressedResponse.toString('utf8');
-          }
-          cb(err, response, status, headers);
-        });
-      } else {
-        cb(err, response.toString('utf8'), status, headers);
-      }
+      cb(err, response, status, headers);
     }
   }, this);
 
@@ -169,9 +154,15 @@ HttpConnector.prototype.request = function (params, cb) {
     status = incoming.statusCode;
     headers = incoming.headers;
     response = '';
-    buffers = [];
+
+    var encoding = (headers['content-encoding'] || '').toLowerCase();
+    if (encoding === 'gzip' || encoding === 'deflate') {
+      incoming = incoming.pipe(zlib.createUnzip());
+    }
+
+    incoming.setEncoding('utf8');
     incoming.on('data', function (d) {
-      buffers.push(new Buffer(d));
+      response += d;
     });
 
     incoming.on('error', cleanUp);
