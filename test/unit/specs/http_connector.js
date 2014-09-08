@@ -356,7 +356,7 @@ describe('Http Connector', function () {
       });
     });
 
-    it('Can handle uncompress errors', function (done) {
+    it('Can handle decompression errors', function (done) {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var body = 'blah';
@@ -425,6 +425,38 @@ describe('Http Connector', function () {
         body: body
       }, function (err, resp, status) {
         expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
+        server.done();
+        done();
+      });
+    });
+
+    it('does not set the Accept-Encoding header by default', function (done) {
+      var con = new HttpConnection(new Host());
+      var respBody = 'i should not be encoded';
+      var server = nock('http://localhost:9200')
+      .matchHeader('accept-encoding', undefined)
+      .get('/')
+      .once()
+      .reply(200, respBody);
+
+      con.request({}, function (err, resp, status) {
+        expect(resp).to.be(respBody);
+        server.done();
+        done();
+      });
+    });
+
+    it('sets the Accept-Encoding header when specified', function (done) {
+      var con = new HttpConnection(new Host({ suggestCompression: true }));
+      var respBody = 'i should be encoded';
+      var server = nock('http://localhost:9200')
+      .matchHeader('accept-encoding', 'gzip,deflate')
+      .get('/')
+      .once()
+      .reply(200, respBody);
+
+      con.request({}, function (err, resp, status) {
+        expect(resp).to.be(respBody);
         server.done();
         done();
       });
