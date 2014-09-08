@@ -16,6 +16,7 @@ var _ = require('../utils');
 var qs = require('querystring');
 var ForeverAgent = require('./_custom_agent');
 var ConnectionAbstract = require('../connection');
+var zlib = require('zlib');
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -121,10 +122,10 @@ HttpConnector.prototype.request = function (params, cb) {
   var incoming;
   var timeoutId;
   var request;
-  var response;
   var status = 0;
-  var headers;
+  var headers = {};
   var log = this.log;
+  var response;
 
   var reqParams = this.makeReqParams(params);
 
@@ -152,9 +153,14 @@ HttpConnector.prototype.request = function (params, cb) {
     incoming = _incoming;
     status = incoming.statusCode;
     headers = incoming.headers;
-    incoming.setEncoding('utf8');
     response = '';
 
+    var encoding = (headers['content-encoding'] || '').toLowerCase();
+    if (encoding === 'gzip' || encoding === 'deflate') {
+      incoming = incoming.pipe(zlib.createUnzip());
+    }
+
+    incoming.setEncoding('utf8');
     incoming.on('data', function (d) {
       response += d;
     });

@@ -15,12 +15,11 @@ if (!Readable) {
 }
 
 function MockIncommingMessage() {
-  var self = this;
+  Readable.call(this);
 
-  Readable.call(self);
-
-  self.setEncoding = sinon.stub();
-  self._read = function () {};
+  this.setEncoding = sinon.stub();
+  this.headers = {};
+  this._read = function () {};
 }
 util.inherits(MockIncommingMessage, Readable);
 

@@ -184,6 +184,31 @@ describe('Transport Class', function () {
           new Host('https://myescluster.com:777/bon/iver?access=all')
         ]);
       });
+
+      it('passes the global config to the objects', function () {
+        // since we can't mock out the Host constructor to see it's args, we will just
+        // check that it's getting the suggestCompression setting
+        stub(Transport.connectionPools.main.prototype, 'setHosts');
+
+        var trans = new Transport({
+          suggestCompression: true,
+          hosts: ['localhost:9200']
+        });
+
+        expect(trans.connectionPool.setHosts).to.have.property('callCount', 1);
+        var hosts = trans.connectionPool.setHosts.firstCall.args[0];
+        expect(hosts).to.have.length(1);
+        expect(hosts[0]).to.have.property('suggestCompression', true);
+
+        trans = new Transport({
+          hosts: ['localhost:9200']
+        });
+
+        expect(trans.connectionPool.setHosts).to.have.property('callCount', 2);
+        hosts = trans.connectionPool.setHosts.lastCall.args[0];
+        expect(hosts).to.have.length(1);
+        expect(hosts[0]).to.have.property('suggestCompression', false);
+      });
     });
 
     describe('randomizeHosts options', function () {
@@ -222,7 +247,7 @@ describe('Transport Class', function () {
     var trans;
 
     beforeEach(function () {
-      trans = new Transport();
+      trans = new Transport({ suggestCompression: true });
       stub(trans, 'request', function (params, cb) {
         process.nextTick(function () {
           cb(void 0, {
@@ -280,6 +305,20 @@ describe('Transport Class', function () {
         done();
       });
     });
+
+    it('passes the global config to the objects', function (done) {
+      // since we can't mock out the Host constructor to see it's args, we will just
+      // check that it's getting the suggestCompression setting
+      trans.sniff(function () {
+        expect(trans.connectionPool.setHosts).to.have.property('callCount', 1);
+        var hosts = trans.connectionPool.setHosts.lastCall.args[0];
+        expect(hosts).to.have.length(2);
+        expect(hosts[0]).to.have.property('suggestCompression', true);
+        expect(hosts[1]).to.have.property('suggestCompression', true);
+        done();
+      });
+    });
+
     it('passed back errors caught from the request', function (done) {
       trans.request.func = function (params, cb) {
         process.nextTick(function () {

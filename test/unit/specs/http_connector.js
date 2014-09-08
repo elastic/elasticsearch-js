@@ -17,6 +17,8 @@ describe('Http Connector', function () {
   var expectSubObject = require('../../utils/expect_sub_object');
   var MockRequest = require('../../mocks/request');
   var MockIncommingMessage = require('../../mocks/incomming_message');
+  var zlib = require('zlib');
+  var estr = require('event-stream');
 
   nock.disableNetConnect();
 
@@ -302,6 +304,78 @@ describe('Http Connector', function () {
       });
     });
 
+    it('collects the whole request body (gzip compressed)', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var elements = [];
+      for (var i = 0; i < 500; i++) {
+        elements.push({ USER: 'doc' });
+      }
+      var body = JSON.stringify(elements);
+      zlib.gzip(body, function (err, compressedBody) {
+        server
+          .get('/users/1')
+          .reply(200, compressedBody, {'Content-Encoding': 'gzip'});
+
+        con.request({
+          method: 'GET',
+          path: '/users/1'
+        }, function (err, resp, status) {
+          expect(err).to.be(undefined);
+          expect(resp).to.eql(body);
+          expect(status).to.eql(200);
+          server.done();
+          done();
+        });
+      });
+    });
+
+    it('collects the whole request body (deflate compressed)', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var elements = [];
+      for (var i = 0; i < 500; i++) {
+        elements.push({ USER: 'doc' });
+      }
+      var body = JSON.stringify(elements);
+      zlib.deflate(body, function (err, compressedBody) {
+        server
+          .get('/users/1')
+          .reply(200, compressedBody, {'Content-Encoding': 'deflate'});
+
+        con.request({
+          method: 'GET',
+          path: '/users/1'
+        }, function (err, resp, status) {
+          expect(err).to.be(undefined);
+          expect(resp).to.eql(body);
+          expect(status).to.eql(200);
+          server.done();
+          done();
+        });
+      });
+    });
+
+    it('Can handle decompression errors', function (done) {
+      var server = nock('http://esjs.com:9200');
+      var con = new HttpConnection(new Host('http://esjs.com:9200'));
+      var body = 'blah';
+      server
+        .get('/users/1')
+        .reply(200, body, {'Content-Encoding': 'gzip'});
+
+      con.request({
+        method: 'GET',
+        path: '/users/1'
+      }, function (err, resp, status) {
+        expect(err).to.be.an(Error);
+        expect(resp).to.eql(undefined);
+        expect(status).to.eql(undefined);
+        server.done();
+        done();
+      });
+    });
+
     it('Ignores serialization errors', function (done) {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
@@ -351,6 +425,38 @@ describe('Http Connector', function () {
         body: body
       }, function (err, resp, status) {
         expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
+        server.done();
+        done();
+      });
+    });
+
+    it('does not set the Accept-Encoding header by default', function (done) {
+      var con = new HttpConnection(new Host());
+      var respBody = 'i should not be encoded';
+      var server = nock('http://localhost:9200')
+      .matchHeader('accept-encoding', undefined)
+      .get('/')
+      .once()
+      .reply(200, respBody);
+
+      con.request({}, function (err, resp, status) {
+        expect(resp).to.be(respBody);
+        server.done();
+        done();
+      });
+    });
+
+    it('sets the Accept-Encoding header when specified', function (done) {
+      var con = new HttpConnection(new Host({ suggestCompression: true }));
+      var respBody = 'i should be encoded';
+      var server = nock('http://localhost:9200')
+      .matchHeader('accept-encoding', 'gzip,deflate')
+      .get('/')
+      .once()
+      .reply(200, respBody);
+
+      con.request({}, function (err, resp, status) {
+        expect(resp).to.be(respBody);
         server.done();
         done();
       });

@@ -23,8 +23,9 @@ Host.defaultPorts = {
   https: 443
 };
 
-function Host(config) {
+function Host(config, globalConfig) {
   config = config || {};
+  globalConfig = globalConfig || {};
 
   // defaults
   this.protocol = 'http';
@@ -34,6 +35,7 @@ function Host(config) {
   this.auth = null;
   this.query = null;
   this.headers = null;
+  this.suggestCompression = !!globalConfig.suggestCompression;
 
   if (typeof config === 'string') {
     if (!startsWithProtocolRE.test(config)) {
@@ -137,7 +139,7 @@ Host.prototype.makeUrl = function (params) {
 function objectPropertyGetter(prop, preOverride) {
   return function (overrides) {
     if (preOverride) {
-      overrides = preOverride(overrides);
+      overrides = preOverride.call(this, overrides);
     }
 
     var obj = this[prop];
@@ -153,7 +155,16 @@ function objectPropertyGetter(prop, preOverride) {
   };
 }
 
-Host.prototype.getHeaders = objectPropertyGetter('headers');
+Host.prototype.getHeaders = objectPropertyGetter('headers', function (overrides) {
+  if (!this.suggestCompression) {
+    return overrides;
+  }
+
+  return _.defaults(overrides || {}, {
+    'Accept-Encoding': 'gzip,deflate'
+  });
+});
+
 Host.prototype.getQuery = objectPropertyGetter('query', function (query) {
   return typeof query === 'string' ? qs.parse(query) : query;
 });
