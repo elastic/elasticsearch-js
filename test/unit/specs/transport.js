@@ -200,7 +200,6 @@ describe('Transport Class', function () {
         expect(hosts).to.have.length(1);
         expect(hosts[0]).to.have.property('suggestCompression', true);
 
-        debugger;
         trans = new Transport({
           hosts: ['localhost:9200']
         });
