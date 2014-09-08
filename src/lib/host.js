@@ -23,8 +23,9 @@ Host.defaultPorts = {
   https: 443
 };
 
-function Host(config) {
+function Host(config, globalConfig) {
   config = config || {};
+  globalConfig = globalConfig || {};
 
   // defaults
   this.protocol = 'http';
@@ -34,7 +35,7 @@ function Host(config) {
   this.auth = null;
   this.query = null;
   this.headers = null;
-  this.suggestCompression = false;
+  this.suggestCompression = !!globalConfig.suggestCompression;
 
   if (typeof config === 'string') {
     if (!startsWithProtocolRE.test(config)) {

@@ -12,7 +12,7 @@ var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault
 
 function Transport(config) {
   var self = this;
-  config = config || {};
+  config = self._config = config || {};
 
   var LogClass = (typeof config.log === 'function') ? config.log : require('./log');
   config.log = this.log = new LogClass(config);
@@ -60,7 +60,7 @@ function Transport(config) {
     }
 
     var hosts = _.map(hostsConfig, function (conf) {
-      return (conf instanceof Host) ? conf : new Host(conf);
+      return (conf instanceof Host) ? conf : new Host(conf, self._config);
     });
 
     if (randomizeHosts) {
@@ -339,6 +339,7 @@ Transport.prototype.sniff = function (cb) {
   var connectionPool = this.connectionPool;
   var nodesToHostCallback = this.nodesToHostCallback;
   var log = this.log;
+  var globalConfig = this._config;
 
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
@@ -359,7 +360,7 @@ Transport.prototype.sniff = function (cb) {
       }
 
       connectionPool.setHosts(_.map(hostsConfigs, function (hostConfig) {
-        return new Host(hostConfig);
+        return new Host(hostConfig, globalConfig);
       }));
     }
     cb(err, resp, status);
