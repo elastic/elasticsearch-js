@@ -15,30 +15,30 @@ function Transport(config) {
   config = self._config = config || {};
 
   var LogClass = (typeof config.log === 'function') ? config.log : require('./log');
-  config.log = this.log = new LogClass(config);
+  config.log = self.log = new LogClass(config);
 
   // setup the connection pool
   var ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
-  this.connectionPool = new ConnectionPool(config);
+  self.connectionPool = new ConnectionPool(config);
 
   // setup the serializer
   var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
-  this.serializer = new Serializer(config);
+  self.serializer = new Serializer(config);
 
   // setup the nodesToHostCallback
-  this.nodesToHostCallback = _.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
+  self.nodesToHostCallback = _.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
 
   // setup max retries
-  this.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
+  self.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
   // setup endpoint to use for sniffing
-  this.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/clear';
+  self.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/clear';
 
   // setup requestTimeout default
-  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
+  self.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
 
   if (config.hasOwnProperty('defer')) {
-    this.defer = config.defer;
+    self.defer = config.defer;
   }
 
   // randomizeHosts option
@@ -54,6 +54,7 @@ function Transport(config) {
         return val;
       }
     });
+
     if (!hostsConfig) {
       throw new TypeError('Invalid hosts config. Expected a URL, an array of urls, a host config object, ' +
         'or an array of host config objects.');
@@ -67,22 +68,22 @@ function Transport(config) {
       hosts = _.shuffle(hosts);
     }
 
-    this.connectionPool.setHosts(hosts);
+    self.connectionPool.setHosts(hosts);
   }
 
   if (config.sniffOnStart) {
-    this.sniff();
+    self.sniff();
   }
 
   if (config.sniffInterval) {
-    this._timeout(function doSniff() {
+    self._timeout(function doSniff() {
       self.sniff();
       self._timeout(doSniff, config.sniffInterval);
     }, config.sniffInterval);
   }
 
   if (config.sniffOnConnectionFault) {
-    patchSniffOnConnectionFault(this);
+    patchSniffOnConnectionFault(self);
   }
 }
 
