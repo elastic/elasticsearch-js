@@ -132,6 +132,9 @@ Default::: `10`
 Default::: `10`
 
 
+`suggestCompression`[[config-suggest-compression]]:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.
+
+Default::: `false`
 
 
 `connectionClass`[[config-connection-class]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
