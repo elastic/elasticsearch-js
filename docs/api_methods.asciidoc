@@ -5,8 +5,6 @@
 NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
 
 [[js-api-method-index]]
-* <<api-abortbenchmark,abortBenchmark>>
-* <<api-benchmark,benchmark>>
 * <<api-bulk,bulk>>
 * <<api-clearscroll,clearScroll>>
 * <<api-count,count>>
@@ -24,7 +22,6 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-gettemplate,getTemplate>>
 * <<api-index,index>>
 * <<api-info,info>>
-* <<api-listbenchmarks,listBenchmarks>>
 * <<api-mget,mget>>
 * <<api-mlt,mlt>>
 * <<api-mpercolate,mpercolate>>
@@ -111,56 +108,6 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-snapshot-getrepository,snapshot.getRepository>>
 * <<api-snapshot-restore,snapshot.restore>>
 * <<api-snapshot-status,snapshot.status>>
-
-[[api-abortbenchmark]]
-=== `abortBenchmark`
-
-[source,js]
---------
-client.abortBenchmark([params, [callback]])
---------
-
-// no description
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`name`::
-`String` -- A benchmark name
-
-link:#[back to top]
-
-[[api-benchmark]]
-=== `benchmark`
-
-[source,js]
---------
-client.benchmark([params, [callback]])
---------
-
-// no description
-
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`verbose`::
-`Boolean` -- Specify whether to return verbose statistics about each iteration (default: false)
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`type`::
-`String` -- The name of the document type
-
-link:#[back to top]
 
 [[api-bulk]]
 === `bulk`
@@ -1104,31 +1051,6 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 // no examples
 
 
-
-[[api-listbenchmarks]]
-=== `listBenchmarks`
-
-[source,js]
---------
-client.listBenchmarks([params, [callback]])
---------
-
-// no description
-
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html[the elasticsearch docs] for more about this method.
-
-// no examples
-
-
-==== Params
-
-[horizontal]
-`index`::
-`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-`type`::
-`String` -- The name of the document type
-
-link:#[back to top]
 
 [[api-mget]]
 === `mget`

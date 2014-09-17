@@ -6,65 +6,6 @@ var api = module.exports = {};
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
- * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.name - A benchmark name
- */
-api.abortBenchmark = ca({
-  url: {
-    fmt: '/_bench/abort/<%=name%>',
-    req: {
-      name: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [benchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.verbose - Specify whether to return verbose statistics about each iteration (default: false)
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.benchmark = ca({
-  params: {
-    verbose: {
-      type: 'boolean'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ],
-  method: 'PUT'
-});
-
-/**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3963,40 +3904,6 @@ api.info = ca({
   url: {
     fmt: '/'
   }
-});
-
-/**
- * Perform a [listBenchmarks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.listBenchmarks = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ]
 });
 
 /**
