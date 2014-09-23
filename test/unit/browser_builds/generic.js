@@ -1,4 +1,3 @@
-/* jshint browser:true */
 var expect = require('expect.js');
 var Transport = require('../../../src/lib/transport');
 
