@@ -1,4 +1,9 @@
 module.exports = function (grunt) {
+
+  grunt.registerTask('browser_clients:dev', [
+    'run:browser_test_server:keepalive'
+  ]);
+
   grunt.registerTask('browser_clients:test', [
     'browser_clients:build',
     'run:browser_test_server',
