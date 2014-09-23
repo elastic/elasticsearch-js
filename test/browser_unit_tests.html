@@ -4,47 +4,22 @@
     <meta charset="utf-8">
     <title>Mocha Tests</title>
     <link rel="stylesheet" href="mocha.css" />
+    <link rel="stylesheet" href="screencast-reporter.css" />
   </head>
   <body>
     <div id="mocha"></div>
     <script src="expect.js"></script>
     <script src="mocha.js"></script>
+    <script src="screencast-reporter.js"></script>
     <script>
       mocha.setup('bdd');
-      // sauce labs & selenium inject global variables that break this
-      // mocha.checkLeaks();
-      // mocha.globals(['mochaRunner', 'angular']);
+      mocha.reporter(ScreencastReporter);
     </script>
     <script src="unit_tests.js"></script>
     <script>
-      (function (root) {
-        var failedTests = [];
-
-        var flattenTitles = function (test) {
-          var titles = [];
-          while (test && test.parent && test.parent.title) {
-            titles.unshift(test.parent.title);
-            test = test.parent
-          }
-          return titles;
-        };
-
-        var runner = root.mochaRunner = mocha.run()
-          .on('end', function(){
-            window.mochaResults = runner.stats;
-            window.mochaResults.reports = failedTests;
-          })
-          .on('fail', function logFailure(test, err){
-            failedTests.push({
-              name: test.title,
-              result: false,
-              message: err.message,
-              stack: err.stack,
-              titles: flattenTitles(test)
-            });
-          });
-
-      }(window));
+      mochaRunner = mocha.run().on('end', function(){
+        window.mochaResults = this.stats;
+      });
     </script>
   </body>
 </html>

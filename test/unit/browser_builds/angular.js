@@ -101,7 +101,9 @@ describe('Angular esFactory', function () {
         return $http(config);
       });
 
-      return client.ping();
+      return client.ping({
+        requestTimeout: 1000
+      });
     });
   });
 
@@ -135,7 +137,9 @@ describe('Angular esFactory', function () {
         });
       });
 
-      var prom = client.ping();
+      var prom = client.ping({
+        requestTimeout: 1000
+      });
       return prom.then(function () {
         expect($httpParams).to.have.property('headers');
         expect($httpParams.headers).to.have.property('Authorization', authHeader);

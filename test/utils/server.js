@@ -91,6 +91,8 @@ app
   .get('/expect.js', sendFile(root + '/node_modules/expect.js/expect.js'))
   .get('/mocha.css', sendFile(root + '/node_modules/mocha/mocha.css'))
   .get('/mocha.js', sendFile(root + '/node_modules/mocha/mocha.js'))
+  .get('/screencast-reporter.css', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.css'))
+  .get('/screencast-reporter.js', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.js'))
 
   // libs
   .get('/angular.js', sendFile(root + '/bower_components/angular/angular.js'))
