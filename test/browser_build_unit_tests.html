@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <title>Mocha Tests</title>
     <link rel="stylesheet" href="mocha.css" />
+    <link rel="stylesheet" href="screencast-reporter.css" />
   </head>
   <body>
     <div id="mocha"></div>
     <script src="expect.js"></script>
     <script src="mocha.js"></script>
+    <script src="screencast-reporter.js"></script>
     <script>
       mocha.setup('bdd');
-      // sauce labs & selenium inject global variables that break this
-      // mocha.checkLeaks();
-      // mocha.globals(['mochaRunner', 'angular']);
+      mocha.reporter(ScreencastReporter);
     </script>
     <!-- libs -->
     <script src="jquery.js"></script>

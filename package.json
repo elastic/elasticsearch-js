@@ -64,6 +64,7 @@
     "load-grunt-tasks": "~0.2.0",
     "mocha": "~1.21.4",
     "mocha-lcov-reporter": "0.0.1",
+    "mocha-screencast-reporter": "~0.1.4",
     "moment": "~2.4.0",
     "nock": "~0.28.3",
     "open": "0.0.4",
