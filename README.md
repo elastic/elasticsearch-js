@@ -2,9 +2,9 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.org/elasticsearch/elasticsearch-js.svg?branch=2.4)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.4)
-[![Coverage Status](http://img.shields.io/coveralls/elasticsearch/elasticsearch-js.svg?branch=2.4)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.4)
-[![Dependencies up to date](https://david-dm.org/elasticsearch/elasticsearch-js.svg)](https://david-dm.org/elasticsearch/elasticsearch-js)
+[![Build Status](http://img.shields.io/travis/elasticsearch/elasticsearch-js/2.4.svg?style=flat-square)](https://travis-ci.org/elasticsearch/elasticsearch-js?branch=2.4)
+[![Coverage Status](http://img.shields.io/coveralls/elasticsearch/elasticsearch-js/2.4.svg?style=flat-square)](https://coveralls.io/r/elasticsearch/elasticsearch-js?branch=2.4)
+[![Dependencies up to date](http://img.shields.io/david/elasticsearch/elasticsearch-js.svg?style=flat-square)](https://david-dm.org/elasticsearch/elasticsearch-js)
 
 ## Features
 
@@ -53,7 +53,7 @@ Check out the [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsear
 
 ## Supported Elasticsearch Versions
 
-[![Supporting Elasticsearch Version 0.90 to 1.3](http://img.shields.io/badge/elasticsearch-0.90--1.3-green.svg)](http://build-eu-1.elasticsearch.com/job/es-js_nightly/)
+[![Supporting Elasticsearch Version 0.90 to 1.3](http://img.shields.io/badge/elasticsearch-0.90--1.3-green.svg?style=flat-square)](http://build-eu-1.elasticsearch.com/job/es-js_nightly/)
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#_config_options)
 
