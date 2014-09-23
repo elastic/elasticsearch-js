@@ -10,25 +10,37 @@ var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 
+function makeAuthHeader(auth) {
+  return 'Basic ' + (new Buffer(auth, 'utf8')).toString('base64');
+}
+
 function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
-  var connector = this;
+  var self = this;
+  self.headerDefaults = {};
+
+  if (self.host.auth) {
+    self.headerDefaults.Authorization = makeAuthHeader(self.host.auth);
+  }
 
   config.$injector.invoke(['$http', '$q', function ($http, $q) {
-    connector.$q = $q;
-    connector.$http = $http;
-
-    if (connector.host.auth) {
-      connector.$http.defaults.headers.common.Authorization = 'Basic ' + (new Buffer(connector.host.auth, 'utf8')).toString('base64');
-    }
+    self.$q = $q;
+    self.$http = $http;
   }]);
-
-
 }
 _.inherits(AngularConnector, ConnectionAbstract);
 
-AngularConnector.prototype.request = function (params, cb) {
+AngularConnector.prototype.request = function (userParams, cb) {
   var abort = this.$q.defer();
+  var params = _.cloneDeep(userParams);
+
+  params.headers = _.defaults(params.headers || {}, this.headerDefaults);
+  if (params.auth) {
+    params.headers.Authorization = makeAuthHeader(params.auth);
+  }
+
+  // inform the host not to use the auth, by overriding it in the params
+  params.auth = false;
 
   this.$http({
     method: params.method,

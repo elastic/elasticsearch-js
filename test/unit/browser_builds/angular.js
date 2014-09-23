@@ -1,7 +1,7 @@
-/* jshint browser:true */
-/* global angular */
-
+var _ = require('lodash-node');
 var expect = require('expect.js');
+var Promise = require('bluebird');
+var sinon = require('sinon');
 
 describe('Angular esFactory', function () {
   before(function () {
@@ -9,110 +9,137 @@ describe('Angular esFactory', function () {
   });
 
   var uuid = (function () { var i = 0; return function () { return ++i; }; }());
+  var esFactory;
+  var $http;
+  var $rootScope;
+  var $httpBackend;
 
-  /**
-   * Perform promise based async code in a way that mocha will understand
-   * @param  {Function} cb   - node style callback
-   * @param  {Function} body - function that executes async and returns a promise/value
-   */
-  var prom = function (cb, body) {
-    expect(cb).to.be.a('function');
-    expect(body).to.be.a('function');
+  function bootstrap(env) {
+    beforeEach(function () {
+      var promiseProvider = _.noop;
+      if (env.bluebirdPromises) {
+        promiseProvider = function ($provide) {
+          $provide.service('$q', function () {
+            return {
+              defer: function () {
+                return _.bindAll(Promise.defer(), ['resolve', 'reject']);
+              },
+              reject: Promise.reject,
+              when: Promise.resolve,
+              all: Promise.all
+            };
+          });
+        };
+      }
 
-    var promise = body();
-    expect(promise.then).to.be.a('function');
-    promise.then(function () { cb(); }, cb);
-  };
-
-  function directive(makeDirective) {
-    var root = document.createElement('div');
-    root.setAttribute('ng-controller', 'empty-controller');
-    var id = uuid();
-    root.setAttribute('test-directive-' + id, 'test-directive');
-    document.body.appendChild(root);
-
-    after(function () {
-      document.body.removeChild(root);
-      root = null;
+      angular.mock.module(promiseProvider, 'elasticsearch');
     });
 
-    angular
-      .module('mod' + id, ['elasticsearch'])
-      .controller('empty-controller', function () {})
-      .directive('testDirective' + id, makeDirective);
-
-    angular.bootstrap(root, ['mod' + id]);
+    beforeEach(angular.mock.inject(function ($injector) {
+      $http = $injector.get('$http');
+      esFactory = $injector.get('esFactory');
+      $rootScope = $injector.get('$rootScope');
+      $httpBackend = $injector.get('$httpBackend');
+    }));
   }
 
-  it('is available in the elasticsearch module', function (done) {
-    directive(function (esFactory) {
-      return function () {
-        expect(esFactory).to.be.a('function');
-        done();
-      };
+  describe('basic', function () {
+    bootstrap({
+      bluebirdPromises: true
+    });
+
+    it('is available in the elasticsearch module', function () {
+      expect(esFactory).to.be.a('function');
+    });
+
+    it('has Transport and ConnectionPool properties', function () {
+      expect(esFactory).to.have.property('Transport');
+      expect(esFactory).to.have.property('ConnectionPool');
+    });
+
+    it('returns a new client when it is called', function () {
+      var client = esFactory({
+        hosts: null
+      });
+
+      expect(client).to.have.keys('transport');
+      expect(client.transport).to.be.a(esFactory.Transport);
+      client.close();
+    });
+
+    it('returns an error created by calling a method incorrectly', function () {
+      var client = esFactory({ hosts: null });
+      var err;
+
+      var prom = client.get().then(function () {
+        throw new Error('expected request to fail');
+      }, function (err) {
+        expect(err).to.have.property('message');
+        expect(err.message).to.match(/unable/i);
+      });
+
+      $rootScope.$apply();
+      return prom;
     });
   });
 
-  it('has Transport and ConnectionPool properties', function (done) {
-    directive(function (esFactory) {
-      return function () {
-        expect(esFactory).to.have.property('Transport');
-        expect(esFactory).to.have.property('ConnectionPool');
-        done();
-      };
+  describe('ping', function () {
+    bootstrap({
+      bluebirdPromises: true
+    });
+
+    it('works', function () {
+      $httpBackend.expect('HEAD', 'http://some-es-host.com/').respond(200);
+
+      var client = esFactory({
+        host: 'http://some-es-host.com/'
+      });
+
+      var connection = client.transport.connectionPool.getConnections().pop();
+      var stub = sinon.stub(connection, '$http', function (config) {
+        process.nextTick($httpBackend.flush);
+        return $http(config);
+      });
+
+      return client.ping();
     });
   });
 
-  it('returns a new client when it is called', function (done) {
-    directive(function (esFactory) {
-      return function () {
-        try {
-          var client = esFactory({
-            hosts: null
-          });
+  describe('$http', function () {
+    bootstrap({
+      bluebirdPromises: true
+    });
 
-          expect(client).to.have.keys('transport');
-          expect(client.transport).to.be.a(esFactory.Transport);
-          client.close();
-        } catch (e) {
-          return done(e);
+    it('uses the auth header provided', function () {
+      var authString = 'user:password';
+      var authHeader = 'Basic ' + (new Buffer(authString, 'utf8')).toString('base64');
+      var $httpParams = null;
+      var client = esFactory({
+        host: {
+          host: 'some-other-es-host.com',
+          auth: authString
         }
-        done();
-      };
-    });
-  });
+      });
 
-  it('returns an error created by calling a method incorrectly', function (done) {
-    directive(function (esFactory) {
-      return function () {
-        prom(done, function () {
-          var client = esFactory({ hosts: null });
-          return client.get().then(function () {
-            expect.fail('promise should have been rejected');
-          }, function (err) {
-            expect(err.message).to.match(/unable/i);
-          });
+      // once the client calls the $http method, flush the requests and trigger an
+      // error if the expected request was not made
+      var connection = client.transport.connectionPool.getConnections().pop();
+      var stub = sinon.stub(connection, '$http', function (params) {
+        $httpParams = params;
+        return Promise.resolve({
+          data: null,
+          status: 200,
+          headers: function () {
+            return {};
+          }
         });
-      };
-    });
-  });
+      });
 
-  it('ping\'s properly', function (done) {
-    directive(function (esFactory) {
-      return function () {
-        prom(done, function () {
-          var client = esFactory({
-            hosts: 'not-a-valid-es-host.es'
-          });
-
-          return client.ping().then(function () {
-            expect.fail('promise should have been rejected');
-          }, function (err) {
-            // this error should be "NoConnections", but in some browsers it will be a Timeout due to testing proxy or because it's IE
-            expect(err).to.be.ok();
-          });
-        });
-      };
+      var prom = client.ping();
+      return prom.then(function () {
+        expect($httpParams).to.have.property('headers');
+        expect($httpParams.headers).to.have.property('Authorization', authHeader);
+      });
     });
   });
 });
