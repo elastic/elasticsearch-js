@@ -93,8 +93,9 @@ app
   .get('/mocha.js', sendFile(root + '/node_modules/mocha/mocha.js'))
 
   // libs
-  .get('/angular.js', sendFile(root + '/test/utils/angular.js'))
-  .get('/jquery.js', sendFile(root + '/test/utils/jquery.js'))
+  .get('/angular.js', sendFile(root + '/bower_components/angular/angular.js'))
+  .get('/angular-mocks.js', sendFile(root + '/bower_components/angular-mocks/angular-mocks.js'))
+  .get('/jquery.js', sendFile(root + '/node_modules/jquery/dist/jquery.js'))
 
   // builds
   .get('/elasticsearch.js', sendFile(root + '/dist/elasticsearch.js'))

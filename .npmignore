@@ -1,4 +1,5 @@
 dist
+bower_components
 npm-debug.log
 node_modules
 scripts/scratch*
