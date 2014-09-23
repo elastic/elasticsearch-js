@@ -1,4 +1,10 @@
 {
   "extends": "../../.jshintrc",
-  "browser": true
+  "browser": true,
+  "globals": {
+    "angular": true,
+    "module": true,
+    "inject": true,
+    "$": true
+  }
 }

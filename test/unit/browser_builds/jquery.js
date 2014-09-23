@@ -1,10 +1,7 @@
-/* jshint browser:true */
 var expect = require('expect.js');
 var Transport = require('../../../src/lib/transport');
 
 describe('jQuery.es namespace', function () {
-  var $ = window.jQuery;
-
   it('is defined on the global jQuery', function () {
     expect($.es).to.be.ok();
   });
