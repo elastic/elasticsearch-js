@@ -125,7 +125,7 @@ Host.prototype.makeUrl = function (params) {
   var auth = '';
   if (params.auth) {
     auth = params.auth + '@';
-  } else if (this.auth) {
+  } else if (this.auth && params.auth !== false) {
     auth = this.auth + '@';
   }
 
