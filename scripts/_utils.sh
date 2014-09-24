@@ -4,15 +4,8 @@
 # Start a group of log output
 #####
 function group {
-  re='start:'
-
-  if [[ $CI_NAME = "codeship" ]]; then
-    style='..'
-    reset='..'
-  else
-    style='\x1b[1m\x1b[37m\x1b[4m'
-    reset='\x1b[24m\x1b[39m\x1b[22m'
-  fi
+  style='\x1b[1m\x1b[37m\x1b[4m'
+  reset='\x1b[24m\x1b[39m\x1b[22m'
 
   echo -en "\n\n${style}${1}${reset}\n"
 }
@@ -23,7 +16,7 @@ function group {
 function call {
   local DO="$*"
   echo "\$ ${DO}"
-  echo $DO | bash
+  echo "$DO" | bash
   local RESULT=$?
   if [ "$RESULT" -gt "0" ]; then
     echo "non-zero exit code: $RESULT"
@@ -32,7 +25,7 @@ function call {
 }
 
 function ensure_grunt {
-  if [[ ! -x "`which grunt`" ]]; then
+  if [[ ! -x "$(which grunt)" ]]; then
     group "installing grunt"
       call npm install --silent -g grunt-cli
   fi
@@ -43,7 +36,7 @@ function ensure_grunt {
 #####
 function _grunt {
   ensure_grunt
-  call grunt $*
+  call grunt "$*"
 }
 
 #####
@@ -63,7 +56,7 @@ function manage_es {
   group "${DO}ing es"
 
     if [ ! -d "$PIDS" ]; then
-      call mkdir -p $PIDS
+      call mkdir -p "$PIDS"
     fi
 
     if [ -n "$ES_RELEASE" ]; then
@@ -71,18 +64,22 @@ function manage_es {
       local ES_URL="https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_RELEASE}.zip"
       local ES_DIR="${SNAPSHOTS}/${ES_VERSION}"
     else
+      local BUCKET='s3-us-west-2.amazonaws.com/build.elasticsearch.org'
+
       # TODO: TRASH THIS
       if [[ $ES_BRANCH == "master" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.x" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.2" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.3" ]]; then local JDK='JDK7'
-      elif [[ $ES_BRANCH == "1.4" ]]; then local JDK='JDK7'
+      elif [[ $ES_BRANCH == "1.4" ]]; then
+        local JDK='JDK7'
+        local BUCKET='s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org'
       else local JDK='JDK6'
       fi
 
       local ES_VERSION="${ES_BRANCH}_nightly"
-      local ES_URL="http://s3-us-west-2.amazonaws.com/build.elasticsearch.org/origin/$ES_BRANCH/nightly/$JDK/elasticsearch-latest-SNAPSHOT.zip"
-      local DATE=`date +%Y_%m_%d`
+      local ES_URL="http://$BUCKET/origin/$ES_BRANCH/nightly/$JDK/elasticsearch-latest-SNAPSHOT.zip"
+      local DATE="$(date +%Y_%m_%d)"
       local ES_DIR="${SNAPSHOTS}/${ES_VERSION}_${DATE}"
     fi
 
@@ -94,20 +91,20 @@ function manage_es {
       reinstall)
         if [ -x "$ES_BIN" ]; then
           echo "removing $ES_VERSION"
-          rm -rf ${SNAPSHOTS}/${ES_VERSION}*
+          rm -rf "${SNAPSHOTS}/${ES_VERSION}*"
         fi
-        manage_es install $ES_BRANCH $ES_RELEASE
+        manage_es install "$ES_BRANCH" "$ES_RELEASE"
       ;;
       install)
         if [ ! -x "$ES_BIN" ]; then
           echo "Downloading Elasticsearch $ES_VERSION"
-          rm -rf ${SNAPSHOTS}/${ES_VERSION}*
-          call curl --silent -O $ES_URL
+          rm -rf "${SNAPSHOTS}/${ES_VERSION}*"
+          call curl --silent -O "$ES_URL"
           unzip -q elasticsearch-*.zip
           rm elasticsearch-*.zip
-          mv elasticsearch-*/ $ES_DIR
+          mv elasticsearch-*/ "$ES_DIR"
           if [ -z "$ES_RELEASE" ]; then
-            ln -sf $ES_DIR "${SNAPSHOTS}/${ES_VERSION}"
+            ln -sf "$ES_DIR" "${SNAPSHOTS}/${ES_VERSION}"
           fi
         else
           echo "$ES_VERSION installed"
@@ -115,9 +112,9 @@ function manage_es {
       ;;
       start)
         # ensure that only one version is running at a time so that we can precisely kill them
-        if [ -f $PIDFILE ]; then
-          local PID=`cat $PIDFILE`
-          kill -0 $PID
+        if [ -f "$PIDFILE" ]; then
+          local PID="$(cat "$PIDFILE")"
+          kill -0 "$PID"
           local RUNNING=$?
 
           if [ $RUNNING -eq 0 ]; then
@@ -125,11 +122,11 @@ function manage_es {
             return 1
           else
             echo "PID file was left behind by ES"
-            rm $PIDFILE
+            rm "$PIDFILE"
           fi
         fi
 
-        manage_es install $ES_BRANCH $ES_RELEASE
+        manage_es install "$ES_BRANCH" "$ES_RELEASE"
 
         if [ ! -x "$ES_BIN" ]; then
           echo "Unable to find elasticsearch executable"
@@ -152,21 +149,21 @@ function manage_es {
           ES_OPTS="$ES_OPTS -D es.node.bench=true -D es.script.disable_dynamic=false"
         fi
 
-        call $ES_BIN $ES_OPTS
+        call "$ES_BIN" "$ES_OPTS"
       ;;
       stop)
-        if [ -e $PIDFILE ]; then
-          local PID=`cat $PIDFILE`
-          kill -0 $PID
+        if [ -e "$PIDFILE" ]; then
+          local PID="$(cat "$PIDFILE")"
+          kill -0 "$PID"
           local RUNNING=$?
 
           if [ $RUNNING -eq 0 ]; then
-            kill $PID
+            kill "$PID"
             echo "Elasticsearch $ES_VERSION stopped"
             return 0
           fi
 
-          rm $PIDFILE
+          rm "$PIDFILE"
         fi
         echo "Elasticsearch $ES_VERSION is not running."
         return 1
