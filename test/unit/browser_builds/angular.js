@@ -83,30 +83,6 @@ describe('Angular esFactory', function () {
     });
   });
 
-  describe('ping', function () {
-    bootstrap({
-      bluebirdPromises: true
-    });
-
-    it('works', function () {
-      $httpBackend.expect('HEAD', 'http://some-es-host.com/').respond(200);
-
-      var client = esFactory({
-        host: 'http://some-es-host.com/'
-      });
-
-      var connection = client.transport.connectionPool.getConnections().pop();
-      var stub = sinon.stub(connection, '$http', function (config) {
-        process.nextTick($httpBackend.flush);
-        return $http(config);
-      });
-
-      return client.ping({
-        requestTimeout: 1000
-      });
-    });
-  });
-
   describe('$http', function () {
     bootstrap({
       bluebirdPromises: true
