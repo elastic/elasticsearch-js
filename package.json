@@ -73,7 +73,7 @@
   },
   "license": "Apache 2.0",
   "dependencies": {
-    "bluebird": "~2.2.1",
+    "bluebird": "~2.2.2",
     "chalk": "~0.5.1",
     "forever-agent": "~0.5.2",
     "lodash-node": "~2.4"
