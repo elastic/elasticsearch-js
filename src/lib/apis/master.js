@@ -932,7 +932,7 @@ api.cluster.prototype.putSettings = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.dryRun - Simulate the operation only and return the resulting state
  * @param {Boolean} params.explain - Return an explanation of why the commands can or cannot be executed
- * @param {Boolean} params.filterMetadata - Don't return cluster state metadata (default: false)
+ * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics. Defaults to all but metadata
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
  */
@@ -945,9 +945,17 @@ api.cluster.prototype.reroute = ca({
     explain: {
       type: 'boolean'
     },
-    filterMetadata: {
-      type: 'boolean',
-      name: 'filter_metadata'
+    metric: {
+      type: 'list',
+      options: [
+        '_all',
+        'blocks',
+        'metadata',
+        'nodes',
+        'routing_table',
+        'master_node',
+        'version'
+      ]
     },
     masterTimeout: {
       type: 'time',
@@ -1420,10 +1428,27 @@ api.deleteByQuery = ca({
  * Perform a [deleteScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.deleteScript = ca({
+  params: {
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
@@ -1686,10 +1711,27 @@ api.get = ca({
  * Perform a [getScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.getScript = ca({
+  params: {
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
@@ -1783,9 +1825,26 @@ api.getSource = ca({
  * Perform a [getTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.getTemplate = ca({
+  params: {
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -2299,7 +2358,7 @@ api.indices.prototype.deleteWarmer = ca({
 });
 
 /**
- * Perform a [indices.exists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-get-settings.html) request
+ * Perform a [indices.exists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-exists.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2542,6 +2601,58 @@ api.indices.prototype.flush = ca({
 });
 
 /**
+ * Perform a [indices.get](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-get-index.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Boolean} params.ignoreUnavailable - Ignore unavailable indexes (default: false)
+ * @param {Boolean} params.allowNoIndices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
+ * @param {String, String[], Boolean} params.expandWildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names
+ * @param {String, String[], Boolean} params.feature - A comma-separated list of features
+ */
+api.indices.prototype.get = ca({
+  params: {
+    local: {
+      type: 'boolean'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'list',
+      name: 'expand_wildcards'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=feature%>',
+      req: {
+        index: {
+          type: 'list'
+        },
+        feature: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    }
+  ]
+});
+
+/**
  * Perform a [indices.getAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -2755,7 +2866,7 @@ api.indices.prototype.getFieldMapping = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String, String[], Boolean} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
@@ -2771,7 +2882,7 @@ api.indices.prototype.getMapping = ca({
       name: 'allow_no_indices'
     },
     expandWildcards: {
-      type: 'enum',
+      type: 'list',
       'default': 'open',
       options: [
         'open',
@@ -3911,7 +4022,6 @@ api.mget = ca({
  * @param {String} params.routing - Specific routing value
  * @param {Number} params.searchFrom - The offset from which to return results
  * @param {String, String[], Boolean} params.searchIndices - A comma-separated list of indices to perform the query against (default: the index containing the document)
- * @param {String} params.searchQueryHint - The search query hint
  * @param {String} params.searchScroll - A scroll search request definition
  * @param {Number} params.searchSize - The number of documents to return (default: 10)
  * @param {String} params.searchSource - A specific search request definition (instead of using the request body)
@@ -3970,10 +4080,6 @@ api.mlt = ca({
     searchIndices: {
       type: 'list',
       name: 'search_indices'
-    },
-    searchQueryHint: {
-      type: 'string',
-      name: 'search_query_hint'
     },
     searchScroll: {
       type: 'string',
@@ -4699,10 +4805,37 @@ api.ping = ca({
  * Perform a [putScript](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} [params.opType=index] - Explicit operation type
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.putScript = ca({
+  params: {
+    opType: {
+      type: 'enum',
+      'default': 'index',
+      options: [
+        'index',
+        'create'
+      ],
+      name: 'op_type'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {

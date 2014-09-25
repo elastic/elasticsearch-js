@@ -1557,7 +1557,7 @@ client.search({
   q: 'title:test'
 }, function getMoreUntilDone(error, response) {
   // collect the title from each response
-  response.hits.hits.forEach(function (hit) {
+  response.hits.hists.forEach(function (hit) {
     allTitles.push(hit.fields.title);
   });
 
@@ -3364,11 +3364,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `allowNoIndices`::
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
-`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
-Options:::
- * `"open"`
- * `"closed"`
-
+`String, String[], Boolean` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
