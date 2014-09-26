@@ -2866,7 +2866,7 @@ api.indices.prototype.getFieldMapping = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String, String[], Boolean} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
@@ -2882,7 +2882,7 @@ api.indices.prototype.getMapping = ca({
       name: 'allow_no_indices'
     },
     expandWildcards: {
-      type: 'enum',
+      type: 'list',
       'default': 'open',
       options: [
         'open',

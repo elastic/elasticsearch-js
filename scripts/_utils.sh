@@ -67,11 +67,10 @@ function manage_es {
       local BUCKET='s3-us-west-2.amazonaws.com/build.elasticsearch.org'
 
       # TODO: TRASH THIS
-      if [[ $ES_BRANCH == "master" ]]; then local JDK='JDK7'
-      elif [[ $ES_BRANCH == "1.x" ]]; then local JDK='JDK7'
+      if [[ $ES_BRANCH == "1.x" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.2" ]]; then local JDK='JDK7'
       elif [[ $ES_BRANCH == "1.3" ]]; then local JDK='JDK7'
-      elif [[ $ES_BRANCH == "1.4" ]]; then
+      elif [[ $ES_BRANCH == "1.4" || $ES_BRANCH == "master" ]]; then
         local JDK='JDK7'
         local BUCKET='s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org'
       else local JDK='JDK6'
