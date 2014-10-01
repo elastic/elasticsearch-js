@@ -2,6 +2,7 @@
 
 ## 2.4 (Jul 30 2014)
  - Added apiVersion `"1.3"`, which is now the default
+ - Angular connector (when used with Basic Auth) no longer modifies Angular's default headers.
 
 ## 2.3 (Jul 11 2014)
  - Added support for Node 0.11
