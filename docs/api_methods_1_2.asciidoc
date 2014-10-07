@@ -1407,7 +1407,7 @@ client.search({
   q: 'title:test'
 }, function getMoreUntilDone(error, response) {
   // collect the title from each response
-  response.hits.hists.forEach(function (hit) {
+  response.hits.hits.forEach(function (hit) {
     allTitles.push(hit.fields.title);
   });
 

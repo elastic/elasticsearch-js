@@ -3882,6 +3882,56 @@ api.indices.prototype.updateAliases = ca({
 });
 
 /**
+ * Perform a [indices.upgrade](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: true)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ */
+api.indices.prototype.upgrade = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      name: 'wait_for_completion'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/_upgrade',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_upgrade'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.validateQuery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-validate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -4309,6 +4359,7 @@ api.msearch = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {String} params.routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {String} params.parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+ * @param {Boolean} params.realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
  * @param {String} params.id - The id of the document.
@@ -4360,6 +4411,10 @@ api.mtermvectors = ca({
     },
     parent: {
       type: 'string',
+      required: false
+    },
+    realtime: {
+      type: 'boolean',
       required: false
     }
   },
@@ -5435,6 +5490,7 @@ api.snapshot.prototype.create = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.verify - Whether to verify the repository after creation
  * @param {String} params.repository - A repository name
  */
 api.snapshot.prototype.createRepository = ca({
@@ -5445,6 +5501,9 @@ api.snapshot.prototype.createRepository = ca({
     },
     timeout: {
       type: 'time'
+    },
+    verify: {
+      type: 'boolean'
     }
   },
   url: {
@@ -5655,6 +5714,35 @@ api.snapshot.prototype.status = ca({
 });
 
 /**
+ * Perform a [snapshot.verifyRepository](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.repository - A repository name
+ */
+api.snapshot.prototype.verifyRepository = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_snapshot/<%=repository%>/_verify',
+    req: {
+      repository: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'POST'
+});
+
+/**
  * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -5725,6 +5813,7 @@ api.suggest = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random).
  * @param {String} params.routing - Specific routing value.
  * @param {String} params.parent - Parent id of documents.
+ * @param {Boolean} params.realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
  * @param {String} params.id - The id of the document.
@@ -5772,6 +5861,10 @@ api.termvector = ca({
     },
     parent: {
       type: 'string',
+      required: false
+    },
+    realtime: {
+      type: 'boolean',
       required: false
     }
   },
