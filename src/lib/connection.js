@@ -15,7 +15,6 @@ function ConnectionAbstract(host, config) {
   config = config || {};
   EventEmitter.call(this);
 
-  this.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
   this.log = config.log || new Log();
 
   if (!host) {
