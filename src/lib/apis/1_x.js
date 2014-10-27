@@ -6,65 +6,6 @@ var api = module.exports = {};
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
- * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.name - A benchmark name
- */
-api.abortBenchmark = ca({
-  url: {
-    fmt: '/_bench/abort/<%=name%>',
-    req: {
-      name: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [benchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.verbose - Specify whether to return verbose statistics about each iteration (default: false)
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.benchmark = ca({
-  params: {
-    verbose: {
-      type: 'boolean'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ],
-  method: 'PUT'
-});
-
-/**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3038,6 +2979,55 @@ api.indices.prototype.getTemplate = ca({
 });
 
 /**
+ * Perform a [indices.getUpgrade](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ */
+api.indices.prototype.getUpgrade = ca({
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed'
+      ],
+      name: 'expand_wildcards'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/_upgrade',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_upgrade'
+    }
+  ]
+});
+
+/**
  * Perform a [indices.getWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3885,18 +3875,14 @@ api.indices.prototype.updateAliases = ca({
  * Perform a [indices.upgrade](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: true)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.upgrade = ca({
   params: {
-    ignoreUnavailable: {
-      type: 'boolean',
-      name: 'ignore_unavailable'
-    },
     allowNoIndices: {
       type: 'boolean',
       name: 'allow_no_indices'
@@ -3909,6 +3895,10 @@ api.indices.prototype.upgrade = ca({
         'closed'
       ],
       name: 'expand_wildcards'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
     },
     waitForCompletion: {
       type: 'boolean',
@@ -4013,40 +4003,6 @@ api.info = ca({
   url: {
     fmt: '/'
   }
-});
-
-/**
- * Perform a [listBenchmarks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.listBenchmarks = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ]
 });
 
 /**

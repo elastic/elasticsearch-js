@@ -81,6 +81,7 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 * <<api-indices-getmapping,indices.getMapping>>
 * <<api-indices-getsettings,indices.getSettings>>
 * <<api-indices-gettemplate,indices.getTemplate>>
+* <<api-indices-getupgrade,indices.getUpgrade>>
 * <<api-indices-getwarmer,indices.getWarmer>>
 * <<api-indices-open,indices.open>>
 * <<api-indices-optimize,indices.optimize>>
@@ -3524,6 +3525,41 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
+[[api-indices-getupgrade]]
+=== `indices.getUpgrade`
+
+[source,js]
+--------
+client.indices.getUpgrade([params, [callback]])
+--------
+
+// no description
+
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html[the elasticsearch docs] for more about this method.
+
+// no examples
+
+
+==== Params
+
+[horizontal]
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+`[expandWildcards=open]`::
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+
+`human`::
+`Boolean` -- Whether to return time and byte values in human-readable format.
+`index`::
+`String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+link:#[back to top]
+
 [[api-indices-getwarmer]]
 === `indices.getWarmer`
 
@@ -4068,8 +4104,6 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 ==== Params
 
 [horizontal]
-`ignoreUnavailable`::
-`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `allowNoIndices`::
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
@@ -4078,6 +4112,8 @@ Options:::
  * `"open"`
  * `"closed"`
 
+`ignoreUnavailable`::
+`Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `waitForCompletion`::
 `Boolean` -- Specify whether the request should block until the all segments are upgraded (default: true)
 `index`::
