@@ -36,8 +36,17 @@ module.exports = function (grunt) {
     'browser_clients:build',
     '_upload_archive:release',
     'run:clone_bower_repo',
+    'run:checkout_bower_repo_master',
     'copy:dist_to_bower',
     'run:release_bower_tag'
+  ]);
+
+  grunt.registerTask('browser_clients:push_prerelease', [
+    'browser_clients:build',
+    'run:clone_bower_repo',
+    'run:checkout_bower_repo_prerelease',
+    'copy:dist_to_bower',
+    'run:push_prerelease_branch'
   ]);
 
   grunt.registerTask('_upload_archive', function (type) {

@@ -38,6 +38,27 @@ var config = {
       quiet: true
     }
   },
+  checkout_bower_repo_master: {
+    exec: 'git checkout master',
+    options: {
+      cwd: '<%= bowerSubmodule %>',
+      quiet: true
+    }
+  },
+  checkout_bower_repo_prerelease: {
+    exec: 'git checkout prerelease',
+    options: {
+      cwd: '<%= bowerSubmodule %>',
+      quiet: true
+    }
+  },
+  push_prerelease_branch: {
+    exec: 'git add -A && git commit -m "prerelease build" && git push origin prerelease',
+    options: {
+      cwd: '<%= bowerSubmodule %>',
+      quite: true
+    }
+  },
   release_bower_tag: {
     exec: 'node ./scripts/release/bower'
   }
