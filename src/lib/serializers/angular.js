@@ -17,3 +17,5 @@ AngularSerializer.prototype.encode = function (val) {
     return;
   }
 };
+
+module.exports = AngularSerializer;
