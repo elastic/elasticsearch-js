@@ -19,14 +19,21 @@ module.exports = function (branch, done) {
   var docVars; // slightly modified clone of apiSpec for the docs
 
   var branchSuffix = utils.branchSuffix(branch);
+  var maxMinorVersion = (function () {
+    var branches = require(fromRoot('package.json')).config.supported_es_branches;
+    var top = branches.map(function (v) { return v + '.0'; }).sort(semver.compare).pop();
+    return top.split('.')[1];
+  }());
+
   var branchAsVersion = (function () {
     var m;
+
     // master === the highest version number
     if (branch === 'master') return '999.999.999';
     // n.m -> n.m.0
     if (m = branch.match(/^\d+\.\d+$/)) return branch + '.0';
-    // n.x -> n.0.0
-    if (m = branch.match(/^(\d+)\.x$/i)) return m[1] + '.0.0';
+    // n.x -> n.(maxVersion + 1).0
+    if (m = branch.match(/^(\d+)\.x$/i)) return m[1] + '.' + (+maxMinorVersion + 1) + '.0';
 
     throw new Error('unable to convert branch "' + branch + '" to semver');
   }());

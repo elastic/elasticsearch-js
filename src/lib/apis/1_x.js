@@ -3237,7 +3237,7 @@ api.indices.prototype.optimize = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit timestamp for the document
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` or omit to perform the operation on all indices.
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
  * @param {String} params.name - The name of the alias to be created or updated
  */
 api.indices.prototype.putAlias = ca({
@@ -3250,27 +3250,17 @@ api.indices.prototype.putAlias = ca({
       name: 'master_timeout'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_alias/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        name: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_alias/<%=name%>',
-      req: {
-        name: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_alias/<%=name%>',
+    req: {
+      index: {
+        type: 'list'
+      },
+      name: {
+        type: 'string'
       }
     }
-  ],
+  },
   method: 'PUT'
 });
 

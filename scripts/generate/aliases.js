@@ -162,5 +162,14 @@ module.exports = [
         '/_snapshot/{repository}/{snapshot}/_create'
       ]
     }
+  },
+  {
+    version: '>1.4.0',
+    aliases: {
+      'indices.putAlias': [
+        // '/{index}/_alias/{name}',
+        '/{index}/_aliases/{name}'
+      ]
+    }
   }
 ];
