@@ -9,6 +9,7 @@ module.exports = function (branch, done) {
   var async = require('async');
   var chalk = require('chalk');
   var path = require('path');
+  var semver = require('semver');
   var fromRoot = path.join.bind(path, require('find-root')(__dirname));
   var templates = require('./templates');
   var urlParamRE = /\{(\w+)\}/g;
@@ -18,14 +19,24 @@ module.exports = function (branch, done) {
   var docVars; // slightly modified clone of apiSpec for the docs
 
   var branchSuffix = utils.branchSuffix(branch);
+  var branchAsVersion = (function () {
+    var m;
+    // master === the highest version number
+    if (branch === 'master') return '999.999.999';
+    // n.m -> n.m.0
+    if (m = branch.match(/^\d+\.\d+$/)) return branch + '.0';
+    // n.x -> n.0.0
+    if (m = branch.match(/^(\d+)\.x$/i)) return m[1] + '.0.0';
+
+    throw new Error('unable to convert branch "' + branch + '" to semver');
+  }());
+
   var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
-  var aliases;
-  try {
-    aliases = require('./aliases_' + _.snakeCase(branch));
-  } catch (e) {
-    // fall back to the master aliases
-    aliases = require('./aliases');
-  }
+  var aliases = _.transform(require('./aliases'), function (aliases, rule) {
+    if (semver.satisfies(branchAsVersion, rule.version)) {
+      _.assign(aliases, rule.aliases);
+    }
+  }, {});
 
   var steps = [
     readSpecFiles,
