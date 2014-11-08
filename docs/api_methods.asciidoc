@@ -1427,10 +1427,19 @@ Options:::
  * `"open"`
  * `"closed"`
 
+`percolateFormat`::
+`String` -- Return an array of matching query IDs instead of objects
+Options:::
+ * `"ids"`
+
 `percolateIndex`::
 `String` -- The index to percolate the document into. Defaults to index.
 `percolateType`::
 `String` -- The type to percolate document into. Defaults to type.
+`percolateRouting`::
+`String` -- The routing value to use when percolating the existing document.
+`percolatePreference`::
+`String` -- Which shard to prefer when executing the percolate request.
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::

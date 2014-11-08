@@ -4787,6 +4787,8 @@ api.nodes.prototype.stats = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.percolateIndex - The index to percolate the document into. Defaults to index.
  * @param {String} params.percolateType - The type to percolate document into. Defaults to type.
+ * @param {String} params.percolateRouting - The routing value to use when percolating the existing document.
+ * @param {String} params.percolatePreference - Which shard to prefer when executing the percolate request.
  * @param {String} params.percolateFormat - Return an array of matching query IDs instead of objects
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
@@ -4826,6 +4828,14 @@ api.percolate = ca({
     percolateType: {
       type: 'string',
       name: 'percolate_type'
+    },
+    percolateRouting: {
+      type: 'string',
+      name: 'percolate_routing'
+    },
+    percolatePreference: {
+      type: 'string',
+      name: 'percolate_preference'
     },
     percolateFormat: {
       type: 'enum',
