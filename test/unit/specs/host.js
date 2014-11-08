@@ -67,6 +67,29 @@ describe('Host class', function () {
         expect(host.port).to.be(9200);
         delete Host.defaultPorts.trift;
       });
+
+      it('parses simple urls properly', function () {
+        var host;
+
+        host = new Host('elasticsearch');
+        expect(host.path).to.be('/elasticsearch');
+
+        host = new Host('/elasticsearch');
+        expect(host.path).to.be('/elasticsearch');
+
+        host = new Host('//localhost/elasticsearch');
+        expect(host.host).to.be('localhost');
+        expect(host.path).to.be('/elasticsearch');
+
+        host = new Host('localhost:9200');
+        expect(host.host).to.be('localhost');
+        expect(host.port).to.be(9200);
+
+        host = new Host('localhost:9200/elasticsearch');
+        expect(host.host).to.be('localhost');
+        expect(host.port).to.be(9200);
+        expect(host.path).to.be('/elasticsearch');
+      });
     });
 
     describe('based on the output from url.parse', function () {

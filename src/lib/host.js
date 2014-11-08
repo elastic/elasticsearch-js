@@ -9,6 +9,13 @@ var qs = require('querystring');
 var _ = require('./utils');
 
 var startsWithProtocolRE = /^([a-z]+:)?\/\//;
+var defaultProto = 'http:';
+
+/* jshint ignore:start */
+if (typeof window !== 'undefined') {
+  defaultProto = window.location.protocol;
+}
+/* jshint ignore:end */
 
 var urlParseFields = [
   'protocol', 'hostname', 'pathname', 'port', 'auth', 'query'
@@ -38,8 +45,12 @@ function Host(config, globalConfig) {
   this.suggestCompression = !!globalConfig.suggestCompression;
 
   if (typeof config === 'string') {
-    if (!startsWithProtocolRE.test(config)) {
-      config = 'http://' + config;
+    var firstColon = config.indexOf(':');
+    var firstSlash = config.indexOf('/');
+    var portWithPath = firstColon < firstSlash;
+    var portNoPath = firstColon > -1 && firstSlash === -1;
+    if ((portWithPath || portNoPath) && !startsWithProtocolRE.test(config)) {
+      config = defaultProto + '//' + config;
     }
     config = _.pick(url.parse(config, false, true), urlParseFields);
     // default logic for the port is to use 9200 for the default. When a string is specified though,
@@ -72,7 +83,9 @@ function Host(config, globalConfig) {
     config = {};
   }
 
-  _.assign(this, config);
+  _.forOwn(config, function (val, prop) {
+    if (val != null) this[prop] = val;
+  }, this);
 
   // make sure the query string is parsed
   if (this.query === null) {
