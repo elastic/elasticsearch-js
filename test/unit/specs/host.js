@@ -71,8 +71,9 @@ describe('Host class', function () {
       it('parses simple urls properly', function () {
         var host;
 
-        host = new Host('elasticsearch');
-        expect(host.path).to.be('/elasticsearch');
+        host = new Host('localhost');
+        expect(host.host).to.be('localhost');
+        expect(host.path).to.be('');
 
         host = new Host('/elasticsearch');
         expect(host.path).to.be('/elasticsearch');

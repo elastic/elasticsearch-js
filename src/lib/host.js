@@ -47,9 +47,10 @@ function Host(config, globalConfig) {
   if (typeof config === 'string') {
     var firstColon = config.indexOf(':');
     var firstSlash = config.indexOf('/');
-    var portWithPath = firstColon < firstSlash;
-    var portNoPath = firstColon > -1 && firstSlash === -1;
-    if ((portWithPath || portNoPath) && !startsWithProtocolRE.test(config)) {
+    var noSlash = firstSlash === -1;
+    var portNoPath = firstColon > -1 && noSlash;
+    var portWithPath = !portNoPath && firstColon < firstSlash;
+    if ((noSlash || portNoPath || portWithPath) && !startsWithProtocolRE.test(config)) {
       config = defaultProto + '//' + config;
     }
     config = _.pick(url.parse(config, false, true), urlParseFields);
