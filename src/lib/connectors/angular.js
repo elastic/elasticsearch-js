@@ -49,7 +49,9 @@ AngularConnector.prototype.request = function (userParams, cb) {
     cache: false,
     headers: this.host.getHeaders(params.headers),
     transformRequest: [],
-    transformResponse: []
+    transformResponse: [],
+    // not actually for timing out, that's handled by the transport
+    timeout: abort.promise
   }).then(function (response) {
     cb(null, response.data, response.status, response.headers());
   }, function (err) {
