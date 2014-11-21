@@ -70,7 +70,7 @@ api.benchmark = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Explicitely set the replication type
+ * @param {String} [params.replication=sync] - Explicitly set the replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
@@ -4100,7 +4100,7 @@ api.mget = ca({
  * @param {Number} params.maxQueryTerms - The maximum query terms to be included in the generated query
  * @param {Number} params.maxWordLength - The minimum length of the word: longer words will be ignored
  * @param {Number} params.minDocFreq - The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
- * @param {Number} params.minTermFreq - The term frequency as percent: terms with lower occurence in the source document will be ignored
+ * @param {Number} params.minTermFreq - The term frequency as percent: terms with lower occurrence in the source document will be ignored
  * @param {Number} params.minWordLength - The minimum length of the word: shorter words will be ignored
  * @param {String, String[], Boolean} params.mltFields - Specific fields to perform the query against
  * @param {Number} params.percentTermsToMatch - How many terms have to match in order to consider the document a match (default: 0.3)
@@ -5788,7 +5788,7 @@ api.suggest = ca({
 });
 
 /**
- * Perform a [termvector](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
+ * Perform a [termvectors](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned.
@@ -5806,7 +5806,7 @@ api.suggest = ca({
  * @param {String} params.type - The type of the document.
  * @param {String} params.id - The id of the document.
  */
-api.termvector = ca({
+api.termvectors = ca({
   params: {
     termStatistics: {
       type: 'boolean',
@@ -5862,7 +5862,7 @@ api.termvector = ca({
     }
   },
   url: {
-    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
+    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvectors',
     req: {
       index: {
         type: 'string'
