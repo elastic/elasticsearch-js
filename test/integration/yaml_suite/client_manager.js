@@ -28,7 +28,7 @@ module.exports = {
     doCreateClient({
       logConfig: null
     }, function () {
-      var attemptsRemaining = 30;
+      var attemptsRemaining = 60;
       var timeout = 500;
 
       (function ping() {
@@ -39,7 +39,11 @@ module.exports = {
           if (err && --attemptsRemaining) {
             setTimeout(ping, timeout);
           } else if (err) {
-            cb(new Error('unable to establish contact with ES'));
+            cb(new Error('unable to establish contact with ES at ' + JSON.stringify({
+              host: argv.host,
+              port: argv.port,
+              err: err
+            })));
           } else if (!JENKINS && resp.name !== 'elasticsearch_js_test_runner') {
             console.log(resp);
             cb(new Error('Almosted wiped out another es node. Shut-down all instances of ES and try again.'));
