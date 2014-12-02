@@ -7,7 +7,7 @@
 
 ## 2.4 (Jul 30 2014)
  - Added apiVersion `"1.3"`, which is now the default
- - Angular connector (when used with Basic Auth) no longer modifies Angular's default headers.
+ - Angular connector (when used with Basic Auth) no longer modifies Angular's default headers
 
 ## 2.3 (Jul 11 2014)
  - Added support for Node 0.11
@@ -28,17 +28,17 @@
 
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
-- Promises are now supported using the Bluebird module.
+- Promises are now supported using the Bluebird module
 - If you try to reuse a configuration object, an error will be thrown. https://github.com/elasticsearch/elasticsearch-js/issues/33
 
 ## 1.5 (Feb 6 2014)
-- Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler.
+- Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler
 - The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `keepAlive`, which will keeps at least `minSockets` connections open forever. See: http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#configuration
 - Closing the client with `keepAlive` turned on will allow the process to exit. https://github.com/elasticsearch/elasticsearch-js/issues/40
-- Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises.
+- Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises
 - added the cat.threadPool to the master/1.0/1.x apis
 - Enabled Basic auth in the Angular connector -- Thanks @jeff-french!
-- Fixed a bug that was preventing index requests (and any other POST/PUT request) from using connections in the connection pool.
+- Fixed a bug that was preventing index requests (and any other POST/PUT request) from using connections in the connection pool
 
 ## 1.4 (Jan 30 2014)
 - The trace log messages will now diaplay the actual host connected to (without auth info) unless they are being written to a bash script
@@ -50,7 +50,7 @@
 
 ## 1.1 (Dec 22 2013)
 - Changed the resolution value of promises. Instead of being an object like `{body: ..., status: ...}` it is now
-  just the response body.
+  just the response body
 
 
 ## 1.0 (Dec 17 2013)
