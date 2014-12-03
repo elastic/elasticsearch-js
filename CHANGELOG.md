@@ -4,6 +4,7 @@
  - Added apiVersion `"1.4"`, which is now the default
  - Improved parsing of `host:` strings, [examples in the tests](https://github.com/elasticsearch/elasticsearch-js/blob/165b7d7986b2184b2e4b73d33bf5803e61ce7a54/test/unit/specs/host.js#L71-L92)
  - The Angular version of the client now uses `angular.toJson()` ([1.2](https://code.angularjs.org/1.2.27/docs/api/ng/function/angular.toJson), [1.3](https://code.angularjs.org/1.3.5/docs/api/ng/function/angular.toJson)) to serialize requests, override with `serializer: "json"`
+ - Angular requests are now being [aborted properly](https://github.com/elasticsearch/elasticsearch-js/commit/4c106967d3e9ae208fae42ce013f0a21e1ace021)
 
 ## 2.4 (Jul 30 2014)
  - Added apiVersion `"1.3"`, which is now the default
