@@ -1,12 +1,11 @@
 [[api-reference<%= branchSuffix %>]]
 == <%= branch %> API
 
-<% if (branchSuffix) { %>
-NOTE: At this time, you must opt into the <%= branch %> API by setting the `apiVersion` config parameter.
-<% } else { %>
+<% if (branchIsDefault) { %>
 NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
-<%
-}
+<% } else { %>
+NOTE: At this time, you must opt into the <%= branch %> API by setting the `apiVersion` config parameter.
+<% }
 
 // method index%>
 [[js-api-method-index<%= branchSuffix %>]]<%

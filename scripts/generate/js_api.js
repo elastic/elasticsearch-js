@@ -152,6 +152,7 @@ module.exports = function (branch, done) {
       'name'
     );
     docVars.branch = branch;
+    docVars.branchIsDefault = branch === utils.branches._default;
     docVars.branchSuffix = branchSuffix.replace(/_/g, '-');
     done();
   }
