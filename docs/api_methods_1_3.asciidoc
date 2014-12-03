@@ -142,7 +142,7 @@ client.bulk([params, [callback]])
 
 Perform many index/delete operations in a single API call.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-bulk.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-bulk.html[the elasticsearch docs] for more about this method.
 
 .Perform three operations in a single request
 [source,js]
@@ -206,7 +206,7 @@ client.clearScroll([params, [callback]])
 
 Clear the scroll request created by specifying the scroll parameter to search.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-request-scroll.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-request-scroll.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -229,7 +229,7 @@ client.count([params, [callback]])
 
 Get the number of documents for the cluster, index, type, or a query.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-count.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-count.html[the elasticsearch docs] for more about this method.
 
 .Get the number of all documents in the cluster
 [source,js]
@@ -308,7 +308,7 @@ client.countPercolate([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-percolate.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-percolate.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -363,7 +363,7 @@ client.create([params, [callback]])
 
 Adds a typed JSON document in a specific index, making it searchable. If a document with the same `index`, `type`, and `id` already exists, an error will occur.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-index_.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-index_.html[the elasticsearch docs] for more about this method.
 
 .Create a document
 [source,js]
@@ -442,7 +442,7 @@ client.delete([params, [callback]])
 
 Delete a typed JSON document from a specific index based on its id.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-delete.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-delete.html[the elasticsearch docs] for more about this method.
 
 .Delete the document `/myindex/mytype/1`
 [source,js]
@@ -510,7 +510,7 @@ client.deleteByQuery([params, [callback]])
 
 Delete documents from one or more indices and one or more types based on a query.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-delete-by-query.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-delete-by-query.html[the elasticsearch docs] for more about this method.
 
 .Deleting documents with a simple query
 [source,js]
@@ -648,7 +648,7 @@ client.exists([params, [callback]])
 
 Returns a boolean indicating whether or not a given document exists.
 
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-get.html[the elasticsearch docs] for more about this method.
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-get.html[the elasticsearch docs] for more about this method.
 
 .Check that the document `/myindex/mytype/1` exits
 [source,js]
@@ -699,7 +699,7 @@ client.explain([params, [callback]])
 
 Provides details about a specific document's score in relation to a specific query. It will also tell you if the document matches the specified query. Also check out http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html[percolaters].
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-explain.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-explain.html[the elasticsearch docs] for more about this method.
 
 .See how a document is scored against a simple query
 [source,js]
@@ -791,7 +791,7 @@ client.get([params, [callback]])
 
 Get a typed JSON document from the index based on its id.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-get.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-get.html[the elasticsearch docs] for more about this method.
 
 .Get `/myindex/mytype/1`
 [source,js]
@@ -881,7 +881,7 @@ client.getSource([params, [callback]])
 
 Get the source of a document by it's index, type and id.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-get.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-get.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -962,7 +962,7 @@ Optimistic concurrency control is performed, when the `version` argument is spec
 By default, the document will be available for `get()` actions immediately, but will only be available for searching after an index refresh (which can happen automatically or manually). See <<api-indices-refresh>>.
 
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-index_.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-index_.html[the elasticsearch docs] for more about this method.
 
 .Create or update a document
 [source,js]
@@ -1080,7 +1080,7 @@ client.mget([params, [callback]])
 
 Get multiple documents based on an index, type (optional) and ids. The body required by mget can take two forms: an array of document locations, or an array of document ids.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-multi-get.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-multi-get.html[the elasticsearch docs] for more about this method.
 
 .An array of doc locations. Useful for getting documents from different indices.
 [source,js]
@@ -1147,7 +1147,7 @@ client.mlt([params, [callback]])
 
 (more like this) Gets more documents that are “like” the document specified using `index`, `type`, and `id`.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-more-like-this.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-more-like-this.html[the elasticsearch docs] for more about this method.
 
 .Search for similar documents using the `title` property of document `myindex/mytype/1`
 [source,js]
@@ -1223,7 +1223,7 @@ client.mpercolate([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-percolate.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-percolate.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -1258,7 +1258,7 @@ client.msearch([params, [callback]])
 
 Execute several search requests within the same request.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-multi-search.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-multi-search.html[the elasticsearch docs] for more about this method.
 
 .Perform multiple different searches, the body is made up of meta/data pairs
 [source,js]
@@ -1307,7 +1307,7 @@ client.mtermvectors([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-multi-termvectors.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-multi-termvectors.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -1354,7 +1354,7 @@ client.percolate([params, [callback]])
 
 Match a document against registered percolator queries.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-percolate.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-percolate.html[the elasticsearch docs] for more about this method.
 
 .First, Register queries named “alert-1” and “alert-2” for the “myindex” index
 [source,js]
@@ -1541,7 +1541,7 @@ client.scroll([params, [callback]])
 
 Scroll a search request (retrieve the next set of results) after specifying the scroll parameter in a `search()` call.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-request-scroll.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-request-scroll.html[the elasticsearch docs] for more about this method.
 
 .Collect every title in the index that contains the word "test"
 [source,js]
@@ -1598,7 +1598,7 @@ TIP: https://github.com/fullscale/elastic.js[elastic.js] or https://github.com/h
 
 
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-search.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-search.html[the elasticsearch docs] for more about this method.
 
 .Search with a simple query string query
 [source,js]
@@ -1833,7 +1833,7 @@ client.suggest([params, [callback]])
 
 The suggest feature suggests similar looking terms based on a provided text by using a specific suggester.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-search.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-suggesters.html[the elasticsearch docs] for more about this method.
 
 .Return query terms suggestions (“auto-correction”)
 [source,js]
@@ -1905,7 +1905,7 @@ client.termvector([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-termvectors.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-termvectors.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -1953,7 +1953,7 @@ Update parts of a document. The required body parameter can contain one of two t
   * a partial document, which will be merged with the existing one.
   * a `script` which will update the document content
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-update.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-update.html[the elasticsearch docs] for more about this method.
 
 .Update document title using partial document
 [source,js]
@@ -2122,7 +2122,7 @@ client.cat.allocation([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-allocation.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-allocation.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2163,7 +2163,7 @@ client.cat.count([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-count.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-count.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2237,7 +2237,7 @@ client.cat.health([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-health.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-health.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2270,7 +2270,7 @@ client.cat.help([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2293,7 +2293,7 @@ client.cat.indices([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-indices.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-indices.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2336,7 +2336,7 @@ client.cat.master([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-master.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-master.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2367,7 +2367,7 @@ client.cat.nodes([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-nodes.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-nodes.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2398,7 +2398,7 @@ client.cat.pendingTasks([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-pending-tasks.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-pending-tasks.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2460,7 +2460,7 @@ client.cat.recovery([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-recovery.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-recovery.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2499,7 +2499,7 @@ client.cat.shards([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-shards.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cat-shards.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2565,7 +2565,7 @@ client.cluster.getSettings([params, [callback]])
 
 Get cluster settings (previously set with `putSettings()`)
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-update-settings.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-update-settings.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2592,7 +2592,7 @@ client.cluster.health([params, [callback]])
 
 Get a very simple status on the health of the cluster.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-health.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-health.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2641,7 +2641,7 @@ client.cluster.pendingTasks([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-pending.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-pending.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2666,7 +2666,7 @@ client.cluster.putSettings([params, [callback]])
 
 Update cluster wide specific settings.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-update-settings.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-update-settings.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2689,7 +2689,7 @@ client.cluster.reroute([params, [callback]])
 
 Explicitly execute a cluster reroute allocation command including specific commands.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-reroute.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-reroute.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2720,7 +2720,7 @@ client.cluster.state([params, [callback]])
 
 Get comprehensive details about the state of the whole cluster (indices settings, allocations, etc).
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-state.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-state.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2751,7 +2751,7 @@ client.cluster.stats([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-stats.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-stats.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2778,7 +2778,7 @@ client.indices.analyze([params, [callback]])
 
 Perform the analysis process on a text and return the tokens breakdown of the text.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-analyze.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-analyze.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2821,7 +2821,7 @@ client.indices.clearCache([params, [callback]])
 
 Clear either all caches or specific cached associated with one ore more indices.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-clearcache.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-clearcache.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2872,7 +2872,7 @@ client.indices.close([params, [callback]])
 
 Close an index to remove it's overhead from the cluster. Closed index is blocked for read/write operations.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-open-close.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-open-close.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2909,7 +2909,7 @@ client.indices.create([params, [callback]])
 
 Create an index in Elasticsearch.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-create-index.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-create-index.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2936,7 +2936,7 @@ client.indices.delete([params, [callback]])
 
 Delete an index in Elasticsearch
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-delete-index.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-delete-index.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2963,7 +2963,7 @@ client.indices.deleteAlias([params, [callback]])
 
 Delete a specific alias.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -2992,7 +2992,7 @@ client.indices.deleteMapping([params, [callback]])
 
 Delete a mapping (type definition) along with its data.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-delete-mapping.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-delete-mapping.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3019,7 +3019,7 @@ client.indices.deleteTemplate([params, [callback]])
 
 Delete an index template by its name.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-templates.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-templates.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3046,7 +3046,7 @@ client.indices.deleteWarmer([params, [callback]])
 
 Delete an index warmer.
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-warmers.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-warmers.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3073,7 +3073,7 @@ client.indices.exists([params, [callback]])
 
 Return a boolean indicating whether given index exists.
 
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-settings.html[the elasticsearch docs] for more about this method.
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-get-settings.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3108,7 +3108,7 @@ client.indices.existsAlias([params, [callback]])
 
 Return a boolean indicating whether given alias exists.
 
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3145,7 +3145,7 @@ client.indices.existsTemplate([params, [callback]])
 
 // no description
 
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-templates.html[the elasticsearch docs] for more about this method.
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-templates.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3170,7 +3170,7 @@ client.indices.existsType([params, [callback]])
 
 Check if a type/types exists in an index/indices.
 
-The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-types-exists.html[the elasticsearch docs] for more about this method.
+The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-types-exists.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3207,7 +3207,7 @@ client.indices.flush([params, [callback]])
 
 Explicitly flush one or more indices.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-flush.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-flush.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3244,7 +3244,7 @@ client.indices.getAlias([params, [callback]])
 
 Retrieve a specified alias.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3281,7 +3281,7 @@ client.indices.getAliases([params, [callback]])
 
 Retrieve specified aliases
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3310,7 +3310,7 @@ client.indices.getFieldMapping([params, [callback]])
 
 Retrieve mapping definition of a specific field.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-field-mapping.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-get-field-mapping.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3351,7 +3351,7 @@ client.indices.getMapping([params, [callback]])
 
 Retrieve mapping definition of index or index/type.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-mapping.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-get-mapping.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3384,7 +3384,7 @@ client.indices.getSettings([params, [callback]])
 
 Retrieve settings for one or more (or all) indices.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-mapping.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-get-settings.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3423,7 +3423,7 @@ client.indices.getTemplate([params, [callback]])
 
 Retrieve an index template by its name.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-templates.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-templates.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3450,7 +3450,7 @@ client.indices.getWarmer([params, [callback]])
 
 Retreieve an index warmer.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-warmers.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-warmers.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3489,7 +3489,7 @@ client.indices.open([params, [callback]])
 
 Open a closed index, making it available for search.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-open-close.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-open-close.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3526,7 +3526,7 @@ client.indices.optimize([params, [callback]])
 
 Explicitly optimize one or more indices.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-optimize.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-optimize.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3571,7 +3571,7 @@ client.indices.putAlias([params, [callback]])
 
 Create an alias for a specific index/indices.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3600,7 +3600,7 @@ client.indices.putMapping([params, [callback]])
 
 Register specific mapping definition for a specific type.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-put-mapping.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-put-mapping.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3641,7 +3641,7 @@ client.indices.putSettings([params, [callback]])
 
 Change specific index level settings in real time.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-update-settings.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-update-settings.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3678,7 +3678,7 @@ client.indices.putTemplate([params, [callback]])
 
 Create an index template that will automatically be applied to new indices created.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-templates.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-templates.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3711,7 +3711,7 @@ client.indices.putWarmer([params, [callback]])
 
 Create an index warmer to run registered search requests to warm up the index before it is available for search.
 
-The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-warmers.html[the elasticsearch docs] for more about this method.
+The default method is `PUT` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-warmers.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3779,7 +3779,7 @@ client.indices.refresh([params, [callback]])
 
 Explicitly refresh one or more index, making all operations performed since the last refresh available for search.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-refresh.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-refresh.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3816,7 +3816,7 @@ client.indices.segments([params, [callback]])
 
 Retrieve low level segments information that a Lucene index (shard level) is built with.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-segments.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-segments.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3853,7 +3853,7 @@ client.indices.stats([params, [callback]])
 
 Retrieve statistics on different operations happening on an index.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-stats.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-stats.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3897,7 +3897,7 @@ client.indices.status([params, [callback]])
 
 Get a comprehensive status information of one or more indices.
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-status.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-status.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -3938,7 +3938,7 @@ client.indices.updateAliases([params, [callback]])
 
 Update specified aliases.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-aliases.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/indices-aliases.html[the elasticsearch docs] for more about this method.
 
 .Perform an atomic alias swap, for a rotating index
 [source,js]
@@ -3976,7 +3976,7 @@ client.indices.validateQuery([params, [callback]])
 
 Validate a potentially expensive query without executing it.
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-validate.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/search-validate.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4019,7 +4019,7 @@ client.nodes.hotThreads([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-nodes-hot-threads.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4055,7 +4055,7 @@ client.nodes.info([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-nodes-info.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4084,7 +4084,7 @@ client.nodes.shutdown([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-nodes-shutdown.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4111,7 +4111,7 @@ client.nodes.stats([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/cluster-nodes-stats.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4157,7 +4157,7 @@ client.snapshot.create([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4186,7 +4186,7 @@ client.snapshot.createRepository([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4213,7 +4213,7 @@ client.snapshot.delete([params, [callback]])
 
 // no description
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4240,7 +4240,7 @@ client.snapshot.deleteRepository([params, [callback]])
 
 // no description
 
-The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `DELETE` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4267,7 +4267,7 @@ client.snapshot.get([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4294,7 +4294,7 @@ client.snapshot.getRepository([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
@@ -4321,7 +4321,7 @@ client.snapshot.restore([params, [callback]])
 
 // no description
 
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html[the elasticsearch docs] for more about this method.
+The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/modules-snapshots.html[the elasticsearch docs] for more about this method.
 
 // no examples
 

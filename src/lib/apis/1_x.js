@@ -1408,9 +1408,26 @@ api.deleteScript = ca({
  * Perform a [deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.deleteTemplate = ca({
+  params: {
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -2870,7 +2887,7 @@ api.indices.prototype.getMapping = ca({
 });
 
 /**
- * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-mapping.html) request
+ * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-get-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4927,9 +4944,36 @@ api.putScript = ca({
  * Perform a [putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} [params.opType=index] - Explicit operation type
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.putTemplate = ca({
+  params: {
+    opType: {
+      type: 'enum',
+      'default': 'index',
+      options: [
+        'index',
+        'create'
+      ],
+      name: 'op_type'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -5185,7 +5229,7 @@ api.search = ca({
 });
 
 /**
- * Perform a [searchExists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/exists.html) request
+ * Perform a [searchExists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-exists.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -5707,7 +5751,7 @@ api.snapshot.prototype.verifyRepository = ca({
 });
 
 /**
- * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-search.html) request
+ * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-suggesters.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
