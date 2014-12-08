@@ -1553,6 +1553,7 @@ var allTitles = [];
 // first we do a search, and specify a scroll timeout
 client.search({
   index: 'myindex',
+  search_type: 'scan',
   // Set to 30 seconds because we are calling right back
   scroll: '30s',
   fields: ['title'],
