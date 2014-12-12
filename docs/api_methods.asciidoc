@@ -1332,8 +1332,6 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `String` -- The index in which the document resides.
 `type`::
 `String` -- The type of the document.
-`id`::
-`String` -- The id of the document.
 
 link:#[back to top]
 
@@ -2015,7 +2013,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `type`::
 `String` -- The type of the document.
 `id`::
-`String` -- The id of the document.
+`String` -- The id of the document, when not specified a doc param should be supplied.
 
 link:#[back to top]
 

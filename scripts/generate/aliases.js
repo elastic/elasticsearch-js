@@ -159,7 +159,7 @@ module.exports = [
         '/{index}/_stats/fielddata/{fields}'
       ],
       'snapshot.create': [
-        '/_snapshot/{repository}/{snapshot}/_create'
+        '/_snapshot/{repository}/{snapshot}'
       ]
     }
   },
