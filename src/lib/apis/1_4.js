@@ -4334,7 +4334,6 @@ api.msearch = ca({
  * @param {String} params.parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
- * @param {String} params.id - The id of the document.
  */
 api.mtermvectors = ca({
   params: {
@@ -5484,7 +5483,7 @@ api.snapshot.prototype.create = ca({
     }
   },
   url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_create',
     req: {
       repository: {
         type: 'string'
@@ -5828,7 +5827,7 @@ api.suggest = ca({
  * @param {String} params.parent - Parent id of documents.
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
- * @param {String} params.id - The id of the document.
+ * @param {String} params.id - The id of the document, when not specified a doc param should be supplied.
  */
 api.termvector = ca({
   params: {
@@ -5876,20 +5875,33 @@ api.termvector = ca({
       required: false
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
-    req: {
-      index: {
-        type: 'string'
-      },
-      type: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        },
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_termvector',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
       }
     }
-  },
+  ],
   method: 'POST'
 });
 

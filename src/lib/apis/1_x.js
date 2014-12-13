@@ -853,12 +853,21 @@ api.cluster.prototype.pendingTasks = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  */
 api.cluster.prototype.putSettings = ca({
   params: {
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   url: {
@@ -5479,7 +5488,7 @@ api.snapshot.prototype.create = ca({
     }
   },
   url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_create',
     req: {
       repository: {
         type: 'string'
