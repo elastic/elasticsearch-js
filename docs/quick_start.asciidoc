@@ -18,7 +18,7 @@ var client = new elasticsearch.Client({
 Almost all of the methods on the client accept two arguments:
 
   * `params` - an optional object/hash of parameters <<api-conventions,More info here>>.
-  * `callback` - an optional function that will be called with the final result of the method. When omitted, a https://github.com/cujojs/when/blob/master/docs/api.md#promise[promise] is returned. api-conventions-cb[More info here].
+  * `callback` - an optional function that will be called with the final result of the method. When omitted, a https://github.com/cujojs/when/blob/master/docs/api.md#promise[promise] is returned. <<api-conventions-cb,More info here>>.
 
 ==== Ping the cluster
 
@@ -70,11 +70,11 @@ client.indices.delete({
 -----------------
 
 === Searching for documents
-A very common use-case for elasticsearch is to sort through large collections of documents in order to find ones that are relavent to a query. In most cases you will use the client's `search()` method to accomplish this.
+A very common use-case for elasticsearch is to sort through large collections of documents in order to find ones that are relevant to a query. In most cases you will use the client's `search()` method to accomplish this.
 
 ==== Elasticsearch Query DSL
 
-For many searches you will want to define a search document that tells elasticsearch exactly how to find the documents you are looking for. To do this you will use the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[elasticsearch query DSL]. If you are not familiary with Elasticsearch's query DSL is it recommended that you research the topic at elasticsearch.org or watch/read one of these introductions:
+For many searches you will want to define a search document that tells elasticsearch exactly how to find the documents you are looking for. To do this you will use the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[elasticsearch query DSL]. If you are not familiar with Elasticsearch's query DSL is it recommended that you research the topic at elasticsearch.org or watch/read one of these introductions:
 
   * https://www.youtube.com/watch?v=52G5ZzE0XpY#t=1471[Clinton Gormley "Getting down and dirty with Elasticsearch"]
   * http://okfnlabs.org/blog/2013/07/01/elasticsearch-query-tutorial.html#query-dsl-overview[Querying Elasticsearch - A Tutorial and Guide]

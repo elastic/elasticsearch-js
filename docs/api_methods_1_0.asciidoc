@@ -763,7 +763,7 @@ link:#[back to top]
 client.getSource([params, [callback]])
 --------
 
-Get the source of a document by it's index, type and id.
+Get the source of a document by its index, type and id.
 
 The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/docs-get.html[the elasticsearch docs] for more about this method.
 
@@ -2529,7 +2529,7 @@ link:#[back to top]
 client.indices.close([params, [callback]])
 --------
 
-Close an index to remove it's overhead from the cluster. Closed index is blocked for read/write operations.
+Close an index to remove its overhead from the cluster. Closed index is blocked for read/write operations.
 
 The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-open-close.html[the elasticsearch docs] for more about this method.
 
