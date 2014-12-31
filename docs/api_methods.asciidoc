@@ -891,6 +891,7 @@ client.getSource([params, [callback]])
 
 Get the source of a document by its index, type and id.
 
+
 The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.4/docs-get.html[the elasticsearch docs] for more about this method.
 
 // no examples
@@ -1735,6 +1736,8 @@ Options:::
 `String, String[], Boolean` -- A list of fields to exclude from the returned _source field
 `_sourceInclude`::
 `String, String[], Boolean` -- A list of fields to extract and return from the _source field
+`terminateAfter`::
+`Number` -- The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
 `stats`::
 `String, String[], Boolean` -- Specific 'tag' of the request for logging and statistical purposes
 `suggestField`::
@@ -2954,6 +2957,7 @@ client.indices.close([params, [callback]])
 --------
 
 Close an index to remove its overhead from the cluster. Closed index is blocked for read/write operations.
+
 
 The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.4/indices-open-close.html[the elasticsearch docs] for more about this method.
 
