@@ -132,7 +132,7 @@ function manage_es {
           return 1
         fi
 
-        local ES_OPTS="-p $PIDFILE -D es.http.port=9400 -D es.network.host=localhost -D es.cluster.name=elasticsearch_js_test_runners -D es.node.name=elasticsearch_js_test_runner -D es.gateway.type=none -D es.index.store.type=memory -D es.discovery.zen.ping.multicast.enabled=false -D es.discovery.zen.ping_timeout=1 -D es.logger.level=ERROR"
+        local ES_OPTS="-p $PIDFILE -D es.http.port=9400 -D es.network.host=localhost -D es.cluster.name=elasticsearch_js_test_runners -D es.node.name=elasticsearch_js_test_runner -D es.discovery.zen.ping.multicast.enabled=false -D es.discovery.zen.ping_timeout=1 -D es.logger.level=ERROR"
 
         if [ -n "$ES_NODE_NAME" ]; then
           ES_OPTS="$ES_OPTS -Des.node.name=$ES_NODE_NAME"
