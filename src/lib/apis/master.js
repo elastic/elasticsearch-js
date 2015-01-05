@@ -70,7 +70,7 @@ api.benchmark = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Explicitely set the replication type
+ * @param {String} [params.replication=sync] - Explicitly set the replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
@@ -148,7 +148,7 @@ api.cat = function CatNS(transport) {
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
 api.cat.prototype.aliases = ca({
@@ -169,7 +169,7 @@ api.cat.prototype.aliases = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -196,7 +196,7 @@ api.cat.prototype.aliases = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information
  */
 api.cat.prototype.allocation = ca({
@@ -226,7 +226,7 @@ api.cat.prototype.allocation = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -252,7 +252,7 @@ api.cat.prototype.allocation = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.count = ca({
@@ -273,7 +273,7 @@ api.cat.prototype.count = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -300,7 +300,7 @@ api.cat.prototype.count = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return the fielddata size
  */
 api.cat.prototype.fielddata = ca({
@@ -330,7 +330,7 @@ api.cat.prototype.fielddata = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     },
     fields: {
       type: 'list'
@@ -360,7 +360,7 @@ api.cat.prototype.fielddata = ca({
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} [params.ts=true] - Set to false to disable timestamping
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  */
 api.cat.prototype.health = ca({
   params: {
@@ -384,7 +384,7 @@ api.cat.prototype.health = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   url: {
@@ -420,7 +420,7 @@ api.cat.prototype.help = ca({
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} params.pri - Set to true to return stats only for primary shards
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.indices = ca({
@@ -454,7 +454,7 @@ api.cat.prototype.indices = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -480,7 +480,7 @@ api.cat.prototype.indices = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  */
 api.cat.prototype.master = ca({
   params: {
@@ -500,7 +500,7 @@ api.cat.prototype.master = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   url: {
@@ -516,7 +516,7 @@ api.cat.prototype.master = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  */
 api.cat.prototype.nodes = ca({
   params: {
@@ -536,7 +536,7 @@ api.cat.prototype.nodes = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   url: {
@@ -552,7 +552,7 @@ api.cat.prototype.nodes = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  */
 api.cat.prototype.pendingTasks = ca({
   params: {
@@ -572,7 +572,7 @@ api.cat.prototype.pendingTasks = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   url: {
@@ -588,7 +588,7 @@ api.cat.prototype.pendingTasks = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  */
 api.cat.prototype.plugins = ca({
   params: {
@@ -608,7 +608,7 @@ api.cat.prototype.plugins = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   url: {
@@ -624,7 +624,7 @@ api.cat.prototype.plugins = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.recovery = ca({
@@ -651,7 +651,7 @@ api.cat.prototype.recovery = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -677,7 +677,7 @@ api.cat.prototype.recovery = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.shards = ca({
@@ -698,7 +698,7 @@ api.cat.prototype.shards = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     }
   },
   urls: [
@@ -724,7 +724,7 @@ api.cat.prototype.shards = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} params.v - Verbose mode. Display column headers
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
  * @param {Boolean} params.fullId - Enables displaying the complete node ids
  */
 api.cat.prototype.threadPool = ca({
@@ -745,7 +745,7 @@ api.cat.prototype.threadPool = ca({
     },
     v: {
       type: 'boolean',
-      'default': false
+      'default': true
     },
     fullId: {
       type: 'boolean',
@@ -912,12 +912,21 @@ api.cluster.prototype.pendingTasks = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  */
 api.cluster.prototype.putSettings = ca({
   params: {
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   url: {
@@ -1467,9 +1476,26 @@ api.deleteScript = ca({
  * Perform a [deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.deleteTemplate = ca({
+  params: {
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -2929,7 +2955,7 @@ api.indices.prototype.getMapping = ca({
 });
 
 /**
- * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-get-mapping.html) request
+ * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-get-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3862,7 +3888,7 @@ api.indices.prototype.updateAliases = ca({
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
- * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: true)
+ * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.upgrade = ca({
@@ -4100,7 +4126,7 @@ api.mget = ca({
  * @param {Number} params.maxQueryTerms - The maximum query terms to be included in the generated query
  * @param {Number} params.maxWordLength - The minimum length of the word: longer words will be ignored
  * @param {Number} params.minDocFreq - The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
- * @param {Number} params.minTermFreq - The term frequency as percent: terms with lower occurence in the source document will be ignored
+ * @param {Number} params.minTermFreq - The term frequency as percent: terms with lower occurrence in the source document will be ignored
  * @param {Number} params.minWordLength - The minimum length of the word: shorter words will be ignored
  * @param {String, String[], Boolean} params.mltFields - Specific fields to perform the query against
  * @param {Number} params.percentTermsToMatch - How many terms have to match in order to consider the document a match (default: 0.3)
@@ -4334,9 +4360,10 @@ api.msearch = ca({
  * @param {String} params.routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {String} params.parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {Boolean} params.realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
- * @param {String} params.id - The id of the document.
  */
 api.mtermvectors = ca({
   params: {
@@ -4390,6 +4417,19 @@ api.mtermvectors = ca({
     realtime: {
       type: 'boolean',
       required: false
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
     }
   },
   urls: [
@@ -4430,6 +4470,7 @@ api.nodes = function NodesNS(transport) {
  * @param {Date, Number} params.interval - The interval for the second sampling of threads
  * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
+ * @param {Boolean} params.ignoreIdleThreads - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
  * @param {String} params.type - The type to sample (default: cpu)
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
@@ -4443,6 +4484,10 @@ api.nodes.prototype.hotThreads = ca({
     },
     threads: {
       type: 'number'
+    },
+    ignoreIdleThreads: {
+      type: 'boolean',
+      name: 'ignore_idle_threads'
     },
     type: {
       type: 'enum',
@@ -4787,6 +4832,8 @@ api.nodes.prototype.stats = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.percolateIndex - The index to percolate the document into. Defaults to index.
  * @param {String} params.percolateType - The type to percolate document into. Defaults to type.
+ * @param {String} params.percolateRouting - The routing value to use when percolating the existing document.
+ * @param {String} params.percolatePreference - Which shard to prefer when executing the percolate request.
  * @param {String} params.percolateFormat - Return an array of matching query IDs instead of objects
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
@@ -4826,6 +4873,14 @@ api.percolate = ca({
     percolateType: {
       type: 'string',
       name: 'percolate_type'
+    },
+    percolateRouting: {
+      type: 'string',
+      name: 'percolate_routing'
+    },
+    percolatePreference: {
+      type: 'string',
+      name: 'percolate_preference'
     },
     percolateFormat: {
       type: 'enum',
@@ -4945,9 +5000,36 @@ api.putScript = ca({
  * Perform a [putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} [params.opType=index] - Explicit operation type
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.putTemplate = ca({
+  params: {
+    opType: {
+      type: 'enum',
+      'default': 'index',
+      options: [
+        'index',
+        'create'
+      ],
+      name: 'op_type'
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
+    }
+  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -5020,6 +5102,7 @@ api.scroll = ca({
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {Number} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
@@ -5130,6 +5213,10 @@ api.search = ca({
       type: 'list',
       name: '_source_include'
     },
+    terminateAfter: {
+      type: 'number',
+      name: 'terminate_after'
+    },
     stats: {
       type: 'list'
     },
@@ -5198,7 +5285,7 @@ api.search = ca({
 });
 
 /**
- * Perform a [searchExists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/exists.html) request
+ * Perform a [searchExists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-exists.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -5720,7 +5807,7 @@ api.snapshot.prototype.verifyRepository = ca({
 });
 
 /**
- * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-search.html) request
+ * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-suggesters.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -5778,7 +5865,7 @@ api.suggest = ca({
 });
 
 /**
- * Perform a [termvector](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
+ * Perform a [termvectors](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned.
@@ -5792,11 +5879,13 @@ api.suggest = ca({
  * @param {String} params.routing - Specific routing value.
  * @param {String} params.parent - Parent id of documents.
  * @param {Boolean} params.realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
+ * @param {Number} params.version - Explicit version number for concurrency control
+ * @param {String} params.versionType - Specific version type
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
- * @param {String} params.id - The id of the document.
+ * @param {String} params.id - The id of the document, when not specified a doc param should be supplied.
  */
-api.termvector = ca({
+api.termvectors = ca({
   params: {
     termStatistics: {
       type: 'boolean',
@@ -5849,22 +5938,48 @@ api.termvector = ca({
     realtime: {
       type: 'boolean',
       required: false
+    },
+    version: {
+      type: 'number'
+    },
+    versionType: {
+      type: 'enum',
+      options: [
+        'internal',
+        'external',
+        'external_gte',
+        'force'
+      ],
+      name: 'version_type'
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
-    req: {
-      index: {
-        type: 'string'
-      },
-      type: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvectors',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        },
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_termvectors',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
       }
     }
-  },
+  ],
   method: 'POST'
 });
 
