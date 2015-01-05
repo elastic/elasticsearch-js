@@ -13,13 +13,22 @@
 #
 ###########
 
-export ES_NODE_NAME="elasticsearch_js_test_runner"
-
-HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MOCHA="./node_modules/.bin/mocha"
 MOCHA_REPORTER="../../../test/utils/jenkins-reporter.js"
 
-source $HERE/_utils.sh
+# execute a command, and exit if it fails
+function crit {
+  $*
+  CODE=$?
+  if [[ $CODE -gt 0 ]]; then
+    echo "last command was critical, but it reported non-zero exit code $CODE";
+    exit;
+  fi
+}
+
+if [[ "$(which grunt)" == "" ]]; then
+  crit npm install -g grunt
+fi
 
 # normalize ES_BRANCH into TESTING_BRANCH
 if [[ -n "$ES_BRANCH" ]]; then
@@ -29,55 +38,48 @@ else
 fi
 
 if [[ "$NODE_UNIT" != "0" ]]; then
-  group "running unit tests"
-    if [[ -n "$JENKINS" ]]; then
-      $MOCHA test/unit/index.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
-      if [ "$?" -gt "0" ]; then
-        echo "non-zero exit code: $RESULT"
-        cat test/junit-node-unit.xml
-      fi
-    else
-      _grunt jshint mochacov:unit
+  if [[ -n "$JENKINS" ]]; then
+    $MOCHA test/unit/index.js --reporter $MOCHA_REPORTER 2> test/junit-node-unit.xml
+    if [ "$?" -gt "0" ]; then
+      echo "non-zero exit code: $RESULT"
+      cat test/junit-node-unit.xml
     fi
+  else
+    crit grunt jshint mochacov:unit
+  fi
 fi
 
 if [[ "$NODE_INTEGRATION" != "0" ]]; then
-  group "generating tests"
-    call node scripts/generate --no-api --branch $TESTING_BRANCH
+  crit node scripts/generate --no-api --branch $TESTING_BRANCH
 
-  group "running integration tests"
-    if [[ -n "$JENKINS" ]]; then
-      # convert TESTING_BRANCH into BRANCH_SUFFIX
-      BRANCH_SUFFIX="_${TESTING_BRANCH//./_}"
+  if [[ -n "$JENKINS" ]]; then
+    # convert TESTING_BRANCH into BRANCH_SUFFIX
+    BRANCH_SUFFIX="_${TESTING_BRANCH//./_}"
 
-      # find value of ES_PORT
-      if [[ -n "$es_port" ]]; then
-        # jenkins
-        ES_PORT=$es_port
-      else
-        ES_PORT=9200
-      fi
-
-      FILES=test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
-      $MOCHA $FILES --host localhost --port $ES_PORT --reporter $MOCHA_REPORTER 2> test/junit-node-integration.xml
-      if [ "$?" -gt "0" ]; then
-        echo "non-zero exit code: $RESULT"
-        cat test/junit-node-unit.xml
-      fi
+    # find value of ES_PORT
+    if [[ -n "$es_port" ]]; then
+      # jenkins
+      ES_PORT=$es_port
     else
-      manage_es start $TESTING_BRANCH $ES_RELEASE
-      _grunt mochacov:integration_$TESTING_BRANCH
-      manage_es stop $TESTING_BRANCH $ES_RELEASE
+      ES_PORT=9200
     fi
+
+    FILES=test/integration/yaml_suite/index${BRANCH_SUFFIX}.js
+    $MOCHA $FILES --host localhost --port $ES_PORT --reporter $MOCHA_REPORTER 2> test/junit-node-integration.xml
+    if [ "$?" -gt "0" ]; then
+      echo "non-zero exit code: $RESULT"
+      cat test/junit-node-unit.xml
+    fi
+  else
+    crit grunt esvm:ci_env "mochacov:integration_${TESTING_BRANCH}" esvm_shutdown:ci_env
+  fi
 fi
 
 if [[ "$BROWSER_UNIT" == "1" ]]; then
-  group "running browser tests"
-  _grunt browser_clients:build run:browser_test_server saucelabs-mocha
+  crit grunt browser_clients:build run:browser_test_server saucelabs-mocha
 fi
 
 if [[ "$COVERAGE" == "1" ]]; then
-  group "shipping coverage"
-    # don't fail even if this does
-    _grunt --force mochacov:ship_coverage
+  # don't fail even if this does
+  grunt --force mochacov:ship_coverage
 fi
