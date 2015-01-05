@@ -29,4 +29,4 @@ var client = new elasticsearch.Client({
 client.getDog( ... );
 --------------
 
-When the client is created, it's prototype is set to the API version selected, and therefore you can access the client via the `this` variable within your API methods. Make requests within your methods using `this.transport.request(params, cb)`. For more information about the transport, see <<transport-reference>>.
+When the client is created, its prototype is set to the API version selected, and therefore you can access the client via the `this` variable within your API methods. Make requests within your methods using `this.transport.request(params, cb)`. For more information about the transport, see <<transport-reference>>.
