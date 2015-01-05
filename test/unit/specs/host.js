@@ -12,7 +12,17 @@ var hostDefaults = {
   auth: null,
   query: {},
   headers: null,
-  suggestCompression: false
+  suggestCompression: false,
+  ssl: {
+    pfx: null,
+    key: null,
+    passphrase: null,
+    cert: null,
+    ca: null,
+    ciphers: null,
+    rejectUnauthorized: false,
+    secureProtocol: null
+  }
 };
 
 describe('Host class', function () {
