@@ -4428,6 +4428,7 @@ api.nodes = function NodesNS(transport) {
  * @param {Date, Number} params.interval - The interval for the second sampling of threads
  * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
+ * @param {Boolean} params.ignoreIdleThreads - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
  * @param {String} params.type - The type to sample (default: cpu)
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
@@ -4441,6 +4442,10 @@ api.nodes.prototype.hotThreads = ca({
     },
     threads: {
       type: 'number'
+    },
+    ignoreIdleThreads: {
+      type: 'boolean',
+      name: 'ignore_idle_threads'
     },
     type: {
       type: 'enum',

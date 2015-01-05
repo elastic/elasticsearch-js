@@ -44,6 +44,45 @@ Options :::
 `...`::
 `Any` -- When the host receives a configuration object, it assigns all of the object's keys to itself. This allows you to pass in arbitrary keys and values that can be used within selectors, or other custom functionality.
 
+`pfx`::
+`String,Array[String]` -- Certificate, Private key and CA certificates to use for SSL.
+
+Default ::: `null`
+
+`key`::
+`String` -- Private key to use for SSL.
+
+Default ::: `null`
+
+`passphrase`::
+`String` -- A string of passphrase for the private key or pfx.
+
+Default ::: `null`
+
+`cert`::
+`String` -- Public x509 certificate to use.
+
+Default ::: `null`
+
+`ca`::
+`String,Array[String]` -- An authority certificate or array of authority certificates to check the remote host against.
+
+Default ::: `null`
+
+`ciphers`::
+`String` -- A string describing the ciphers to use or exclude. Consult http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT for details on the format.
+
+Default ::: `null`
+
+`rejectUnauthorized`::
+`Boolean` -- If true, the server certificate is verified against the list of supplied CAs. An 'error' event is emitted if verification fails. Verification happens at the connection level, before the HTTP request is sent.
+
+Default ::: `true`
+
+`secureProtocol`::
+`String` -- The SSL method to use, e.g. TLSv1_method to force TLS version 1. The possible values depend on your installation of OpenSSL and are defined in the constant SSL_METHODS.
+
+Default ::: `null`
 
 === Examples
 
