@@ -6,7 +6,7 @@ var expect = require('expect.js');
 
 var sinon = require('sinon');
 var nock = require('../../mocks/server.js');
-var estr = require('event-stream');
+var through2 = require('through2');
 var _ = require('lodash-node');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
@@ -311,9 +311,10 @@ describe('Transport + Mock server', function () {
         var serverMock = nock('http://esbox.1.com')
           .get('/')
           .reply(200, function () {
-            var str = estr.readable(function (count, cb) {
+            var str = through2(function (chunk, enc, cb) {
               cb(new Error('force error'));
             });
+
             str.setEncoding = function () {}; // force nock's isStream detection
             return str;
           });

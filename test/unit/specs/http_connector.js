@@ -18,7 +18,6 @@ describe('Http Connector', function () {
   var MockRequest = require('../../mocks/request');
   var MockIncommingMessage = require('../../mocks/incomming_message');
   var zlib = require('zlib');
-  var estr = require('event-stream');
 
   nock.disableNetConnect();
 

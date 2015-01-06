@@ -21,10 +21,9 @@ module.exports = function (grunt) {
 
     branches.forEach(function (branch) {
       tasks.push(
-        'run:install_es_' + branch,
-        'run:es_' + branch,
+        'esvm:' + branch,
         'mochacov:integration_' + branch,
-        'stop:es_' + branch
+        'esvm_shutdown:' + branch
       );
     });
 
@@ -72,6 +71,7 @@ module.exports = function (grunt) {
         writeFile(browserBuildsPath, browserBuilds),
         writeFile(packagePath, JSON.stringify(pkg, null, '  '))
       ]);
-    }).nodeify(this.async());
+    })
+    .nodeify(this.async());
   });
 };

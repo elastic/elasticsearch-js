@@ -1,15 +1,37 @@
 module.exports = _spawn;
 
-var estream = require('event-stream');
+var map = require('through2-map');
+var split = require('split');
 var chalk = require('chalk');
 var spawn = require('child_process').spawn;
 var path = require('path');
 var root = path.resolve(__dirname, '../');
 
+function indent(line) {
+  line = String(line).trim();
+  return line ? '    ' + line + '\n' : '';
+}
+
+function consume(stream) {
+  stream
+  .pipe(split())
+  .pipe(map(indent))
+  .pipe(process.stdout, { end: false });
+}
+
 function _spawn(cmd, args, opts, cb) {
   opts = opts || {};
+
+  if (cmd === 'rm') {
+    opts.verbose = false;
+  }
+
   var conf = {
-    stdio: 'pipe'
+    stdio: [
+      'ignore',
+      opts.verbose ? 'pipe' : 'ignore',
+      'pipe'
+    ]
   };
 
   var subdir;
@@ -18,24 +40,16 @@ function _spawn(cmd, args, opts, cb) {
     conf.cwd = opts.cwd;
     subdir = path.relative(root, opts.cwd);
   }
+
   console.log(chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') + cmd + ' ' + args.join(' '));
 
-  var cp = spawn(cmd, args, opts);
-  var split = estream.split();
+  var cp = spawn(cmd, args, conf);
 
   if (opts.verbose) {
-    cp.stdout.pipe(split);
-  } else {
-    cp.stdout.resume();
+    consume(cp.stdout);
   }
 
-  cp.stderr.pipe(split);
-
-  split
-    .pipe(estream.mapSync(function indent(line) {
-      return line ? '    ' + line + '\n' : '';
-    }))
-    .pipe(process.stdout);
+  consume(cp.stderr);
 
   if (typeof cb === 'function') {
     cp.on('exit', cb);
