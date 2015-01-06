@@ -14,7 +14,7 @@ var handles = {
 };
 var _ = require('../utils');
 var qs = require('querystring');
-var ForeverAgent = require('./_custom_agent');
+var KeepAliveAgent = require('./_keep_alive_agent');
 var ConnectionAbstract = require('../connection');
 var zlib = require('zlib');
 
@@ -33,6 +33,8 @@ function HttpConnector(host, config) {
     throw new TypeError('Invalid protocol "' + this.host.protocol +
       '", expected one of ' + _.keys(handles).join(', '));
   }
+
+  this.useSsl = this.host.protocol === 'https';
 
   config = _.defaults(config || {}, {
     keepAlive: true,
@@ -77,7 +79,7 @@ HttpConnector.prototype.createAgent = function (config) {
   }
 
   if (config.keepAlive) {
-    Agent = this.host.protocol === 'https' ? ForeverAgent.SSL : ForeverAgent;
+    Agent = this.useSsl ? KeepAliveAgent.SSL : KeepAliveAgent;
     this.on('status set', this.bound.onStatusSet);
   }
 
@@ -85,10 +87,16 @@ HttpConnector.prototype.createAgent = function (config) {
 };
 
 HttpConnector.prototype.makeAgentConfig = function (config) {
-  return {
+  var agentConfig =  {
     maxSockets: config.maxSockets,
     minSockets: config.minSockets
   };
+
+  if (this.useSsl) {
+    _.merge(agentConfig, this.host.ssl);
+  }
+
+  return agentConfig;
 };
 
 HttpConnector.prototype.makeReqParams = function (params) {

@@ -1,1 +1,1 @@
-Get the source of a document by it's index, type and id.
+Get the source of a document by its index, type and id.

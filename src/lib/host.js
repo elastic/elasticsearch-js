@@ -23,6 +23,17 @@ var urlParseFields = [
 
 var simplify = ['host', 'path'];
 
+var sslDefaults = {
+  pfx: null,
+  key: null,
+  passphrase: null,
+  cert: null,
+  ca: null,
+  ciphers: null,
+  rejectUnauthorized: false,
+  secureProtocol: null
+};
+
 // simple reference used when formatting as a url
 // and defines when parsing from a string
 Host.defaultPorts = {
@@ -43,6 +54,8 @@ function Host(config, globalConfig) {
   this.query = null;
   this.headers = null;
   this.suggestCompression = !!globalConfig.suggestCompression;
+
+  this.ssl = _.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
 
   if (typeof config === 'string') {
     var firstColon = config.indexOf(':');

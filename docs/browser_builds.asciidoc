@@ -3,7 +3,7 @@
 
 We also provide builds of the elasticsearch.js client for use in the browser. These versions of the client are currently ***experimental***. We test these builds using https://saucelabs.com/u/elasticsearch-js[saucelabs] in Chrome, Firefox, and Internet Explorer 10, and 11.
 
-While there is https://github.com/elasticsearch/elasticsearch-js/issues/96#issuecomment-42617480[a way to get it working in IE 9], the browser severly limits what you can do with cross-domain requests. Because of these limits, many of the API calls and other functionality do not work.
+While there is https://github.com/elasticsearch/elasticsearch-js/issues/96#issuecomment-42617480[a way to get it working in IE 9], the browser severely limits what you can do with cross-domain requests. Because of these limits, many of the API calls and other functionality do not work.
 
 === Bower
 If you use bower to manage your dependencies, then just run:

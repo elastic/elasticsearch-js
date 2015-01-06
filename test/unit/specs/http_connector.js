@@ -7,7 +7,7 @@ describe('Http Connector', function () {
   var util = require('util');
   var http = require('http');
   var https = require('https');
-  var CustomAgent = require('../../../src/lib/connectors/_custom_agent');
+  var KeepAliveAgent = require('../../../src/lib/connectors/_keep_alive_agent');
 
   var Host = require('../../../src/lib/host');
   var errors = require('../../../src/lib/errors');
@@ -164,7 +164,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
-        expect(http.request.lastCall.args[0].agent).to.be.a(CustomAgent);
+        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
         done();
       });
     });
@@ -174,7 +174,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
-        expect(https.request.lastCall.args[0].agent).to.be.a(CustomAgent.SSL);
+        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.SSL);
         done();
       });
     });
@@ -465,7 +465,7 @@ describe('Http Connector', function () {
 
   describe('Connection cleanup', function () {
     // skip these tests if native keep alive requests are supported
-    if (CustomAgent.supportsNativeKeepAlive) {
+    if (KeepAliveAgent.supportsNativeKeepAlive) {
       return;
     }
 

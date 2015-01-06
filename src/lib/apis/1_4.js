@@ -5051,6 +5051,7 @@ api.scroll = ca({
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {Number} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
@@ -5164,6 +5165,10 @@ api.search = ca({
     _sourceInclude: {
       type: 'list',
       name: '_source_include'
+    },
+    terminateAfter: {
+      type: 'number',
+      name: 'terminate_after'
     },
     stats: {
       type: 'list'

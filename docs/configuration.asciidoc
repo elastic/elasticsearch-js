@@ -1,7 +1,7 @@
 [[configuration]]
 == Configuration
 
-The `Client` constructor accepts a single object as it's argument. In the <<config-options>> section all of the available options/keys are listed.
+The `Client` constructor accepts a single object as its argument. In the <<config-options>> section all of the available options/keys are listed.
 
 [source,js]
 ------

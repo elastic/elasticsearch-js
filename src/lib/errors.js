@@ -80,19 +80,19 @@ _.inherits(errors.RequestTypeError, ErrorAbstract);
 var statusCodes = {
 
   /**
-   * Service Unavailable
+   * ServiceUnavailable
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   503: 'Service Unavailable',
 
   /**
-   * Internal Server Error
+   * InternalServerError
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   500: 'Internal Server Error',
 
   /**
-   * Precondition Failed
+   * PreconditionFailed
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   412: 'Precondition Failed',
@@ -104,25 +104,31 @@ var statusCodes = {
   409: 'Conflict',
 
   /**
-   * Forbidden
+   * AuthorizationException
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
-  403: 'Forbidden',
+  403: 'Authorization Exception',
 
   /**
-   * Not Found
+   * NotFound
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   404: 'Not Found',
 
   /**
-   * Bad Request
+   * AuthenticationException
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  401: 'Authentication Exception',
+
+  /**
+   * BadRequest
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   400: 'Bad Request',
 
   /**
-   * Moved Permanently
+   * MovedPermanently
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
   301: 'Moved Permanently'
