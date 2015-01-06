@@ -138,7 +138,7 @@ _.each(statusCodes, function (name, status) {
   var className = _.studlyCase(name);
 
   function StatusCodeError(msg) {
-    ErrorAbstract.call(this, msg || name, errors[className]);
+    ErrorAbstract.call(this, msg || name, StatusCodeError);
   }
 
   _.inherits(StatusCodeError, ErrorAbstract);
