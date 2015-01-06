@@ -1,5 +1,8 @@
 # elasticsearch-js changelog
 
+## 3.1 (Jan 6 2015)
+ - Added HTTPS/SSL configuration options and related errors
+
 ## 3.0 (Nov 7 2014)
  - Added apiVersion `"1.4"`, which is now the default
  - Improved parsing of `host:` strings, [examples in the tests](https://github.com/elasticsearch/elasticsearch-js/blob/165b7d7986b2184b2e4b73d33bf5803e61ce7a54/test/unit/specs/host.js#L71-L92)
