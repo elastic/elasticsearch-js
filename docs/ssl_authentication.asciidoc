@@ -1,0 +1,49 @@
+[[auth-reference]]
+== SSL and Authentication
+
+You can configure the client to use SSL for connecting to your elasticsearch cluster, including certificate verification and http auth.
+
+=== Basic Auth
+
+Basic authentication credentials can be configured on a per-host basis using URL notiation, or at the `auth:` property of a host config object.
+
+.Credentials directly in the host url:
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  host: 'https://user:password@my-site.com:9200'
+})
+-----
+
+.Credentials as a property of the host config:
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  host: [
+    {
+      host: 'es1.internal.org',
+      auth: 'user:password'
+    }
+  ]
+});
+-----
+
+=== HTTPS/SSL
+
+Without any additional configuration you can specify `https://` host urls, but the certificates used to sign these requests will not verified (`rejectUnauthorized: false`). To turn on certificate verification you must specify an `ssl:` object either in the top level config or in each host config object and set `rejectUnauthorized: true`. The ssl config object can contain many of the same configuration options that http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] accepts. For convenience these options are also listed in the <<host-reference>> reference.
+
+.Specify a certificate authority that should be used to verify server certifcates on all nodes:
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  hosts: [
+    'https://box1.internal.org',
+    'https://box2.internal.org',
+    'https://box3.internal.org'
+  ],
+  ssl: {
+    ca: fs.readFileSync('./cacert.pem'),
+    rejectUnauthorized: true
+  }
+});
+-----
