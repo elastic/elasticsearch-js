@@ -191,6 +191,11 @@ function exec(transport, spec, params, cb) {
     request.requestTimeout = spec.requestTimeout;
   }
 
+  if (!params.body && spec.paramAsBody) {
+    params.body = params[spec.paramAsBody];
+    delete params[spec.paramAsBody];
+  }
+
   // verify that we have the body if needed
   if (spec.needsBody && !params.body) {
     throw new TypeError('A request body is required.');
