@@ -4765,6 +4765,7 @@ api.scroll = ca({
       fmt: '/_search/scroll'
     }
   ],
+  paramAsBody: 'scrollId',
   method: 'POST'
 });
 
