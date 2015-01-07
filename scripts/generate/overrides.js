@@ -1,5 +1,11 @@
 module.exports = [
   {
+    version: '*',
+    paramAsBody: {
+      scroll: 'scrollId'
+    }
+  },
+  {
     version: '0.90.x',
     aliases: {
       'cluster.nodeHotThreads': [
