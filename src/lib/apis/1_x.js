@@ -611,6 +611,44 @@ api.cat.prototype.recovery = ca({
 });
 
 /**
+ * Perform a [cat.segments](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-segments.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
+ */
+api.cat.prototype.segments = ca({
+  params: {
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': true
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/segments/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/segments'
+    }
+  ]
+});
+
+/**
  * Perform a [cat.shards](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cat-shards.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
