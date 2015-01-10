@@ -1,7 +1,7 @@
 var utils = require('../utils');
 var _ = require('lodash-node');
 
-var defaultOpts = exports.options = {
+var defaultOpts = {
   nodes: 1,
   quiet: true,
   config: {
@@ -25,9 +25,11 @@ function setBranchConfig(branch, target) {
     target.options.config = _.merge({
       'node.bench': true,
       'script.disable_dynamic': false
-    }, defaultOpts.config);
+    }, target.options.config);
     break;
   }
+
+  target.options = _.merge({}, defaultOpts, target.options);
 }
 
 // targets for each branch
@@ -45,23 +47,24 @@ utils.branches.forEach(function (branch) {
 (function () {
   var release = process.env.ES_RELEASE;
   var branch = process.env.ES_BRANCH;
+  var port = process.env.ES_PORT;
+
+  var options = {
+    config: {
+      'http.port': port || 9200
+    }
+  };
 
   if (release) {
-    exports.ci_env = { options: { version: release } };
-
-    var versions = process.env.ES_RELEASE.split('.');
-    var major = versions.shift();
-    var minor = versions.shift();
-    branch = major + '.' + minor;
+    options.version = release;
   }
-
-  if (!release && branch) {
-    exports.ci_env = { options: { branch: branch } };
+  else if (branch) {
+    options.branch = branch;
   }
-
-  if (!branch) {
+  else {
     return;
   }
 
+  exports.ci_env = { options: options };
   setBranchConfig(branch, exports.ci_env);
 }());
