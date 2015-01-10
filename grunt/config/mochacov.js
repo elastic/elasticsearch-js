@@ -1,8 +1,8 @@
 var root = require('find-root')(__dirname);
 var rel = require('path').resolve.bind(null, root);
 var rootReq = function (p) { return require(rel(p)); };
-var utils = rootReq('grunt/utils');
 var _ = rootReq('src/lib/utils');
+var grunt = require('grunt');
 
 var JENKINS_REPORTER = rel('test/utils/jenkins-reporter.js');
 
@@ -35,20 +35,34 @@ var config = {
       coveralls: true,
       instrument: false
     }
-  }
-};
+  },
 
-utils.branches.forEach(function (branch) {
-  config['integration_' + branch] = {
-    src: 'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
-  };
+  integration: {
+    src: null
+  },
 
-  config['jenkins_integration_' + branch] = {
-    src: 'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js',
+  jenkins_integration: {
+    src: null,
     options: {
       reporter: JENKINS_REPORTER
     }
-  };
+  }
+};
+
+grunt.registerTask('mocha_integration', function (branch) {
+  grunt.config.set(
+    'mochacov.integration.src',
+    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+  );
+  grunt.task.run('mochacov:integration');
+});
+
+grunt.registerTask('mocha_jenkins_integration', function (branch) {
+  grunt.config.set(
+    'mochacov.jenkins_integration.src',
+    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+  );
+  grunt.task.run('mochacov:jenkins_integration');
 });
 
 module.exports = config;
