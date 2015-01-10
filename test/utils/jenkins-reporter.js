@@ -24,6 +24,18 @@ var log = (function () {
   };
 })();
 
+var integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
+var unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
+var output;
+
+if (unit) {
+  output = path.join(__dirname, '../junit-node-unit.xml');
+} else if (integration) {
+  output = path.join(__dirname, '../junit-node-integration.xml');
+} else {
+  throw new Error('unable to detect unit or integration tests');
+}
+
 function JenkinsReporter(runner) {
   Base.call(this, runner);
 
@@ -149,7 +161,8 @@ function JenkinsReporter(runner) {
         return s;
       })
     });
-    console.error(xml);
+
+    fs.writeFileSync(output, xml, 'utf8');
 
     console.log('\n' + [
       'tests complete in ' + (Math.round(stats.duration / 10) / 100) + ' seconds',

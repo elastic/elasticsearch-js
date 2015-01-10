@@ -1,9 +1,10 @@
 var root = require('find-root')(__dirname);
-var rootReq = function (p) { return require(require('path').resolve(root, p)); };
+var rel = require('path').resolve.bind(null, root);
+var rootReq = function (p) { return require(rel(p)); };
 var utils = rootReq('grunt/utils');
 var _ = rootReq('src/lib/utils');
 
-var JENKINS_REPORTER = 'test/utils/jenkins-reporter.js';
+var JENKINS_REPORTER = rel('test/utils/jenkins-reporter.js');
 
 var config = {
   unit: {
@@ -13,8 +14,7 @@ var config = {
   jenkins_unit: {
     src: 'test/unit/index.js',
     options: {
-      reporter: JENKINS_REPORTER,
-      output: 'test/junit-node-unit.xml'
+      reporter: JENKINS_REPORTER
     }
   },
 
@@ -23,7 +23,6 @@ var config = {
     src: 'test/unit/coverage.js',
     options: {
       reporter: 'html-cov',
-      output: 'coverage.html',
       instrument: false
     }
   },
@@ -47,8 +46,7 @@ utils.branches.forEach(function (branch) {
   config['jenkins_integration_' + branch] = {
     src: 'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js',
     options: {
-      reporter: JENKINS_REPORTER,
-      output: 'test/junit-node-integration.xml'
+      reporter: JENKINS_REPORTER
     }
   };
 });
