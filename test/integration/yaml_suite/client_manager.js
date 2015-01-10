@@ -10,7 +10,6 @@ if (BROWSER) {
 }
 
 var _ = require('../../../src/lib/utils');
-var argv = require('./argv');
 var path = require('path');
 var fs = require('fs');
 var async = require('async');
@@ -23,7 +22,7 @@ var client = null;
 var externalExists;
 
 module.exports = {
-  create: function create(apiVersion, cb) {
+  create: function create(apiVersion, port, cb) {
     // create a client and ping the server for up to 15 seconds
     doCreateClient({
       logConfig: null
@@ -40,8 +39,8 @@ module.exports = {
             setTimeout(ping, timeout);
           } else if (err) {
             cb(new Error('unable to establish contact with ES at ' + JSON.stringify({
-              host: argv.host,
-              port: argv.port,
+              host: 'localhost',
+              port: port,
               err: err
             })));
           } else if (!JENKINS && resp.name !== 'elasticsearch_js_test_runner') {
@@ -92,8 +91,8 @@ module.exports = {
         apiVersion: apiVersion,
         hosts: [
           {
-            host: argv.host,
-            port: argv.port
+            host: 'localhost',
+            port: port
           }
         ],
         log: logConfig
