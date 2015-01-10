@@ -17,15 +17,12 @@ var through2 = require('through2');
 var map = require('through2-map');
 var split = require('split');
 var join = require('path').join;
-var fs = require('fs');
 var child_process = require('child_process');
 var chalk = require('chalk');
 var format = require('util').format;
 
 var ROOT = join(__dirname, '..');
 var GRUNT = join(ROOT, './node_modules/.bin/grunt');
-var MOCHA = join(ROOT, './node_modules/.bin/mocha');
-var MOCHA_REPORTER = 'test/utils/jenkins-reporter.js';
 var ENV = _.clone(process.env);
 var JENKINS = !!ENV.JENKINS_HOME;
 
@@ -89,9 +86,7 @@ task(
       return grunt('jshint', 'mochacov:unit');
     }
 
-    var report = join(ROOT, 'test/junit-node-unit.xml');
-    var tests = join(ROOT, 'test/unit/index.js');
-    return mocha(report, tests, '--reporter', join(ROOT, MOCHA_REPORTER));
+    return grunt('mochacov:jenkins_unit');
   }
 );
 
@@ -103,19 +98,8 @@ task(
 
     return node('scripts/generate', '--no-api', '--branch', branch)
     .then(function () {
-      if (JENKINS) return;
-
-      return grunt('esvm:ci_env', 'mochacov:integration_' + branch, 'esvm_shutdown:ci_env');
-    })
-    .then(function () {
-      if (!JENKINS) return;
-
-      var branchSuffix = '_' + branch.replace(/\./g, '_');
-      var tests = 'test/integration/yaml_suite/index' + branchSuffix + '.js';
-      var esPort = ENV.es_port || 9200;
-      var report = 'test/junit-node-integration.xml';
-
-      return mocha(report, tests, '--host', 'localhost', '--port', esPort, '--reporter', MOCHA_REPORTER);
+      var target = (JENKINS ? 'jenkins_' : '') + 'integration_' + branch;
+      return grunt('esvm:ci_env', 'mochacov:' + target, 'esvm_shutdown:ci_env');
     });
   }
 );
@@ -330,11 +314,4 @@ function node(/*args... */) {
 
 function grunt(/* args... */) {
   return spawn(GRUNT, _.toArray(arguments));
-}
-
-function mocha(report/*, args... */) {
-  return spawn(MOCHA, _.rest(arguments, 1), function (cp) {
-    cp.stderr.unpipe();
-    cp.stderr.pipe(fs.createWriteStream(report));
-  });
 }
