@@ -50,7 +50,7 @@ function install_node {
 
 
 get_lock
-install_node 0.10
+install_node "$NODE_V"
 npm install
 release_lock
 
