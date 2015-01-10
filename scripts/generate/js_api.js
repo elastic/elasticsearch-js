@@ -39,11 +39,17 @@ module.exports = function (branch, done) {
   }());
 
   var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
-  var aliases = _.transform(require('./aliases'), function (aliases, rule) {
-    if (semver.satisfies(branchAsVersion, rule.version)) {
-      _.assign(aliases, rule.aliases);
-    }
-  }, {});
+
+  var overrides = require('./overrides')
+  .filter(function (rule) {
+    return semver.satisfies(branchAsVersion, rule.version);
+  })
+  .reduce(function (overrides, rule) {
+    return _.merge(overrides, _.omit(rule, 'version'));
+  }, {
+    aliases: {},
+    paramAsBody: {}
+  });
 
   var steps = [
     readSpecFiles,
@@ -217,7 +223,7 @@ module.exports = function (branch, done) {
         spec.requestTimeout = 100;
       }
 
-      var urls = _.difference(def.url.paths, aliases[name]);
+      var urls = _.difference(def.url.paths, overrides.aliases[name]);
       var urlSignatures = [];
       urls = _.map(urls, function (url) {
         var optionalVars = {};
@@ -271,6 +277,10 @@ module.exports = function (branch, done) {
         ]);
       }, {});
 
+      if (overrides.paramAsBody[name]) {
+        spec.paramAsBody = overrides.paramAsBody[name];
+      }
+
       if (_.size(spec.params) === 0) {
         delete spec.params;
       }
@@ -287,7 +297,8 @@ module.exports = function (branch, done) {
           'urls',
           'needBody',
           'requestTimeout',
-          'bulkBody'
+          'bulkBody',
+          'paramAsBody'
         ]),
         location: location,
         docUrl: def.documentation,

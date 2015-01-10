@@ -30,7 +30,6 @@ Default:::
 
 
 
-
 `log`[[config-log]]:: `String, String[], Object, Object[], Constructor` -- Unless a constructor is specified, this sets the output settings for the bundled logger. See the section on configuring-logging[logging] for more information.
 
 Default in Node:::
@@ -146,6 +145,35 @@ Defaults:::
   * jQuery Build: `"jquery"`
 
 
+
+`ssl`[[config-ssl]]:: `Object` -- An object defining HTTPS/SSL configuration to use for all nodes. The properties of this mimic the options accepted by http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] with the exception of `rejectUnauthorized`, which defaults to `false` allowing self-signed certificates to work out-of-the-box.
++
+Additional information available in <<auth-reference>>.
+
+`ssl.pfx`::: `String,Array[String]` -- Certificate, Private key and CA certificates to use for SSL. Default `null`.
+`ssl.key`::: `String` -- Private key to use for SSL. Default `null`.
+`ssl.passphrase`::: `String` -- A string of passphrase for the private key or pfx. Default `null`.
+`ssl.cert`::: `String` -- Public x509 certificate to use. Default `null`.
+`ssl.ca`::: `String,Array[String]` -- An authority certificate or array of authority certificates to check the remote host against. Default `null`.
+`ssl.ciphers`::: `String` -- A string describing the ciphers to use or exclude. Consult http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT for details on the format.  Default `null`.
+`ssl.rejectUnauthorized`::: `Boolean` -- If true, the server certificate is verified against the list of supplied CAs. An 'error' event is emitted if verification fails. Verification happens at the connection level, before the HTTP request is sent. Default `false`
+`ssl.secureProtocol`::: `String` -- The SSL method to use, e.g. TLSv1_method to force TLS version 1. The possible values depend on your installation of OpenSSL and are defined in the constant SSL_METHODS. Default `null`.
+Example:::
++
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  hosts: [
+    'https://box1.internal.org',
+    'https://box2.internal.org',
+    'https://box3.internal.org'
+  ],
+  ssl: {
+    ca: fs.readFileSync('./cacert.pem'),
+    rejectUnauthorized: true
+  }
+});
+-----
 
 
 `selector`[[config-selector]]:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.

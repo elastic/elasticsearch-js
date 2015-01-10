@@ -21,6 +21,7 @@ NOTE: the https://github.com/fullscale/elastic.js[elastic.js] library can be use
   * `requestTimeout` -- <<config-request-timeout, more info>>
   * `maxRetries` -- <<config-max-retries, more info>>
 
+[[api-conventions-cb]]
 === Callbacks or Promises
 When a callback is passed to any of the API methods, it will be called with `(err, response, status)`. If you prefer to use promises, don't pass a callback and a promise will be returned. The promise will either be resolved with the response body, or rejected with the error that occured (including any 300+ response for non "exists" methods).
 

@@ -670,6 +670,44 @@ api.cat.prototype.recovery = ca({
 });
 
 /**
+ * Perform a [cat.segments](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-segments.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
+ */
+api.cat.prototype.segments = ca({
+  params: {
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': true
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/segments/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/segments'
+    }
+  ]
+});
+
+/**
  * Perform a [cat.shards](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -5072,6 +5110,7 @@ api.scroll = ca({
       fmt: '/_search/scroll'
     }
   ],
+  paramAsBody: 'scrollId',
   method: 'POST'
 });
 
@@ -5990,7 +6029,6 @@ api.termvectors = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
- * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
@@ -6021,9 +6059,6 @@ api.update = ca({
       type: 'list'
     },
     lang: {
-      type: 'string'
-    },
-    parent: {
       type: 'string'
     },
     refresh: {

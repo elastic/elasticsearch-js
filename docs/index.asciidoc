@@ -10,6 +10,8 @@ include::api_conventions.asciidoc[]
 
 include::configuration.asciidoc[]
 
+include::ssl_authentication.asciidoc[]
+
 include::extending_core_components.asciidoc[]
 
 include::logging.asciidoc[]
