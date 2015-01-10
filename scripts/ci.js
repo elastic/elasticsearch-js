@@ -47,21 +47,25 @@ task(
           return [match[1], null];
         }
 
-        if (match = ENV.ES_V.match(/^(1\.\d+|0\.90)\..*$/)) {
-          return [match[1], ENV.ES_V];
+        if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V)) {
+          return ['v' + ENV.ES_V, ENV.ES_V];
         }
 
         throw new Error('unable to parse ES_V ' + ENV.ES_V);
       }
 
+      if (ENV.ES_RELEASE) {
+        return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
+      }
+
       if (ENV.ES_BRANCH) {
-        return [ENV.ES_BRANCH, ENV.ES_RELEASE || null];
+        return [ENV.ES_BRANCH, null];
       }
     }
 
     var ver = read();
     if (!ver) {
-      throw new Error('Unable to run the ci script without at least an ES_BRANCH environment var.');
+      throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
     }
 
     if (ver[0]) {
@@ -98,8 +102,8 @@ task(
 
     return node('scripts/generate', '--no-api', '--branch', branch)
     .then(function () {
-      var target = (JENKINS ? 'jenkins_' : '') + 'integration_' + branch;
-      return grunt('esvm:ci_env', 'mochacov:' + target, 'esvm_shutdown:ci_env');
+      var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
+      return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
     });
   }
 );
