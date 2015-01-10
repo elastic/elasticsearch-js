@@ -75,20 +75,20 @@ describe('Transport Class', function () {
 
     it('schedules a sniff when sniffInterval is set', function () {
       var clock = sinon.useFakeTimers('setTimeout');
+      stub.autoRelease(clock);
       stub(Transport.prototype, 'sniff');
 
       var trans = new Transport({
         sniffInterval: 25000
       });
 
-      expect(_.size(clock.timeouts)).to.eql(1);
-      var id = _.keys(clock.timeouts).pop();
+      expect(_.size(clock.timers)).to.eql(1);
+      var id = _.keys(clock.timers).pop();
       clock.tick(25000);
       expect(trans.sniff.callCount).to.eql(1);
-      expect(_.size(clock.timeouts)).to.eql(1);
-      expect(clock.timeouts).to.not.have.key(id);
+      expect(_.size(clock.timers)).to.eql(1);
+      expect(clock.timers).to.not.have.key(id);
 
-      clock.restore();
     });
 
     describe('host config', function () {
@@ -628,6 +628,7 @@ describe('Transport Class', function () {
     describe('timeout', function () {
       it('uses 30 seconds for the default', function () {
         var clock = sinon.useFakeTimers();
+        stub.autoRelease(clock);
         var tran = new Transport({});
         var err;
 
@@ -635,15 +636,15 @@ describe('Transport Class', function () {
         // disregard promise, prevent bluebird's warnings
         prom.then(_.noop, _.noop);
 
-        expect(_.size(clock.timeouts)).to.eql(1);
-        _.each(clock.timeouts, function (timer, id) {
+        expect(_.size(clock.timers)).to.eql(1);
+        _.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(30000);
           clearTimeout(id);
         });
-        clock.restore();
       });
       it('inherits the requestTimeout from the transport', function () {
         var clock = sinon.useFakeTimers();
+        stub.autoRelease(clock);
         var tran = new Transport({
           requestTimeout: 5000
         });
@@ -653,18 +654,18 @@ describe('Transport Class', function () {
         // disregard promise, prevent bluebird's warnings
         prom.then(_.noop, _.noop);
 
-        expect(_.size(clock.timeouts)).to.eql(1);
-        _.each(clock.timeouts, function (timer, id) {
+        expect(_.size(clock.timers)).to.eql(1);
+        _.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(5000);
           clearTimeout(id);
         });
-        clock.restore();
       });
 
 
       _.each([false, 0, null], function (falsy) {
         it('skips the timeout when it is ' + falsy, function () {
           var clock = sinon.useFakeTimers();
+          stub.autoRelease(clock);
           var tran = new Transport({});
           stub(tran.connectionPool, 'select', function () {});
 
@@ -672,8 +673,7 @@ describe('Transport Class', function () {
             requestTimeout: falsy
           }, function (_err) {});
 
-          expect(_.size(clock.timeouts)).to.eql(0);
-          clock.restore();
+          expect(_.size(clock.timers)).to.eql(0);
         });
       });
     });

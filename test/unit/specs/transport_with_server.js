@@ -262,6 +262,7 @@ describe('Transport + Mock server', function () {
     describe('timeout', function () {
       it('clears the timeout when the request is complete', function () {
         var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+        stub.autoRelease(clock);
         var tran = new Transport({
           host: 'http://localhost:9200'
         });
@@ -276,13 +277,12 @@ describe('Transport + Mock server', function () {
           expect(err).to.be(undefined);
           expect(resp).to.eql({ i: 'am here' });
           expect(status).to.eql(200);
-          expect(_.keys(clock.timeouts)).to.have.length(0);
+          expect(_.keys(clock.timers)).to.have.length(0);
           clock.restore();
         });
       });
 
       it('timeout responds with a requestTimeout error', function (done) {
-        // var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
         var tran = new Transport({
           host: 'http://localhost:9200'
         });
@@ -298,25 +298,16 @@ describe('Transport + Mock server', function () {
           requestTimeout: 25
         }, function (err, resp, status) {
           expect(err).to.be.a(errors.RequestTimeout);
-          // expect(_.keys(clock.timeouts)).to.have.length(0);
-          // clock.restore();
           done();
         });
       });
     });
 
     describe('sniffOnConnectionFault', function () {
-      var clock;
-
-      beforeEach(function () {
-        clock = sinon.useFakeTimers('setTimeout');
-      });
-
-      afterEach(function () {
-        clock.restore();
-      });
-
       it('schedules a sniff when sniffOnConnectionFault is set and a connection failes', function () {
+        var clock = sinon.useFakeTimers('setTimeout');
+        stub.autoRelease(clock);
+
         var serverMock = nock('http://esbox.1.com')
           .get('/')
           .reply(200, function () {
@@ -351,9 +342,9 @@ describe('Transport + Mock server', function () {
         .catch(function (err) {
           expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
           expect(tran.sniff.callCount).to.eql(0);
-          expect(_.size(clock.timeouts)).to.eql(1);
+          expect(_.size(clock.timers)).to.eql(1);
 
-          var timeout = _.values(clock.timeouts).pop();
+          var timeout = _.values(clock.timers).pop();
           timeout.func();
           expect(tran.sniff.callCount).to.eql(1);
         });

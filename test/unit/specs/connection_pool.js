@@ -165,6 +165,7 @@ describe('Connection Pool', function () {
     it('should ping all of the dead nodes, in order of oldest timeout, and return the first that\'s okay',
     function (done) {
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      stub.autoRelease(clock);
       var pool = new ConnectionPool({
         deadTimeout: 10000
       });
@@ -201,7 +202,6 @@ describe('Connection Pool', function () {
       });
 
       pool.select(function (err, selection) {
-        clock.restore();
         expect(selection).to.be(expectedSelection);
         expect(pingQueue.length).to.be(0);
         pool.setHosts([]);
@@ -244,17 +244,18 @@ describe('Connection Pool', function () {
     });
 
     it('clears and resets the timeout when a connection redies', function () {
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      var clock = sinon.useFakeTimers();
+      stub.autoRelease(clock);
 
+      debugger;
       connection.setStatus('dead');
-      expect(_.size(clock.timeouts)).to.eql(1);
-      var id = _(clock.timeouts).keys().first();
+      expect(_.size(clock.timers)).to.eql(1);
+      var id = _(clock.timers).keys().first();
 
       // it re-dies
       connection.setStatus('dead');
-      expect(_.size(clock.timeouts)).to.eql(1);
-      expect(_(clock.timeouts).keys().first()).to.not.eql(id);
-      clock.restore();
+      expect(_.size(clock.timers)).to.eql(1);
+      expect(_(clock.timers).keys().first()).to.not.eql(id);
     });
 
     it('does nothing when a connection is re-alive', function () {

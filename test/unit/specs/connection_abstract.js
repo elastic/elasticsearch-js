@@ -77,6 +77,7 @@ describe('Connection Abstract', function () {
     it('sets a timer for the request', function (done) {
       var conn = new ConnectionAbstract(host);
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      stub.autoRelease(clock);
       var order = 0;
 
       stub(conn, 'request', function (params, cb) {
@@ -96,13 +97,13 @@ describe('Connection Abstract', function () {
       process.nextTick(function () {
         clock.tick(1000);
         clock.tick(10000);
-        clock.restore();
         done();
       });
     });
     it('calls the requestAborter if req takes too long', function (done) {
       var conn = new ConnectionAbstract(host);
       var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      stub.autoRelease(clock);
       var order = 0;
 
       stub(conn, 'request', function (params, cb) {
@@ -126,7 +127,6 @@ describe('Connection Abstract', function () {
       process.nextTick(function () {
         clock.tick(1000);
         clock.tick(10000);
-        clock.restore();
         done();
       });
     });
