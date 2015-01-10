@@ -5,6 +5,7 @@
  *  ES_V - a version identifier used by jenkins. don't use this
  *  ES_BRANCH - the ES branch we should use to generate the tests and download es
  *  ES_RELEASE - a specific ES release to download in use for testing
+ *  ES_PORT - the port number we should run elasticsearch on
  *  NODE_UNIT=1 - 0/1 run the unit tests in node
  *  NODE_INTEGRATION=1 - 0/1 run the integration tests in node
  *  BROWSER_UNIT - the browser to test in using, sauce labs. One of 'ie', 'firefox', 'chrome'
@@ -26,19 +27,12 @@ var GRUNT = join(ROOT, './node_modules/.bin/grunt');
 var ENV = _.clone(process.env);
 var JENKINS = !!ENV.JENKINS_HOME;
 
-/******
- * SETUP
- ******/
 var taskChain = Promise.resolve();
 var output; // main output stream
 var taskOut; // task output stream
 
-/******
- * GET VERSION
- ******/
 task(
-  'read version from environment',
-  true,
+  'SETUP',
   function () {
     function read() {
       if (ENV.ES_V) {
@@ -68,6 +62,12 @@ task(
       throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
     }
 
+    taskOut.write('es port: ' + (ENV.ES_PORT = parseInt(ENV.ES_PORT || 9200, 10)) + '\n');
+    taskOut.write('unit tests: ' + (ENV.NODE_UNIT = ENV.NODE_UNIT !== '0') + '\n');
+    taskOut.write('integration tests: ' + (ENV.NODE_INTEGRATION = ENV.NODE_INTEGRATION !== '0') + '\n');
+    taskOut.write('browser unit tests: ' + (ENV.BROWSER_UNIT = ENV.BROWSER_UNIT === '1') + '\n');
+    taskOut.write('coverage: ' + (ENV.COVERAGE = ENV.COVERAGE === '1') + '\n');
+
     if (ver[0]) {
       taskOut.write('branch: ' + (ENV.ES_BRANCH = ver[0]) + '\n');
     } else {
@@ -83,8 +83,7 @@ task(
 );
 
 task(
-  'node unit tests',
-  ENV.NODE_UNIT !== '0',
+  'NODE_UNIT',
   function () {
     if (!JENKINS) {
       return grunt('jshint', 'mochacov:unit');
@@ -95,8 +94,7 @@ task(
 );
 
 task(
-  'node integration tests',
-  ENV.NODE_INTEGRATION !== '0',
+  'NODE_INTEGRATION',
   function () {
     var branch = ENV.ES_BRANCH;
 
@@ -109,8 +107,7 @@ task(
 );
 
 task(
-  'browser unit tests',
-  ENV.BROWSER_UNIT === '1',
+  'BROWSER_UNIT',
   function () {
     return new Promise(function (resolve, reject) {
       // build the clients and start the server, once the server is ready call trySaucelabs()
@@ -181,8 +178,7 @@ task(
 );
 
 task(
-  'code coverage',
-  ENV.COVERAGE === '1',
+  'COVERAGE',
   function () {
     return grunt('mochacov:ship_coverage')
     .catch(function () {
@@ -246,10 +242,10 @@ function indent() {
   );
 }
 
-function task(name, condition, block) {
-  if (!condition) return;
-
+function task(name, block) {
   taskChain = taskChain.then(function () {
+    if (name !== 'SETUP' && !ENV[name]) return;
+
     taskOut = through2();
     output = through2();
 
