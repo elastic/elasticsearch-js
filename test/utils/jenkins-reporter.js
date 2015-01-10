@@ -178,10 +178,10 @@ function JenkinsReporter(runner) {
     var orig = obj.write;
     obj.write = function (chunk) {
       if (stack[0]) {
-        stack[0][name] += chunk;
-      } else {
-        orig.apply(obj, arguments);
+        stack[0][name] = (stack[0][name] || '') + chunk;
       }
+
+      orig.apply(obj, arguments);
     };
     obj.__restore = function () {
       this.write = orig;
