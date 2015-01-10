@@ -306,14 +306,27 @@ describe('Transport + Mock server', function () {
     });
 
     describe('sniffOnConnectionFault', function () {
-      it('schedules a sniff when sniffOnConnectionFault is set and a connection failes', function (done) {
-        var clock = sinon.useFakeTimers('setTimeout');
+      var clock;
+
+      beforeEach(function () {
+        clock = sinon.useFakeTimers('setTimeout');
+      });
+
+      afterEach(function () {
+        clock.restore();
+      });
+
+      it('schedules a sniff when sniffOnConnectionFault is set and a connection failes', function () {
         var serverMock = nock('http://esbox.1.com')
           .get('/')
           .reply(200, function () {
             var str = through2(function (chunk, enc, cb) {
               cb(new Error('force error'));
             });
+
+            setTimeout(function () {
+              str.write('');
+            }, 10);
 
             str.setEncoding = function () {}; // force nock's isStream detection
             return str;
@@ -331,19 +344,19 @@ describe('Transport + Mock server', function () {
 
         tran.request({
           requestTimeout: Infinity
-        }).then(
-          _.partial(done, new Error('expected the request to fail')),
-          function (err) {
-            expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
-            expect(tran.sniff.callCount).to.eql(0);
-            expect(_.size(clock.timeouts)).to.eql(1);
-            var timeout = _.values(clock.timeouts).pop();
-            timeout.func();
-            expect(tran.sniff.callCount).to.eql(1);
-            clock.restore();
-            done();
-          }
-        );
+        })
+        .then(function () {
+          throw new Error('expected the request to fail');
+        })
+        .catch(function (err) {
+          expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
+          expect(tran.sniff.callCount).to.eql(0);
+          expect(_.size(clock.timeouts)).to.eql(1);
+
+          var timeout = _.values(clock.timeouts).pop();
+          timeout.func();
+          expect(tran.sniff.callCount).to.eql(1);
+        });
       });
     });
   });
