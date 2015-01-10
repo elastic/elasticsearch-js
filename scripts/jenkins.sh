@@ -54,4 +54,5 @@ install_node 0.10
 npm install
 release_lock
 
+export ES_PORT=$((9400 + EXECUTOR_NUMBER))
 node ./scripts/ci.js
