@@ -23,7 +23,7 @@ var client = null;
 var externalExists;
 
 module.exports = {
-  create: function create(branch, cb) {
+  create: function create(apiVersion, cb) {
     // create a client and ping the server for up to 15 seconds
     doCreateClient({
       logConfig: null
@@ -89,7 +89,7 @@ module.exports = {
       }
 
       client = new es.Client({
-        apiVersion: branch,
+        apiVersion: apiVersion,
         hosts: [
           {
             host: argv.host,

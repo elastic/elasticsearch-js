@@ -17,7 +17,15 @@ module.exports = function (branch) {
     before(function (done) {
       // start our personal ES Server
       this.timeout(5 * 60 * 1000);
-      clientManager.create(branch, done);
+
+      var apiVersion = branch;
+      var match;
+      if (match = apiVersion.match(/^v(\d+\.\d+)\.\d+$/)) {
+        apiVersion = match[1];
+      }
+
+      console.log('testing branch', branch, 'against api version', apiVersion);
+      clientManager.create(apiVersion, done);
     });
 
     before(function (done) {
