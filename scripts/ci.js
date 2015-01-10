@@ -238,9 +238,24 @@ function logImportant(text) {
   log('------------\n');
 }
 
-function indent(line) {
-  line = String(line).trim();
-  return line ? '    ' + line + '\n' : '';
+function indent() {
+  var RE = /\n/g;
+  var first = true;
+  return through2(
+    function (chunk, enc, cb) {
+      if (first) {
+        this.push('  ');
+        first = false;
+      }
+
+      this.push(('' + chunk).replace(RE, '\n  '));
+      cb();
+    },
+    function (cb) {
+      this.push('\n');
+      cb();
+    }
+  );
 }
 
 function task(name, condition, block) {
@@ -251,8 +266,7 @@ function task(name, condition, block) {
     output = through2();
 
     taskOut
-    .pipe(split())
-    .pipe(map(indent))
+    .pipe(indent())
     .pipe(output);
 
     output
