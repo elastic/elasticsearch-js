@@ -31,161 +31,146 @@ var taskChain = Promise.resolve();
 var output; // main output stream
 var taskOut; // task output stream
 
-task(
-  'SETUP',
-  function () {
-    function read() {
-      if (ENV.ES_V) {
-        var match;
-        if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
-          return [match[1], null];
-        }
-
-        if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V)) {
-          return ['v' + ENV.ES_V, ENV.ES_V];
-        }
-
-        throw new Error('unable to parse ES_V ' + ENV.ES_V);
+task('SETUP', function () {
+  function read() {
+    if (ENV.ES_V) {
+      var match;
+      if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
+        return [match[1], null];
       }
 
-      if (ENV.ES_RELEASE) {
-        return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
+      if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V)) {
+        return ['v' + ENV.ES_V, ENV.ES_V];
       }
 
-      if (ENV.ES_BRANCH) {
-        return [ENV.ES_BRANCH, null];
-      }
+      throw new Error('unable to parse ES_V ' + ENV.ES_V);
     }
 
-    var ver = read();
-    if (!ver) {
-      throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
+    if (ENV.ES_RELEASE) {
+      return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
     }
 
-    taskOut.write('es port: ' + (ENV.ES_PORT = parseInt(ENV.ES_PORT || 9200, 10)) + '\n');
-    taskOut.write('unit tests: ' + (ENV.NODE_UNIT = ENV.NODE_UNIT !== '0') + '\n');
-    taskOut.write('integration tests: ' + (ENV.NODE_INTEGRATION = ENV.NODE_INTEGRATION !== '0') + '\n');
-    taskOut.write('browser unit tests: ' + (ENV.BROWSER_UNIT = ENV.BROWSER_UNIT === '1') + '\n');
-    taskOut.write('coverage: ' + (ENV.COVERAGE = ENV.COVERAGE === '1') + '\n');
-
-    if (ver[0]) {
-      taskOut.write('branch: ' + (ENV.ES_BRANCH = ver[0]) + '\n');
-    } else {
-      delete ENV.ES_BRANCH;
-    }
-
-    if (ver[1]) {
-      taskOut.write('release: ' + (ENV.ES_RELEASE = ver[1]) + '\n');
-    } else {
-      delete ENV.ES_RELEASE;
+    if (ENV.ES_BRANCH) {
+      return [ENV.ES_BRANCH, null];
     }
   }
-);
 
-task(
-  'NODE_UNIT',
-  function () {
-    if (!JENKINS) {
-      return grunt('jshint', 'mochacov:unit');
-    }
-
-    return grunt('mochacov:jenkins_unit');
+  var ver = read();
+  if (!ver) {
+    throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
   }
-);
 
-task(
-  'NODE_INTEGRATION',
-  function () {
-    var branch = ENV.ES_BRANCH;
+  taskOut.write('es port: ' + (ENV.ES_PORT = parseInt(ENV.ES_PORT || 9200, 10)) + '\n');
+  taskOut.write('unit tests: ' + (ENV.NODE_UNIT = ENV.NODE_UNIT !== '0') + '\n');
+  taskOut.write('integration tests: ' + (ENV.NODE_INTEGRATION = ENV.NODE_INTEGRATION !== '0') + '\n');
+  taskOut.write('browser unit tests: ' + (ENV.BROWSER_UNIT = ENV.BROWSER_UNIT === '1') + '\n');
+  taskOut.write('coverage: ' + (ENV.COVERAGE = ENV.COVERAGE === '1') + '\n');
 
-    return node('scripts/generate', '--no-api', '--branch', branch)
-    .then(function () {
-      var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
-      return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
-    });
+  if (ver[0]) {
+    taskOut.write('branch: ' + (ENV.ES_BRANCH = ver[0]) + '\n');
+  } else {
+    delete ENV.ES_BRANCH;
   }
-);
 
-task(
-  'BROWSER_UNIT',
-  function () {
-    return new Promise(function (resolve, reject) {
-      // build the clients and start the server, once the server is ready call trySaucelabs()
-      var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
-      spawn(GRUNT, serverTasks, function (cp) {
-        var stdout = cp.stdout;
-        var lines = split();
-        var findReady = through2(function (line, enc, cb) {
-          cb();
+  if (ver[1]) {
+    taskOut.write('release: ' + (ENV.ES_RELEASE = ver[1]) + '\n');
+  } else {
+    delete ENV.ES_RELEASE;
+  }
+});
 
-          line = String(line);
-          if (line.indexOf('run:browser_test_server') === -1) return;
+task('NODE_UNIT', function () {
+  if (!JENKINS) {
+    return grunt('jshint', 'mochacov:unit');
+  }
 
-          trySaucelabs()
-          .finally(function () {
-            cp.kill();
-          })
-          .then(resolve, reject);
+  return grunt('mochacov:jenkins_unit');
+});
 
-          stdout.unpipe(lines);
-          lines.end();
-        });
+task('NODE_INTEGRATION', function () {
+  var branch = ENV.ES_BRANCH;
 
-        stdout.pipe(lines).pipe(findReady);
+  return node('scripts/generate', '--no-api', '--branch', branch)
+  .then(function () {
+    var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
+    return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
+  });
+});
+
+task('BROWSER_UNIT', function () {
+  return new Promise(function (resolve, reject) {
+    // build the clients and start the server, once the server is ready call trySaucelabs()
+    var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
+    spawn(GRUNT, serverTasks, function (cp) {
+      var stdout = cp.stdout;
+      var lines = split();
+      var findReady = through2(function (line, enc, cb) {
+        cb();
+
+        line = String(line);
+        if (line.indexOf('run:browser_test_server') === -1) return;
+
+        trySaucelabs()
+        .finally(function () {
+          cp.kill();
+        })
+        .then(resolve, reject);
+
+        stdout.unpipe(lines);
+        lines.end();
       });
 
-      // attempt to run tests on saucelabs and retry if it fails
-      var saucelabsAttempts = 0;
-      function trySaucelabs() {
-        saucelabsAttempts++;
-        return new Promise(function (resolve, reject) {
-          spawn(GRUNT, ['saucelabs-mocha'], function (cp) {
+      stdout.pipe(lines).pipe(findReady);
+    });
 
-            var failedTests = 0;
-            cp.stdout
-            .pipe(split())
-            .pipe(map(function (line) {
-              line = String(line);
-              if (line.trim() === 'Passed: false') {
-                failedTests ++;
-              }
-            }));
+    // attempt to run tests on saucelabs and retry if it fails
+    var saucelabsAttempts = 0;
+    function trySaucelabs() {
+      saucelabsAttempts++;
+      return new Promise(function (resolve, reject) {
+        spawn(GRUNT, ['saucelabs-mocha'], function (cp) {
 
-            cp.on('error', reject);
-            cp.on('exit', function (code) {
-              if (code > 0) {
-                if (failedTests > 0) {
-                  return reject(new Error('Browser tests failed'));
-                }
+          var failedTests = 0;
+          cp.stdout
+          .pipe(split())
+          .pipe(map(function (line) {
+            line = String(line);
+            if (line.trim() === 'Passed: false') {
+              failedTests ++;
+            }
+          }));
 
-                if (saucelabsAttempts >= 3) {
-                  return reject(new Error('Saucelabs is like really really down. Tried 3 times'));
-                }
-
-                taskOut.write(chalk.blue('trying saucelabs again...'));
-                return trySaucelabs().then(resolve, reject);
+          cp.on('error', reject);
+          cp.on('exit', function (code) {
+            if (code > 0) {
+              if (failedTests > 0) {
+                return reject(new Error('Browser tests failed'));
               }
 
-              return resolve();
-            });
-          })
-          // swallow spawn() errors
-          .then(_.noop, _.noop);
-        });
-      }
-    });
-  }
-);
+              if (saucelabsAttempts >= 3) {
+                return reject(new Error('Saucelabs is like really really down. Tried 3 times'));
+              }
 
-task(
-  'COVERAGE',
-  function () {
-    return grunt('mochacov:ship_coverage')
-    .catch(function () {
-      taskOut.write('FAILED TO SHIP COVERAGE! but that\'s okay\n');
-    });
-  }
-);
+              taskOut.write(chalk.blue('trying saucelabs again...'));
+              return trySaucelabs().then(resolve, reject);
+            }
+
+            return resolve();
+          });
+        })
+        // swallow spawn() errors
+        .then(_.noop, _.noop);
+      });
+    }
+  });
+});
+
+task('COVERAGE', function () {
+  return grunt('mochacov:ship_coverage')
+  .catch(function () {
+    taskOut.write('FAILED TO SHIP COVERAGE! but that\'s okay\n');
+  });
+});
 
 /******
  * FINISH
