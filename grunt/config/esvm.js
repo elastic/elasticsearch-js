@@ -1,7 +1,9 @@
 var utils = require('../utils');
 var _ = require('lodash-node');
+var join = require('path').join;
 
 var defaultOpts = {
+  directory: join(__dirname, '..', '..', '.esvm'),
   nodes: 1,
   quiet: true,
   config: {
