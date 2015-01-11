@@ -54,4 +54,4 @@ install_node "$NODE_V"
 npm install
 release_lock
 
-ES_PORT=$((9400 + EXECUTOR_NUMBER)) node ./scripts/ci.js
+ES_PORT=$((9400 + EXECUTOR_NUMBER)) RUN=NODE_UNIT,NODE_INTEGRATION node ./scripts/ci.js
