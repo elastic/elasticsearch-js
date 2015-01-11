@@ -11,8 +11,8 @@
  * Tasks:
  *  NODE_UNIT - run the unit tests in node (default: true)
  *  NODE_INTEGRATION - run the integration tests in node  (default: true)
- *  BROWSER - run the browser tests  (default: false)
- *  COVERAGE - check for coverage and ship it to coveralls (default: false)
+ *  SAUCE_LABS - run the browser tests  (default: false)
+ *  CHECK_COVERAGE - check for coverage and ship it to coveralls (default: false)
  *
  *******/
 
