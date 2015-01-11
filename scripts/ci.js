@@ -2,14 +2,18 @@
  * Run the tests, and setup es if needed
  *
  * ENV VARS:
- *  ES_V - a version identifier used by jenkins. don't use this
+ *  RUN - a list of task names to run, specifying this turns of all other tasks
  *  ES_BRANCH - the ES branch we should use to generate the tests and download es
  *  ES_RELEASE - a specific ES release to download in use for testing
  *  ES_PORT - the port number we should run elasticsearch on
- *  NODE_UNIT=1 - 0/1 run the unit tests in node
- *  NODE_INTEGRATION=1 - 0/1 run the integration tests in node
- *  BROWSER_UNIT - the browser to test in using, sauce labs. One of 'ie', 'firefox', 'chrome'
- *  COVERAGE - 0/1 check for coverage and ship it to coveralls
+ *  ES_V - a version identifier used by jenkins. don't use this
+ *
+ * Tasks:
+ *  NODE_UNIT - run the unit tests in node (default: true)
+ *  NODE_INTEGRATION - run the integration tests in node  (default: true)
+ *  BROWSER - run the browser tests  (default: false)
+ *  COVERAGE - check for coverage and ship it to coveralls (default: false)
+ *
  *******/
 
 var Promise = require('bluebird');
@@ -26,60 +30,12 @@ var ROOT = join(__dirname, '..');
 var GRUNT = join(ROOT, './node_modules/.bin/grunt');
 var ENV = _.clone(process.env);
 var JENKINS = !!ENV.JENKINS_HOME;
+var TASKS = [];
 
-var taskChain = Promise.resolve();
 var output; // main output stream
 var taskOut; // task output stream
 
-task('SETUP', function () {
-  function read() {
-    if (ENV.ES_V) {
-      var match;
-      if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
-        return [match[1], null];
-      }
-
-      if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V)) {
-        return ['v' + ENV.ES_V, ENV.ES_V];
-      }
-
-      throw new Error('unable to parse ES_V ' + ENV.ES_V);
-    }
-
-    if (ENV.ES_RELEASE) {
-      return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
-    }
-
-    if (ENV.ES_BRANCH) {
-      return [ENV.ES_BRANCH, null];
-    }
-  }
-
-  var ver = read();
-  if (!ver) {
-    throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
-  }
-
-  taskOut.write('es port: ' + (ENV.ES_PORT = parseInt(ENV.ES_PORT || 9200, 10)) + '\n');
-  taskOut.write('unit tests: ' + (ENV.NODE_UNIT = ENV.NODE_UNIT !== '0') + '\n');
-  taskOut.write('integration tests: ' + (ENV.NODE_INTEGRATION = ENV.NODE_INTEGRATION !== '0') + '\n');
-  taskOut.write('browser unit tests: ' + (ENV.BROWSER_UNIT = ENV.BROWSER_UNIT === '1') + '\n');
-  taskOut.write('coverage: ' + (ENV.COVERAGE = ENV.COVERAGE === '1') + '\n');
-
-  if (ver[0]) {
-    taskOut.write('branch: ' + (ENV.ES_BRANCH = ver[0]) + '\n');
-  } else {
-    delete ENV.ES_BRANCH;
-  }
-
-  if (ver[1]) {
-    taskOut.write('release: ' + (ENV.ES_RELEASE = ver[1]) + '\n');
-  } else {
-    delete ENV.ES_RELEASE;
-  }
-});
-
-task('NODE_UNIT', function () {
+task('NODE_UNIT', true, function () {
   if (!JENKINS) {
     return grunt('jshint', 'mochacov:unit');
   }
@@ -87,7 +43,7 @@ task('NODE_UNIT', function () {
   return grunt('mochacov:jenkins_unit');
 });
 
-task('NODE_INTEGRATION', function () {
+task('NODE_INTEGRATION', true, function () {
   var branch = ENV.ES_BRANCH;
 
   return node('scripts/generate', '--no-api', '--branch', branch)
@@ -97,47 +53,46 @@ task('NODE_INTEGRATION', function () {
   });
 });
 
-task('BROWSER_UNIT', function () {
+task('SAUCE_LABS', false, function () {
   return new Promise(function (resolve, reject) {
     // build the clients and start the server, once the server is ready call trySaucelabs()
     var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
     spawn(GRUNT, serverTasks, function (cp) {
-      var stdout = cp.stdout;
-      var lines = split();
-      var findReady = through2(function (line, enc, cb) {
+      var toLines = split();
+
+      cp.stdout
+      .pipe(toLines)
+      .pipe(through2(function (line, enc, cb) {
         cb();
 
-        line = String(line);
-        if (line.indexOf('run:browser_test_server') === -1) return;
+        if (String(line).indexOf('listening on port 8000') === -1) return;
+
 
         trySaucelabs()
-        .finally(function () {
-          cp.kill();
-        })
+        .finally(function () { cp && cp.kill(); })
         .then(resolve, reject);
 
-        stdout.unpipe(lines);
-        lines.end();
-      });
-
-      stdout.pipe(lines).pipe(findReady);
-    });
+        cp.on('exit', function () { cp = null; });
+        cp.stdout.unpipe(toLines);
+        toLines.end();
+      }));
+    })
+    // ignore server errors
+    .catch(_.noop);
 
     // attempt to run tests on saucelabs and retry if it fails
     var saucelabsAttempts = 0;
     function trySaucelabs() {
       saucelabsAttempts++;
       return new Promise(function (resolve, reject) {
+        log(chalk.green('saucelabs attempt #', saucelabsAttempts));
         spawn(GRUNT, ['saucelabs-mocha'], function (cp) {
 
           var failedTests = 0;
           cp.stdout
           .pipe(split())
           .pipe(map(function (line) {
-            line = String(line);
-            if (line.trim() === 'Passed: false') {
-              failedTests ++;
-            }
+            failedTests += String(line).trim() === 'Passed: false' ? 1 : 0;
           }));
 
           cp.on('error', reject);
@@ -151,34 +106,76 @@ task('BROWSER_UNIT', function () {
                 return reject(new Error('Saucelabs is like really really down. Tried 3 times'));
               }
 
-              taskOut.write(chalk.blue('trying saucelabs again...'));
+              log(chalk.blue('trying saucelabs again...'));
               return trySaucelabs().then(resolve, reject);
             }
 
             return resolve();
           });
         })
-        // swallow spawn() errors
-        .then(_.noop, _.noop);
+        // swallow spawn() errors, custom error handler in place
+        .catch(_.noop);
       });
     }
   });
 });
 
-task('COVERAGE', function () {
+task('CHECK_COVERAGE', false, function () {
   return grunt('mochacov:ship_coverage')
   .catch(function () {
-    taskOut.write('FAILED TO SHIP COVERAGE! but that\'s okay\n');
+    log('FAILED TO SHIP COVERAGE! but that\'s okay');
   });
 });
 
-/******
- * FINISH
- */
-taskChain
-.finally(function () {
-  // output directly to stdout
-  output = process.stdout;
+execTask('SETUP', function () {
+  return Promise.try(function readVersion() {
+    if (!ENV.ES_V) {
+      if (ENV.ES_RELEASE)
+        return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
+
+      if (ENV.ES_BRANCH)
+        return [ENV.ES_BRANCH, null];
+    }
+
+    var match;
+    if (match = ENV.ES_V.match(/^(.*)_nightly$/))
+      return [match[1], null];
+
+    if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V))
+      return ['v' + ENV.ES_V, ENV.ES_V];
+
+    throw new Error('unable to parse ES_V ' + ENV.ES_V);
+  })
+  .then(function readOtherConf(ver) {
+    if (!ver)
+      throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
+
+    log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
+    log('ES_BRANCH:', ENV.ES_BRANCH = ver[0] || null);
+    log('ES_RELEASE:', ENV.ES_RELEASE = ver[1] || null);
+  })
+  .then(function readTasks() {
+    if (!ENV.RUN)
+      return _.where(TASKS, { default: true });
+
+    return ENV.RUN
+    .split(',')
+    .map(function (name) {
+      return _.find(TASKS, { name: name.trim() });
+    })
+    .filter(Boolean);
+  });
+})
+.then(function (queue) {
+  if (!queue.length) {
+    throw new Error('no tasks to run');
+  }
+
+  // Recursively do tasks until the queue is empty
+  return (function next() {
+    if (!queue.length) return;
+    return execTask(queue.shift()).then(next);
+  }());
 })
 .then(function () {
   logImportant(chalk.bold.green('✔︎ SUCCESS'));
@@ -195,16 +192,15 @@ taskChain
 /******
  * utils
  ******/
-
 function log() {
   var chunk = format.apply(null, arguments);
-  output.write(chunk + '\n');
+  (taskOut || output || process.stdout).write(chunk + '\n');
 }
 
 function logImportant(text) {
   log('\n------------');
   log(text);
-  log('------------\n');
+  log('------------');
 }
 
 function indent() {
@@ -227,36 +223,49 @@ function indent() {
   );
 }
 
-function task(name, block) {
-  taskChain = taskChain.then(function () {
-    if (name !== 'SETUP' && !ENV[name]) return;
+function task(name, def, fn) {
+  if (_.isFunction(def)) {
+    fn = def;
+    def = true;
+  }
 
-    taskOut = through2();
-    output = through2();
-
-    taskOut
-    .pipe(indent())
-    .pipe(output);
-
-    output
-    .pipe(process.stdout, { end: false });
-
-    log(chalk.white.underline(name));
-
-    function flushTaskOut() {
-      return new Promise(function (resolve) {
-        // wait for the taskOut to finish writing before continuing
-        output.once('finish', function () {
-          process.stdout.write('\n');
-          resolve();
-        });
-        taskOut.end(); // will end output as well
-        taskOut = output = null;
-      });
-    }
-
-    return Promise.try(block).finally(flushTaskOut);
+  TASKS.push({
+    name: name,
+    default: def,
+    fn: fn
   });
+}
+
+function execTask(name, task) {
+  if (_.isObject(name)) {
+    task = name.fn;
+    name = name.name;
+  }
+
+  output = through2();
+  output
+  .pipe(process.stdout, { end: false });
+
+  log(chalk.white.underline(name));
+
+  taskOut = through2();
+  taskOut
+  .pipe(indent())
+  .pipe(output);
+
+  function flushTaskOut() {
+    return new Promise(function (resolve) {
+      // wait for the taskOut to finish writing before continuing
+      output.once('finish', function () {
+        log('');
+        resolve();
+      });
+      taskOut.end(); // will end output as well
+      taskOut = output = null;
+    });
+  }
+
+  return Promise.try(task).finally(flushTaskOut);
 }
 
 function spawn(file, args, block) {
@@ -294,9 +303,15 @@ function spawn(file, args, block) {
 }
 
 function node(/*args... */) {
-  return spawn(process.execPath, _.toArray(arguments));
+  return spawn(
+    process.execPath,
+    _.toArray(arguments)
+  );
 }
 
 function grunt(/* args... */) {
-  return spawn(GRUNT, _.toArray(arguments));
+  return spawn(
+    GRUNT,
+    _.toArray(arguments)
+  );
 }

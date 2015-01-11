@@ -13,7 +13,7 @@ var config = {
     exec: 'node ./test/utils/server',
     options: {
       wait: false,
-      quiet: true,
+      quiet: false,
       ready: /listening/
     }
   },

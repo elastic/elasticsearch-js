@@ -81,7 +81,6 @@ function sendFile(file) {
 var app = express();
 
 app
-  .use(express.logger('dev'))
   .use(app.router)
   // runners
   .get('/unit.html', sendFile(root + '/test/browser_unit_tests.html'))
