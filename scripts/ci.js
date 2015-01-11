@@ -207,24 +207,24 @@ function logImportant(text) {
   log('------------');
 }
 
-function indent() {
-  var RE = /\n/g;
-  var first = true;
-  return through2(
-    function (chunk, enc, cb) {
-      if (first) {
-        this.push('  ');
-        first = false;
-      }
+var RE = /(\r?\n)/g;
 
-      this.push(('' + chunk).replace(RE, '\n  '));
-      cb();
-    },
-    function (cb) {
-      this.push('\n');
-      cb();
-    }
+function push(m) {
+  return function () {
+    var args = _.toArray(arguments);
+    var cb = args.pop();
+    this.push(m.apply(this, args));
+    cb();
+  };
+}
+
+function indent() {
+  var str = through2(
+    push(function (chunk) { return String(chunk).replace(RE, '$1  '); }),
+    push(function () { return '\n'; })
   );
+  str.push('  ');
+  return str;
 }
 
 function task(name, def, fn) {
