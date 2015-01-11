@@ -26,6 +26,7 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var format = require('util').format;
 
+var NL_RE = /(\r?\n)/g;
 var ROOT = join(__dirname, '..');
 var GRUNT = join(ROOT, './node_modules/.bin/grunt');
 var ENV = _.clone(process.env);
@@ -207,8 +208,6 @@ function logImportant(text) {
   log('------------');
 }
 
-var RE = /(\r?\n)/g;
-
 function push(m) {
   return function () {
     var args = _.toArray(arguments);
@@ -220,7 +219,7 @@ function push(m) {
 
 function indent() {
   var str = through2(
-    push(function (chunk) { return String(chunk).replace(RE, '$1  '); }),
+    push(function (chunk) { return String(chunk).replace(NL_RE, '$1  '); }),
     push(function () { return '\n'; })
   );
   str.push('  ');

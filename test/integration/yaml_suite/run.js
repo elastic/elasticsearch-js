@@ -9,25 +9,20 @@ module.exports = function (branch) {
   var es = rootReq('src/elasticsearch');
   var clientManager = require('./client_manager');
 
+  var port = parseInt(process.env.ES_PORT || 9200, 10);
+  var _release = branch.match(/^v(\d+\.\d+)\.\d+$/);
+  var apiVersion = _release ? _release[1] : branch;
+
+  console.log('  branch:', branch);
+  console.log('  port:', port);
+  console.log('  api version:', apiVersion);
+
   describe('integration', function () {
     this.timeout(30000);
 
     // before running any tests...
     before(function (done) {
       this.timeout(5 * 60 * 1000);
-
-      var apiVersion = branch;
-      var match;
-      if (match = apiVersion.match(/^v(\d+\.\d+)\.\d+$/)) {
-        apiVersion = match[1];
-      }
-
-      var port = parseInt(process.env.ES_PORT || 9200, 10);
-
-      console.log('branch:', branch);
-      console.log('port:', port);
-      console.log('api version:', apiVersion);
-
       clientManager.create(apiVersion, port, done);
     });
 
