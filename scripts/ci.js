@@ -151,8 +151,12 @@ execTask('SETUP', function () {
       throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
 
     log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
-    log('ES_BRANCH:', ENV.ES_BRANCH = ver[0] || null);
-    log('ES_RELEASE:', ENV.ES_RELEASE = ver[1] || null);
+
+    if (ver[0]) log('ES_BRANCH:', ENV.ES_BRANCH = ver[0]);
+    else delete ENV.ES_BRANCH;
+
+    if (ver[1]) log('ES_RELEASE:', ENV.ES_RELEASE = ver[1]);
+    else delete ENV.ES_RELEASE;
   })
   .then(function readTasks() {
     if (!ENV.RUN)
