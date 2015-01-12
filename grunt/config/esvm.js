@@ -5,7 +5,7 @@ var join = require('path').join;
 var defaultOpts = {
   directory: join(__dirname, '..', '..', '.esvm'),
   nodes: 1,
-  quiet: true,
+  quiet: false,
   config: {
     'node.name': 'elasticsearch_js_test_runner',
     'cluster.name': 'elasticsearch_js_test_runners',

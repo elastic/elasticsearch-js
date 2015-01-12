@@ -28,7 +28,7 @@ var format = require('util').format;
 
 var NL_RE = /(\r?\n)/g;
 var ROOT = join(__dirname, '..');
-var GRUNT = join(ROOT, './node_modules/.bin/grunt');
+var GRUNT = join(ROOT, 'node_modules', '.bin', 'grunt');
 var ENV = _.clone(process.env);
 var JENKINS = !!ENV.JENKINS_HOME;
 var TASKS = [];
