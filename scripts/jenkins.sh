@@ -20,6 +20,17 @@ function release_lock {
   echo "cleared lock file $lockpath"
 }
 
+# execute a command, and exit if it fails
+function crit {
+  $*
+  CODE=$?
+  if [[ $CODE -gt 0 ]]; then
+    echo "last command was critical, but it reported non-zero exit code $CODE";
+    release_lock # clear any locks
+    exit $CODE;
+  fi
+}
+
 # install a specific version of Node and the latest version of NPM within that install
 function install_node {
   local version=$1
@@ -47,7 +58,6 @@ function install_node {
     return
   fi
 }
-
 
 get_lock
 install_node "$NODE_V"
