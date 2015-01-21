@@ -80,6 +80,12 @@ _.inherits(errors.RequestTypeError, ErrorAbstract);
 var statusCodes = {
 
   /**
+   * GatewayTimeout
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  504: 'Gateway Timeout',
+
+  /**
    * ServiceUnavailable
    * @param {String} [msg] - An error message that will probably end up in a log.
    */

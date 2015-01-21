@@ -33,7 +33,7 @@ Please write test cases to exercise your changes.
   Or to skip the integration tests:
 
   ```sh
-  grunt test_unit
+  grunt unit_test
   ```
 4. Optionally, run the browser tests. While this step is automated and simple, it can take several minutes for the tests to complete. Unless you are making changes to browser specific portions of the code you can probably let Travis run the browser tests for you.
 
