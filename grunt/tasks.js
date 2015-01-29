@@ -19,10 +19,11 @@ module.exports = function (grunt) {
 
     var branches = branch ? [branch] : utils.branches;
 
+    process.env.ES_PORT = process.env.ES_PORT || 9400;
     branches.forEach(function (branch) {
       tasks.push(
         'esvm:' + branch,
-        'mochacov:integration_' + branch,
+        'mocha_integration:' + branch,
         'esvm_shutdown:' + branch
       );
     });
