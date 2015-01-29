@@ -1656,6 +1656,8 @@ Options:::
 `Boolean` -- Specify whether to return detailed information about score computation as part of a hit
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields to return as part of a hit
+`fielddataFields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return as the field data representation of a field for each hit
 `from`::
 `Number` -- Starting offset (default: 0)
 `ignoreUnavailable`::

@@ -262,6 +262,8 @@ client.count(
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `minScore`::
 `Number` -- Include only documents with a specific `_score` value in the result
@@ -309,6 +311,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `percolateIndex`::
 `String` -- The index to count percolate the document into. Defaults to index.
@@ -548,6 +552,8 @@ Options:::
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `[replication=sync]`::
 `String` -- Specific replication type
@@ -1234,6 +1240,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String` -- The index of the document being count percolated to use as default
@@ -1435,6 +1443,8 @@ client.percolate({
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `percolateFormat`::
 `String` -- Return an array of matching query IDs instead of objects
@@ -1688,6 +1698,8 @@ Options:::
 `Boolean` -- Specify whether to return detailed information about score computation as part of a hit
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields to return as part of a hit
+`fielddataFields`::
+`String, String[], Boolean` -- A comma-separated list of fields to return as the field data representation of a field for each hit
 `from`::
 `Number` -- Starting offset (default: 0)
 `ignoreUnavailable`::
@@ -1699,6 +1711,8 @@ Options:::
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `indicesBoost`::
 `String, String[], Boolean` -- Comma-separated list of index boosts
@@ -1795,6 +1809,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `minScore`::
 `Number` -- Include only documents with a specific `_score` value in the result
@@ -1844,6 +1860,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String` -- The name of the index
@@ -1879,6 +1897,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `preference`::
 `String` -- Specify the node or shard the operation should be performed on (default: random)
@@ -1963,6 +1983,8 @@ body: {
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `preference`::
 `String` -- Specify the node or shard the operation should be performed on (default: random)
@@ -2938,6 +2960,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index name to limit the operation
@@ -2980,6 +3004,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String` -- The name of the index
@@ -3177,6 +3203,8 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3212,6 +3240,8 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3274,6 +3304,8 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3317,6 +3349,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
@@ -3347,8 +3381,14 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Ignore unavailable indexes (default: false)
 `allowNoIndices`::
 `Boolean` -- Ignore if a wildcard expression resolves to no concrete indices (default: false)
-`expandWildcards`::
-`String, String[], Boolean` -- Whether wildcard expressions should get expanded to open or closed indices (default: open)
+`[expandWildcards=open]`::
+`String` -- Whether wildcard expressions should get expanded to open or closed indices (default: open)
+Options:::
+ * `"open"`
+ * `"closed"`
+ * `"none"`
+ * `"all"`
+
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names
 `feature`::
@@ -3383,6 +3423,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3451,6 +3493,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3486,7 +3530,13 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `allowNoIndices`::
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
-`String, String[], Boolean` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+`String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
+Options:::
+ * `"open"`
+ * `"closed"`
+ * `"none"`
+ * `"all"`
+
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
@@ -3523,6 +3573,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
@@ -3589,6 +3641,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
@@ -3624,6 +3678,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
@@ -3667,6 +3723,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String` -- The name of the index
@@ -3702,6 +3760,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `maxNumSegments`::
 `Number` -- The number of segments the index should be merged into (default: dynamic)
@@ -3780,6 +3840,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
@@ -3817,6 +3879,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
@@ -3887,6 +3951,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
@@ -3953,6 +4019,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `force`::
 `Boolean` -- Force a refresh even if not required
@@ -3990,6 +4058,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
@@ -4071,6 +4141,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
@@ -4148,6 +4220,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4187,6 +4261,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 Options:::
  * `"open"`
  * `"closed"`
+ * `"none"`
+ * `"all"`
 
 `operationThreading`::
 `Anything` -- TODO: ?

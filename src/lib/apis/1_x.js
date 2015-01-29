@@ -966,6 +966,9 @@ api.cluster.prototype.reroute = ca({
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
  */
@@ -981,6 +984,25 @@ api.cluster.prototype.state = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
     }
   },
   urls: [
@@ -1090,7 +1112,9 @@ api.count = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -1173,7 +1197,9 @@ api.countPercolate = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -1363,7 +1389,9 @@ api.deleteByQuery = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2101,7 +2129,9 @@ api.indices.prototype.clearCache = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2165,7 +2195,9 @@ api.indices.prototype.close = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -2387,7 +2419,9 @@ api.indices.prototype.exists = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2435,7 +2469,9 @@ api.indices.prototype.existsAlias = ca({
       ],
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2525,7 +2561,9 @@ api.indices.prototype.existsType = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2584,7 +2622,9 @@ api.indices.prototype.flush = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -2612,7 +2652,7 @@ api.indices.prototype.flush = ca({
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Boolean} params.ignoreUnavailable - Ignore unavailable indexes (default: false)
  * @param {Boolean} params.allowNoIndices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
- * @param {String, String[], Boolean} params.expandWildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
+ * @param {String} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.feature - A comma-separated list of features
  */
@@ -2630,7 +2670,14 @@ api.indices.prototype.get = ca({
       name: 'allow_no_indices'
     },
     expandWildcards: {
-      type: 'list',
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
       name: 'expand_wildcards'
     }
   },
@@ -2683,7 +2730,9 @@ api.indices.prototype.getAlias = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2809,7 +2858,9 @@ api.indices.prototype.getFieldMapping = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2871,7 +2922,7 @@ api.indices.prototype.getFieldMapping = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String, String[], Boolean} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
@@ -2887,11 +2938,13 @@ api.indices.prototype.getMapping = ca({
       name: 'allow_no_indices'
     },
     expandWildcards: {
-      type: 'list',
+      type: 'enum',
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -2963,7 +3016,9 @@ api.indices.prototype.getSettings = ca({
       ],
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3067,7 +3122,9 @@ api.indices.prototype.getUpgrade = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3118,7 +3175,9 @@ api.indices.prototype.getWarmer = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3207,7 +3266,9 @@ api.indices.prototype.open = ca({
       'default': 'closed',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -3256,7 +3317,9 @@ api.indices.prototype.optimize = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3367,7 +3430,9 @@ api.indices.prototype.putMapping = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -3427,7 +3492,9 @@ api.indices.prototype.putSettings = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3528,7 +3595,9 @@ api.indices.prototype.putWarmer = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -3638,7 +3707,9 @@ api.indices.prototype.refresh = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3692,7 +3763,9 @@ api.indices.prototype.segments = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3868,7 +3941,9 @@ api.indices.prototype.status = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -3946,7 +4021,9 @@ api.indices.prototype.upgrade = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -4007,7 +4084,9 @@ api.indices.prototype.validateQuery = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -4269,7 +4348,9 @@ api.mpercolate = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -4858,7 +4939,9 @@ api.percolate = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -5082,6 +5165,7 @@ api.scroll = ca({
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return as part of a hit
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the field data representation of a field for each hit
  * @param {Number} params.from - Starting offset (default: 0)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -5139,6 +5223,10 @@ api.search = ca({
     fields: {
       type: 'list'
     },
+    fielddataFields: {
+      type: 'list',
+      name: 'fielddata_fields'
+    },
     from: {
       type: 'number'
     },
@@ -5155,7 +5243,9 @@ api.search = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -5310,7 +5400,9 @@ api.searchExists = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -5392,7 +5484,9 @@ api.searchShards = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     }
@@ -5453,7 +5547,9 @@ api.searchTemplate = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
@@ -5830,7 +5926,9 @@ api.suggest = ca({
       'default': 'open',
       options: [
         'open',
-        'closed'
+        'closed',
+        'none',
+        'all'
       ],
       name: 'expand_wildcards'
     },
