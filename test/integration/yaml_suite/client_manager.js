@@ -43,7 +43,7 @@ module.exports = {
               port: port,
               err: err
             })));
-          } else if (!JENKINS && resp.name !== 'elasticsearch_js_test_runner') {
+          } else if (resp.name !== 'elasticsearch_js_test_runner') {
             console.log(resp);
             cb(new Error('Almosted wiped out another es node. Shut-down all instances of ES and try again.'));
           } else {
