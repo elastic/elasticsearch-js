@@ -43,7 +43,17 @@ function ClientAction(spec) {
 }
 
 var castType = {
-  'enum': function (param, val, name) {
+  'enum': function validSelection(param, val, name) {
+    if (_.isString(val) && val.indexOf(',') > -1) {
+      val = val.split(',');
+    }
+
+    if (_.isArray(val)) {
+      return val.map(function (v) {
+        return validSelection(param, v, name);
+      }).join(',');
+    }
+
     /* jshint eqeqeq: false */
     for (var i = 0; i < param.options.length; i++) {
       if (param.options[i] == val) {
