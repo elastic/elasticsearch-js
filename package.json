@@ -38,7 +38,6 @@
     "async": "~0.8.0",
     "blanket": "~1.1.5",
     "browserify": "~2.35.1",
-    "chalk": "~0.5.1",
     "expect.js": "~0.2.0",
     "express": "~3.4.7",
     "find-root": "~0.1.1",
@@ -80,6 +79,7 @@
   },
   "license": "Apache 2.0",
   "dependencies": {
+    "chalk": "~0.5.1",
     "bluebird": "~2.8.2",
     "forever-agent": "~0.5.2",
     "lodash": "^3.0.0",
