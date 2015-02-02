@@ -2,6 +2,7 @@
 
 ## 3.1 (Jan 6 2015)
  - Added HTTPS/SSL configuration options and related errors
+ - `client.scroll()` requests made without a body will use the `scrollId` param as the body to prevent #113 & #174
 
 ## 3.0 (Nov 7 2014)
  - Added apiVersion `"1.4"`, which is now the default
