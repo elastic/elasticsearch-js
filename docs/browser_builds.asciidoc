@@ -14,7 +14,7 @@ bower install elasticsearch
 ---------
 
 === Download
- * v3.1.2: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.2.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.2.tar.gz[tar.gz]
+ * v3.1.3: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.tar.gz[tar.gz]
 
 
 === Angular Build
