@@ -34,10 +34,10 @@ Check out the [Browser Builds](http://www.elasticsearch.org/guide/en/elasticsear
 </tr><tr>
 <td>download:</td>
 <td align="center">
-<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.1.zip">zip</a>
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.zip">zip</a>
 </td>
 <td align="center">
-<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.1.tar.gz">tar.gz</a>
+<a href="https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.tar.gz">tar.gz</a>
 </td>
 </tr>
 </table>

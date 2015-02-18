@@ -15,7 +15,7 @@ Params can either be URL string, or an object with the following properties
 Default ::: `"localhost"`
 
 `port`::
-`Number` -- The port number to use for this host
+`Number` -- The port number to use for this host. Note the default of 9200 is only true if the params are passed as an object. If a string, then default port is evaluated based on the protocol (`80` for http, `443` for https).
 
 Default ::: `9200`
 

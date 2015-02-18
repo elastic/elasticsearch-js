@@ -3,6 +3,8 @@
 ## 3.1 (Jan 6 2015)
  - Added HTTPS/SSL configuration options and related errors
  - `client.scroll()` requests made without a body will use the `scrollId` param as the body to prevent #113 & #174
+ - Updated bluebird to `v2.8.2` - [bluebird changelog](https://github.com/petkaantonov/bluebird/blob/master/changelog.md)
+ - Added specific error message for 504 errors [#182](https://github.com/elasticsearch/elasticsearch-js/pull/182)
 
 ## 3.0 (Nov 7 2014)
  - Added apiVersion `"1.4"`, which is now the default
