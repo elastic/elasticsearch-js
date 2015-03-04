@@ -18,7 +18,7 @@ bower install elasticsearch
 
 
 === Angular Build
-  * Registers the an `esFactory` factory in the `"elasticsearch"` module
+  * Registers an `esFactory` factory in the `"elasticsearch"` module
   * Uses Angular's `$http` service
   * Returns promises using Angular's `$q` service to properly trigger digest cycles within Angular
 
