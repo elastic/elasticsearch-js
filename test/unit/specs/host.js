@@ -1,5 +1,5 @@
 var Host = require('../../../src/lib/host');
-var _ = require('lodash-node');
+var _ = require('lodash');
 var expect = require('expect.js');
 var url = require('url');
 var expectSubObject = require('../../utils/expect_sub_object');

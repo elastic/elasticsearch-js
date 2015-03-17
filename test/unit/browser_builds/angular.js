@@ -1,4 +1,4 @@
-var _ = require('lodash-node');
+var _ = require('lodash');
 var expect = require('expect.js');
 var Promise = require('bluebird');
 var sinon = require('sinon');

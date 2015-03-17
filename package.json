@@ -83,8 +83,7 @@
     "chalk": "~0.5.1",
     "bluebird": "~2.8.2",
     "forever-agent": "~0.5.2",
-    "lodash": "^3.0.0",
-    "lodash-node": "~2.4"
+    "lodash": "^3.0.0"
   },
   "repository": {
     "type": "git",

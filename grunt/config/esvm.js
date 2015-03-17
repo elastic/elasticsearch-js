@@ -1,5 +1,5 @@
 var utils = require('../utils');
-var _ = require('lodash-node');
+var _ = require('lodash');
 var join = require('path').join;
 
 var defaultOpts = {

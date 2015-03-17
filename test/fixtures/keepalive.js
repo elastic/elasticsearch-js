@@ -1,6 +1,6 @@
 var clock = require('sinon').useFakeTimers();
 var Client = require('../../src/elasticsearch').Client;
-var _ = require('lodash-node');
+var _ = require('lodash');
 var times = require('async').times;
 
 process.once('message', function (port) {

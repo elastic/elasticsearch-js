@@ -1,4 +1,4 @@
-var _ = require('lodash-node');
+var _ = require('lodash');
 var expect = require('expect.js');
 module.exports = function expectSubObject(obj, subObj) {
   _.forOwn(subObj, function (val, prop) {

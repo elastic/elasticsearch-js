@@ -28,7 +28,7 @@ var testXml = require('xmlbuilder');
 var suites = testXml.create('testsuites');
 var suiteCount = 0;
 var moment = require('moment');
-var _ = require('lodash-node');
+var _ = require('lodash');
 var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {

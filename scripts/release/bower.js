@@ -1,7 +1,7 @@
 var fs = require('fs');
 var spawn = require('../_spawn');
 var async = require('async');
-var _ = require('lodash-node');
+var _ = require('lodash');
 
 var root = require('path').join(__dirname, '../..');
 var bowerDir = root + '/src/bower_es_js';

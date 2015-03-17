@@ -3,7 +3,7 @@ var complete = [];
 var MockHttpRequest = require('./browser_http');
 var XhrServer = MockHttpRequest.MockHttpServer;
 var parseUrl = MockHttpRequest.prototype.parseUri;
-var _ = require('lodash-node');
+var _ = require('lodash');
 
 var server = new XhrServer(function (request) {
   var reqDetails = {

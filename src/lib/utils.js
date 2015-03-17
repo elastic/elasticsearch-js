@@ -1,5 +1,5 @@
 var path = require('path');
-var _ = require('lodash-node/modern');
+var _ = require('lodash');
 var nodeUtils = require('util');
 
 /**
