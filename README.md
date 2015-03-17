@@ -49,6 +49,8 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
  - [Extending Core Components](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extending_core_components.html)
  - [Logging](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html)
 
+ [![Join the chat at https://gitter.im/spalger/elasticsearch-js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spalger/elasticsearch-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Supported Elasticsearch Versions
 
 [![Supporting Elasticsearch Version 0.90 to 1.4](http://img.shields.io/badge/elasticsearch-0.90--1.4-green.svg?style=flat-square)](http://build-eu-00.elasticsearch.org/job/es-js_nightly/)
