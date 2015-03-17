@@ -32,6 +32,10 @@ function setBranchConfig(branch, target) {
   }
 
   target.options = _.merge({}, defaultOpts, target.options);
+
+  if (target.options.branch && !target.options.version) {
+    target.options.fresh = true;
+  }
 }
 
 // targets for each branch
