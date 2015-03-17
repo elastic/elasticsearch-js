@@ -45,7 +45,7 @@ function ClientAction(spec) {
 var castType = {
   'enum': function validSelection(param, val, name) {
     if (_.isString(val) && val.indexOf(',') > -1) {
-      val = val.split(',');
+      val = commaSepList(val);
     }
 
     if (_.isArray(val)) {
@@ -79,9 +79,11 @@ var castType = {
   list: function (param, val, name) {
     switch (typeof val) {
     case 'number':
-    case 'string':
     case 'boolean':
       return '' + val;
+    case 'string':
+      val = commaSepList(val);
+      /* falls through */
     case 'object':
       if (_.isArray(val)) {
         return val.join(',');
@@ -299,6 +301,11 @@ function exec(transport, spec, params, cb) {
   return transport.request(request, cb);
 }
 
+function commaSepList(str) {
+  return str.split(',').map(function (i) {
+    return i.trim();
+  });
+}
 
 
 ClientAction.proxy = function (fn, spec) {

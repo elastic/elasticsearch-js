@@ -108,7 +108,6 @@ fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
   if (name !== 'index') {
     templates[name] = _.template(
       fs.readFileSync(path.resolve(__dirname, filename), 'utf8'),
-      null,
       {
         imports: templateGlobals
       }

@@ -398,12 +398,12 @@ _.createArray = function (input, transform) {
  */
 _.getUnwrittenFromStream = function (stream) {
   var writeBuffer = _.getStreamWriteBuffer(stream);
-  if (!writeBuffer || !writeBuffer.length) {
-    return '';
-  }
+  if (!writeBuffer) return;
 
   // flush the write buffer
   var out = '';
+  if (!writeBuffer.length) return out;
+
   _.each(writeBuffer, function (writeReq) {
     if (writeReq.chunk) {
       // 0.9.12+ uses WriteReq objects with a chunk prop
@@ -431,7 +431,7 @@ _.getStreamWriteBuffer = function (stream) {
 };
 
 _.clearWriteStreamBuffer = function (stream) {
-  var buffer = _.emptyWriteStreamBuffer(stream);
+  var buffer = _.getStreamWriteBuffer(stream);
   return buffer && buffer.splice(0);
 };
 

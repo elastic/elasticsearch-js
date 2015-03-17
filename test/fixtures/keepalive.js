@@ -22,10 +22,9 @@ process.once('message', function (port) {
     var conns = es.transport.connectionPool._conns;
     var sockets = _([].concat(conns.dead, conns.alive))
       .transform(function (sockets, conn) {
-        [].push.apply(sockets, _.values(conn.agent.sockets));
-        [].push.apply(sockets, _.values(conn.agent.freeSockets));
+        sockets.push(_.values(conn.agent.sockets), _.values(conn.agent.freeSockets));
       }, [])
-      .flatten()
+      .flattenDeep()
       .value();
 
     es.close();

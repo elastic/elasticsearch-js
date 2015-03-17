@@ -2,7 +2,7 @@ describe('File Logger', function () {
   var Log = require('../../../src/lib/log');
   var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
-  var _ = require('lodash');
+  var _ = require('../../../src/lib/utils');
   var parentLog;
   var logger;
   var expect = require('expect.js');

@@ -30,7 +30,8 @@ if (typeof XMLHttpRequest !== 'undefined') {
   };
 } else {
   // find the first MS implementation available
-  getXhr = _.first(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'], function (appName) {
+  getXhr = _(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'])
+  .map(function (appName) {
     /* jshint unused: false */
     try {
       var test = new window.ActiveXObject(appName);
@@ -38,9 +39,11 @@ if (typeof XMLHttpRequest !== 'undefined') {
         return new window.ActiveXObject(appName);
       };
     } catch (e) {
-      return null;
+      return false;
     }
-  });
+  })
+  .compact()
+  .first();
 }
 
 if (!getXhr) {

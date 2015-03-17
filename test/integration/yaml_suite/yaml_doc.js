@@ -90,7 +90,7 @@ function rangeMatchesCurrentVersion(rangeString, done) {
     expect(rangeString).to.match(versionRangeRE);
 
     var range = versionRangeRE.exec(rangeString);
-    range = _.map(_.last(range, 2), versionToComparableString);
+    range = _.map(_.takeRight(range, 2), versionToComparableString);
 
     done(ES_VERSION >= range[0] && ES_VERSION <= range[1]);
   }
