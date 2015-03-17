@@ -4,13 +4,13 @@
  - Added HTTPS/SSL configuration options and related errors
  - `client.scroll()` requests made without a body will use the `scrollId` param as the body to prevent #113 & #174
  - Updated bluebird to `v2.8.2` - [bluebird changelog](https://github.com/petkaantonov/bluebird/blob/master/changelog.md)
- - Added specific error message for 504 errors [#182](https://github.com/elasticsearch/elasticsearch-js/pull/182)
+ - Added specific error message for 504 errors [#182](https://github.com/elastic/elasticsearch-js/pull/182)
 
 ## 3.0 (Nov 7 2014)
  - Added apiVersion `"1.4"`, which is now the default
- - Improved parsing of `host:` strings, [examples in the tests](https://github.com/elasticsearch/elasticsearch-js/blob/165b7d7986b2184b2e4b73d33bf5803e61ce7a54/test/unit/specs/host.js#L71-L92)
+ - Improved parsing of `host:` strings, [examples in the tests](https://github.com/elastic/elasticsearch-js/blob/165b7d7986b2184b2e4b73d33bf5803e61ce7a54/test/unit/specs/host.js#L71-L92)
  - The Angular version of the client now uses `angular.toJson()` ([1.2](https://code.angularjs.org/1.2.27/docs/api/ng/function/angular.toJson), [1.3](https://code.angularjs.org/1.3.5/docs/api/ng/function/angular.toJson)) to serialize requests, override with `serializer: "json"`
- - Angular requests are now being [aborted properly](https://github.com/elasticsearch/elasticsearch-js/commit/4c106967d3e9ae208fae42ce013f0a21e1ace021)
+ - Angular requests are now being [aborted properly](https://github.com/elastic/elasticsearch-js/commit/4c106967d3e9ae208fae42ce013f0a21e1ace021)
 
 ## 2.4 (Jul 30 2014)
  - Added apiVersion `"1.3"`, which is now the default
@@ -20,7 +20,7 @@
  - Added support for Node 0.11
  - Updated `bluebird`, which modified the [promise api](https://github.com/petkaantonov/bluebird/blob/v2.2.1/API.md) somewhat
  - moved the log generator into it's own package [makelogs](https://www.npmjs.org/package/makelogs)
- - [Lower the logging level of `Request complete`](https://github.com/elasticsearch/elasticsearch-js/pull/122)
+ - [Lower the logging level of `Request complete`](https://github.com/elastic/elasticsearch-js/pull/122)
 
 ## 2.2 (Mar 27 2014)
 - The default API version is now `'1.2'`
@@ -36,12 +36,12 @@
 ## 2.0 (Mar 27 2014)
 - The default API version is now `'1.0'`
 - Promises are now supported using the Bluebird module
-- If you try to reuse a configuration object, an error will be thrown. https://github.com/elasticsearch/elasticsearch-js/issues/33
+- If you try to reuse a configuration object, an error will be thrown. https://github.com/elastic/elasticsearch-js/issues/33
 
 ## 1.5 (Feb 6 2014)
 - Switched out `keepaliveagent` dependency with `forever-agent`, which is used in the ever popular `request` module, and is much simpler
-- The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `keepAlive`, which will keeps at least `minSockets` connections open forever. See: http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/configuration.html#configuration
-- Closing the client with `keepAlive` turned on will allow the process to exit. https://github.com/elasticsearch/elasticsearch-js/issues/40
+- The option to use keep-alive is now all or nothing. `maxKeepAliveTime` and `maxKeepAliveRequests` config parameters have been replaced by `keepAlive`, which will keeps at least `minSockets` connections open forever. See: http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html
+- Closing the client with `keepAlive` turned on will allow the process to exit. https://github.com/elastic/elasticsearch-js/issues/40
 - Fixed a bug that caused invalid param/type errors to not be reported properly, in the browser builds that use promises
 - added the cat.threadPool to the master/1.0/1.x apis
 - Enabled Basic auth in the Angular connector -- Thanks @jeff-french!
