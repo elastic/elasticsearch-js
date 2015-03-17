@@ -397,25 +397,42 @@ _.createArray = function (input, transform) {
  * @return {string} - the remaining test to be written to the stream
  */
 _.getUnwrittenFromStream = function (stream) {
-  if (stream && stream._writableState && stream._writableState.buffer) {
-    // flush the write buffer to disk
-    var writeBuffer = stream._writableState.buffer;
-    var out = '';
-    if (writeBuffer.length) {
-      _.each(writeBuffer, function (writeReq) {
-        if (writeReq.chunk) {
-          // 0.9.12+ uses WriteReq objects with a chunk prop
-          out += '' + writeReq.chunk;
-        } else if (_.isArray(writeReq) && (typeof writeReq[0] === 'string' || Buffer.isBuffer(writeReq[0]))) {
-          // 0.9.4 - 0.9.9 buffers are arrays of arrays like [[chunk, cb], [chunk, undef], ...].
-          out += '' + writeReq[0];
-        } else {
-          return false;
-        }
-      });
-    }
-    return out;
+  var writeBuffer = _.getStreamWriteBuffer(stream);
+  if (!writeBuffer || !writeBuffer.length) {
+    return '';
   }
+
+  // flush the write buffer
+  var out = '';
+  _.each(writeBuffer, function (writeReq) {
+    if (writeReq.chunk) {
+      // 0.9.12+ uses WriteReq objects with a chunk prop
+      out += '' + writeReq.chunk;
+    } else if (_.isArray(writeReq) && (typeof writeReq[0] === 'string' || Buffer.isBuffer(writeReq[0]))) {
+      // 0.9.4 - 0.9.9 buffers are arrays of arrays like [[chunk, cb], [chunk, undef], ...].
+      out += '' + writeReq[0];
+    } else {
+      return false;
+    }
+  });
+  return out;
+};
+
+_.getStreamWriteBuffer = function (stream) {
+  if (!stream || !stream._writableState) return;
+
+  var writeState = stream._writableState;
+
+  if (writeState.getBuffer) {
+    return writeState.getBuffer();
+  } else if (writeState.buffer) {
+    return writeState.buffer;
+  }
+};
+
+_.clearWriteStreamBuffer = function (stream) {
+  var buffer = _.emptyWriteStreamBuffer(stream);
+  return buffer && buffer.splice(0);
 };
 
 /**

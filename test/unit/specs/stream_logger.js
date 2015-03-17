@@ -19,11 +19,7 @@ describe('Stream Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-
-    if (stream._writableState && stream._writableState.buffer.length) {
-      // empty the buffer manually
-      stream._writableState.buffer.splice(0);
-    }
+    _.clearWriteStreamBuffer(stream);
   });
 
   function makeLogger(parent, levels) {

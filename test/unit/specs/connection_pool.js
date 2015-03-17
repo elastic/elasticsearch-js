@@ -247,7 +247,6 @@ describe('Connection Pool', function () {
       var clock = sinon.useFakeTimers();
       stub.autoRelease(clock);
 
-      debugger;
       connection.setStatus('dead');
       expect(_.size(clock.timers)).to.eql(1);
       var id = _(clock.timers).keys().first();

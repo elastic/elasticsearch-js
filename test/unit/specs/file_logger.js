@@ -15,15 +15,7 @@ describe('File Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-
-    if (logger
-      && logger.stream
-      && logger.stream._writableState
-      && logger.stream._writableState.buffer.length
-    ) {
-      // empty the buffer manually
-      logger.stream._writableState.buffer.splice(0);
-    }
+    logger && _.clearWriteStreamBuffer(logger.stream);
   });
 
   function makeLogger(parent, levels) {
