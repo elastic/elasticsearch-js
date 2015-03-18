@@ -14,7 +14,7 @@ module.exports = {
     options: {
       key: config.key || process.env.AWS_KEY,
       secret: config.secret || process.env.AWS_SECRET,
-      bucket: 'download.elasticsearch.org',
+      bucket: 'download.elastic.co',
       access: 'public-read',
       headers: {
         'X-Content-Type-Options': 'nosniff',

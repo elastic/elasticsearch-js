@@ -11,7 +11,7 @@ var client = new elasticsearch.Client({
 });
 ------
 
-WARNING: Due to the complex nature of the configuration, the config object you pass in will be modified and can only be used to create one `Client` instance. Sorry for the inconvenience. Related Github issue: https://github.com/elasticsearch/elasticsearch-js/issues/33
+WARNING: Due to the complex nature of the configuration, the config object you pass in will be modified and can only be used to create one `Client` instance. Sorry for the inconvenience. Related Github issue: https://github.com/elastic/elasticsearch-js/issues/33
 
 [[config-options]]
 === Config options
@@ -131,7 +131,7 @@ Default::: `10`
 Default::: `10`
 
 
-`suggestCompression`[[config-suggest-compression]]:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.
+`suggestCompression`[[config-suggest-compression]]:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.
 
 Default::: `false`
 
@@ -206,7 +206,7 @@ function () {
 `nodesToHostCallback`[[config-nodes-to-host-callback]]:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
 
 Default:::
-see https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/nodes_to_host.js[nodes_to_host.js]
+see https://github.com/elastic/elasticsearch-js/blob/master/src/lib/nodes_to_host.js[nodes_to_host.js]
 
 
 

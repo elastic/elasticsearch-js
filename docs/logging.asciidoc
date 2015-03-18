@@ -3,7 +3,7 @@
 Every application needs to have some solution for logging, and there isn't a standard in JavaScript, so instead of forcing you to rely on a specific logging module we created a bare bones logging solution and <<logging-customization>> will show you how to configure it. That said, our implementation of logging is very minimal and ***it is highly recommended that you use something like https://github.com/trentm/node-bunyan[Bunyan] once you move to production***.
 
 === Using A Library
-When the client receives a function for the `log:` config value, it expects that the function is a constructor for a custom log class. This is the simplest way to integrate other logging libraries into the elasticsearch client at this time. The contract for this Log class is pretty straight-forward. See https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/log.js[our implementation] for additional details.
+When the client receives a function for the `log:` config value, it expects that the function is a constructor for a custom log class. This is the simplest way to integrate other logging libraries into the elasticsearch client at this time. The contract for this Log class is pretty straight-forward. See https://github.com/elastic/elasticsearch-js/blob/master/src/lib/log.js[our implementation] for additional details.
 
 ==== `new Constructor(config)`
 [horizontal]
