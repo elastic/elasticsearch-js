@@ -186,7 +186,7 @@ module.exports = function (branch, done) {
       name = _.map(name.split('.'), _.camelCase).join('.');
 
       if (name === 'cat.aliases') {
-        def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
+        def.documentation = 'http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html';
       }
 
       var steps = name.split('.');

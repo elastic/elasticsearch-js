@@ -34,7 +34,7 @@ function Client(config) {
 
   if (config.__reused) {
     throw new Error('Do not reuse objects to configure the elasticsearch Client class: ' +
-      'https://github.com/elasticsearch/elasticsearch-js/issues/33');
+      'https://github.com/elastic/elasticsearch-js/issues/33');
   } else {
     config.__reused = true;
   }

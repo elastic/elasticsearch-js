@@ -57,7 +57,7 @@ You can probably find help on [![Join the chat at https://gitter.im/spalger/elas
 
 ## Supported Elasticsearch Versions
 
-[![Supporting Elasticsearch Version 0.90 to 1.4](http://img.shields.io/badge/elasticsearch-0.90--1.4-green.svg?style=flat-square)](http://build-eu-00.elasticsearch.org/job/es-js_nightly/)
+[![Supporting Elasticsearch Version 0.90 to 1.4](http://img.shields.io/badge/elasticsearch-0.90--1.4-green.svg?style=flat-square)](http://build-eu-00.elastic.co/job/es-js_nightly/)
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options)
 
@@ -125,7 +125,7 @@ More examples and detailed information about each method are available [here](ht
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2014 Elasticsearch <http://www.elasticsearch.org>
+    Copyright (c) 2014 Elasticsearch <http://www.elastic.co>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
