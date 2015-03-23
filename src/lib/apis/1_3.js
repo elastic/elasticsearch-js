@@ -6,24 +6,6 @@ var api = module.exports = {};
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
- * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.name - A benchmark name
- */
-api.abortBenchmark = ca({
-  url: {
-    fmt: '/_bench/abort/<%=name%>',
-    req: {
-      name: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'POST'
-});
-
-/**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -624,6 +606,44 @@ api.cat.prototype.recovery = ca({
     },
     {
       fmt: '/_cat/recovery'
+    }
+  ]
+});
+
+/**
+ * Perform a [cat.segments](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-segments.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
+ */
+api.cat.prototype.segments = ca({
+  params: {
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': true
+    }
+  },
+  urls: [
+    {
+      fmt: '/_cat/segments/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_cat/segments'
     }
   ]
 });
@@ -3802,40 +3822,6 @@ api.info = ca({
 });
 
 /**
- * Perform a [listBenchmarks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.listBenchmarks = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ]
-});
-
-/**
  * Perform a [mget](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.3/docs-multi-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -4778,6 +4764,7 @@ api.scroll = ca({
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return as part of a hit
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the field data representation of a field for each hit
  * @param {Number} params.from - Starting offset (default: 0)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -4833,6 +4820,10 @@ api.search = ca({
     },
     fields: {
       type: 'list'
+    },
+    fielddataFields: {
+      type: 'list',
+      name: 'fielddata_fields'
     },
     from: {
       type: 'number'
