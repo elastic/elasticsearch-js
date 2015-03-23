@@ -6,71 +6,11 @@ var api = module.exports = {};
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
 
 /**
- * Perform a [abortBenchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.name - A benchmark name
- */
-api.abortBenchmark = ca({
-  url: {
-    fmt: '/_bench/abort/<%=name%>',
-    req: {
-      name: {
-        type: 'string'
-      }
-    }
-  },
-  method: 'POST'
-});
-
-/**
- * Perform a [benchmark](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.verbose - Specify whether to return verbose statistics about each iteration (default: false)
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.benchmark = ca({
-  params: {
-    verbose: {
-      type: 'boolean'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ],
-  method: 'PUT'
-});
-
-/**
  * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Explicitly set the replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
@@ -88,14 +28,6 @@ api.bulk = ca({
     },
     refresh: {
       type: 'boolean'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
     },
     routing: {
       type: 'string'
@@ -1222,6 +1154,7 @@ api.count = ca({
  * Perform a [countPercolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -1237,6 +1170,9 @@ api.count = ca({
  */
 api.countPercolate = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     routing: {
       type: 'list'
     },
@@ -1321,7 +1257,6 @@ api.countPercolate = ca({
  * @param {String} params.consistency - Specific write consistency setting for the operation
  * @param {String} params.parent - ID of parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Number} params.version - Explicit version number for concurrency control
@@ -1345,14 +1280,6 @@ api['delete'] = ca({
     },
     refresh: {
       type: 'boolean'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
     },
     routing: {
       type: 'string'
@@ -1402,7 +1329,6 @@ api['delete'] = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
  * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
@@ -1453,14 +1379,6 @@ api.deleteByQuery = ca({
         'all'
       ],
       name: 'expand_wildcards'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
     },
     q: {
       type: 'string'
@@ -1954,7 +1872,6 @@ api.getTemplate = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
@@ -1989,14 +1906,6 @@ api.index = ca({
     },
     refresh: {
       type: 'boolean'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
     },
     routing: {
       type: 'string'
@@ -2063,6 +1972,7 @@ api.indices = function IndicesNS(transport) {
  * Perform a [indices.analyze](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-analyze.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String} params.analyzer - The name of the analyzer to use
  * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
@@ -2075,6 +1985,9 @@ api.indices = function IndicesNS(transport) {
  */
 api.indices.prototype.analyze = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     analyzer: {
       type: 'string'
     },
@@ -2574,11 +2487,16 @@ api.indices.prototype.existsAlias = ca({
  * Perform a [indices.existsTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.existsTemplate = ca({
   params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
     local: {
       type: 'boolean'
     }
@@ -2649,7 +2567,6 @@ api.indices.prototype.existsType = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.force - Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
- * @param {Boolean} params.full - If set to true a new index writer is created and settings that have been changed related to the index writer will be refreshed. Note: if a full flush is required for a setting to take effect this will be part of the settings update process and it not required to be executed by the user. (This setting can be considered as internal)
  * @param {Boolean} params.waitIfOngoing - If set to true the flush operation will block until the flush can be executed if another flush operation is already executing. The default is false and will cause an exception to be thrown on the shard level if another flush operation is already running.
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -2659,9 +2576,6 @@ api.indices.prototype.existsType = ca({
 api.indices.prototype.flush = ca({
   params: {
     force: {
-      type: 'boolean'
-    },
-    full: {
       type: 'boolean'
     },
     waitIfOngoing: {
@@ -3128,6 +3042,7 @@ api.indices.prototype.getSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String} params.name - The name of the template
  */
@@ -3136,6 +3051,10 @@ api.indices.prototype.getTemplate = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
     },
     local: {
       type: 'boolean'
@@ -4131,43 +4050,10 @@ api.info = ca({
 });
 
 /**
- * Perform a [listBenchmarks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
- * @param {String} params.type - The name of the document type
- */
-api.listBenchmarks = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_bench',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_bench'
-    }
-  ]
-});
-
-/**
  * Perform a [mget](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
@@ -4180,6 +4066,9 @@ api.listBenchmarks = ca({
  */
 api.mget = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     fields: {
       type: 'list'
     },
@@ -4236,6 +4125,7 @@ api.mget = ca({
  * Perform a [mlt](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-more-like-this.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {Number} params.boostTerms - The boost factor
  * @param {Number} params.maxDocFreq - The word occurrence frequency as count: words with higher occurrence in the corpus will be ignored
  * @param {Number} params.maxQueryTerms - The maximum query terms to be included in the generated query
@@ -4260,6 +4150,9 @@ api.mget = ca({
  */
 api.mlt = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     boostTerms: {
       type: 'number',
       name: 'boost_terms'
@@ -4353,6 +4246,7 @@ api.mlt = ca({
  * Perform a [mpercolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -4361,6 +4255,9 @@ api.mlt = ca({
  */
 api.mpercolate = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
@@ -4414,12 +4311,16 @@ api.mpercolate = ca({
  * Perform a [msearch](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-multi-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String} params.searchType - Search operation type
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to use as default
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to use as default
  */
 api.msearch = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     searchType: {
       type: 'enum',
       options: [
@@ -4466,6 +4367,7 @@ api.msearch = ca({
  * Perform a [mtermvectors](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String, String[], Boolean} params.ids - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
  * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {Boolean} [params.fieldStatistics=true] - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
@@ -4484,6 +4386,9 @@ api.msearch = ca({
  */
 api.mtermvectors = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     ids: {
       type: 'list',
       required: false
@@ -4942,6 +4847,7 @@ api.nodes.prototype.stats = ca({
  * Perform a [percolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4960,6 +4866,9 @@ api.nodes.prototype.stats = ca({
  */
 api.percolate = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     routing: {
       type: 'list'
     },
@@ -5165,11 +5074,15 @@ api.putTemplate = ca({
  * Perform a [scroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     scroll: {
       type: 'duration'
     },
@@ -5562,6 +5475,7 @@ api.searchShards = ca({
  * Perform a [searchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -5574,6 +5488,9 @@ api.searchShards = ca({
  */
 api.searchTemplate = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
@@ -6003,6 +5920,7 @@ api.suggest = ca({
  * Perform a [termvectors](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.source - The URL-encoded request definition
  * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned.
  * @param {Boolean} [params.fieldStatistics=true] - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
  * @param {Boolean} params.dfs - Specifies if distributed frequencies should be returned instead shard frequencies.
@@ -6022,6 +5940,9 @@ api.suggest = ca({
  */
 api.termvectors = ca({
   params: {
+    source: {
+      type: 'string'
+    },
     termStatistics: {
       type: 'boolean',
       'default': false,
@@ -6126,7 +6047,6 @@ api.termvectors = ca({
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Specific replication type
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
  * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
@@ -6159,14 +6079,6 @@ api.update = ca({
     },
     refresh: {
       type: 'boolean'
-    },
-    replication: {
-      type: 'enum',
-      'default': 'sync',
-      options: [
-        'sync',
-        'async'
-      ]
     },
     retryOnConflict: {
       type: 'number',
@@ -6228,7 +6140,6 @@ api.update = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
- * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
