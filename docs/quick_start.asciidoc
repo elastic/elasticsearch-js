@@ -8,7 +8,7 @@ Start using Elasticsearch.js by creating an instance of the `elasticsearch.Clien
 -----------------
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'http://localhost:9200',
   log: 'trace'
 });
 -----------------
