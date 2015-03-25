@@ -17,7 +17,7 @@ The official low-level Elasticsearch client for Node.js and the browser.
 ## Use in Node.js
 
 ```
-npm install elasticsearch
+npm install elasticsearch --save
 ```
 
 Supported node versions include 0.8, 0.10, and now 0.11
