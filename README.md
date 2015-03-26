@@ -2,8 +2,8 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](http://img.shields.io/travis/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://travis-ci.org/elastic/elasticsearch-js?branch=3.1)
-[![Coverage Status](http://img.shields.io/coveralls/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://coveralls.io/r/elastic/elasticsearch-js?branch=3.1)
+[![Build Status](http://img.shields.io/travis/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://travis-ci.org/elastic/elasticsearch-js?branch=4.0)
+[![Coverage Status](http://img.shields.io/coveralls/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://coveralls.io/r/elastic/elasticsearch-js?branch=4.0)
 [![Dependencies up to date](http://img.shields.io/david/elastic/elasticsearch-js.svg?style=flat-square)](https://david-dm.org/elastic/elasticsearch-js)
 
 ## Features
@@ -32,10 +32,10 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
 </tr><tr>
 <td>download:</td>
 <td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.zip">zip</a>
+<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.0.zip">zip</a>
 </td>
 <td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-3.1.3.tar.gz">tar.gz</a>
+<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.0.tar.gz">tar.gz</a>
 </td>
 </tr>
 </table>
