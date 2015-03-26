@@ -1,5 +1,11 @@
 # elasticsearch-js changelog
 
+## 4.0 (Mar 26 2015)
+ - Added apiVersion `"1.5"`, which is now the default
+ - Changed the default pingTimeout to 3 seconds, and made it configurable
+ - Improved compatibility with node 0.12
+ - Updated dependencies
+
 ## 3.1 (Jan 6 2015)
  - Added HTTPS/SSL configuration options and related errors
  - `client.scroll()` requests made without a body will use the `scrollId` param as the body to prevent #113 & #174
