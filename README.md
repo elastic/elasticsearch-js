@@ -75,8 +75,8 @@ var client = new elasticsearch.Client({
 Send a HEAD request to `/?hello=elasticsearch` and allow up to 1 second for it to complete.
 ```js
 client.ping({
-  // ping usually has a 100ms timeout
-  requestTimeout: 1000,
+  // ping usually has a 3000ms timeout
+  requestTimeout: Infinity,
 
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
