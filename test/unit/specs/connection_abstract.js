@@ -66,6 +66,19 @@ describe('Connection Abstract', function () {
       expect(conn.request.lastCall.args[1]).to.be.a('function');
     });
 
+    it('defaults to the pingTimeout in the config', function () {
+      var conn = new ConnectionAbstract(host, { pingTimeout: 5000 });
+      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      stub.autoRelease(clock);
+
+      stub(conn, 'request');
+
+      expect(_.size(clock.timers)).to.eql(0);
+      conn.ping();
+      expect(_.size(clock.timers)).to.eql(1);
+      expect(clock.timers[_.keys(clock.timers).shift()].delay).to.eql(5000);
+    });
+
     it('calls it\'s own request method', function () {
       var conn = new ConnectionAbstract(host);
       var football = {};

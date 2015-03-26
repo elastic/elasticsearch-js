@@ -54,11 +54,11 @@ describe('Client instances creation', function () {
   });
 
   describe('#ping', function () {
-    it('sets the default requestTimeout to 100', function () {
+    it('sets the default requestTimeout to 3000', function () {
       stub(client.transport, 'request');
       client.ping();
       expect(client.transport.request.callCount).to.be(1);
-      expect(client.transport.request.lastCall.args[0].requestTimeout).to.be(100);
+      expect(client.transport.request.lastCall.args[0].requestTimeout).to.be(3000);
     });
   });
 });
