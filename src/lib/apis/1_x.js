@@ -5059,7 +5059,7 @@ api.ping = ca({
   url: {
     fmt: '/'
   },
-  requestTimeout: 100,
+  requestTimeout: 3000,
   method: 'HEAD'
 });
 
