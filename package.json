@@ -83,7 +83,7 @@
     "bluebird": "^2.9.14",
     "chalk": "^1.0.0",
     "forever-agent": "~0.5.2",
-    "lodash": "^3.0.0"
+    "lodash": "^3.0.0",
     "lodash-compat": "^3.0.0"
   },
   "repository": {
