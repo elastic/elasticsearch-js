@@ -627,7 +627,7 @@ describe('Transport Class', function () {
 
     describe('timeout', function () {
       it('uses 30 seconds for the default', function () {
-        var clock = sinon.useFakeTimers('setTimeout');
+        var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
         stub.autoRelease(clock);
         var tran = new Transport({});
         var err;
@@ -643,7 +643,7 @@ describe('Transport Class', function () {
         });
       });
       it('inherits the requestTimeout from the transport', function () {
-        var clock = sinon.useFakeTimers('setTimeout');
+        var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
         stub.autoRelease(clock);
         var tran = new Transport({
           requestTimeout: 5000
