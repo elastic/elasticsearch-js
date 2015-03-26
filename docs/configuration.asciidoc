@@ -113,6 +113,11 @@ Default::: `30000`
 Default::: `30000`
 
 
+`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.
+
+Default::: `3000`
+
+
 
 `keepAlive`[[config-keep-alive]]:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
 

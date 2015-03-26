@@ -220,7 +220,7 @@ module.exports = function (branch, done) {
       }
 
       if (name === 'ping') {
-        spec.requestTimeout = 100;
+        spec.requestTimeout = 3000;
       }
 
       var urls = _.difference(def.url.paths, overrides.aliases[name]);

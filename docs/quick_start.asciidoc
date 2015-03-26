@@ -26,7 +26,8 @@ Almost all of the methods on the client accept two arguments:
 [source,js]
 -----------------
 client.ping({
-  requestTimeout: 1000,
+  requestTimeout: 30000,
+
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
 }, function (error) {
