@@ -2,8 +2,8 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](http://img.shields.io/travis/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://travis-ci.org/elastic/elasticsearch-js?branch=4.0)
-[![Coverage Status](http://img.shields.io/coveralls/elastic/elasticsearch-js/2.4.svg?style=flat-square)](https://coveralls.io/r/elastic/elasticsearch-js?branch=4.0)
+[![Build Status](http://img.shields.io/travis/elastic/elasticsearch-js/4.0.svg?style=flat-square)](https://travis-ci.org/elastic/elasticsearch-js?branch=4.0)
+[![Coverage Status](http://img.shields.io/coveralls/elastic/elasticsearch-js/4.0.svg?style=flat-square)](https://coveralls.io/r/elastic/elasticsearch-js?branch=4.0)
 [![Dependencies up to date](http://img.shields.io/david/elastic/elasticsearch-js.svg?style=flat-square)](https://david-dm.org/elastic/elasticsearch-js)
 
 ## Features

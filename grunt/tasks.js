@@ -59,7 +59,15 @@ module.exports = function (grunt) {
 
       pkg.version = next;
       browserBuilds = utils.replaceAll(browserBuilds, current, next);
+
       readme = utils.replaceAll(readme, current, next);
+
+      readme = utils.replaceAll(
+        readme,
+        '/' + utils.minorVersion(current) + '.svg',
+        '/' + utils.minorVersion(next) + '.svg'
+      );
+
       readme = utils.replaceAll(
         readme,
         'branch=' + utils.minorVersion(current),
