@@ -73,7 +73,7 @@ module.exports = {
           logConfig.type = 'tracer';
         }
 
-        logConfig.level = VERBOSE ? 'trace' : 'error';
+        logConfig.level = JENKINS || VERBOSE ? 'trace' : 'error';
       }
 
       if (logConfig && logConfig.type === 'tracer') {
