@@ -32,10 +32,10 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
 </tr><tr>
 <td>download:</td>
 <td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.1.zip">zip</a>
+<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.2.zip">zip</a>
 </td>
 <td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.1.tar.gz">tar.gz</a>
+<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.2.tar.gz">tar.gz</a>
 </td>
 </tr>
 </table>

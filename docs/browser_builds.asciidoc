@@ -14,7 +14,7 @@ bower install elasticsearch
 ---------
 
 === Download
- * v4.0.1: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.1.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.1.tar.gz[tar.gz]
+ * v4.0.2: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.2.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-4.0.2.tar.gz[tar.gz]
 
 
 === Angular Build
