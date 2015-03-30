@@ -78,19 +78,29 @@ function makeJUnitXml(runnerName, testDetails) {
           type: 'TestError'
         });
       }
+
+      giveOutput(testcase, testInfo);
     });
 
     if (suiteInfo.suites) {
       _.each(suiteInfo.suites, serializeSuite);
     }
 
-    if (suiteInfo.stdout.trim()) {
-      suite.ele('system-out', {}).cdata(chalk.stripColor(suiteInfo.stdout));
-    }
-    if (suiteInfo.stderr.trim()) {
-      suite.ele('system-err', {}).cdata(chalk.stripColor(suiteInfo.stderr));
-    }
+    giveOutput(suite, suiteInfo);
   });
 
   return suites.toString({ pretty: true});
+}
+
+function giveOutput(el, info) {
+  var out = info.stdout.trim();
+  var err = info.stderr.trim();
+
+  if (out) {
+    el.ele('system-out', {}).cdata(chalk.stripColor(out));
+  }
+
+  if (err) {
+    el.ele('system-err', {}).cdata(chalk.stripColor(err));
+  }
 }

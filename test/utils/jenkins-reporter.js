@@ -136,8 +136,20 @@ function JenkinsReporter(runner) {
         name: test.title,
         time: test.duration,
         pass: test.state === 'passed',
-        test: test
+        test: test,
+        stdout: stack[0].stdout,
+        stderr: stack[0].stderr
       });
+      stack[0].stdout = stack[0].stderr = '';
+    }
+  });
+
+  runner.on('hook end', function (hook) {
+    if (hook.title.indexOf('"after each"') > -1 && stack[0] && stack[0].results.length) {
+      var result = _.last(stack[0].results);
+      result.stdout += stack[0].stdout;
+      result.stderr += stack[0].stderr;
+      stack[0].stdout = stack[0].stderr = '';
     }
   });
 
