@@ -23,10 +23,21 @@ function setBranchConfig(branch, target) {
   case '1.1':
     // no special treatment
     break;
-  default:
+  case '1.2':
+  case '1.3':
+  case '1.4':
+  case '1.5':
+  case '1.x':
     target.options.config = _.merge({
       'node.bench': true,
       'script.disable_dynamic': false
+    }, target.options.config);
+    break;
+  default:
+    target.options.config = _.merge({
+      'node.bench': true,
+      'script.inline': true,
+      'script.indexed': true
     }, target.options.config);
     break;
   }

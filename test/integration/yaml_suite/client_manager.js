@@ -1,6 +1,6 @@
 var BROWSER = process.env.browser;
 var VERBOSE = process.env.VERBOSE;
-var JENKINS = process.env.JENKINS;
+var JENKINS = !!process.env.JENKINS_HOME;
 
 if (BROWSER) {
   /* jshint browser: true */
