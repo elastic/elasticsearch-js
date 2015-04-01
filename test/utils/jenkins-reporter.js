@@ -193,7 +193,7 @@ function JenkinsReporter(runner) {
         stack[0][name] = (stack[0][name] || '') + chunk;
       }
 
-      orig.apply(obj, arguments);
+      // orig.apply(obj, arguments);
     };
     obj.__restore = function () {
       this.write = orig;
