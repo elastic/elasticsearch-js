@@ -16,8 +16,16 @@ var defaultOpts = {
   }
 };
 
-function setBranchConfig(branch, target) {
-  switch (branch) {
+/**
+ * set config vars based on the ref.
+ *
+ * @param {string} ref    - either a tag or branch name
+ * @param {[type]} target - the grunt target to configure
+ */
+function setConfig(ref, target) {
+  var minorV = String(ref).replace(/^v/, '').replace(/(\d+\.\d+)\..+/, '$1');
+
+  switch (minorV) {
   case '0.90':
   case '1.0':
   case '1.1':
@@ -56,14 +64,14 @@ utils.branches.forEach(function (branch) {
       branch: branch
     }
   };
-  setBranchConfig(branch, exports[branch]);
+  setConfig(branch, exports[branch]);
 });
 
 
 // ci target, based on env variables
 (function () {
   var release = process.env.ES_RELEASE;
-  var branch = process.env.ES_BRANCH;
+  var ref = process.env.ES_REF;
   var port = process.env.ES_PORT;
 
   var options = {
@@ -75,13 +83,14 @@ utils.branches.forEach(function (branch) {
   if (release) {
     options.version = release;
   }
-  else if (branch) {
-    options.branch = branch;
+  else if (ref) {
+    // assume it is a ref to a branch
+    options.branch = ref;
   }
   else {
     return;
   }
 
   exports.ci_env = { options: options };
-  setBranchConfig(branch, exports.ci_env);
+  setConfig(ref, exports.ci_env);
 }());

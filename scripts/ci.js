@@ -3,7 +3,7 @@
  *
  * ENV VARS:
  *  RUN - a list of task names to run, specifying this turns of all other tasks
- *  ES_BRANCH - the ES branch we should use to generate the tests and download es
+ *  ES_REF - the ES branch/tag we should use to generate the tests and download es
  *  ES_RELEASE - a specific ES release to download in use for testing
  *  ES_PORT - the port number we should run elasticsearch on
  *  ES_V - a version identifier used by jenkins. don't use this
@@ -45,7 +45,7 @@ task('NODE_UNIT', true, function () {
 });
 
 task('NODE_INTEGRATION', true, function () {
-  var branch = ENV.ES_BRANCH;
+  var branch = ENV.ES_REF;
 
   return node('scripts/generate', '--no-api', '--branch', branch)
   .then(function () {
@@ -134,8 +134,8 @@ execTask('SETUP', function () {
       if (ENV.ES_RELEASE)
         return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
 
-      if (ENV.ES_BRANCH)
-        return [ENV.ES_BRANCH, null];
+      if (ENV.ES_REF)
+        return [ENV.ES_REF, null];
     }
 
     var match;
@@ -149,12 +149,12 @@ execTask('SETUP', function () {
   })
   .then(function readOtherConf(ver) {
     if (!ver)
-      throw new Error('Unable to run the ci script without at least an ES_BRANCH or ES_RELEASE environment var.');
+      throw new Error('Unable to run the ci script without at least an ES_REF or ES_RELEASE environment var.');
 
     log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
 
-    if (ver[0]) log('ES_BRANCH:', ENV.ES_BRANCH = ver[0]);
-    else delete ENV.ES_BRANCH;
+    if (ver[0]) log('ES_REF:', ENV.ES_REF = ver[0]);
+    else delete ENV.ES_REF;
 
     if (ver[1]) log('ES_RELEASE:', ENV.ES_RELEASE = ver[1]);
     else delete ENV.ES_RELEASE;
