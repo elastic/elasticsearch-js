@@ -1008,6 +1008,7 @@ api.cluster.prototype.state = ca({
             'metadata',
             'nodes',
             'routing_table',
+            'routing_nodes',
             'master_node',
             'version'
           ]
@@ -1028,6 +1029,7 @@ api.cluster.prototype.state = ca({
             'metadata',
             'nodes',
             'routing_table',
+            'routing_nodes',
             'master_node',
             'version'
           ]
@@ -4112,7 +4114,7 @@ api.mget = ca({
  * @param {String} params.searchScroll - A scroll search request definition
  * @param {Number} params.searchSize - The number of documents to return (default: 10)
  * @param {String} params.searchSource - A specific search request definition (instead of using the request body)
- * @param {String} params.searchType - Specific search type (eg. `dfs_then_fetch`, `count`, etc)
+ * @param {String} params.searchType - Specific search type (eg. `dfs_then_fetch`, `scan`, etc)
  * @param {String, String[], Boolean} params.searchTypes - A comma-separated list of types to perform the query against (default: the same type as the document)
  * @param {String, String[], Boolean} params.stopWords - A list of stop words to be ignored
  * @param {String} params.id - The document ID
@@ -6017,6 +6019,7 @@ api.termvectors = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
+ * @param {String} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
@@ -6046,6 +6049,9 @@ api.update = ca({
       type: 'list'
     },
     lang: {
+      type: 'string'
+    },
+    parent: {
       type: 'string'
     },
     refresh: {
