@@ -72,10 +72,10 @@ describe('Http Connector', function () {
       var con = new HttpConnection(host, {});
       var reqParams = con.makeReqParams();
 
+      expect(reqParams).to.not.have.property('auth');
       expect(reqParams).to.eql({
         method: 'GET',
         protocol: 'http:',
-        auth: 'john:dude',
         hostname: 'pizza.com',
         port: 9200,
         path: '/pizza/cheese?shrooms=true',
@@ -142,7 +142,6 @@ describe('Http Connector', function () {
       expect(reqParams).to.eql({
         method: 'PUT',
         protocol: 'http:',
-        auth: null,
         hostname: 'google.com',
         port: 80,
         path: '/stuff',

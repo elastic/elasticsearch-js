@@ -9,7 +9,6 @@ var hostDefaults = {
   host: 'localhost',
   port: 9200,
   path: '',
-  auth: null,
   query: {},
   headers: null,
   suggestCompression: false,
@@ -44,7 +43,7 @@ describe('Host class', function () {
       var headers = { 'X-Special-Routing-Header': 'pie' };
       var host = new Host({ headers: headers });
 
-      expect(host.headers).to.be(headers);
+      expect(host.headers).to.eql(headers);
     });
 
     describe('from a string', function () {
@@ -56,7 +55,6 @@ describe('Host class', function () {
           host: 'pizza.com',
           port: 420,
           path: '/pizza/cheese',
-          auth: 'john:dude',
           query: {
             shrooms: 'true'
           }
@@ -122,7 +120,7 @@ describe('Host class', function () {
         expect(host.host).to.eql('pizza.com');
         expect(host.port).to.eql(888);
         expect(host.path).to.eql('/path');
-        expect(host.auth).to.eql('joe:diner');
+        expect(host.headers).to.eql({ Authorization: 'Basic ' + (new Buffer('joe:diner')).toString('base64') });
         expect(host.query).to.eql({
           query: 'yes'
         });
@@ -151,9 +149,8 @@ describe('Host class', function () {
         path: '/this and that',
         query: {
           param: 1
-        },
-        auth: 'user:pass'
-      })).to.be('http://user:pass@localhost:9200/prefix/this and that?user_id=123&param=1');
+        }
+      })).to.be('http://localhost:9200/prefix/this and that?user_id=123&param=1');
     });
 
     it('ensures that path starts with a forward-slash', function () {
@@ -179,7 +176,7 @@ describe('Host class', function () {
       expect(host.makeUrl()).to.be('http://john/');
 
       host = new Host({ host: 'italy', path: '/pie', auth: 'user:pass'});
-      expect(host.makeUrl()).to.be('http://user:pass@italy:9200/pie');
+      expect(host.makeUrl()).to.be('http://italy:9200/pie');
     });
 
     it('outputs valid relative urls when the host is empty', function () {
