@@ -52,7 +52,7 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
 
 
 ## Questions?
-You can probably find help on [![Join the chat at https://gitter.im/spalger/elasticsearch-js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spalger/elasticsearch-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) or in the #elasticsearch channel on freenode.net.
+You can probably find help in the #elasticsearch-js or #kibana rooms on [freenode](http://webchat.freenode.net/?channels=elasticsearch-js).
 
 
 ## Supported Elasticsearch Versions
