@@ -82,44 +82,4 @@ describe('Angular esFactory', function () {
       return prom;
     });
   });
-
-  describe('$http', function () {
-    bootstrap({
-      bluebirdPromises: true
-    });
-
-    it('uses the auth header provided', function () {
-      var authString = 'user:password';
-      var authHeader = 'Basic ' + (new Buffer(authString, 'utf8')).toString('base64');
-      var $httpParams = null;
-      var client = esFactory({
-        host: {
-          host: 'some-other-es-host.com',
-          auth: authString
-        }
-      });
-
-      // once the client calls the $http method, flush the requests and trigger an
-      // error if the expected request was not made
-      var connection = client.transport.connectionPool.getConnections().pop();
-      var stub = sinon.stub(connection, '$http', function (params) {
-        $httpParams = params;
-        return Promise.resolve({
-          data: null,
-          status: 200,
-          headers: function () {
-            return {};
-          }
-        });
-      });
-
-      var prom = client.ping({
-        requestTimeout: 1000
-      });
-      return prom.then(function () {
-        expect($httpParams).to.have.property('headers');
-        expect($httpParams.headers).to.have.property('Authorization', authHeader);
-      });
-    });
-  });
 });

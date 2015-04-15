@@ -53,16 +53,21 @@ if (!getXhr) {
 XhrConnector.prototype.request = function (params, cb) {
   var xhr = getXhr();
   var timeoutId;
-  var url = this.host.makeUrl(params);
-  var headers = this.host.getHeaders(params.headers);
-
+  var host = this.host;
   var log = this.log;
+
+  var url = host.makeUrl(params);
+  var headers = host.getHeaders(params.headers);
   var async = params.async === false ? false : asyncDefault;
 
-  if (params.auth) {
-    xhr.open(params.method || 'GET', url, async, params.auth.user, params.auth.pass);
-  } else {
-    xhr.open(params.method || 'GET', url, async);
+  xhr.open(params.method || 'GET', url, async);
+
+  if (headers) {
+    for (var key in headers) {
+      if (headers[key] !== void 0) {
+        xhr.setRequestHeader(key, headers[key]);
+      }
+    }
   }
 
   xhr.onreadystatechange = function () {
@@ -73,14 +78,6 @@ XhrConnector.prototype.request = function (params, cb) {
       cb(err, xhr.responseText, xhr.status);
     }
   };
-
-  if (headers) {
-    for (var key in headers) {
-      if (headers[key] !== void 0) {
-        xhr.setRequestHeader(key, headers[key]);
-      }
-    }
-  }
 
   xhr.send(params.body || void 0);
 

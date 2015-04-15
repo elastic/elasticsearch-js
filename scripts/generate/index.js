@@ -31,7 +31,7 @@ var path = require('path');
 var fromRoot = path.join.bind(path, require('find-root')(__dirname));
 var utils = require(fromRoot('grunt/utils'));
 var _ = require(fromRoot('src/lib/utils'));
-var esUrl = 'https://github.com/elasticsearch/elasticsearch.git';
+var esUrl = 'https://github.com/elastic/elasticsearch.git';
 var branches;
 
 if (process.env.npm_config_argv) {

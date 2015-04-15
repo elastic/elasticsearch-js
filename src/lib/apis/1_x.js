@@ -1017,6 +1017,7 @@ api.cluster.prototype.state = ca({
             'metadata',
             'nodes',
             'routing_table',
+            'routing_nodes',
             'master_node',
             'version'
           ]
@@ -1037,6 +1038,7 @@ api.cluster.prototype.state = ca({
             'metadata',
             'nodes',
             'routing_table',
+            'routing_nodes',
             'master_node',
             'version'
           ]
@@ -6096,7 +6098,7 @@ api.termvector = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
- * @param {String} params.parent - ID of the parent document
+ * @param {String} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
