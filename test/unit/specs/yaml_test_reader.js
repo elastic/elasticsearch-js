@@ -4,12 +4,6 @@ describe('Yaml Test Reader', function () {
   var expect = require('expect.js');
 
   describe('version range comparison', function () {
-    // console.assert(rangeMatchesCurrentVersion(" - "));
-    // console.assert(rangeMatchesCurrentVersion("0.4 - 1.3") === false, '1.4.4 is outside of 0.4 - 1.3');
-    // console.assert(rangeMatchesCurrentVersion("0 - ") === true, '1.4.4 is less than infinity');
-    // console.assert(rangeMatchesCurrentVersion(" - 1.4") === false, '1.4.4 is greater than 1.4');
-    // console.assert(rangeMatchesCurrentVersion(" - 1.4.5") === true, '1.4.4 is less than 1.4.5');
-
     it('supports unbounded ranges', function () {
       expect(compare(' - ', '999999999999999999')).to.be(true);
       expect(compare('0 - ', '999999999999999999')).to.be(true);
