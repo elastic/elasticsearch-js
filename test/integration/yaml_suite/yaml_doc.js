@@ -21,7 +21,7 @@ var implementedFeatures = ['gtelte', 'regex', 'benchmark'];
 var ES_VERSION = null;
 
 // core expression for finding a version
-var versionExp = '([\\d\\.]*\\d)(?:\\.\\w+)?';
+var versionExp = '((?:\\d+\\.){0,2}\\d+)(?:\\.\\w+)?|';
 
 // match all whitespace within a "regexp" match arg
 var reWhitespace_RE = /\s+/g;
@@ -29,19 +29,17 @@ var reWhitespace_RE = /\s+/g;
 // match all comments within a "regexp" match arg
 var reComments_RE = /([\S\s]?)#[^\n]*\n/g;
 
-
 /**
  * Regular Expression to extract a version number from a string
  * @type {RegExp}
  */
-var versionRE = new RegExp(versionExp);
+var versionRE = new RegExp('^(?:' + versionExp + ')$');
 
 /**
  * Regular Expression to extract a version range from a string
  * @type {RegExp}
  */
-var versionRangeRE = new RegExp(versionExp + '\\s*\\-\\s*' + versionExp);
-
+var versionRangeRE = new RegExp('^(?:' + versionExp + ')\\s*\\-\\s*(?:' + versionExp + ')$');
 
 /**
  * Fetches the client.info, and parses out the version number to a comparable string
@@ -52,8 +50,8 @@ function getVersionFromES(done) {
     if (err) {
       throw new Error('unable to get info about ES');
     }
-    expect(resp.version.number).to.match(versionRE);
-    ES_VERSION = versionToComparableString(versionRE.exec(resp.version.number)[1]);
+
+    ES_VERSION = resp.version.number;
     done();
   });
 }
@@ -65,10 +63,14 @@ function getVersionFromES(done) {
  * @return {String} - Version number represented as three numbers, seperated by -, all numbers are
  *   padded with 0 and will be three characters long so the strings can be compared.
  */
-function versionToComparableString(version) {
+function versionToComparableString(version, def) {
+  if (!version) {
+    return def;
+  }
+
   var parts = _.map(version.split('.'), function (part) {
     part = '' + _.parseInt(part);
-    return (new Array(4 - part.length)).join('0') + part;
+    return (new Array(Math.max(4 - part.length, 0))).join('0') + part;
   });
 
   while (parts.length < 3) {
@@ -86,21 +88,16 @@ function versionToComparableString(version) {
  * @return {Boolean} - is the current version within the range (inclusive)
  */
 function rangeMatchesCurrentVersion(rangeString, done) {
-  function doWork() {
-    expect(rangeString).to.match(versionRangeRE);
-
-    var range = versionRangeRE.exec(rangeString);
-    range = _.map(_.takeRight(range, 2), versionToComparableString);
-
-    done(ES_VERSION >= range[0] && ES_VERSION <= range[1]);
-  }
-
   if (!ES_VERSION) {
-    getVersionFromES(doWork);
-  } else {
-    doWork();
+    getVersionFromES(function () {
+      rangeMatchesCurrentVersion(rangeString, done);
+    });
+    return;
   }
+
+  done(YamlDoc.compareRangeToVersion(rangeString, ES_VERSION));
 }
+
 
 // empty all of the indices in ES please
 function clearIndices(done) {
@@ -161,6 +158,20 @@ function YamlDoc(doc, file) {
     return action;
   });
 }
+
+YamlDoc.compareRangeToVersion = function (range, version) {
+  expect(range).to.match(versionRangeRE);
+  var rangeMatch = versionRangeRE.exec(range);
+
+  expect(version).to.match(versionRE);
+  var versionMatch = versionRE.exec(version);
+
+  var min = versionToComparableString(rangeMatch[1], -Infinity);
+  var max = versionToComparableString(rangeMatch[2], Infinity);
+  var comp = versionToComparableString(versionMatch[1], Infinity);
+
+  return (min === -Infinity || min <= comp) && (max === Infinity || max >= comp);
+};
 
 YamlDoc.prototype = {
 
