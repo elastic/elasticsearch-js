@@ -92,6 +92,12 @@ var statusCodes = {
   503: 'Service Unavailable',
 
   /**
+   * BadGateway
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  502: 'Bad Gateway',
+
+  /**
    * InternalServerError
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
