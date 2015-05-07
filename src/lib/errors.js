@@ -150,6 +150,17 @@ _.each(statusCodes, function (name, status) {
   var className = _.studlyCase(name);
 
   function StatusCodeError(msg) {
+    // errors from es now come in two forms, an error string < 2.0 and
+    // an object >= 2.0
+    // TODO: remove after dropping support for < 2.0
+    if (typeof msg === 'object') {
+      msg = _.reduce(msg.root_cause, function (msg, cause) {
+        if (msg) msg += ' (and) ';
+        msg += '[' + cause.type + '] ' + cause.reason;
+        return msg;
+      }, '') || msg.reason;
+    }
+
     ErrorAbstract.call(this, msg || name, StatusCodeError);
   }
 
