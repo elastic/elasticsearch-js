@@ -88,6 +88,10 @@ function versionToComparableString(version, def) {
  * @return {Boolean} - is the current version within the range (inclusive)
  */
 function rangeMatchesCurrentVersion(rangeString, done) {
+  if (rangeString === 'all') {
+    return done(true);
+  }
+
   if (!ES_VERSION) {
     getVersionFromES(function () {
       rangeMatchesCurrentVersion(rangeString, done);
