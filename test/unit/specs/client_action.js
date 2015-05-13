@@ -1,4 +1,5 @@
-var ca = require('../../../src/lib/client_action');
+var ca = require('../../../src/lib/client_action').factory;
+var proxy = require('../../../src/lib/client_action').proxyFactory;
 var expect = require('expect.js');
 var _ = require('lodash');
 var Promise = require('bluebird');
@@ -48,13 +49,13 @@ function makeClientAction(spec) {
 }
 
 /**
- * Calls ca.proxy and binds it to a mock client
+ * Calls proxyFactory and binds it to a mock client
  * @param  {Function} fn - the function to proxy
  * @param  {Object} spec - The spec for the proxy
  * @return {Function} - the clientActionProxy
  */
 function makeClientActionProxy(fn, spec) {
-  return _.bind(ca.proxy(fn, spec || {}), mockClient());
+  return _.bind(proxy(fn, spec || {}), mockClient());
 }
 
 
