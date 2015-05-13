@@ -1,6 +1,8 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action');
+var ca = require('../client_action').factory;
+var proxy = require('../client_action').proxyFactory;
+var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
@@ -77,9 +79,7 @@ api.bulk = ca({
   method: 'POST'
 });
 
-api.cat = function CatNS(transport) {
-  this.transport = transport;
-};
+api.cat = namespace();
 
 /**
  * Perform a [cat.aliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html) request
@@ -662,9 +662,7 @@ api.clearScroll = ca({
   method: 'DELETE'
 });
 
-api.cluster = function ClusterNS(transport) {
-  this.transport = transport;
-};
+api.cluster = namespace();
 
 /**
  * Perform a [cluster.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-update-settings.html) request
@@ -1712,9 +1710,7 @@ api.index = ca({
   method: 'POST'
 });
 
-api.indices = function IndicesNS(transport) {
-  this.transport = transport;
-};
+api.indices = namespace();
 
 /**
  * Perform a [indices.analyze](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/indices-analyze.html) request
@@ -4084,9 +4080,7 @@ api.mtermvectors = ca({
   method: 'POST'
 });
 
-api.nodes = function NodesNS(transport) {
-  this.transport = transport;
-};
+api.nodes = namespace();
 
 /**
  * Perform a [nodes.hotThreads](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/cluster-nodes-hot-threads.html) request
@@ -4886,9 +4880,7 @@ api.searchShards = ca({
   method: 'POST'
 });
 
-api.snapshot = function SnapshotNS(transport) {
-  this.transport = transport;
-};
+api.snapshot = namespace();
 
 /**
  * Perform a [snapshot.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/modules-snapshots.html) request
@@ -5406,7 +5398,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = ca.proxy(api.index, {
+api.create = proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }

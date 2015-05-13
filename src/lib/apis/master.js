@@ -1,6 +1,8 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action');
+var ca = require('../client_action').factory;
+var proxy = require('../client_action').proxyFactory;
+var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
 api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
@@ -68,9 +70,7 @@ api.bulk = ca({
   method: 'POST'
 });
 
-api.cat = function CatNS(transport) {
-  this.transport = transport;
-};
+api.cat = namespace();
 
 /**
  * Perform a [cat.aliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html) request
@@ -751,9 +751,7 @@ api.clearScroll = ca({
   method: 'DELETE'
 });
 
-api.cluster = function ClusterNS(transport) {
-  this.transport = transport;
-};
+api.cluster = namespace();
 
 /**
  * Perform a [cluster.getSettings](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html) request
@@ -1086,6 +1084,13 @@ api.cluster.prototype.stats = ca({
  * @param {Number} params.minScore - Include only documents with a specific `_score` value in the result
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.routing - Specific routing value
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
+ * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to restrict the results
  * @param {String, String[], Boolean} params.type - A comma-separated list of types to restrict the results
  */
@@ -1119,6 +1124,35 @@ api.count = ca({
     },
     routing: {
       type: 'string'
+    },
+    q: {
+      type: 'string'
+    },
+    analyzer: {
+      type: 'string'
+    },
+    analyzeWildcard: {
+      type: 'boolean',
+      name: 'analyze_wildcard'
+    },
+    defaultOperator: {
+      type: 'enum',
+      'default': 'OR',
+      options: [
+        'AND',
+        'OR'
+      ],
+      name: 'default_operator'
+    },
+    df: {
+      type: 'string'
+    },
+    lenient: {
+      type: 'boolean'
+    },
+    lowercaseExpandedTerms: {
+      type: 'boolean',
+      name: 'lowercase_expanded_terms'
     }
   },
   urls: [
@@ -1915,9 +1949,7 @@ api.index = ca({
   method: 'POST'
 });
 
-api.indices = function IndicesNS(transport) {
-  this.transport = transport;
-};
+api.indices = namespace();
 
 /**
  * Perform a [indices.analyze](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
@@ -3891,6 +3923,12 @@ api.indices.prototype.upgrade = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Anything} params.operationThreading - TODO: ?
  * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
+ * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
@@ -3923,6 +3961,32 @@ api.indices.prototype.validateQuery = ca({
     },
     q: {
       type: 'string'
+    },
+    analyzer: {
+      type: 'string'
+    },
+    analyzeWildcard: {
+      type: 'boolean',
+      name: 'analyze_wildcard'
+    },
+    defaultOperator: {
+      type: 'enum',
+      'default': 'OR',
+      options: [
+        'AND',
+        'OR'
+      ],
+      name: 'default_operator'
+    },
+    df: {
+      type: 'string'
+    },
+    lenient: {
+      type: 'boolean'
+    },
+    lowercaseExpandedTerms: {
+      type: 'boolean',
+      name: 'lowercase_expanded_terms'
     }
   },
   urls: [
@@ -4258,9 +4322,7 @@ api.mtermvectors = ca({
   method: 'POST'
 });
 
-api.nodes = function NodesNS(transport) {
-  this.transport = transport;
-};
+api.nodes = namespace();
 
 /**
  * Perform a [nodes.hotThreads](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html) request
@@ -4960,9 +5022,7 @@ api.search = ca({
       type: 'enum',
       options: [
         'query_then_fetch',
-        'query_and_fetch',
         'dfs_query_then_fetch',
-        'dfs_query_and_fetch',
         'count',
         'scan'
       ],
@@ -5066,6 +5126,13 @@ api.search = ca({
  * @param {Number} params.minScore - Include only documents with a specific `_score` value in the result
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.routing - Specific routing value
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
+ * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to restrict the results
  * @param {String, String[], Boolean} params.type - A comma-separated list of types to restrict the results
  */
@@ -5099,6 +5166,35 @@ api.searchExists = ca({
     },
     routing: {
       type: 'string'
+    },
+    q: {
+      type: 'string'
+    },
+    analyzer: {
+      type: 'string'
+    },
+    analyzeWildcard: {
+      type: 'boolean',
+      name: 'analyze_wildcard'
+    },
+    defaultOperator: {
+      type: 'enum',
+      'default': 'OR',
+      options: [
+        'AND',
+        'OR'
+      ],
+      name: 'default_operator'
+    },
+    df: {
+      type: 'string'
+    },
+    lenient: {
+      type: 'boolean'
+    },
+    lowercaseExpandedTerms: {
+      type: 'boolean',
+      name: 'lowercase_expanded_terms'
     }
   },
   urls: [
@@ -5283,9 +5379,7 @@ api.searchTemplate = ca({
   method: 'POST'
 });
 
-api.snapshot = function SnapshotNS(transport) {
-  this.transport = transport;
-};
+api.snapshot = namespace();
 
 /**
  * Perform a [snapshot.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
@@ -5870,7 +5964,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = ca.proxy(api.index, {
+api.create = proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }

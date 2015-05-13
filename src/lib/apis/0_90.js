@@ -1,6 +1,8 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action');
+var ca = require('../client_action').factory;
+var proxy = require('../client_action').proxyFactory;
+var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
 api._namespaces = ['cluster', 'indices'];
@@ -91,9 +93,7 @@ api.clearScroll = ca({
   method: 'DELETE'
 });
 
-api.cluster = function ClusterNS(transport) {
-  this.transport = transport;
-};
+api.cluster = namespace();
 
 /**
  * Perform a [cluster.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
@@ -1145,9 +1145,7 @@ api.index = ca({
   method: 'POST'
 });
 
-api.indices = function IndicesNS(transport) {
-  this.transport = transport;
-};
+api.indices = namespace();
 
 /**
  * Perform a [indices.analyze](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-analyze.html) request
@@ -3263,7 +3261,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = ca.proxy(api.index, {
+api.create = proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }

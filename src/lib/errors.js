@@ -161,6 +161,7 @@ _.each(statusCodes, function (name, status) {
       }, '') || msg.reason;
     }
 
+    this.status = status;
     ErrorAbstract.call(this, msg || name, StatusCodeError);
   }
 

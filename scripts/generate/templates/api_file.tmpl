@@ -1,6 +1,8 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action');
+var ca = require('../client_action').factory;
+var proxy = require('../client_action').proxyFactory;
+var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
 api._namespaces = <%= stringify(namespaces) %>;<%
@@ -9,12 +11,9 @@ _.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
   if (_.contains(namespaces, namespace)) {
     _.pull(namespaces, namespace);
-    var className = _.studlyCase(namespace) + 'NS';
 %>
 
-api.<%= namespace %> = function <%= className %>(transport) {
-  this.transport = transport;
-};<%
+api.<%= namespace %> = namespace();<%
   }%>
 
 <%= partials.client_action(action) %><%

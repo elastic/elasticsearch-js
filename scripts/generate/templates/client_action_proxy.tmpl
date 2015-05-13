@@ -9,7 +9,7 @@ _.each(allParams, function(param, paramName) { %>
   }
 %><% }) %>
  */
-api<%= (location[0] === '[' ? '' : '.') + location %> = ca.proxy(<%= 'api' + (proxy[0] === '[' ? '' : '.') + proxy %><%
+api<%= (location[0] === '[' ? '' : '.') + location %> = proxy(<%= 'api' + (proxy[0] === '[' ? '' : '.') + proxy %><%
 if (typeof transformBody === 'string') { %>, {
   transform: function (params) {
 <%= indent(transformBody, 4) %>

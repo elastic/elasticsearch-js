@@ -1,12 +1,33 @@
+
 /**
  * Constructs a function that can be called to make a request to ES
- * @type {[type]}
+ * @type {Function}
  */
-module.exports = ClientAction;
+exports.factory = factory;
+
+/**
+ * Constructs a proxy to another api method
+ * @type {Function}
+ */
+exports.proxyFactory = proxyFactory;
+
+// export so that we can test this
+exports._resolveUrl = resolveUrl;
+
+exports.ApiNamespace = function() {};
+exports.namespaceFactory = function () {
+  function ClientNamespace(transport) {
+    this.transport = transport;
+  }
+
+  ClientNamespace.prototype = new exports.ApiNamespace();
+
+  return ClientNamespace;
+};
 
 var _ = require('./utils');
 
-function ClientAction(spec) {
+function factory(spec) {
   if (!_.isPlainObject(spec.params)) {
     spec.params = {};
   }
@@ -40,6 +61,24 @@ function ClientAction(spec) {
   action.spec = spec;
 
   return action;
+}
+
+function proxyFactory(fn, spec) {
+  return function (params, cb) {
+    if (typeof params === 'function') {
+      cb = params;
+      params = {};
+    } else {
+      params = params || {};
+      cb = typeof cb === 'function' ? cb : null;
+    }
+
+    if (spec.transform) {
+      spec.transform(params);
+    }
+
+    return fn.call(this, params, cb);
+  };
 }
 
 var castType = {
@@ -188,8 +227,6 @@ function resolveUrl(url, params) {
   }, {}));
 }
 
-// export so that we can test this
-ClientAction.resolveUrl = resolveUrl;
 
 function exec(transport, spec, params, cb) {
   var request = {
@@ -306,22 +343,3 @@ function commaSepList(str) {
     return i.trim();
   });
 }
-
-
-ClientAction.proxy = function (fn, spec) {
-  return function (params, cb) {
-    if (typeof params === 'function') {
-      cb = params;
-      params = {};
-    } else {
-      params = params || {};
-      cb = typeof cb === 'function' ? cb : null;
-    }
-
-    if (spec.transform) {
-      spec.transform(params);
-    }
-
-    return fn.call(this, params, cb);
-  };
-};

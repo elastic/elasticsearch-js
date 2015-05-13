@@ -91,10 +91,7 @@ Transport.connectionPools = {
   main: require('./connection_pool')
 };
 
-Transport.serializers = {
-  json: require('./serializers/json'),
-  angular: require('./serializers/angular')
-};
+Transport.serializers = require('./serializers');
 
 Transport.nodesToHostCallbacks = {
   main: require('./nodes_to_host')
