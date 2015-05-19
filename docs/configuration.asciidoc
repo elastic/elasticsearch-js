@@ -19,7 +19,7 @@ WARNING: Due to the complex nature of the configuration, the config object you p
 `host or hosts`[[config-hosts]]::
 `String, String[], Object[]` -- Specify the hosts that this client will connect to. If sniffing is enabled, or you call `client.sniff()`, this list will be used as seeds to discover the rest of your cluster.
 +
-The value(s) are passed to the <<host-reference,`Host`>> constructor. `Host` objects can help enforce path-prefixes, default headers and query strings, and can be helpfull in making more intellegent selection algorithms; Head over to <<host-reference,the `Host` docs>> for more information.
+The value(s) are passed to the <<host-reference,`Host`>> constructor. `Host` objects can help enforce path-prefixes, default headers and query strings, and can be helpful in making more intelligent selection algorithms; Head over to <<host-reference,the `Host` docs>> for more information.
 
 Default:::
 +
@@ -27,6 +27,7 @@ Default:::
 ------
 'http://localhost:9200'
 ------
+
 
 
 
@@ -67,6 +68,14 @@ Options in the browser :::
   * `"1.1"`
 
 
+
+`plugins`[[config-plugins]]:: `Function[]` -- Plugin instantiators that will be called when the Client initializes. Each function is called in order with the arguments `Constructor`, `config`, and `components`.
++
+`Constructor` is the class that will be newed up to create the client instance. It's prototype contains the api methods that correlate to the `apiVersion` requested.
++
+`config` is the config object that was passed to the `elasticsearch.Client` constructor.
++
+`components` is a map of the internal classes for this version of the elasticsearch client. The values on this object are listed https://github.com/elastic/elasticsearch-js/blob/master/src/lib/client.js#L80[here].
 
 
 `sniffOnStart`[[config-sniff-on-start]]:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
