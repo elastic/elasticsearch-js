@@ -9,7 +9,10 @@ module.exports = {
       '<%= distDir %>/elasticsearch.min.js': '<%= distDir %>/elasticsearch.min.js'
     },
     options: {
-      banner: '<%= meta.banner %>'
+      banner: '<%= meta.banner %>\n' +
+              ';(function () {\n' +
+              '/* prevent lodash from detecting external amd loaders */var define; \n',
+      footer: '\n}());'
     }
   }
 };
