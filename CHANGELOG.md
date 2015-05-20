@@ -5,6 +5,7 @@
  - Changed the default pingTimeout to 3 seconds, and made it configurable
  - Improved compatibility with node 0.12
  - Updated dependencies
+ - Make the stream logger actually usable (thanks @falmp!)
 
 ## 3.1 (Jan 6 2015)
  - Added HTTPS/SSL configuration options and related errors
