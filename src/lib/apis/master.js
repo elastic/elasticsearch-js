@@ -1961,7 +1961,7 @@ api.indices = namespace();
  * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
- * @param {String} params.text - The text on which the analysis should be performed (when request body is not used)
+ * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
  * @param {String} params.tokenizer - The name of the tokenizer to use for the analysis
  * @param {String} [params.format=detailed] - Format of the output
  */
@@ -1988,7 +1988,7 @@ api.indices.prototype.analyze = ca({
       name: 'prefer_local'
     },
     text: {
-      type: 'string'
+      type: 'list'
     },
     tokenizer: {
       type: 'string'
@@ -2027,8 +2027,6 @@ api.indices.prototype.analyze = ca({
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
  * @param {Boolean} params.filter - Clear filter caches
  * @param {Boolean} params.filterCache - Clear filter caches
- * @param {Boolean} params.id - Clear ID caches for parent/child
- * @param {Boolean} params.idCache - Clear ID caches for parent/child
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -2054,13 +2052,6 @@ api.indices.prototype.clearCache = ca({
     filterCache: {
       type: 'boolean',
       name: 'filter_cache'
-    },
-    id: {
-      type: 'boolean'
-    },
-    idCache: {
-      type: 'boolean',
-      name: 'id_cache'
     },
     ignoreUnavailable: {
       type: 'boolean',
@@ -3314,7 +3305,6 @@ api.indices.prototype.putAlias = ca({
  * Perform a [indices.putMapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.ignoreConflicts - Specify whether to ignore conflicts while updating the mapping (default: false)
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3325,10 +3315,6 @@ api.indices.prototype.putAlias = ca({
  */
 api.indices.prototype.putMapping = ca({
   params: {
-    ignoreConflicts: {
-      type: 'boolean',
-      name: 'ignore_conflicts'
-    },
     timeout: {
       type: 'time'
     },
@@ -3657,6 +3643,29 @@ api.indices.prototype.refresh = ca({
 });
 
 /**
+ * Perform a [indices.seal](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-seal.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
+ */
+api.indices.prototype.seal = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/_seal',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_seal'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3775,7 +3784,6 @@ api.indices.prototype.stats = ca({
             'filter_cache',
             'flush',
             'get',
-            'id_cache',
             'indexing',
             'merge',
             'percolate',
@@ -3803,7 +3811,6 @@ api.indices.prototype.stats = ca({
             'filter_cache',
             'flush',
             'get',
-            'id_cache',
             'indexing',
             'merge',
             'percolate',
@@ -4531,7 +4538,6 @@ api.nodes.prototype.stats = ca({
             'filter_cache',
             'flush',
             'get',
-            'id_cache',
             'indexing',
             'merge',
             'percolate',
@@ -4599,7 +4605,6 @@ api.nodes.prototype.stats = ca({
             'filter_cache',
             'flush',
             'get',
-            'id_cache',
             'indexing',
             'merge',
             'percolate',

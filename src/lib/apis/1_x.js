@@ -3826,6 +3826,29 @@ api.indices.prototype.refresh = ca({
 });
 
 /**
+ * Perform a [indices.seal](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-seal.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
+ */
+api.indices.prototype.seal = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/_seal',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_seal'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.segments](http://www.elastic.co/guide/en/elasticsearch/reference/1.x/indices-segments.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
