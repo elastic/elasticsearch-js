@@ -7,15 +7,10 @@ NOTE: This is currently the default API, but in upcomming versions that will cha
 NOTE: At this time, you must opt into the <%= branch %> API by setting the `apiVersion` config parameter.
 <% }
 
-// method index%>
-[[js-api-method-index<%= branchSuffix %>]]<%
 actions = _.sortBy(actions, 'namespace');
 _.each(actions, function (action) {
-action.index = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-') + branchSuffix; %>
-* <%= '<<' + action.index + ',' + action.name + '>>' %><%
-})
+  action.index = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-') + branchSuffix;
 
-_.each(actions, function (action) {
 %>
 
 [[<%= action.index %>]]
