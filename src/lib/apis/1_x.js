@@ -1,6 +1,15 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action').factory;
+var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
+  return require('../utils').merge(spec, {
+    params: {
+      filterPath: {
+        type: 'list',
+        name: 'filter_path'
+      }
+    }
+  });
+});
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
