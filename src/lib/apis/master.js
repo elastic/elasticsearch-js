@@ -1,7 +1,15 @@
 /* jshint maxlen: false */
 
-var ca = require('../client_action').factory;
-var proxy = require('../client_action').proxyFactory;
+var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
+  return require('../utils').merge(spec, {
+    params: {
+      filterPath: {
+        type: 'list',
+        name: 'filter_path'
+      }
+    }
+  });
+});
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
@@ -2555,6 +2563,32 @@ api.indices.prototype.flush = ca({
 });
 
 /**
+ * Perform a [indices.flushSynced](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ */
+api.indices.prototype.flushSynced = ca({
+  urls: [
+    {
+      fmt: '/<%=index%>/_flush/synced',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_flush/synced'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3637,29 +3671,6 @@ api.indices.prototype.refresh = ca({
     },
     {
       fmt: '/_refresh'
-    }
-  ],
-  method: 'POST'
-});
-
-/**
- * Perform a [indices.seal](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-seal.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices
- */
-api.indices.prototype.seal = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/_seal',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_seal'
     }
   ],
   method: 'POST'
@@ -5969,7 +5980,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = proxy(api.index, {
+api.create = ca.proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }

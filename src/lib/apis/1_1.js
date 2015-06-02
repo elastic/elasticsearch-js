@@ -1,7 +1,6 @@
 /* jshint maxlen: false */
 
 var ca = require('../client_action').factory;
-var proxy = require('../client_action').proxyFactory;
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
@@ -5398,7 +5397,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = proxy(api.index, {
+api.create = ca.proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }

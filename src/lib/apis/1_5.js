@@ -1,7 +1,6 @@
 /* jshint maxlen: false */
 
 var ca = require('../client_action').factory;
-var proxy = require('../client_action').proxyFactory;
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
@@ -6069,20 +6068,33 @@ api.termvector = ca({
       required: false
     }
   },
-  url: {
-    fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
-    req: {
-      index: {
-        type: 'string'
-      },
-      type: {
-        type: 'string'
-      },
-      id: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvector',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        },
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/<%=type%>/_termvector',
+      req: {
+        index: {
+          type: 'string'
+        },
+        type: {
+          type: 'string'
+        }
       }
     }
-  },
+  ],
   method: 'POST'
 });
 
@@ -6211,7 +6223,7 @@ api.update = ca({
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
  */
-api.create = proxy(api.index, {
+api.create = ca.proxy(api.index, {
   transform: function (params) {
     params.op_type = 'create';
   }
