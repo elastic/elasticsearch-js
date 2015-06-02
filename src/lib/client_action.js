@@ -1,15 +1,23 @@
 
+var _ = require('./utils');
+
+/**
+ * Constructs a client action factory that uses specific defaults
+ * @type {Function}
+ */
+exports.makeFactoryWithModifier = makeFactoryWithModifier;
+
 /**
  * Constructs a function that can be called to make a request to ES
  * @type {Function}
  */
-exports.factory = factory;
+exports.factory = makeFactoryWithModifier();
 
 /**
  * Constructs a proxy to another api method
  * @type {Function}
  */
-exports.proxyFactory = proxyFactory;
+exports.proxyFactory = exports.factory.proxy;
 
 // export so that we can test this
 exports._resolveUrl = resolveUrl;
@@ -25,60 +33,66 @@ exports.namespaceFactory = function () {
   return ClientNamespace;
 };
 
-var _ = require('./utils');
+function makeFactoryWithModifier(modifier) {
+  modifier = modifier || _.identity;
 
-function factory(spec) {
-  if (!_.isPlainObject(spec.params)) {
-    spec.params = {};
-  }
+  var factory = function (spec) {
+    spec = modifier(spec);
 
-  if (!spec.method) {
-    spec.method = 'GET';
-  }
-
-  function action(params, cb) {
-    if (typeof params === 'function') {
-      cb = params;
-      params = {};
-    } else {
-      params = params || {};
-      cb = typeof cb === 'function' ? cb : null;
+    if (!_.isPlainObject(spec.params)) {
+      spec.params = {};
     }
 
-    try {
-      return exec(this.transport, spec, _.clone(params), cb);
-    } catch (e) {
-      if (typeof cb === 'function') {
-        _.nextTick(cb, e);
+    if (!spec.method) {
+      spec.method = 'GET';
+    }
+
+    function action(params, cb) {
+      if (typeof params === 'function') {
+        cb = params;
+        params = {};
       } else {
-        var def = this.transport.defer();
-        def.reject(e);
-        return def.promise;
+        params = params || {};
+        cb = typeof cb === 'function' ? cb : null;
+      }
+
+      try {
+        return exec(this.transport, spec, _.clone(params), cb);
+      } catch (e) {
+        if (typeof cb === 'function') {
+          _.nextTick(cb, e);
+        } else {
+          var def = this.transport.defer();
+          def.reject(e);
+          return def.promise;
+        }
       }
     }
-  }
 
-  action.spec = spec;
+    action.spec = spec;
 
-  return action;
-}
-
-function proxyFactory(fn, spec) {
-  return function (params, cb) {
-    if (typeof params === 'function') {
-      cb = params;
-      params = {};
-    } else {
-      params = params || {};
-      cb = typeof cb === 'function' ? cb : null;
-    }
-
-    if (spec.transform) {
-      spec.transform(params);
-    }
-
-    return fn.call(this, params, cb);
+    return action;
   };
+
+  factory.proxy = function (fn, spec) {
+    return function (params, cb) {
+      if (typeof params === 'function') {
+        cb = params;
+        params = {};
+      } else {
+        params = params || {};
+        cb = typeof cb === 'function' ? cb : null;
+      }
+
+      if (spec.transform) {
+        spec.transform(params);
+      }
+
+      return fn.call(this, params, cb);
+    };
+  };
+
+  return factory;
 }
 
 var castType = {
@@ -288,9 +302,7 @@ function exec(transport, spec, params, cb) {
     }, []);
   }
 
-  var key, paramSpec;
-
-  for (key in params) {
+  for (var key in params) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
       case 'body':
@@ -305,7 +317,7 @@ function exec(transport, spec, params, cb) {
         request.method = _.toUpperString(params[key]);
         break;
       default:
-        paramSpec = spec.params[key];
+        var paramSpec = spec.params[key];
         if (paramSpec) {
           // param keys don't always match the param name, in those cases it's stored in the param def as "name"
           paramSpec.name = paramSpec.name || key;

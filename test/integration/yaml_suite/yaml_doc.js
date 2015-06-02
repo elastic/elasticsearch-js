@@ -12,7 +12,7 @@ var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
 
-var implementedFeatures = ['gtelte', 'regex', 'benchmark'];
+var implementedFeatures = ['gtelte', 'regex', 'benchmark', 'stash_in_path'];
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
@@ -239,21 +239,25 @@ YamlDoc.prototype = {
    * @return {*} - The value requested, or undefined if it was not found
    */
   get: function (path, from) {
-
+    var self = this;
     var log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {};
     var i;
 
     if (path === '$body') {
       // shortcut, the test just wants the whole body
-      return this._last_requests_response;
+      return self._last_requests_response;
+    } else if (path) {
+      path = path.replace(/\.\$([a-zA-Z0-9_]+)/g, function (m, name) {
+        return '.' + self._stash[name];
+      });
     }
 
     if (!from) {
       if (path[0] === '$') {
-        from = this._stash;
+        from = self._stash;
         path = path.substring(1);
       } else {
-        from = this._last_requests_response;
+        from = self._last_requests_response;
       }
     }
 
@@ -330,6 +334,15 @@ YamlDoc.prototype = {
    */
   do_do: function (args, done) {
     var catcher;
+
+    if (process.env.LOG_DO) {
+      var __done = done;
+      done = function (err, resp) {
+        console.log('doing', clientActionName, 'with', params);
+        console.log('got', resp);
+        __done(err, resp);
+      };
+    }
 
     // resolve the catch arg to a value used for matching once the request is complete
     switch (args.catch) {
@@ -475,7 +488,12 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_is_true: function (path) {
-    expect(Boolean(this.get(path))).to.be(true, 'path: ' + path);
+    var val = this.get(path);
+    try {
+      expect(Boolean(val)).to.be(true, 'path: ' + path);
+    } catch (e) {
+      throw new Error('expected path "' + path + '" to be true but got ' + val);
+    }
   },
 
   /**
@@ -486,7 +504,12 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_is_false: function (path) {
-    expect(Boolean(this.get(path))).to.be(false, 'path: ' + path);
+    var val = this.get(path);
+    try {
+      expect(Boolean(val)).to.be(false, 'path: ' + path);
+    } catch (e) {
+      throw new Error('expected path "' + path + '" to be false but got ' + val);
+    }
   },
 
   /**
@@ -529,8 +552,10 @@ YamlDoc.prototype = {
         return _.each(val, recurse);
       }
 
-      if (_.isString(val) && val[0] === '$') {
-        lvl[key] = self.get(val);
+      if (_.isString(val)) {
+        lvl[key] = val.replace(/\$[a-zA-Z0-9_]+/g, function (name) {
+          return self.get(name);
+        });
       }
     });
 

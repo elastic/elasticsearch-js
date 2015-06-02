@@ -177,5 +177,26 @@ module.exports = [
         '/{index}/_aliases/{name}'
       ]
     }
+  },
+  {
+    version: '>=2.0.0',
+
+/* jshint ignore:start */
+
+// strange indentation makes pretty api files
+clientActionModifier:
+function (spec) {
+  return require('../utils').merge(spec, {
+    params: {
+      filterPath: {
+        type: 'list',
+        name: 'filter_path'
+      }
+    }
+  });
+}
+
+/* jshint ignore:end */
+
   }
 ];

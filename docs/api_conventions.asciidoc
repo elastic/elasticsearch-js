@@ -17,6 +17,10 @@ NOTE: the https://github.com/fullscale/elastic.js[elastic.js] library can be use
 +
 `Number, Number[]` -- HTTP status codes which should not be considered errors for this request.
 
+`filterPath`::
++
+`String|String[]` -- Starting in **elasticsearch 2.0** the `filterPath` parameter can be passed to any API to filter it's reponse values. See the https://www.elastic.co/guide/en/elasticsearch/reference/master/common-options.html#_response_filtering[elasticsearch response filtering docs] for more information.
+
 === Config values you can override per request
   * `requestTimeout` -- <<config-request-timeout, more info>>
   * `maxRetries` -- <<config-max-retries, more info>>

@@ -29,7 +29,7 @@ module.exports = function (branch, done) {
     var m;
 
     // master === the highest version number
-    if (branch === 'master') return '999.999.999';
+    if (branch === 'master') return '2.0.0';
     // n.m -> n.m.0
     if (m = branch.match(/^\d+\.\d+$/)) return branch + '.0';
     // n.x -> n.(maxVersion + 1).0
@@ -48,7 +48,8 @@ module.exports = function (branch, done) {
     return _.merge(overrides, _.omit(rule, 'version'));
   }, {
     aliases: {},
-    paramAsBody: {}
+    paramAsBody: {},
+    clientActionModifier: false
   });
 
   var steps = [
@@ -106,7 +107,8 @@ module.exports = function (branch, done) {
     apiSpec = {
       actions: groups.normal || [],
       proxies: groups.proxies || [],
-      namespaces: _.unique(namespaces.sort(), true)
+      namespaces: _.unique(namespaces.sort(), true),
+      clientActionModifier: overrides.clientActionModifier
     };
 
     var create = _.assign({}, _.find(apiSpec.actions, { name: 'index' }), {

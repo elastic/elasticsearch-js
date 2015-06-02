@@ -38,7 +38,10 @@ var config = {
   },
 
   integration: {
-    src: null
+    src: null,
+    options: {
+      reporter: 'spec'
+    }
   },
 
   jenkins_integration: {
