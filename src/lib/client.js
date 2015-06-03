@@ -66,7 +66,7 @@ function Client(config) {
   }
 
 
-  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '1.5');
+  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '1.6');
   if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
     config.sniffEndpoint = '/_cluster/nodes';
   }

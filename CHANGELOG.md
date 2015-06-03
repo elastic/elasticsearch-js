@@ -1,5 +1,12 @@
 # elasticsearch-js changelog
 
+## 5.0 (Jun...)
+ - Added apiVersion `"1.6"`, which is now the default
+
+## 4.1 (May 19 2015)
+ - Plugin configuration option added
+ - Added support for object based error
+
 ## 4.0 (Mar 26 2015)
  - Added apiVersion `"1.5"`, which is now the default
  - Changed the default pingTimeout to 3 seconds, and made it configurable
