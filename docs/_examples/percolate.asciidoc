@@ -2,8 +2,8 @@
 [source,js]
 ---------
 client.index({
-  index: '_percolator',
-  type: 'myindex',
+  index: 'myindex',
+  type: '.percolator',
   id: 'alert-1',
   body: {
     // This query will be run against documents sent to percolate
@@ -18,8 +18,8 @@ client.index({
 });
 
 client.index({
-  index: '_percolator',
-  type: 'myindex',
+  index: 'myindex',
+  type: '.percolator',
   id: 'alert-2',
   body: {
     // This query will also be run against documents sent to percolate
@@ -39,6 +39,7 @@ client.index({
 ---------
 client.percolate({
   index: 'myindex',
+  type: 'mytype',
   body: {
     doc: {
       title: "Foo"
@@ -47,13 +48,14 @@ client.percolate({
 }, function (error, response) {
   // response would equal
   // {
-  //   ok:true,
-  //   matches: [ "alert-1" ]
+  //   total: 1,
+  //   matches: [ { _index: 'myindex', _id: 'alert-1' } ]
   // }
 });
 
 client.percolate({
   index: 'myindex',
+  type: 'mytype',
   body: {
     doc: {
       title: "Foo Bar"
@@ -62,8 +64,11 @@ client.percolate({
 }, function (error, response) {
   // response would equal
   // {
-  //   ok:true,
-  //   matches: [ "alert-1", "alert-2" ]
+  //   total: 2,
+  //   matches: [
+  //     { _index: 'myindex', _id: 'alert-1' },
+  //     { _index: 'myindex', _id: 'alert-2' }
+  //   ]
   // }
 });
 ---------
