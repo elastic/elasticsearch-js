@@ -123,30 +123,31 @@ client.search({
   from: (pageNum - 1) * perPage,
   size: perPage,
   body: {
-    filtered: {
-      query: {
-        match: {
-          // match the query agains all of
-          // the fields in the posts index
-          _all: userQuery
-        }
-      },
-      filter: {
-        // only return documents that are
-        // public or owned by the current user
-        or: [
-          {
-            term: { privacy: "public" }
-          },
-          {
-            term: { owner: userId }
+    query: {
+      filtered: {
+        query: {
+          match: {
+            // match the query agains all of
+            // the fields in the posts index
+            _all: userQuery
           }
-        ]
+        },
+        filter: {
+          // only return documents that are
+          // public or owned by the current user
+          or: [
+            {
+              term: { privacy: "public" }
+            },
+            {
+              term: { owner: userId }
+            }
+          ]
+        }
       }
     }
-  }
-}, function (error, response) {
-  if (err) {
+  }, function (error, response) {
+    if (err) {
     // handle error
     return;
   }
