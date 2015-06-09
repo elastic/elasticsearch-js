@@ -51,7 +51,12 @@ function setConfig(ref, target) {
     break;
   }
 
+
   target.options = _.merge({}, defaultOpts, target.options);
+
+  if (minorV === 'master') {
+    delete target.options.config['discovery.zen.ping_timeout'];
+  }
 
   if (target.options.branch && !target.options.version) {
     target.options.fresh = true;
