@@ -125,7 +125,7 @@ var castType = {
     } else {
       throw new TypeError(
         'Invalid ' + name + ': expected a number or interval ' +
-        '(an integer followed by one of Mwdhmsy).'
+        '(an integer followed by one of M, w, d, h, m, s, y or ms).'
       );
     }
   },

@@ -2563,7 +2563,7 @@ api.indices.prototype.flush = ca({
 });
 
 /**
- * Perform a [indices.flushSynced](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html) request
+ * Perform a [indices.flushSynced](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string for all indices

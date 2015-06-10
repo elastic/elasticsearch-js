@@ -208,7 +208,7 @@ utils.isNumeric = function (val) {
 };
 
 // regexp to test for intervals
-var intervalRE = /^(\d+(?:\.\d+)?)([Mwdhmsy])$/;
+var intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
 
 /**
  * Test if a string represents an interval (eg. 1m, 2Y)
