@@ -1,6 +1,6 @@
 # elasticsearch-js changelog
 
-## 5.0 (Jun...)
+## 5.0 (Jun 9 2015)
  - Added apiVersion `"1.6"`, which is now the default
 
 ## 4.1 (May 19 2015)
