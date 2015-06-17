@@ -3947,6 +3947,7 @@ api.indices.prototype.upgrade = ca({
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
+ * @param {Boolean} params.rewrite - Provide a more detailed explanation showing the actual Lucene query that will be executed.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
  */
@@ -4005,6 +4006,9 @@ api.indices.prototype.validateQuery = ca({
     lowercaseExpandedTerms: {
       type: 'boolean',
       name: 'lowercase_expanded_terms'
+    },
+    rewrite: {
+      type: 'boolean'
     }
   },
   urls: [
