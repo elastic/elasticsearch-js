@@ -2596,6 +2596,8 @@ api.indices.prototype.flushSynced = ca({
  * @param {Boolean} params.ignoreUnavailable - Ignore unavailable indexes (default: false)
  * @param {Boolean} params.allowNoIndices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
  * @param {String} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
+ * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
+ * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.feature - A comma-separated list of features
  */
@@ -2622,6 +2624,14 @@ api.indices.prototype.get = ca({
         'all'
       ],
       name: 'expand_wildcards'
+    },
+    flatSettings: {
+      type: 'boolean',
+      name: 'flat_settings'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
     }
   },
   urls: [
@@ -2938,6 +2948,7 @@ api.indices.prototype.getMapping = ca({
  * @param {String} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
+ * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.name - The name of the settings that should be included
  */
@@ -2971,6 +2982,10 @@ api.indices.prototype.getSettings = ca({
     },
     local: {
       type: 'boolean'
+    },
+    human: {
+      type: 'boolean',
+      'default': false
     }
   },
   urls: [

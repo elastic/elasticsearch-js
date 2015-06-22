@@ -59,6 +59,9 @@ var paths = {
   },
   getArchiveTarball: function (branch) {
     return fromRoot('src/_elasticsearch_' + _.snakeCase(branch) + '.tar');
+  },
+  getSpecPathInRepo: function (branch) {
+    return /^(master|2\.)/.test(branch) ? 'rest-api-spec/src/main/resources/rest-api-spec' : 'rest-api-spec';
   }
 };
 
@@ -153,7 +156,7 @@ function findGeneratedApiFiles() {
 
 
 function clearGeneratedFiles() {
-  var esArchives = /^_elasticsearch_(master|[\d_]+|\.tar)$/;
+  var esArchives = /^_elasticsearch_(master|[\dx_]+|\.tar)$/;
   var generatedFiles = [];
 
   if (argv.api) {
@@ -190,6 +193,8 @@ function createArchive(branch) {
   return function (done) {
     var dir = paths.getArchiveDir(branch);
     var tarball = paths.getArchiveTarball(branch);
+    var specPathInRepo = paths.getSpecPathInRepo(branch);
+    var subDirCount = _.countBy(specPathInRepo, _.partial(_.eq, '/')).true || 0;
 
     if (isDirectory(dir)) {
       console.log(branch + ' archive already exists');
@@ -198,8 +203,8 @@ function createArchive(branch) {
 
     async.series([
       spawnStep('mkdir', [dir], paths.root),
-      spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, 'rest-api-spec'], paths.esSrc),
-      spawnStep('tar', ['-x', '-f', tarball, '-C', dir]),
+      spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, specPathInRepo], paths.esSrc),
+      spawnStep('tar', ['-x', '-f', tarball, '-C', dir, '--strip-components', subDirCount]),
       spawnStep('rm',  [tarball])
     ], done);
   };
