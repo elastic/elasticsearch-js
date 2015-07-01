@@ -4,7 +4,7 @@
 client.msearch({
   body: [
     // match all query, on all indices and types
-    {}
+    {},
     { query: { match_all: {} } },
 
     // query_string query, on index/mytype
