@@ -2033,14 +2033,13 @@ api.indices.prototype.analyze = ca({
  * @param {Boolean} params.fieldData - Clear field data
  * @param {Boolean} params.fielddata - Clear field data
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
- * @param {Boolean} params.filter - Clear filter caches
- * @param {Boolean} params.filterCache - Clear filter caches
+ * @param {Boolean} params.query - Clear query caches
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index name to limit the operation
  * @param {Boolean} params.recycler - Clear the recycler cache
- * @param {Boolean} params.queryCache - Clear query cache
+ * @param {Boolean} params.request - Clear request cache
  */
 api.indices.prototype.clearCache = ca({
   params: {
@@ -2054,12 +2053,8 @@ api.indices.prototype.clearCache = ca({
     fields: {
       type: 'list'
     },
-    filter: {
+    query: {
       type: 'boolean'
-    },
-    filterCache: {
-      type: 'boolean',
-      name: 'filter_cache'
     },
     ignoreUnavailable: {
       type: 'boolean',
@@ -2086,9 +2081,8 @@ api.indices.prototype.clearCache = ca({
     recycler: {
       type: 'boolean'
     },
-    queryCache: {
-      type: 'boolean',
-      name: 'query_cache'
+    request: {
+      type: 'boolean'
     }
   },
   urls: [
@@ -3807,13 +3801,13 @@ api.indices.prototype.stats = ca({
             'completion',
             'docs',
             'fielddata',
-            'filter_cache',
+            'query_cache',
             'flush',
             'get',
             'indexing',
             'merge',
             'percolate',
-            'query_cache',
+            'request_cache',
             'refresh',
             'search',
             'segments',
@@ -3834,13 +3828,13 @@ api.indices.prototype.stats = ca({
             'completion',
             'docs',
             'fielddata',
-            'filter_cache',
+            'query_cache',
             'flush',
             'get',
             'indexing',
             'merge',
             'percolate',
-            'query_cache',
+            'request_cache',
             'refresh',
             'search',
             'segments',
@@ -4565,13 +4559,13 @@ api.nodes.prototype.stats = ca({
             'completion',
             'docs',
             'fielddata',
-            'filter_cache',
+            'query_cache',
             'flush',
             'get',
             'indexing',
             'merge',
             'percolate',
-            'query_cache',
+            'request_cache',
             'refresh',
             'search',
             'segments',
@@ -4632,13 +4626,13 @@ api.nodes.prototype.stats = ca({
             'completion',
             'docs',
             'fielddata',
-            'filter_cache',
+            'query_cache',
             'flush',
             'get',
             'indexing',
             'merge',
             'percolate',
-            'query_cache',
+            'request_cache',
             'refresh',
             'search',
             'segments',
@@ -4908,6 +4902,29 @@ api.putTemplate = ca({
 });
 
 /**
+ * Perform a [renderSearchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.id - The id of the stored search template
+ */
+api.renderSearchTemplate = ca({
+  urls: [
+    {
+      fmt: '/_render/template/<%=id%>',
+      req: {
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_render/template'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -4977,7 +4994,7 @@ api.scroll = ca({
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
- * @param {Boolean} params.queryCache - Specify if query cache should be used for this request or not, defaults to index level setting
+ * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -5119,9 +5136,9 @@ api.search = ca({
     version: {
       type: 'boolean'
     },
-    queryCache: {
+    requestCache: {
       type: 'boolean',
-      name: 'query_cache'
+      name: 'request_cache'
     }
   },
   urls: [
@@ -5437,17 +5454,7 @@ api.snapshot.prototype.create = ca({
       name: 'wait_for_completion'
     }
   },
-  url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_create',
-    req: {
-      repository: {
-        type: 'string'
-      },
-      snapshot: {
-        type: 'string'
-      }
-    }
-  },
+  url: {},
   method: 'POST'
 });
 
