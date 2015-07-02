@@ -9,7 +9,7 @@ var utils = {
   branchSuffix: function (branch) {
     return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
   },
-  branches: [].concat(stable, unstable),
+  branches: [].concat(unstable, stable),
   stableBranches: stable,
   unstableBranches: unstable
 };

@@ -1,67 +1,58 @@
 var utils = require('../utils');
-var _ = require('lodash');
-var join = require('path').join;
+var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
 var Version = require('../../scripts/Version');
-
-var defaultOpts = {
-  directory: join(__dirname, '..', '..', '.esvm'),
-  nodes: 1,
-  quiet: false,
-  config: {
-    'node.name': 'elasticsearch_js_test_runner',
-    'cluster.name': 'elasticsearch_js_test_runners',
-    'http.port': 9400,
-    'network.host': 'localhost',
-    'discovery.zen.ping_timeout': 1,
-    'discovery.zen.ping.multicast.enabled': false
-  }
-};
-
-/**
- * set config vars based on the ref.
- *
- * @param {string} ref    - either a tag or branch name
- * @param {[type]} target - the grunt target to configure
- */
-function setConfig(ref, target) {
-  var v = Version.fromBranch(String(ref).replace(/^v/, '').replace(/(\d+\.\d+)\..+/, '$1'));
-  var config = target.options.config = (target.options.config || {});
-
-  if (v.satisfies('^1.2')) {
-    _.merge(config, {
+var opts = [
+  {
+    version: '*',
+    directory: fromRoot('.esvm'),
+    nodes: 1,
+    quiet: false,
+    config: {
+      'node.name': 'elasticsearch_js_test_runner',
+      'cluster.name': 'elasticsearch_js_test_runners',
+      'http.port': 9400,
+      'network.host': 'localhost',
+      'discovery.zen.ping.multicast.enabled': false
+    }
+  },
+  {
+    version: '<1.6',
+    config: {
+      'discovery.zen.ping_timeout': 1
+    }
+  },
+  {
+    version: '^1.2 <1.6',
+    config: {
       'node.bench': true,
       'script.disable_dynamic': false
-    });
-  }
-
-  if (v.satisfies('>=1.6')) {
-    _.merge(config, {
+    }
+  },
+  {
+    version: '>=1.6',
+    config: {
       'node.bench': true,
       'script.inline': true,
       'script.indexed': true
-    });
+    }
+  },
+  {
+    version: '>=2.0',
+    config: {
+      'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos')
+    }
   }
-
-  _.defaultsDeep(target.options, defaultOpts);
-
-  if (v.satisfies('>=1.6')) {
-    delete config['discovery.zen.ping_timeout'];
-  }
-
-  if (target.options.branch && !target.options.version) {
-    target.options.fresh = true;
-  }
-}
+];
 
 // targets for each branch
 utils.branches.forEach(function (branch) {
   exports[branch] = {
-    options: {
-      branch: branch
-    }
+    options: Version.fromBranch(branch).mergeOpts(opts, {
+      branch: branch,
+      fresh: true
+    })
   };
-  setConfig(branch, exports[branch]);
 });
 
 
@@ -71,23 +62,27 @@ utils.branches.forEach(function (branch) {
   var ref = process.env.ES_REF;
   var port = process.env.ES_PORT;
 
-  var options = {
+  var v;
+  var defaults = {
     config: {
       'http.port': port || 9200
     }
   };
 
   if (release) {
-    options.version = release;
+    v = new Version(String(release).replace(/^v/, ''));
+    defaults.version = v.version;
   }
   else if (ref) {
-    // assume it is a ref to a branch
-    options.branch = ref;
+    v = new Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
+    defaults.branch = ref;
+    defaults.fresh = true;
   }
   else {
     return;
   }
 
-  exports.ci_env = { options: options };
-  setConfig(ref, exports.ci_env);
+  exports.ci_env = {
+    options: v.mergeOpts(opts, defaults)
+  };
 }());
