@@ -5806,7 +5806,7 @@ api.snapshot.prototype.create = ca({
     }
   },
   url: {
-    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>/_create',
+    fmt: '/_snapshot/<%=repository%>/<%=snapshot%>',
     req: {
       repository: {
         type: 'string'

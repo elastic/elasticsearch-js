@@ -163,9 +163,6 @@ module.exports = [
         '/{index}/_stats/indexing',
         '/{index}/_stats/search/{search_groups}',
         '/{index}/_stats/fielddata/{fields}'
-      ],
-      'snapshot.create': [
-        '/_snapshot/{repository}/{snapshot}'
       ]
     }
   },
@@ -175,6 +172,14 @@ module.exports = [
       'indices.putAlias': [
         // '/{index}/_alias/{name}',
         '/{index}/_aliases/{name}'
+      ]
+    }
+  },
+  {
+    version: '<1.6.0',
+    aliases: {
+      'snapshot.create': [
+        '/_snapshot/{repository}/{snapshot}'
       ]
     }
   },
