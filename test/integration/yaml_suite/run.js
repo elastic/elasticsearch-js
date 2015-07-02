@@ -26,9 +26,10 @@ module.exports = function (branch) {
       clientManager.create(apiVersion, port, done);
     });
 
-    before(function (done) {
+    before(function () {
       // make sure ES is empty
-      clientManager.get().clearEs(done);
+      this.timeout(0);
+      return clientManager.get().clearEs();
     });
 
     var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {

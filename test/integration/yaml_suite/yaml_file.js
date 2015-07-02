@@ -29,8 +29,8 @@ function YamlFile(filename, docs) {
       }
     });
 
-    afterEach(/* doc */function (done) {
-      clientManager.get().clearEs(done);
+    afterEach(/* doc */function () {
+      return clientManager.get().clearEs();
     });
   });
 

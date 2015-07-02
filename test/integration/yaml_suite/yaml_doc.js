@@ -103,11 +103,6 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 }
 
 
-// empty all of the indices in ES please
-function clearIndices(done) {
-  clientManager.get().clearEs(done);
-}
-
 function YamlDoc(doc, file) {
   var self = this;
 
