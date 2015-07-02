@@ -72,7 +72,7 @@
     "nock": "~0.28.3",
     "open": "0.0.4",
     "optimist": "~0.6.0",
-    "semver": "~4.1.0",
+    "semver": "^4.3.6",
     "sinon": "~1.12.2",
     "split": "~0.3.2",
     "through2": "~0.6.3",
@@ -84,7 +84,7 @@
     "bluebird": "^2.9.14",
     "chalk": "^1.0.0",
     "forever-agent": "^0.6.0",
-    "lodash": "^3.9.3",
+    "lodash": "^3.10.0",
     "lodash-compat": "^3.0.0"
   },
   "repository": {

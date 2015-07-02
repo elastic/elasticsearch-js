@@ -2,6 +2,8 @@ var utils = require('../utils');
 var _ = require('lodash');
 var join = require('path').join;
 
+var Version = require('../../scripts/Version');
+
 var defaultOpts = {
   directory: join(__dirname, '..', '..', '.esvm'),
   nodes: 1,
@@ -23,39 +25,28 @@ var defaultOpts = {
  * @param {[type]} target - the grunt target to configure
  */
 function setConfig(ref, target) {
-  var minorV = String(ref).replace(/^v/, '').replace(/(\d+\.\d+)\..+/, '$1');
+  var v = Version.fromBranch(String(ref).replace(/^v/, '').replace(/(\d+\.\d+)\..+/, '$1'));
+  var config = target.options.config = (target.options.config || {});
 
-  switch (minorV) {
-  case '0.90':
-  case '1.0':
-  case '1.1':
-    // no special treatment
-    break;
-  case '1.2':
-  case '1.3':
-  case '1.4':
-  case '1.5':
-  case '1.6':
-  case '1.x':
-    target.options.config = _.merge({
+  if (v.satisfies('^1.2')) {
+    _.merge(config, {
       'node.bench': true,
       'script.disable_dynamic': false
-    }, target.options.config);
-    break;
-  default:
-    target.options.config = _.merge({
+    });
+  }
+
+  if (v.satisfies('>=1.6')) {
+    _.merge(config, {
       'node.bench': true,
       'script.inline': true,
       'script.indexed': true
-    }, target.options.config);
-    break;
+    });
   }
 
+  _.defaultsDeep(target.options, defaultOpts);
 
-  target.options = _.merge({}, defaultOpts, target.options);
-
-  if (minorV === 'master') {
-    delete target.options.config['discovery.zen.ping_timeout'];
+  if (v.satisfies('>=1.6')) {
+    delete config['discovery.zen.ping_timeout'];
   }
 
   if (target.options.branch && !target.options.version) {

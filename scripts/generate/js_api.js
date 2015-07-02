@@ -9,9 +9,9 @@ module.exports = function (branch, done) {
   var async = require('async');
   var chalk = require('chalk');
   var path = require('path');
-  var semver = require('semver');
   var fromRoot = path.join.bind(path, require('find-root')(__dirname));
   var templates = require('./templates');
+  var Version = require('../Version');
   var urlParamRE = /\{(\w+)\}/g;
 
   var files; // populated in readSpecFiles
@@ -19,34 +19,10 @@ module.exports = function (branch, done) {
   var docVars; // slightly modified clone of apiSpec for the docs
 
   var branchSuffix = utils.branchSuffix(branch);
-  var maxMinorVersion = (function () {
-    var branches = require(fromRoot('package.json')).config.supported_es_branches;
-    var top = branches.map(function (v) { return v + '.0'; }).sort(semver.compare).pop();
-    return top.split('.')[1];
-  }());
-
-  var branchAsVersion = (function () {
-    var m;
-
-    // master === the highest version number
-    if (branch === 'master') return '2.0.0';
-    // n.m -> n.m.0
-    if (m = branch.match(/^\d+\.\d+$/)) return branch + '.0';
-    // n.x -> n.(maxVersion + 1).0
-    if (m = branch.match(/^(\d+)\.x$/i)) return m[1] + '.' + (+maxMinorVersion + 1) + '.0';
-
-    throw new Error('unable to convert branch "' + branch + '" to semver');
-  }());
-
   var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
 
-  var overrides = require('./overrides')
-  .filter(function (rule) {
-    return semver.satisfies(branchAsVersion, rule.version);
-  })
-  .reduce(function (overrides, rule) {
-    return _.merge(overrides, _.omit(rule, 'version'));
-  }, {
+  var version = Version.fromBranch(branch);
+  var overrides = version.mergeOpts(require('./overrides'), {
     aliases: {},
     paramAsBody: {},
     clientActionModifier: false
