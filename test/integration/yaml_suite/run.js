@@ -28,7 +28,6 @@ module.exports = function (branch) {
 
     before(function () {
       // make sure ES is empty
-      this.timeout(0);
       return clientManager.get().clearEs();
     });
 
