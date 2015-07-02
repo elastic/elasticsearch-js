@@ -112,9 +112,10 @@ module.exports = {
               repository: repo,
               snapshot: '_all'
             })
-            .catch(_.noop)
             .then(function (resp) {
               return _.pluck(resp.snapshots, 'snapshot');
+            }, function () {
+              return [];
             })
             .map(function (snapshot) {
               return client.snapshot.delete({

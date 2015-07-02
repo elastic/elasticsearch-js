@@ -8,7 +8,10 @@ var JENKINS_REPORTER = rel('test/utils/jenkins-reporter.js');
 
 var config = {
   unit: {
-    src: 'test/unit/index.js'
+    src: 'test/unit/index.js',
+    options: {
+      reporter: 'nyan'
+    }
   },
 
   jenkins_unit: {

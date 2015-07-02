@@ -41,16 +41,16 @@ Version.prototype.satisfies = function (range) {
 // merge a list of option objects, each of which has a "version" key dictating
 // the range of versions those options should be included in. Options are merged
 // in the order of the array
-Version.prototype.mergeOpts = function (opts, defaults) {
+Version.prototype.mergeOpts = function (opts) {
   var self = this;
 
-  return opts
-  .filter(function (rule) {
+  return opts.filter(function (rule) {
     return self.satisfies(rule.version);
   })
-  .reduce(function (overrides, rule) {
-    return _.merge(overrides, _.omit(rule, 'version'));
-  }, defaults ? _.clone(defaults) : {});
+  .map(_.ary(_.partialRight(_.omit, 'version'), 1))
+  .concat(_.rest(arguments))
+  .reverse()
+  .reduce(_.merge, {});
 };
 
 module.exports = Version;

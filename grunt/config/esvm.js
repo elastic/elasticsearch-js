@@ -1,8 +1,13 @@
+var _ = require('lodash');
 var utils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
+var release = process.env.ES_RELEASE;
+var ref = process.env.ES_REF;
+var port = parseFloat(_.get(process.env, 'ES_PORT', 9200));
+
 var Version = require('../../scripts/Version');
-var opts = [
+var versionedOpts = [
   {
     version: '*',
     directory: fromRoot('.esvm'),
@@ -11,7 +16,7 @@ var opts = [
     config: {
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
-      'http.port': 9400,
+      'http.port': port,
       'network.host': 'localhost',
       'discovery.zen.ping.multicast.enabled': false
     }
@@ -48,7 +53,7 @@ var opts = [
 // targets for each branch
 utils.branches.forEach(function (branch) {
   exports[branch] = {
-    options: Version.fromBranch(branch).mergeOpts(opts, {
+    options: Version.fromBranch(branch).mergeOpts(versionedOpts, {
       branch: branch,
       fresh: true
     })
@@ -58,31 +63,27 @@ utils.branches.forEach(function (branch) {
 
 // ci target, based on env variables
 (function () {
-  var release = process.env.ES_RELEASE;
-  var ref = process.env.ES_REF;
-  var port = process.env.ES_PORT;
-
   var v;
-  var defaults = {
+  var opts = {
     config: {
-      'http.port': port || 9200
+      'http.port': port
     }
   };
 
   if (release) {
     v = new Version(String(release).replace(/^v/, ''));
-    defaults.version = v.version;
+    opts.version = v.version;
   }
   else if (ref) {
     v = new Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
-    defaults.branch = ref;
-    defaults.fresh = true;
+    opts.branch = ref;
+    opts.fresh = true;
   }
   else {
     return;
   }
 
   exports.ci_env = {
-    options: v.mergeOpts(opts, defaults)
+    options: v.mergeOpts(versionedOpts, opts)
   };
 }());
