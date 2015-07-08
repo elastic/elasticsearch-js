@@ -306,6 +306,7 @@ function exec(transport, spec, params, cb) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
       case 'body':
+      case 'headers':
       case 'requestTimeout':
       case 'maxRetries':
         request[key] = params[key];

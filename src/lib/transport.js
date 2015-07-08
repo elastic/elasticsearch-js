@@ -154,6 +154,7 @@ Transport.prototype.request = function (params, cb) {
     path: params.path || '/',
     query: params.query,
     body: params.body,
+    headers: params.headers
   };
 
   function sendReqWithConnection(err, _connection) {
