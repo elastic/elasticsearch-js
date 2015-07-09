@@ -20,6 +20,7 @@
       "pattern": "specified in test/unit/coverage.js"
     },
     "supported_es_branches": [
+      "1.7",
       "1.6",
       "1.5",
       "1.4",
@@ -33,7 +34,7 @@
       "master",
       "1.x"
     ],
-    "default_api_branch": "1.6"
+    "default_api_branch": "1.7"
   },
   "devDependencies": {
     "aliasify": "~1.2.4",

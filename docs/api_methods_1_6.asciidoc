@@ -1,11 +1,11 @@
-[[api-reference]]
-== 1.7 API
+[[api-reference-1-6]]
+== 1.6 API
 
 
-NOTE: This is currently the default API, but in upcomming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
+NOTE: At this time, you must opt into the 1.6 API by setting the `apiVersion` config parameter.
 
 
-[[api-bulk]]
+[[api-bulk-1-6]]
 === `bulk`
 
 [source,js]
@@ -69,7 +69,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-clearscroll]]
+[[api-clearscroll-1-6]]
 === `clearScroll`
 
 [source,js]
@@ -92,7 +92,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-count]]
+[[api-count-1-6]]
 === `count`
 
 [source,js]
@@ -189,7 +189,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-countpercolate]]
+[[api-countpercolate-1-6]]
 === `countPercolate`
 
 [source,js]
@@ -246,7 +246,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-create]]
+[[api-create-1-6]]
 === `create`
 
 [source,js]
@@ -325,7 +325,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-delete]]
+[[api-delete-1-6]]
 === `delete`
 
 [source,js]
@@ -393,7 +393,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletebyquery]]
+[[api-deletebyquery-1-6]]
 === `deleteByQuery`
 
 [source,js]
@@ -483,7 +483,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletescript]]
+[[api-deletescript-1-6]]
 === `deleteScript`
 
 [source,js]
@@ -518,7 +518,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletetemplate]]
+[[api-deletetemplate-1-6]]
 === `deleteTemplate`
 
 [source,js]
@@ -551,7 +551,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-exists]]
+[[api-exists-1-6]]
 === `exists`
 
 [source,js]
@@ -602,7 +602,7 @@ client.exists({
 
 link:#[back to top]
 
-[[api-explain]]
+[[api-explain-1-6]]
 === `explain`
 
 [source,js]
@@ -692,7 +692,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-fieldstats]]
+[[api-fieldstats-1-6]]
 === `fieldStats`
 
 [source,js]
@@ -735,7 +735,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-get]]
+[[api-get-1-6]]
 === `get`
 
 [source,js]
@@ -800,7 +800,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-getscript]]
+[[api-getscript-1-6]]
 === `getScript`
 
 [source,js]
@@ -835,7 +835,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-getsource]]
+[[api-getsource-1-6]]
 === `getSource`
 
 [source,js]
@@ -889,7 +889,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-gettemplate]]
+[[api-gettemplate-1-6]]
 === `getTemplate`
 
 [source,js]
@@ -922,7 +922,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-index]]
+[[api-index-1-6]]
 === `index`
 
 [source,js]
@@ -1004,7 +1004,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-info]]
+[[api-info-1-6]]
 === `info`
 
 [source,js]
@@ -1020,7 +1020,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 
 
-[[api-mget]]
+[[api-mget-1-6]]
 === `mget`
 
 [source,js]
@@ -1087,7 +1087,7 @@ client.mget({
 
 link:#[back to top]
 
-[[api-mlt]]
+[[api-mlt-1-6]]
 === `mlt`
 
 [source,js]
@@ -1161,7 +1161,7 @@ client.mlt({
 
 link:#[back to top]
 
-[[api-mpercolate]]
+[[api-mpercolate-1-6]]
 === `mpercolate`
 
 [source,js]
@@ -1198,7 +1198,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-msearch]]
+[[api-msearch-1-6]]
 === `msearch`
 
 [source,js]
@@ -1247,7 +1247,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-mtermvectors]]
+[[api-mtermvectors-1-6]]
 === `mtermvectors`
 
 [source,js]
@@ -1296,7 +1296,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-percolate]]
+[[api-percolate-1-6]]
 === `percolate`
 
 [source,js]
@@ -1435,7 +1435,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-ping]]
+[[api-ping-1-6]]
 === `ping`
 
 [source,js]
@@ -1451,7 +1451,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 
 
 
-[[api-putscript]]
+[[api-putscript-1-6]]
 === `putScript`
 
 [source,js]
@@ -1492,7 +1492,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-puttemplate]]
+[[api-puttemplate-1-6]]
 === `putTemplate`
 
 [source,js]
@@ -1531,7 +1531,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-scroll]]
+[[api-scroll-1-6]]
 === `scroll`
 
 [source,js]
@@ -1584,7 +1584,7 @@ client.search({
 
 link:#[back to top]
 
-[[api-search]]
+[[api-search-1-6]]
 === `search`
 
 [source,js]
@@ -1733,7 +1733,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchexists]]
+[[api-searchexists-1-6]]
 === `searchExists`
 
 [source,js]
@@ -1794,7 +1794,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchshards]]
+[[api-searchshards-1-6]]
 === `searchShards`
 
 [source,js]
@@ -1837,7 +1837,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchtemplate]]
+[[api-searchtemplate-1-6]]
 === `searchTemplate`
 
 [source,js]
@@ -1890,7 +1890,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-suggest]]
+[[api-suggest-1-6]]
 === `suggest`
 
 [source,js]
@@ -1962,7 +1962,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-termvector]]
+[[api-termvector-1-6]]
 === `termvector`
 
 [source,js]
@@ -2009,7 +2009,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-update]]
+[[api-update-1-6]]
 === `update`
 
 [source,js]
@@ -2152,7 +2152,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-aliases]]
+[[api-cat-aliases-1-6]]
 === `cat.aliases`
 
 [source,js]
@@ -2185,7 +2185,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-allocation]]
+[[api-cat-allocation-1-6]]
 === `cat.allocation`
 
 [source,js]
@@ -2226,7 +2226,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-count]]
+[[api-cat-count-1-6]]
 === `cat.count`
 
 [source,js]
@@ -2259,7 +2259,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-fielddata]]
+[[api-cat-fielddata-1-6]]
 === `cat.fielddata`
 
 [source,js]
@@ -2300,7 +2300,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-health]]
+[[api-cat-health-1-6]]
 === `cat.health`
 
 [source,js]
@@ -2333,7 +2333,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-help]]
+[[api-cat-help-1-6]]
 === `cat.help`
 
 [source,js]
@@ -2356,7 +2356,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-indices]]
+[[api-cat-indices-1-6]]
 === `cat.indices`
 
 [source,js]
@@ -2399,7 +2399,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-master]]
+[[api-cat-master-1-6]]
 === `cat.master`
 
 [source,js]
@@ -2430,7 +2430,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-nodes]]
+[[api-cat-nodes-1-6]]
 === `cat.nodes`
 
 [source,js]
@@ -2461,7 +2461,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-pendingtasks]]
+[[api-cat-pendingtasks-1-6]]
 === `cat.pendingTasks`
 
 [source,js]
@@ -2492,7 +2492,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-plugins]]
+[[api-cat-plugins-1-6]]
 === `cat.plugins`
 
 [source,js]
@@ -2523,7 +2523,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-recovery]]
+[[api-cat-recovery-1-6]]
 === `cat.recovery`
 
 [source,js]
@@ -2562,7 +2562,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-segments]]
+[[api-cat-segments-1-6]]
 === `cat.segments`
 
 [source,js]
@@ -2591,7 +2591,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-shards]]
+[[api-cat-shards-1-6]]
 === `cat.shards`
 
 [source,js]
@@ -2624,7 +2624,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cat-threadpool]]
+[[api-cat-threadpool-1-6]]
 === `cat.threadPool`
 
 [source,js]
@@ -2657,7 +2657,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-getsettings]]
+[[api-cluster-getsettings-1-6]]
 === `cluster.getSettings`
 
 [source,js]
@@ -2684,7 +2684,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-health]]
+[[api-cluster-health-1-6]]
 === `cluster.health`
 
 [source,js]
@@ -2733,7 +2733,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-pendingtasks]]
+[[api-cluster-pendingtasks-1-6]]
 === `cluster.pendingTasks`
 
 [source,js]
@@ -2758,7 +2758,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-putsettings]]
+[[api-cluster-putsettings-1-6]]
 === `cluster.putSettings`
 
 [source,js]
@@ -2785,7 +2785,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-cluster-reroute]]
+[[api-cluster-reroute-1-6]]
 === `cluster.reroute`
 
 [source,js]
@@ -2816,7 +2816,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-cluster-state]]
+[[api-cluster-state-1-6]]
 === `cluster.state`
 
 [source,js]
@@ -2859,7 +2859,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-stats]]
+[[api-cluster-stats-1-6]]
 === `cluster.stats`
 
 [source,js]
@@ -2886,7 +2886,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-analyze]]
+[[api-indices-analyze-1-6]]
 === `indices.analyze`
 
 [source,js]
@@ -2929,7 +2929,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-clearcache]]
+[[api-indices-clearcache-1-6]]
 === `indices.clearCache`
 
 [source,js]
@@ -2984,7 +2984,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-close]]
+[[api-indices-close-1-6]]
 === `indices.close`
 
 [source,js]
@@ -3024,7 +3024,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-create]]
+[[api-indices-create-1-6]]
 === `indices.create`
 
 [source,js]
@@ -3051,7 +3051,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-indices-delete]]
+[[api-indices-delete-1-6]]
 === `indices.delete`
 
 [source,js]
@@ -3078,7 +3078,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletealias]]
+[[api-indices-deletealias-1-6]]
 === `indices.deleteAlias`
 
 [source,js]
@@ -3107,7 +3107,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletemapping]]
+[[api-indices-deletemapping-1-6]]
 === `indices.deleteMapping`
 
 [source,js]
@@ -3134,7 +3134,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletetemplate]]
+[[api-indices-deletetemplate-1-6]]
 === `indices.deleteTemplate`
 
 [source,js]
@@ -3161,7 +3161,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-deletewarmer]]
+[[api-indices-deletewarmer-1-6]]
 === `indices.deleteWarmer`
 
 [source,js]
@@ -3188,7 +3188,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-indices-exists]]
+[[api-indices-exists-1-6]]
 === `indices.exists`
 
 [source,js]
@@ -3225,7 +3225,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existsalias]]
+[[api-indices-existsalias-1-6]]
 === `indices.existsAlias`
 
 [source,js]
@@ -3264,7 +3264,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existstemplate]]
+[[api-indices-existstemplate-1-6]]
 === `indices.existsTemplate`
 
 [source,js]
@@ -3291,7 +3291,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-indices-existstype]]
+[[api-indices-existstype-1-6]]
 === `indices.existsType`
 
 [source,js]
@@ -3330,7 +3330,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-flush]]
+[[api-indices-flush-1-6]]
 === `indices.flush`
 
 [source,js]
@@ -3369,7 +3369,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-flushsynced]]
+[[api-indices-flushsynced-1-6]]
 === `indices.flushSynced`
 
 [source,js]
@@ -3404,7 +3404,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-get]]
+[[api-indices-get-1-6]]
 === `indices.get`
 
 [source,js]
@@ -3443,7 +3443,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getalias]]
+[[api-indices-getalias-1-6]]
 === `indices.getAlias`
 
 [source,js]
@@ -3482,7 +3482,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getaliases]]
+[[api-indices-getaliases-1-6]]
 === `indices.getAliases`
 
 [source,js]
@@ -3511,7 +3511,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-getfieldmapping]]
+[[api-indices-getfieldmapping-1-6]]
 === `indices.getFieldMapping`
 
 [source,js]
@@ -3554,7 +3554,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getmapping]]
+[[api-indices-getmapping-1-6]]
 === `indices.getMapping`
 
 [source,js]
@@ -3593,7 +3593,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getsettings]]
+[[api-indices-getsettings-1-6]]
 === `indices.getSettings`
 
 [source,js]
@@ -3634,7 +3634,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-gettemplate]]
+[[api-indices-gettemplate-1-6]]
 === `indices.getTemplate`
 
 [source,js]
@@ -3663,7 +3663,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-getupgrade]]
+[[api-indices-getupgrade-1-6]]
 === `indices.getUpgrade`
 
 [source,js]
@@ -3700,7 +3700,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getwarmer]]
+[[api-indices-getwarmer-1-6]]
 === `indices.getWarmer`
 
 [source,js]
@@ -3741,7 +3741,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-open]]
+[[api-indices-open-1-6]]
 === `indices.open`
 
 [source,js]
@@ -3780,7 +3780,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-optimize]]
+[[api-indices-optimize-1-6]]
 === `indices.optimize`
 
 [source,js]
@@ -3827,7 +3827,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putalias]]
+[[api-indices-putalias-1-6]]
 === `indices.putAlias`
 
 [source,js]
@@ -3856,7 +3856,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-putmapping]]
+[[api-indices-putmapping-1-6]]
 === `indices.putMapping`
 
 [source,js]
@@ -3899,7 +3899,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putsettings]]
+[[api-indices-putsettings-1-6]]
 === `indices.putSettings`
 
 [source,js]
@@ -3938,7 +3938,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-puttemplate]]
+[[api-indices-puttemplate-1-6]]
 === `indices.putTemplate`
 
 [source,js]
@@ -3971,7 +3971,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-putwarmer]]
+[[api-indices-putwarmer-1-6]]
 === `indices.putWarmer`
 
 [source,js]
@@ -4012,7 +4012,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-recovery]]
+[[api-indices-recovery-1-6]]
 === `indices.recovery`
 
 [source,js]
@@ -4041,7 +4041,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-indices-refresh]]
+[[api-indices-refresh-1-6]]
 === `indices.refresh`
 
 [source,js]
@@ -4080,7 +4080,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-segments]]
+[[api-indices-segments-1-6]]
 === `indices.segments`
 
 [source,js]
@@ -4119,7 +4119,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-stats]]
+[[api-indices-stats-1-6]]
 === `indices.stats`
 
 [source,js]
@@ -4163,7 +4163,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-status]]
+[[api-indices-status-1-6]]
 === `indices.status`
 
 [source,js]
@@ -4206,7 +4206,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-updatealiases]]
+[[api-indices-updatealiases-1-6]]
 === `indices.updateAliases`
 
 [source,js]
@@ -4244,7 +4244,7 @@ client.indices.updateAliases({
 
 link:#[back to top]
 
-[[api-indices-upgrade]]
+[[api-indices-upgrade-1-6]]
 === `indices.upgrade`
 
 [source,js]
@@ -4283,7 +4283,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-validatequery]]
+[[api-indices-validatequery-1-6]]
 === `indices.validateQuery`
 
 [source,js]
@@ -4344,7 +4344,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-nodes-hotthreads]]
+[[api-nodes-hotthreads-1-6]]
 === `nodes.hotThreads`
 
 [source,js]
@@ -4382,7 +4382,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-nodes-info]]
+[[api-nodes-info-1-6]]
 === `nodes.info`
 
 [source,js]
@@ -4411,7 +4411,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-nodes-shutdown]]
+[[api-nodes-shutdown-1-6]]
 === `nodes.shutdown`
 
 [source,js]
@@ -4438,7 +4438,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-nodes-stats]]
+[[api-nodes-stats-1-6]]
 === `nodes.stats`
 
 [source,js]
@@ -4484,7 +4484,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-snapshot-create]]
+[[api-snapshot-create-1-6]]
 === `snapshot.create`
 
 [source,js]
@@ -4513,7 +4513,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-createrepository]]
+[[api-snapshot-createrepository-1-6]]
 === `snapshot.createRepository`
 
 [source,js]
@@ -4542,7 +4542,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-delete]]
+[[api-snapshot-delete-1-6]]
 === `snapshot.delete`
 
 [source,js]
@@ -4569,7 +4569,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-snapshot-deleterepository]]
+[[api-snapshot-deleterepository-1-6]]
 === `snapshot.deleteRepository`
 
 [source,js]
@@ -4596,7 +4596,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 link:#[back to top]
 
-[[api-snapshot-get]]
+[[api-snapshot-get-1-6]]
 === `snapshot.get`
 
 [source,js]
@@ -4623,7 +4623,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-snapshot-getrepository]]
+[[api-snapshot-getrepository-1-6]]
 === `snapshot.getRepository`
 
 [source,js]
@@ -4650,7 +4650,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-snapshot-restore]]
+[[api-snapshot-restore-1-6]]
 === `snapshot.restore`
 
 [source,js]
@@ -4679,7 +4679,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 link:#[back to top]
 
-[[api-snapshot-status]]
+[[api-snapshot-status-1-6]]
 === `snapshot.status`
 
 [source,js]
@@ -4706,7 +4706,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 link:#[back to top]
 
-[[api-snapshot-verifyrepository]]
+[[api-snapshot-verifyrepository-1-6]]
 === `snapshot.verifyRepository`
 
 [source,js]
