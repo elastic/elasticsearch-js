@@ -39,12 +39,7 @@ var versionedOpts = [
     config: {
       'node.bench': true,
       'script.inline': true,
-      'script.indexed': true
-    }
-  },
-  {
-    version: '>=2.0',
-    config: {
+      'script.indexed': true,
       'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos')
     }
   }
