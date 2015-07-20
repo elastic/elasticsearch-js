@@ -40,7 +40,8 @@ var versionedOpts = [
       'node.bench': true,
       'script.inline': true,
       'script.indexed': true,
-      'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos')
+      'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
+      'repositories.url.allowed_urls': 'http://snapshot.*'
     }
   }
 ];

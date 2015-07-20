@@ -12,7 +12,7 @@ var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
 
-var implementedFeatures = ['gtelte', 'regex', 'benchmark', 'stash_in_path'];
+var implementedFeatures = ['gtelte', 'regex', 'benchmark', 'stash_in_path', 'groovy_scripting'];
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
