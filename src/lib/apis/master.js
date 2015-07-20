@@ -3745,6 +3745,66 @@ api.indices.prototype.segments = ca({
 });
 
 /**
+ * Perform a [indices.shardStores](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shard-stores.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.status - A comma-separated list of statuses used to filter on shards to get store information for
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Anything} params.operationThreading - TODO: ?
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ */
+api.indices.prototype.shardStores = ca({
+  params: {
+    status: {
+      type: 'list',
+      options: [
+        'green',
+        'yellow',
+        'red',
+        'all'
+      ]
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    },
+    operationThreading: {
+      name: 'operation_threading'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/_shard_stores',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_shard_stores'
+    }
+  ]
+});
+
+/**
  * Perform a [indices.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action

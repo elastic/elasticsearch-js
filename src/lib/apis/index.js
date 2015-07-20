@@ -1,6 +1,5 @@
 module.exports = {
   'master': require('./master'),
-  '1.x': require('./1_x'),
   '1.7': require('./1_7'),
   '1.6': require('./1_6'),
   '1.5': require('./1_5'),
