@@ -122,7 +122,7 @@ Default::: `30000`
 
 `deadTimeout`[[config-dead-timeout]]:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
 
-Default::: `30000`
+Default::: `60000`
 
 
 `pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.
