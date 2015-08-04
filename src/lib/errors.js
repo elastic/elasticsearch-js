@@ -124,6 +124,12 @@ var statusCodes = {
   412: 'Precondition Failed',
 
   /**
+   * Too Many Requests
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  429: 'Too Many Requests',
+
+  /**
    * Conflict
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
