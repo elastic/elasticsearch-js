@@ -4,7 +4,6 @@ node_js:
   - "iojs"
 cache:
   directories:
-  - src/_elasticsearch_/
   - esvm
   - node_modules
 before_cache:
