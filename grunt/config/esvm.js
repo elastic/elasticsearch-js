@@ -10,10 +10,11 @@ var Version = require('../../scripts/Version');
 var versionedOpts = [
   {
     version: '*',
-    directory: fromRoot('.esvm'),
+    directory: fromRoot('esvm'),
     nodes: 1,
     quiet: false,
     config: {
+      'path.data': fromRoot('esvm/data_dir'),
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
       'http.port': port,

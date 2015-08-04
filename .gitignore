@@ -6,7 +6,7 @@ scripts/scratch*
 test/integration/yaml_suite/log
 .aws-config.json
 .idea
-.esvm
+esvm
 .es-snapshot-repos
 
 ## generated files
