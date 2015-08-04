@@ -21,19 +21,22 @@ describe('Client instances creation', function () {
     }).to.throwError(/previous "elasticsearch" module/);
   });
 
-  var def = require('../../../package.json').config.default_api_branch;
+  var pkg = require('../../../package.json');
+  var def = pkg.config.default_api_branch;
+  var prev = pkg.config.supported_es_branches[pkg.config.supported_es_branches.indexOf(def) + 1];
+
   it('inherits the ' + def + ' API by default', function () {
     expect(client.bulk).to.be(apis[def].bulk);
     expect(client.nodes.stats).to.be(apis[def].nodes.prototype.stats);
   });
 
-  it('inherits the 1.4 API when specified', function () {
+  it('inherits the ' + prev + ' API when specified', function () {
     client.close();
     client = es.Client({
-      apiVersion: '1.4'
+      apiVersion: prev
     });
-    expect(client.bulk).to.be(apis['1.4'].bulk);
-    expect(client.cluster.nodeStats).to.be(apis['1.4'].cluster.prototype.nodeStats);
+    expect(client.bulk).to.be(apis[prev].bulk);
+    expect(client.cluster.nodeStats).to.be(apis[prev].cluster.prototype.nodeStats);
   });
 
   it('closing the client causes it\'s transport to be closed', function () {
