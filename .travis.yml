@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "node"
   - "iojs"
+sudo: false
 secure: "UFAGQ6m/VnEahbj9vttY9YoA5h5rEBE6K7AvEEbWnt+VKppV+w3hu3HZxgKr8C9PWhCzqlGvsLh+kCqykZhISU1fBCK/Ttp3nSpMvvF5tI2u51Rj1qZ/7NUGRU0qVI9KFt0rJeXMJwq3fivb1H6aojfPD1gsIte7NHNjUfd0iUg="
 env:
   - ES_RELEASE=1.5.2 RUN=NODE_INTEGRATION
