@@ -909,7 +909,7 @@ client.msearch({
     { query: { match_all: {} } },
 
     // query_string query, on index/mytype
-    { index: 'myindex', type: 'mytype' },
+    { _index: 'myindex', _type: 'mytype' },
     { query: { query_string: { query: '"Test 1"' } } }
   ]
 });
