@@ -21,7 +21,7 @@ var implementedFeatures = ['gtelte', 'regex', 'benchmark', 'stash_in_path', 'gro
 var ES_VERSION = null;
 
 // core expression for finding a version
-var versionExp = '((?:\\d+\\.){0,2}\\d+)(?:\\.\\w+)?|';
+var versionExp = '((?:\\d+\\.){0,2}\\d+)(?:[\\.\\-]\\w+)?|';
 
 // match all whitespace within a "regexp" match arg
 var reWhitespace_RE = /\s+/g;
@@ -432,7 +432,7 @@ YamlDoc.prototype = {
         if (catcher) {
           if (catcher instanceof RegExp) {
             // error message should match the regexp
-            expect(error.message).to.match(catcher);
+            expect('' + error).to.match(catcher);
             error = null;
           } else if (typeof catcher === 'function') {
             // error should be an instance of

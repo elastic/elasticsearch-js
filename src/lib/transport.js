@@ -229,10 +229,15 @@ Transport.prototype.request = function (params, cb) {
       && (status < 200 || status >= 300)
       && (!params.ignore || !_.contains(params.ignore, status))
     ) {
+
+      var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
+      errorMetadata.statusCode = status;
+      errorMetadata.response = body;
+
       if (errors[status]) {
-        err = new errors[status](parsedBody && parsedBody.error);
+        err = new errors[status](parsedBody && parsedBody.error, errorMetadata);
       } else {
-        err = new errors.Generic('unknown error');
+        err = new errors.Generic('unknown error', errorMetadata);
       }
     }
 
