@@ -1,7 +1,8 @@
 # elasticsearch-js changelog
 
-## 6.0 (unreleased)
+## 6.0 (Aug 4 2015)
  - Added apiVersion `"1.7"`, which is now the default
+ - Error objects resulting from a completed http request now have much more information about the request that caused them.
 
 ## 5.0 (Jun 9 2015)
  - Added apiVersion `"1.6"`, which is now the default
