@@ -14,6 +14,13 @@ var config = {
     }
   },
 
+  ci_unit: {
+    src: 'test/unit/index.js',
+    options: {
+      reporter: 'spec'
+    }
+  },
+
   jenkins_unit: {
     src: 'test/unit/index.js',
     options: {

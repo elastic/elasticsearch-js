@@ -38,7 +38,7 @@ var taskOut; // task output stream
 
 task('NODE_UNIT', true, function () {
   if (!JENKINS) {
-    return grunt('jshint', 'mochacov:unit');
+    return grunt('jshint', 'mochacov:ci_unit');
   }
 
   return grunt('mochacov:jenkins_unit');
