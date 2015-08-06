@@ -118,6 +118,12 @@ var statusCodes = {
   500: 'Internal Server Error',
 
   /**
+   * TooManyRequests
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  429: 'Too Many Requests',
+
+  /**
    * PreconditionFailed
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
