@@ -1696,7 +1696,7 @@ client.search({
   }
 }, function (error, response) {
   // ...
-}):
+});
 ---------
 
 
