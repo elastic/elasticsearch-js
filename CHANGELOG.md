@@ -2,6 +2,7 @@
 
 ## 6.1 (Aug 18 2015)
  - Added experimental support for apiVersion `"2.0"`
+ - Added support for [many more status codes](https://github.com/elastic/elasticsearch-js/blob/ea6721127fb239951fb86ac3b386e182b26f683c/src/lib/errors.js#L94-L138) so that "unknown error" is far less likely.
 
 ## 6.0 (Aug 4 2015)
  - Added apiVersion `"1.7"`, which is now the default
