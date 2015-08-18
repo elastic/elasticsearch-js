@@ -353,6 +353,9 @@ YamlDoc.prototype = {
     case 'forbidden':
       catcher = 403;
       break;
+    case 'request_timeout':
+      catcher = 408;
+      break;
     case 'request':
       catcher = /.*/;
       break;
@@ -363,6 +366,8 @@ YamlDoc.prototype = {
       catcher = args.catch.match(/^\/(.*)\/$/);
       if (catcher) {
         catcher = new RegExp(catcher[1]);
+      } else {
+        return done(new TypeError('unsupported catch type ' + args.catch));
       }
     }
 
