@@ -31,7 +31,8 @@
       "0.90"
     ],
     "unstable_es_branches": [
-      "master"
+      "master",
+      "2.0"
     ],
     "default_api_branch": "1.7"
   },
