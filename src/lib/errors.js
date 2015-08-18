@@ -92,84 +92,49 @@ errors.RequestTypeError = function RequestTypeError(feature) {
 _.inherits(errors.RequestTypeError, ErrorAbstract);
 
 var statusCodes = {
-
-  /**
-   * GatewayTimeout
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  504: 'Gateway Timeout',
-
-  /**
-   * ServiceUnavailable
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  503: 'Service Unavailable',
-
-  /**
-   * BadGateway
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  502: 'Bad Gateway',
-
-  /**
-   * InternalServerError
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  500: 'Internal Server Error',
-
-  /**
-   * TooManyRequests
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  429: 'Too Many Requests',
-
-  /**
-   * PreconditionFailed
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  412: 'Precondition Failed',
-
-  /**
-   * Too Many Requests
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  429: 'Too Many Requests',
-
-  /**
-   * Conflict
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  409: 'Conflict',
-
-  /**
-   * AuthorizationException
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  403: 'Authorization Exception',
-
-  /**
-   * NotFound
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  404: 'Not Found',
-
-  /**
-   * AuthenticationException
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  401: 'Authentication Exception',
-
-  /**
-   * BadRequest
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
+  300: 'Multiple Choices',
+  301: 'Moved Permanently',
+  302: 'Found',
+  303: 'See Other',
+  304: 'Not Modified',
+  305: 'Use Proxy',
+  307: 'Temporary Redirect',
+  308: 'Permanent Redirect',
   400: 'Bad Request',
+  401: 'Authentication Exception',
+  402: 'Payment Required',
+  403: 'Authorization Exception',
+  404: 'Not Found',
+  405: 'Method Not Allowed',
+  406: 'Not Acceptable',
+  407: 'Proxy Authentication Required',
+  408: 'Request Timeout',
+  409: 'Conflict',
+  410: 'Gone',
+  411: 'Length Required',
+  412: 'Precondition Failed',
+  413: 'Request Entity Too Large',
+  414: 'Request URIToo Long',
+  415: 'Unsupported Media Type',
+  416: 'Requested Range Not Satisfiable',
+  417: 'Expectation Failed',
+  418: 'Im ATeapot',
+  421: 'Too Many Connections From This IP',
+  426: 'Upgrade Required',
+  429: 'Too Many Requests',
+  450: 'Blocked By Windows Parental Controls',
+  494: 'Request Header Too Large',
+  497: 'HTTPTo HTTPS',
+  499: 'Client Closed Request',
 
-  /**
-   * MovedPermanently
-   * @param {String} [msg] - An error message that will probably end up in a log.
-   */
-  301: 'Moved Permanently'
+  500: 'Internal Server Error',
+  501: 'Not Implemented',
+  502: 'Bad Gateway',
+  503: 'Service Unavailable',
+  504: 'Gateway Timeout',
+  505: 'HTTPVersion Not Supported',
+  506: 'Variant Also Negotiates',
+  510: 'Not Extended'
 };
 
 _.each(statusCodes, function (name, status) {
