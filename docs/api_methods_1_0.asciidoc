@@ -129,10 +129,12 @@ client.count({
 client.count(
   index: 'index_name',
   body: {
-    filtered: {
-      filter: {
-        terms: {
-          foo: ['bar']
+    query: {
+      filtered: {
+        filter: {
+          terms: {
+            foo: ['bar']
+          }
         }
       }
     }
