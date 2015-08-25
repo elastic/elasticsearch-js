@@ -23,7 +23,7 @@ var client = null;
 var externalExists;
 
 module.exports = {
-  create: function create(apiVersion, port, cb) {
+  create: function create(apiVersion, port, host, cb) {
     // create a client and ping the server for up to 15 seconds
     doCreateClient({
       logConfig: null
@@ -40,7 +40,7 @@ module.exports = {
             setTimeout(ping, timeout);
           } else if (err) {
             cb(new Error('unable to establish contact with ES at ' + JSON.stringify({
-              host: 'localhost',
+              host: host,
               port: port,
               err: err
             })));
@@ -92,7 +92,7 @@ module.exports = {
         apiVersion: apiVersion,
         hosts: [
           {
-            host: 'localhost',
+            host: host,
             port: port
           }
         ],

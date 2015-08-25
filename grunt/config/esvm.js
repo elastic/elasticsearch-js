@@ -5,6 +5,7 @@ var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 var release = process.env.ES_RELEASE;
 var ref = process.env.ES_REF;
 var port = parseFloat(_.get(process.env, 'ES_PORT', 9400));
+var host = _.get(process.env, 'ES_HOST', 'localhost');
 
 var Version = require('../../scripts/Version');
 var versionedOpts = [
@@ -18,7 +19,7 @@ var versionedOpts = [
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
       'http.port': port,
-      'network.host': 'localhost',
+      'network.host': host,
       'discovery.zen.ping.multicast.enabled': false
     }
   },

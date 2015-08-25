@@ -6,6 +6,7 @@
  *  ES_REF - the ES branch/tag we should use to generate the tests and download es
  *  ES_RELEASE - a specific ES release to download in use for testing
  *  ES_PORT - the port number we should run elasticsearch on
+ *  ES_HOST - the hostname elasticsearch should bind to
  *  ES_V - a version identifier used by jenkins. don't use this
  *
  * Tasks:
@@ -152,6 +153,7 @@ execTask('SETUP', function () {
       throw new Error('Unable to run the ci script without at least an ES_REF or ES_RELEASE environment var.');
 
     log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
+    log('ES_HOST:', ENV.ES_HOST = ENV.ES_HOST || 'localhost');
 
     if (ver[0]) log('ES_REF:', ENV.ES_REF = ver[0]);
     else delete ENV.ES_REF;

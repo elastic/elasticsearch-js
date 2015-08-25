@@ -10,6 +10,7 @@ module.exports = function (branch) {
   var clientManager = require('./client_manager');
 
   var port = parseInt(process.env.ES_PORT || 9200, 10);
+  var host = process.env.ES_HOST || 'localhost';
   var _release = branch.match(/^v(\d+\.\d+)\.\d+$/);
   var apiVersion = _release ? _release[1] : branch;
 
@@ -23,7 +24,7 @@ module.exports = function (branch) {
     // before running any tests...
     before(function (done) {
       this.timeout(5 * 60 * 1000);
-      clientManager.create(apiVersion, port, done);
+      clientManager.create(apiVersion, port, host, done);
     });
 
     before(function () {

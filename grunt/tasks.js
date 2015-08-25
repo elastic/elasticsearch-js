@@ -20,6 +20,7 @@ module.exports = function (grunt) {
     var branches = branch ? [branch] : utils.branches;
 
     process.env.ES_PORT = process.env.ES_PORT || 9400;
+    process.env.ES_HOST = process.env.ES_HOST || 'localhost';
     branches.forEach(function (branch) {
       tasks.push(
         'esvm:' + branch,
