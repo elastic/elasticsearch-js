@@ -3786,7 +3786,7 @@ api.indices.prototype.segments = ca({
 });
 
 /**
- * Perform a [indices.shardStores](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shard-stores.html) request
+ * Perform a [indices.shardStores](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String, String[], Boolean} params.status - A comma-separated list of statuses used to filter on shards to get store information for

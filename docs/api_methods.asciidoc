@@ -3982,7 +3982,7 @@ client.indices.shardStores([params, [callback]])
 
 // no description
 
-The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shard-stores.html[the elasticsearch docs] for more about this method.
+The default method is `GET` and the usual <<api-conventions,params and return values>> apply. See http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html[the elasticsearch docs] for more about this method.
 
 // no examples
 
