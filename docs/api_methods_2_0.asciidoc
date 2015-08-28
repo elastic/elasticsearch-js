@@ -2031,7 +2031,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `name`::
 `String, String[], Boolean` -- A comma-separated list of alias names to return
@@ -2072,7 +2072,7 @@ Options:::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information
@@ -2105,7 +2105,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
@@ -2146,7 +2146,7 @@ Options:::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `fields`::
 `String, String[], Boolean` -- A comma-separated list of fields to return the fielddata size
@@ -2181,7 +2181,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return help information
 `[ts=true]`::
 `Boolean` -- Set to false to disable timestamping
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2245,7 +2245,7 @@ Options:::
 `Boolean` -- Return help information
 `pri`::
 `Boolean` -- Set to true to return stats only for primary shards
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
@@ -2278,7 +2278,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2309,7 +2309,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2340,7 +2340,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2371,7 +2371,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2402,7 +2402,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 
 link:#[back to top]
@@ -2439,7 +2439,7 @@ Options:::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
@@ -2468,7 +2468,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
@@ -2501,7 +2501,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to limit the returned information
@@ -2534,7 +2534,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
 `Boolean` -- Return help information
-`[v=true]`::
+`v`::
 `Boolean` -- Verbose mode. Display column headers
 `fullId`::
 `Boolean` -- Enables displaying the complete node ids
@@ -3859,7 +3859,7 @@ Options:::
  * `"all"`
 
 `requestCache`::
-`Boolean` -- Specify whether the request to be wamred shoyd use the request cache, defaults to index level setting
+`Boolean` -- Specify whether the request to be warmed should use the request cache, defaults to index level setting
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
 `name`::

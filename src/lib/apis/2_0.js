@@ -92,7 +92,7 @@ api.cat = namespace();
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
  */
 api.cat.prototype.aliases = ca({
@@ -113,7 +113,7 @@ api.cat.prototype.aliases = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -140,7 +140,7 @@ api.cat.prototype.aliases = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information
  */
 api.cat.prototype.allocation = ca({
@@ -170,7 +170,7 @@ api.cat.prototype.allocation = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -196,7 +196,7 @@ api.cat.prototype.allocation = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.count = ca({
@@ -217,7 +217,7 @@ api.cat.prototype.count = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -244,7 +244,7 @@ api.cat.prototype.count = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return the fielddata size
  */
 api.cat.prototype.fielddata = ca({
@@ -274,7 +274,7 @@ api.cat.prototype.fielddata = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     },
     fields: {
       type: 'list'
@@ -304,7 +304,7 @@ api.cat.prototype.fielddata = ca({
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} [params.ts=true] - Set to false to disable timestamping
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.health = ca({
   params: {
@@ -328,7 +328,7 @@ api.cat.prototype.health = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -364,7 +364,7 @@ api.cat.prototype.help = ca({
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} params.pri - Set to true to return stats only for primary shards
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.indices = ca({
@@ -398,7 +398,7 @@ api.cat.prototype.indices = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -424,7 +424,7 @@ api.cat.prototype.indices = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.master = ca({
   params: {
@@ -444,7 +444,7 @@ api.cat.prototype.master = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -460,7 +460,7 @@ api.cat.prototype.master = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.nodeattrs = ca({
   params: {
@@ -480,7 +480,7 @@ api.cat.prototype.nodeattrs = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -496,7 +496,7 @@ api.cat.prototype.nodeattrs = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.nodes = ca({
   params: {
@@ -516,7 +516,7 @@ api.cat.prototype.nodes = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -532,7 +532,7 @@ api.cat.prototype.nodes = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.pendingTasks = ca({
   params: {
@@ -552,7 +552,7 @@ api.cat.prototype.pendingTasks = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -568,7 +568,7 @@ api.cat.prototype.pendingTasks = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  */
 api.cat.prototype.plugins = ca({
   params: {
@@ -588,7 +588,7 @@ api.cat.prototype.plugins = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   url: {
@@ -604,7 +604,7 @@ api.cat.prototype.plugins = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.recovery = ca({
@@ -631,7 +631,7 @@ api.cat.prototype.recovery = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -655,7 +655,7 @@ api.cat.prototype.recovery = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.segments = ca({
@@ -669,7 +669,7 @@ api.cat.prototype.segments = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -695,7 +695,7 @@ api.cat.prototype.segments = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.shards = ca({
@@ -716,7 +716,7 @@ api.cat.prototype.shards = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     }
   },
   urls: [
@@ -742,7 +742,7 @@ api.cat.prototype.shards = ca({
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
- * @param {Boolean} [params.v=true] - Verbose mode. Display column headers
+ * @param {Boolean} params.v - Verbose mode. Display column headers
  * @param {Boolean} params.fullId - Enables displaying the complete node ids
  */
 api.cat.prototype.threadPool = ca({
@@ -763,7 +763,7 @@ api.cat.prototype.threadPool = ca({
     },
     v: {
       type: 'boolean',
-      'default': true
+      'default': false
     },
     fullId: {
       type: 'boolean',
@@ -3570,7 +3570,7 @@ api.indices.prototype.putTemplate = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed) in the search request to warm
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices in the search request to warm. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both, in the search request to warm.
- * @param {Boolean} params.requestCache - Specify whether the request to be wamred shoyd use the request cache, defaults to index level setting
+ * @param {Boolean} params.requestCache - Specify whether the request to be warmed should use the request cache, defaults to index level setting
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or omit to perform the operation on all indices
  * @param {String} params.name - The name of the warmer
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
