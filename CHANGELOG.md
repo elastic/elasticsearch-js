@@ -1,5 +1,9 @@
 # elasticsearch-js changelog
 
+## 8.1 (Sep 8 2014)
+ - Added apiVersion `"2.x"`, which will semi-regularly be updated to match the latest development at [elastic/elasticsearch#2.x](https://github.com/elastic/elasticsearch/tree/2.x)
+ - Removed node engine upper-bound, supporting 4.0 and versions beyond.
+
 ## 8.0 (Aug 26 2015)
  - apiVersion changed back to `"1.7"` until es 2.0 is actually released.
 
