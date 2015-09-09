@@ -4318,7 +4318,9 @@ api.msearch = ca({
         'query_then_fetch',
         'query_and_fetch',
         'dfs_query_then_fetch',
-        'dfs_query_and_fetch'
+        'dfs_query_and_fetch',
+        'count',
+        'scan'
       ],
       name: 'search_type'
     }
@@ -5181,7 +5183,9 @@ api.search = ca({
       type: 'enum',
       options: [
         'query_then_fetch',
-        'dfs_query_then_fetch'
+        'dfs_query_then_fetch',
+        'count',
+        'scan'
       ],
       name: 'search_type'
     },
@@ -5502,7 +5506,9 @@ api.searchTemplate = ca({
         'query_then_fetch',
         'query_and_fetch',
         'dfs_query_then_fetch',
-        'dfs_query_and_fetch'
+        'dfs_query_and_fetch',
+        'count',
+        'scan'
       ],
       name: 'search_type'
     }

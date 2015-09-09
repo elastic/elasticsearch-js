@@ -33,6 +33,7 @@
       "0.90"
     ],
     "unstable_es_branches": [
+      "2.x",
       "master"
     ]
   },

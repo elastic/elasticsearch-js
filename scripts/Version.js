@@ -19,7 +19,7 @@ Version.fromBranch = function (branch) {
   var m;
 
   // master === the highest version number
-  if (branch === 'master') return new Version('2.0.0');
+  if (branch === 'master') return new Version('3.0.0');
 
   // n.m -> n.m.0
   if (m = branch.match(/^\d+\.\d+$/)) return new Version(branch + '.0');

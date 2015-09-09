@@ -64,6 +64,7 @@ Options in node :::
   * `"1.1"`
   * `"1.0"`
   * `"0.90"`
+  * `"2.x"` (unstable)
   * `"master"` (unstable)
 
 Options in the browser :::
