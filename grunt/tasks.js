@@ -32,12 +32,7 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('unit_test', [
-    'jshint',
-    'run:generate',
-    'mochacov:unit',
-  ]);
-
+  grunt.registerTask('unit_test', 'mochacov:unit');
   grunt.registerTask('coverage', [
     'mochacov:make_coverage_html',
     'open:coverage'

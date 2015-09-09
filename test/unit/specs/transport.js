@@ -360,7 +360,8 @@ describe('Transport Class', function () {
         done();
       });
     });
-    it('rejects get requests with bodies', function (done) {
+
+    it('rejects GET requests with a body (callback)', function (done) {
       var trans = new Transport();
       stub(trans.log, 'debug');
       stub(trans.connectionPool, 'select', function (cb) {
@@ -370,6 +371,26 @@ describe('Transport Class', function () {
       trans.request({
         body: 'JSON!!',
         method: 'GET'
+      }, function (err) {
+        expect(err).to.be.a(TypeError);
+        expect(err.message).to.match(/body.*method.*get/i);
+        done();
+      });
+    });
+
+    it('rejects GET requests with a body (promise)', function (done) {
+      var trans = new Transport();
+      stub(trans.log, 'debug');
+      stub(trans.connectionPool, 'select', function (cb) {
+        // simulate "no connections"
+        process.nextTick(cb);
+      });
+      trans.request({
+        body: 'JSON!!',
+        method: 'GET'
+      })
+      .then(function () {
+        done(new Error('expected the request to fail!'));
       }, function (err) {
         expect(err).to.be.a(TypeError);
         expect(err.message).to.match(/body.*method.*get/i);
