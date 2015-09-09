@@ -98,7 +98,7 @@
     "generate": "node scripts/generate"
   },
   "engines": {
-    "node": ">=0.8 <3.0",
+    "node": ">=0.8",
     "iojs": ">=1.5"
   }
 }

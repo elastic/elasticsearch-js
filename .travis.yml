@@ -1,7 +1,5 @@
 language: node_js
-node_js:
-  - "node"
-  - "iojs"
+node_js: "4.0"
 cache:
   directories:
   - esvm
