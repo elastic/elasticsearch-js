@@ -131,9 +131,20 @@ Transport.prototype.request = function (params, cb) {
 
   self.log.debug('starting request', params);
 
+  // determine the response based on the presense of a callback
+  if (typeof cb === 'function') {
+    ret = {
+      abort: abortRequest
+    };
+  } else {
+    defer = this.defer();
+    ret = defer.promise;
+    ret.abort = abortRequest;
+  }
+
   if (params.body && params.method === 'GET') {
     _.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
-    return;
+    return ret;
   }
 
   // serialize the body
@@ -286,18 +297,6 @@ Transport.prototype.request = function (params, cb) {
       abortRequest();
     }, requestTimeout);
   }
-
-  // determine the response based on the presense of a callback
-  if (typeof cb === 'function') {
-    ret = {
-      abort: abortRequest
-    };
-  } else {
-    defer = this.defer();
-    ret = defer.promise;
-    ret.abort = abortRequest;
-  }
-
 
   if (connection) {
     sendReqWithConnection(void 0, connection);
