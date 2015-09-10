@@ -45,6 +45,12 @@ var versionedOpts = [
       'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
       'repositories.url.allowed_urls': 'http://snapshot.*'
     }
+  },
+  {
+    version: '>2.0',
+    config: {
+      'node.testattr': 'test'
+    }
   }
 ];
 
