@@ -21,7 +21,7 @@ describe('Utils', function () {
         is: [['im'], ['usefull']],
       },
       Finite: {
-        is: [11123, 666],
+        is: [11123, 777],
         not: Infinity
       },
       Function: {

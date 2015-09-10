@@ -38,7 +38,7 @@ client.update({
 client.update({
   index: 'myindex',
   type: 'mytype',
-  id: '666',
+  id: '777',
   body: {
     script: 'ctx._source.counter += 1',
     upsert: {
