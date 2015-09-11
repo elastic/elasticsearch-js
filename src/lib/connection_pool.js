@@ -328,6 +328,12 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   }
 };
 
+ConnectionPool.prototype.getAllHosts = function () {
+  return _.values(this.index).map(function (connection) {
+    return connection.host;
+  });
+};
+
 /**
  * Close the conncetion pool, as well as all of it's connections
  */

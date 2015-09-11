@@ -9,6 +9,7 @@ var errors = require('./errors');
 var Host = require('./host');
 var Promise = require('bluebird');
 var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
+var findCommonProtocol = require('./transport/find_common_protocol');
 
 function Transport(config) {
   var self = this;
@@ -69,6 +70,12 @@ function Transport(config) {
     }
 
     self.connectionPool.setHosts(hosts);
+  }
+
+  if (config.hasOwnProperty('sniffedNodesProtocol')) {
+    self.sniffedNodesProtocol = config.sniffedNodesProtocol || null;
+  } else {
+    self.sniffedNodesProtocol = findCommonProtocol(self.connectionPool.getAllHosts()) || null;
   }
 
   if (config.sniffOnStart) {
@@ -344,6 +351,7 @@ Transport.prototype.sniff = function (cb) {
   var nodesToHostCallback = this.nodesToHostCallback;
   var log = this.log;
   var globalConfig = this._config;
+  var sniffedNodesProtocol = this.sniffedNodesProtocol;
 
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
@@ -364,6 +372,10 @@ Transport.prototype.sniff = function (cb) {
       }
 
       connectionPool.setHosts(_.map(hostsConfigs, function (hostConfig) {
+        if (sniffedNodesProtocol) {
+          hostConfig.protocol = sniffedNodesProtocol;
+        }
+
         return new Host(hostConfig, globalConfig);
       }));
     }
