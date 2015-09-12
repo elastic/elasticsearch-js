@@ -24,6 +24,9 @@ function getConnection(transport, status) {
   return transport.connectionPool.getConnections(status || 'alive', 1).pop();
 }
 
+function CustomConnectionPool() {}
+CustomConnectionPool.prototype = Object.create(Transport.connectionPools.main.prototype);
+
 describe('Transport Class', function () {
 
   describe('Constructor', function () {
@@ -37,7 +40,6 @@ describe('Transport Class', function () {
     });
 
     it('Accepts a connection pool class and intanciates it at this.connectionPool', function () {
-      function CustomConnectionPool() {}
       var trans = new Transport({
         connectionPool: CustomConnectionPool
       });
@@ -46,7 +48,7 @@ describe('Transport Class', function () {
     });
 
     it('Accepts the name of a connectionPool class that is defined on Transport.connectionPools', function () {
-      Transport.connectionPools.custom = function () {};
+      Transport.connectionPools.custom = CustomConnectionPool;
 
       var trans = new Transport({
         connectionPool: 'custom'
@@ -90,6 +92,77 @@ describe('Transport Class', function () {
       expect(clock.timers).to.not.have.key(id);
 
     });
+
+    describe('config.sniffedNodesProtocol', function () {
+      it('Assigns to itself', function () {
+        var football = {};
+        var trans = new Transport({
+          sniffedNodesProtocol: football
+        });
+        expect(trans).to.have.property('sniffedNodesProtocol', football);
+      });
+
+      it('Defaults to null when no hosts given', function () {
+        var trans = new Transport({
+          hosts: []
+        });
+
+        expect(trans).to.have.property('sniffedNodesProtocol', null);
+      });
+
+      it('Defaults to "http" when a single http host given', function () {
+        var trans = new Transport({
+          hosts: [
+            new Host({
+              protocol: 'http'
+            })
+          ]
+        });
+
+        expect(trans).to.have.property('sniffedNodesProtocol', 'http');
+      });
+
+      it('Defaults to "http" when multiple http host given', function () {
+        var trans = new Transport({
+          hosts: [
+            new Host(),
+            'http://google.com',
+            {
+              host: 'foo',
+              path: 'bar'
+            }
+          ]
+        });
+
+        expect(trans).to.have.property('sniffedNodesProtocol', 'http');
+      });
+
+      it('Defaults to "https" when a single https host given', function () {
+        var trans = new Transport({
+          host: {
+            protocol: 'https'
+          }
+        });
+
+        expect(trans).to.have.property('sniffedNodesProtocol', 'https');
+      });
+
+      it('Defaults to "https" when every seed host uses https', function () {
+        var trans = new Transport({
+          hosts: [
+            'https://localhost:9200',
+            new Host({
+              protocol: 'https'
+            }),
+            {
+              protocol: 'https'
+            }
+          ]
+        });
+
+        expect(trans).to.have.property('sniffedNodesProtocol', 'https');
+      });
+    })
 
     describe('host config', function () {
       it('rejects non-strings/objects', function () {

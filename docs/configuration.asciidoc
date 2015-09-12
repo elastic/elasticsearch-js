@@ -164,6 +164,10 @@ Defaults:::
   * jQuery Build: `"jquery"`
 
 
+`sniffedNodesProtocol`[[config-sniffed-nodes-protocol]]:: `String` -- Defines the protocol that will be used to communicate with nodes discovered during sniffing.
+
+Default::: If all of the hosts/host passed to the client via configuration use the same protocol then this defaults to that protocol, otherwise it defaults to `"http"`.
+
 
 `ssl`[[config-ssl]]:: `Object` -- An object defining HTTPS/SSL configuration to use for all nodes. The properties of this mimic the options accepted by http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] with the exception of `rejectUnauthorized`, which defaults to `false` allowing self-signed certificates to work out-of-the-box.
 +
