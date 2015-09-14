@@ -1409,6 +1409,7 @@ client.search({
   index: 'myindex',
   // Set to 30 seconds because we are calling right back
   scroll: '30s',
+  search_type: 'scan',
   fields: ['title'],
   q: 'title:test'
 }, function getMoreUntilDone(error, response) {
@@ -1428,6 +1429,7 @@ client.search({
   }
 });
 ---------
+
 
 
 *Params*
