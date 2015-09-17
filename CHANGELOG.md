@@ -1,5 +1,9 @@
 # elasticsearch-js changelog
 
+## 8.2 (Sep 17 2015)
+ - Added [`sniffedNodesProtocol`](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-sniffed-nodes-protocol) configuration option
+ - Fixed an issue which prevented promised from getting rejected if the `GET` verb was used with a request body ([#263](https://github.com/elastic/elasticsearch-js/issues/263))
+
 ## 8.1 (Sep 8 2015)
  - Added apiVersion `"2.x"`, which will semi-regularly be updated to match the latest development at [elastic/elasticsearch#2.x](https://github.com/elastic/elasticsearch/tree/2.x)
  - Removed node engine upper-bound, supporting 4.0 and versions beyond.
