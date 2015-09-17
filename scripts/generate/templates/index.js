@@ -1,5 +1,6 @@
 
 var _ = require('../../../src/lib/utils');
+var utils = require('../../../grunt/utils');
 var fs = require('fs');
 var path = require('path');
 
@@ -100,7 +101,9 @@ var templateGlobals = {
     }
   },
 
-  partials: templates
+  partials: templates,
+
+  utils: utils
 };
 
 fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
@@ -119,5 +122,8 @@ templates.text = templates.string;
 module.exports = {
   apiFile: templates.api_file,
   apiMethodList: templates.api_method_list,
-  apiMethods: templates.api_methods
+  apiMethods: templates.api_methods,
+  docsIndex: templates.docs_index,
+  apiIndex: templates.api_index,
+  configurationDocs: templates.configuration_docs,
 };

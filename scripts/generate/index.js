@@ -53,6 +53,7 @@ var paths = {
   src: fromRoot('src'),
   esSrc: fromRoot('src/_elasticsearch_'),
   docs: fromRoot('docs'),
+  docsIndex: fromRoot('docs/index.asciidoc'),
   apiSrc: 'src/lib/apis',
   getArchiveDir: function (branch) {
     return fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
@@ -127,8 +128,8 @@ function fetchBranchesStep() {
 
 
 function findGeneratedApiFiles() {
-  var anyApiMethodDocs = /^api_methods.*\.asciidoc$/;
-  var anyApiJsFiled = /^(master|[\d_]+)\.js$/;
+  var anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
+  var anyApiJsFiled = /^.+\.js$/;
   var allBranches = _.isEqual(branches, utils.branches);
 
   if (allBranches) {
@@ -232,6 +233,14 @@ branches.forEach(function (branch) {
     generateStep(branch)
   ].filter(Boolean)));
 });
+
+if (argv.api) {
+  steps.push(
+    require('./api_index'),
+    require('./doc_index'),
+    require('./configuration_docs')
+  );
+}
 
 async.series(
   steps.map(function (step) {

@@ -9,9 +9,10 @@ var utils = {
   branchSuffix: function (branch) {
     return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
   },
-  branches: [].concat(unstable, stable),
+  branches: [].concat(stable, unstable),
   stableBranches: stable,
-  unstableBranches: unstable
+  unstableBranches: unstable,
+  browserBranches: stable.slice(0, 3),
 };
 
 utils.branches._default = pkg.config.default_api_branch;

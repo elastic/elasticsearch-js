@@ -51,27 +51,22 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `'1.7'`
+Default ::: `<%= stringify(utils.branches._default) %>`
+<%
 
+function printBranch(branch, i) {
+  print('  * `' + stringify(branch) + '`');
+  if (utils.unstableBranches.indexOf(branch) >= 0) {
+    print(' (unstable)');
+  }
+  print('\n');
+}
+
+%>
 Options in node :::
-  * `'2.0'`
-  * `'1.7'`
-  * `'1.6'`
-  * `'1.5'`
-  * `'1.4'`
-  * `'1.3'`
-  * `'1.2'`
-  * `'1.1'`
-  * `'1.0'`
-  * `'0.90'`
-  * `'2.x'` (unstable)
-  * `'master'` (unstable)
-
+<% utils.branches.forEach(printBranch); %>
 Options in the browser :::
-  * `'2.0'`
-  * `'1.7'`
-  * `'1.6'`
-
+<% utils.browserBranches.forEach(printBranch); %>
 
 
 `plugins`[[config-plugins]]:: `Function[]` -- Plugin instantiators that will be called when the Client initializes. Each function is called in order with the arguments `Constructor`, `config`, and `components`.
