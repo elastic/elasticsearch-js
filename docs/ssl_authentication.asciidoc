@@ -5,7 +5,7 @@ You can configure the client to use SSL for connecting to your elasticsearch clu
 
 === Basic Auth
 
-Basic authentication credentials can be configured on a per-host basis using URL notiation, or at the `auth:` property of a host config object.
+Basic authentication credentials can be configured on a per-host basis using URL notation, or at the `auth:` property of a host config object.
 
 .Credentials directly in the host url:
 [source,js]
