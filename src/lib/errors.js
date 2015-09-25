@@ -1,4 +1,5 @@
 var _ = require('./utils');
+var qs = require('querystring');
 var errors = module.exports;
 
 var canCapture = (typeof Error.captureStackTrace === 'function');
@@ -164,7 +165,11 @@ _.each(statusCodes, function (name, status) {
 
       var extraData = _.omit(cause, ['type', 'reason']);
       if (_.size(extraData)) {
-        memo += ', with: ' + JSON.stringify(extraData);
+        memo += ', with { ' + qs.stringify(extraData, ' ', '=', {
+          encodeURIComponent: function (v) {
+            return String(v).split('\n').join('\\n');
+          }
+        }) + ' }';
       }
 
       return memo;
