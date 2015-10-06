@@ -140,6 +140,10 @@ Transport.prototype.request = function (params, cb) {
 
   // determine the response based on the presense of a callback
   if (typeof cb === 'function') {
+    // handle callbacks within a domain
+    if (process.domain) {
+      cb = process.domain.bind(cb);
+    }
     ret = {
       abort: abortRequest
     };
