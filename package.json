@@ -13,7 +13,7 @@
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
     "./src/lib/apis/index.js": "./src/lib/apis/browser_index.js",
     "./test/mocks/server.js": "./test/mocks/browser_server.js",
-    "lodash": "./node_modules/lodash-compat/index.js"
+    "lodash": "lodash-compat"
   },
   "config": {
     "blanket": {
