@@ -21,6 +21,7 @@
     },
     "default_api_branch": "1.7",
     "supported_es_branches": [
+      "2.1",
       "2.0",
       "1.7",
       "1.6",

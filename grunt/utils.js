@@ -12,7 +12,7 @@ var utils = {
   branches: [].concat(stable, unstable),
   stableBranches: stable,
   unstableBranches: unstable,
-  browserBranches: stable.slice(0, 3),
+  browserBranches: stable.slice(0, 5),
 };
 
 utils.branches._default = pkg.config.default_api_branch;

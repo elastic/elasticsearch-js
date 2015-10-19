@@ -54,6 +54,7 @@ WARNING: This default will track the latest version of Elasticsearch, and is onl
 Default ::: `'1.7'`
 
 Options in node :::
+  * `'2.1'`
   * `'2.0'`
   * `'1.7'`
   * `'1.6'`
@@ -68,9 +69,11 @@ Options in node :::
   * `'master'` (unstable)
 
 Options in the browser :::
+  * `'2.1'`
   * `'2.0'`
   * `'1.7'`
   * `'1.6'`
+  * `'1.5'`
 
 
 
