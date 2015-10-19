@@ -86,6 +86,7 @@
     "bluebird": "^2.9.14",
     "chalk": "^1.0.0",
     "forever-agent": "^0.6.0",
+    "grunt-esvm": "^1.1.8",
     "lodash": "^3.10.0",
     "lodash-compat": "^3.0.0"
   },
