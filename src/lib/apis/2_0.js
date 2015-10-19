@@ -840,7 +840,7 @@ api.cluster.prototype.getSettings = ca({
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
  * @param {Number} params.waitForRelocatingShards - Wait until the specified number of relocating shards is finished
  * @param {String} params.waitForStatus - Wait until cluster is in a specific state
- * @param {String} params.index - Limit the information returned to a specific index
+ * @param {String, String[], Boolean} params.index - Limit the information returned to a specific index
  */
 api.cluster.prototype.health = ca({
   params: {
@@ -891,7 +891,7 @@ api.cluster.prototype.health = ca({
       fmt: '/_cluster/health/<%=index%>',
       req: {
         index: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -1094,6 +1094,7 @@ api.cluster.prototype.state = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.stats = ca({
@@ -1105,6 +1106,9 @@ api.cluster.prototype.stats = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -2150,7 +2154,7 @@ api.indices.prototype.clearCache = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String} params.index - The name of the index
+ * @param {String, String[], Boolean} params.index - A comma separated list of indices to close
  */
 api.indices.prototype.close = ca({
   params: {
@@ -2185,7 +2189,7 @@ api.indices.prototype.close = ca({
     fmt: '/<%=index%>/_close',
     req: {
       index: {
-        type: 'string'
+        type: 'list'
       }
     }
   },
@@ -2702,7 +2706,13 @@ api.indices.prototype.get = ca({
           type: 'list'
         },
         feature: {
-          type: 'list'
+          type: 'list',
+          options: [
+            '_settings',
+            '_mappings',
+            '_warmers',
+            '_aliases'
+          ]
         }
       }
     },
@@ -2850,7 +2860,7 @@ api.indices.prototype.getAliases = ca({
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types
- * @param {String, String[], Boolean} params.field - A comma-separated list of fields
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields
  */
 api.indices.prototype.getFieldMapping = ca({
   params: {
@@ -2883,7 +2893,7 @@ api.indices.prototype.getFieldMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/_mapping/<%=type%>/field/<%=field%>',
+      fmt: '/<%=index%>/_mapping/<%=type%>/field/<%=fields%>',
       req: {
         index: {
           type: 'list'
@@ -2891,37 +2901,37 @@ api.indices.prototype.getFieldMapping = ca({
         type: {
           type: 'list'
         },
-        field: {
+        fields: {
           type: 'list'
         }
       }
     },
     {
-      fmt: '/<%=index%>/_mapping/field/<%=field%>',
+      fmt: '/<%=index%>/_mapping/field/<%=fields%>',
       req: {
         index: {
           type: 'list'
         },
-        field: {
+        fields: {
           type: 'list'
         }
       }
     },
     {
-      fmt: '/_mapping/<%=type%>/field/<%=field%>',
+      fmt: '/_mapping/<%=type%>/field/<%=fields%>',
       req: {
         type: {
           type: 'list'
         },
-        field: {
+        fields: {
           type: 'list'
         }
       }
     },
     {
-      fmt: '/_mapping/field/<%=field%>',
+      fmt: '/_mapping/field/<%=fields%>',
       req: {
-        field: {
+        fields: {
           type: 'list'
         }
       }
@@ -3089,7 +3099,7 @@ api.indices.prototype.getSettings = ca({
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {String} params.name - The name of the template
+ * @param {String, String[], Boolean} params.name - The comma separated names of the index templates
  */
 api.indices.prototype.getTemplate = ca({
   params: {
@@ -3110,7 +3120,7 @@ api.indices.prototype.getTemplate = ca({
       fmt: '/_template/<%=name%>',
       req: {
         name: {
-          type: 'string'
+          type: 'list'
         }
       }
     },
@@ -3265,7 +3275,7 @@ api.indices.prototype.getWarmer = ca({
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String} params.index - The name of the index
+ * @param {String, String[], Boolean} params.index - A comma separated list of indices to open
  */
 api.indices.prototype.open = ca({
   params: {
@@ -3300,7 +3310,7 @@ api.indices.prototype.open = ca({
     fmt: '/<%=index%>/_open',
     req: {
       index: {
-        type: 'string'
+        type: 'list'
       }
     }
   },
@@ -4500,6 +4510,7 @@ api.nodes = namespace();
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
  * @param {Boolean} params.ignoreIdleThreads - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
  * @param {String} params.type - The type to sample (default: cpu)
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.nodes.prototype.hotThreads = ca({
@@ -4524,6 +4535,9 @@ api.nodes.prototype.hotThreads = ca({
         'wait',
         'block'
       ]
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -4547,6 +4561,7 @@ api.nodes.prototype.hotThreads = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
  */
@@ -4559,6 +4574,9 @@ api.nodes.prototype.info = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -4626,6 +4644,7 @@ api.nodes.prototype.info = ca({
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {String} [params.level=node] - Return indices stats aggregated at node, index or shard level
  * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
  * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -4661,6 +4680,9 @@ api.nodes.prototype.stats = ca({
     },
     types: {
       type: 'list'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -6050,6 +6072,7 @@ api.termvectors = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {Boolean} params.detectNoop - Specifying as true will cause Elasticsearch to check if there are changes and, if there aren’t, turn the update request into a noop.
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -6110,6 +6133,10 @@ api.update = ca({
         'force'
       ],
       name: 'version_type'
+    },
+    detectNoop: {
+      type: 'boolean',
+      name: 'detect_noop'
     }
   },
   url: {

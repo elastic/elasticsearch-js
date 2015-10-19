@@ -1063,6 +1063,7 @@ api.cluster.prototype.state = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.stats = ca({
@@ -1074,6 +1075,9 @@ api.cluster.prototype.stats = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -4706,6 +4710,7 @@ api.nodes = namespace();
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
  * @param {Boolean} params.ignoreIdleThreads - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
  * @param {String} params.type - The type to sample (default: cpu)
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.nodes.prototype.hotThreads = ca({
@@ -4730,6 +4735,9 @@ api.nodes.prototype.hotThreads = ca({
         'wait',
         'block'
       ]
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -4753,6 +4761,7 @@ api.nodes.prototype.hotThreads = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
  */
@@ -4765,6 +4774,9 @@ api.nodes.prototype.info = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [
@@ -4867,6 +4879,7 @@ api.nodes.prototype.shutdown = ca({
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {String} [params.level=node] - Return indices stats aggregated at node, index or shard level
  * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
+ * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
  * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -4902,6 +4915,9 @@ api.nodes.prototype.stats = ca({
     },
     types: {
       type: 'list'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   urls: [

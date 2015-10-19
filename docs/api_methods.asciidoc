@@ -2885,6 +2885,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return settings in flat format (default: false)
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -4381,6 +4383,8 @@ Options:::
  * `"wait"`
  * `"block"`
 
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -4408,6 +4412,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return settings in flat format (default: false)
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 `metric`::
@@ -4479,6 +4485,8 @@ Options:::
 
 `types`::
 `String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `metric`::
 `String, String[], Boolean` -- Limit the information returned to the specified metrics
 `indexMetric`::

@@ -1998,6 +1998,8 @@ Options:::
  * `"internal"`
  * `"force"`
 
+`detectNoop`::
+`Boolean` -- Specifying as true will cause Elasticsearch to check if there are changes and, if there aren’t, turn the update request into a noop.
 `id`::
 `String` -- Document ID
 `index`::
@@ -2615,7 +2617,7 @@ Options:::
  * `"red"`
 
 `index`::
-`String` -- Limit the information returned to a specific index
+`String, String[], Boolean` -- Limit the information returned to a specific index
 
 link:#[back to top]
 
@@ -2767,6 +2769,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return settings in flat format (default: false)
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -2898,7 +2902,7 @@ Options:::
  * `"all"`
 
 `index`::
-`String` -- The name of the index
+`String, String[], Boolean` -- A comma separated list of indices to close
 
 link:#[back to top]
 
@@ -3406,7 +3410,7 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types
-`field`::
+`fields`::
 `String, String[], Boolean` -- A comma-separated list of fields
 
 link:#[back to top]
@@ -3518,7 +3522,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `name`::
-`String` -- The name of the template
+`String, String[], Boolean` -- The comma separated names of the index templates
 
 link:#[back to top]
 
@@ -3635,7 +3639,7 @@ Options:::
  * `"all"`
 
 `index`::
-`String` -- The name of the index
+`String, String[], Boolean` -- A comma separated list of indices to open
 
 link:#[back to top]
 
@@ -4232,6 +4236,8 @@ Options:::
  * `"wait"`
  * `"block"`
 
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -4259,6 +4265,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `Boolean` -- Return settings in flat format (default: false)
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 `metric`::
@@ -4303,6 +4311,8 @@ Options:::
 
 `types`::
 `String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
+`timeout`::
+`Date, Number` -- Explicit operation timeout
 `metric`::
 `String, String[], Boolean` -- Limit the information returned to the specified metrics
 `indexMetric`::
