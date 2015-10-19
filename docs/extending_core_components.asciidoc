@@ -19,7 +19,7 @@ util.inherits(MyHttpConnector, HttpConnector);
 MyHttpConnector.prototype.makeReqParams = function(params) {
   params = params || {};
   params.method = params.method || 'POST';
-  returh HttpConnector.prototype.makeReqParams.call(this, params);
+  return HttpConnector.prototype.makeReqParams.call(this, params);
 };
 
 var client = new elasticsearch.Client({
