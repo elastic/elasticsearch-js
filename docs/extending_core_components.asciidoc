@@ -27,9 +27,6 @@ var client = new elasticsearch.Client({
 });
 ---------------
 
-=== ConnectionPool
-Coming Soon
-
 === Log
 see <<logging>>.
 
