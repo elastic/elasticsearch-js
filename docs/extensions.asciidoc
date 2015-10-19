@@ -1,0 +1,11 @@
+[[extensions]]
+== Extensions
+
+This page aims to list useful extensions for the elasticsearch.js client provided by the elasticsearch community. If you would like to list your extension here please submit a pull request against https://github.com/elastic/elasticsearch-js/blob/master/docs/extending_core_components.asciidoc[the source code for this page].
+
+For information about writing extensions, check out the <<extending_core_components>> page.
+
+=== http-aws-es
+Makes elasticsearch-js compatible with https://aws.amazon.com/elasticsearch-service/[Amazon ES]. It uses the https://www.npmjs.com/package/aws-sdk[aws-sdk] to make signed requests to an Amazon ES endpoint.
+
+http-aws-es is available on https://www.npmjs.com/package/http-aws-es[npm].

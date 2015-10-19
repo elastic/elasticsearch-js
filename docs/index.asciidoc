@@ -14,6 +14,8 @@ include::ssl_authentication.asciidoc[]
 
 include::extending_core_components.asciidoc[]
 
+include::extensions.asciidoc[]
+
 include::logging.asciidoc[]
 
 include::development.asciidoc[]
