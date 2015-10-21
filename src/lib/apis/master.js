@@ -2653,6 +2653,76 @@ api.indices.prototype.flushSynced = ca({
 });
 
 /**
+ * Perform a [indices.forcemerge](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Number} params.maxNumSegments - The number of segments the index should be merged into (default: dynamic)
+ * @param {Boolean} params.onlyExpungeDeletes - Specify whether the operation should only expunge deleted documents
+ * @param {Anything} params.operationThreading - TODO: ?
+ * @param {Boolean} params.waitForMerge - Specify whether the request should block until the merge process is finished (default: true)
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+ */
+api.indices.prototype.forcemerge = ca({
+  params: {
+    flush: {
+      type: 'boolean'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    },
+    maxNumSegments: {
+      type: 'number',
+      name: 'max_num_segments'
+    },
+    onlyExpungeDeletes: {
+      type: 'boolean',
+      name: 'only_expunge_deletes'
+    },
+    operationThreading: {
+      name: 'operation_threading'
+    },
+    waitForMerge: {
+      type: 'boolean',
+      name: 'wait_for_merge'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/_forcemerge',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_forcemerge'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
