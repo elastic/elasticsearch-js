@@ -1,4 +1,4 @@
-.Check that the document `/myindex/mytype/1` exits
+.Check that the document `/myindex/mytype/1` exist
 [source,js]
 ---------
 client.exists({
