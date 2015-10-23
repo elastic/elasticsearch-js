@@ -410,7 +410,7 @@ Returns a boolean indicating whether or not a given document exists.
 
 The default method is `HEAD` and the usual <<api-conventions,params and return values>> apply. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html[the elasticsearch docs] for more about this method.
 
-.Check that the document `/myindex/mytype/1` exits
+.Check that the document `/myindex/mytype/1` exist
 [source,js]
 ---------
 client.exists({
