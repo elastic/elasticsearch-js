@@ -122,13 +122,13 @@ module.exports = {
                 repository: repo,
                 snapshot: snapshot
               });
-            })
+            }, {concurrency: 1})
             .then(function () {
               return client.snapshot.deleteRepository({
                 repository: repo
               });
             });
-          })
+          }, {concurrency: 1})
         ]);
       };
 
