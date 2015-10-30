@@ -104,7 +104,7 @@ var statusCodes = {
   400: 'Bad Request',
   401: 'Authentication Exception',
   402: 'Payment Required',
-  403: 'Authorization Exception',
+  403: ['Authorization Exception', 'Forbidden'],
   404: 'Not Found',
   405: 'Method Not Allowed',
   406: 'Not Acceptable',
@@ -138,11 +138,15 @@ var statusCodes = {
   510: 'Not Extended'
 };
 
-_.each(statusCodes, function (name, status) {
-  var className = _.studlyCase(name);
+_.each(statusCodes, function createStatusCodeError(names, status) {
+  var allNames = [].concat(names, status);
+  var primaryName = allNames[0];
+  var className = _.studlyCase(primaryName);
+  allNames = _.uniq(allNames.concat(className));
 
   function StatusCodeError(msg, metadata) {
     this.status = status;
+    this.displayName = className;
 
     var esErrObject = null;
     if (_.isPlainObject(msg)) {
@@ -154,7 +158,7 @@ _.each(statusCodes, function (name, status) {
       // errors from es now come in two forms, an error string < 2.0 and
       // an object >= 2.0
       // TODO: remove after dropping support for < 2.0
-      ErrorAbstract.call(this, msg || name, StatusCodeError);
+      ErrorAbstract.call(this, msg || primaryName, StatusCodeError);
       return this;
     }
 
@@ -180,11 +184,12 @@ _.each(statusCodes, function (name, status) {
       if (esErrObject.reason) msg += esErrObject.reason;
     }
 
-    ErrorAbstract.call(this, msg || name, StatusCodeError, metadata);
+    ErrorAbstract.call(this, msg || primaryName, StatusCodeError, metadata);
     return this;
   }
-
   _.inherits(StatusCodeError, ErrorAbstract);
-  errors[className] = StatusCodeError;
-  errors[status] = StatusCodeError;
+
+  allNames.forEach(function (name) {
+    errors[name] = StatusCodeError;
+  });
 });
