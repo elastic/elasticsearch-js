@@ -1,4 +1,4 @@
-# elasticsearch.js
+# elasticsearch.js 9.1.0-snapshot
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
@@ -26,20 +26,6 @@ npm install elasticsearch
 
 Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html) doc page for help downloading and setting up the client for use in the browser.
 
-<table><tr>
-<td>bower:</td>
-<td colspan="2"><code>bower install elasticsearch</code></td>
-</tr><tr>
-<td>download:</td>
-<td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-9.0.0.zip">zip</a>
-</td>
-<td align="center">
-<a href="https://download.elastic.co/elasticsearch/elasticsearch-js/elasticsearch-js-9.0.0.tar.gz">tar.gz</a>
-</td>
-</tr>
-</table>
-
 ## Docs
  - [Quick Start](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/quick-start.html)
  - [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html)
@@ -48,7 +34,6 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
  - [Development/Contributing](https://github.com/elastic/elasticsearch-js/blob/master/CONTRIBUTING.md)
  - [Extending Core Components](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extending_core_components.html)
  - [Logging](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html)
-
 
 
 ## Questions?
