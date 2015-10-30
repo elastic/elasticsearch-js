@@ -252,6 +252,10 @@ Transport.prototype.request = function (params, cb) {
       errorMetadata.statusCode = status;
       errorMetadata.response = body;
 
+      if (status === 401 && headers && headers['www-authenticate']) {
+        errorMetadata.wwwAuthenticateDirective = headers['www-authenticate'];
+      }
+
       if (errors[status]) {
         err = new errors[status](parsedBody && parsedBody.error, errorMetadata);
       } else {
