@@ -38,7 +38,7 @@ module.exports = function (grunt) {
     'open:coverage'
   ]);
 
-  grunt.registerTask('version', function (type) {
+  grunt.registerTask('version', function (nextVersion) {
     var root = require('path').join.bind(null, __dirname, '..');
     var readmePath = root('README.md');
     var packagePath = root('package.json');
@@ -51,23 +51,22 @@ module.exports = function (grunt) {
     ])
     .spread(function (pkg, readme, browserBuilds) {
       var current = pkg.version;
-      var next = utils.increaseVersion(current, type);
 
-      pkg.version = next;
-      browserBuilds = utils.replaceAll(browserBuilds, current, next);
+      pkg.version = nextVersion;
+      browserBuilds = utils.replaceAll(browserBuilds, current, nextVersion);
 
-      readme = utils.replaceAll(readme, current, next);
+      readme = utils.replaceAll(readme, current, nextVersion);
 
       readme = utils.replaceAll(
         readme,
         '/' + utils.minorVersion(current) + '.svg',
-        '/' + utils.minorVersion(next) + '.svg'
+        '/' + utils.minorVersion(nextVersion) + '.svg'
       );
 
       readme = utils.replaceAll(
         readme,
         'branch=' + utils.minorVersion(current),
-        'branch=' + utils.minorVersion(next)
+        'branch=' + utils.minorVersion(nextVersion)
       );
 
       // write all files to disk
