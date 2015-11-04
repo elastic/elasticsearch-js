@@ -57,7 +57,7 @@
     "grunt-contrib-jshint": "spenceralger/grunt-contrib-jshint",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-esvm": "^1.1.8",
+    "grunt-esvm": "^1.1.9",
     "grunt-mocha-cov": "^0.4.0",
     "grunt-open": "~0.2.2",
     "grunt-prompt": "~0.1.2",
