@@ -9,3 +9,8 @@ For information about writing extensions, check out the <<extending_core_compone
 Makes elasticsearch-js compatible with https://aws.amazon.com/elasticsearch-service/[Amazon ES]. It uses the https://www.npmjs.com/package/aws-sdk[aws-sdk] to make signed requests to an Amazon ES endpoint.
 
 http-aws-es is available on https://www.npmjs.com/package/http-aws-es[npm].
+
+=== elasticsearch-scrolltoend
+This module provides a `scrollToEnd` function which allows for processing each batch while scrolling search results.
+
+elasticsearch-scrolltoend is available on https://www.npmjs.com/package/elasticsearch-scrolltoend[npm].
