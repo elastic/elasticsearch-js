@@ -185,6 +185,7 @@ HttpConnector.prototype.request = function (params, cb) {
     request.setHeader('Content-Length', Buffer.byteLength(params.body, 'utf8'));
     request.end(params.body);
   } else {
+    request.setHeader('Content-Length', 0);
     request.end();
   }
 
