@@ -64,12 +64,12 @@ Log.prototype.close = function () {
 
 Log.prototype.listenerCount = function (event) {
   // node >= 3.0 supports EE#listenerCount()
-  if (EventEmitter.prototype.listenerCount) {
+  if (EventEmitter.prototype.listenerCount && process.version >= 'v3.0.0') {
     return EventEmitter.prototype.listenerCount.call(this, event);
   }
 
   // compatability for node < 0.10
-  if (EventEmitter.listenerCount) {
+  if (EventEmitter.listenerCount && process.version < 'v0.10.0') {
     return EventEmitter.listenerCount(this, event);
   }
 
