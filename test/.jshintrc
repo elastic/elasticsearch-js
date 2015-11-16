@@ -32,6 +32,7 @@
 
   "globals": {
     "describe": true,
+    "context": true,
     "before": true,
     "after": true,
     "it": true,
