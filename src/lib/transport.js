@@ -319,8 +319,10 @@ Transport.prototype.request = function (params, cb) {
 };
 
 Transport.prototype._timeout = function (cb, delay) {
-  this._timers = this._timers || [];
+  if (this.closed) return;
+
   var id;
+  var timers = this._timers || (this._timers = []);
 
   if ('function' !== typeof cb) {
     id = cb;
@@ -329,8 +331,12 @@ Transport.prototype._timeout = function (cb, delay) {
 
   if (cb) {
     // set the timer
-    id = setTimeout(cb, delay);
-    this._timers.push(id);
+    id = setTimeout(function () {
+      _.pull(timers, id);
+      cb();
+    }, delay);
+
+    timers.push(id);
     return id;
   }
 
@@ -393,6 +399,8 @@ Transport.prototype.sniff = function (cb) {
  */
 Transport.prototype.close = function () {
   this.log.close();
+  this.closed = true;
   _.each(this._timers, clearTimeout);
+  this._timers = null;
   this.connectionPool.close();
 };
