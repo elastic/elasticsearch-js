@@ -4,31 +4,63 @@ describe('Nodes to host callback', function () {
 
   // example node list that would come back from "GET _cluster/nodes"
   var nodes = require('../../fixtures/short_node_list.json');
+  var nodes20 = require('../../fixtures/short_node_list.2.0.json');
 
-  it('properly creates host objects', function () {
-    var hosts = callback(nodes);
-    expect(hosts.length).to.be(2);
-    expect(hosts[0]).to.eql({
-      host: '10.10.10.100',
-      port: 9205,
-      _meta: {
-        id: 'id1',
-        name: 'Headknocker',
-        hostname: 'Spencers-MacBook-Pro.local',
-        version: '0.90.5'
-      }
-    });
-    expect(hosts[1]).to.eql({
-      host: '10.10.10.101',
-      port: 9205,
-      _meta: {
-        id: 'id2',
-        name: 'Buttknocker',
-        hostname: 'Johns-MacBook-Pro.local',
-        version: '0.90.5'
-      }
+  context('pre 2.0 nodes style', function () {
+    it('properly creates host objects', function () {
+      var hosts = callback(nodes);
+      expect(hosts.length).to.be(2);
+      expect(hosts[0]).to.eql({
+        host: '10.10.10.100',
+        port: 9205,
+        _meta: {
+          id: 'id1',
+          name: 'Headknocker',
+          hostname: 'Spencers-MacBook-Pro.local',
+          version: '0.90.5'
+        }
+      });
+      expect(hosts[1]).to.eql({
+        host: '10.10.10.101',
+        port: 9205,
+        _meta: {
+          id: 'id2',
+          name: 'Buttknocker',
+          hostname: 'Johns-MacBook-Pro.local',
+          version: '0.90.5'
+        }
+      });
     });
   });
+
+  context('2.0 nodes style', function () {
+    it('properly creates host objects', function () {
+      var hosts = callback(nodes20);
+      expect(hosts.length).to.be(2);
+      expect(hosts[0]).to.eql({
+        host: '10.10.10.100',
+        port: 9205,
+        _meta: {
+          id: 'id1',
+          name: 'Headknocker',
+          hostname: 'Spencers-MacBook-Pro.local',
+          version: '0.90.5'
+        }
+      });
+      expect(hosts[1]).to.eql({
+        host: '10.10.10.101',
+        port: 9205,
+        _meta: {
+          id: 'id2',
+          name: 'Buttknocker',
+          hostname: 'Johns-MacBook-Pro.local',
+          version: '0.90.5'
+        }
+      });
+    });
+  });
+
+
 
   it('ignores hosts that don\'t have an http_host property', function () {
     var hosts = callback({
@@ -47,7 +79,7 @@ describe('Nodes to host callback', function () {
           http_address: 'not actually an http host'
         }
       });
-    }).to.throwException(/does not match the expected pattern/);
+    }).to.throwException(/expected.*property.*match either/);
   });
 
 });
