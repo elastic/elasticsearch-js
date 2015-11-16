@@ -79,7 +79,7 @@ describe('Nodes to host callback', function () {
           http_address: 'not actually an http host'
         }
       });
-    }).to.throwException(/does not match the expected pattern/);
+    }).to.throwException(/expected.*property.*match either/);
   });
 
 });
