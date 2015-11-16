@@ -162,7 +162,7 @@ describe('Transport Class', function () {
 
         expect(trans).to.have.property('sniffedNodesProtocol', 'https');
       });
-    })
+    });
 
     describe('host config', function () {
       it('rejects non-strings/objects', function () {
@@ -483,6 +483,7 @@ describe('Transport Class', function () {
         };
 
         stub(conn, 'request', function (params) {
+          expect(params.headers).to.have.property('content-type', 'application/json');
           expect(JSON.parse(params.body)).to.eql(body);
           done();
         });
@@ -502,6 +503,7 @@ describe('Transport Class', function () {
         ];
 
         stub(conn, 'request', function (params) {
+          expect(params.headers).to.have.property('content-type', 'application/x-ldjson');
           expect(params.body).to.eql(
             '{"_id":"simple body"}\n' +
             '{"name":"ഢധയമബ"}\n'
