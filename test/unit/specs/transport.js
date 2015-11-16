@@ -670,6 +670,35 @@ describe('Transport Class', function () {
       });
     });
 
+    describe('handles process.domain', function () {
+      if (process && process.hasOwnProperty('domain')) {
+        it('works without a domain', function () {
+          expect(process.domain).to.be(null);
+          var tran = new Transport();
+          shortCircuitRequest(tran);
+          tran.request({}, function(err, result, status) {
+            expect(process.domain).to.be(null);
+          });
+        });
+
+        it('binds the callback to the correct domain', function () {
+          expect(process.domain).to.be(null);
+          var domain = require('domain').create();
+          domain.run(function() {
+            var tran = new Transport();
+            shortCircuitRequest(tran);
+            expect(process.domain).not.to.be(null);
+            var startingDomain = process.domain
+            tran.request({}, function(err, result, status) {
+              expect(process.domain).not.to.be(null);
+              expect(process.domain).to.be(startingDomain);
+              process.domain.exit();
+            });
+          });
+        });
+      }
+    });
+
     describe('aborting', function () {
       it('prevents the request from starting if called in the same tick', function () {
         var tran = new Transport({
