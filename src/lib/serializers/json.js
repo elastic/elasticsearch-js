@@ -28,6 +28,8 @@ Json.prototype.serialize = function (val, replacer, spaces) {
   }
 };
 
+Json.prototype.serialize.contentType = 'application/json';
+
 /**
  * Parse a JSON string, if it is already parsed it is ignored
  * @param  {String} str - the string to parse
@@ -57,3 +59,5 @@ Json.prototype.bulkBody = function (val) {
 
   return body;
 };
+
+Json.prototype.bulkBody.contentType = 'application/x-ldjson';
