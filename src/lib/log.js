@@ -62,19 +62,26 @@ Log.prototype.close = function () {
   }
 };
 
-Log.prototype.listenerCount = function (event) {
-  // node >= 3.0 supports EE#listenerCount()
-  if (EventEmitter.prototype.listenerCount) {
-    return EventEmitter.prototype.listenerCount.call(this, event);
-  }
-
-  // compatability for node < 0.10
-  if (EventEmitter.listenerCount) {
+if (EventEmitter.prototype.listenerCount) {
+  // If the event emitter implements it's own listenerCount method
+  // we don't need to (newer nodes do this).
+  Log.prototype.listenerCount = EventEmitter.prototype.listenerCount;
+}
+else if (EventEmitter.listenerCount) {
+  // some versions of node expose EventEmitter::listenerCount
+  // which is more efficient the getting all listeners of a
+  // specific type
+  Log.prototype.listenerCount = function (event) {
     return EventEmitter.listenerCount(this, event);
-  }
-
-  return this.listeners(event).length;
-};
+  };
+}
+else {
+  // all other versions of node expose a #listeners() method, which returns
+  // and array we have to count
+  Log.prototype.listenerCount = function (event) {
+    return this.listeners(event).length;
+  };
+}
 
 /**
  * Levels observed by the loggers, ordered by rank
