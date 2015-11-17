@@ -136,6 +136,11 @@ Transport.prototype.request = function (params, cb) {
   var ret; // the object returned to the user, might be a promise
   var defer; // the defer object, will be set when we are using promises.
 
+  var body = params.body;
+  var headers = !params.headers ? {} : _.transform(params.headers, function (headers, val, name) {
+    headers[String(name).toLowerCase()] = val;
+  });
+
   self.log.debug('starting request', params);
 
   // determine the response based on the presense of a callback
@@ -153,14 +158,20 @@ Transport.prototype.request = function (params, cb) {
     ret.abort = abortRequest;
   }
 
-  if (params.body && params.method === 'GET') {
+  if (body && params.method === 'GET') {
     _.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
     return ret;
   }
 
   // serialize the body
-  if (params.body) {
-    params.body = self.serializer[params.bulkBody ? 'bulkBody' : 'serialize'](params.body);
+  if (body) {
+    var serializer = self.serializer;
+    var serializeFn = serializer[params.bulkBody ? 'bulkBody' : 'serialize'];
+
+    body = serializeFn.call(serializer, body);
+    if (!headers['content-type']) {
+      headers['content-type'] = serializeFn.contentType;
+    }
   }
 
   if (params.hasOwnProperty('maxRetries')) {
@@ -175,8 +186,8 @@ Transport.prototype.request = function (params, cb) {
     method: params.method,
     path: params.path || '/',
     query: params.query,
-    body: params.body,
-    headers: params.headers
+    body: body,
+    headers: headers
   };
 
   function sendReqWithConnection(err, _connection) {
