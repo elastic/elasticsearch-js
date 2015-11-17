@@ -222,7 +222,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
     if (timeout.conn.status === 'dead') {
       timeout.revive(function (err) {
         if (err) {
-          log.warning('Unable to revive connection: ' + timeout.conn.id);
+          log.warning('Unable to revive connection: ' + timeout.conn.id.replace(/\w+:\w+@/, ''));
           process.nextTick(next);
         } else {
           cb(void 0, timeout.conn);
