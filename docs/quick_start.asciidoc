@@ -113,49 +113,50 @@ NOTE: In this example, `request` and `response` are http://expressjs.com/api.htm
 
 [source,js]
 -----------------
-var pageNum = request.param('page', 1);
-var perPage = request.param('per_page', 15);
-var userQuery = request.param('search_query');
+var pageNum = request.params.page;
+var perPage = request.params.per_page;
+var userQuery = request.params.'search_query;
 var userId = request.session.userId;
 
 client.search({
-  index: 'posts',
-  from: (pageNum - 1) * perPage,
-  size: perPage,
-  body: {
-    query: {
-      filtered: {
-        query: {
-          match: {
-            // match the query agains all of
-            // the fields in the posts index
-            _all: userQuery
-          }
-        },
-        filter: {
-          // only return documents that are
-          // public or owned by the current user
-          or: [
-            {
-              term: { privacy: "public" }
-            },
-            {
-              term: { owner: userId }
+    index: 'posts',
+    from: (pageNum - 1) * perPage,
+    size: perPage,
+    body: {
+      query: {
+        filtered: {
+          query: {
+            match: {
+              // match the query agains all of
+              // the fields in the posts index
+              _all: userQuery
             }
-          ]
+          },
+          filter: {
+            // only return documents that are
+            // public or owned by the current user
+            or: [
+              {
+                term: { privacy: "public" }
+              },
+              {
+                term: { owner: userId }
+              }
+            ]
+          }
         }
       }
     }
-  }, function (error, response) {
+  }, function (err, res) {
     if (err) {
     // handle error
     return;
   }
 
   response.render('search_results', {
-    results: response.hits.hits,
+    results: res.hits.hits,
     page: pageNum,
-    pages: Math.ceil(response.hits.total / perPage)
+    pages: Math.ceil(res.hits.total / perPage)
   })
 });
 -----------------
