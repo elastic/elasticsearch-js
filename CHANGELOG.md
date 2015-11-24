@@ -2,7 +2,7 @@
 
 ## 10.0 (Nov 24 2015)
  - apiVersion `"2.1"` is now the default
- - Remove `bluebird` dependency, use an ES6 Promise shim instead
+ - Remove `bluebird` dependency, use an ES6 Promise shim instead. To use Bluebird in your project supply the [defer](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-defer) configuration option.
 
 ## 9.0 (Oct 30 2015)
  - apiVersion `"2.0"` is now the default

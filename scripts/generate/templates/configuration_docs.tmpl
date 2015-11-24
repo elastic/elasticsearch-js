@@ -210,13 +210,18 @@ Options:::
 
 `defer`[[config-defer]]:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
 
-Default:::
+Default::: Defer object created with ES6 Promise
+
+To use Bluebird:::
 +
 [source,js]
 -----
-function () {
-  return when.defer();
-}
+var Bluebird = require('bluebird');
+var client = new elasticsearch.Client({
+  defer: function () {
+    return Bluebird.defer();
+  }
+});
 -----
 
 
