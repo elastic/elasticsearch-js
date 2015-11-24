@@ -1,5 +1,15 @@
 # elasticsearch-js changelog
 
+## 10.0 (Nov 24 2015)
+ - apiVersion `"2.1"` is now the default
+ - Remove `bluebird` dependency, use an ES6 Promise shim instead
+
+## 9.0 (Oct 30 2015)
+ - apiVersion `"2.0"` is now the default
+ - Fix a memory leak caused by sniffing
+ - Use the `application/x-ldjson` content-type for bulk formatted bodies
+ - Added `wwwAuthenticateDirective` property to `401` errors
+
 ## 8.2 (Sep 17 2015)
  - Added [`sniffedNodesProtocol`](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-sniffed-nodes-protocol) configuration option
  - Fixed an issue which prevented promised from getting rejected if the `GET` verb was used with a request body ([#263](https://github.com/elastic/elasticsearch-js/issues/263))
