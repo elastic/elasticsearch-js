@@ -775,6 +775,7 @@ api.cat.prototype.shards = ca({
  * Perform a [cat.snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.ignoreUnavailable - Set to true to ignore unavailable snapshots
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
@@ -783,6 +784,11 @@ api.cat.prototype.shards = ca({
  */
 api.cat.prototype.snapshots = ca({
   params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      'default': false,
+      name: 'ignore_unavailable'
+    },
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'

@@ -20,9 +20,9 @@ include::logging.asciidoc[]
 
 include::development.asciidoc[]
 
-include::api_methods_2_1.asciidoc[]
-
 include::api_methods.asciidoc[]
+
+include::api_methods_2_0.asciidoc[]
 
 include::api_methods_1_7.asciidoc[]
 
