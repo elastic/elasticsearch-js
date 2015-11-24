@@ -14,7 +14,7 @@ var path = require('path');
 var fs = require('fs');
 var async = require('async');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 
 // current client
 var client = null;
@@ -96,11 +96,14 @@ module.exports = {
             port: port
           }
         ],
-        log: logConfig
+        log: logConfig,
+        defer: function () {
+          return Bluebird.defer();
+        }
       });
 
       client.clearEs = function () {
-        return Promise.all([
+        return Bluebird.all([
           client.indices.delete({ index: '*', ignore: 404 }),
           client.indices.deleteTemplate({ name: '*', ignore: 404 }),
           client.snapshot.getRepository({
