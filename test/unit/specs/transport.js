@@ -310,8 +310,11 @@ describe('Transport Class', function () {
   });
 
   describe('#defer', function () {
-    it('returns a when.js promise by default', function () {
-      expect(Transport.prototype.defer().constructor).to.be(Promise.defer().constructor);
+    it('returns a custom defer object', function () {
+      var defer = Transport.prototype.defer();
+      expect(defer).to.have.property('promise');
+      expect(defer).to.have.property('resolve');
+      expect(defer).to.have.property('reject');
     });
   });
 
@@ -648,7 +651,7 @@ describe('Transport Class', function () {
         var tran = new Transport();
         shortCircuitRequest(tran);
         var ret = tran.request({});
-        expect(Promise.is(ret)).to.be(true);
+        expect(ret.then).to.be.a('function');
         expect(ret.abort).to.be.a('function');
         ret.then(_.noop, _.noop); // prevent complaining from bluebird
       });
