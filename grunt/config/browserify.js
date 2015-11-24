@@ -33,7 +33,7 @@ module.exports = {
       ignore: [
         'src/lib/connectors/jquery.js',
         'src/lib/connectors/xhr.js',
-        'bluebird'
+        'promise-js'
       ]
     }
   },
@@ -45,7 +45,7 @@ module.exports = {
       ignore: [
         'src/lib/connectors/angular.js',
         'src/lib/connectors/xhr.js',
-        'bluebird'
+        'promise-js'
       ]
     }
   }
