@@ -14,3 +14,8 @@ http-aws-es is available on https://www.npmjs.com/package/http-aws-es[npm].
 This module provides a `scrollToEnd` function which allows for processing each batch while scrolling search results.
 
 elasticsearch-scrolltoend is available on https://www.npmjs.com/package/elasticsearch-scrolltoend[npm].
+
+=== elasticsearch-deletebyquery
+This module provides the `deleteByQuery` method which was removed from the core API in ES 2.0.0. For those with the [Delete-by-query](https://www.elastic.co/guide/en/elasticsearch/plugins/2.0/plugins-delete-by-query.html) installed, this will bring back that feature to your Elasticsearch-js client.
+
+elasticsearch-deletebyquery is available on https://www.npmjs.com/package/elasticsearch-deletebyquery[npm].
