@@ -12,6 +12,7 @@ var http = require('http');
 function MockRequest() {
   sinon.stub(this, 'end');
   sinon.stub(this, 'write');
+  sinon.stub(this, 'setHeader');
   this.log = sinon.stub(this.log);
 }
 util.inherits(MockRequest, http.ClientRequest);
