@@ -3925,6 +3925,7 @@ api.indices.prototype.refresh = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {Anything} params.operationThreading - TODO: ?
+ * @param {Boolean} params.verbose - Includes detailed memory usage by Lucene.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.segments = ca({
@@ -3954,6 +3955,10 @@ api.indices.prototype.segments = ca({
     },
     operationThreading: {
       name: 'operation_threading'
+    },
+    verbose: {
+      type: 'boolean',
+      'default': false
     }
   },
   urls: [

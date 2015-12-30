@@ -2096,6 +2096,8 @@ api.indices = namespace();
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
  * @param {String} params.tokenizer - The name of the tokenizer to use for the analysis
+ * @param {Boolean} params.detail - With `true`, outputs more advanced details. (default: false)
+ * @param {String, String[], Boolean} params.attributes - A comma-separated list of token attributes to output, this parameter works only with `detail=true`
  * @param {String} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
@@ -2125,6 +2127,12 @@ api.indices.prototype.analyze = ca({
     },
     tokenizer: {
       type: 'string'
+    },
+    detail: {
+      type: 'boolean'
+    },
+    attributes: {
+      type: 'list'
     },
     format: {
       type: 'enum',
@@ -3861,6 +3869,7 @@ api.indices.prototype.refresh = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {Anything} params.operationThreading - TODO: ?
+ * @param {Boolean} params.verbose - Includes detailed memory usage by Lucene.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.segments = ca({
@@ -3890,6 +3899,10 @@ api.indices.prototype.segments = ca({
     },
     operationThreading: {
       name: 'operation_threading'
+    },
+    verbose: {
+      type: 'boolean',
+      'default': false
     }
   },
   urls: [
