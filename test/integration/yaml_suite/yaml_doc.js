@@ -397,27 +397,16 @@ YamlDoc.prototype = {
 
       // for ercursively traversing the params to replace '$stashed' vars
       var transformObject = function (vals, val, i) {
-        switch (typeof val) {
-        case 'string':
+        if (_.isString(val)) {
           val = (val[0] === '$') ? this.get(val) : val;
-          break;
-        case 'object':
+        } else if (_.isPlainObject(val) || _.isArray(val)) {
           val = _.transform(val, transformObject);
         }
+
         vals[i] = val;
       }.bind(this);
 
-      // start with the initial param, only traverse traversables
-      switch (typeof val) {
-      case 'string':
-        val = (val[0] === '$') ? this.get(val) : val;
-        break;
-      case 'object':
-        val = _.transform(val, transformObject);
-        break;
-      }
-
-      params[paramName] = val;
+      transformObject(params, val, paramName);
     }, {}, this);
 
 
