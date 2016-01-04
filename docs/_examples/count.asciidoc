@@ -20,7 +20,7 @@ client.count({
 .Get the number of documents matching a query
 [source,js]
 ---------
-client.count(
+client.count({
   index: 'index_name',
   body: {
     query: {
