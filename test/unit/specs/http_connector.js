@@ -64,6 +64,17 @@ describe('Http Connector', function () {
         var con = new HttpConnection(new Host('thrifty://es.com/stuff'));
       }).to.throwError(/invalid protocol/i);
     });
+
+    it('allows defining a custom agent', function () {
+      var football = {};
+      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(football) });
+      expect(con.agent).to.be(football);
+    });
+
+    it('allows setting agent to false', function () {
+      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(false) });
+      expect(con.agent).to.be(false);
+    });
   });
 
   describe('#makeReqParams', function () {
