@@ -13,7 +13,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot'];
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -5916,6 +5916,58 @@ api.suggest = ca({
   ],
   needBody: true,
   method: 'POST'
+});
+
+api.tasks = namespace();
+
+/**
+ * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-list.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.detailed - Return detailed task information (default: false)
+ * @param {String} params.parentNode - Return tasks with specified parent node.
+ * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
+ */
+api.tasks.prototype.list = ca({
+  params: {
+    detailed: {
+      type: 'boolean'
+    },
+    parentNode: {
+      type: 'string',
+      name: 'parent_node'
+    },
+    parentTask: {
+      type: 'number',
+      name: 'parent_task'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_tasks/<%=nodeId%>/<%=actions%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        actions: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_tasks/<%=nodeId%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_tasks'
+    }
+  ]
 });
 
 /**
