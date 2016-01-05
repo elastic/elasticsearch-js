@@ -343,3 +343,22 @@ var client = new elasticsearch.Client({
   }
 })
 -----
+
+
+
+`createNodeAgent`[[config-createNodeAgent]]:: `Function` -- Override the way that the client creates node.js `Agent`[https://nodejs.org/api/http.html#http_class_http_agent] objects. The value of this property will be executed every time a new Node is added to the client (either from the initial seed or from sniffing) and can return any value that node's http(s) module accepts as `agent:` configuration.
++
+The function is called with two arguments, first an `HttpConnector`[http://github.com/spalger/elasticsearch-js/blob/master/src/lib/connectors/http.js] object and the second the config object initially passed when creating the client.
+
+Default::: `HttpConnector#createAgent()`
+
+Disable Agent creation:::
++
+[source,js]
+-----
+var client = new elasticsearch.Client({
+  createNodeAgent: function () {
+    return false;
+  }
+});
+-----
