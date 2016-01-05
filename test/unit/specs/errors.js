@@ -24,3 +24,11 @@ describe('Error Abstract', function () {
     expect(err.stack).to.be.a('string');
   });
 });
+
+describe('StatusCodeError', function () {
+  it('exposes status code as a number', function () {
+    var err = new errors['404']();
+    expect(err.status).to.be(404);
+    expect(err.status).to.not.be('404');
+  });
+});
