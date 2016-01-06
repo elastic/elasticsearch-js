@@ -44,7 +44,7 @@ function HttpConnector(host, config) {
     maxSockets: 11
   });
 
-  this.agent = this.createAgent(config);
+  this.agent = config.noAgent ? false : this.createAgent(config);
 }
 _.inherits(HttpConnector, ConnectionAbstract);
 
