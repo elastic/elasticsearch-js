@@ -1,5 +1,3 @@
-/* jshint browser: true, jquery: true */
-
 /**
  * Simple connection class for using the XHR object in browsers
  *
@@ -40,5 +38,3 @@ JqueryConnector.prototype.request = function (params, cb) {
     jqXHR.abort();
   };
 };
-
-

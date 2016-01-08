@@ -186,8 +186,6 @@ module.exports = [
   {
     version: '>=1.6.0',
 
-/* jshint ignore:start */
-
 // strange indentation makes pretty api files
 clientActionModifier:
 function (spec) {
@@ -200,8 +198,6 @@ function (spec) {
     }
   });
 }
-
-/* jshint ignore:end */
 
   }
 ];

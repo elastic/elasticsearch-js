@@ -1,5 +1,3 @@
-/* jshint browser:true */
-/* global ActiveXObject */
 
 //////////////
 /// Extended version of:
@@ -399,7 +397,6 @@ MockHttpRequest.prototype = {
   // Based on parseUri by Steven Levithan <stevenlevithan.com>
   // See http://blog.stevenlevithan.com/archives/parseuri
   parseUri: function (str) {
-    /* jshint maxlen:false */
     var pattern =
       /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/;
     var key = ['source', 'protocol', 'authority', 'userInfo', 'user',

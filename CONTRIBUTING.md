@@ -4,7 +4,7 @@ The process for contributing to any of the Elasticsearch repositories is similar
 
 ### 1. Lint your codes
 
-While developing, be sure to run JSHint on the files you modify. This is simple with most IDE's and the project has [.jshintrc files](http://www.jshint.com/docs/) in the proper places, make sure jshint is using them.
+While developing, be sure to run eslint on the files you modify.
 
 ### 2. Write tests
 

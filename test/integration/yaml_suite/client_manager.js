@@ -3,7 +3,6 @@ var VERBOSE = process.env.VERBOSE;
 var JENKINS = !!process.env.JENKINS_HOME;
 
 if (BROWSER) {
-  /* jshint browser: true */
   var es = window.elasticsearch;
 } else {
   var es = require('../../../src/elasticsearch');

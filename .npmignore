@@ -21,7 +21,7 @@ coverage.html
 html_docs
 
 ## just in .npmignore
-.jshintrc
+.eslintrc
 .travis.yml
 CHANGELOG.md
 CONTRIBUTING.md

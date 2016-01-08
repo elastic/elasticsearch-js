@@ -7,7 +7,6 @@ module.exports = {
       'Gruntfile.js'
     ],
     tasks: [
-      'jshint',
       'mochacov:unit'
     ],
     options: {

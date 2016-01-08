@@ -12,12 +12,10 @@ var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 var defaultProto = 'http:';
 var btoa;
 
-/* jshint ignore:start */
 if (typeof window !== 'undefined') {
   defaultProto = window.location.protocol;
   btoa = window.btoa;
 }
-/* jshint ignore:end */
 
 btoa = btoa || function (data) {
   return (new Buffer(data, 'utf8')).toString('base64');
