@@ -1,5 +1,3 @@
-/* jshint maxlen: false */
-
 var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
   return require('../utils').merge(spec, {
     params: {

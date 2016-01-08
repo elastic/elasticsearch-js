@@ -1,5 +1,3 @@
-/* jshint maxlen: false */
-
 var ca = require('../client_action').factory;
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
