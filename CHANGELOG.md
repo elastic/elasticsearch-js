@@ -1,5 +1,11 @@
 # elasticsearch-js changelog
 
+## 10.1 (Jan 8 2016)
+ - browser builds now include the "unstable" api's from elasticsearch
+ - added `createNodeAgent` configuration value for overriding the agent that the node.js HttpConnector uses. (see [#329](https://github.com/elastic/elasticsearch-js/pull/329))
+ - fix a bug that could cause error statuses to be strings rather than numbers
+ - doc fixes
+
 ## 10.0 (Nov 24 2015)
  - apiVersion `"2.1"` is now the default
  - Remove `bluebird` dependency, use an ES6 Promise shim instead. To use Bluebird in your project supply the [defer](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-defer) configuration option.
