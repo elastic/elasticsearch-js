@@ -67,5 +67,4 @@ module.exports = function (grunt) {
       throw new Error('Aborting release');
     }
   });
-
 };
