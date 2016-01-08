@@ -10,11 +10,12 @@ var EventEmitter = require('events').EventEmitter;
  * @class Log
  * @uses Loggers.Stdio
  * @constructor
- * @param {string|Object|ArrayOfStrings|ArrayOfObjects} output - Either the level
- *  to setup a single logger, a full config object for alogger, or an array of
+ * @param {object} config
+ * @param {string|Object|ArrayOfStrings|ArrayOfObjects} config.log - Either the level
+ *  to setup a single logger, a full config object for a logger, or an array of
  *  config objects to use for creating log outputs.
- * @param {string} output.level - One of the keys in Log.levels (error, warning, etc.)
- * @param {string} output.type - The name of the logger to use for this output
+ * @param {string|array} config.log.level|config.log.levels - One or more keys in Log.levels (error, warning, etc.)
+ * @param {string} config.log.type - The name of the logger to use for this output
  */
 function Log(config) {
   config = config || {};
@@ -196,7 +197,7 @@ Log.join = function (arrayish) {
  * @param {object} config - An object with config options for the logger.
  * @param {String} [config.type=stdio] - The name of an output/logger. Options
  *   can be found in the `src/loggers` directory.
- * @param {String|ArrayOfStrings} [config.levels=warning] - The levels to output
+ * @param {String|ArrayOfStrings} [config.level|config.levels=warning] - The levels to output
  *   to this logger, when an array is specified no levels other than the ones
  *   specified will be listened to. When a string is specified, that and all lower
  *   levels will be logged.
