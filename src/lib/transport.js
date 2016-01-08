@@ -122,9 +122,10 @@ Transport.prototype.defer = function () {
  * @todo access to custom headers, modifying of request in general
  * @param {object} params
  * @param {Number} params.requestTimeout - timeout for the entire request (inculding all retries)
- * @param {Number} params.maxRetries - number of times the request will be re-run in
- *   the original node chosen can not be connected to.
- * @param {String} params.url - The url for the request
+ * @param {Number} params.maxRetries - number of times to re-run request if the
+ *   original node chosen can not be connected to.
+ * @param {string} [params.path="/"] - URL pathname. Do not include query string.
+ * @param {string|object} [params.query] - Query string.
  * @param {String} params.method - The HTTP method for the request
  * @param {String} params.body - The body of the HTTP request
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
