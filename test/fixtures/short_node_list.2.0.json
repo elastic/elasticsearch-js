@@ -11,6 +11,6 @@
     "transport_address": "10.10.10.101:9300",
     "hostname": "Johns-MacBook-Pro.local",
     "version": "0.90.5",
-    "http_address": "10.10.10.101:9205"
+    "http_address": "published.hostname/10.10.10.101:9205"
   }
 }
