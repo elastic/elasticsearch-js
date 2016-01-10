@@ -20,7 +20,7 @@ var config = {
   clone_bower_repo: {
     exec: [
       'test -d src/bower_es_js',
-      'git clone git@github.com:elasticsearch/bower-elasticsearch-js.git <%= bowerSubmodule %>'
+      'git clone git@github.com:elastic/bower-elasticsearch-js.git <%= bowerSubmodule %>'
     ].join(' || '),
     options: {
       quiet: true
