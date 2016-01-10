@@ -3475,7 +3475,7 @@ api.indices.prototype.open = ca({
 });
 
 /**
- * Perform a [indices.optimize](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-optimize.html) request
+ * Perform a [indices.optimize](https://www.elastic.co/guide/en/elasticsearch/reference/2.1/indices-optimize.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
@@ -5483,7 +5483,7 @@ api.search = ca({
 });
 
 /**
- * Perform a [searchExists](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-exists.html) request
+ * Perform a [searchExists](https://www.elastic.co/guide/en/elasticsearch/reference/2.1/search-exists.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
