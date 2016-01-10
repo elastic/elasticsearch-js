@@ -48,7 +48,7 @@ describe('Nodes to host callback', function () {
         }
       });
       expect(hosts[1]).to.eql({
-        host: '10.10.10.101',
+        host: 'published.hostname',
         port: 9205,
         _meta: {
           id: 'id2',
@@ -79,7 +79,7 @@ describe('Nodes to host callback', function () {
           http_address: 'not actually an http host'
         }
       });
-    }).to.throwException(/expected.*property.*match either/);
+    }).to.throwException(/^Malformed http_address/);
   });
 
 });

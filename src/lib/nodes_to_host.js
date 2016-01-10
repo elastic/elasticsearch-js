@@ -1,35 +1,58 @@
 var _ = require('./utils');
 
 var extractHostPartsRE1x = /\[\/*([^:]+):(\d+)\]/;
-var extractHostPartsRE = /^([\.:0-9a-f]*):([0-9]+)?$/;
 
 function makeNodeParser(hostProp) {
   return function (nodes) {
     return _.transform(nodes, function (hosts, node, id) {
-      if (!node[hostProp]) {
-        return;
-      }
+      var address = node[hostProp]
+      if (!address) return;
 
-      var hostnameMatches = extractHostPartsRE.exec(node[hostProp]);
-      if (!hostnameMatches) {
-        hostnameMatches = extractHostPartsRE1x.exec(node[hostProp]);
-      }
-
-      if (!hostnameMatches) {
-        throw new Error('expected node\'s ' + hostProp + ' property (' + JSON.stringify(node[hostProp]) +
-          ') to match either ' + extractHostPartsRE + ' or ' + extractHostPartsRE1x + '.');
-      }
-
-      hosts.push({
-        host: hostnameMatches[1],
-        port: parseInt(hostnameMatches[2], 10),
+      var host = {
+        host: undefined,
+        port: undefined,
         _meta: {
           id: id,
           name: node.name,
           hostname: node.hostname,
           version: node.version
         }
-      });
+      };
+
+      var malformedError = new Error(
+        'Malformed ' + hostProp + '.' +
+        ' Got ' + JSON.stringify(node[hostProp]) +
+        ' and expected it to match "{hostname?}/{ip}:{port}".'
+      );
+
+      var matches1x = extractHostPartsRE1x.exec(address);
+      if (matches1x) {
+        host.host = matches1x[1];
+        host.port = parseInt(matches1x[2], 10);
+        hosts.push(host);
+        return;
+      }
+
+      if (address.indexOf('/') > -1) {
+        var withHostParts = address.split('/');
+        if (withHostParts.length !== 2) throw malformedError;
+
+        host.host = withHostParts.shift();
+        address = withHostParts.shift();
+      }
+
+      if (address.indexOf(':') < 0) {
+        throw malformedError;
+      }
+
+      var addressParts = address.split(':');
+      if (addressParts.length !== 2) {
+        throw malformedError;
+      }
+
+      host.host = host.host || addressParts[0];
+      host.port = parseInt(addressParts[1], 10);
+      hosts.push(host);
     }, []);
   };
 }
