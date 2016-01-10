@@ -5,6 +5,7 @@
  - added `createNodeAgent` configuration value for overriding the agent that the node.js HttpConnector uses. (see [#329](https://github.com/elastic/elasticsearch-js/pull/329))
  - fix a bug that could cause error statuses to be strings rather than numbers
  - doc fixes
+ - support sniffing nodes that have published hostnames
 
 ## 10.0 (Nov 24 2015)
  - apiVersion `"2.1"` is now the default
