@@ -6,6 +6,7 @@
  - fix a bug that could cause error statuses to be strings rather than numbers
  - doc fixes
  - support sniffing nodes that have published hostnames
+ - error logging now includes information about the request where the error occured [#330](https://github.com/elastic/elasticsearch-js/pull/330)
 
 ## 10.0 (Nov 24 2015)
  - apiVersion `"2.1"` is now the default
