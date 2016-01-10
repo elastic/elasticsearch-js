@@ -11,9 +11,6 @@
 `query`::
 `Object` -- The query string params
 
-`path`::
-`Object` -- The query string params
-
 `ignore`::
 `Number, Number[]` -- HTTP status codes which should not be treated as errors
 
