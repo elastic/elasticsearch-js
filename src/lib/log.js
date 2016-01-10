@@ -18,36 +18,35 @@ var EventEmitter = require('events').EventEmitter;
  */
 function Log(config) {
   config = config || {};
+  if (!config.log) return;
 
   var i;
   var outputs;
 
-  if (config.log) {
-    if (_.isArrayOfStrings(config.log)) {
-      outputs = [{
-        levels: config.log
-      }];
-    } else {
-      outputs = _.createArray(config.log, function (val) {
-        if (_.isPlainObject(val)) {
-          return val;
-        }
-        if (typeof val === 'string') {
-          return {
-            level: val
-          };
-        }
-      });
-    }
+  if (_.isArrayOfStrings(config.log)) {
+    outputs = [{
+      levels: config.log
+    }];
+  } else {
+    outputs = _.createArray(config.log, function (val) {
+      if (_.isPlainObject(val)) {
+        return val;
+      }
+      if (typeof val === 'string') {
+        return {
+          level: val
+        };
+      }
+    });
+  }
 
-    if (!outputs) {
-      throw new TypeError('Invalid logging output config. Expected either a log level, array of log levels, ' +
-        'a logger config object, or an array of logger config objects.');
-    }
+  if (!outputs) {
+    throw new TypeError('Invalid logging output config. Expected either a log level, array of log levels, ' +
+      'a logger config object, or an array of logger config objects.');
+  }
 
-    for (i = 0; i < outputs.length; i++) {
-      this.addOutput(outputs[i]);
-    }
+  for (i = 0; i < outputs.length; i++) {
+    this.addOutput(outputs[i]);
   }
 }
 _.inherits(Log, EventEmitter);
