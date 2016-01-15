@@ -9,7 +9,7 @@
 `String` -- The path/endpoint for the request
 
 `query`::
-`Object` -- The query string params
+`String|Object` -- The query string params
 
 `ignore`::
 `Number, Number[]` -- HTTP status codes which should not be treated as errors
