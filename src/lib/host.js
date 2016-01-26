@@ -12,7 +12,7 @@ var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 var defaultProto = 'http:';
 var btoa;
 
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
   defaultProto = window.location.protocol;
   btoa = window.btoa;
 }
