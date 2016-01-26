@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -23,6 +23,7 @@ api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
  * @param {String, String[], Boolean} params.fields - Default comma-separated list of fields to return in the response for updates
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
@@ -49,6 +50,9 @@ api.bulk = ca({
     },
     fields: {
       type: 'list'
+    },
+    pipeline: {
+      type: 'string'
     }
   },
   urls: [
@@ -887,6 +891,7 @@ api.cluster = namespace();
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.includeDefaults - Whether to return all default clusters setting.
  */
 api.cluster.prototype.getSettings = ca({
   params: {
@@ -900,6 +905,11 @@ api.cluster.prototype.getSettings = ca({
     },
     timeout: {
       type: 'time'
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   url: {
@@ -1994,6 +2004,7 @@ api.getTemplate = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -2047,6 +2058,9 @@ api.index = ca({
         'force'
       ],
       name: 'version_type'
+    },
+    pipeline: {
+      type: 'string'
     }
   },
   urls: [
@@ -2787,6 +2801,7 @@ api.indices.prototype.forcemerge = ca({
  * @param {String} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
+ * @param {Boolean} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.feature - A comma-separated list of features
  */
@@ -2821,6 +2836,11 @@ api.indices.prototype.get = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   urls: [
@@ -3143,6 +3163,7 @@ api.indices.prototype.getMapping = ca({
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
+ * @param {Boolean} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.name - The name of the settings that should be included
  */
@@ -3180,6 +3201,11 @@ api.indices.prototype.getSettings = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   urls: [
@@ -4094,6 +4120,122 @@ api.info = ca({
   url: {
     fmt: '/'
   }
+});
+
+api.ingest = namespace();
+
+/**
+ * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.deletePipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'DELETE'
+});
+
+/**
+ * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String} params.id - Comma separated list of pipeline ids. Wildcards supported
+ */
+api.ingest.prototype.getPipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  }
+});
+
+/**
+ * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.putPipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  needBody: true,
+  method: 'PUT'
+});
+
+/**
+ * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.verbose - Verbose mode. Display data output for each processor in executed pipeline
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.simulate = ca({
+  params: {
+    verbose: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/_ingest/pipeline/<%=id%>/_simulate/',
+      req: {
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_ingest/pipeline/_simulate'
+    }
+  ],
+  needBody: true,
+  method: 'POST'
 });
 
 /**
@@ -6003,6 +6145,7 @@ api.update = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
