@@ -25,7 +25,7 @@ client.<%= action.name %>([params, [callback]])
 
 The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-conventions,params and return values>> apply. See <%= action.docUrl %>[the elasticsearch docs] for more about this method.
 
-<%= examples(action.name) %>
+<%= action.examples %>
 
 <% if (_.size(action.allParams)) { %>
 *Params*

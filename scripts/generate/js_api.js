@@ -28,6 +28,10 @@ module.exports = function (branch, done) {
     clientActionModifier: false
   });
 
+  var examples = version.mergeOpts(require('../../docs/_examples/index.js'), {
+    examples: {}
+  }).examples;
+
   var steps = [
     readSpecFiles,
     parseSpecFiles,
@@ -99,6 +103,17 @@ module.exports = function (branch, done) {
     }
 
     apiSpec.proxies.push(create);
+
+    [].concat(apiSpec.actions, apiSpec.proxies)
+    .forEach(function (action) {
+      var examplePath = examples[action.name] || action.name + '.asciidoc';
+
+      try {
+        action.examples = fs.readFileSync(fromRoot('docs/_examples', examplePath), 'utf8');
+      } catch (e) {
+        action.examples = '// no examples';
+      }
+    })
 
     done();
   }
@@ -336,4 +351,3 @@ module.exports = function (branch, done) {
     return actions;
   }
 };
-
