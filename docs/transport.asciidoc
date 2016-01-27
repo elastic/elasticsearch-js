@@ -5,11 +5,23 @@
 
 ==== Params
 [horizontal]
+`method`::
+`String` -- The HTTP method to use for this request. All of the API methods have their own default.
+
 `path`::
 `String` -- The path/endpoint for the request
 
 `query`::
 `String|Object` -- The query string params
+
+`body`::
+`String|Object|Array<Object>` -- The request body to be sent to elasticsearch
+
+`requestTimeout`::
+`Number` -- The number of milliseconds before this request should "timeout"
+
+`headers`::
+`Object<String:String>` -- An object of string keys and values to use as the headers for this request.
 
 `ignore`::
 `Number, Number[]` -- HTTP status codes which should not be treated as errors
@@ -17,5 +29,8 @@
 `requestTimeout`::
 `Number` -- Milliseconds this request has to complete. The default can be set using the client's `requestTimeout:` config parameter.
 
-`method`::
-`String` -- The HTTP method to use for this request. All of the API methods have their own default.
+`castExists`::
+`Boolean` -- This is used by methods like `indices.exists()` to provide a `true`/`false` return value based on the status of the response. When set to `true` 200 responses are converted to `true`, and 404s to `false`. Any other error will still be passed through to the response handler but all other response data is discarded.
+
+`bulkBody`::
+`Boolean` -- Set to `true` if the body should be formatted using the newline delimited JSON format used by the `bulk` API.
