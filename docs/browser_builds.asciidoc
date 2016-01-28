@@ -16,6 +16,7 @@ bower install elasticsearch
 === Download
  * v11.0.0-snapshot: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-11.0.0-snapshot.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-11.0.0-snapshot.tar.gz[tar.gz]
 
+NOTE: Here's an example that integrates elasticsearch.js with React https://github.com/scotchfield/elasticsearch-react-example/[on GitHub]
 
 === Angular Build
   * Registers an `esFactory` factory in the `"elasticsearch"` module
