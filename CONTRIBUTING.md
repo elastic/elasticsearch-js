@@ -12,7 +12,7 @@ Please write test cases to exercise your changes.
 
 ### 3. When you are ready, run the test suite
 
-1. Install dev dependenies.
+1. Install dev dependencies.
 
   ```sh
   npm install
@@ -63,4 +63,4 @@ Please make sure you have signed the [Contributor License Agreement](https://www
 
 There will probably be discussion about the pull request and we will work with you if any changes are needed.
 
-### 7. Know that we greatly apreciate your help!! :D
+### 7. Know that we greatly appreciate your help!! :D
