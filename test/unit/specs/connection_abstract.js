@@ -15,6 +15,15 @@ describe('Connection Abstract', function () {
     expect(conn.host).to.be(host);
   });
 
+  it('constructs with string host using Host constructor', function(){
+    var host = 'localhost';
+    var port = 9200;
+    var hostUrl = host+':'+port;
+    var conn = new ConnectionAbstract(hostUrl);
+    expect(conn.host.host).to.be(host);
+    expect(conn.host.port).to.be(port);
+  });
+
   it('requires a valid host', function () {
     expect(function () {
       new ConnectionAbstract();
