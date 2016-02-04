@@ -34,3 +34,13 @@
 
 `bulkBody`::
 `Boolean` -- Set to `true` if the body should be formatted using the newline delimited JSON format used by the `bulk` API.
+
+
+=== setHosts(hostConfigs)
+
+Use this method to dynamically change the list or hosts the client uses.
+
+==== args
+[horizontal]
+`hostConfigs`::
+`Array<HostConfig>` -- any valid host config value, as accepted by the client constructor. Each value can be either a url string, an object describing the values detailed in the host[host] docs, or an instance of the `Host` class.
