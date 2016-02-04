@@ -22,8 +22,6 @@ function ConnectionAbstract(host, config) {
     throw new TypeError('Missing host');
   } else if (host instanceof Host) {
     this.host = host;
-  } else if (typeof host === "string"){
-    this.host = new Host(host);
   } else {
     throw new TypeError('Invalid host');
   }

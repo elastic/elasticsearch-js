@@ -61,15 +61,11 @@ function Transport(config) {
         'or an array of host config objects.');
     }
 
-    var hosts = _.map(hostsConfig, function (conf) {
-      return (conf instanceof Host) ? conf : new Host(conf, self._config);
-    });
-
     if (randomizeHosts) {
-      hosts = _.shuffle(hosts);
+      hostsConfig = _.shuffle(hostsConfig);
     }
 
-    self.connectionPool.setHosts(hosts);
+    self.setHosts(hostsConfig);
   }
 
   if (config.hasOwnProperty('sniffedNodesProtocol')) {
@@ -390,10 +386,9 @@ Transport.prototype._timeout = function (cb, delay) {
  * @param  {Function} cb - Function to call back once complete
  */
 Transport.prototype.sniff = function (cb) {
-  var connectionPool = this.connectionPool;
+  var self = this;
   var nodesToHostCallback = this.nodesToHostCallback;
   var log = this.log;
-  var globalConfig = this._config;
   var sniffedNodesProtocol = this.sniffedNodesProtocol;
 
   // make cb a function if it isn't
@@ -414,16 +409,27 @@ Transport.prototype.sniff = function (cb) {
         return;
       }
 
-      connectionPool.setHosts(_.map(hostsConfigs, function (hostConfig) {
-        if (sniffedNodesProtocol) {
-          hostConfig.protocol = sniffedNodesProtocol;
-        }
+      _.forEach(hostsConfigs, function (hostConfig) {
+        if (sniffedNodesProtocol) hostConfig.protocol = sniffedNodesProtocol;
+      });
 
-        return new Host(hostConfig, globalConfig);
-      }));
+      self.setHosts(hostsConfigs);
     }
     cb(err, resp, status);
   });
+};
+
+/**
+ * Set the host list that the transport should use.
+ *
+ * @param {Array<HostConfig>} hostsConfigs - an array of Hosts, or configuration objects
+ *                                         that will be used to create Host objects.
+ */
+Transport.prototype.setHosts = function (hostsConfigs) {
+  var globalConfig = this._config;
+  this.connectionPool.setHosts(_.map(hostsConfigs, function (conf) {
+    return (conf instanceof Host) ? conf : new Host(conf, globalConfig);
+  }));
 };
 
 /**

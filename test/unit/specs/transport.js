@@ -807,6 +807,43 @@ describe('Transport Class', function () {
     });
   });
 
+  describe('#setHosts', function () {
+    it('accepts strings, host objects, and host configs', function () {
+
+      var trans = new Transport({ suggestCompression: true });
+      stub(trans.connectionPool, 'setHosts');
+
+      trans.setHosts([
+        { host: 'first.server', port: 9200 },
+        'http://second.server:9200',
+        new Host('http://third.server:9200')
+      ]);
+
+      sinon.assert.calledOnce(trans.connectionPool.setHosts);
+      var host, hosts = trans.connectionPool.setHosts.firstCall.args[0];
+
+      expect(hosts).to.have.length(3);
+
+      host = hosts.shift();
+      expect(host).to.be.a(Host);
+      expect(host.host).to.eql('first.server');
+      expect(host.port).to.eql(9200);
+      expect(host.suggestCompression).to.be(true);
+
+      host = hosts.shift();
+      expect(host).to.be.a(Host);
+      expect(host.host).to.eql('second.server');
+      expect(host.port).to.eql(9200);
+      expect(host.suggestCompression).to.be(true);
+
+      host = hosts.shift();
+      expect(host).to.be.a(Host);
+      expect(host.host).to.eql('third.server');
+      expect(host.port).to.eql(9200);
+      expect(host.suggestCompression).to.be(false);
+    });
+  });
+
   describe('#close', function () {
     it('proxies the call to it\'s log and connection pool', function () {
       var tran = new Transport();
