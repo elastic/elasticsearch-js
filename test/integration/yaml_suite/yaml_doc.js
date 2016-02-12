@@ -60,7 +60,7 @@ function getVersionFromES(done) {
  * Transform x.x.x into xxx.xxx.xxx, striping off any text at the end like beta or pre-alpha35
  *
  * @param  {String} version - Version number represented as a string
- * @return {String} - Version number represented as three numbers, seperated by -, all numbers are
+ * @return {String} - Version number represented as three numbers, separated by -, all numbers are
  *   padded with 0 and will be three characters long so the strings can be compared.
  */
 function versionToComparableString(version, def) {
@@ -84,7 +84,7 @@ function versionToComparableString(version, def) {
  * Compare a version range to the ES_VERSION, determining if the current version
  * falls within the range.
  *
- * @param  {String} rangeString - a string representing two version numbers seperated by a "-"
+ * @param  {String} rangeString - a string representing two version numbers separated by a "-"
  * @return {Boolean} - is the current version within the range (inclusive)
  */
 function rangeMatchesCurrentVersion(rangeString, done) {
