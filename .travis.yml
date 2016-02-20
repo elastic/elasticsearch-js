@@ -2,11 +2,12 @@ language: node_js
 node_js: "4.0"
 cache:
   directories:
-  - esvm
-  - node_modules
+    - esvm
+    - node_modules
 before_cache:
   - rm -rf esvm/*/logs esvm/data_dir
 sudo: false
+dist: trusty
 secure: "UFAGQ6m/VnEahbj9vttY9YoA5h5rEBE6K7AvEEbWnt+VKppV+w3hu3HZxgKr8C9PWhCzqlGvsLh+kCqykZhISU1fBCK/Ttp3nSpMvvF5tI2u51Rj1qZ/7NUGRU0qVI9KFt0rJeXMJwq3fivb1H6aojfPD1gsIte7NHNjUfd0iUg="
 env:
   - ES_HOST=0.0.0.0 ES_RELEASE=1.7.1 RUN=NODE_INTEGRATION
