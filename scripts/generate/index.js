@@ -62,7 +62,7 @@ var paths = {
     return fromRoot('src/_elasticsearch_' + _.snakeCase(branch) + '.tar');
   },
   getSpecPathInRepo: function (branch) {
-    return /^(master|2\.)/.test(branch) ? 'rest-api-spec/src/main/resources/rest-api-spec' : 'rest-api-spec';
+    return /^v?(master|[2-9]\.)/.test(branch) ? 'rest-api-spec/src/main/resources/rest-api-spec' : 'rest-api-spec';
   }
 };
 
