@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  * Class to wrap a single document from a yaml test file
  *
@@ -112,7 +114,7 @@ function YamlDoc(doc, file) {
   self._last_requests_response = null;
 
   // setup the actions, creating a bound and testable method for each
-  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action, i) {
+  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action) {
     // get the method that will do the action
     var method = self['do_' + action.name];
 
@@ -373,8 +375,13 @@ YamlDoc.prototype = {
 
     delete args.catch;
 
+    var otherKeys = _.keys(args);
+    var action = otherKeys.shift();
+    if (otherKeys.length) {
+      return done(new TypeError('Unexpected top-level args to "do": ' + otherKeys.join(', ')));
+    }
+
     var client = clientManager.get();
-    var action = _.keys(args).pop();
     var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
     var params = _.transform(args[action], function (params, val, name) {
@@ -418,7 +425,7 @@ YamlDoc.prototype = {
     }
 
     var timeoutId;
-    var cb =  _.bind(function (error, body, status) {
+    var cb =  _.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
