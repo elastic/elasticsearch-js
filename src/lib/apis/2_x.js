@@ -6234,7 +6234,6 @@ api.termvectors = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
- * @param {Boolean} params.detectNoop - Specifying as true will cause Elasticsearch to check if there are changes and, if there aren’t, turn the update request into a noop.
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -6295,10 +6294,6 @@ api.update = ca({
         'force'
       ],
       name: 'version_type'
-    },
-    detectNoop: {
-      type: 'boolean',
-      name: 'detect_noop'
     }
   },
   url: {

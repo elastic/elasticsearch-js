@@ -1014,11 +1014,12 @@ client.msearch({
     { query: { match_all: {} } },
 
     // query_string query, on index/mytype
-    { _index: 'myindex', _type: 'mytype' },
+    { index: 'myindex', type: 'mytype' },
     { query: { query_string: { query: '"Test 1"' } } }
   ]
 });
 ---------
+
 
 
 *Params*

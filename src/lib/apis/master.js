@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -23,6 +23,7 @@ api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
  * @param {String, String[], Boolean} params.fields - Default comma-separated list of fields to return in the response for updates
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
@@ -49,6 +50,9 @@ api.bulk = ca({
     },
     fields: {
       type: 'list'
+    },
+    pipeline: {
+      type: 'string'
     }
   },
   urls: [
@@ -86,6 +90,7 @@ api.cat = namespace();
  * Perform a [cat.aliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -95,6 +100,9 @@ api.cat = namespace();
  */
 api.cat.prototype.aliases = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -133,6 +141,7 @@ api.cat.prototype.aliases = ca({
  * Perform a [cat.allocation](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -143,6 +152,9 @@ api.cat.prototype.aliases = ca({
  */
 api.cat.prototype.allocation = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     bytes: {
       type: 'enum',
       options: [
@@ -190,6 +202,7 @@ api.cat.prototype.allocation = ca({
  * Perform a [cat.count](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -199,6 +212,9 @@ api.cat.prototype.allocation = ca({
  */
 api.cat.prototype.count = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -237,6 +253,7 @@ api.cat.prototype.count = ca({
  * Perform a [cat.fielddata](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -247,6 +264,9 @@ api.cat.prototype.count = ca({
  */
 api.cat.prototype.fielddata = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     bytes: {
       type: 'enum',
       options: [
@@ -297,6 +317,7 @@ api.cat.prototype.fielddata = ca({
  * Perform a [cat.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -306,6 +327,9 @@ api.cat.prototype.fielddata = ca({
  */
 api.cat.prototype.health = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -356,6 +380,7 @@ api.cat.prototype.help = ca({
  * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -367,6 +392,9 @@ api.cat.prototype.help = ca({
  */
 api.cat.prototype.indices = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     bytes: {
       type: 'enum',
       options: [
@@ -418,6 +446,7 @@ api.cat.prototype.indices = ca({
  * Perform a [cat.master](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -426,6 +455,9 @@ api.cat.prototype.indices = ca({
  */
 api.cat.prototype.master = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -454,6 +486,7 @@ api.cat.prototype.master = ca({
  * Perform a [cat.nodeattrs](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -462,6 +495,9 @@ api.cat.prototype.master = ca({
  */
 api.cat.prototype.nodeattrs = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -490,6 +526,7 @@ api.cat.prototype.nodeattrs = ca({
  * Perform a [cat.nodes](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -498,6 +535,9 @@ api.cat.prototype.nodeattrs = ca({
  */
 api.cat.prototype.nodes = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -526,6 +566,7 @@ api.cat.prototype.nodes = ca({
  * Perform a [cat.pendingTasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -534,6 +575,9 @@ api.cat.prototype.nodes = ca({
  */
 api.cat.prototype.pendingTasks = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -562,6 +606,7 @@ api.cat.prototype.pendingTasks = ca({
  * Perform a [cat.plugins](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -570,6 +615,9 @@ api.cat.prototype.pendingTasks = ca({
  */
 api.cat.prototype.plugins = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -598,6 +646,7 @@ api.cat.prototype.plugins = ca({
  * Perform a [cat.recovery](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -607,6 +656,9 @@ api.cat.prototype.plugins = ca({
  */
 api.cat.prototype.recovery = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     bytes: {
       type: 'enum',
       options: [
@@ -651,6 +703,7 @@ api.cat.prototype.recovery = ca({
  * Perform a [cat.repositories](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -659,6 +712,9 @@ api.cat.prototype.recovery = ca({
  */
 api.cat.prototype.repositories = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean',
       'default': false
@@ -688,6 +744,7 @@ api.cat.prototype.repositories = ca({
  * Perform a [cat.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} params.v - Verbose mode. Display column headers
@@ -695,6 +752,9 @@ api.cat.prototype.repositories = ca({
  */
 api.cat.prototype.segments = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     h: {
       type: 'list'
     },
@@ -726,6 +786,7 @@ api.cat.prototype.segments = ca({
  * Perform a [cat.shards](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -735,6 +796,9 @@ api.cat.prototype.segments = ca({
  */
 api.cat.prototype.shards = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -773,6 +837,7 @@ api.cat.prototype.shards = ca({
  * Perform a [cat.snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.ignoreUnavailable - Set to true to ignore unavailable snapshots
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -782,6 +847,9 @@ api.cat.prototype.shards = ca({
  */
 api.cat.prototype.snapshots = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     ignoreUnavailable: {
       type: 'boolean',
       'default': false,
@@ -817,6 +885,7 @@ api.cat.prototype.snapshots = ca({
  * Perform a [cat.threadPool](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -826,6 +895,9 @@ api.cat.prototype.snapshots = ca({
  */
 api.cat.prototype.threadPool = ca({
   params: {
+    format: {
+      type: 'string'
+    },
     local: {
       type: 'boolean'
     },
@@ -887,6 +959,7 @@ api.cluster = namespace();
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.includeDefaults - Whether to return all default clusters setting.
  */
 api.cluster.prototype.getSettings = ca({
   params: {
@@ -900,6 +973,11 @@ api.cluster.prototype.getSettings = ca({
     },
     timeout: {
       type: 'time'
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   url: {
@@ -1994,6 +2072,7 @@ api.getTemplate = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -2047,6 +2126,9 @@ api.index = ca({
         'force'
       ],
       name: 'version_type'
+    },
+    pipeline: {
+      type: 'string'
     }
   },
   urls: [
@@ -2787,6 +2869,7 @@ api.indices.prototype.forcemerge = ca({
  * @param {String} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
+ * @param {Boolean} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names
  * @param {String, String[], Boolean} params.feature - A comma-separated list of features
  */
@@ -2821,6 +2904,11 @@ api.indices.prototype.get = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   urls: [
@@ -3143,6 +3231,7 @@ api.indices.prototype.getMapping = ca({
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Boolean} params.human - Whether to return version and creation date values in human-readable format.
+ * @param {Boolean} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.name - The name of the settings that should be included
  */
@@ -3180,6 +3269,11 @@ api.indices.prototype.getSettings = ca({
     human: {
       type: 'boolean',
       'default': false
+    },
+    includeDefaults: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_defaults'
     }
   },
   urls: [
@@ -4094,6 +4188,122 @@ api.info = ca({
   url: {
     fmt: '/'
   }
+});
+
+api.ingest = namespace();
+
+/**
+ * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.deletePipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'DELETE'
+});
+
+/**
+ * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {String} params.id - Comma separated list of pipeline ids. Wildcards supported
+ */
+api.ingest.prototype.getPipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  }
+});
+
+/**
+ * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.putPipeline = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  url: {
+    fmt: '/_ingest/pipeline/<%=id%>',
+    req: {
+      id: {
+        type: 'string'
+      }
+    }
+  },
+  needBody: true,
+  method: 'PUT'
+});
+
+/**
+ * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.verbose - Verbose mode. Display data output for each processor in executed pipeline
+ * @param {String} params.id - Pipeline ID
+ */
+api.ingest.prototype.simulate = ca({
+  params: {
+    verbose: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  urls: [
+    {
+      fmt: '/_ingest/pipeline/<%=id%>/_simulate/',
+      req: {
+        id: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/_ingest/pipeline/_simulate'
+    }
+  ],
+  needBody: true,
+  method: 'POST'
 });
 
 /**
@@ -5719,17 +5929,72 @@ api.suggest = ca({
 api.tasks = namespace();
 
 /**
+ * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-cancel.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
+ * @param {String} params.parentNode - Cancel tasks with specified parent node.
+ * @param {Number} params.parentTask - Cancel tasks with specified parent task id. Set to -1 to cancel all.
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the request; use `_local` to cancel only tasks on the node you're connecting to, leave empty to cancel tasks on all nodes
+ * @param {Number} params.taskId - Cancel the task with specified id
+ */
+api.tasks.prototype.cancel = ca({
+  params: {
+    actions: {
+      type: 'list'
+    },
+    parentNode: {
+      type: 'string',
+      name: 'parent_node'
+    },
+    parentTask: {
+      type: 'number',
+      name: 'parent_task'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_tasks/<%=nodeId%>/<%=taskId%>/_cancel',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        taskId: {
+          type: 'number'
+        }
+      }
+    },
+    {
+      fmt: '/_tasks/<%=nodeId%>/_cancel',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_tasks/_cancel'
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-list.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {Boolean} params.detailed - Return detailed task information (default: false)
  * @param {String} params.parentNode - Return tasks with specified parent node.
  * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
- * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
+ * @param {Number} params.taskId - Return the task with specified id
  */
 api.tasks.prototype.list = ca({
   params: {
+    actions: {
+      type: 'list'
+    },
     detailed: {
       type: 'boolean'
     },
@@ -5744,13 +6009,13 @@ api.tasks.prototype.list = ca({
   },
   urls: [
     {
-      fmt: '/_tasks/<%=nodeId%>/<%=actions%>',
+      fmt: '/_tasks/<%=nodeId%>/<%=taskId%>',
       req: {
         nodeId: {
           type: 'list'
         },
-        actions: {
-          type: 'list'
+        taskId: {
+          type: 'number'
         }
       }
     },
@@ -5774,7 +6039,6 @@ api.tasks.prototype.list = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.termStatistics - Specifies if total term frequency and document frequency should be returned.
  * @param {Boolean} [params.fieldStatistics=true] - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
- * @param {Boolean} params.dfs - Specifies if distributed frequencies should be returned instead shard frequencies.
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return.
  * @param {Boolean} [params.offsets=true] - Specifies if term offsets should be returned.
  * @param {Boolean} [params.positions=true] - Specifies if term positions should be returned.
@@ -5802,11 +6066,6 @@ api.termvectors = ca({
       'default': true,
       required: false,
       name: 'field_statistics'
-    },
-    dfs: {
-      type: 'boolean',
-      'default': false,
-      required: false
     },
     fields: {
       type: 'list',
@@ -5906,7 +6165,6 @@ api.termvectors = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
- * @param {Boolean} params.detectNoop - Specifying as true will cause Elasticsearch to check if there are changes and, if there aren’t, turn the update request into a noop.
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
@@ -5967,10 +6225,6 @@ api.update = ca({
         'force'
       ],
       name: 'version_type'
-    },
-    detectNoop: {
-      type: 'boolean',
-      name: 'detect_noop'
     }
   },
   url: {
@@ -6003,6 +6257,7 @@ api.update = ca({
  * @param {Duration} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
+ * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {String} params.id - Document ID
  * @param {String} params.index - The name of the index
  * @param {String} params.type - The type of the document
