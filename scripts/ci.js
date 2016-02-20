@@ -321,6 +321,6 @@ function node(/*args... */) {
 function grunt(/* args... */) {
   return spawn(
     GRUNT,
-    _.toArray(arguments)
+    ['--verbose'].concat(_.toArray(arguments))
   );
 }
