@@ -48,6 +48,10 @@ task('NODE_UNIT', true, function () {
 task('NODE_INTEGRATION', true, function () {
   var branch = ENV.ES_REF;
 
+  if (branch === 'master' || branch.match(/^[3-9]/)) {
+    process.env.JAVA_HOME = '/usr/lib/jvm/jdk8';
+  }
+
   return node('scripts/generate', '--no-api', '--branch', branch)
   .then(function () {
     var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
