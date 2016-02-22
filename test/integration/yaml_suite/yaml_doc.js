@@ -158,6 +158,19 @@ function YamlDoc(doc, file) {
 
     return action;
   });
+
+  self.getActionsRunners = function () {
+    return self._actions.map(function (action) {
+      return function (cb) {
+        if (!!process.env.JENKINS_HOME) {
+          console.log('===========================');
+          console.log(action.name);
+          console.log('===========================');
+        }
+        return action.testable(cb);
+      };
+    });
+  };
 }
 
 YamlDoc.compareRangeToVersion = function (range, version) {

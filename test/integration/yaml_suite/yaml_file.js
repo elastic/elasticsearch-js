@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+/* eslint-disable no-console */
 /**
  * Class representing a YAML file
  * @type {[type]}
@@ -20,16 +22,21 @@ function YamlFile(filename, docs) {
       doc =  new YamlDoc(doc, file);
       if (doc.description === 'setup') {
         beforeEach(/* doc */function (done) {
-          async.series(_.pluck(doc._actions, 'testable'), done);
+          async.series(doc.getActionsRunners(), done);
         });
       } else {
         it(doc.description, function (done) {
-          async.series(_.pluck(doc._actions, 'testable'), done);
+          async.series(doc.getActionsRunners(), done);
         });
       }
     });
 
     afterEach(/* doc */function () {
+      if (!!process.env.JENKINS_HOME) {
+        console.log('===========================');
+        console.log('Cleanup');
+        console.log('===========================');
+      }
       return clientManager.get().clearEs();
     });
   });
