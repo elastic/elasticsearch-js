@@ -375,6 +375,14 @@ YamlDoc.prototype = {
 
     delete args.catch;
 
+    var inputParams = {};
+
+    // resolve the headers for a request
+    if (args.headers) {
+      inputParams.headers = args.headers;
+      delete args.headers;
+    }
+
     var otherKeys = _.keys(args);
     var action = otherKeys.shift();
     if (otherKeys.length) {
@@ -384,7 +392,9 @@ YamlDoc.prototype = {
     var client = clientManager.get();
     var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
-    var params = _.transform(args[action], function (params, val, name) {
+    _.assign(inputParams, args[action]);
+
+    var params = _.transform(inputParams, function (params, val, name) {
       var camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
