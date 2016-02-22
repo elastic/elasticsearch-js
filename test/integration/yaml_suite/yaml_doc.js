@@ -162,11 +162,11 @@ function YamlDoc(doc, file) {
   self.getActionsRunners = function () {
     return self._actions.map(function (action) {
       return function (cb) {
-        if (!!process.env.JENKINS_HOME) {
-          console.log('===========================');
-          console.log(action.name);
-          console.log('===========================');
-        }
+        clientManager.get().transport.log.debug(
+          '===========================\n' +
+          action.name +
+          '\n==========================='
+        );
         return action.testable(cb);
       };
     });

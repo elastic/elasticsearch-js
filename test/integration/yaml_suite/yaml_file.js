@@ -32,11 +32,11 @@ function YamlFile(filename, docs) {
     });
 
     afterEach(/* doc */function () {
-      if (!!process.env.JENKINS_HOME) {
-        console.log('===========================');
-        console.log('Cleanup');
-        console.log('===========================');
-      }
+      clientManager.get().transport.log.debug(
+        '===========================\n' +
+        'Cleanup\n' +
+        '==========================='
+      );
       return clientManager.get().clearEs();
     });
   });
