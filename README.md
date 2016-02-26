@@ -37,7 +37,7 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
 
 
 ## Questions?
-You can probably find help in the #elasticsearch-js or #kibana rooms on [freenode](http://webchat.freenode.net/?channels=elasticsearch-js).
+You can probably find help in [#kibana](https://kiwiirc.com/client/irc.freenode.net/?#kibana) on freenode.
 
 
 ## Supported Elasticsearch Versions
