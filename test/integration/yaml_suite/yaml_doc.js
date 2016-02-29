@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  * Class to wrap a single document from a yaml test file
  *
@@ -112,7 +114,7 @@ function YamlDoc(doc, file) {
   self._last_requests_response = null;
 
   // setup the actions, creating a bound and testable method for each
-  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action, i) {
+  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action) {
     // get the method that will do the action
     var method = self['do_' + action.name];
 
@@ -156,6 +158,19 @@ function YamlDoc(doc, file) {
 
     return action;
   });
+
+  self.getActionsRunners = function () {
+    return self._actions.map(function (action) {
+      return function (cb) {
+        clientManager.get().transport.log.debug(
+          '===========================\n' +
+          action.name +
+          '\n==========================='
+        );
+        return action.testable(cb);
+      };
+    });
+  };
 }
 
 YamlDoc.compareRangeToVersion = function (range, version) {
@@ -373,11 +388,26 @@ YamlDoc.prototype = {
 
     delete args.catch;
 
+    var inputParams = {};
+
+    // resolve the headers for a request
+    if (args.headers) {
+      inputParams.headers = args.headers;
+      delete args.headers;
+    }
+
+    var otherKeys = _.keys(args);
+    var action = otherKeys.shift();
+    if (otherKeys.length) {
+      return done(new TypeError('Unexpected top-level args to "do": ' + otherKeys.join(', ')));
+    }
+
     var client = clientManager.get();
-    var action = _.keys(args).pop();
     var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
-    var params = _.transform(args[action], function (params, val, name) {
+    _.assign(inputParams, args[action]);
+
+    var params = _.transform(inputParams, function (params, val, name) {
       var camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
@@ -418,7 +448,7 @@ YamlDoc.prototype = {
     }
 
     var timeoutId;
-    var cb =  _.bind(function (error, body, status) {
+    var cb =  _.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
