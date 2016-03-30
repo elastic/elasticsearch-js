@@ -953,6 +953,25 @@ api.clearScroll = ca({
 api.cluster = namespace();
 
 /**
+ * Perform a [cluster.allocationExplain](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.includeYesDecisions - Return 'YES' decisions in explanation (default: false)
+ */
+api.cluster.prototype.allocationExplain = ca({
+  params: {
+    includeYesDecisions: {
+      type: 'boolean',
+      name: 'include_yes_decisions'
+    }
+  },
+  url: {
+    fmt: '/_cluster/allocation/explain'
+  },
+  method: 'POST'
+});
+
+/**
  * Perform a [cluster.getSettings](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -2176,8 +2195,8 @@ api.indices = namespace();
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
  * @param {String} params.tokenizer - The name of the tokenizer to use for the analysis
- * @param {Boolean} params.detail - With `true`, outputs more advanced details. (default: false)
- * @param {String, String[], Boolean} params.attributes - A comma-separated list of token attributes to output, this parameter works only with `detail=true`
+ * @param {Boolean} params.explain - With `true`, outputs more advanced details. (default: false)
+ * @param {String, String[], Boolean} params.attributes - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
  * @param {String} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
@@ -2208,7 +2227,7 @@ api.indices.prototype.analyze = ca({
     tokenizer: {
       type: 'string'
     },
-    detail: {
+    explain: {
       type: 'boolean'
     },
     attributes: {
@@ -3559,6 +3578,7 @@ api.indices.prototype.putMapping = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {Boolean} params.preserveExisting - Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3570,6 +3590,10 @@ api.indices.prototype.putSettings = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    preserveExisting: {
+      type: 'boolean',
+      name: 'preserve_existing'
     },
     ignoreUnavailable: {
       type: 'boolean',
@@ -4696,7 +4720,8 @@ api.nodes.prototype.info = ca({
             'thread_pool',
             'transport',
             'http',
-            'plugins'
+            'plugins',
+            'ingest'
           ]
         }
       }
@@ -4722,7 +4747,8 @@ api.nodes.prototype.info = ca({
             'thread_pool',
             'transport',
             'http',
-            'plugins'
+            'plugins',
+            'ingest'
           ]
         }
       }
@@ -5155,6 +5181,51 @@ api.putTemplate = ca({
   },
   needBody: true,
   method: 'PUT'
+});
+
+/**
+ * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
+ * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
+ * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ */
+api.reindex = ca({
+  params: {
+    refresh: {
+      type: 'boolean'
+    },
+    timeout: {
+      type: 'time',
+      'default': '1m'
+    },
+    consistency: {
+      type: 'enum',
+      options: [
+        'one',
+        'quorum',
+        'all'
+      ]
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      'default': false,
+      name: 'wait_for_completion'
+    },
+    requestsPerSecond: {
+      type: 'float',
+      'default': 0,
+      name: 'requests_per_second'
+    }
+  },
+  url: {
+    fmt: '/_reindex'
+  },
+  needBody: true,
+  method: 'POST'
 });
 
 /**
@@ -5932,14 +6003,18 @@ api.tasks = namespace();
  * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-cancel.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {String} params.parentNode - Cancel tasks with specified parent node.
  * @param {Number} params.parentTask - Cancel tasks with specified parent task id. Set to -1 to cancel all.
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the request; use `_local` to cancel only tasks on the node you're connecting to, leave empty to cancel tasks on all nodes
  * @param {Number} params.taskId - Cancel the task with specified id
  */
 api.tasks.prototype.cancel = ca({
   params: {
+    nodeId: {
+      type: 'list',
+      name: 'node_id'
+    },
     actions: {
       type: 'list'
     },
@@ -5954,21 +6029,10 @@ api.tasks.prototype.cancel = ca({
   },
   urls: [
     {
-      fmt: '/_tasks/<%=nodeId%>/<%=taskId%>/_cancel',
+      fmt: '/_tasks/<%=taskId%>/_cancel',
       req: {
-        nodeId: {
-          type: 'list'
-        },
         taskId: {
           type: 'number'
-        }
-      }
-    },
-    {
-      fmt: '/_tasks/<%=nodeId%>/_cancel',
-      req: {
-        nodeId: {
-          type: 'list'
         }
       }
     },
@@ -5983,15 +6047,20 @@ api.tasks.prototype.cancel = ca({
  * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-list.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {Boolean} params.detailed - Return detailed task information (default: false)
  * @param {String} params.parentNode - Return tasks with specified parent node.
  * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
- * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
  * @param {Number} params.taskId - Return the task with specified id
  */
 api.tasks.prototype.list = ca({
   params: {
+    nodeId: {
+      type: 'list',
+      name: 'node_id'
+    },
     actions: {
       type: 'list'
     },
@@ -6005,25 +6074,18 @@ api.tasks.prototype.list = ca({
     parentTask: {
       type: 'number',
       name: 'parent_task'
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      name: 'wait_for_completion'
     }
   },
   urls: [
     {
-      fmt: '/_tasks/<%=nodeId%>/<%=taskId%>',
+      fmt: '/_tasks/<%=taskId%>',
       req: {
-        nodeId: {
-          type: 'list'
-        },
         taskId: {
           type: 'number'
-        }
-      }
-    },
-    {
-      fmt: '/_tasks/<%=nodeId%>',
-      req: {
-        nodeId: {
-          type: 'list'
         }
       }
     },
@@ -6241,6 +6303,265 @@ api.update = ca({
       }
     }
   },
+  method: 'POST'
+});
+
+/**
+ * Perform a [updateByQuery](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.analyzer - The analyzer to use for the query string
+ * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
+ * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
+ * @param {String} params.df - The field to use as default where no field prefix is given in the query string
+ * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
+ * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return as part of a hit
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the field data representation of a field for each hit
+ * @param {Number} params.from - Starting offset (default: 0)
+ * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {String} [params.conflicts=abort] - What to do when the reindex hits version conflicts?
+ * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
+ * @param {String} params.pipeline - Ingest pipeline to set on index requests made by this action. (default: none)
+ * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
+ * @param {String} params.q - Query in the Lucene query string syntax
+ * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
+ * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {String} params.searchType - Search operation type
+ * @param {Date, Number} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
+ * @param {Number} params.size - Number of hits to return (default: 10)
+ * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
+ * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
+ * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {Number} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+ * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
+ * @param {String} params.suggestField - Specify which field to use for suggestions
+ * @param {String} [params.suggestMode=missing] - Specify suggest mode
+ * @param {Number} params.suggestSize - How many suggestions to return in response
+ * @param {Text} params.suggestText - The source text for which the suggestions should be returned
+ * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
+ * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
+ * @param {Boolean} params.version - Specify whether to return document version as part of a hit
+ * @param {Boolean} params.versionType - Should the document increment the version number (internal) on hit or not (reindex)
+ * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
+ * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
+ * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {Integer} params.scrollSize - Size on the scroll request powering the update_by_query
+ * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
+ * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+ * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
+ */
+api.updateByQuery = ca({
+  params: {
+    analyzer: {
+      type: 'string'
+    },
+    analyzeWildcard: {
+      type: 'boolean',
+      name: 'analyze_wildcard'
+    },
+    defaultOperator: {
+      type: 'enum',
+      'default': 'OR',
+      options: [
+        'AND',
+        'OR'
+      ],
+      name: 'default_operator'
+    },
+    df: {
+      type: 'string'
+    },
+    explain: {
+      type: 'boolean'
+    },
+    fields: {
+      type: 'list'
+    },
+    fielddataFields: {
+      type: 'list',
+      name: 'fielddata_fields'
+    },
+    from: {
+      type: 'number'
+    },
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
+    },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    conflicts: {
+      type: 'enum',
+      'default': 'abort',
+      options: [
+        'abort',
+        'proceed'
+      ]
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    },
+    lenient: {
+      type: 'boolean'
+    },
+    lowercaseExpandedTerms: {
+      type: 'boolean',
+      name: 'lowercase_expanded_terms'
+    },
+    pipeline: {
+      type: 'string'
+    },
+    preference: {
+      type: 'string'
+    },
+    q: {
+      type: 'string'
+    },
+    routing: {
+      type: 'list'
+    },
+    scroll: {
+      type: 'duration'
+    },
+    searchType: {
+      type: 'enum',
+      options: [
+        'query_then_fetch',
+        'dfs_query_then_fetch'
+      ],
+      name: 'search_type'
+    },
+    searchTimeout: {
+      type: 'time',
+      name: 'search_timeout'
+    },
+    size: {
+      type: 'number'
+    },
+    sort: {
+      type: 'list'
+    },
+    _source: {
+      type: 'list'
+    },
+    _sourceExclude: {
+      type: 'list',
+      name: '_source_exclude'
+    },
+    _sourceInclude: {
+      type: 'list',
+      name: '_source_include'
+    },
+    terminateAfter: {
+      type: 'number',
+      name: 'terminate_after'
+    },
+    stats: {
+      type: 'list'
+    },
+    suggestField: {
+      type: 'string',
+      name: 'suggest_field'
+    },
+    suggestMode: {
+      type: 'enum',
+      'default': 'missing',
+      options: [
+        'missing',
+        'popular',
+        'always'
+      ],
+      name: 'suggest_mode'
+    },
+    suggestSize: {
+      type: 'number',
+      name: 'suggest_size'
+    },
+    suggestText: {
+      type: 'text',
+      name: 'suggest_text'
+    },
+    timeout: {
+      type: 'time',
+      'default': '1m'
+    },
+    trackScores: {
+      type: 'boolean',
+      name: 'track_scores'
+    },
+    version: {
+      type: 'boolean'
+    },
+    versionType: {
+      type: 'boolean',
+      name: 'version_type'
+    },
+    requestCache: {
+      type: 'boolean',
+      name: 'request_cache'
+    },
+    refresh: {
+      type: 'boolean'
+    },
+    consistency: {
+      type: 'enum',
+      options: [
+        'one',
+        'quorum',
+        'all'
+      ]
+    },
+    scrollSize: {
+      type: 'integer',
+      name: 'scroll_size'
+    },
+    waitForCompletion: {
+      type: 'boolean',
+      'default': false,
+      name: 'wait_for_completion'
+    },
+    requestsPerSecond: {
+      type: 'float',
+      'default': 0,
+      name: 'requests_per_second'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_update_by_query',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_update_by_query',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    }
+  ],
   method: 'POST'
 });
 
