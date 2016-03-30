@@ -43,19 +43,24 @@ var versionedOpts = [
     }
   },
   {
+    version: '>=1.6 <5.0',
+    config: {
+      'node.bench': true
+    }
+  },
+  {
+    version: '>2.0 <5.0',
+    config: {
+      'node.testattr': 'test'
+    }
+  },
+  {
     version: '>=1.6',
     config: {
-      'node.bench': true,
       'script.inline': true,
       'script.indexed': true,
       'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
       'repositories.url.allowed_urls': 'http://snapshot.*'
-    }
-  },
-  {
-    version: '>2.0',
-    config: {
-      'node.testattr': 'test'
     }
   }
 ];
