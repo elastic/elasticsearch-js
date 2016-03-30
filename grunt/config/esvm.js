@@ -19,7 +19,8 @@ var versionedOpts = [
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
       'http.port': port,
-      'network.host': host
+      'network.host': host,
+      'discovery.zen.minimum_master_nodes': 1
     }
   },
   {
