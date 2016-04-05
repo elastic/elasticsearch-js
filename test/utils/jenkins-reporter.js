@@ -14,47 +14,6 @@ var fs = require('fs');
 var path = require('path');
 var inspect = require('util').inspect;
 
-var stdioHook = {
-  interceptors: [],
-
-  // overload the write methods on stdout and stderr
-  wraps: ['stdout', 'stderr'].map(function (name) {
-    var obj = process[name];
-
-    var orig = obj.write;
-
-    obj.write = function (chunk) {
-      if (!stdioHook.interceptors.length) {
-        return orig.apply(obj, arguments);
-      } else {
-        stdioHook.interceptors.forEach(function (intercept) {
-          intercept(name, chunk);
-        });
-      }
-    };
-
-    obj.__restore = function () {
-      obj.write = orig;
-    };
-
-    return obj;
-  }),
-
-  restore: function () {
-    stdioHook.wraps.splice(0).forEach(function (stream) {
-      stream.__restore();
-    });
-  },
-
-  intercept: function (handler) {
-    stdioHook.interceptors.push(handler);
-    return function () {
-      var i = stdioHook.interceptors.indexOf(handler);
-      if (i > -1) stdioHook.interceptors.splice(i, 1);
-    };
-  }
-}
-
 var log = (function () {
   var locked = _.bind(process.stdout.write, process.stdout);
   return function (str) {
@@ -194,12 +153,6 @@ function JenkinsReporter(runner) {
     }
   });
 
-  var restoreStdio = stdioHook.intercept(function (name, chunk) {
-    if (stack[0]) {
-      stack[0][name] = (stack[0][name] || '') + chunk;
-    }
-  });
-
   runner.on('end', function () {
     restoreStdio();
     var xml = makeJUnitXml('node ' + process.version, {
@@ -230,4 +183,26 @@ function JenkinsReporter(runner) {
       '  pending: ' + chalk.grey(stats.pending)
     ].join('\n'));
   });
+
+  // overload the write methods on stdout and stderr
+  ['stdout', 'stderr'].forEach(function (name) {
+    var obj = process[name];
+    var orig = obj.write;
+    obj.write = function (chunk) {
+      if (stack[0]) {
+        stack[0][name] = (stack[0][name] || '') + chunk;
+      }
+
+      // orig.apply(obj, arguments);
+    };
+    obj.__restore = function () {
+      this.write = orig;
+    };
+  });
+
+  function restoreStdio() {
+    process.stdout.__restore();
+    process.stderr.__restore();
+  }
+
 }
