@@ -41,7 +41,7 @@ You can probably find help in [#kibana](https://kiwiirc.com/client/irc.freenode.
 
 ## Supported Elasticsearch Versions
 
-[![Supporting Elasticsearch Version 0.90 to 2.0](http://img.shields.io/badge/elasticsearch-0.90--2.0-green.svg?style=flat-square)](http://build-eu-00.elasticsearch.org/job/es-js_nightly/)
+![Supporting Elasticsearch Version 0.90 to 5.0-alpha1](https://img.shields.io/badge/elasticsearch-0.90%20to%205.0--alpha1-green.svg?style=flat-square)
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options)
 
