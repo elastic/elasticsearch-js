@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -2964,7 +2964,7 @@ api.indices.prototype.get = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {String} [params.expandWildcards=all] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to return
@@ -2981,7 +2981,7 @@ api.indices.prototype.getAlias = ca({
     },
     expandWildcards: {
       type: 'enum',
-      'default': 'open',
+      'default': 'all',
       options: [
         'open',
         'closed',
@@ -3024,58 +3024,6 @@ api.indices.prototype.getAlias = ca({
     },
     {
       fmt: '/_alias'
-    }
-  ]
-});
-
-/**
- * Perform a [indices.getAliases](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
- * @param {String, String[], Boolean} params.name - A comma-separated list of alias names to filter
- */
-api.indices.prototype.getAliases = ca({
-  params: {
-    timeout: {
-      type: 'time'
-    },
-    local: {
-      type: 'boolean'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/_aliases/<%=name%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        name: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_aliases',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_aliases/<%=name%>',
-      req: {
-        name: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_aliases'
     }
   ]
 });
@@ -5183,6 +5131,8 @@ api.putTemplate = ca({
   method: 'PUT'
 });
 
+api.reindex = namespace();
+
 /**
  * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
  *
@@ -5225,6 +5175,32 @@ api.reindex = ca({
     fmt: '/_reindex'
   },
   needBody: true,
+  method: 'POST'
+});
+
+/**
+ * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+ * @param {String} params.taskId - The task id to rethrottle
+ */
+api.reindex.prototype.rethrottle = ca({
+  params: {
+    requestsPerSecond: {
+      type: 'float',
+      'default': 0,
+      name: 'requests_per_second'
+    }
+  },
+  url: {
+    fmt: '/_reindex/<%=taskId%>/_rethrottle',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  },
   method: 'POST'
 });
 
@@ -6006,8 +5982,8 @@ api.tasks = namespace();
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {String} params.parentNode - Cancel tasks with specified parent node.
- * @param {Number} params.parentTask - Cancel tasks with specified parent task id. Set to -1 to cancel all.
- * @param {Number} params.taskId - Cancel the task with specified id
+ * @param {String} params.parentTask - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+ * @param {String} params.taskId - Cancel the task with specified task id (node_id:task_number)
  */
 api.tasks.prototype.cancel = ca({
   params: {
@@ -6023,7 +5999,7 @@ api.tasks.prototype.cancel = ca({
       name: 'parent_node'
     },
     parentTask: {
-      type: 'number',
+      type: 'string',
       name: 'parent_task'
     }
   },
@@ -6032,7 +6008,7 @@ api.tasks.prototype.cancel = ca({
       fmt: '/_tasks/<%=taskId%>/_cancel',
       req: {
         taskId: {
-          type: 'number'
+          type: 'string'
         }
       }
     },
@@ -6051,9 +6027,10 @@ api.tasks.prototype.cancel = ca({
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {Boolean} params.detailed - Return detailed task information (default: false)
  * @param {String} params.parentNode - Return tasks with specified parent node.
- * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
+ * @param {String} params.parentTask - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
  * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
- * @param {Number} params.taskId - Return the task with specified id
+ * @param {String} [params.groupBy=nodes] - Group tasks by nodes or parent/child relationships
+ * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
  */
 api.tasks.prototype.list = ca({
   params: {
@@ -6072,12 +6049,21 @@ api.tasks.prototype.list = ca({
       name: 'parent_node'
     },
     parentTask: {
-      type: 'number',
+      type: 'string',
       name: 'parent_task'
     },
     waitForCompletion: {
       type: 'boolean',
       name: 'wait_for_completion'
+    },
+    groupBy: {
+      type: 'enum',
+      'default': 'nodes',
+      options: [
+        'nodes',
+        'parents'
+      ],
+      name: 'group_by'
     }
   },
   urls: [
@@ -6085,7 +6071,7 @@ api.tasks.prototype.list = ca({
       fmt: '/_tasks/<%=taskId%>',
       req: {
         taskId: {
-          type: 'number'
+          type: 'string'
         }
       }
     },
