@@ -91,7 +91,7 @@
     "forever-agent": "^0.6.0",
     "lodash": "^3.10.0",
     "lodash-compat": "^3.0.0",
-    "promise-js": "0.0.7"
+    "promise": "^7.1.1"
   },
   "repository": {
     "type": "git",
