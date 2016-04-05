@@ -2,24 +2,21 @@ var BROWSER = process.env.browser;
 var VERBOSE = process.env.VERBOSE;
 var JENKINS = !!process.env.JENKINS_HOME;
 
+var es;
 if (BROWSER) {
-  var es = window.elasticsearch;
+  es = window.elasticsearch;
 } else {
-  var es = require('../../../src/elasticsearch');
+  es = require('../../../src/elasticsearch');
 }
 
 var _ = require('../../../src/lib/utils');
 var path = require('path');
 var fs = require('fs');
-var async = require('async');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
 var Bluebird = require('bluebird');
 
 // current client
 var client = null;
-
-// when set to a boolean, hold the test of a ping
-var externalExists;
 
 module.exports = {
   create: function create(apiVersion, port, host, cb) {

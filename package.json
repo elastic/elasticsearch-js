@@ -19,8 +19,9 @@
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
     },
-    "default_api_branch": "2.1",
+    "default_api_branch": "2.3",
     "supported_es_branches": [
+      "2.3",
       "2.2",
       "2.1",
       "2.0",
@@ -59,7 +60,7 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-esvm": "^2.0.0",
+    "grunt-esvm": "^3.1.1",
     "grunt-mocha-cov": "^0.4.0",
     "grunt-open": "~0.2.2",
     "grunt-prompt": "~0.1.2",

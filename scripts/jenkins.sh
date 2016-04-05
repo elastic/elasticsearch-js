@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export JAVA_HOME="/usr/lib/jvm/jdk8"
 lockpath="/var/lock/setup_nodejs"
 
 # pass a file name to aquire a lock

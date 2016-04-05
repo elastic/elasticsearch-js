@@ -2,7 +2,6 @@
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
-[![Build Status](http://img.shields.io/travis/elastic/elasticsearch-js/master.svg?style=flat-square)](https://travis-ci.org/elastic/elasticsearch-js?branch=master)
 [![Coverage Status](http://img.shields.io/coveralls/elastic/elasticsearch-js/master.svg?style=flat-square)](https://coveralls.io/r/elastic/elasticsearch-js?branch=master)
 [![Dependencies up to date](http://img.shields.io/david/elastic/elasticsearch-js.svg?style=flat-square)](https://david-dm.org/elastic/elasticsearch-js)
 
@@ -37,12 +36,12 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
 
 
 ## Questions?
-You can probably find help in the #elasticsearch-js or #kibana rooms on [freenode](http://webchat.freenode.net/?channels=elasticsearch-js).
+You can probably find help in [#kibana](https://kiwiirc.com/client/irc.freenode.net/?#kibana) on freenode.
 
 
 ## Supported Elasticsearch Versions
 
-[![Supporting Elasticsearch Version 0.90 to 2.0](http://img.shields.io/badge/elasticsearch-0.90--2.0-green.svg?style=flat-square)](http://build-eu-00.elasticsearch.org/job/es-js_nightly/)
+![Supporting Elasticsearch Version 0.90 to 5.0-alpha1](https://img.shields.io/badge/elasticsearch-0.90%20to%205.0--alpha1-green.svg?style=flat-square)
 
 Elasticsearch.js provides support for, and is regularly tested against, Elasticsearch releases 0.90.12 and greater. We also test against the latest changes in several branches in the Elasticsearch repository. To tell the client which version of Elastisearch you are using, and therefore the API it should provide, set the `apiVersion` config param. [More info](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options)
 
