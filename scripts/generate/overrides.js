@@ -199,5 +199,13 @@ function (spec) {
   });
 }
 
+  },
+  {
+    version: '>=2.0.0',
+    aliases: {
+      'reindex.rethrottle': [
+        '/_update_by_query/{task_id}/_rethrottle'
+      ]
+    }
   }
 ];
