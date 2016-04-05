@@ -6144,8 +6144,8 @@ api.tasks = namespace();
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {String} params.parentNode - Cancel tasks with specified parent node.
- * @param {Number} params.parentTask - Cancel tasks with specified parent task id. Set to -1 to cancel all.
- * @param {Number} params.taskId - Cancel the task with specified id
+ * @param {String} params.parentTask - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+ * @param {Number} params.taskId - Cancel the task with specified task id (node_id:task_number)
  */
 api.tasks.prototype.cancel = ca({
   params: {
@@ -6161,7 +6161,7 @@ api.tasks.prototype.cancel = ca({
       name: 'parent_node'
     },
     parentTask: {
-      type: 'number',
+      type: 'string',
       name: 'parent_task'
     }
   },
@@ -6189,9 +6189,9 @@ api.tasks.prototype.cancel = ca({
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {Boolean} params.detailed - Return detailed task information (default: false)
  * @param {String} params.parentNode - Return tasks with specified parent node.
- * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
+ * @param {String} params.parentTask - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
  * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
- * @param {Number} params.taskId - Return the task with specified id
+ * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
  */
 api.tasks.prototype.list = ca({
   params: {
@@ -6210,7 +6210,7 @@ api.tasks.prototype.list = ca({
       name: 'parent_node'
     },
     parentTask: {
-      type: 'number',
+      type: 'string',
       name: 'parent_task'
     },
     waitForCompletion: {
@@ -6223,7 +6223,7 @@ api.tasks.prototype.list = ca({
       fmt: '/_tasks/<%=taskId%>',
       req: {
         taskId: {
-          type: 'number'
+          type: 'string'
         }
       }
     },
