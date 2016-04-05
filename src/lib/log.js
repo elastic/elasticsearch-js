@@ -57,7 +57,7 @@ Log.loggers = require('./loggers');
 Log.prototype.close = function () {
   this.emit('closing');
   if (this.listenerCount()) {
-    console.error('Something is still listening for log events, but the logger is closing.');
+    console.error('Something is still listening for log events, but the logger is closing.'); // eslint-disable-line no-console
     this.clearAllListeners();
   }
 };
