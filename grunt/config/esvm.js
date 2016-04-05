@@ -55,6 +55,12 @@ var versionedOpts = [
     }
   },
   {
+    version: '>=5.0',
+    config: {
+      'node.attr.testattr': 'test'
+    }
+  },
+  {
     version: '>=1.6',
     config: {
       'script.inline': true,
