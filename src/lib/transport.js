@@ -7,7 +7,6 @@ module.exports = Transport;
 var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
-var Promise = require('promise-js');
 var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
 var findCommonProtocol = require('./transport/find_common_protocol');
 
@@ -102,6 +101,7 @@ Transport.nodesToHostCallbacks = {
 
 Transport.prototype.defer = function () {
   var defer = {};
+  var Promise = require('promise-js');
   defer.promise = new Promise(function (resolve, reject) {
     defer.resolve = resolve;
     defer.reject = reject;
