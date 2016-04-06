@@ -1,4 +1,4 @@
-# elasticsearch.js 11.0.0-snapshot
+# elasticsearch.js 11.0.0
 
 The official low-level Elasticsearch client for Node.js and the browser.
 

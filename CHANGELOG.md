@@ -1,5 +1,10 @@
 # elasticsearch-js changelog
 
+## 11.0 (Apr 5 2016)
+ - apiVersion `"2.3"` is not the default
+ - updated APIs, to use the new API's exposed by the `v5.0.0-alpha1` of elasticsearch use the `"master"` api version.
+ - Switch to [promise](https://www.npmjs.com/package/promise) from [promise-js](https://www.npmjs.com/package/promise-js) to prevent polluting global environment
+
 ## 10.1 (Jan 8 2016)
  - browser builds now include the "unstable" api's from elasticsearch
  - added `createNodeAgent` configuration value for overriding the agent that the node.js HttpConnector uses. (see [#329](https://github.com/elastic/elasticsearch-js/pull/329))
