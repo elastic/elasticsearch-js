@@ -88,6 +88,15 @@ HttpConnector.prototype.createAgent = function (config) {
 
 HttpConnector.prototype.makeAgentConfig = function (config) {
   var agentConfig =  {
+    /*
+     * As HTTP/HTTPS Agent defaults keepAlive to false, in the case where we
+     * desire HTTP keep-alive, we need to set it appropriately. This could be
+     * done in the wrapper, but I don't see any good reason not to simply set
+     * it here. ¯\_(ツ)_/¯
+     *
+     * https://github.com/elastic/elasticsearch-js/issues/107
+     */
+    keepAlive: config.keepAlive,
     maxSockets: config.maxSockets,
     minSockets: config.minSockets
   };
