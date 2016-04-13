@@ -4,6 +4,7 @@
  - apiVersion `"2.3"` is now the default
  - updated APIs, to use the new API's exposed by the `v5.0.0-alpha1` of elasticsearch use the `"master"` api version.
  - Switch to [promise](https://www.npmjs.com/package/promise) from [promise-js](https://www.npmjs.com/package/promise-js) to prevent polluting global environment
+ - Pass the keepAlive configuration all the way to the Agent [#371](https://github.com/elastic/elasticsearch-js/pull/371)
 
 ## 10.1 (Jan 8 2016)
  - browser builds now include the "unstable" api's from elasticsearch
