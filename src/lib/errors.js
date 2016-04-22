@@ -73,6 +73,14 @@ errors.RequestTimeout = function RequestTimeout(msg) {
 };
 _.inherits(errors.RequestTimeout, ErrorAbstract);
 
+/**
+ * Connection Timeout Error
+ * @param {String} [msg] - An error message that will probably end up in a log.
+ */
+errors.ConnectionTimeout = function ConnectionTimeout(msg) {
+  ErrorAbstract.call(this, msg || 'Connection Timeout', errors.ConnectionTimeout);
+};
+_.inherits(errors.RequestTimeout, ErrorAbstract);
 
 /**
  * Request Body could not be parsed
