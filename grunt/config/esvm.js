@@ -61,10 +61,15 @@ var versionedOpts = [
     }
   },
   {
+    version: '>=1.6 <5.0',
+    config: {
+      'script.indexed': true
+    }
+  },
+  {
     version: '>=1.6',
     config: {
       'script.inline': true,
-      'script.indexed': true,
       'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
       'repositories.url.allowed_urls': 'http://snapshot.*'
     }
