@@ -3028,10 +3028,14 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `analyzer`::
 `String` -- The name of the analyzer to use
 `charFilters`::
+`String, String[], Boolean` -- Deprecated : A comma-separated list of character filters to use for the analysis
+`charFilter`::
 `String, String[], Boolean` -- A comma-separated list of character filters to use for the analysis
 `field`::
 `String` -- Use the analyzer configured for this field (instead of passing the analyzer name)
 `filters`::
+`String, String[], Boolean` -- Deprecated : A comma-separated list of filters to use for the analysis
+`filter`::
 `String, String[], Boolean` -- A comma-separated list of filters to use for the analysis
 `index`::
 `String` -- The name of the index to scope the operation
@@ -4880,7 +4884,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `parentTask`::
 `String` -- Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
 `taskId`::
-`Number` -- Cancel the task with specified task id (node_id:task_number)
+`String` -- Cancel the task with specified task id (node_id:task_number)
 
 link:#[back to top]
 

@@ -2087,9 +2087,11 @@ api.indices = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
- * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
+ * @param {String, String[], Boolean} params.charFilters - Deprecated : A comma-separated list of character filters to use for the analysis
+ * @param {String, String[], Boolean} params.charFilter - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
- * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {String, String[], Boolean} params.filters - Deprecated : A comma-separated list of filters to use for the analysis
+ * @param {String, String[], Boolean} params.filter - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
@@ -2107,10 +2109,17 @@ api.indices.prototype.analyze = ca({
       type: 'list',
       name: 'char_filters'
     },
+    charFilter: {
+      type: 'list',
+      name: 'char_filter'
+    },
     field: {
       type: 'string'
     },
     filters: {
+      type: 'list'
+    },
+    filter: {
       type: 'list'
     },
     index: {
@@ -6145,7 +6154,7 @@ api.tasks = namespace();
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {String} params.parentNode - Cancel tasks with specified parent node.
  * @param {String} params.parentTask - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
- * @param {Number} params.taskId - Cancel the task with specified task id (node_id:task_number)
+ * @param {String} params.taskId - Cancel the task with specified task id (node_id:task_number)
  */
 api.tasks.prototype.cancel = ca({
   params: {
@@ -6170,7 +6179,7 @@ api.tasks.prototype.cancel = ca({
       fmt: '/_tasks/<%=taskId%>/_cancel',
       req: {
         taskId: {
-          type: 'number'
+          type: 'string'
         }
       }
     },

@@ -882,6 +882,60 @@ api.cat.prototype.snapshots = ca({
 });
 
 /**
+ * Perform a [cat.tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
+ * @param {Boolean} params.detailed - Return detailed task information (default: false)
+ * @param {String} params.parentNode - Return tasks with specified parent node.
+ * @param {Number} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
+ * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
+ * @param {Boolean} params.help - Return help information
+ * @param {Boolean} params.v - Verbose mode. Display column headers
+ */
+api.cat.prototype.tasks = ca({
+  params: {
+    format: {
+      type: 'string'
+    },
+    nodeId: {
+      type: 'list',
+      name: 'node_id'
+    },
+    actions: {
+      type: 'list'
+    },
+    detailed: {
+      type: 'boolean'
+    },
+    parentNode: {
+      type: 'string',
+      name: 'parent_node'
+    },
+    parentTask: {
+      type: 'number',
+      name: 'parent_task'
+    },
+    h: {
+      type: 'list'
+    },
+    help: {
+      type: 'boolean',
+      'default': false
+    },
+    v: {
+      type: 'boolean',
+      'default': false
+    }
+  },
+  url: {
+    fmt: '/_cat/tasks'
+  }
+});
+
+/**
  * Perform a [cat.threadPool](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -1578,27 +1632,10 @@ api['delete'] = ca({
  * Perform a [deleteScript](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.deleteScript = ca({
-  params: {
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
@@ -1617,26 +1654,9 @@ api.deleteScript = ca({
  * Perform a [deleteTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.deleteTemplate = ca({
-  params: {
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -1934,27 +1954,10 @@ api.get = ca({
  * Perform a [getScript](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.getScript = ca({
-  params: {
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
@@ -2048,26 +2051,9 @@ api.getSource = ca({
  * Perform a [getTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.getTemplate = ca({
-  params: {
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -2188,9 +2174,9 @@ api.indices = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
- * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
+ * @param {String, String[], Boolean} params.charFilter - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
- * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {String, String[], Boolean} params.filter - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
@@ -2204,14 +2190,14 @@ api.indices.prototype.analyze = ca({
     analyzer: {
       type: 'string'
     },
-    charFilters: {
+    charFilter: {
       type: 'list',
-      name: 'char_filters'
+      name: 'char_filter'
     },
     field: {
       type: 'string'
     },
-    filters: {
+    filter: {
       type: 'list'
     },
     index: {
@@ -5039,37 +5025,10 @@ api.ping = ca({
  * Perform a [putScript](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.opType=index] - Explicit operation type
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Script ID
  * @param {String} params.lang - Script language
  */
 api.putScript = ca({
-  params: {
-    opType: {
-      type: 'enum',
-      'default': 'index',
-      options: [
-        'index',
-        'create'
-      ],
-      name: 'op_type'
-    },
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_scripts/<%=lang%>/<%=id%>',
     req: {
@@ -5089,36 +5048,9 @@ api.putScript = ca({
  * Perform a [putTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} [params.opType=index] - Explicit operation type
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Template ID
  */
 api.putTemplate = ca({
-  params: {
-    opType: {
-      type: 'enum',
-      'default': 'index',
-      options: [
-        'index',
-        'create'
-      ],
-      name: 'op_type'
-    },
-    version: {
-      type: 'number'
-    },
-    versionType: {
-      type: 'enum',
-      options: [
-        'internal',
-        'external',
-        'external_gte',
-        'force'
-      ],
-      name: 'version_type'
-    }
-  },
   url: {
     fmt: '/_search/template/<%=id%>',
     req: {
@@ -6020,7 +5952,7 @@ api.tasks.prototype.cancel = ca({
 });
 
 /**
- * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-list.html) request
+ * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
