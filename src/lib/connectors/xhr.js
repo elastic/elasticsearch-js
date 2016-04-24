@@ -79,7 +79,7 @@ XhrConnector.prototype.request = function (params, cb) {
     }
   };
 
-  xhr.send(params.body || void 0);
+  xhr.send(params.body || null);
 
   return function () {
     xhr.abort();
