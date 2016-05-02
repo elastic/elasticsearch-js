@@ -160,8 +160,15 @@ api.cat.prototype.allocation = ca({
       options: [
         'b',
         'k',
+        'kb',
         'm',
-        'g'
+        'mb',
+        'g',
+        'gb',
+        't',
+        'tb',
+        'p',
+        'pb'
       ]
     },
     local: {
@@ -272,8 +279,15 @@ api.cat.prototype.fielddata = ca({
       options: [
         'b',
         'k',
+        'kb',
         'm',
-        'g'
+        'mb',
+        'g',
+        'gb',
+        't',
+        'tb',
+        'p',
+        'pb'
       ]
     },
     local: {
@@ -664,8 +678,15 @@ api.cat.prototype.recovery = ca({
       options: [
         'b',
         'k',
+        'kb',
         'm',
-        'g'
+        'mb',
+        'g',
+        'gb',
+        't',
+        'tb',
+        'p',
+        'pb'
       ]
     },
     masterTimeout: {
@@ -940,6 +961,7 @@ api.cat.prototype.tasks = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {String} params.size - The multiplier in which to display values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -951,6 +973,17 @@ api.cat.prototype.threadPool = ca({
   params: {
     format: {
       type: 'string'
+    },
+    size: {
+      type: 'enum',
+      options: [
+        '',
+        'k',
+        'm',
+        'g',
+        't',
+        'p'
+      ]
     },
     local: {
       type: 'boolean'
@@ -4249,7 +4282,7 @@ api.ingest.prototype.simulate = ca({
   },
   urls: [
     {
-      fmt: '/_ingest/pipeline/<%=id%>/_simulate/',
+      fmt: '/_ingest/pipeline/<%=id%>/_simulate',
       req: {
         id: {
           type: 'string'
