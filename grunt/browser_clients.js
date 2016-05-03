@@ -17,9 +17,9 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:dist',
-      'browserify:browser_client',
-      'browserify:angular_client',
-      'browserify:jquery_client',
+      'webpack:browser_client',
+      'webpack:angular_client',
+      'webpack:jquery_client',
       'uglify:dist',
       'concat:dist_banners'
     ]);
