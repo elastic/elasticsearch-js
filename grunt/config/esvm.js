@@ -14,6 +14,7 @@ var versionedOpts = [
     directory: fromRoot('esvm'),
     nodes: 1,
     quiet: false,
+    logLevel: 'ERROR',
     config: {
       'path.data': fromRoot('esvm/data_dir'),
       'node.name': 'elasticsearch_js_test_runner',
