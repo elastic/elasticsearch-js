@@ -61,7 +61,7 @@ function install_node {
 }
 
 get_lock
-install_node "$NODE_V"
+install_node "$(cat ./.node-version)"
 npm install
 release_lock
 
