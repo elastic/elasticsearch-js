@@ -716,6 +716,7 @@ api.clearScroll = ca({
       fmt: '/_search/scroll'
     }
   ],
+  paramAsBody: 'scrollId',
   method: 'DELETE'
 });
 

@@ -87,6 +87,7 @@ api.clearScroll = ca({
       }
     }
   },
+  paramAsBody: 'scrollId',
   method: 'DELETE'
 });
 
