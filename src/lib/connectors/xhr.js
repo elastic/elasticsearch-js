@@ -34,7 +34,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
   .map(function (appName) {
     /* jshint unused: false */
     try {
-      var test = new window.ActiveXObject(appName);
+      var test = new window.ActiveXObject(appName); // eslint-disable-line no-unused-vars
       return function () {
         return new window.ActiveXObject(appName);
       };

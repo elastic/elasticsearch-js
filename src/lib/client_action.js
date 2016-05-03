@@ -22,7 +22,7 @@ exports.proxyFactory = exports.factory.proxy;
 // export so that we can test this
 exports._resolveUrl = resolveUrl;
 
-exports.ApiNamespace = function() {};
+exports.ApiNamespace = function () {};
 exports.namespaceFactory = function () {
   function ClientNamespace(transport) {
     this.transport = transport;
@@ -107,9 +107,8 @@ var castType = {
       }).join(',');
     }
 
-    /* jshint eqeqeq: false */
     for (var i = 0; i < param.options.length; i++) {
-      if (param.options[i] == val) {
+      if (param.options[i] == val) { // eslint-disable-line eqeqeq
         return param.options[i];
       }
     }
@@ -131,19 +130,19 @@ var castType = {
   },
   list: function (param, val, name) {
     switch (typeof val) {
-    case 'number':
-    case 'boolean':
-      return '' + val;
-    case 'string':
-      val = commaSepList(val);
+      case 'number':
+      case 'boolean':
+        return '' + val;
+      case 'string':
+        val = commaSepList(val);
       /* falls through */
-    case 'object':
-      if (_.isArray(val)) {
-        return val.join(',');
-      }
+      case 'object':
+        if (_.isArray(val)) {
+          return val.join(',');
+        }
       /* falls through */
-    default:
-      throw new TypeError('Invalid ' + name + ': expected be a comma separated list, array, number or string.');
+      default:
+        throw new TypeError('Invalid ' + name + ': expected be a comma separated list, array, number or string.');
     }
   },
   'boolean': function (param, val) {
@@ -159,11 +158,11 @@ var castType = {
   },
   string: function (param, val, name) {
     switch (typeof val) {
-    case 'number':
-    case 'string':
-      return '' + val;
-    default:
-      throw new TypeError('Invalid ' + name + ': expected a string.');
+      case 'number':
+      case 'string':
+        return '' + val;
+      default:
+        throw new TypeError('Invalid ' + name + ': expected a string.');
     }
   },
   time: function (param, val, name) {
@@ -305,37 +304,37 @@ function exec(transport, spec, params, cb) {
   for (var key in params) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
-      case 'body':
-      case 'headers':
-      case 'requestTimeout':
-      case 'maxRetries':
-        request[key] = params[key];
-        break;
-      case 'ignore':
-        request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
-        break;
-      case 'method':
-        request.method = _.toUpperString(params[key]);
-        break;
-      default:
-        var paramSpec = spec.params[key];
-        if (paramSpec) {
+        case 'body':
+        case 'headers':
+        case 'requestTimeout':
+        case 'maxRetries':
+          request[key] = params[key];
+          break;
+        case 'ignore':
+          request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
+          break;
+        case 'method':
+          request.method = _.toUpperString(params[key]);
+          break;
+        default:
+          var paramSpec = spec.params[key];
+          if (paramSpec) {
           // param keys don't always match the param name, in those cases it's stored in the param def as "name"
-          paramSpec.name = paramSpec.name || key;
-          if (params[key] != null) {
-            if (castType[paramSpec.type]) {
-              query[paramSpec.name] = castType[paramSpec.type](paramSpec, params[key], key);
-            } else {
-              query[paramSpec.name] = params[key];
-            }
+            paramSpec.name = paramSpec.name || key;
+            if (params[key] != null) {
+              if (castType[paramSpec.type]) {
+                query[paramSpec.name] = castType[paramSpec.type](paramSpec, params[key], key);
+              } else {
+                query[paramSpec.name] = params[key];
+              }
 
-            if (paramSpec['default'] && query[paramSpec.name] === paramSpec['default']) {
-              delete query[paramSpec.name];
+              if (paramSpec['default'] && query[paramSpec.name] === paramSpec['default']) {
+                delete query[paramSpec.name];
+              }
             }
+          } else {
+            query[key] = params[key];
           }
-        } else {
-          query[key] = params[key];
-        }
       }
     }
   }

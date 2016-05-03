@@ -151,7 +151,7 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
  */
 ConnectionPool.prototype._onConnectionRevived = function (connection) {
   var timeout;
-  for (var i = 0; i < this._timeouts.length; i++)  {
+  for (var i = 0; i < this._timeouts.length; i++) {
     if (this._timeouts[i].conn === connection) {
       timeout = this._timeouts[i];
       if (timeout.id) {
@@ -171,7 +171,7 @@ ConnectionPool.prototype._onConnectionRevived = function (connection) {
 ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
   var timeout;
   if (alreadyWasDead) {
-    for (var i = 0; i < this._timeouts.length; i++)  {
+    for (var i = 0; i < this._timeouts.length; i++) {
       if (this._timeouts[i].conn === connection) {
         timeout = this._timeouts[i];
         break;

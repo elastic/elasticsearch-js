@@ -44,9 +44,9 @@ Tracer.prototype._formatTraceMessage = function (req) {
 
   /* jshint quotmark: double */
   var curlCall =
-    "# " + originalHost + "\n" +
+    '# ' + originalHost + '\n' +
     "curl '" + url.format(reqUrl).replace(/'/g, "\\'") + "' -X" + req.method.toUpperCase() +
-    (req.body ? " -d '" + this._prettyJson(req.body) + "'" : "");
+    (req.body ? " -d '" + this._prettyJson(req.body) + "'" : '');
   /* jshint quotmark: single */
 
   return {

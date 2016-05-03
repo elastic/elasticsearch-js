@@ -34,16 +34,16 @@ utils.joinPath = path.join;
 utils.deepMerge = function (to, from) {
   _.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
-    case 'undefined':
-      to[key] = from[key];
-      break;
-    case 'object':
-      if (_.isArray(to[key]) && _.isArray(from[key])) {
-        to[key] = to[key].concat(from[key]);
-      }
-      else if (_.isPlainObject(to[key]) && _.isPlainObject(from[key])) {
-        utils.deepMerge(to[key], from[key]);
-      }
+      case 'undefined':
+        to[key] = from[key];
+        break;
+      case 'object':
+        if (_.isArray(to[key]) && _.isArray(from[key])) {
+          to[key] = to[key].concat(from[key]);
+        }
+        else if (_.isPlainObject(to[key]) && _.isPlainObject(from[key])) {
+          utils.deepMerge(to[key], from[key]);
+        }
     }
   });
   return to;
@@ -246,21 +246,21 @@ utils.repeat = function (what, times) {
 utils.applyArgs = function (func, context, args, sliceIndex) {
   sliceIndex = sliceIndex || 0;
   switch (args.length - sliceIndex) {
-  case 0:
-    return func.call(context);
-  case 1:
-    return func.call(context, args[0 + sliceIndex]);
-  case 2:
-    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex]);
-  case 3:
-    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex]);
-  case 4:
-    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex], args[3 + sliceIndex]);
-  case 5:
-    return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex],
+    case 0:
+      return func.call(context);
+    case 1:
+      return func.call(context, args[0 + sliceIndex]);
+    case 2:
+      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex]);
+    case 3:
+      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex]);
+    case 4:
+      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex], args[3 + sliceIndex]);
+    case 5:
+      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex],
       args[2 + sliceIndex], args[3 + sliceIndex], args[4 + sliceIndex]);
-  default:
-    return func.apply(context, Array.prototype.slice.call(args, sliceIndex));
+    default:
+      return func.apply(context, Array.prototype.slice.call(args, sliceIndex));
   }
 };
 
@@ -332,28 +332,28 @@ _.noop = function () {};
 _.funcEnum = function (config, name, opts, def) {
   var val = config[name];
   switch (typeof val) {
-  case 'undefined':
-    return opts[def];
-  case 'function':
-    return val;
-  case 'string':
-    if (opts.hasOwnProperty(val)) {
-      return opts[val];
-    }
+    case 'undefined':
+      return opts[def];
+    case 'function':
+      return val;
+    case 'string':
+      if (opts.hasOwnProperty(val)) {
+        return opts[val];
+      }
     /* falls through */
-  default:
-    var err = 'Invalid ' + name + ' "' + val + '", expected a function';
-    switch (_.size(opts)) {
-    case 0:
-      break;
-    case 1:
-      err += ' or ' + _.keys(opts)[0];
-      break;
     default:
-      err += ' or one of ' + _.keys(opts).join(', ');
-      break;
-    }
-    throw new TypeError(err);
+      var err = 'Invalid ' + name + ' "' + val + '", expected a function';
+      switch (_.size(opts)) {
+        case 0:
+          break;
+        case 1:
+          err += ' or ' + _.keys(opts)[0];
+          break;
+        default:
+          err += ' or one of ' + _.keys(opts).join(', ');
+          break;
+      }
+      throw new TypeError(err);
   }
 };
 

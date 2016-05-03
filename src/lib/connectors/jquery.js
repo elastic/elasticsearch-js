@@ -1,3 +1,5 @@
+/* global jQuery: false */
+
 /**
  * Simple connection class for using the XHR object in browsers
  *
@@ -25,12 +27,12 @@ JqueryConnector.prototype.request = function (params, cb) {
   };
 
   var jqXHR = jQuery.ajax(ajax)
-    .done(function (data, textStatus, jqXHR) {
+    .done(function (data) {
       cb(null, data, jqXHR.statusCode(), {
         'content-type': jqXHR.getResponseHeader('content-type')
       });
     })
-    .fail(function (jqXHR, textStatus, err) {
+    .fail(function (a, b, err) {
       cb(new ConnectionFault(err && err.message));
     });
 

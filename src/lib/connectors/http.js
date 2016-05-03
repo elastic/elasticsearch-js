@@ -54,7 +54,7 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     var toRemove = [];
     var collectSockets = function (sockets, host) {
       _.each(sockets, function (s) {
-        s && toRemove.push([host, s]);
+        if (s) toRemove.push([host, s]);
       });
     };
 
@@ -87,7 +87,7 @@ HttpConnector.prototype.createAgent = function (config) {
 };
 
 HttpConnector.prototype.makeAgentConfig = function (config) {
-  var agentConfig =  {
+  var agentConfig = {
     /*
      * As HTTP/HTTPS Agent defaults keepAlive to false, in the case where we
      * desire HTTP keep-alive, we need to set it appropriately. This could be

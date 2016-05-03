@@ -150,22 +150,22 @@ Log.levels = [
  */
 Log.parseLevels = function (input) {
   switch (typeof input) {
-  case 'string':
-    var i = _.indexOf(Log.levels, input);
-    if (i >= 0) {
-      return Log.levels.slice(0, i + 1);
-    }
-    /* fall through */
-  case 'object':
-    if (_.isArray(input)) {
-      var valid = _.intersection(input, Log.levels);
-      if (valid.length === input.length) {
-        return valid;
+    case 'string':
+      var i = _.indexOf(Log.levels, input);
+      if (i >= 0) {
+        return Log.levels.slice(0, i + 1);
       }
-    }
     /* fall through */
-  default:
-    throw new TypeError('invalid logging level ' + input + '. Expected zero or more of these options: ' +
+    case 'object':
+      if (_.isArray(input)) {
+        var valid = _.intersection(input, Log.levels);
+        if (valid.length === input.length) {
+          return valid;
+        }
+      }
+    /* fall through */
+    default:
+      throw new TypeError('invalid logging level ' + input + '. Expected zero or more of these options: ' +
       Log.levels.join(', '));
   }
 };

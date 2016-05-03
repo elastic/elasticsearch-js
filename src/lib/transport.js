@@ -227,7 +227,7 @@ Transport.prototype.request = function (params, cb) {
       var errMsg = err.message || '';
 
       errMsg =
-        "\n" +
+        '\n' +
         params.req.method +
         ' ' +
         connection.host.makeUrl(params.req) +

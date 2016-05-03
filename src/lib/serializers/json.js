@@ -16,15 +16,15 @@ function Json() {}
  */
 Json.prototype.serialize = function (val, replacer, spaces) {
   switch (typeof val) {
-  case 'string':
-    return val;
-  case 'object':
-    if (val) {
-      return JSON.stringify(val, replacer, spaces);
-    }
+    case 'string':
+      return val;
+    case 'object':
+      if (val) {
+        return JSON.stringify(val, replacer, spaces);
+      }
     /* falls through */
-  default:
-    return;
+    default:
+      return;
   }
 };
 
