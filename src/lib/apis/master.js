@@ -5154,7 +5154,7 @@ api.reindex.prototype.rethrottle = ca({
   params: {
     requestsPerSecond: {
       type: 'float',
-      'default': 0,
+      required: true,
       name: 'requests_per_second'
     }
   },
