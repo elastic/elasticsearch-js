@@ -41,15 +41,8 @@ function install_node {
     ulimit -c unlimited
   fi
 
-  nvm use "$version"
-  NVM_USE_CODE=$?
-
-  if [[ $NVM_USE_CODE -gt 0 ]]; then
-    # nvm use failed
-    echo "installing node $version";
-    crit nvm install "$version";
-    # fresh installs should include npm, but lets check anyway
-  fi
+  echo "installing node $version";
+  crit nvm install "$version"
 
   if [[ "$(which npm)" == "" ]]; then
     echo "npm is missing, reinstalling node version $version";
