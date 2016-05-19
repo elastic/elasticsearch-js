@@ -1,9 +1,9 @@
 /* global angular */
-// var _ = require('../utils');
+var _ = require('../utils');
 var JsonSerializer = require('../serializers/json');
 
 function AngularSerializer() {}
-_v4.inherits(AngularSerializer, JsonSerializer);
+_.inherits(AngularSerializer, JsonSerializer);
 
 // mimic the JsonSerializer's encode method, but use angular's toJson instead
 AngularSerializer.prototype.encode = function (val) {

@@ -1,8 +1,8 @@
 module.exports = function (done) {
-  // var _ = require('../../src/lib/utils');
+  var _ = require('../../src/lib/utils');
 
   var chalk = require('chalk');
-  var fromRoot = _v4.partial(require('path').join, require('find-root')(__dirname));
+  var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
   var write = require('fs').writeFile;
 
   var outputPath = fromRoot('docs/configuration.asciidoc');

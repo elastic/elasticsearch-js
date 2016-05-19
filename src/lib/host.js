@@ -6,7 +6,7 @@ module.exports = Host;
 
 var url = require('url');
 var qs = require('querystring');
-// var _ = require('./utils');
+var _ = require('./utils');
 
 var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 var defaultProto = 'http:';
@@ -46,7 +46,7 @@ Host.defaultPorts = {
 };
 
 function Host(config, globalConfig) {
-  config = _v4.clone(config || {});
+  config = _.clone(config || {});
   globalConfig = globalConfig || {};
 
   // defaults
@@ -58,7 +58,7 @@ function Host(config, globalConfig) {
   this.headers = null;
   this.suggestCompression = !!globalConfig.suggestCompression;
 
-  this.ssl = _v4.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
+  this.ssl = _.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
 
   if (typeof config === 'string') {
     var firstColon = config.indexOf(':');
@@ -69,7 +69,7 @@ function Host(config, globalConfig) {
     if ((noSlash || portNoPath || portWithPath) && !startsWithProtocolRE.test(config)) {
       config = defaultProto + '//' + config;
     }
-    config = _v4.pick(url.parse(config, false, true), urlParseFields);
+    config = _.pick(url.parse(config, false, true), urlParseFields);
     // default logic for the port is to use 9200 for the default. When a string is specified though,
     // we will use the default from the protocol of the string.
     if (!config.port) {
@@ -83,9 +83,9 @@ function Host(config, globalConfig) {
     }
   }
 
-  if (_v4.isObject(config)) {
+  if (_.isObject(config)) {
     // move hostname/portname to host/port semi-intelligently.
-    _v4.each(simplify, function (to) {
+    _.each(simplify, function (to) {
       var from = to + 'name';
       if (config[from] && config[to]) {
         if (config[to].indexOf(config[from]) === 0) {
@@ -106,20 +106,20 @@ function Host(config, globalConfig) {
     delete config.auth;
   }
 
-  _v4.forOwn(config, _v4.bind(function (val, prop) {
-    if (val != null) this[prop] = _v4.clone(val);
+  _.forOwn(config, _.bind(function (val, prop) {
+    if (val != null) this[prop] = _.clone(val);
   }, this));
 
   // make sure the query string is parsed
   if (this.query === null) {
     // majority case
     this.query = {};
-  } else if (!_v4.isPlainObject(this.query)) {
+  } else if (!_.isPlainObject(this.query)) {
     this.query = qs.parse(this.query);
   }
 
   // make sure that the port is a number
-  if (_v4.isNumeric(this.port)) {
+  if (_.isNumeric(this.port)) {
     this.port = parseInt(this.port, 10);
   } else {
     this.port = 9200;
@@ -177,10 +177,10 @@ function objectPropertyGetter(prop, preOverride) {
     }
 
     if (overrides) {
-      obj = _v4.assign({}, obj, overrides);
+      obj = _.assign({}, obj, overrides);
     }
 
-    return _v4.size(obj) ? obj : null;
+    return _.size(obj) ? obj : null;
   };
 }
 
@@ -189,7 +189,7 @@ Host.prototype.getHeaders = objectPropertyGetter('headers', function (overrides)
     return overrides;
   }
 
-  return _v4.defaults(overrides || {}, {
+  return _.defaults(overrides || {}, {
     'Accept-Encoding': 'gzip,deflate'
   });
 });

@@ -1,6 +1,6 @@
 describe('Http Connector', function () {
 
-  // var _ = require('lodash');
+  var _ = require('lodash');
   var expect = require('expect.js');
   var nock = require('nock');
   var sinon = require('sinon');
@@ -67,12 +67,12 @@ describe('Http Connector', function () {
 
     it('allows defining a custom agent', function () {
       var football = {};
-      var con = new HttpConnection(new Host(), { createNodeAgent: _v4.constant(football) });
+      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(football) });
       expect(con.agent).to.be(football);
     });
 
     it('allows setting agent to false', function () {
-      var con = new HttpConnection(new Host(), { createNodeAgent: _v4.constant(false) });
+      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(false) });
       expect(con.agent).to.be(false);
     });
   });
@@ -482,7 +482,7 @@ describe('Http Connector', function () {
       this.timeout(5 * 60 * 1000);
       var cp = require('child_process');
       var path = require('path');
-      var fixture = _v4.partial(path.join, __dirname, '../../fixtures');
+      var fixture = _.partial(path.join, __dirname, '../../fixtures');
       var timeout; // start the timeout once we hear back from the client
 
       var server = cp.fork(fixture('keepalive_server.js'))

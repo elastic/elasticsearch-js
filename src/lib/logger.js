@@ -1,4 +1,4 @@
-// var _ = require('./utils');
+var _ = require('./utils');
 
 /**
  * Abstract class providing common functionality to loggers
@@ -9,7 +9,7 @@ function LoggerAbstract(log, config) {
   this.log = log;
   this.listeningLevels = [];
 
-  _v4.makeBoundMethods(this);
+  _.makeBoundMethods(this);
 
   // when the log closes, remove our event listeners
   this.log.once('closing', this.bound.cleanUpListeners);
@@ -37,7 +37,7 @@ LoggerAbstract.prototype.timestamp = function () {
 };
 
 function indent(text, spaces) {
-  var space = _v4.repeat(' ', spaces || 2);
+  var space = _.repeat(' ', spaces || 2);
   return (text || '').split(/\r?\n/).map(function (line) {
     return space + line;
   }).join('\n');
@@ -64,8 +64,8 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
 
   this.listeningLevels = [];
 
-  _v4.each(levels, _v4.bind(function (level) {
-    var fnName = 'on' + _v4.ucfirst(level);
+  _.each(levels, _.bind(function (level) {
+    var fnName = 'on' + _.ucfirst(level);
     if (this.bound[fnName]) {
       this.listeningLevels.push(level);
       this.log.on(level, this.bound[fnName]);
@@ -82,9 +82,9 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  * @private
  * @return {undefined}
  */
-LoggerAbstract.prototype.cleanUpListeners = _v4.handler(function () {
-  _v4.each(this.listeningLevels, _v4.bind(function (level) {
-    this.log.removeListener(level, this.bound['on' + _v4.ucfirst(level)]);
+LoggerAbstract.prototype.cleanUpListeners = _.handler(function () {
+  _.each(this.listeningLevels, _.bind(function (level) {
+    this.log.removeListener(level, this.bound['on' + _.ucfirst(level)]);
   }, this));
 });
 
@@ -96,7 +96,7 @@ LoggerAbstract.prototype.cleanUpListeners = _v4.handler(function () {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-LoggerAbstract.prototype.onError = _v4.handler(function (e) {
+LoggerAbstract.prototype.onError = _.handler(function (e) {
   this.write((e.name === 'Error' ? 'ERROR' : e.name), e.stack);
 });
 
@@ -108,7 +108,7 @@ LoggerAbstract.prototype.onError = _v4.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onWarning = _v4.handler(function (msg) {
+LoggerAbstract.prototype.onWarning = _.handler(function (msg) {
   this.write('WARNING', msg);
 });
 
@@ -120,7 +120,7 @@ LoggerAbstract.prototype.onWarning = _v4.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onInfo = _v4.handler(function (msg) {
+LoggerAbstract.prototype.onInfo = _.handler(function (msg) {
   this.write('INFO', msg);
 });
 
@@ -132,7 +132,7 @@ LoggerAbstract.prototype.onInfo = _v4.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onDebug = _v4.handler(function (msg) {
+LoggerAbstract.prototype.onDebug = _.handler(function (msg) {
   this.write('DEBUG', msg);
 });
 
@@ -144,7 +144,7 @@ LoggerAbstract.prototype.onDebug = _v4.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = _v4.handler(function (requestDetails) {
+LoggerAbstract.prototype.onTrace = _.handler(function (requestDetails) {
   this.write('TRACE', this._formatTraceMessage(requestDetails));
 });
 

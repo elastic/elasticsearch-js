@@ -8,7 +8,7 @@ module.exports = YamlFile;
 
 var YamlDoc = require('./yaml_doc');
 var clientManager = require('./client_manager');
-// var _ = require('../../../src/lib/utils');
+var _ = require('../../../src/lib/utils');
 var async = require('async');
 
 function YamlFile(filename, docs) {
@@ -18,7 +18,7 @@ function YamlFile(filename, docs) {
   file.skipping = false;
 
   describe(filename, function () {
-    file.docs = _v4.map(docs, function (doc) {
+    file.docs = _.map(docs, function (doc) {
       doc = new YamlDoc(doc, file);
       if (doc.description === 'setup') {
         beforeEach(/* doc */function (done) {

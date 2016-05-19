@@ -1,7 +1,7 @@
-// var _ = require('lodash');
+var _ = require('lodash');
 var expect = require('expect.js');
 module.exports = function expectSubObject(obj, subObj) {
-  _v4.forOwn(subObj, function (val, prop) {
+  _.forOwn(subObj, function (val, prop) {
     if (typeof obj[prop] === 'object') {
       // non-strict equals
       expect(obj[prop]).to.eql(val, 'Expected property' + prop + ' of object to equal ' + val);

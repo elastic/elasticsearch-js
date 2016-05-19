@@ -2,7 +2,7 @@ module.exports = {
 <%
 
   branches.forEach(function (branch, i, list) {
-    var req = "require('./" + _v4.snakeCase(branch) + "')";
+    var req = "require('./" + _.snakeCase(branch) + "')";
     if (branch === utils.branches._default) {
       print("  '_default': " + req + ',\n');
     }

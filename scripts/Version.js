@@ -1,4 +1,4 @@
-// var _ = require('lodash');
+var _ = require('lodash');
 var pkg = require('../package.json');
 var branches = pkg.config.supported_es_branches;
 var semver = require('semver');
@@ -47,10 +47,10 @@ Version.prototype.mergeOpts = function (opts) {
   return opts.filter(function (rule) {
     return self.satisfies(rule.version);
   })
-  .map(_v4.ary(_v4.partialRight(_v4.omit, 'version'), 1))
-  .concat(_v4.tail(arguments))
+  .map(_.ary(_.partialRight(_.omit, 'version'), 1))
+  .concat(_.tail(arguments))
   .reverse()
-  .reduce(_v4.merge, {});
+  .reduce(_.merge, {});
 };
 
 module.exports = Version;

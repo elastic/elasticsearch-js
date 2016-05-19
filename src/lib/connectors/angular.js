@@ -6,7 +6,7 @@
  */
 module.exports = AngularConnector;
 
-// var _ = require('../utils');
+var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 
@@ -20,7 +20,7 @@ function AngularConnector(host, config) {
   }]);
 
 }
-_v4.inherits(AngularConnector, ConnectionAbstract);
+_.inherits(AngularConnector, ConnectionAbstract);
 
 AngularConnector.prototype.request = function (params, cb) {
   var abort = this.$q.defer();

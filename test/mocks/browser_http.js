@@ -27,7 +27,7 @@
 
 module.exports = MockHttpRequest;
 
-// var _ = require('lodash');
+var _ = require('lodash');
 
 function MockHttpRequest() {
   // These are internal flags and data structures
@@ -221,7 +221,7 @@ MockHttpRequest.prototype = {
 
   getAllResponseHeaders: function () {
     var r = '';
-    _v4.each(this.responseHeaders, function (header) {
+    _.each(this.responseHeaders, function (header) {
       if ((header === 'set-cookie') || (header === 'set-cookie2')) {
         return;
       }
@@ -353,7 +353,7 @@ MockHttpRequest.prototype = {
 
     this.responseText = null;
     this.error = true;
-    _v4.each(this.requestHeaders, function (header) {
+    _.each(this.requestHeaders, function (header) {
       delete this.requestHeaders[header];
     }, this);
 

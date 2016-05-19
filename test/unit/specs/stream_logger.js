@@ -4,7 +4,7 @@ describe('Stream Logger', function () {
   var MockWritableStream = require('../../mocks/writable_stream');
   var once = require('events').EventEmitter.prototype.once;
   var stream = new MockWritableStream();
-  // var _ = require('../../../src/lib/utils');
+  var _ = require('../../../src/lib/utils');
   var expect = require('expect.js');
   var parentLog;
 
@@ -19,7 +19,7 @@ describe('Stream Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-    _v4.clearWriteStreamBuffer(stream);
+    _.clearWriteStreamBuffer(stream);
   });
 
   function makeLogger(parent, levels) {
@@ -41,13 +41,13 @@ describe('Stream Logger', function () {
 
         // get the last handler for process's "exit" event
         var exitHandlers = process._events.exit;
-        var exitHandler = _v4.isArray(exitHandlers) ? _v4.last(exitHandlers) : exitHandlers;
+        var exitHandler = _.isArray(exitHandlers) ? _.last(exitHandlers) : exitHandlers;
 
         // allow the logger to acctually write to the stream
         stream.write.restore();
 
         // write the line 10 times
-        _v4.times(10, function () {
+        _.times(10, function () {
           logger.onDebug(line);
         });
 

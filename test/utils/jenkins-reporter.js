@@ -7,7 +7,7 @@
 module.exports = JenkinsReporter;
 
 var Base = require('mocha/lib/reporters/base');
-// var _ = require('lodash');
+var _ = require('lodash');
 var chalk = require('chalk');
 var makeJUnitXml = require('./make_j_unit_xml');
 var fs = require('fs');
@@ -15,7 +15,7 @@ var path = require('path');
 var inspect = require('util').inspect;
 
 var log = (function () {
-  var locked = _v4.bind(process.stdout.write, process.stdout);
+  var locked = _.bind(process.stdout.write, process.stdout);
   return function (str) {
     if (typeof str !== 'string') {
       str = inspect(str);
@@ -24,8 +24,8 @@ var log = (function () {
   };
 }());
 
-var integration = _v4.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
-var unit = _v4.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
+var integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
+var unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
 var output;
 
 if (unit) {
@@ -126,7 +126,7 @@ function JenkinsReporter(runner) {
         errMsg += '\n(' + test.err.sourceURL + ':' + test.err.line + ')';
       }
 
-      console.error(_v4.map(errMsg.split('\n'), function (line) {
+      console.error(_.map(errMsg.split('\n'), function (line) {
         return indt() + '    ' + line;
       }).join('\n'));
     }
@@ -146,7 +146,7 @@ function JenkinsReporter(runner) {
 
   runner.on('hook end', function (hook) {
     if (hook.title.indexOf('"after each"') > -1 && stack[0] && stack[0].results.length) {
-      var result = _v4.last(stack[0].results);
+      var result = _.last(stack[0].results);
       result.stdout += stack[0].stdout;
       result.stderr += stack[0].stderr;
       stack[0].stdout = stack[0].stderr = '';
@@ -157,7 +157,7 @@ function JenkinsReporter(runner) {
     restoreStdio();
     var xml = makeJUnitXml('node ' + process.version, {
       stats: stats,
-      suites: _v4.map(rootSuite.suites, function removeElements(suite) {
+      suites: _.map(rootSuite.suites, function removeElements(suite) {
         var s = {
           name: suite.name,
           start: suite.start,
@@ -168,7 +168,7 @@ function JenkinsReporter(runner) {
         };
 
         if (suite.suites) {
-          s.suites = _v4.map(suite.suites, removeElements);
+          s.suites = _.map(suite.suites, removeElements);
         }
         return s;
       })

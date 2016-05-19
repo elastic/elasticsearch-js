@@ -9,12 +9,12 @@
 
 module.exports = ConnectionPool;
 
-// var _ = require('./utils');
+var _ = require('./utils');
 var Log = require('./log');
 
 function ConnectionPool(config) {
   config = config || {};
-  _v4.makeBoundMethods(this);
+  _.makeBoundMethods(this);
 
   if (!config.log) {
     this.log = new Log();
@@ -27,16 +27,16 @@ function ConnectionPool(config) {
   this._config = config;
 
   // get the selector config var
-  this.selector = _v4.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
+  this.selector = _.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
 
   // get the connection class
-  this.Connection = _v4.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
+  this.Connection = _.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
     ConnectionPool.defaultConnectionClass);
 
   // time that connections will wait before being revived
   this.deadTimeout = config.hasOwnProperty('deadTimeout') ? config.deadTimeout : 60000;
   this.maxDeadTimeout = config.hasOwnProperty('maxDeadTimeout') ? config.maxDeadTimeout : 18e5;
-  this.calcDeadTimeout = _v4.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
+  this.calcDeadTimeout = _.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
 
   // a map of connections to their "id" property, used when sniffing
   this.index = {};
@@ -86,7 +86,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.selector(this._conns.alive, cb);
     } else {
       try {
-        _v4.nextTick(cb, void 0, this.selector(this._conns.alive));
+        _.nextTick(cb, void 0, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
@@ -94,7 +94,7 @@ ConnectionPool.prototype.select = function (cb) {
   } else if (this._timeouts.length) {
     this._selectDeadConnection(cb);
   } else {
-    _v4.nextTick(cb, void 0);
+    _.nextTick(cb, void 0);
   }
 };
 
@@ -106,7 +106,7 @@ ConnectionPool.prototype.select = function (cb) {
  * @param  {String} oldStatus - the connection's old status
  * @param  {ConnectionAbstract} connection - the connection object itself
  */
-ConnectionPool.prototype.onStatusSet = _v4.handler(function (status, oldStatus, connection) {
+ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, connection) {
   var index;
 
   var died = (status === 'dead');
@@ -121,14 +121,14 @@ ConnectionPool.prototype.onStatusSet = _v4.handler(function (status, oldStatus, 
   }
 
   if (from !== to) {
-    if (_v4.isArray(from)) {
+    if (_.isArray(from)) {
       index = from.indexOf(connection);
       if (index !== -1) {
         from.splice(index, 1);
       }
     }
 
-    if (_v4.isArray(to)) {
+    if (_.isArray(to)) {
       index = to.indexOf(connection);
       if (index === -1) {
         to.push(connection);
@@ -200,11 +200,11 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
 
   var ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
   timeout.id = setTimeout(timeout.revive, ms);
-  timeout.runAt = _v4.now() + ms;
+  timeout.runAt = _.now() + ms;
 };
 
 ConnectionPool.prototype._selectDeadConnection = function (cb) {
-  var orderedTimeouts = _v4.sortBy(this._timeouts, 'runAt');
+  var orderedTimeouts = _.sortBy(this._timeouts, 'runAt');
   var log = this.log;
 
   process.nextTick(function next() {
@@ -257,7 +257,7 @@ ConnectionPool.prototype.getConnections = function (status, limit) {
   if (limit == null) {
     return list.slice(0);
   } else {
-    return _v4.shuffle(list).slice(0, limit);
+    return _.shuffle(list).slice(0, limit);
   }
 };
 
@@ -308,7 +308,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   var i;
   var id;
   var host;
-  var toRemove = _v4.clone(this.index);
+  var toRemove = _.clone(this.index);
 
   for (i = 0; i < hosts.length; i++) {
     host = hosts[i];
@@ -322,14 +322,14 @@ ConnectionPool.prototype.setHosts = function (hosts) {
     }
   }
 
-  var removeIds = _v4.keys(toRemove);
+  var removeIds = _.keys(toRemove);
   for (i = 0; i < removeIds.length; i++) {
     this.removeConnection(this.index[removeIds[i]]);
   }
 };
 
 ConnectionPool.prototype.getAllHosts = function () {
-  return _v4.values(this.index).map(function (connection) {
+  return _.values(this.index).map(function (connection) {
     return connection.host;
   });
 };

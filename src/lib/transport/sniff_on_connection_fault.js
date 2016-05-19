@@ -1,4 +1,4 @@
-// var _ = require('../utils');
+var _ = require('../utils');
 
 
 /**
@@ -25,7 +25,7 @@ module.exports = function setupSniffOnConnectionFault(transport) {
   // create a function that will count down to a
   // point n milliseconds into the future
   var countdownTo = function (ms) {
-    var start = _v4.now();
+    var start = _.now();
     return function () {
       return start - ms;
     };

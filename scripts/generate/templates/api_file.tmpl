@@ -9,21 +9,21 @@ var api = module.exports = {};
 
 api._namespaces = <%= stringify(namespaces) %>;<%
 
-_v4.each(actions, function (action) {
+_.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
   if (_.includes(namespaces, namespace)) {
-    _v4.pull(namespaces, namespace);
+    _.pull(namespaces, namespace);
 %>
 
 api.<%= namespace %> = namespace();<%
   }%>
 
-<%= _v4.trimEnd(partials.client_action(action)) %><%
+<%= _.trimEnd(partials.client_action(action)) %><%
 
 });
 
-_v4.each(proxies, function (action) {%>
+_.each(proxies, function (action) {%>
 
-<%= _v4.trimEnd(partials.client_action_proxy(action)) %><%
+<%= _.trimEnd(partials.client_action_proxy(action)) %><%
 });
 %>

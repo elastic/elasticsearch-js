@@ -7,7 +7,7 @@ module.exports = XhrConnector;
 
 /* jshint browser:true */
 
-// var _ = require('../utils');
+var _ = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
@@ -15,13 +15,13 @@ var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 function XhrConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_v4.inherits(XhrConnector, ConnectionAbstract);
+_.inherits(XhrConnector, ConnectionAbstract);
 
 /**
  * Simply returns an XHR object cross browser
  * @type {Function}
  */
-var getXhr = _v4.noop;
+var getXhr = _.noop;
 
 if (typeof XMLHttpRequest !== 'undefined') {
   // rewrite the getXhr method to always return the native implementation
@@ -30,7 +30,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
   };
 } else {
   // find the first MS implementation available
-  getXhr = _v4(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'])
+  getXhr = _(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'])
   .map(function (appName) {
     /* jshint unused: false */
     try {

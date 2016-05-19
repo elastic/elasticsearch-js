@@ -4,7 +4,7 @@
  */
 module.exports = Transport;
 
-// var _ = require('./utils');
+var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
 var Promise = require('promise/lib/es6-extensions');
@@ -19,15 +19,15 @@ function Transport(config) {
   config.log = self.log = new LogClass(config);
 
   // setup the connection pool
-  var ConnectionPool = _v4.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
+  var ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
   self.connectionPool = new ConnectionPool(config);
 
   // setup the serializer
-  var Serializer = _v4.funcEnum(config, 'serializer', Transport.serializers, 'json');
+  var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
   self.serializer = new Serializer(config);
 
   // setup the nodesToHostCallback
-  self.nodesToHostCallback = _v4.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
+  self.nodesToHostCallback = _.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
 
   // setup max retries
   self.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
@@ -50,8 +50,8 @@ function Transport(config) {
   }
 
   if (config.hosts) {
-    var hostsConfig = _v4.createArray(config.hosts, function (val) {
-      if (_v4.isPlainObject(val) || _v4.isString(val) || val instanceof Host) {
+    var hostsConfig = _.createArray(config.hosts, function (val) {
+      if (_.isPlainObject(val) || _.isString(val) || val instanceof Host) {
         return val;
       }
     });
@@ -62,7 +62,7 @@ function Transport(config) {
     }
 
     if (randomizeHosts) {
-      hostsConfig = _v4.shuffle(hostsConfig);
+      hostsConfig = _.shuffle(hostsConfig);
     }
 
     self.setHosts(hostsConfig);
@@ -139,7 +139,7 @@ Transport.prototype.request = function (params, cb) {
   var defer; // the defer object, will be set when we are using promises.
 
   var body = params.body;
-  var headers = !params.headers ? {} : _v4.transform(params.headers, function (headers, val, name) {
+  var headers = !params.headers ? {} : _.transform(params.headers, function (headers, val, name) {
     headers[String(name).toLowerCase()] = val;
   });
 
@@ -161,7 +161,7 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (body && params.method === 'GET') {
-    _v4.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
+    _.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
     return ret;
   }
 
@@ -274,10 +274,10 @@ Transport.prototype.request = function (params, cb) {
     if (
       (!err || err instanceof errors.Serialization)
       && (status < 200 || status >= 300)
-      && (!params.ignore || !_v4.includes(params.ignore, status))
+      && (!params.ignore || !_.includes(params.ignore, status))
     ) {
 
-      var errorMetadata = _v4.pick(params.req, ['path', 'query', 'body']);
+      var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
       errorMetadata.statusCode = status;
       errorMetadata.response = body;
 
@@ -361,7 +361,7 @@ Transport.prototype._timeout = function (cb, delay) {
   if (cb) {
     // set the timer
     id = setTimeout(function () {
-      _v4.pull(timers, id);
+      _.pull(timers, id);
       cb();
     }, delay);
 
@@ -392,7 +392,7 @@ Transport.prototype.sniff = function (cb) {
   var sniffedNodesProtocol = this.sniffedNodesProtocol;
 
   // make cb a function if it isn't
-  cb = typeof cb === 'function' ? cb : _v4.noop;
+  cb = typeof cb === 'function' ? cb : _.noop;
 
   this.request({
     path: this.sniffEndpoint,
@@ -409,7 +409,7 @@ Transport.prototype.sniff = function (cb) {
         return;
       }
 
-      _v4.forEach(hostsConfigs, function (hostConfig) {
+      _.forEach(hostsConfigs, function (hostConfig) {
         if (sniffedNodesProtocol) hostConfig.protocol = sniffedNodesProtocol;
       });
 
@@ -427,7 +427,7 @@ Transport.prototype.sniff = function (cb) {
  */
 Transport.prototype.setHosts = function (hostsConfigs) {
   var globalConfig = this._config;
-  this.connectionPool.setHosts(_v4.map(hostsConfigs, function (conf) {
+  this.connectionPool.setHosts(_.map(hostsConfigs, function (conf) {
     return (conf instanceof Host) ? conf : new Host(conf, globalConfig);
   }));
 };
@@ -439,7 +439,7 @@ Transport.prototype.setHosts = function (hostsConfigs) {
 Transport.prototype.close = function () {
   this.log.close();
   this.closed = true;
-  _v4.each(this._timers, clearTimeout);
+  _.each(this._timers, clearTimeout);
   this._timers = null;
   this.connectionPool.close();
 };

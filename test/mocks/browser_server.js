@@ -3,7 +3,7 @@ var complete = [];
 var MockHttpRequest = require('./browser_http');
 var XhrServer = MockHttpRequest.MockHttpServer;
 var parseUrl = MockHttpRequest.prototype.parseUri;
-// var _ = require('lodash');
+var _ = require('lodash');
 
 var server = new XhrServer(function (request) {
   var reqDetails = {
@@ -11,7 +11,7 @@ var server = new XhrServer(function (request) {
     host: request.urlParts.host,
     path: request.urlParts.relative
   };
-  var response = _v4.find(interceptors, reqDetails);
+  var response = _.find(interceptors, reqDetails);
 
   if (response) {
     // remove of tick down the times

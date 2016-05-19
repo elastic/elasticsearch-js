@@ -2,7 +2,7 @@ describe('File Logger', function () {
   var Log = require('../../../src/lib/log');
   var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
-  // var _ = require('../../../src/lib/utils');
+  var _ = require('../../../src/lib/utils');
   var parentLog;
   var logger;
   var expect = require('expect.js');
@@ -15,7 +15,7 @@ describe('File Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-    logger && _v4.clearWriteStreamBuffer(logger.stream);
+    logger && _.clearWriteStreamBuffer(logger.stream);
   });
 
   function makeLogger(parent, levels) {
@@ -49,7 +49,7 @@ describe('File Logger', function () {
         var logger = makeLogger();
 
         // write the line 10 times
-        _v4.times(10, function () {
+        _.times(10, function () {
           logger.onDebug(line);
         });
 

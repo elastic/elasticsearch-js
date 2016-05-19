@@ -1,7 +1,7 @@
 var ca = require('../../../src/lib/client_action').factory;
 var proxy = require('../../../src/lib/client_action').proxyFactory;
 var expect = require('expect.js');
-// var _ = require('lodash');
+var _ = require('lodash');
 var Promise = require('bluebird');
 
 /**
@@ -45,7 +45,7 @@ function makeClientAction(spec) {
     };
   }
 
-  return _v4.bind(ca(spec), mockClient());
+  return _.bind(ca(spec), mockClient());
 }
 
 /**
@@ -55,7 +55,7 @@ function makeClientAction(spec) {
  * @return {Function} - the clientActionProxy
  */
 function makeClientActionProxy(fn, spec) {
-  return _v4.bind(proxy(fn, spec || {}), mockClient());
+  return _.bind(proxy(fn, spec || {}), mockClient());
 }
 
 
@@ -68,7 +68,7 @@ describe('Client Action runner', function () {
     afterEach(function () { _stash = {}; });
     var make = function (params) {
       _stash.orig = params;
-      _stash.copy = _v4.clone(params);
+      _stash.copy = _.clone(params);
       return params;
     };
     make.check = function () {
@@ -118,7 +118,7 @@ describe('Client Action runner', function () {
 
     it('handles passing just the callback', function () {
       var action = makeClientActionProxy(function (params, cb) {
-        expect(_v4.isObject(params)).to.be.ok();
+        expect(_.isObject(params)).to.be.ok();
         expect(cb).to.be.a('function');
       });
 

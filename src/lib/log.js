@@ -1,4 +1,4 @@
-// var _ = require('./utils');
+var _ = require('./utils');
 var url = require('url');
 var EventEmitter = require('events').EventEmitter;
 
@@ -24,13 +24,13 @@ function Log(config) {
   var i;
   var outputs;
 
-  if (_v4.isArrayOfStrings(config.log)) {
+  if (_.isArrayOfStrings(config.log)) {
     outputs = [{
       levels: config.log
     }];
   } else {
-    outputs = _v4.createArray(config.log, function (val) {
-      if (_v4.isPlainObject(val)) {
+    outputs = _.createArray(config.log, function (val) {
+      if (_.isPlainObject(val)) {
         return val;
       }
       if (typeof val === 'string') {
@@ -50,7 +50,7 @@ function Log(config) {
     this.addOutput(outputs[i]);
   }
 }
-_v4.inherits(Log, EventEmitter);
+_.inherits(Log, EventEmitter);
 
 Log.loggers = require('./loggers');
 
@@ -151,14 +151,14 @@ Log.levels = [
 Log.parseLevels = function (input) {
   switch (typeof input) {
     case 'string':
-      var i = _v4.indexOf(Log.levels, input);
+      var i = _.indexOf(Log.levels, input);
       if (i >= 0) {
         return Log.levels.slice(0, i + 1);
       }
     /* fall through */
     case 'object':
-      if (_v4.isArray(input)) {
-        var valid = _v4.intersection(input, Log.levels);
+      if (_.isArray(input)) {
+        var valid = _.intersection(input, Log.levels);
         if (valid.length === input.length) {
           return valid;
         }
@@ -176,13 +176,13 @@ Log.parseLevels = function (input) {
  * @method join
  * @static
  * @private
- * @param  {*} arrayish - An array like object that can be itterated by _v4.each
+ * @param  {*} arrayish - An array like object that can be itterated by _.each
  * @return {String} - The final string.
  */
 Log.join = function (arrayish) {
-  return _v4.map(arrayish, function (item) {
-    if (_v4.isPlainObject(item)) {
-      return _v4.inspect(item) + '\n';
+  return _.map(arrayish, function (item) {
+    if (_.isPlainObject(item)) {
+      return _.inspect(item) + '\n';
     } else {
       return item.toString();
     }
@@ -209,7 +209,7 @@ Log.prototype.addOutput = function (config) {
   config.levels = Log.parseLevels(config.levels || config.level || 'warning');
   delete config.level;
 
-  var Logger = _v4.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
+  var Logger = _.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
   return new Logger(this, config);
 };
 
@@ -289,7 +289,7 @@ Log.normalizeTraceArgs = function (method, requestUrl, body, responseBody, respo
   if (typeof requestUrl === 'string') {
     requestUrl = url.parse(requestUrl, true, true);
   } else {
-    requestUrl = _v4.clone(requestUrl);
+    requestUrl = _.clone(requestUrl);
     if (requestUrl.path) {
       requestUrl.query = url.parse(requestUrl.path, true, false).query;
     }

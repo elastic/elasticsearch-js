@@ -28,11 +28,11 @@ var testXml = require('xmlbuilder');
 var suites = testXml.create('testsuites');
 var suiteCount = 0;
 var moment = require('moment');
-// var _ = require('lodash');
+var _ = require('lodash');
 var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
-  _v4.each(testDetails.suites, function serializeSuite(suiteInfo) {
+  _.each(testDetails.suites, function serializeSuite(suiteInfo) {
 
     var suite = suites.ele('testsuite', {
       package: 'elasticsearch-js',
@@ -41,12 +41,12 @@ function makeJUnitXml(runnerName, testDetails) {
       timestamp: moment(suiteInfo.start).toJSON(),
       hostname: 'localhost',
       tests: (suiteInfo.results && suiteInfo.results.length) || 0,
-      failures: _v4.filter(suiteInfo.results, { pass: false }).length,
+      failures: _.filter(suiteInfo.results, { pass: false }).length,
       errors: 0,
       time: suiteInfo.time / 1000
     });
 
-    _v4.each(suiteInfo.results, function (testInfo) {
+    _.each(suiteInfo.results, function (testInfo) {
       var section;
       var integration = false;
 
@@ -83,7 +83,7 @@ function makeJUnitXml(runnerName, testDetails) {
     });
 
     if (suiteInfo.suites) {
-      _v4.each(suiteInfo.suites, serializeSuite);
+      _.each(suiteInfo.suites, serializeSuite);
     }
 
     giveOutput(suite, suiteInfo);

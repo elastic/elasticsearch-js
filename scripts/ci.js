@@ -18,7 +18,7 @@
  *******/
 
 var Promise = require('bluebird');
-// var _ = require('lodash');
+var _ = require('lodash');
 var through2 = require('through2');
 var map = require('through2-map');
 var split = require('split');
@@ -30,7 +30,7 @@ var format = require('util').format;
 var NL_RE = /(\r?\n)/g;
 var ROOT = join(__dirname, '..');
 var GRUNT = join(ROOT, 'node_modules', '.bin', 'grunt');
-var ENV = _v4.clone(process.env);
+var ENV = _.clone(process.env);
 var JENKINS = !!ENV.JENKINS_HOME;
 var TASKS = [];
 
@@ -80,7 +80,7 @@ task('SAUCE_LABS', false, function () {
       }));
     })
     // ignore server errors
-    .catch(_v4.noop);
+    .catch(_.noop);
 
     // attempt to run tests on saucelabs and retry if it fails
     var saucelabsAttempts = 0;
@@ -116,7 +116,7 @@ task('SAUCE_LABS', false, function () {
           });
         })
         // swallow spawn() errors, custom error handler in place
-        .catch(_v4.noop);
+        .catch(_.noop);
       });
     }
   });
@@ -168,13 +168,13 @@ execTask('SETUP', function () {
   })
   .then(function readTasks() {
     if (!ENV.RUN) {
-      return _v4.filter(TASKS, { default: true });
+      return _.filter(TASKS, { default: true });
     }
 
     return ENV.RUN
     .split(',')
     .map(function (name) {
-      return _v4.find(TASKS, { name: name.trim() });
+      return _.find(TASKS, { name: name.trim() });
     })
     .filter(Boolean);
   });
@@ -218,7 +218,7 @@ function logImportant(text) {
 
 function push(m) {
   return function () {
-    var args = _v4.toArray(arguments);
+    var args = _.toArray(arguments);
     var cb = args.pop();
     this.push(m.apply(this, args));
     cb();
@@ -235,7 +235,7 @@ function indent() {
 }
 
 function task(name, def, fn) {
-  if (_v4.isFunction(def)) {
+  if (_.isFunction(def)) {
     fn = def;
     def = true;
   }
@@ -248,7 +248,7 @@ function task(name, def, fn) {
 }
 
 function execTask(name, task) {
-  if (_v4.isObject(name)) {
+  if (_.isObject(name)) {
     task = name.fn;
     name = name.name;
   }
@@ -316,13 +316,13 @@ function spawn(file, args, block) {
 function node(/* args... */) {
   return spawn(
     process.execPath,
-    _v4.toArray(arguments)
+    _.toArray(arguments)
   );
 }
 
 function grunt(/* args... */) {
   return spawn(
     GRUNT,
-    _v4.toArray(arguments)
+    _.toArray(arguments)
   );
 }

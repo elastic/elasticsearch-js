@@ -3,7 +3,7 @@ module.exports = function (makeLogger) {
   var stub = require('../utils/auto_release_stub').make();
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
-  // var _ = require('lodash');
+  var _ = require('lodash');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
@@ -21,7 +21,7 @@ module.exports = function (makeLogger) {
         var logger = makeLogger();
 
         // write the line 10 times
-        _v4.times(10, function () {
+        _.times(10, function () {
           logger.onDebug(line);
         });
 

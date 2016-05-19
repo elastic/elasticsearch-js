@@ -1,7 +1,7 @@
 var fs = require('fs');
 var spawn = require('../_spawn');
 var async = require('async');
-// var _ = require('lodash');
+var _ = require('lodash');
 
 var root = require('path').join(__dirname, '../..');
 var bowerDir = root + '/src/bower_es_js';
@@ -21,7 +21,7 @@ fs.writeFileSync(bowerDir + '/bower.json', JSON.stringify(bowerJson, null, '  ')
 fs.writeFileSync(bowerDir + '/package.json', JSON.stringify(bowerPackageJson, null, '  '));
 
 function make(cmd, args) {
-  return _v4.bind(spawn, null, cmd, args, {
+  return _.bind(spawn, null, cmd, args, {
     verbose: true,
     cwd: bowerDir
   });
@@ -36,7 +36,7 @@ async.series([
   make('npm', ['publish'])
 ], function (err) {
   if (err) {
-    if (_v4.isNumber(err)) {
+    if (_.isNumber(err)) {
       console.log('Non-zero exit code: %d', err);
     } else {
       console.log('Error: ', err.message ? err.message : err);
