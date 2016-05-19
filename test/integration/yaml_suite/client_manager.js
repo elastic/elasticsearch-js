@@ -112,7 +112,7 @@ module.exports = {
               snapshot: '_all'
             })
             .then(function (resp) {
-              return _.pluck(resp.snapshots, 'snapshot');
+              return _.map(resp.snapshots, 'snapshot');
             }, function () {
               return [];
             })
@@ -121,13 +121,13 @@ module.exports = {
                 repository: repo,
                 snapshot: snapshot
               });
-            }, {concurrency: 1})
+            }, { concurrency: 1 })
             .then(function () {
               return client.snapshot.deleteRepository({
                 repository: repo
               });
             });
-          }, {concurrency: 1})
+          }, { concurrency: 1 })
         ]);
       };
 

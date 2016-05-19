@@ -88,7 +88,7 @@ module.exports = function (branch, done) {
     apiSpec = {
       actions: groups.normal || [],
       proxies: groups.proxies || [],
-      namespaces: _.unique(namespaces.sort(), true),
+      namespaces: _.uniq(namespaces.sort(), true),
       clientActionModifier: overrides.clientActionModifier
     };
 
@@ -252,8 +252,14 @@ module.exports = function (branch, done) {
         });
       });
 
-      if (urlSignatures.length !== _.unique(urlSignatures).length) {
-        throw new Error('Multiple URLS with the same signature detected for ' + spec.name + '\n' + _.pluck(urls, 'fmt').join('\n') + '\n');
+      if (urlSignatures.length !== _.uniq(urlSignatures).length) {
+        throw new Error(
+          'Multiple URLS with the same signature detected for ' +
+          spec.name +
+          '\n' +
+          _.map(urls, 'fmt').join('\n') +
+          '\n'
+        );
       }
 
       if (urls.length > 1) {
