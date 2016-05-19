@@ -11,7 +11,7 @@ api._namespaces = <%= stringify(namespaces) %>;<%
 
 _.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
-  if (_.contains(namespaces, namespace)) {
+  if (_.includes(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
 
