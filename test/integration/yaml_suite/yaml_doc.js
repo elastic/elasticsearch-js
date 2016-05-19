@@ -9,7 +9,7 @@
  */
 module.exports = YamlDoc;
 
-var _ = require('../../../src/lib/utils');
+var _ = require('lodash-migrate/lodash');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
@@ -200,7 +200,7 @@ YamlDoc.prototype = {
     // creates [ [ {name:"", args:"" }, ... ], ... ]
     // from [ {name:args, name:args}, {name:args} ]
     var actionSets = _.map(config, function (set) {
-      return _.map(_.pairs(set), function (pair) {
+      return _.map(_.toPairs(set), function (pair) {
         return { name: pair[0], args: pair[1] };
       });
     });
