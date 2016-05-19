@@ -48,7 +48,7 @@ Version.prototype.mergeOpts = function (opts) {
     return self.satisfies(rule.version);
   })
   .map(_.ary(_.partialRight(_.omit, 'version'), 1))
-  .concat(_.rest(arguments))
+  .concat(_.tail(arguments))
   .reverse()
   .reduce(_.merge, {});
 };
