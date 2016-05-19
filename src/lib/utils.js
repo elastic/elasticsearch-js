@@ -2,11 +2,11 @@ var path = require('path');
 var nodeUtils = require('util');
 
 /**
- * Custom _ library, basically a modified version of [lodash](http://lodash.com/docs) +
- * [node._](http://nodejs.org/api/util.html#util_util) that doesn't use mixins to prevent
+ * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
+ * [node.utils](http://nodejs.org/api/util.html#util_util) that doesn't use mixins to prevent
  * confusion when requiring lodash itself.
  *
- * @class _
+ * @class utils
  * @static
  */
 var _ = require('lodash').assign({}, require('lodash'), nodeUtils);
