@@ -11,7 +11,7 @@ var server = new XhrServer(function (request) {
     host: request.urlParts.host,
     path: request.urlParts.relative
   };
-  var response = _.find(interceptors, reqDetails);
+  var response = _v4.find(interceptors, reqDetails);
 
   if (response) {
     // remove of tick down the times

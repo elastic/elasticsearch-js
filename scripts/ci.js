@@ -174,7 +174,7 @@ execTask('SETUP', function () {
     return ENV.RUN
     .split(',')
     .map(function (name) {
-      return _.find(TASKS, { name: name.trim() });
+      return _v4.find(TASKS, { name: name.trim() });
     })
     .filter(Boolean);
   });

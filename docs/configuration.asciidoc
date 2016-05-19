@@ -315,7 +315,7 @@ var client = new elasticsearch.Client({
   selector: function (hosts) {
     var myCountry = process.env.COUNTRY;
     // first try to find a node that is in the same country
-    var selection = _.find(nodes, function (node) {
+    var selection = _v4.find(nodes, function (node) {
       return node.host.country === myCountry;
     });
 

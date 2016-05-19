@@ -18,7 +18,7 @@ function YamlFile(filename, docs) {
   file.skipping = false;
 
   describe(filename, function () {
-    file.docs = _.map(docs, function (doc) {
+    file.docs = _v4.map(docs, function (doc) {
       doc = new YamlDoc(doc, file);
       if (doc.description === 'setup') {
         beforeEach(/* doc */function (done) {

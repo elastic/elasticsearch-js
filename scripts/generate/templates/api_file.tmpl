@@ -18,12 +18,12 @@ _v4.each(actions, function (action) {
 api.<%= namespace %> = namespace();<%
   }%>
 
-<%= partials.client_action(action) %><%
+<%= _v4.trimEnd(partials.client_action(action)) %><%
 
 });
 
 _v4.each(proxies, function (action) {%>
 
-<%= partials.client_action_proxy(action) %><%
+<%= _v4.trimEnd(partials.client_action_proxy(action)) %><%
 });
 %>

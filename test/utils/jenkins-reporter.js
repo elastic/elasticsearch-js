@@ -24,8 +24,8 @@ var log = (function () {
   };
 }());
 
-var integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
-var unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
+var integration = _v4.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
+var unit = _v4.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
 var output;
 
 if (unit) {

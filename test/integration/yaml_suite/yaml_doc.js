@@ -407,14 +407,14 @@ YamlDoc.prototype = {
     var clientAction = this.get(clientActionName, client);
     _.assign(inputParams, args[action]);
 
-    var params = _.transform(inputParams, function (params, val, name) {
+    var params = _.transform(inputParams, _.bind(function (params, val, name) {
       var camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
       var paramName = name;
       var spec = clientAction && clientAction.spec;
       var knownParam = spec && spec.params && spec.params[camelName];
-      var knownUrlParam = spec && !knownParam && !!_.find(spec.url ? [spec.url] : spec.urls, function (url) {
+      var knownUrlParam = spec && !knownParam && !!_v4.find(spec.url ? [spec.url] : spec.urls, function (url) {
         if ((url.opt && url.opt[camelName]) || (url.req && url.req[camelName])) {
           return true;
         }
@@ -437,12 +437,12 @@ YamlDoc.prototype = {
       }.bind(this);
 
       transformObject(params, val, paramName);
-    }, {}, this);
+    }, this), {});
 
 
     expect(clientAction || clientActionName).to.be.a('function');
 
-    if (_.isNumeric(catcher)) {
+    if (!isNaN(parseFloat(catcher))) {
       params.ignore = _.union(params.ignore || [], [catcher]);
       catcher = null;
     }
@@ -494,9 +494,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_set: function (args) {
-    _.forOwn(args, function (name, path) {
+    _.forOwn(args, _.bind(function (name, path) {
       this._stash[name] = this.get(path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -578,7 +578,7 @@ YamlDoc.prototype = {
       }
     });
 
-    _.forOwn(args, function (match, path) {
+    _.forOwn(args, _.bind(function (match, path) {
       var origMatch = match;
 
       var maybeRE = false;
@@ -645,7 +645,7 @@ YamlDoc.prototype = {
 
         throw new Error(msg.join('\n'));
       }
-    }, this);
+    }, this));
   },
 
   /**
@@ -655,9 +655,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lt: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path)).to.be.below(num, 'path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -667,9 +667,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lte: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path) <= num).to.be.ok('path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -679,9 +679,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gt: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path)).to.be.above(num, 'path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -691,9 +691,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gte: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path) >= num).to.be.ok('path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -704,8 +704,8 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_length: function (args) {
-    _.forOwn(args, function (len, path) {
+    _.forOwn(args, _.bind(function (len, path) {
       expect(_.size(this.get(path))).to.eql(len, 'path: ' + path);
-    }, this);
+    }, this));
   }
 };

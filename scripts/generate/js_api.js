@@ -91,7 +91,7 @@ module.exports = function (branch, done) {
       clientActionModifier: overrides.clientActionModifier
     };
 
-    var create = _.assign({}, _.find(apiSpec.actions, { name: 'index' }), {
+    var create = _.assign({}, _v4.find(apiSpec.actions, { name: 'index' }), {
       name: 'create',
       location: 'create',
       proxy: 'index',

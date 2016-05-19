@@ -32,7 +32,7 @@ module.exports = function (branch) {
       return clientManager.get().clearEs();
     });
 
-    var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
+    var files = _v4.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
       return new YamlFile(filename, docs);
     });
 
