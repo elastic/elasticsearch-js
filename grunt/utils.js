@@ -31,19 +31,19 @@ utils.minorVersion = function (version) {
 utils.increaseVersion = function (version, type) {
   var i;
   switch (type) {
-  case 'major':
-    i = 0;
-    break;
-  case 'minor':
-    i = 1;
-    break;
-  case 'bug':
-  case 'patch':
-  case 'bugfix':
-    i = 2;
-    break;
-  default:
-    throw new TypeError('unexpected version bump type');
+    case 'major':
+      i = 0;
+      break;
+    case 'minor':
+      i = 1;
+      break;
+    case 'bug':
+    case 'patch':
+    case 'bugfix':
+      i = 2;
+      break;
+    default:
+      throw new TypeError('unexpected version bump type');
   }
 
   // breakout the current version

@@ -257,7 +257,7 @@ ConnectionPool.prototype.getConnections = function (status, limit) {
   if (limit == null) {
     return list.slice(0);
   } else {
-    return _.shuffle(list).slice(0, limit);
+    return _v4.shuffle(list).slice(0, limit);
   }
 };
 
@@ -308,7 +308,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   var i;
   var id;
   var host;
-  var toRemove = _.clone(this.index);
+  var toRemove = _v4.clone(this.index);
 
   for (i = 0; i < hosts.length; i++) {
     host = hosts[i];

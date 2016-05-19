@@ -68,7 +68,7 @@ describe('Client Action runner', function () {
     afterEach(function () { _stash = {}; });
     var make = function (params) {
       _stash.orig = params;
-      _stash.copy = _.clone(params);
+      _stash.copy = _v4.clone(params);
       return params;
     };
     make.check = function () {

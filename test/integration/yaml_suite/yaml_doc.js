@@ -568,7 +568,7 @@ YamlDoc.prototype = {
     // recursively replace all $var within args
     _.forOwn(args, function recurse(val, key, lvl) {
       if (_.isObject(val)) {
-        return _.each(val, recurse);
+        return _v4.each(val, recurse);
       }
 
       if (_.isString(val)) {

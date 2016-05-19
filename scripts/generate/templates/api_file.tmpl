@@ -9,7 +9,7 @@ var api = module.exports = {};
 
 api._namespaces = <%= stringify(namespaces) %>;<%
 
-_.each(actions, function (action) {
+_v4.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
   if (_.includes(namespaces, namespace)) {
     _.pull(namespaces, namespace);
@@ -22,7 +22,7 @@ api.<%= namespace %> = namespace();<%
 
 });
 
-_.each(proxies, function (action) {%>
+_v4.each(proxies, function (action) {%>
 
 <%= partials.client_action_proxy(action) %><%
 });

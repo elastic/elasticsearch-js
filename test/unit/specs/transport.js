@@ -5,7 +5,6 @@ var errors = require('../../../src/lib/errors');
 var sinon = require('sinon');
 var expect = require('expect.js');
 var _ = require('lodash-migrate');
-var _v4 = require('lodash-migrate/lodash');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 
@@ -288,23 +287,23 @@ describe('Transport Class', function () {
       it('calls _.shuffle be default', function () {
         var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
-        stub(_, 'shuffle');
+        stub(_v4, 'shuffle');
         var trans = new Transport({
           hosts: 'localhost'
         });
 
-        expect(_.shuffle.callCount).to.eql(1);
+        expect(_v4.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
         var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
-        stub(_, 'shuffle');
+        stub(_v4, 'shuffle');
         var trans = new Transport({
           hosts: 'localhost',
           randomizeHosts: false
         });
 
-        expect(_.shuffle.callCount).to.eql(0);
+        expect(_v4.shuffle.callCount).to.eql(0);
       });
     });
   });
@@ -619,7 +618,7 @@ describe('Transport Class', function () {
 
           // trigger a select so that we can harvest the connection list
           trans.connectionPool.select(_.noop);
-          _.each(connections, function (conn) {
+          _v4.each(connections, function (conn) {
             stub(conn, 'request', failRequest);
           });
 
@@ -763,7 +762,7 @@ describe('Transport Class', function () {
         prom.then(_.noop, _.noop);
 
         expect(_.size(clock.timers)).to.eql(1);
-        _.each(clock.timers, function (timer, id) {
+        _v4.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(30000);
           clearTimeout(id);
         });
@@ -780,14 +779,14 @@ describe('Transport Class', function () {
         prom.then(_.noop, _.noop);
 
         expect(_.size(clock.timers)).to.eql(1);
-        _.each(clock.timers, function (timer, id) {
+        _v4.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(5000);
           clearTimeout(id);
         });
       });
 
 
-      _.each([false, 0, null], function (falsy) {
+      _v4.each([false, 0, null], function (falsy) {
         it('skips the timeout when it is ' + falsy, function () {
           var clock = sinon.useFakeTimers();
           stub.autoRelease(clock);

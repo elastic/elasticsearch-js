@@ -46,7 +46,7 @@ Host.defaultPorts = {
 };
 
 function Host(config, globalConfig) {
-  config = _.clone(config || {});
+  config = _v4.clone(config || {});
   globalConfig = globalConfig || {};
 
   // defaults
@@ -85,7 +85,7 @@ function Host(config, globalConfig) {
 
   if (_.isObject(config)) {
     // move hostname/portname to host/port semi-intelligently.
-    _.each(simplify, function (to) {
+    _v4.each(simplify, function (to) {
       var from = to + 'name';
       if (config[from] && config[to]) {
         if (config[to].indexOf(config[from]) === 0) {
@@ -107,7 +107,7 @@ function Host(config, globalConfig) {
   }
 
   _.forOwn(config, function (val, prop) {
-    if (val != null) this[prop] = _.clone(val);
+    if (val != null) this[prop] = _v4.clone(val);
   }, this);
 
   // make sure the query string is parsed

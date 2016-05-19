@@ -137,7 +137,7 @@ var statusCodes = [
   [510, 'Not Extended']
 ];
 
-_.each(statusCodes, function createStatusCodeError(tuple) {
+_v4.each(statusCodes, function createStatusCodeError(tuple) {
   var status = tuple[0];
   var names = tuple[1];
   var allNames = [].concat(names, status);

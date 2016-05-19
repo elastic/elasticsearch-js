@@ -32,7 +32,7 @@ utils.joinPath = path.join;
  * @return {Object} - returns the modified to value
  */
 utils.deepMerge = function (to, from) {
-  _.each(from, function (fromVal, key) {
+  _v4.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
       case 'undefined':
         to[key] = from[key];
@@ -56,7 +56,7 @@ utils.deepMerge = function (to, from) {
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-_.each([
+_v4.each([
   'String',
   'Object',
   'PlainObject',
@@ -404,7 +404,7 @@ _.getUnwrittenFromStream = function (stream) {
   var out = '';
   if (!writeBuffer.length) return out;
 
-  _.each(writeBuffer, function (writeReq) {
+  _v4.each(writeBuffer, function (writeReq) {
     if (writeReq.chunk) {
       // 0.9.12+ uses WriteReq objects with a chunk prop
       out += '' + writeReq.chunk;

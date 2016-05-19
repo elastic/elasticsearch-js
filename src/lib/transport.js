@@ -62,7 +62,7 @@ function Transport(config) {
     }
 
     if (randomizeHosts) {
-      hostsConfig = _.shuffle(hostsConfig);
+      hostsConfig = _v4.shuffle(hostsConfig);
     }
 
     self.setHosts(hostsConfig);
@@ -439,7 +439,7 @@ Transport.prototype.setHosts = function (hostsConfigs) {
 Transport.prototype.close = function () {
   this.log.close();
   this.closed = true;
-  _.each(this._timers, clearTimeout);
+  _v4.each(this._timers, clearTimeout);
   this._timers = null;
   this.connectionPool.close();
 };

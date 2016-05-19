@@ -64,7 +64,7 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
 
   this.listeningLevels = [];
 
-  _.each(levels, function (level) {
+  _v4.each(levels, _.bind(function (level) {
     var fnName = 'on' + _.ucfirst(level);
     if (this.bound[fnName]) {
       this.listeningLevels.push(level);
@@ -72,7 +72,7 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
     } else {
       throw new Error('Unable to listen for level "' + level + '"');
     }
-  }, this);
+  }, this));
 };
 
 /**
@@ -83,9 +83,9 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  * @return {undefined}
  */
 LoggerAbstract.prototype.cleanUpListeners = _.handler(function () {
-  _.each(this.listeningLevels, function (level) {
+  _v4.each(this.listeningLevels, _.bind(function (level) {
     this.log.removeListener(level, this.bound['on' + _.ucfirst(level)]);
-  }, this);
+  }, this));
 });
 
 /**

@@ -2,7 +2,7 @@ var errors = require('../../../src/lib/errors');
 var expect = require('expect.js');
 var _ = require('lodash-migrate');
 
-_.each(errors, function (CustomError, name) {
+_v4.each(errors, function (CustomError, name) {
   if (name.charAt(0) !== '_') {
     describe(name, function () {
       it('extend the ErrorAbstract and Error classes', function () {

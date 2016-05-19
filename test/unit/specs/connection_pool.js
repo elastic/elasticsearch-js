@@ -175,10 +175,10 @@ describe('Connection Pool', function () {
         new ConnectionAbstract(new Host('http://localhost:9202')),
         new ConnectionAbstract(new Host('http://localhost:9203'))
       ];
-      var pingQueue = _.shuffle(connections);
+      var pingQueue = _v4.shuffle(connections);
       var expectedSelection = pingQueue[pingQueue.length - 1];
 
-      _.each(pingQueue, function (conn) {
+      _v4.each(pingQueue, function (conn) {
         pool.addConnection(conn);
         stub(conn, 'ping', function (params, cb) {
           if (typeof params === 'function') {

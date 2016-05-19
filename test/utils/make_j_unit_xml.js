@@ -32,7 +32,7 @@ var _ = require('lodash-migrate');
 var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
-  _.each(testDetails.suites, function serializeSuite(suiteInfo) {
+  _v4.each(testDetails.suites, function serializeSuite(suiteInfo) {
 
     var suite = suites.ele('testsuite', {
       package: 'elasticsearch-js',
@@ -46,7 +46,7 @@ function makeJUnitXml(runnerName, testDetails) {
       time: suiteInfo.time / 1000
     });
 
-    _.each(suiteInfo.results, function (testInfo) {
+    _v4.each(suiteInfo.results, function (testInfo) {
       var section;
       var integration = false;
 
@@ -83,7 +83,7 @@ function makeJUnitXml(runnerName, testDetails) {
     });
 
     if (suiteInfo.suites) {
-      _.each(suiteInfo.suites, serializeSuite);
+      _v4.each(suiteInfo.suites, serializeSuite);
     }
 
     giveOutput(suite, suiteInfo);

@@ -221,7 +221,7 @@ MockHttpRequest.prototype = {
 
   getAllResponseHeaders: function () {
     var r = '';
-    _.each(this.responseHeaders, function (header) {
+    _v4.each(this.responseHeaders, function (header) {
       if ((header === 'set-cookie') || (header === 'set-cookie2')) {
         return;
       }
@@ -353,7 +353,7 @@ MockHttpRequest.prototype = {
 
     this.responseText = null;
     this.error = true;
-    _.each(this.requestHeaders, function (header) {
+    _v4.each(this.requestHeaders, function (header) {
       delete this.requestHeaders[header];
     }, this);
 

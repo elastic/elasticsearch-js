@@ -56,11 +56,11 @@ function Client(config) {
 
     this.transport = new Transport(config);
 
-    _.each(EsApiClient.prototype, function (Fn, prop) {
+    _v4.each(EsApiClient.prototype, _.bind(function (Fn, prop) {
       if (Fn.prototype instanceof clientAction.ApiNamespace) {
         this[prop] = new Fn(this.transport);
       }
-    }, this);
+    }, this));
 
     delete this._namespaces;
   }
@@ -74,9 +74,9 @@ function Client(config) {
   var Constructor = EsApiClient;
 
   if (config.plugins) {
-    Constructor.prototype = _.cloneDeep(Constructor.prototype);
+    Constructor.prototype = _v4.cloneDeep(Constructor.prototype);
 
-    _.each(config.plugins, function (setup) {
+    _v4.each(config.plugins, function (setup) {
       Constructor = setup(Constructor, config, {
         apis: require('./apis'),
         connectors: require('./connectors'),

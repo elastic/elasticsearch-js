@@ -176,7 +176,7 @@ Log.parseLevels = function (input) {
  * @method join
  * @static
  * @private
- * @param  {*} arrayish - An array like object that can be itterated by _.each
+ * @param  {*} arrayish - An array like object that can be itterated by _v4.each
  * @return {String} - The final string.
  */
 Log.join = function (arrayish) {
@@ -289,7 +289,7 @@ Log.normalizeTraceArgs = function (method, requestUrl, body, responseBody, respo
   if (typeof requestUrl === 'string') {
     requestUrl = url.parse(requestUrl, true, true);
   } else {
-    requestUrl = _.clone(requestUrl);
+    requestUrl = _v4.clone(requestUrl);
     if (requestUrl.path) {
       requestUrl.query = url.parse(requestUrl.path, true, false).query;
     }

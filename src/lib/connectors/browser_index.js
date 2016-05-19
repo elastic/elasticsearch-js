@@ -6,7 +6,7 @@ var opts = {
 var _ = require('../utils');
 
 // remove modules that have been ignored by browserify
-_.each(opts, function (conn, name) {
+_v4.each(opts, function (conn, name) {
   if (typeof conn !== 'function') {
     delete opts[name];
   }

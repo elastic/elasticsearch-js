@@ -53,7 +53,7 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     var agent = this.agent;
     var toRemove = [];
     var collectSockets = function (sockets, host) {
-      _.each(sockets, function (s) {
+      _v4.each(sockets, function (s) {
         if (s) toRemove.push([host, s]);
       });
     };
@@ -61,9 +61,9 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     agent.minSockets = agent.maxSockets = 0;
     agent.requests = {};
 
-    _.each(agent.sockets, collectSockets);
-    _.each(agent.freeSockets, collectSockets);
-    _.each(toRemove, function (args) {
+    _v4.each(agent.sockets, collectSockets);
+    _v4.each(agent.freeSockets, collectSockets);
+    _v4.each(toRemove, function (args) {
       var host = args[0], socket = args[1];
       agent.removeSocket(socket, host);
       socket.destroy();

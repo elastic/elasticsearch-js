@@ -4,7 +4,6 @@ module.exports = function (makeLogger) {
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
   var _ = require('lodash-migrate');
-  var _v4 = require('lodash-migrate/lodash');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
