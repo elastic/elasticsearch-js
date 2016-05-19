@@ -141,7 +141,7 @@ describe('Log class', function () {
 
       log.emit = function (eventName) {
         call = {
-          event : eventName,
+          event: eventName,
           args: Array.prototype.slice.call(arguments, 1)
         };
       };
@@ -221,7 +221,7 @@ describe('Log class', function () {
     });
 
     it('accepts an array of output config objects', function () {
-      var log = new Log({ log: [{ level: 'error' }, { level: 'trace'}] });
+      var log = new Log({ log: [{ level: 'error' }, { level: 'trace' }] });
       expect(log.listenerCount('error')).to.eql(2);
       expect(log.listenerCount('warning')).to.eql(1);
       expect(log.listenerCount('info')).to.eql(1);

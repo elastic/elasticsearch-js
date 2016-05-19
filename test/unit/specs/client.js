@@ -68,7 +68,7 @@ describe('Client instances creation', function () {
       }
       util.inherits(NullStream, stream.Writable);
 
-      NullStream.prototype._write = function(/* chunk, encoding, next */) {
+      NullStream.prototype._write = function (/* chunk, encoding, next */) {
         done();
       };
 

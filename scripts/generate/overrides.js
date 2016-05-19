@@ -187,6 +187,7 @@ module.exports = [
     version: '>=1.6.0',
 
 // strange indentation makes pretty api files
+/* eslint-disable */
 clientActionModifier:
 function (spec) {
   return require('../utils').merge(spec, {
@@ -198,13 +199,15 @@ function (spec) {
     }
   });
 }
+/* eslint-enable */
 
   },
   {
     version: '>=2.0.0',
     aliases: {
       'reindex.rethrottle': [
-        '/_update_by_query/{task_id}/_rethrottle'
+        '/_update_by_query/{task_id}/_rethrottle',
+        '/_delete_by_query/{task_id}/_rethrottle'
       ]
     }
   }

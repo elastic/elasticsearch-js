@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function (grunt) {
   // load plugins
   require('load-grunt-config')(grunt, {

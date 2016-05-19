@@ -87,7 +87,7 @@ module.exports = function (branch, done) {
     apiSpec = {
       actions: groups.normal || [],
       proxies: groups.proxies || [],
-      namespaces: _.unique(namespaces.sort(), true),
+      namespaces: _.uniq(namespaces.sort()),
       clientActionModifier: overrides.clientActionModifier
     };
 
@@ -170,12 +170,12 @@ module.exports = function (branch, done) {
     );
   }
 
-  function __puke__transformSpec(spec) {
+  function __puke__transformSpec(spec) { // eslint-disable-line
     var actions = [];
 
     // itterate all of the specs within the file, should only be one
     _.each(spec, function (def, name) {
-      //camelcase the name
+      // camelcase the name
       name = _.map(name.split('.'), _.camelCase).join('.');
 
       if (name === 'cat.aliases') {
@@ -239,7 +239,7 @@ module.exports = function (branch, done) {
 
         urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
 
-        return _.omit({
+        return _.omitBy({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + _.camelCase(match) + '%>';
           }),
@@ -251,8 +251,14 @@ module.exports = function (branch, done) {
         });
       });
 
-      if (urlSignatures.length !== _.unique(urlSignatures).length) {
-        throw new Error('Multiple URLS with the same signature detected for ' + spec.name + '\n' + _.pluck(urls, 'fmt').join('\n') + '\n');
+      if (urlSignatures.length !== _.uniq(urlSignatures).length) {
+        throw new Error(
+          'Multiple URLS with the same signature detected for ' +
+          spec.name +
+          '\n' +
+          _.map(urls, 'fmt').join('\n') +
+          '\n'
+        );
       }
 
       if (urls.length > 1) {

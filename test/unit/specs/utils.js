@@ -32,7 +32,7 @@ describe('Utils', function () {
       }
     },
     function (thing, name) {
-      describe('#isArrayOf' + name, function (test) {
+      describe('#isArrayOf' + name, function () {
         it('likes arrays of ' + name, function () {
           expect(_['isArrayOf' + name + 's'](thing.is)).to.be(true);
         });
@@ -54,7 +54,6 @@ describe('Utils', function () {
         expect(_.isNumeric(0)).to.be(true);
         expect(_.isNumeric(32)).to.be(true);
         expect(_.isNumeric('040')).to.be(true);
-        expect(_.isNumeric(0144)).to.be(true);
         expect(_.isNumeric('0xFF')).to.be(true);
         expect(_.isNumeric(0xFFF)).to.be(true);
       });
@@ -196,7 +195,7 @@ describe('Utils', function () {
       });
 
       it('sorta kinda works on objects', function () {
-        expect(_.toLowerString({a: 'thing'})).to.eql('[object object]');
+        expect(_.toLowerString({ a: 'thing' })).to.eql('[object object]');
       });
     });
 
@@ -216,7 +215,7 @@ describe('Utils', function () {
       });
 
       it('sorta kinda works on objects', function () {
-        expect(_.toUpperString({a: 'thing'})).to.eql('[OBJECT OBJECT]');
+        expect(_.toUpperString({ a: 'thing' })).to.eql('[OBJECT OBJECT]');
       });
     });
 
@@ -268,7 +267,7 @@ describe('Utils', function () {
           foo: ['bax', 'boz']
         }
       };
-      _.deepMerge(obj, { bax: { foo: ['poo'] }});
+      _.deepMerge(obj, { bax: { foo: ['poo'] } });
       expect(obj.bax.foo).to.have.length(3);
     });
 
@@ -282,7 +281,7 @@ describe('Utils', function () {
       expect(out).to.not.be(inp);
     });
     it('accepts a primitive value and calls the the transform function', function (done) {
-      var out = _.createArray('str', function (val) {
+      _.createArray('str', function (val) {
         expect(val).to.be('str');
         done();
       });

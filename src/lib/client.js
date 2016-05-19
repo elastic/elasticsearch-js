@@ -56,11 +56,11 @@ function Client(config) {
 
     this.transport = new Transport(config);
 
-    _.each(EsApiClient.prototype, function (Fn, prop) {
+    _.each(EsApiClient.prototype, _.bind(function (Fn, prop) {
       if (Fn.prototype instanceof clientAction.ApiNamespace) {
         this[prop] = new Fn(this.transport);
       }
-    }, this);
+    }, this));
 
     delete this._namespaces;
   }

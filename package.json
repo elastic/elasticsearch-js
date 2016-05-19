@@ -96,7 +96,7 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "forever-agent": "^0.6.0",
-    "lodash": "^3.10.0",
+    "lodash": "^4.12.0",
     "lodash-compat": "^3.0.0",
     "promise": "^7.1.1"
   },
@@ -107,7 +107,8 @@
   "scripts": {
     "test": "grunt test",
     "generate": "node scripts/generate",
-    "grunt": "grunt"
+    "grunt": "grunt",
+    "eslint": "eslint src scripts test grunt Gruntfile.js"
   },
   "engines": {
     "node": ">=0.8"

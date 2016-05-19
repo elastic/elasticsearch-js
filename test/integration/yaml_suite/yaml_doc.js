@@ -9,7 +9,7 @@
  */
 module.exports = YamlDoc;
 
-var _ = require('../../../src/lib/utils');
+var _ = require('lodash');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
@@ -26,10 +26,10 @@ var ES_VERSION = null;
 var versionExp = '((?:\\d+\\.){0,2}\\d+)(?:[\\.\\-]\\w+)?|';
 
 // match all whitespace within a "regexp" match arg
-var reWhitespace_RE = /\s+/g;
+var reWhitespaceRE = /\s+/g;
 
 // match all comments within a "regexp" match arg
-var reComments_RE = /([\S\s]?)#[^\n]*\n/g;
+var reCommentsRE = /([\S\s]?)#[^\n]*\n/g;
 
 /**
  * Regular Expression to extract a version number from a string
@@ -200,7 +200,7 @@ YamlDoc.prototype = {
     // creates [ [ {name:"", args:"" }, ... ], ... ]
     // from [ {name:args, name:args}, {name:args} ]
     var actionSets = _.map(config, function (set) {
-      return _.map(_.pairs(set), function (pair) {
+      return _.map(_.toPairs(set), function (pair) {
         return { name: pair[0], args: pair[1] };
       });
     });
@@ -356,34 +356,34 @@ YamlDoc.prototype = {
 
     // resolve the catch arg to a value used for matching once the request is complete
     switch (args.catch) {
-    case void 0:
-      catcher = null;
-      break;
-    case 'missing':
-      catcher = 404;
-      break;
-    case 'conflict':
-      catcher = 409;
-      break;
-    case 'forbidden':
-      catcher = 403;
-      break;
-    case 'request_timeout':
-      catcher = 408;
-      break;
-    case 'request':
-      catcher = /.*/;
-      break;
-    case 'param':
-      catcher = TypeError;
-      break;
-    default:
-      catcher = args.catch.match(/^\/(.*)\/$/);
-      if (catcher) {
-        catcher = new RegExp(catcher[1]);
-      } else {
-        return done(new TypeError('unsupported catch type ' + args.catch));
-      }
+      case void 0:
+        catcher = null;
+        break;
+      case 'missing':
+        catcher = 404;
+        break;
+      case 'conflict':
+        catcher = 409;
+        break;
+      case 'forbidden':
+        catcher = 403;
+        break;
+      case 'request_timeout':
+        catcher = 408;
+        break;
+      case 'request':
+        catcher = /.*/;
+        break;
+      case 'param':
+        catcher = TypeError;
+        break;
+      default:
+        catcher = args.catch.match(/^\/(.*)\/$/);
+        if (catcher) {
+          catcher = new RegExp(catcher[1]);
+        } else {
+          return done(new TypeError('unsupported catch type ' + args.catch));
+        }
     }
 
     delete args.catch;
@@ -407,7 +407,7 @@ YamlDoc.prototype = {
     var clientAction = this.get(clientActionName, client);
     _.assign(inputParams, args[action]);
 
-    var params = _.transform(inputParams, function (params, val, name) {
+    var params = _.transform(inputParams, _.bind(function (params, val, name) {
       var camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
@@ -437,18 +437,18 @@ YamlDoc.prototype = {
       }.bind(this);
 
       transformObject(params, val, paramName);
-    }, {}, this);
+    }, this), {});
 
 
     expect(clientAction || clientActionName).to.be.a('function');
 
-    if (_.isNumeric(catcher)) {
+    if (!isNaN(parseFloat(catcher))) {
       params.ignore = _.union(params.ignore || [], [catcher]);
       catcher = null;
     }
 
     var timeoutId;
-    var cb =  _.bind(function (error, body) {
+    var cb = _.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
@@ -494,9 +494,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_set: function (args) {
-    _.forOwn(args, function (name, path) {
+    _.forOwn(args, _.bind(function (name, path) {
       this._stash[name] = this.get(path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -578,7 +578,7 @@ YamlDoc.prototype = {
       }
     });
 
-    _.forOwn(args, function (match, path) {
+    _.forOwn(args, _.bind(function (match, path) {
       var origMatch = match;
 
       var maybeRE = false;
@@ -588,7 +588,7 @@ YamlDoc.prototype = {
         // convert the matcher into a compatible string for building a regexp
         maybeRE = match
           // replace comments, but allow the # to be escaped like \#
-          .replace(reComments_RE, function (match, prevChar) {
+          .replace(reCommentsRE, function (match, prevChar) {
             if (prevChar === '\\') {
               return match;
             } else {
@@ -597,7 +597,7 @@ YamlDoc.prototype = {
           })
           // remove all whitespace from the expression, all meaningful
           // whitespace is represented with \s
-          .replace(reWhitespace_RE, '');
+          .replace(reWhitespaceRE, '');
 
         var startsWithSlash = maybeRE[0] === '/';
         var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';
@@ -645,7 +645,7 @@ YamlDoc.prototype = {
 
         throw new Error(msg.join('\n'));
       }
-    }, this);
+    }, this));
   },
 
   /**
@@ -655,9 +655,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lt: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path)).to.be.below(num, 'path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -667,9 +667,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lte: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path) <= num).to.be.ok('path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -679,9 +679,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gt: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path)).to.be.above(num, 'path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -691,9 +691,9 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gte: function (args) {
-    _.forOwn(args, function (num, path) {
+    _.forOwn(args, _.bind(function (num, path) {
       expect(this.get(path) >= num).to.be.ok('path: ' + path);
-    }, this);
+    }, this));
   },
 
   /**
@@ -704,8 +704,8 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_length: function (args) {
-    _.forOwn(args, function (len, path) {
+    _.forOwn(args, _.bind(function (len, path) {
       expect(_.size(this.get(path))).to.eql(len, 'path: ' + path);
-    }, this);
+    }, this));
   }
 };

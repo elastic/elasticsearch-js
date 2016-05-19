@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 //////////////
 /// Extended version of:
 ///  https://github.com/philikon/MockHttpRequest/

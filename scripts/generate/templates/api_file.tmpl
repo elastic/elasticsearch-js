@@ -11,19 +11,19 @@ api._namespaces = <%= stringify(namespaces) %>;<%
 
 _.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
-  if (_.contains(namespaces, namespace)) {
+  if (_.includes(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
 
 api.<%= namespace %> = namespace();<%
   }%>
 
-<%= partials.client_action(action) %><%
+<%= _.trimEnd(partials.client_action(action)) %><%
 
 });
 
 _.each(proxies, function (action) {%>
 
-<%= partials.client_action_proxy(action) %><%
+<%= _.trimEnd(partials.client_action_proxy(action)) %><%
 });
 %>

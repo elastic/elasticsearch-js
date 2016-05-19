@@ -51,7 +51,7 @@ module.exports = function (branch, done) {
 
   function writeTestIndex(done) {
     var file = fromRoot('test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js');
-    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');', 'utf8');
+    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');\n', 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML index to', file);
     done();
   }

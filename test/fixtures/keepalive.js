@@ -31,8 +31,8 @@ process.once('message', function (port) {
 
     var out = {
       socketCount: err || sockets.length,
-      remaining: _.where(sockets, { destroyed: true }).length - sockets.length,
-      timeouts: _.size(clock.timers) && _.pluck(clock.timers, 'func').map(String)
+      remaining: _.filter(sockets, { destroyed: true }).length - sockets.length,
+      timeouts: _.size(clock.timers) && _.map(clock.timers, 'func').map(String)
     };
 
     clock.restore();

@@ -1,4 +1,4 @@
-/*jshint curly: false */
+/* jshint curly: false */
 var async = require('async');
 var fs = require('fs');
 var spawn = require('../_spawn');
@@ -95,7 +95,7 @@ function dirRegex(dir, regexp) {
 function dirOpts(dir, opts) {
   opts = _.isArray(opts) ? opts : [opts];
   return dirFilter(dir, function (name) {
-    return _.contains(opts, name);
+    return _.includes(opts, name);
   });
 }
 
@@ -206,7 +206,7 @@ function createArchive(branch) {
       spawnStep('mkdir', [dir], paths.root),
       spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, specPathInRepo], paths.esSrc),
       spawnStep('tar', ['-x', '-f', tarball, '-C', dir, '--strip-components', subDirCount]),
-      spawnStep('rm',  [tarball])
+      spawnStep('rm', [tarball])
     ], done);
   };
 }

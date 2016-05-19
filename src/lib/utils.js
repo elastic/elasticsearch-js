@@ -1,5 +1,4 @@
 var path = require('path');
-var _ = require('lodash');
 var nodeUtils = require('util');
 
 /**
@@ -10,16 +9,15 @@ var nodeUtils = require('util');
  * @class utils
  * @static
  */
-var utils = _.extend({}, _, nodeUtils);
-_ = utils;
+var _ = require('lodash').assign({}, require('lodash'), nodeUtils);
 
 /**
  * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
  *
- * @method utils.joinPath
+ * @method _.joinPath
  * @type {function}
  */
-utils.joinPath = path.join;
+_.joinPath = path.join;
 
 /**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
@@ -31,7 +29,7 @@ utils.joinPath = path.join;
  * @param  {Object} from - Object to pull changed from
  * @return {Object} - returns the modified to value
  */
-utils.deepMerge = function (to, from) {
+_.deepMerge = function (to, from) {
   _.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
       case 'undefined':
@@ -42,7 +40,7 @@ utils.deepMerge = function (to, from) {
           to[key] = to[key].concat(from[key]);
         }
         else if (_.isPlainObject(to[key]) && _.isPlainObject(from[key])) {
-          utils.deepMerge(to[key], from[key]);
+          _.deepMerge(to[key], from[key]);
         }
     }
   });
@@ -67,7 +65,7 @@ _.each([
 ], function (type) {
   var check = _['is' + type];
 
-  utils['isArrayOf' + type + 's'] = function (arr) {
+  _['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
     return _.isArray(arr) && _.every(arr.slice(0, 10), check);
   };
@@ -81,7 +79,7 @@ _.each([
  * @param  {string} word - The word to transform
  * @return {string}
  */
-utils.ucfirst = function (word) {
+_.ucfirst = function (word) {
   return word[0].toUpperCase() + word.substring(1).toLowerCase();
 };
 
@@ -142,7 +140,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
  * @param  {String} string
  * @return {String}
  */
-utils.studlyCase = adjustWordCase(true, true, '');
+_.studlyCase = adjustWordCase(true, true, '');
 
 /**
  * Transform a string into camelCase
@@ -151,7 +149,7 @@ utils.studlyCase = adjustWordCase(true, true, '');
  * @param  {String} string
  * @return {String}
  */
-utils.camelCase = adjustWordCase(false, true, '');
+_.camelCase = adjustWordCase(false, true, '');
 
 /**
  * Transform a string into snakeCase
@@ -160,7 +158,7 @@ utils.camelCase = adjustWordCase(false, true, '');
  * @param  {String} string
  * @return {String}
  */
-utils.snakeCase = adjustWordCase(false, false, '_');
+_.snakeCase = adjustWordCase(false, false, '_');
 
 /**
  * Lower-case a string, and return an empty string if any is not a string
@@ -168,7 +166,7 @@ utils.snakeCase = adjustWordCase(false, false, '_');
  * @param any {*} - Something or nothing
  * @returns {string}
  */
-utils.toLowerString = function (any) {
+_.toLowerString = function (any) {
   if (any) {
     if (typeof any !== 'string') {
       any = any.toString();
@@ -185,7 +183,7 @@ utils.toLowerString = function (any) {
  * @param any {*} - Something or nothing
  * @returns {string}
  */
-utils.toUpperString = function (any) {
+_.toUpperString = function (any) {
   if (any) {
     if (typeof any !== 'string') {
       any = any.toString();
@@ -203,7 +201,7 @@ utils.toUpperString = function (any) {
  * @param  {*} val
  * @return {Boolean}
  */
-utils.isNumeric = function (val) {
+_.isNumeric = function (val) {
   return typeof val !== 'object' && val - parseFloat(val) >= 0;
 };
 
@@ -217,7 +215,7 @@ var intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
  * @param {String} val
  * @return {Boolean}
  */
-utils.isInterval = function (val) {
+_.isInterval = function (val) {
   return !!(val.match && val.match(intervalRE));
 };
 
@@ -230,7 +228,7 @@ utils.isInterval = function (val) {
  * @param {Number} times - Times the string should be repeated
  * @return {String}
  */
-utils.repeat = function (what, times) {
+_.repeat = function (what, times) {
   return (new Array(times + 1)).join(what);
 };
 
@@ -243,7 +241,7 @@ utils.repeat = function (what, times) {
  * @param [sliceIndex=0] {Integer} - The index that args should be sliced at, before feeding args to func
  * @returns {*} - the return value of func
  */
-utils.applyArgs = function (func, context, args, sliceIndex) {
+_.applyArgs = function (func, context, args, sliceIndex) {
   sliceIndex = sliceIndex || 0;
   switch (args.length - sliceIndex) {
     case 0:
@@ -442,4 +440,4 @@ _.now = function () {
   return (typeof Date.now === 'function') ? Date.now() : (new Date()).getTime();
 };
 
-module.exports = utils;
+module.exports = _;

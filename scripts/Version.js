@@ -1,6 +1,6 @@
 var _ = require('lodash');
-var package = require('../package.json');
-var branches = package.config.supported_es_branches;
+var pkg = require('../package.json');
+var branches = pkg.config.supported_es_branches;
 var semver = require('semver');
 
 var maxMinorVersion = function (majorV) {
@@ -48,7 +48,7 @@ Version.prototype.mergeOpts = function (opts) {
     return self.satisfies(rule.version);
   })
   .map(_.ary(_.partialRight(_.omit, 'version'), 1))
-  .concat(_.rest(arguments))
+  .concat(_.tail(arguments))
   .reverse()
   .reduce(_.merge, {});
 };

@@ -57,15 +57,15 @@ var mockNock = module.exports = function (url) {
       req.status = status;
       req.body = body;
       switch (typeof req.body) {
-      case 'string':
-      case 'number':
-        break;
-      default:
-        try {
-          req.body = req.body && JSON.stringify(req.body);
-        } catch (e) {
-          req.body = req.body;
-        }
+        case 'string':
+        case 'number':
+          break;
+        default:
+          try {
+            req.body = req.body && JSON.stringify(req.body);
+          } catch (e) {
+            req.body = req.body;
+          }
       }
       interceptors.push(req);
       return mockNock(url);

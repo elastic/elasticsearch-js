@@ -14,7 +14,7 @@ var path = require('path');
  */
 function stringify(thing, pretty) {
   return (pretty ? JSON.stringify(thing, null, '  ') : JSON.stringify(thing))
-    .replace(/\'/g, '\\\'')
+    .replace(/'/g, '\\\'')
     .replace(/\\?"/g, function (quote) {
       // replace external (unescaped) double quotes with single quotes
       return quote === '\\"' ? '"' : '\'';
@@ -68,16 +68,16 @@ var templateGlobals = {
 
   paramType: function (type) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
-    case 'time':
-      return 'Date, Number';
-    case 'any':
-      return 'Anything';
-    case 'enum':
-      return 'String';
-    case 'list':
-      return 'String, String[], Boolean';
-    default:
-      return _.ucfirst(type);
+      case 'time':
+        return 'Date, Number';
+      case 'any':
+        return 'Anything';
+      case 'enum':
+        return 'String';
+      case 'list':
+        return 'String, String[], Boolean';
+      default:
+        return _.ucfirst(type);
     }
   },
 

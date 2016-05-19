@@ -274,7 +274,7 @@ Transport.prototype.request = function (params, cb) {
     if (
       (!err || err instanceof errors.Serialization)
       && (status < 200 || status >= 300)
-      && (!params.ignore || !_.contains(params.ignore, status))
+      && (!params.ignore || !_.includes(params.ignore, status))
     ) {
 
       var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
