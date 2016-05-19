@@ -1,5 +1,7 @@
 module.exports = {
-  browser_client: require('../../webpack_config/browser'),
-  angular_client: require('../../webpack_config/angular'),
-  jquery_client: require('../../webpack_config/jquery'),
+  browser_clients: [
+    require('../../webpack_config/browser'),
+    require('../../webpack_config/angular'),
+    require('../../webpack_config/jquery'),
+  ]
 }
