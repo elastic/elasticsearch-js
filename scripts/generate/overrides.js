@@ -187,6 +187,7 @@ module.exports = [
     version: '>=1.6.0',
 
 // strange indentation makes pretty api files
+/* eslint-disable */
 clientActionModifier:
 function (spec) {
   return require('../utils').merge(spec, {
@@ -198,6 +199,7 @@ function (spec) {
     }
   });
 }
+/* eslint-enable */
 
   },
   {

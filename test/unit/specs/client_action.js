@@ -195,7 +195,7 @@ describe('Client Action runner', function () {
       it('rejects array', function (done) {
         action({
           one: ['one'],
-          two: [ 1304 ]
+          two: [1304]
         }, function (err, params) {
           expect(err).to.be.a(TypeError);
           done();
@@ -629,7 +629,7 @@ describe('Client Action runner', function () {
         method: 'POST'
       });
 
-      action({method: 'get'}, function (err, params) {
+      action({ method: 'get' }, function (err, params) {
         expect(params.method).to.be('GET');
         done();
       });

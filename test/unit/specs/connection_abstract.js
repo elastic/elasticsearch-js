@@ -17,11 +17,11 @@ describe('Connection Abstract', function () {
 
   it('requires a valid host', function () {
     expect(function () {
-      new ConnectionAbstract();
+      var conn = new ConnectionAbstract();
     }).to.throwError(TypeError);
 
     expect(function () {
-      new ConnectionAbstract({});
+      var conn = new ConnectionAbstract({});
     }).to.throwError(TypeError);
   });
 
@@ -81,7 +81,6 @@ describe('Connection Abstract', function () {
 
     it('calls it\'s own request method', function () {
       var conn = new ConnectionAbstract(host);
-      var football = {};
       stub(conn, 'request');
       conn.ping();
       expect(conn.request.callCount).to.eql(1);

@@ -19,7 +19,7 @@ function YamlFile(filename, docs) {
 
   describe(filename, function () {
     file.docs = _.map(docs, function (doc) {
-      doc =  new YamlDoc(doc, file);
+      doc = new YamlDoc(doc, file);
       if (doc.description === 'setup') {
         beforeEach(/* doc */function (done) {
           async.series(doc.getActionsRunners(), done);

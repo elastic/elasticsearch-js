@@ -1,7 +1,6 @@
 var Transport = require('../../../src/lib/transport');
 var Host = require('../../../src/lib/host');
 var errors = require('../../../src/lib/errors');
-var Promise = require('bluebird');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
@@ -354,10 +353,10 @@ describe('Transport Class', function () {
     });
 
     it('logs an error if nodes to host throws one', function (done) {
-      trans.nodesToHostCallback = function (nodes) {
+      trans.nodesToHostCallback = function () {
         throw new Error('I failed');
       };
-      trans.log.error = function (err) {
+      trans.log.error = function () {
         done();
       };
       trans.sniff();
@@ -408,7 +407,7 @@ describe('Transport Class', function () {
       });
     });
     it('passed back the full server response', function (done) {
-      trans.sniff(function (err, resp, status) {
+      trans.sniff(function (err, resp) {
         expect(resp.ok).to.eql(true);
         expect(resp.cluster_name).to.eql('clustername');
         done();
@@ -501,7 +500,7 @@ describe('Transport Class', function () {
         });
         var conn = getConnection(trans);
         var body = [
-          { _id: 'simple body'},
+          { _id: 'simple body' },
           { name: 'ഢധയമബ' }
         ];
 
@@ -526,7 +525,7 @@ describe('Transport Class', function () {
         var trans = new Transport({
           hosts: 'localhost'
         });
-        var conn = getConnection(trans);
+        getConnection(trans);
         var body = {
           _id: 'circular body'
         };
@@ -560,7 +559,7 @@ describe('Transport Class', function () {
           }
         });
 
-        trans.request({}, function (err, body, status) {
+        trans.request({}, function (err) {
           expect(err.message).to.eql('I am broken');
         });
       });
@@ -574,7 +573,7 @@ describe('Transport Class', function () {
           }
         });
 
-        trans.request({}, function (err, body, status) {
+        trans.request({}, function (err) {
           expect(err.message).to.eql('I am broken');
         });
       });
@@ -638,7 +637,6 @@ describe('Transport Class', function () {
     });
 
 
-
     describe('return value', function () {
       it('returns an object with an abort() method when a callback is sent', function () {
         var tran = new Transport();
@@ -681,7 +679,7 @@ describe('Transport Class', function () {
           expect(process.domain).to.be(null);
           var tran = new Transport();
           shortCircuitRequest(tran);
-          tran.request({}, function(err, result, status) {
+          tran.request({}, function () {
             expect(process.domain).to.be(null);
           });
         });
@@ -689,12 +687,12 @@ describe('Transport Class', function () {
         it('binds the callback to the correct domain', function () {
           expect(process.domain).to.be(null);
           var domain = require('domain').create();
-          domain.run(function() {
+          domain.run(function () {
             var tran = new Transport();
             shortCircuitRequest(tran);
             expect(process.domain).not.to.be(null);
             var startingDomain = process.domain
-            tran.request({}, function(err, result, status) {
+            tran.request({}, function () {
               expect(process.domain).not.to.be(null);
               expect(process.domain).to.be(startingDomain);
               process.domain.exit();
@@ -758,7 +756,6 @@ describe('Transport Class', function () {
         var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
         stub.autoRelease(clock);
         var tran = new Transport({});
-        var err;
 
         var prom = tran.request({});
         // disregard promise, prevent bluebird's warnings
@@ -776,7 +773,6 @@ describe('Transport Class', function () {
         var tran = new Transport({
           requestTimeout: 5000
         });
-        var err;
 
         var prom = tran.request({});
         // disregard promise, prevent bluebird's warnings
@@ -799,7 +795,7 @@ describe('Transport Class', function () {
 
           tran.request({
             requestTimeout: falsy
-          }, function (_err) {});
+          }, function () {});
 
           expect(_.size(clock.timers)).to.eql(0);
         });

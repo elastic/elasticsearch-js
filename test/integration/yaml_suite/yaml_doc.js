@@ -26,10 +26,10 @@ var ES_VERSION = null;
 var versionExp = '((?:\\d+\\.){0,2}\\d+)(?:[\\.\\-]\\w+)?|';
 
 // match all whitespace within a "regexp" match arg
-var reWhitespace_RE = /\s+/g;
+var reWhitespaceRE = /\s+/g;
 
 // match all comments within a "regexp" match arg
-var reComments_RE = /([\S\s]?)#[^\n]*\n/g;
+var reCommentsRE = /([\S\s]?)#[^\n]*\n/g;
 
 /**
  * Regular Expression to extract a version number from a string
@@ -356,34 +356,34 @@ YamlDoc.prototype = {
 
     // resolve the catch arg to a value used for matching once the request is complete
     switch (args.catch) {
-    case void 0:
-      catcher = null;
-      break;
-    case 'missing':
-      catcher = 404;
-      break;
-    case 'conflict':
-      catcher = 409;
-      break;
-    case 'forbidden':
-      catcher = 403;
-      break;
-    case 'request_timeout':
-      catcher = 408;
-      break;
-    case 'request':
-      catcher = /.*/;
-      break;
-    case 'param':
-      catcher = TypeError;
-      break;
-    default:
-      catcher = args.catch.match(/^\/(.*)\/$/);
-      if (catcher) {
-        catcher = new RegExp(catcher[1]);
-      } else {
-        return done(new TypeError('unsupported catch type ' + args.catch));
-      }
+      case void 0:
+        catcher = null;
+        break;
+      case 'missing':
+        catcher = 404;
+        break;
+      case 'conflict':
+        catcher = 409;
+        break;
+      case 'forbidden':
+        catcher = 403;
+        break;
+      case 'request_timeout':
+        catcher = 408;
+        break;
+      case 'request':
+        catcher = /.*/;
+        break;
+      case 'param':
+        catcher = TypeError;
+        break;
+      default:
+        catcher = args.catch.match(/^\/(.*)\/$/);
+        if (catcher) {
+          catcher = new RegExp(catcher[1]);
+        } else {
+          return done(new TypeError('unsupported catch type ' + args.catch));
+        }
     }
 
     delete args.catch;
@@ -448,7 +448,7 @@ YamlDoc.prototype = {
     }
 
     var timeoutId;
-    var cb =  _.bind(function (error, body) {
+    var cb = _.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
@@ -588,7 +588,7 @@ YamlDoc.prototype = {
         // convert the matcher into a compatible string for building a regexp
         maybeRE = match
           // replace comments, but allow the # to be escaped like \#
-          .replace(reComments_RE, function (match, prevChar) {
+          .replace(reCommentsRE, function (match, prevChar) {
             if (prevChar === '\\') {
               return match;
             } else {
@@ -597,7 +597,7 @@ YamlDoc.prototype = {
           })
           // remove all whitespace from the expression, all meaningful
           // whitespace is represented with \s
-          .replace(reWhitespace_RE, '');
+          .replace(reWhitespaceRE, '');
 
         var startsWithSlash = maybeRE[0] === '/';
         var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';

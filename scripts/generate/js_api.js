@@ -171,7 +171,7 @@ module.exports = function (branch, done) {
     );
   }
 
-  function __puke__transformSpec(spec) {
+  function __puke__transformSpec(spec) { // eslint-disable-line
     var actions = [];
 
     // itterate all of the specs within the file, should only be one

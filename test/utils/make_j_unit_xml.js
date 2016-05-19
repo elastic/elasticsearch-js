@@ -41,7 +41,7 @@ function makeJUnitXml(runnerName, testDetails) {
       timestamp: moment(suiteInfo.start).toJSON(),
       hostname: 'localhost',
       tests: (suiteInfo.results && suiteInfo.results.length) || 0,
-      failures: _.where(suiteInfo.results, {pass: false}).length,
+      failures: _.where(suiteInfo.results, { pass: false }).length,
       errors: 0,
       time: suiteInfo.time / 1000
     });
@@ -89,7 +89,7 @@ function makeJUnitXml(runnerName, testDetails) {
     giveOutput(suite, suiteInfo);
   });
 
-  return suites.toString({ pretty: true});
+  return suites.toString({ pretty: true });
 }
 
 function giveOutput(el, info) {

@@ -1,6 +1,6 @@
 var _ = require('lodash-migrate');
-var package = require('../package.json');
-var branches = package.config.supported_es_branches;
+var pkg = require('../package.json');
+var branches = pkg.config.supported_es_branches;
 var semver = require('semver');
 
 var maxMinorVersion = function (majorV) {

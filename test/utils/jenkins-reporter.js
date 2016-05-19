@@ -22,7 +22,7 @@ var log = (function () {
     }
     locked(str);
   };
-})();
+}());
 
 var integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
 var unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
@@ -86,7 +86,7 @@ function JenkinsReporter(runner) {
     stack.shift();
   });
 
-  runner.on('fail', function (test, err) {
+  runner.on('fail', function (test) {
     if ('hook' === test.type) {
       runner.emit('test end', test);
     }

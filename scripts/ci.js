@@ -23,7 +23,7 @@ var through2 = require('through2');
 var map = require('through2-map');
 var split = require('split');
 var join = require('path').join;
-var child_process = require('child_process');
+var cp = require('child_process');
 var chalk = require('chalk');
 var format = require('util').format;
 
@@ -59,10 +59,10 @@ task('SAUCE_LABS', false, function () {
   return new Promise(function (resolve, reject) {
     // build the clients and start the server, once the server is ready call trySaucelabs()
     var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
-    spawn(GRUNT, serverTasks, function (cp) {
+    spawn(GRUNT, serverTasks, function (proc) {
       var toLines = split();
 
-      cp.stdout
+      proc.stdout
       .pipe(toLines)
       .pipe(through2(function (line, enc, cb) {
         cb();
@@ -71,11 +71,11 @@ task('SAUCE_LABS', false, function () {
 
 
         trySaucelabs()
-        .finally(function () { cp && cp.kill(); })
+        .finally(function () { if (proc) proc.kill(); })
         .then(resolve, reject);
 
-        cp.on('exit', function () { cp = null; });
-        cp.stdout.unpipe(toLines);
+        proc.on('exit', function () { proc = null; });
+        proc.stdout.unpipe(toLines);
         toLines.end();
       }));
     })
@@ -132,25 +132,30 @@ task('CHECK_COVERAGE', false, function () {
 execTask('SETUP', function () {
   return Promise.try(function readVersion() {
     if (!ENV.ES_V) {
-      if (ENV.ES_RELEASE)
+      if (ENV.ES_RELEASE) {
         return ['v' + ENV.ES_RELEASE, ENV.ES_RELEASE];
+      }
 
-      if (ENV.ES_REF)
+      if (ENV.ES_REF) {
         return [ENV.ES_REF, null];
+      }
     }
 
     var match;
-    if (match = ENV.ES_V.match(/^(.*)_nightly$/))
+    if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
       return [match[1], null];
+    }
 
-    if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V))
+    if (/^(?:1\.\d+|0\.90)\..*$/.test(ENV.ES_V)) {
       return ['v' + ENV.ES_V, ENV.ES_V];
+    }
 
     throw new Error('unable to parse ES_V ' + ENV.ES_V);
   })
   .then(function readOtherConf(ver) {
-    if (!ver)
+    if (!ver) {
       throw new Error('Unable to run the ci script without at least an ES_REF or ES_RELEASE environment var.');
+    }
 
     log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
     log('ES_HOST:', ENV.ES_HOST = ENV.ES_HOST || 'localhost');
@@ -162,8 +167,9 @@ execTask('SETUP', function () {
     else delete ENV.ES_RELEASE;
   })
   .then(function readTasks() {
-    if (!ENV.RUN)
+    if (!ENV.RUN) {
       return _.where(TASKS, { default: true });
+    }
 
     return ENV.RUN
     .split(',')
@@ -196,7 +202,7 @@ execTask('SETUP', function () {
   });
 });
 
-/******
+/** ****
  * utils
  ******/
 function log() {
@@ -275,25 +281,25 @@ function execTask(name, task) {
 
 function spawn(file, args, block) {
   return new Promise(function (resolve, reject) {
-    var cp = child_process.spawn(file, args, {
+    var proc = cp.spawn(file, args, {
       cwd: ROOT,
       env: ENV,
       stdio: [0, 'pipe', 'pipe']
     });
 
-    cp.stdout.pipe(taskOut, { end: false });
-    cp.stderr.pipe(taskOut, { end: false });
+    proc.stdout.pipe(taskOut, { end: false });
+    proc.stderr.pipe(taskOut, { end: false });
 
     var stdout = '';
-    cp.stdout
+    proc.stdout
     .pipe(through2(function (chunk, enc, cb) {
       stdout += chunk;
       cb();
     }));
 
-    block && block(cp);
+    if (block) block(proc);
 
-    cp.on('exit', function (code) {
+    proc.on('exit', function (code) {
       if (code > 0) {
         reject(new Error('non-zero exit code: ' + code));
       } else {
@@ -301,13 +307,13 @@ function spawn(file, args, block) {
       }
     });
 
-    cp.on('error', function (origErr) {
+    proc.on('error', function (origErr) {
       reject(new Error('Unable to execute "' + file + ' ' + args.join(' ') + '": ' + origErr.message));
     });
   });
 }
 
-function node(/*args... */) {
+function node(/* args... */) {
   return spawn(
     process.execPath,
     _.toArray(arguments)

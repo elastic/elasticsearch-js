@@ -1,6 +1,5 @@
 var ConnectionPool = require('../../../src/lib/connection_pool');
 var Host = require('../../../src/lib/host');
-var errors = require('../../../src/lib/errors');
 var ConnectionAbstract = require('../../../src/lib/connection');
 var _ = require('lodash-migrate');
 var EventEmitter = require('events').EventEmitter;
@@ -121,7 +120,7 @@ describe('Connection Pool', function () {
     });
 
     it('detects if the selector is not async', function (done) {
-      pool.selector = function (list) {
+      pool.selector = function () {
         expect(arguments.length).to.be(1);
       };
 
@@ -149,11 +148,11 @@ describe('Connection Pool', function () {
     });
 
     it('should catch errors in sync selectors', function (done) {
-      pool.selector = function (list) {
+      pool.selector = function () {
         return JSON.notAMethod();
       };
 
-      pool.select(function (err, selection) {
+      pool.select(function (err) {
         expect(err).be.an(Error);
         done();
       });
@@ -297,7 +296,8 @@ describe('Connection Pool', function () {
       var result = pool.getConnections();
       expect(result.length).to.be(1000);
       expect(_.reduce(result, function (sum, num) {
-        return sum += num;
+        sum += num
+        return sum;
       }, 0)).to.eql(499500);
     });
   });

@@ -324,7 +324,7 @@ describe('Http Connector', function () {
       zlib.gzip(body, function (err, compressedBody) {
         server
           .get('/users/1')
-          .reply(200, compressedBody, {'Content-Encoding': 'gzip'});
+          .reply(200, compressedBody, { 'Content-Encoding': 'gzip' });
 
         con.request({
           method: 'GET',
@@ -350,7 +350,7 @@ describe('Http Connector', function () {
       zlib.deflate(body, function (err, compressedBody) {
         server
           .get('/users/1')
-          .reply(200, compressedBody, {'Content-Encoding': 'deflate'});
+          .reply(200, compressedBody, { 'Content-Encoding': 'deflate' });
 
         con.request({
           method: 'GET',
@@ -371,7 +371,7 @@ describe('Http Connector', function () {
       var body = 'blah';
       server
         .get('/users/1')
-        .reply(200, body, {'Content-Encoding': 'gzip'});
+        .reply(200, body, { 'Content-Encoding': 'gzip' });
 
       con.request({
         method: 'GET',

@@ -55,7 +55,8 @@ module.exports = {
 
     function doCreateClient(options, cb) {
       if (typeof options === 'function') {
-        cb = options, options = {};
+        cb = options;
+        options = {};
       }
 
       var logConfig = {};

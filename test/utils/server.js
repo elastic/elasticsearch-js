@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 var express = require('express');
 var http = require('http');
 var fs = require('fs');
@@ -31,6 +32,8 @@ testFiles.build = fs.readdirSync(browserBuildsDir)
     if (file.substr(-3) === '.js') {
       return browserBuildsDir + '/' + file;
     }
+
+    return null
   })
   .filter(Boolean);
 
@@ -73,7 +76,7 @@ function bundleTests(name) {
 
 // create a route that just rends a specific file (like a symlink or something)
 function sendFile(file) {
-  return function (req, res, next) {
+  return function (req, res) {
     res.sendfile(file);
   };
 }

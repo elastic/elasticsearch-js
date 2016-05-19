@@ -1,4 +1,4 @@
-/*jshint curly: false */
+/* jshint curly: false */
 var async = require('async');
 var fs = require('fs');
 var spawn = require('../_spawn');
@@ -206,7 +206,7 @@ function createArchive(branch) {
       spawnStep('mkdir', [dir], paths.root),
       spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, specPathInRepo], paths.esSrc),
       spawnStep('tar', ['-x', '-f', tarball, '-C', dir, '--strip-components', subDirCount]),
-      spawnStep('rm',  [tarball])
+      spawnStep('rm', [tarball])
     ], done);
   };
 }

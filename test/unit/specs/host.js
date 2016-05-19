@@ -32,7 +32,7 @@ describe('Host class', function () {
     });
 
     it('accepts a string for query', function () {
-      var host = new Host({ query: 'beep=boop'});
+      var host = new Host({ query: 'beep=boop' });
 
       expect(host.query).to.eql({
         beep: 'boop'
@@ -157,14 +157,14 @@ describe('Host class', function () {
       var host = new Host();
       host.path = 'prefix';
 
-      expect(host.makeUrl({ path: '/this and that'}))
+      expect(host.makeUrl({ path: '/this and that' }))
         .to.be('http://localhost:9200/prefix/this and that');
     });
 
     it('does not try to prevent double forward-slashes', function () {
       var host = new Host({ path: 'prefix/' });
 
-      expect(host.makeUrl({ path: '/this and that'}))
+      expect(host.makeUrl({ path: '/this and that' }))
         .to.be('http://localhost:9200/prefix//this and that');
     });
 
@@ -175,7 +175,7 @@ describe('Host class', function () {
       host = new Host({ host: 'john', port: 80 });
       expect(host.makeUrl()).to.be('http://john/');
 
-      host = new Host({ host: 'italy', path: '/pie', auth: 'user:pass'});
+      host = new Host({ host: 'italy', path: '/pie', auth: 'user:pass' });
       expect(host.makeUrl()).to.be('http://italy:9200/pie');
     });
 
