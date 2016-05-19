@@ -4,6 +4,7 @@ module.exports = function (branch, done) {
    * @type {[type]}
    */
   var _ = require('../../src/lib/utils');
+  var _v4 = require('lodash-migrate/lodash');
   var utils = require('../../grunt/utils');
   var fs = require('fs');
   var async = require('async');
@@ -174,8 +175,8 @@ module.exports = function (branch, done) {
     var actions = [];
 
     // itterate all of the specs within the file, should only be one
-    _.each(spec, function (def, name) {
-      //camelcase the name
+    _v4.each(spec, function (def, name) {
+      // camelcase the name
       name = _.map(name.split('.'), _.camelCase).join('.');
 
       if (name === 'cat.aliases') {
@@ -218,7 +219,7 @@ module.exports = function (branch, done) {
 
       var urls = _.difference(def.url.paths, overrides.aliases[name]);
       var urlSignatures = [];
-      urls = _.map(urls, function (url) {
+      urls = _v4.map(urls, function (url) {
         var optionalVars = {};
         var requiredVars = {};
         var param;
@@ -239,7 +240,7 @@ module.exports = function (branch, done) {
 
         urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
 
-        return _.omit({
+        return _v4.omitBy({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + _.camelCase(match) + '%>';
           }),

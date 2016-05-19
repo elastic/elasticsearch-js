@@ -8,7 +8,7 @@ NOTE: At this time, you must opt into the <%= branch %> API by setting the `apiV
 <% }
 
 actions = _.sortBy(actions, 'namespace');
-_.each(actions, function (action) {
+_v4.each(actions, function (action) {
   action.index = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-') + branchSuffix;
 
 %>
@@ -31,12 +31,12 @@ The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-c
 *Params*
 
 [horizontal]<%
-_.each(action.allParams, function (param, paramName) { %>
+_v4.each(action.allParams, function (param, paramName) { %>
 `<%= paramWithDefault(paramName, param.default) %>`::
 `<%= paramType(param.type) %>` -- <%= joinParagraphs(param.description || '', 4) %><%
 if (param.type === 'enum') {%>
 Options:::<%
-_.each(param.options, function (opt) {%>
+_v4.each(param.options, function (opt) {%>
  * `"<%= opt %>"`<%
 });%>
 <%

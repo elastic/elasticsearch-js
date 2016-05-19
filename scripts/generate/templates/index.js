@@ -1,5 +1,6 @@
 
 var _ = require('../../../src/lib/utils');
+var _v4 = require('lodash-migrate/lodash');
 var utils = require('../../../grunt/utils');
 var fs = require('fs');
 var path = require('path');
@@ -42,6 +43,7 @@ var templateGlobals = {
   stringify: stringify,
 
   _: _,
+  _v4: _v4,
 
   indent: function (block, spaces) {
     var indent = _.repeat(' ', spaces);
