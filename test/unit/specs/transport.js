@@ -5,6 +5,7 @@ var errors = require('../../../src/lib/errors');
 var sinon = require('sinon');
 var expect = require('expect.js');
 var _ = require('lodash-migrate');
+var _v4 = require('lodash-migrate/lodash');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 
@@ -632,7 +633,7 @@ describe('Transport Class', function () {
           });
         };
       }
-      it('retries when there are retries remaining', testRetries(_.random(25, 40)));
+      it('retries when there are retries remaining', testRetries(_v4.random(25, 40)));
       it('responds when there are no retries', testRetries(0));
     });
 

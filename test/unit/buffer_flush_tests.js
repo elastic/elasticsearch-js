@@ -4,6 +4,7 @@ module.exports = function (makeLogger) {
   var fs = require('fs');
   var once = require('events').EventEmitter.prototype.once;
   var _ = require('lodash-migrate');
+  var _v4 = require('lodash-migrate/lodash');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
@@ -21,7 +22,7 @@ module.exports = function (makeLogger) {
         var logger = makeLogger();
 
         // write the line 10 times
-        _.times(10, function () {
+        _v4.times(10, function () {
           logger.onDebug(line);
         });
 

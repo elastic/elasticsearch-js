@@ -349,7 +349,7 @@ describe('Utils', function () {
   });
 
   describe('#applyArgs', function () {
-    _.times(10, function (i) {
+    _v4.times(10, function (i) {
       var method = i > 5 ? 'apply' : 'call';
       var argCount = i + 1;
       var slice = 1;

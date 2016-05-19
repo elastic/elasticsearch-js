@@ -5,6 +5,7 @@ describe('Stream Logger', function () {
   var once = require('events').EventEmitter.prototype.once;
   var stream = new MockWritableStream();
   var _ = require('../../../src/lib/utils');
+  var _v4 = require('lodash-migrate/lodash');
   var expect = require('expect.js');
   var parentLog;
 
@@ -47,7 +48,7 @@ describe('Stream Logger', function () {
         stream.write.restore();
 
         // write the line 10 times
-        _.times(10, function () {
+        _v4.times(10, function () {
           logger.onDebug(line);
         });
 

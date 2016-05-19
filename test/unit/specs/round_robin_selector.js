@@ -1,6 +1,7 @@
 describe('Round Robin Selector', function () {
   var selector = require('../../../src/lib/selectors/round_robin');
   var _ = require('lodash-migrate');
+  var _v4 = require('lodash-migrate/lodash');
   var expect = require('expect.js');
 
   it('chooses options in order', function () {
@@ -8,7 +9,7 @@ describe('Round Robin Selector', function () {
     var expected = _.clone(options);
     var selections = [];
 
-    _.times(options.length, function () {
+    _v4.times(options.length, function () {
       selections.push(selector(options));
     });
 
