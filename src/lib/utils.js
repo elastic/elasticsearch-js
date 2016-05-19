@@ -1,5 +1,5 @@
 var path = require('path');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var nodeUtils = require('util');
 
 /**

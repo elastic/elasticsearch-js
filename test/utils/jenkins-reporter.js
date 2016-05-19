@@ -7,7 +7,7 @@
 module.exports = JenkinsReporter;
 
 var Base = require('mocha/lib/reporters/base');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var chalk = require('chalk');
 var makeJUnitXml = require('./make_j_unit_xml');
 var fs = require('fs');

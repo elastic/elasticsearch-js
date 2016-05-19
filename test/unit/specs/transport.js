@@ -5,7 +5,7 @@ var Promise = require('bluebird');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 

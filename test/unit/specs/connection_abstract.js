@@ -2,7 +2,7 @@ var ConnectionAbstract = require('../../../src/lib/connection');
 var Host = require('../../../src/lib/host');
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var errors = require('../../../src/lib/errors');
 
 var stub = require('../../utils/auto_release_stub').make();

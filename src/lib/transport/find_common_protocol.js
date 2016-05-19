@@ -1,4 +1,4 @@
-var isEmpty = require('lodash').isEmpty;
+var isEmpty = require('lodash-migrate').isEmpty;
 
 module.exports = function (hosts) {
   if (isEmpty(hosts)) return false;

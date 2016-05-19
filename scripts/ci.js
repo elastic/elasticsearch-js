@@ -18,7 +18,7 @@
  *******/
 
 var Promise = require('bluebird');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var through2 = require('through2');
 var map = require('through2-map');
 var split = require('split');

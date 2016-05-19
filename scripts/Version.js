@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var package = require('../package.json');
 var branches = package.config.supported_es_branches;
 var semver = require('semver');

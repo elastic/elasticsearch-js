@@ -27,7 +27,7 @@
 
 module.exports = MockHttpRequest;
 
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 
 function MockHttpRequest() {
   // These are internal flags and data structures

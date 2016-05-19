@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var utils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 

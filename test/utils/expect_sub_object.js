@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var expect = require('expect.js');
 module.exports = function expectSubObject(obj, subObj) {
   _.forOwn(subObj, function (val, prop) {

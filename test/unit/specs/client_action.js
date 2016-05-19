@@ -1,7 +1,7 @@
 var ca = require('../../../src/lib/client_action').factory;
 var proxy = require('../../../src/lib/client_action').proxyFactory;
 var expect = require('expect.js');
-var _ = require('lodash');
+var _ = require('lodash-migrate');
 var Promise = require('bluebird');
 
 /**
