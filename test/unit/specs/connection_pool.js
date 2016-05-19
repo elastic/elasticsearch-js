@@ -1,7 +1,7 @@
 var ConnectionPool = require('../../../src/lib/connection_pool');
 var Host = require('../../../src/lib/host');
 var ConnectionAbstract = require('../../../src/lib/connection');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var expect = require('expect.js');
 var sinon = require('sinon');
@@ -36,10 +36,10 @@ describe('Connection Pool', function () {
     });
 
     it('#addConnection only adds the connection if it doesn\'t already exist', function () {
-      expect(_.keys(pool.index).length).to.eql(0);
+      expect(_v4.keys(pool.index).length).to.eql(0);
       pool.addConnection(connection);
 
-      expect(_.keys(pool.index)).to.eql([host.toString()]);
+      expect(_v4.keys(pool.index)).to.eql([host.toString()]);
 
       expect(pool._conns.alive).to.eql([connection]);
       expect(pool._conns.dead).to.eql([]);
@@ -52,7 +52,7 @@ describe('Connection Pool', function () {
 
         expect(pool._conns.alive).to.eql([connection]);
         expect(pool._conns.dead).to.eql([]);
-        expect(_.keys(pool.index).length).to.eql(1);
+        expect(_v4.keys(pool.index).length).to.eql(1);
       });
 
       it('closes the connection when it removes it', function () {
@@ -247,13 +247,13 @@ describe('Connection Pool', function () {
       stub.autoRelease(clock);
 
       connection.setStatus('dead');
-      expect(_.size(clock.timers)).to.eql(1);
-      var id = _(clock.timers).keys().first();
+      expect(_v4.size(clock.timers)).to.eql(1);
+      var id = _v4(clock.timers).keys().first();
 
       // it re-dies
       connection.setStatus('dead');
-      expect(_.size(clock.timers)).to.eql(1);
-      expect(_(clock.timers).keys().first()).to.not.eql(id);
+      expect(_v4.size(clock.timers)).to.eql(1);
+      expect(_v4(clock.timers).keys().first()).to.not.eql(id);
     });
 
     it('does nothing when a connection is re-alive', function () {
@@ -295,7 +295,7 @@ describe('Connection Pool', function () {
 
       var result = pool.getConnections();
       expect(result.length).to.be(1000);
-      expect(_.reduce(result, function (sum, num) {
+      expect(_v4.reduce(result, function (sum, num) {
         sum += num
         return sum;
       }, 0)).to.eql(499500);

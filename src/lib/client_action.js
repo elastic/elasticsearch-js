@@ -1,5 +1,5 @@
 
-var _ = require('./utils');
+// var _ = require('./utils');
 
 /**
  * Constructs a client action factory that uses specific defaults
@@ -34,12 +34,12 @@ exports.namespaceFactory = function () {
 };
 
 function makeFactoryWithModifier(modifier) {
-  modifier = modifier || _.identity;
+  modifier = modifier || _v4.identity;
 
   var factory = function (spec) {
     spec = modifier(spec);
 
-    if (!_.isPlainObject(spec.params)) {
+    if (!_v4.isPlainObject(spec.params)) {
       spec.params = {};
     }
 
@@ -60,7 +60,7 @@ function makeFactoryWithModifier(modifier) {
         return exec(this.transport, spec, _v4.clone(params), cb);
       } catch (e) {
         if (typeof cb === 'function') {
-          _.nextTick(cb, e);
+          _v4.nextTick(cb, e);
         } else {
           var def = this.transport.defer();
           def.reject(e);
@@ -97,11 +97,11 @@ function makeFactoryWithModifier(modifier) {
 
 var castType = {
   'enum': function validSelection(param, val, name) {
-    if (_.isString(val) && val.indexOf(',') > -1) {
+    if (_v4.isString(val) && val.indexOf(',') > -1) {
       val = commaSepList(val);
     }
 
-    if (_.isArray(val)) {
+    if (_v4.isArray(val)) {
       return val.map(function (v) {
         return validSelection(param, v, name);
       }).join(',');
@@ -119,7 +119,7 @@ var castType = {
     ));
   },
   duration: function (param, val, name) {
-    if (_.isNumeric(val) || _.isInterval(val)) {
+    if (_v4.isNumeric(val) || _v4.isInterval(val)) {
       return val;
     } else {
       throw new TypeError(
@@ -137,7 +137,7 @@ var castType = {
         val = commaSepList(val);
       /* falls through */
       case 'object':
-        if (_.isArray(val)) {
+        if (_v4.isArray(val)) {
           return val.join(',');
         }
       /* falls through */
@@ -146,11 +146,11 @@ var castType = {
     }
   },
   'boolean': function (param, val) {
-    val = _.isString(val) ? val.toLowerCase() : val;
+    val = _v4.isString(val) ? val.toLowerCase() : val;
     return (val === 'no' || val === 'off') ? false : !!val;
   },
   number: function (param, val, name) {
-    if (_.isNumeric(val)) {
+    if (_v4.isNumeric(val)) {
       return val * 1;
     } else {
       throw new TypeError('Invalid ' + name + ': expected a number.');
@@ -169,7 +169,7 @@ var castType = {
     if (typeof val === 'string') {
       return val;
     }
-    else if (_.isNumeric(val)) {
+    else if (_v4.isNumeric(val)) {
       return '' + val;
     }
     else if (val instanceof Date) {
@@ -188,7 +188,7 @@ function resolveUrl(url, params) {
     // url has required params
     if (!url.reqParamKeys) {
       // create cached key list on demand
-      url.reqParamKeys = _.keys(url.req);
+      url.reqParamKeys = _v4.keys(url.req);
     }
 
     for (i = 0; i < url.reqParamKeys.length; i ++) {
@@ -210,7 +210,7 @@ function resolveUrl(url, params) {
   if (url.opt) {
     // url has optional params
     if (!url.optParamKeys) {
-      url.optParamKeys = _.keys(url.opt);
+      url.optParamKeys = _v4.keys(url.opt);
     }
 
     for (i = 0; i < url.optParamKeys.length; i ++) {
@@ -229,10 +229,10 @@ function resolveUrl(url, params) {
 
   if (!url.template) {
     // compile the template on demand
-    url.template = _.template(url.fmt);
+    url.template = _v4.template(url.fmt);
   }
 
-  return url.template(_.transform(vars, function (note, val, name) {
+  return url.template(_v4.transform(vars, function (note, val, name) {
     // encode each value
     note[name] = encodeURIComponent(val);
     // remove it from the params so that it isn't sent to the final request
@@ -287,14 +287,14 @@ function exec(transport, spec, params, cb) {
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
     var minUrl = spec.url || spec.urls[spec.urls.length - 1];
-    throw new TypeError('Unable to build a path with those params. Supply at least ' + _.keys(minUrl.req).join(', '));
+    throw new TypeError('Unable to build a path with those params. Supply at least ' + _v4.keys(minUrl.req).join(', '));
   }
 
   // build the query string
   if (!spec.paramKeys) {
     // build a key list on demand
-    spec.paramKeys = _.keys(spec.params);
-    spec.requireParamKeys = _.transform(spec.params, function (req, param, key) {
+    spec.paramKeys = _v4.keys(spec.params);
+    spec.requireParamKeys = _v4.transform(spec.params, function (req, param, key) {
       if (param.required) {
         req.push(key);
       }
@@ -311,10 +311,10 @@ function exec(transport, spec, params, cb) {
           request[key] = params[key];
           break;
         case 'ignore':
-          request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
+          request.ignore = _v4.isArray(params[key]) ? params[key] : [params[key]];
           break;
         case 'method':
-          request.method = _.toUpperString(params[key]);
+          request.method = _v4.toUpperString(params[key]);
           break;
         default:
           var paramSpec = spec.params[key];

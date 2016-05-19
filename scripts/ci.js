@@ -18,7 +18,7 @@
  *******/
 
 var Promise = require('bluebird');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var through2 = require('through2');
 var map = require('through2-map');
 var split = require('split');
@@ -80,7 +80,7 @@ task('SAUCE_LABS', false, function () {
       }));
     })
     // ignore server errors
-    .catch(_.noop);
+    .catch(_v4.noop);
 
     // attempt to run tests on saucelabs and retry if it fails
     var saucelabsAttempts = 0;
@@ -116,7 +116,7 @@ task('SAUCE_LABS', false, function () {
           });
         })
         // swallow spawn() errors, custom error handler in place
-        .catch(_.noop);
+        .catch(_v4.noop);
       });
     }
   });
@@ -168,7 +168,7 @@ execTask('SETUP', function () {
   })
   .then(function readTasks() {
     if (!ENV.RUN) {
-      return _.where(TASKS, { default: true });
+      return _v4.filter(TASKS, { default: true });
     }
 
     return ENV.RUN
@@ -218,7 +218,7 @@ function logImportant(text) {
 
 function push(m) {
   return function () {
-    var args = _.toArray(arguments);
+    var args = _v4.toArray(arguments);
     var cb = args.pop();
     this.push(m.apply(this, args));
     cb();
@@ -235,7 +235,7 @@ function indent() {
 }
 
 function task(name, def, fn) {
-  if (_.isFunction(def)) {
+  if (_v4.isFunction(def)) {
     fn = def;
     def = true;
   }
@@ -248,7 +248,7 @@ function task(name, def, fn) {
 }
 
 function execTask(name, task) {
-  if (_.isObject(name)) {
+  if (_v4.isObject(name)) {
     task = name.fn;
     name = name.name;
   }
@@ -316,13 +316,13 @@ function spawn(file, args, block) {
 function node(/* args... */) {
   return spawn(
     process.execPath,
-    _.toArray(arguments)
+    _v4.toArray(arguments)
   );
 }
 
 function grunt(/* args... */) {
   return spawn(
     GRUNT,
-    _.toArray(arguments)
+    _v4.toArray(arguments)
   );
 }

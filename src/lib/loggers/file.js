@@ -12,7 +12,7 @@
 module.exports = File;
 
 var StreamLogger = require('./stream');
-var _ = require('../utils');
+// var _ = require('../utils');
 var fs = require('fs');
 
 function File(log, config) {
@@ -29,10 +29,10 @@ function File(log, config) {
 
   StreamLogger.call(this, log, config);
 }
-_.inherits(File, StreamLogger);
+_v4.inherits(File, StreamLogger);
 
-File.prototype.onProcessExit = _.handler(function () {
-  var toWrite = _.getUnwrittenFromStream(this.stream);
+File.prototype.onProcessExit = _v4.handler(function () {
+  var toWrite = _v4.getUnwrittenFromStream(this.stream);
   if (toWrite) {
     fs.appendFileSync(this.path, toWrite);
   }

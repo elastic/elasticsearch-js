@@ -6,7 +6,7 @@ module.exports = Host;
 
 var url = require('url');
 var qs = require('querystring');
-var _ = require('./utils');
+// var _ = require('./utils');
 
 var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 var defaultProto = 'http:';
@@ -58,7 +58,7 @@ function Host(config, globalConfig) {
   this.headers = null;
   this.suggestCompression = !!globalConfig.suggestCompression;
 
-  this.ssl = _.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
+  this.ssl = _v4.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
 
   if (typeof config === 'string') {
     var firstColon = config.indexOf(':');
@@ -69,7 +69,7 @@ function Host(config, globalConfig) {
     if ((noSlash || portNoPath || portWithPath) && !startsWithProtocolRE.test(config)) {
       config = defaultProto + '//' + config;
     }
-    config = _.pick(url.parse(config, false, true), urlParseFields);
+    config = _v4.pick(url.parse(config, false, true), urlParseFields);
     // default logic for the port is to use 9200 for the default. When a string is specified though,
     // we will use the default from the protocol of the string.
     if (!config.port) {
@@ -83,7 +83,7 @@ function Host(config, globalConfig) {
     }
   }
 
-  if (_.isObject(config)) {
+  if (_v4.isObject(config)) {
     // move hostname/portname to host/port semi-intelligently.
     _v4.each(simplify, function (to) {
       var from = to + 'name';
@@ -106,20 +106,20 @@ function Host(config, globalConfig) {
     delete config.auth;
   }
 
-  _.forOwn(config, function (val, prop) {
+  _v4.forOwn(config, _v4.bind(function (val, prop) {
     if (val != null) this[prop] = _v4.clone(val);
-  }, this);
+  }, this));
 
   // make sure the query string is parsed
   if (this.query === null) {
     // majority case
     this.query = {};
-  } else if (!_.isPlainObject(this.query)) {
+  } else if (!_v4.isPlainObject(this.query)) {
     this.query = qs.parse(this.query);
   }
 
   // make sure that the port is a number
-  if (_.isNumeric(this.port)) {
+  if (_v4.isNumeric(this.port)) {
     this.port = parseInt(this.port, 10);
   } else {
     this.port = 9200;
@@ -177,10 +177,10 @@ function objectPropertyGetter(prop, preOverride) {
     }
 
     if (overrides) {
-      obj = _.assign({}, obj, overrides);
+      obj = _v4.assign({}, obj, overrides);
     }
 
-    return _.size(obj) ? obj : null;
+    return _v4.size(obj) ? obj : null;
   };
 }
 
@@ -189,7 +189,7 @@ Host.prototype.getHeaders = objectPropertyGetter('headers', function (overrides)
     return overrides;
   }
 
-  return _.defaults(overrides || {}, {
+  return _v4.defaults(overrides || {}, {
     'Accept-Encoding': 'gzip,deflate'
   });
 });

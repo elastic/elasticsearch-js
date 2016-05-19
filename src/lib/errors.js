@@ -1,4 +1,4 @@
-var _ = require('./utils');
+// var _ = require('./utils');
 var qs = require('querystring');
 var errors = module.exports;
 
@@ -21,21 +21,21 @@ function ErrorAbstract(msg, constructor, metadata) {
   }
 
   if (metadata) {
-    _.assign(this, metadata);
+    _v4.assign(this, metadata);
 
     this.toString = function () {
       return msg + ' :: ' + JSON.stringify(metadata);
     };
 
     this.toJSON = function () {
-      return _.assign({
+      return _v4.assign({
         msg: msg
       }, metadata);
     };
   }
 }
 errors._Abstract = ErrorAbstract;
-_.inherits(ErrorAbstract, Error);
+_v4.inherits(ErrorAbstract, Error);
 
 /**
  * Connection Error
@@ -44,7 +44,7 @@ _.inherits(ErrorAbstract, Error);
 errors.ConnectionFault = function ConnectionFault(msg) {
   ErrorAbstract.call(this, msg || 'Connection Failure', errors.ConnectionFault);
 };
-_.inherits(errors.ConnectionFault, ErrorAbstract);
+_v4.inherits(errors.ConnectionFault, ErrorAbstract);
 
 /**
  * No Living Connections
@@ -53,7 +53,7 @@ _.inherits(errors.ConnectionFault, ErrorAbstract);
 errors.NoConnections = function NoConnections(msg) {
   ErrorAbstract.call(this, msg || 'No Living connections', errors.NoConnections);
 };
-_.inherits(errors.NoConnections, ErrorAbstract);
+_v4.inherits(errors.NoConnections, ErrorAbstract);
 
 /**
  * Generic Error
@@ -62,7 +62,7 @@ _.inherits(errors.NoConnections, ErrorAbstract);
 errors.Generic = function Generic(msg, metadata) {
   ErrorAbstract.call(this, msg || 'Generic Error', errors.Generic, metadata);
 };
-_.inherits(errors.Generic, ErrorAbstract);
+_v4.inherits(errors.Generic, ErrorAbstract);
 
 /**
  * Request Timeout Error
@@ -71,7 +71,7 @@ _.inherits(errors.Generic, ErrorAbstract);
 errors.RequestTimeout = function RequestTimeout(msg) {
   ErrorAbstract.call(this, msg || 'Request Timeout', errors.RequestTimeout);
 };
-_.inherits(errors.RequestTimeout, ErrorAbstract);
+_v4.inherits(errors.RequestTimeout, ErrorAbstract);
 
 
 /**
@@ -81,7 +81,7 @@ _.inherits(errors.RequestTimeout, ErrorAbstract);
 errors.Serialization = function Serialization(msg) {
   ErrorAbstract.call(this, msg || 'Unable to parse/serialize body', errors.Serialization);
 };
-_.inherits(errors.Serialization, ErrorAbstract);
+_v4.inherits(errors.Serialization, ErrorAbstract);
 
 
 /**
@@ -90,7 +90,7 @@ _.inherits(errors.Serialization, ErrorAbstract);
 errors.RequestTypeError = function RequestTypeError(feature) {
   ErrorAbstract.call(this, 'Cross-domain AJAX requests ' + feature + ' are not supported', errors.RequestTypeError);
 };
-_.inherits(errors.RequestTypeError, ErrorAbstract);
+_v4.inherits(errors.RequestTypeError, ErrorAbstract);
 
 var statusCodes = [
   [300, 'Multiple Choices'],
@@ -142,15 +142,15 @@ _v4.each(statusCodes, function createStatusCodeError(tuple) {
   var names = tuple[1];
   var allNames = [].concat(names, status);
   var primaryName = allNames[0];
-  var className = _.studlyCase(primaryName);
-  allNames = _.uniq(allNames.concat(className));
+  var className = _v4.studlyCase(primaryName);
+  allNames = _v4.uniq(allNames.concat(className));
 
   function StatusCodeError(msg, metadata) {
     this.status = status;
     this.displayName = className;
 
     var esErrObject = null;
-    if (_.isPlainObject(msg)) {
+    if (_v4.isPlainObject(msg)) {
       esErrObject = msg;
       msg = null;
     }
@@ -168,8 +168,8 @@ _v4.each(statusCodes, function createStatusCodeError(tuple) {
 
       memo += '[' + cause.type + '] ' + cause.reason;
 
-      var extraData = _.omit(cause, ['type', 'reason']);
-      if (_.size(extraData)) {
+      var extraData = _v4.omit(cause, ['type', 'reason']);
+      if (_v4.size(extraData)) {
         memo += ', with { ' + qs.stringify(extraData, ' ', '=', {
           encodeURIComponent: function (v) {
             return String(v).split('\n').join('\\n');
@@ -188,7 +188,7 @@ _v4.each(statusCodes, function createStatusCodeError(tuple) {
     ErrorAbstract.call(this, msg || primaryName, StatusCodeError, metadata);
     return this;
   }
-  _.inherits(StatusCodeError, ErrorAbstract);
+  _v4.inherits(StatusCodeError, ErrorAbstract);
 
   allNames.forEach(function (name) {
     errors[name] = StatusCodeError;

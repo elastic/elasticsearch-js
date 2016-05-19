@@ -1,18 +1,18 @@
 describe('Random Selector', function () {
   var randomSelector = require('../../../src/lib/selectors/random');
-  var _ = require('lodash-migrate');
+  // var _ = require('lodash');
   var expect = require('expect.js');
 
   it('chooses a selection by random', function () {
     var log = { a: 0, b: 0, c: 0 };
-    var choices = _.keys(log);
+    var choices = _v4.keys(log);
 
     _v4.times(1000, function () {
       var choice = randomSelector(choices);
       log[choice]++;
     });
 
-    expect(_.filter(log, function (count) {
+    expect(_v4.filter(log, function (count) {
       return count < 200 || count > 400;
     })).to.have.length(0);
 

@@ -1,9 +1,9 @@
 module.exports = function (done) {
-  var _ = require('../../src/lib/utils');
+  // var _ = require('../../src/lib/utils');
   var utils = require('../../grunt/utils');
 
   var chalk = require('chalk');
-  var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
+  var fromRoot = _v4.partial(require('path').join, require('find-root')(__dirname));
   var write = require('fs').writeFileSync;
 
   var nodeApiIndex = fromRoot('src/lib/apis/index.js');

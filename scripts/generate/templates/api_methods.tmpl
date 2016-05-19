@@ -7,7 +7,7 @@ NOTE: This is currently the default API, but in upcoming versions that will chan
 NOTE: At this time, you must opt into the <%= branch %> API by setting the `apiVersion` config parameter.
 <% }
 
-actions = _.sortBy(actions, 'namespace');
+actions = _v4.sortBy(actions, 'namespace');
 _v4.each(actions, function (action) {
   action.index = 'api-' + action.name.toLowerCase().replace(/[^\w]+/g, '-') + branchSuffix;
 
@@ -27,7 +27,7 @@ The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-c
 
 <%= action.examples %>
 
-<% if (_.size(action.allParams)) { %>
+<% if (_v4.size(action.allParams)) { %>
 *Params*
 
 [horizontal]<%

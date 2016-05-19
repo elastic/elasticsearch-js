@@ -9,10 +9,10 @@ if (BROWSER) {
   es = require('../../../src/elasticsearch');
 }
 
-var _ = require('../../../src/lib/utils');
+// var _ = require('../../../src/lib/utils');
 var path = require('path');
 var fs = require('fs');
-var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
+var fromRoot = _v4.bindKey(path, 'join', require('find-root')(__dirname));
 var Bluebird = require('bluebird');
 
 // current client
@@ -60,7 +60,7 @@ module.exports = {
       }
 
       var logConfig = {};
-      if (_.has(options, 'logConfig')) {
+      if (_v4.has(options, 'logConfig')) {
         logConfig = options.logConfig;
       } else {
         if (BROWSER) {
@@ -106,14 +106,14 @@ module.exports = {
           client.snapshot.getRepository({
             snapshot: '_all'
           })
-          .then(_.keys)
+          .then(_v4.keys)
           .map(function (repo) {
             return client.snapshot.get({
               repository: repo,
               snapshot: '_all'
             })
             .then(function (resp) {
-              return _.map(resp.snapshots, 'snapshot');
+              return _v4.map(resp.snapshots, 'snapshot');
             }, function () {
               return [];
             })
@@ -132,7 +132,7 @@ module.exports = {
         ]);
       };
 
-      _.nextTick(cb);
+      _v4.nextTick(cb);
     }
   },
   get: function () {

@@ -1,5 +1,5 @@
 
-var _ = require('../../../src/lib/utils');
+// var _ = require('../../../src/lib/utils');
 var utils = require('../../../grunt/utils');
 var fs = require('fs');
 var path = require('path');
@@ -41,11 +41,10 @@ var templateGlobals = {
 
   stringify: stringify,
 
-  _: _,
   _v4: _v4,
 
   indent: function (block, spaces) {
-    var indent = _.repeat(' ', spaces);
+    var indent = _v4.repeat(' ', spaces);
     return block.split('\n').map(function (line) {
       return indent + line;
     }).join('\n');
@@ -78,7 +77,7 @@ var templateGlobals = {
       case 'list':
         return 'String, String[], Boolean';
       default:
-        return _.ucfirst(type);
+        return _v4.ucfirst(type);
     }
   },
 
@@ -98,7 +97,7 @@ var templateGlobals = {
 fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
   var name = filename.replace(/\..+$/, '');
   if (name !== 'index') {
-    templates[name] = _.template(
+    templates[name] = _v4.template(
       fs.readFileSync(path.resolve(__dirname, filename), 'utf8'),
       {
         imports: templateGlobals

@@ -12,7 +12,7 @@ api._namespaces = <%= stringify(namespaces) %>;<%
 _v4.each(actions, function (action) {
   var namespace = action.location.split('.').shift();
   if (_.includes(namespaces, namespace)) {
-    _.pull(namespaces, namespace);
+    _v4.pull(namespaces, namespace);
 %>
 
 api.<%= namespace %> = namespace();<%

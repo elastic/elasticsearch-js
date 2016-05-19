@@ -12,7 +12,7 @@ var handles = {
   http: require('http'),
   https: require('https')
 };
-var _ = require('../utils');
+// var _ = require('../utils');
 var qs = require('querystring');
 var KeepAliveAgent = require('./_keep_alive_agent');
 var ConnectionAbstract = require('../connection');
@@ -31,12 +31,12 @@ function HttpConnector(host, config) {
   this.hand = handles[this.host.protocol];
   if (!this.hand) {
     throw new TypeError('Invalid protocol "' + this.host.protocol +
-      '", expected one of ' + _.keys(handles).join(', '));
+      '", expected one of ' + _v4.keys(handles).join(', '));
   }
 
   this.useSsl = this.host.protocol === 'https';
 
-  config = _.defaults(config || {}, {
+  config = _v4.defaults(config || {}, {
     keepAlive: true,
     minSockets: 10,
     // 10 makes sense but 11 actually keeps 10 sockets around
@@ -46,9 +46,9 @@ function HttpConnector(host, config) {
 
   this.agent = config.createNodeAgent ? config.createNodeAgent(this, config) : this.createAgent(config);
 }
-_.inherits(HttpConnector, ConnectionAbstract);
+_v4.inherits(HttpConnector, ConnectionAbstract);
 
-HttpConnector.prototype.onStatusSet = _.handler(function (status) {
+HttpConnector.prototype.onStatusSet = _v4.handler(function (status) {
   if (status === 'closed') {
     var agent = this.agent;
     var toRemove = [];
@@ -102,7 +102,7 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
   };
 
   if (this.useSsl) {
-    _.merge(agentConfig, this.host.ssl);
+    _v4.merge(agentConfig, this.host.ssl);
   }
 
   return agentConfig;
@@ -147,7 +147,7 @@ HttpConnector.prototype.request = function (params, cb) {
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  var cleanUp = _.bind(function (err) {
+  var cleanUp = _v4.bind(function (err) {
     clearTimeout(timeoutId);
 
     request && request.removeAllListeners();

@@ -9,7 +9,7 @@
  */
 module.exports = YamlDoc;
 
-var _ = require('lodash-migrate/lodash');
+// var _ = require('lodash-migrate/lodash');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
@@ -70,8 +70,8 @@ function versionToComparableString(version, def) {
     return def;
   }
 
-  var parts = _.map(version.split('.'), function (part) {
-    part = '' + _.parseInt(part);
+  var parts = _v4.map(version.split('.'), function (part) {
+    part = '' + _v4.parseInt(part);
     return (new Array(Math.max(4 - part.length, 0))).join('0') + part;
   });
 
@@ -109,26 +109,26 @@ function YamlDoc(doc, file) {
   var self = this;
 
   self.file = file;
-  self.description = _.keys(doc).shift();
+  self.description = _v4.keys(doc).shift();
   self._stash = {};
   self._last_requests_response = null;
 
   // setup the actions, creating a bound and testable method for each
-  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action) {
+  self._actions = _v4.map(self.flattenTestActions(doc[self.description]), function (action) {
     // get the method that will do the action
     var method = self['do_' + action.name];
 
     // check that it's a function
     expect(method || 'YamlDoc#' + action.name).to.be.a('function');
 
-    if (_.isPlainObject(action.args)) {
+    if (_v4.isPlainObject(action.args)) {
       action.name += '(' + JSON.stringify(action.args) + ')';
     } else if (action.args) {
       action.name += '(' + action.args + ')';
     }
 
     // wrap in a check for skipping
-    action.bound = _.bind(method, self, action.args);
+    action.bound = _v4.bind(method, self, action.args);
 
     // create a function that can be passed to mocha or async
     action.testable = function (_cb) {
@@ -199,15 +199,15 @@ YamlDoc.prototype = {
   flattenTestActions: function (config) {
     // creates [ [ {name:"", args:"" }, ... ], ... ]
     // from [ {name:args, name:args}, {name:args} ]
-    var actionSets = _.map(config, function (set) {
-      return _.map(_.toPairs(set), function (pair) {
+    var actionSets = _v4.map(config, function (set) {
+      return _v4.map(_v4.toPairs(set), function (pair) {
         return { name: pair[0], args: pair[1] };
       });
     });
 
     // do a single level flatten, merge=ing the nested arrays from step one
     // into a master array, creating an array of action objects
-    return _.reduce(actionSets, function (note, set) {
+    return _v4.reduce(actionSets, function (note, set) {
       return note.concat(set);
     }, []);
   },
@@ -273,7 +273,7 @@ YamlDoc.prototype = {
 
     log('getting', path, 'from', from);
 
-    var steps = _.map(path ? path.replace(/\\\./g, '\uffff').split('.') : [], function (step) {
+    var steps = _v4.map(path ? path.replace(/\\\./g, '\uffff').split('.') : [], function (step) {
       return step.replace(/\uffff/g, '.');
     });
     var remainingSteps;
@@ -301,7 +301,7 @@ YamlDoc.prototype = {
    */
   do_skip: function (args, done) {
     if (args.version) {
-      return rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
+      return rangeMatchesCurrentVersion(args.version, _v4.bind(function (match) {
         if (match) {
           if (this.description === 'setup') {
             this.file.skipping = true;
@@ -320,7 +320,7 @@ YamlDoc.prototype = {
 
     if (args.features) {
       var features = Array.isArray(args.features) ? args.features : [args.features];
-      var notImplemented = _.difference(features, implementedFeatures);
+      var notImplemented = _v4.difference(features, implementedFeatures);
 
       if (notImplemented.length) {
         if (this.description === 'setup') {
@@ -396,19 +396,19 @@ YamlDoc.prototype = {
       delete args.headers;
     }
 
-    var otherKeys = _.keys(args);
+    var otherKeys = _v4.keys(args);
     var action = otherKeys.shift();
     if (otherKeys.length) {
       return done(new TypeError('Unexpected top-level args to "do": ' + otherKeys.join(', ')));
     }
 
     var client = clientManager.get();
-    var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
+    var clientActionName = _v4.map(action.split('.'), _v4.camelCase).join('.');
     var clientAction = this.get(clientActionName, client);
-    _.assign(inputParams, args[action]);
+    _v4.assign(inputParams, args[action]);
 
-    var params = _.transform(inputParams, _.bind(function (params, val, name) {
-      var camelName = _.camelCase(name);
+    var params = _v4.transform(inputParams, _v4.bind(function (params, val, name) {
+      var camelName = _v4.camelCase(name);
 
       // search through the params and url peices to find this param name
       var paramName = name;
@@ -427,10 +427,10 @@ YamlDoc.prototype = {
 
       // for ercursively traversing the params to replace '$stashed' vars
       var transformObject = function (vals, val, i) {
-        if (_.isString(val)) {
+        if (_v4.isString(val)) {
           val = (val[0] === '$') ? this.get(val) : val;
-        } else if (_.isPlainObject(val) || _.isArray(val)) {
-          val = _.transform(val, transformObject);
+        } else if (_v4.isPlainObject(val) || _v4.isArray(val)) {
+          val = _v4.transform(val, transformObject);
         }
 
         vals[i] = val;
@@ -443,12 +443,12 @@ YamlDoc.prototype = {
     expect(clientAction || clientActionName).to.be.a('function');
 
     if (!isNaN(parseFloat(catcher))) {
-      params.ignore = _.union(params.ignore || [], [catcher]);
+      params.ignore = _v4.union(params.ignore || [], [catcher]);
       catcher = null;
     }
 
     var timeoutId;
-    var cb = _.bind(function (error, body) {
+    var cb = _v4.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
@@ -494,7 +494,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_set: function (args) {
-    _.forOwn(args, _.bind(function (name, path) {
+    _v4.forOwn(args, _v4.bind(function (name, path) {
       this._stash[name] = this.get(path);
     }, this));
   },
@@ -566,25 +566,25 @@ YamlDoc.prototype = {
     var self = this;
 
     // recursively replace all $var within args
-    _.forOwn(args, function recurse(val, key, lvl) {
-      if (_.isObject(val)) {
+    _v4.forOwn(args, function recurse(val, key, lvl) {
+      if (_v4.isObject(val)) {
         return _v4.each(val, recurse);
       }
 
-      if (_.isString(val)) {
+      if (_v4.isString(val)) {
         lvl[key] = val.replace(/\$[a-zA-Z0-9_]+/g, function (name) {
           return self.get(name);
         });
       }
     });
 
-    _.forOwn(args, _.bind(function (match, path) {
+    _v4.forOwn(args, _v4.bind(function (match, path) {
       var origMatch = match;
 
       var maybeRE = false;
       var usedRE = false;
 
-      if (_.isString(match)) {
+      if (_v4.isString(match)) {
         // convert the matcher into a compatible string for building a regexp
         maybeRE = match
           // replace comments, but allow the # to be escaped like \#
@@ -655,7 +655,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lt: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
+    _v4.forOwn(args, _v4.bind(function (num, path) {
       expect(this.get(path)).to.be.below(num, 'path: ' + path);
     }, this));
   },
@@ -667,7 +667,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_lte: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
+    _v4.forOwn(args, _v4.bind(function (num, path) {
       expect(this.get(path) <= num).to.be.ok('path: ' + path);
     }, this));
   },
@@ -679,7 +679,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gt: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
+    _v4.forOwn(args, _v4.bind(function (num, path) {
       expect(this.get(path)).to.be.above(num, 'path: ' + path);
     }, this));
   },
@@ -691,7 +691,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_gte: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
+    _v4.forOwn(args, _v4.bind(function (num, path) {
       expect(this.get(path) >= num).to.be.ok('path: ' + path);
     }, this));
   },
@@ -704,8 +704,8 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   do_length: function (args) {
-    _.forOwn(args, _.bind(function (len, path) {
-      expect(_.size(this.get(path))).to.eql(len, 'path: ' + path);
+    _v4.forOwn(args, _v4.bind(function (len, path) {
+      expect(_v4.size(this.get(path))).to.eql(len, 'path: ' + path);
     }, this));
   }
 };

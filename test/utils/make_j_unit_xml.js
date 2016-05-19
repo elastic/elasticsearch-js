@@ -28,7 +28,7 @@ var testXml = require('xmlbuilder');
 var suites = testXml.create('testsuites');
 var suiteCount = 0;
 var moment = require('moment');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
@@ -41,7 +41,7 @@ function makeJUnitXml(runnerName, testDetails) {
       timestamp: moment(suiteInfo.start).toJSON(),
       hostname: 'localhost',
       tests: (suiteInfo.results && suiteInfo.results.length) || 0,
-      failures: _.where(suiteInfo.results, { pass: false }).length,
+      failures: _v4.filter(suiteInfo.results, { pass: false }).length,
       errors: 0,
       time: suiteInfo.time / 1000
     });

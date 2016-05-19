@@ -1,6 +1,6 @@
 module.exports = ConnectionAbstract;
 
-var _ = require('./utils');
+// var _ = require('./utils');
 var EventEmitter = require('events').EventEmitter;
 var Log = require('./log');
 var Host = require('./host');
@@ -26,9 +26,9 @@ function ConnectionAbstract(host, config) {
     throw new TypeError('Invalid host');
   }
 
-  _.makeBoundMethods(this);
+  _v4.makeBoundMethods(this);
 }
-_.inherits(ConnectionAbstract, EventEmitter);
+_v4.inherits(ConnectionAbstract, EventEmitter);
 
 /**
  * Make a request using this connection. Must be overridden by Connection classes, which can add whatever keys to
@@ -61,7 +61,7 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
     requestTimeout = params.requestTimeout;
   }
 
-  abort = this.request(_.defaults(params || {}, {
+  abort = this.request(_v4.defaults(params || {}, {
     path: '/',
     method: 'HEAD'
   }), function (err) {

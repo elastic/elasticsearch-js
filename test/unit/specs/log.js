@@ -1,5 +1,5 @@
 var Log = require('../../../src/lib/log');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var expect = require('expect.js');
 
 describe('Log class', function () {
@@ -129,11 +129,11 @@ describe('Log class', function () {
         log: [
           {
             type: function (log, config) {
-              log.on('error', _.noop);
-              log.on('warning', _.noop);
-              log.on('info', _.noop);
-              log.on('debug', _.noop);
-              log.on('trace', _.noop);
+              log.on('error', _v4.noop);
+              log.on('warning', _v4.noop);
+              log.on('info', _v4.noop);
+              log.on('debug', _v4.noop);
+              log.on('trace', _v4.noop);
             }
           }
         ]

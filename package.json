@@ -108,7 +108,7 @@
     "test": "grunt test",
     "generate": "node scripts/generate",
     "grunt": "grunt",
-    "eslint": "eslint src scripts test"
+    "eslint": "eslint src scripts test grunt Gruntfile.js"
   },
   "engines": {
     "node": ">=0.8"

@@ -8,10 +8,10 @@ module.exports = function (branch, done) {
   var chalk = require('chalk');
   var path = require('path');
   var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-  var _ = require(fromRoot('src/lib/utils'));
+  // var _ = require(fromRoot('src/lib/utils'));
   var tests = {}; // populated in readYamlTests
 
-  var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+  var esDir = fromRoot('src/_elasticsearch_' + _v4.snakeCase(branch));
 
   // generate the yaml tests
   async.series([
@@ -43,15 +43,15 @@ module.exports = function (branch, done) {
   }
 
   function writeYamlTests(done) {
-    var testFile = fromRoot('test/integration/yaml_suite/yaml_tests_' + _.snakeCase(branch) + '.json');
+    var testFile = fromRoot('test/integration/yaml_suite/yaml_tests_' + _v4.snakeCase(branch) + '.json');
     fs.writeFileSync(testFile, JSON.stringify(tests, null, '  '), 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML tests as JSON to', testFile);
     done();
   }
 
   function writeTestIndex(done) {
-    var file = fromRoot('test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js');
-    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');', 'utf8');
+    var file = fromRoot('test/integration/yaml_suite/index_' + _v4.snakeCase(branch) + '.js');
+    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');\n', 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML index to', file);
     done();
   }

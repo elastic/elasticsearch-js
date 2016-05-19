@@ -4,7 +4,7 @@
  */
 module.exports = Json;
 
-var _ = require('../utils');
+// var _ = require('../utils');
 
 function Json() {}
 
@@ -46,7 +46,7 @@ Json.prototype.deserialize = function (str) {
 Json.prototype.bulkBody = function (val) {
   var body = '', i;
 
-  if (_.isArray(val)) {
+  if (_v4.isArray(val)) {
     for (i = 0; i < val.length; i++) {
       body += this.serialize(val[i]) + '\n';
     }

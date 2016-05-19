@@ -1,11 +1,11 @@
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var utils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
 var release = process.env.ES_RELEASE;
 var ref = process.env.ES_REF;
-var port = parseFloat(_.get(process.env, 'ES_PORT', 9400));
-var host = _.get(process.env, 'ES_HOST', 'localhost');
+var port = parseFloat(_v4.get(process.env, 'ES_PORT', 9400));
+var host = _v4.get(process.env, 'ES_HOST', 'localhost');
 
 var Version = require('../../scripts/Version');
 var versionedOpts = [

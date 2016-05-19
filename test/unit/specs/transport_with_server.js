@@ -7,7 +7,7 @@ var expect = require('expect.js');
 var sinon = require('sinon');
 var nock = require('../../mocks/server.js');
 var through2 = require('through2');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 
@@ -277,7 +277,7 @@ describe('Transport + Mock server', function () {
           expect(err).to.be(undefined);
           expect(resp).to.eql({ i: 'am here' });
           expect(status).to.eql(200);
-          expect(_.keys(clock.timers)).to.have.length(0);
+          expect(_v4.keys(clock.timers)).to.have.length(0);
           clock.restore();
         });
       });
@@ -342,9 +342,9 @@ describe('Transport + Mock server', function () {
         .catch(function (err) {
           expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
           expect(tran.sniff.callCount).to.eql(0);
-          expect(_.size(clock.timers)).to.eql(1);
+          expect(_v4.size(clock.timers)).to.eql(1);
 
-          var timeout = _.values(clock.timers).pop();
+          var timeout = _v4.values(clock.timers).pop();
           timeout.func();
           expect(tran.sniff.callCount).to.eql(1);
         });

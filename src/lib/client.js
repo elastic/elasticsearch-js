@@ -28,7 +28,7 @@ module.exports = Client;
 
 var Transport = require('./transport');
 var clientAction = require('./client_action');
-var _ = require('./utils');
+// var _ = require('./utils');
 
 function Client(config) {
   config = config || {};
@@ -56,7 +56,7 @@ function Client(config) {
 
     this.transport = new Transport(config);
 
-    _v4.each(EsApiClient.prototype, _.bind(function (Fn, prop) {
+    _v4.each(EsApiClient.prototype, _v4.bind(function (Fn, prop) {
       if (Fn.prototype instanceof clientAction.ApiNamespace) {
         this[prop] = new Fn(this.transport);
       }
@@ -66,7 +66,7 @@ function Client(config) {
   }
 
 
-  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '_default');
+  EsApiClient.prototype = _v4.funcEnum(config, 'apiVersion', Client.apis, '_default');
   if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
     config.sniffEndpoint = '/_cluster/nodes';
   }

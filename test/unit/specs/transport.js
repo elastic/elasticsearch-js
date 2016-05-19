@@ -4,7 +4,7 @@ var errors = require('../../../src/lib/errors');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var nodeList = require('../../fixtures/short_node_list.json');
 var stub = require('../../utils/auto_release_stub').make();
 
@@ -83,11 +83,11 @@ describe('Transport Class', function () {
         sniffInterval: 25000
       });
 
-      expect(_.size(clock.timers)).to.eql(1);
-      var id = _.keys(clock.timers).pop();
+      expect(_v4.size(clock.timers)).to.eql(1);
+      var id = _v4.keys(clock.timers).pop();
       clock.tick(25000);
       expect(trans.sniff.callCount).to.eql(1);
-      expect(_.size(clock.timers)).to.eql(1);
+      expect(_v4.size(clock.timers)).to.eql(1);
       expect(clock.timers).to.not.have.key(id);
 
     });
@@ -285,7 +285,7 @@ describe('Transport Class', function () {
 
     describe('randomizeHosts options', function () {
       it('calls _.shuffle be default', function () {
-        var _ = require('../../../src/lib/utils');
+        // var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_v4, 'shuffle');
         var trans = new Transport({
@@ -295,7 +295,7 @@ describe('Transport Class', function () {
         expect(_v4.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
-        var _ = require('../../../src/lib/utils');
+        // var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_v4, 'shuffle');
         var trans = new Transport({
@@ -606,7 +606,7 @@ describe('Transport Class', function () {
           }
 
           var trans = new Transport({
-            hosts: _.map(new Array(retries + 1), function (val, i) {
+            hosts: _v4.map(new Array(retries + 1), function (val, i) {
               return 'localhost/' + i;
             }),
             maxRetries: retries,
@@ -617,7 +617,7 @@ describe('Transport Class', function () {
           });
 
           // trigger a select so that we can harvest the connection list
-          trans.connectionPool.select(_.noop);
+          trans.connectionPool.select(_v4.noop);
           _v4.each(connections, function (conn) {
             stub(conn, 'request', failRequest);
           });
@@ -641,7 +641,7 @@ describe('Transport Class', function () {
       it('returns an object with an abort() method when a callback is sent', function () {
         var tran = new Transport();
         shortCircuitRequest(tran);
-        var ret = tran.request({}, _.noop);
+        var ret = tran.request({}, _v4.noop);
         expect(ret).to.be.a('object');
         expect(ret.abort).to.be.a('function');
       });
@@ -651,7 +651,7 @@ describe('Transport Class', function () {
         var ret = tran.request({});
         expect(ret.then).to.be.a('function');
         expect(ret.abort).to.be.a('function');
-        ret.then(_.noop, _.noop); // prevent complaining from bluebird
+        ret.then(_v4.noop, _v4.noop); // prevent complaining from bluebird
       });
       it('promise is always pulled from the defer created by this.defer()', function () {
         var fakePromise = {};
@@ -659,8 +659,8 @@ describe('Transport Class', function () {
         var tran = new Transport({
           defer: function () {
             return {
-              resolve: _.noop,
-              reject: _.noop,
+              resolve: _v4.noop,
+              reject: _v4.noop,
               promise: fakePromise
             };
           }
@@ -759,9 +759,9 @@ describe('Transport Class', function () {
 
         var prom = tran.request({});
         // disregard promise, prevent bluebird's warnings
-        prom.then(_.noop, _.noop);
+        prom.then(_v4.noop, _v4.noop);
 
-        expect(_.size(clock.timers)).to.eql(1);
+        expect(_v4.size(clock.timers)).to.eql(1);
         _v4.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(30000);
           clearTimeout(id);
@@ -776,9 +776,9 @@ describe('Transport Class', function () {
 
         var prom = tran.request({});
         // disregard promise, prevent bluebird's warnings
-        prom.then(_.noop, _.noop);
+        prom.then(_v4.noop, _v4.noop);
 
-        expect(_.size(clock.timers)).to.eql(1);
+        expect(_v4.size(clock.timers)).to.eql(1);
         _v4.each(clock.timers, function (timer, id) {
           expect(timer.callAt).to.eql(5000);
           clearTimeout(id);
@@ -797,7 +797,7 @@ describe('Transport Class', function () {
             requestTimeout: falsy
           }, function () {});
 
-          expect(_.size(clock.timers)).to.eql(0);
+          expect(_v4.size(clock.timers)).to.eql(0);
         });
       });
     });

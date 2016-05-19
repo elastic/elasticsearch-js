@@ -1,4 +1,5 @@
-var _ = require('lodash-migrate');
+/* global angular */
+// var _ = require('lodash');
 var expect = require('expect.js');
 var Promise = require('bluebird');
 var sinon = require('sinon');
@@ -16,13 +17,13 @@ describe('Angular esFactory', function () {
 
   function bootstrap(env) {
     beforeEach(function () {
-      var promiseProvider = _.noop;
+      var promiseProvider = _v4.noop;
       if (env.bluebirdPromises) {
         promiseProvider = function ($provide) {
           $provide.service('$q', function () {
             return {
               defer: function () {
-                return _.bindAll(Promise.defer(), ['resolve', 'reject']);
+                return _v4.bindAll(Promise.defer(), ['resolve', 'reject']);
               },
               reject: Promise.reject,
               when: Promise.resolve,

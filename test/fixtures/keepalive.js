@@ -1,6 +1,6 @@
 var clock = require('sinon').useFakeTimers();
 var Client = require('../../src/elasticsearch').Client;
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var times = require('async').times;
 
 process.once('message', function (port) {
@@ -20,9 +20,9 @@ process.once('message', function (port) {
     clock.tick(10);
   }, function (err) {
     var conns = es.transport.connectionPool._conns;
-    var sockets = _([].concat(conns.dead, conns.alive))
+    var sockets = _v4([].concat(conns.dead, conns.alive))
       .transform(function (sockets, conn) {
-        sockets.push(_.values(conn.agent.sockets), _.values(conn.agent.freeSockets));
+        sockets.push(_v4.values(conn.agent.sockets), _v4.values(conn.agent.freeSockets));
       }, [])
       .flattenDeep()
       .value();
@@ -31,8 +31,8 @@ process.once('message', function (port) {
 
     var out = {
       socketCount: err || sockets.length,
-      remaining: _.where(sockets, { destroyed: true }).length - sockets.length,
-      timeouts: _.size(clock.timers) && _.map(clock.timers, 'func').map(String)
+      remaining: _v4.filter(sockets, { destroyed: true }).length - sockets.length,
+      timeouts: _v4.size(clock.timers) && _v4.map(clock.timers, 'func').map(String)
     };
 
     clock.restore();

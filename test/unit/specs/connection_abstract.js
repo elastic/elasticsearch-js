@@ -2,7 +2,7 @@ var ConnectionAbstract = require('../../../src/lib/connection');
 var Host = require('../../../src/lib/host');
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash-migrate');
+// var _ = require('lodash');
 var errors = require('../../../src/lib/errors');
 
 var stub = require('../../utils/auto_release_stub').make();
@@ -73,10 +73,10 @@ describe('Connection Abstract', function () {
 
       stub(conn, 'request');
 
-      expect(_.size(clock.timers)).to.eql(0);
+      expect(_v4.size(clock.timers)).to.eql(0);
       conn.ping();
-      expect(_.size(clock.timers)).to.eql(1);
-      expect(clock.timers[_.keys(clock.timers).shift()].delay).to.eql(5000);
+      expect(_v4.size(clock.timers)).to.eql(1);
+      expect(clock.timers[_v4.keys(clock.timers).shift()].delay).to.eql(5000);
     });
 
     it('calls it\'s own request method', function () {

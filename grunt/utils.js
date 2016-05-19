@@ -1,4 +1,4 @@
-var _ = require('../src/lib/utils');
+// var _ = require('../src/lib/utils');
 
 var root = require('find-root')(__dirname);
 var pkg = require(root + '/package.json');
@@ -8,7 +8,7 @@ var branches = [].concat(stable, unstable);
 
 var utils = {
   branchSuffix: function (branch) {
-    return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
+    return branch === utils.branches._default ? '' : '_' + _v4.snakeCase(branch);
   },
   branches: branches,
   stableBranches: stable,
