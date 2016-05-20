@@ -7,6 +7,8 @@ module.exports = {
   output: {
     filename: 'elasticsearch.js',
     path: rel('dist'),
+    library: 'elasticsearch',
+    libraryTarget: 'umd'
   },
   module: {
     loaders: [
