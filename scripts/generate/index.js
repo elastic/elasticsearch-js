@@ -31,7 +31,10 @@ var path = require('path');
 var fromRoot = path.join.bind(path, require('find-root')(__dirname));
 var utils = require(fromRoot('grunt/utils'));
 var _ = require(fromRoot('src/lib/utils'));
-var esUrl = 'https://github.com/elastic/elasticsearch.git';
+var esUrl = process.env.ES_REPO
+  ? path.resolve(process.cwd(), process.env.ES_REPO)
+  : 'https://github.com/elastic/elasticsearch.git';
+
 var branches;
 
 if (process.env.npm_config_argv) {
@@ -111,13 +114,17 @@ function spawnStep(cmd, args, cwd) {
 }
 
 function initStep() {
-  if (isDirectory(paths.esSrc)) return;
-
   return function (done) {
-    async.series([
-      spawnStep('git', ['init', '--bare', paths.esSrc], paths.root),
-      spawnStep('git', ['remote', 'add', 'origin', esUrl], paths.esSrc)
-    ], done);
+    if (isDirectory(paths.esSrc)) {
+      async.series([
+        spawnStep('git', ['remote', 'set-url', 'origin', esUrl], paths.esSrc)
+      ], done);
+    } else {
+      async.series([
+        spawnStep('git', ['init', '--bare', paths.esSrc], paths.root),
+        spawnStep('git', ['remote', 'add', 'origin', esUrl], paths.esSrc)
+      ], done);
+    }
   };
 }
 
