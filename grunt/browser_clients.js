@@ -17,11 +17,12 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:dist',
-      'webpack:browser_client',
-      'webpack:angular_client',
-      'webpack:jquery_client',
+      'webpack:browser_clients',
       'uglify:dist',
-      'concat:dist_banners'
+      'concat:dist_banners',
+      'copy:dist_to_named_dir',
+      'compress:release_zip',
+      'compress:release_tarball',
     ]);
   });
 
