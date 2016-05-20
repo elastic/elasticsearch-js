@@ -12,8 +12,7 @@
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
     "./src/lib/apis/index.js": "./src/lib/apis/browser_index.js",
-    "./test/mocks/server.js": "./test/mocks/browser_server.js",
-    "lodash": "lodash-compat"
+    "./test/mocks/server.js": "./test/mocks/browser_server.js"
   },
   "config": {
     "blanket": {
@@ -97,7 +96,6 @@
     "chalk": "^1.0.0",
     "forever-agent": "^0.6.0",
     "lodash": "^4.12.0",
-    "lodash-compat": "^3.0.0",
     "promise": "^7.1.1"
   },
   "repository": {
