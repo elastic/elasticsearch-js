@@ -19,7 +19,10 @@ module.exports = function (grunt) {
       'clean:dist',
       'webpack:browser_clients',
       'uglify:dist',
-      'concat:dist_banners'
+      'concat:dist_banners',
+      'copy:dist_to_named_dir',
+      'compress:release_zip',
+      'compress:release_tarball',
     ]);
   });
 
