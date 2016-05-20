@@ -1220,6 +1220,7 @@ api.cluster.prototype.putSettings = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.dryRun - Simulate the operation only and return the resulting state
  * @param {Boolean} params.explain - Return an explanation of why the commands can or cannot be executed
+ * @param {Boolean} params.retryFailed - Retries allocation of shards that are blocked due to too many subsequent allocation failures
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics. Defaults to all but metadata
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Date, Number} params.timeout - Explicit operation timeout
@@ -1232,6 +1233,10 @@ api.cluster.prototype.reroute = ca({
     },
     explain: {
       type: 'boolean'
+    },
+    retryFailed: {
+      type: 'boolean',
+      name: 'retry_failed'
     },
     metric: {
       type: 'list',
@@ -1662,7 +1667,7 @@ api['delete'] = ca({
 });
 
 /**
- * Perform a [deleteByQuery](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ * Perform a [deleteByQuery](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-delete-by-query.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The analyzer to use for the query string
@@ -5350,7 +5355,7 @@ api.putTemplate = ca({
 api.reindex = namespace();
 
 /**
- * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
@@ -5395,7 +5400,7 @@ api.reindex = ca({
 });
 
 /**
- * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
@@ -6192,7 +6197,7 @@ api.suggest = ca({
 api.tasks = namespace();
 
 /**
- * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-cancel.html) request
+ * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -6509,7 +6514,7 @@ api.update = ca({
 });
 
 /**
- * Perform a [updateByQuery](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ * Perform a [updateByQuery](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The analyzer to use for the query string
