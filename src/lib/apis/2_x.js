@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'reindex', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -2087,9 +2087,11 @@ api.indices = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The name of the analyzer to use
- * @param {String, String[], Boolean} params.charFilters - A comma-separated list of character filters to use for the analysis
+ * @param {String, String[], Boolean} params.charFilters - Deprecated : A comma-separated list of character filters to use for the analysis
+ * @param {String, String[], Boolean} params.charFilter - A comma-separated list of character filters to use for the analysis
  * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
- * @param {String, String[], Boolean} params.filters - A comma-separated list of filters to use for the analysis
+ * @param {String, String[], Boolean} params.filters - Deprecated : A comma-separated list of filters to use for the analysis
+ * @param {String, String[], Boolean} params.filter - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
  * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
@@ -2107,10 +2109,17 @@ api.indices.prototype.analyze = ca({
       type: 'list',
       name: 'char_filters'
     },
+    charFilter: {
+      type: 'list',
+      name: 'char_filter'
+    },
     field: {
       type: 'string'
     },
     filters: {
+      type: 'list'
+    },
+    filter: {
       type: 'list'
     },
     index: {
@@ -5215,6 +5224,8 @@ api.putTemplate = ca({
   method: 'PUT'
 });
 
+api.reindex = namespace();
+
 /**
  * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
  *
@@ -5223,6 +5234,7 @@ api.putTemplate = ca({
  * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
+ * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
  */
 api.reindex = ca({
   params: {
@@ -5245,12 +5257,43 @@ api.reindex = ca({
       type: 'boolean',
       'default': false,
       name: 'wait_for_completion'
+    },
+    requestsPerSecond: {
+      type: 'float',
+      'default': 0,
+      name: 'requests_per_second'
     }
   },
   url: {
     fmt: '/_reindex'
   },
   needBody: true,
+  method: 'POST'
+});
+
+/**
+ * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+ * @param {String} params.taskId - The task id to rethrottle
+ */
+api.reindex.prototype.rethrottle = ca({
+  params: {
+    requestsPerSecond: {
+      type: 'float',
+      required: true,
+      name: 'requests_per_second'
+    }
+  },
+  url: {
+    fmt: '/_reindex/<%=taskId%>/_rethrottle',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  },
   method: 'POST'
 });
 
@@ -6145,7 +6188,7 @@ api.tasks = namespace();
  * @param {String, String[], Boolean} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {String} params.parentNode - Cancel tasks with specified parent node.
  * @param {String} params.parentTask - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
- * @param {Number} params.taskId - Cancel the task with specified task id (node_id:task_number)
+ * @param {String} params.taskId - Cancel the task with specified id
  */
 api.tasks.prototype.cancel = ca({
   params: {
@@ -6170,7 +6213,7 @@ api.tasks.prototype.cancel = ca({
       fmt: '/_tasks/<%=taskId%>/_cancel',
       req: {
         taskId: {
-          type: 'number'
+          type: 'string'
         }
       }
     },
@@ -6494,6 +6537,7 @@ api.update = ca({
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Integer} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
+ * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -6673,6 +6717,11 @@ api.updateByQuery = ca({
       type: 'boolean',
       'default': false,
       name: 'wait_for_completion'
+    },
+    requestsPerSecond: {
+      type: 'float',
+      'default': 0,
+      name: 'requests_per_second'
     }
   },
   urls: [
