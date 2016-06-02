@@ -127,7 +127,7 @@ var searchParams = {
       filtered: {
         query: {
           match: {
-            // match the query agains all of
+            // match the query against all of
             // the fields in the posts index
             _all: userQuery
           }
