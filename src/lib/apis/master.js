@@ -11,14 +11,14 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 'snapshot', 'task', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
@@ -37,7 +37,12 @@ api.bulk = ca({
       ]
     },
     refresh: {
-      type: 'boolean'
+      type: 'enum',
+      options: [
+        'true',
+        'false',
+        'wait_for'
+      ]
     },
     routing: {
       type: 'string'
@@ -1604,7 +1609,7 @@ api.countPercolate = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Specific write consistency setting for the operation
  * @param {String} params.parent - ID of parent document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Number} params.version - Explicit version number for concurrency control
@@ -1627,7 +1632,12 @@ api['delete'] = ca({
       type: 'string'
     },
     refresh: {
-      type: 'boolean'
+      type: 'enum',
+      options: [
+        'true',
+        'false',
+        'wait_for'
+      ]
     },
     routing: {
       type: 'string'
@@ -1667,7 +1677,7 @@ api['delete'] = ca({
 });
 
 /**
- * Perform a [deleteByQuery](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-delete-by-query.html) request
+ * Perform a [deleteByQuery](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.analyzer - The analyzer to use for the query string
@@ -2359,7 +2369,7 @@ api.getTemplate = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
@@ -2394,7 +2404,12 @@ api.index = ca({
       type: 'string'
     },
     refresh: {
-      type: 'boolean'
+      type: 'enum',
+      options: [
+        'true',
+        'false',
+        'wait_for'
+      ]
     },
     routing: {
       type: 'string'
@@ -4000,6 +4015,49 @@ api.indices.prototype.refresh = ca({
 });
 
 /**
+ * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {String} params.alias - The name of the alias to rollover
+ * @param {String} params.newIndex - The name of the rollover index
+ */
+api.indices.prototype.rollover = ca({
+  params: {
+    timeout: {
+      type: 'time'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=alias%>/_rollover/<%=newIndex%>',
+      req: {
+        alias: {
+          type: 'string'
+        },
+        newIndex: {
+          type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=alias%>/_rollover',
+      req: {
+        alias: {
+          type: 'string'
+        }
+      }
+    }
+  ],
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -4117,6 +4175,39 @@ api.indices.prototype.shardStores = ca({
       fmt: '/_shard_stores'
     }
   ]
+});
+
+/**
+ * Perform a [indices.shrink](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {String} params.index - The name of the source index to shrink
+ * @param {String} params.target - The name of the target index to shrink into
+ */
+api.indices.prototype.shrink = ca({
+  params: {
+    timeout: {
+      type: 'time'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
+  url: {
+    fmt: '/<%=index%>/_shrink/<%=target%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      target: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'POST'
 });
 
 /**
@@ -4687,6 +4778,7 @@ api.mpercolate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.searchType - Search operation type
+ * @param {Number} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to use as default
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to use as default
  */
@@ -4701,6 +4793,10 @@ api.msearch = ca({
         'dfs_query_and_fetch'
       ],
       name: 'search_type'
+    },
+    maxConcurrentSearches: {
+      type: 'number',
+      name: 'max_concurrent_searches'
     }
   },
   urls: [
@@ -5491,8 +5587,9 @@ api.scroll = ca({
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
- * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return as part of a hit
- * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the field data representation of a field for each hit
+ * @param {String, String[], Boolean} params.storedFields - A comma-separated list of stored fields to return as part of a hit
+ * @param {String, String[], Boolean} params.docvalueFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+ * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
  * @param {Number} params.from - Starting offset (default: 0)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -5546,8 +5643,13 @@ api.search = ca({
     explain: {
       type: 'boolean'
     },
-    fields: {
-      type: 'list'
+    storedFields: {
+      type: 'list',
+      name: 'stored_fields'
+    },
+    docvalueFields: {
+      type: 'list',
+      name: 'docvalue_fields'
     },
     fielddataFields: {
       type: 'list',
@@ -6194,6 +6296,32 @@ api.suggest = ca({
   method: 'POST'
 });
 
+api.task = namespace();
+
+/**
+ * Perform a [task.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
+ * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
+ */
+api.task.prototype.get = ca({
+  params: {
+    waitForCompletion: {
+      type: 'boolean',
+      name: 'wait_for_completion'
+    }
+  },
+  url: {
+    fmt: '/_tasks/<%=taskId%>',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  }
+});
+
 api.tasks = namespace();
 
 /**
@@ -6251,7 +6379,6 @@ api.tasks.prototype.cancel = ca({
  * @param {String} params.parentTask - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
  * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
  * @param {String} [params.groupBy=nodes] - Group tasks by nodes or parent/child relationships
- * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
  */
 api.tasks.prototype.list = ca({
   params: {
@@ -6291,9 +6418,7 @@ api.tasks.prototype.list = ca({
     {
       fmt: '/_tasks/<%=taskId%>',
       req: {
-        taskId: {
-          type: 'string'
-        }
+        taskId: {}
       }
     },
     {
@@ -6423,7 +6548,7 @@ api.termvectors = ca({
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
  * @param {String} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
  * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
@@ -6458,7 +6583,12 @@ api.update = ca({
       type: 'string'
     },
     refresh: {
-      type: 'boolean'
+      type: 'enum',
+      options: [
+        'true',
+        'false',
+        'wait_for'
+      ]
     },
     retryOnConflict: {
       type: 'number',
@@ -6778,7 +6908,7 @@ api.updateByQuery = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
