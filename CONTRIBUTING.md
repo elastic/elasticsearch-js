@@ -64,3 +64,54 @@ Please make sure you have signed the [Contributor License Agreement](https://www
 There will probably be discussion about the pull request and we will work with you if any changes are needed.
 
 ### 7. Know that we greatly appreciate your help!! :D
+
+===
+
+## Generate
+
+To automatically regenerate elasticsearch-js from elasticsearch master, run the following command:
+
+```sh
+npm run generate
+```
+
+## Release
+
+Before you attempt to release a new version, make sure you have AWS credentials in the root of this project in the following format:
+
+```json
+{
+  "key": "YOUR_AWS_ACCESS_KEY_ID",
+  "secret": "YOUR_AWS_SECRET_ACCESS_KEY"
+}
+```
+
+Also, make sure you have been added as a contributor on npm for both [elasticsearch](https://www.npmjs.com/package/elasticsearch) and [elasticsearch-browser](https://www.npmjs.com/package/elasticsearch-browser).
+
+### 1. Bump the package version
+
+```sh
+grunt version:12.0.0-rc4
+```
+
+After bumping the version, commit and push the changed files.
+
+### 2. Publish both libraries to npm and tag as needed
+
+```sh
+npm publish
+npm tag elasticsearch@12.0.0-rc4 prerelease
+npm tag elasticsearch@11.0.1 latest
+cd src/bower_es_js
+npm publish
+npm tag elasticsearch-browser@12.0.0-rc4 prerelease
+npm tag elasticsearch-browser@11.0.1 latest
+```
+
+### 3. Release the new builds
+
+```sh
+grunt browser_clients:release
+```
+
+Voila! You're all finished.
