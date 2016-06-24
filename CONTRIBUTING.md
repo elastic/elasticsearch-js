@@ -65,8 +65,6 @@ There will probably be discussion about the pull request and we will work with y
 
 ### 7. Know that we greatly appreciate your help!! :D
 
-===
-
 ## Generate
 
 To automatically regenerate elasticsearch-js from elasticsearch master, run the following command:
