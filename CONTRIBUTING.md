@@ -94,7 +94,7 @@ grunt version:12.0.0-rc4
 
 After bumping the version, commit and push the changed files.
 
-### 2. Publish both libraries to npm and tag as needed
+### 2. Publish to npm and tag as needed
 
 ```sh
 npm publish [--tag prerelease]
