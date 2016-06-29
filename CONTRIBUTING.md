@@ -97,13 +97,7 @@ After bumping the version, commit and push the changed files.
 ### 2. Publish both libraries to npm and tag as needed
 
 ```sh
-npm publish
-npm tag elasticsearch@12.0.0-rc4 prerelease
-npm tag elasticsearch@11.0.1 latest
-cd src/bower_es_js
-npm publish
-npm tag elasticsearch-browser@12.0.0-rc4 prerelease
-npm tag elasticsearch-browser@11.0.1 latest
+npm publish [--tag prerelease]
 ```
 
 ### 3. Release the new builds
