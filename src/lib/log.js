@@ -182,7 +182,7 @@ Log.parseLevels = function (input) {
 Log.join = function (arrayish) {
   return _.map(arrayish, function (item) {
     if (_.isPlainObject(item)) {
-      return _.inspect(item) + '\n';
+      return JSON.stringify(item, null, 2) + '\n';
     } else {
       return item.toString();
     }
