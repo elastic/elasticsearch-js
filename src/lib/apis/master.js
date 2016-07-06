@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 'snapshot', 'task', 'tasks', 'template'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -4829,6 +4829,56 @@ api.msearch = ca({
 });
 
 /**
+ * Perform a [msearchTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.searchType - Search operation type
+ * @param {String, String[], Boolean} params.index - A comma-separated list of index names to use as default
+ * @param {String, String[], Boolean} params.type - A comma-separated list of document types to use as default
+ */
+api.msearchTemplate = ca({
+  params: {
+    searchType: {
+      type: 'enum',
+      options: [
+        'query_then_fetch',
+        'query_and_fetch',
+        'dfs_query_then_fetch',
+        'dfs_query_and_fetch'
+      ],
+      name: 'search_type'
+    }
+  },
+  urls: [
+    {
+      fmt: '/<%=index%>/<%=type%>/_msearch/template',
+      req: {
+        index: {
+          type: 'list'
+        },
+        type: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_msearch/template',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_msearch/template'
+    }
+  ],
+  needBody: true,
+  bulkBody: true,
+  method: 'POST'
+});
+
+/**
  * Perform a [mtermvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -6296,32 +6346,6 @@ api.suggest = ca({
   method: 'POST'
 });
 
-api.task = namespace();
-
-/**
- * Perform a [task.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
- * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
- */
-api.task.prototype.get = ca({
-  params: {
-    waitForCompletion: {
-      type: 'boolean',
-      name: 'wait_for_completion'
-    }
-  },
-  url: {
-    fmt: '/_tasks/<%=taskId%>',
-    req: {
-      taskId: {
-        type: 'string'
-      }
-    }
-  }
-});
-
 api.tasks = namespace();
 
 /**
@@ -6366,6 +6390,30 @@ api.tasks.prototype.cancel = ca({
     }
   ],
   method: 'POST'
+});
+
+/**
+ * Perform a [tasks.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
+ * @param {String} params.taskId - Return the task with specified id (node_id:task_number)
+ */
+api.tasks.prototype.get = ca({
+  params: {
+    waitForCompletion: {
+      type: 'boolean',
+      name: 'wait_for_completion'
+    }
+  },
+  url: {
+    fmt: '/_tasks/<%=taskId%>',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  }
 });
 
 /**
@@ -6414,151 +6462,9 @@ api.tasks.prototype.list = ca({
       name: 'group_by'
     }
   },
-  urls: [
-    {
-      fmt: '/_tasks/<%=taskId%>',
-      req: {
-        taskId: {}
-      }
-    },
-    {
-      fmt: '/_tasks'
-    }
-  ]
-});
-
-api.template = namespace();
-
-/**
- * Perform a [template.msearch](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.searchType - Search operation type
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to use as default
- * @param {String, String[], Boolean} params.type - A comma-separated list of document types to use as default
- */
-api.template.prototype.msearch = ca({
-  params: {
-    searchType: {
-      type: 'enum',
-      options: [
-        'query_then_fetch',
-        'query_and_fetch',
-        'dfs_query_then_fetch',
-        'dfs_query_and_fetch'
-      ],
-      name: 'search_type'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_msearch/template',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_msearch/template',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_msearch/template'
-    }
-  ],
-  needBody: true,
-  bulkBody: true,
-  method: 'POST'
-});
-
-/**
- * Perform a [template.search](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
- * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
- * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
- * @param {String} params.searchType - Search operation type
- * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
- * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
- */
-api.template.prototype.search = ca({
-  params: {
-    ignoreUnavailable: {
-      type: 'boolean',
-      name: 'ignore_unavailable'
-    },
-    allowNoIndices: {
-      type: 'boolean',
-      name: 'allow_no_indices'
-    },
-    expandWildcards: {
-      type: 'enum',
-      'default': 'open',
-      options: [
-        'open',
-        'closed',
-        'none',
-        'all'
-      ],
-      name: 'expand_wildcards'
-    },
-    preference: {
-      type: 'string'
-    },
-    routing: {
-      type: 'list'
-    },
-    scroll: {
-      type: 'duration'
-    },
-    searchType: {
-      type: 'enum',
-      options: [
-        'query_then_fetch',
-        'query_and_fetch',
-        'dfs_query_then_fetch',
-        'dfs_query_and_fetch'
-      ],
-      name: 'search_type'
-    }
-  },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_search/template',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_search/template',
-      req: {
-        index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_search/template'
-    }
-  ],
-  method: 'POST'
+  url: {
+    fmt: '/_tasks'
+  }
 });
 
 /**

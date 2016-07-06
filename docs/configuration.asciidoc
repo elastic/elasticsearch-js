@@ -67,7 +67,7 @@ Options in node :::
   * `'1.1'`
   * `'1.0'`
   * `'0.90'`
-  * `'2.x'` (unstable)
+  * `'2.4'` (unstable)
   * `'master'` (unstable)
 
 Options in the browser :::
@@ -76,7 +76,7 @@ Options in the browser :::
   * `'2.1'`
   * `'2.0'`
   * `'1.7'`
-  * `'2.x'` (unstable)
+  * `'2.4'` (unstable)
   * `'master'` (unstable)
 
 
