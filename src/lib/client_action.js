@@ -108,7 +108,7 @@ var castType = {
     }
 
     for (var i = 0; i < param.options.length; i++) {
-      if (param.options[i] == val) { // eslint-disable-line eqeqeq
+      if (param.options[i] === String(val)) {
         return param.options[i];
       }
     }
