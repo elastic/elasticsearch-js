@@ -195,6 +195,12 @@ module.exports = function (branch, done) {
       def.url.params = _.transform(def.url.params, transformParamKeys, {});
       def.url.parts = _.transform(def.url.parts, transformParamKeys, {});
 
+      _.values(def.url.params).concat(_.values(def.url.parts)).forEach(param => {
+        if (param.options && param.options.some(opt => typeof opt !== 'string')) {
+          throw new Error(`${def.name} has options that are not strings...`)
+        }
+      })
+
       var allParams = _.extend({}, def.url.params, def.url.parts);
       var spec = {
         name: name,
