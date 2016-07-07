@@ -264,7 +264,7 @@ describe('Client Action runner', function () {
       beforeEach(function () {
         action = makeClientAction({
           params: {
-            one: { type: 'enum', options: ['opt', 'other opt', '150'] }
+            one: { type: 'enum', options: ['opt', 'other opt', '150', 'true'] }
           }
         });
       });
@@ -285,6 +285,16 @@ describe('Client Action runner', function () {
         }, function (err, params) {
           if (err) { throw err; }
           expect(params.query.one).to.be('150');
+          done();
+        });
+      });
+
+      it('accepts string versions of booleans', function (done) {
+        action({
+          one: true
+        }, function (err, params) {
+          if (err) { throw err; }
+          expect(params.query.one).to.be('true');
           done();
         });
       });
