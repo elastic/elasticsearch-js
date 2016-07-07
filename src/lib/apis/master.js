@@ -41,7 +41,8 @@ api.bulk = ca({
       options: [
         'true',
         'false',
-        'wait_for'
+        'wait_for',
+        ''
       ]
     },
     routing: {
@@ -1636,7 +1637,8 @@ api['delete'] = ca({
       options: [
         'true',
         'false',
-        'wait_for'
+        'wait_for',
+        ''
       ]
     },
     routing: {
@@ -2408,7 +2410,8 @@ api.index = ca({
       options: [
         'true',
         'false',
-        'wait_for'
+        'wait_for',
+        ''
       ]
     },
     routing: {
@@ -6627,7 +6630,8 @@ api.update = ca({
       options: [
         'true',
         'false',
-        'wait_for'
+        'wait_for',
+        ''
       ]
     },
     retryOnConflict: {

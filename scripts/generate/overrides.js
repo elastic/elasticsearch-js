@@ -210,5 +210,35 @@ function (spec) {
         '/_delete_by_query/{task_id}/_rethrottle'
       ]
     }
+  },
+  {
+    version: '>=5.0.0',
+    mergeConcatParams: {
+      bulk: {
+        refresh: {
+          options: ['']
+        }
+      },
+      create: {
+        refresh: {
+          options: ['']
+        }
+      },
+      index: {
+        refresh: {
+          options: ['']
+        }
+      },
+      update: {
+        refresh: {
+          options: ['']
+        }
+      },
+      delete: {
+        refresh: {
+          options: ['']
+        }
+      }
+    }
   }
 ];
