@@ -24,8 +24,9 @@ exports._resolveUrl = resolveUrl;
 
 exports.ApiNamespace = function () {};
 exports.namespaceFactory = function () {
-  function ClientNamespace(transport) {
+  function ClientNamespace(transport, client) {
     this.transport = transport;
+    this.client = client;
   }
 
   ClientNamespace.prototype = new exports.ApiNamespace();
