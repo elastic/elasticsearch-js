@@ -17,7 +17,7 @@ api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 's
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
@@ -28,13 +28,9 @@ api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'reindex', 's
  */
 api.bulk = ca({
   params: {
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     refresh: {
       type: 'enum',
@@ -973,7 +969,7 @@ api.cat.prototype.tasks = ca({
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {Boolean} params.v - Verbose mode. Display column headers
- * @param {Boolean} params.fullId - Enables displaying the complete node ids
+ * @param {String, String[], Boolean} params.threadPoolPatterns - A comma-separated list of regular-expressions to filter the thread pools in the output
  */
 api.cat.prototype.threadPool = ca({
   params: {
@@ -1009,15 +1005,22 @@ api.cat.prototype.threadPool = ca({
       type: 'boolean',
       'default': false
     },
-    fullId: {
-      type: 'boolean',
-      'default': false,
-      name: 'full_id'
+    threadPoolPatterns: {
+      type: 'list',
+      name: 'thread_pool_patterns'
     }
   },
-  url: {
-    fmt: '/_cat/thread_pool'
-  }
+  urls: [
+    {
+      fmt: '/_cat/thread_pool/<%=threadPools%>',
+      req: {
+        threadPools: {}
+      }
+    },
+    {
+      fmt: '/_cat/thread_pool'
+    }
+  ]
 });
 
 /**
@@ -1050,12 +1053,17 @@ api.cluster = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.includeYesDecisions - Return 'YES' decisions in explanation (default: false)
+ * @param {Boolean} params.includeDiskInfo - Return information about disk usage and shard sizes (default: false)
  */
 api.cluster.prototype.allocationExplain = ca({
   params: {
     includeYesDecisions: {
       type: 'boolean',
       name: 'include_yes_decisions'
+    },
+    includeDiskInfo: {
+      type: 'boolean',
+      name: 'include_disk_info'
     }
   },
   url: {
@@ -1107,6 +1115,7 @@ api.cluster.prototype.getSettings = ca({
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Number} params.waitForActiveShards - Wait until the specified number of shards is active
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
+ * @param {String} params.waitForEvents - Wait until all currently queued events with the given priorty are processed
  * @param {Number} params.waitForRelocatingShards - Wait until the specified number of relocating shards is finished
  * @param {String} params.waitForStatus - Wait until cluster is in a specific state
  * @param {String, String[], Boolean} params.index - Limit the information returned to a specific index
@@ -1139,6 +1148,18 @@ api.cluster.prototype.health = ca({
     waitForNodes: {
       type: 'string',
       name: 'wait_for_nodes'
+    },
+    waitForEvents: {
+      type: 'enum',
+      options: [
+        'immediate',
+        'urgent',
+        'high',
+        'normal',
+        'low',
+        'languid'
+      ],
+      name: 'wait_for_events'
     },
     waitForRelocatingShards: {
       type: 'number',
@@ -1608,7 +1629,7 @@ api.countPercolate = ca({
  * Perform a [delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Specific write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String} params.parent - ID of parent document
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
@@ -1621,13 +1642,9 @@ api.countPercolate = ca({
  */
 api['delete'] = ca({
   params: {
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     parent: {
       type: 'string'
@@ -1718,10 +1735,10 @@ api['delete'] = ca({
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Integer} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the delete-by-query is complete.
- * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. -1 means set no throttle.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -1881,13 +1898,9 @@ api.deleteByQuery = ca({
     refresh: {
       type: 'boolean'
     },
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     scrollSize: {
       type: 'integer',
@@ -2369,7 +2382,7 @@ api.getTemplate = ca({
  * Perform a [index](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
@@ -2385,13 +2398,9 @@ api.getTemplate = ca({
  */
 api.index = ca({
   params: {
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     opType: {
       type: 'enum',
@@ -2681,6 +2690,7 @@ api.indices.prototype.close = ca({
  * Perform a [indices.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {String} params.waitForActiveShards - Set the number of active shards to wait for before the operation returns.
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.updateAllTypes - Whether to update the mapping for all fields with the same name across all types or not
@@ -2688,6 +2698,10 @@ api.indices.prototype.close = ca({
  */
 api.indices.prototype.create = ca({
   params: {
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
+    },
     timeout: {
       type: 'time'
     },
@@ -2708,7 +2722,7 @@ api.indices.prototype.create = ca({
       }
     }
   },
-  method: 'POST'
+  method: 'PUT'
 });
 
 /**
@@ -4023,6 +4037,7 @@ api.indices.prototype.refresh = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
  * @param {String} params.alias - The name of the alias to rollover
  * @param {String} params.newIndex - The name of the rollover index
  */
@@ -4034,6 +4049,10 @@ api.indices.prototype.rollover = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     }
   },
   urls: [
@@ -4186,6 +4205,7 @@ api.indices.prototype.shardStores = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the shrunken index before the operation returns.
  * @param {String} params.index - The name of the source index to shrink
  * @param {String} params.target - The name of the target index to shrink into
  */
@@ -4197,6 +4217,10 @@ api.indices.prototype.shrink = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     }
   },
   url: {
@@ -4576,14 +4600,19 @@ api.ingest.prototype.getPipeline = ca({
       name: 'master_timeout'
     }
   },
-  url: {
-    fmt: '/_ingest/pipeline/<%=id%>',
-    req: {
-      id: {
-        type: 'string'
+  urls: [
+    {
+      fmt: '/_ingest/pipeline/<%=id%>',
+      req: {
+        id: {
+          type: 'string'
+        }
       }
+    },
+    {
+      fmt: '/_ingest/pipeline'
     }
-  }
+  ]
 });
 
 /**
@@ -5509,9 +5538,9 @@ api.reindex = namespace();
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
  * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
- * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
  */
 api.reindex = ca({
   params: {
@@ -5522,13 +5551,9 @@ api.reindex = ca({
       type: 'time',
       'default': '1m'
     },
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     waitForCompletion: {
       type: 'boolean',
@@ -5552,7 +5577,7 @@ api.reindex = ca({
  * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+ * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
  * @param {String} params.taskId - The task id to rethrottle
  */
 api.reindex.prototype.rethrottle = ca({
@@ -6587,16 +6612,13 @@ api.termvectors = ca({
  * Perform a [update](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String, String[], Boolean} params.fields - A comma-separated list of fields to return in the response
  * @param {String} params.lang - The script language (default: groovy)
  * @param {String} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
- * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
- * @param {Anything} params.scriptId - The id of a stored script
- * @param {Boolean} params.scriptedUpsert - True if the script referenced in script or script_id should be called to perform inserts - defaults to false
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
  * @param {Duration} params.ttl - Expiration time for the document
@@ -6608,13 +6630,9 @@ api.termvectors = ca({
  */
 api.update = ca({
   params: {
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     fields: {
       type: 'list'
@@ -6640,14 +6658,6 @@ api.update = ca({
     },
     routing: {
       type: 'string'
-    },
-    script: {},
-    scriptId: {
-      name: 'script_id'
-    },
-    scriptedUpsert: {
-      type: 'boolean',
-      name: 'scripted_upsert'
     },
     timeout: {
       type: 'time'
@@ -6729,10 +6739,10 @@ api.update = ca({
  * @param {Boolean} params.versionType - Should the document increment the version number (internal) on hit or not (reindex)
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Integer} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
- * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -6899,13 +6909,9 @@ api.updateByQuery = ca({
     refresh: {
       type: 'boolean'
     },
-    consistency: {
-      type: 'enum',
-      options: [
-        'one',
-        'quorum',
-        'all'
-      ]
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     },
     scrollSize: {
       type: 'integer',
@@ -6950,7 +6956,7 @@ api.updateByQuery = ca({
  * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
