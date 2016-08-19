@@ -106,4 +106,11 @@ npm publish [--tag prerelease]
 grunt browser_clients:release
 ```
 
+If this is a prerelease, you will need to modify the `elasticsearch-browser` npm tags
+
+```sh
+npm dist-tag add elasticsearch-browser@11.0.1 latest
+npm dist-tag add elasticsearch-browser@12.0.0-rc4 prerelease
+```
+
 Voila! You're all finished.
