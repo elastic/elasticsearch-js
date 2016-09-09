@@ -3642,6 +3642,14 @@ api.indices.prototype.putMapping = ca({
           type: 'string'
         }
       }
+    },
+    {
+      fmt: '/<%=index%>',
+      req: {
+        index: {
+          type: 'list'
+        }
+      }
     }
   ],
   needBody: true,
