@@ -23,6 +23,8 @@ var client = new elasticsearch.Client({
     {
       host: 'es1.internal.org',
       auth: 'user:password'
+      protocol: 'https',
+      port: 9200
     }
   ]
 });
@@ -37,9 +39,9 @@ Without any additional configuration you can specify `https://` host urls, but t
 -----
 var client = new elasticsearch.Client({
   hosts: [
-    'https://box1.internal.org',
-    'https://box2.internal.org',
-    'https://box3.internal.org'
+    'https://box1.internal.org:9200',
+    'https://box2.internal.org:9200',
+    'https://box3.internal.org:9200'
   ],
   ssl: {
     ca: fs.readFileSync('./cacert.pem'),
