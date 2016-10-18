@@ -11,7 +11,7 @@ Basic authentication credentials can be configured on a per-host basis using URL
 [source,js]
 -----
 var client = new elasticsearch.Client({
-  host: 'https://user:password@my-site.com:9243'
+  host: 'https://user:password@my-site.com:9200'
 })
 -----
 
@@ -24,7 +24,7 @@ var client = new elasticsearch.Client({
       host: 'es1.internal.org',
       auth: 'user:password'
       protocol: 'https',
-      port: 9243
+      port: 9200
     }
   ]
 });
@@ -39,9 +39,9 @@ Without any additional configuration you can specify `https://` host urls, but t
 -----
 var client = new elasticsearch.Client({
   hosts: [
-    'https://box1.internal.org:9243',
-    'https://box2.internal.org:9243',
-    'https://box3.internal.org:9243'
+    'https://box1.internal.org:9200',
+    'https://box2.internal.org:9200',
+    'https://box3.internal.org:9200'
   ],
   ssl: {
     ca: fs.readFileSync('./cacert.pem'),
