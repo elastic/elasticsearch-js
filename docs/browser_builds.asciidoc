@@ -14,7 +14,7 @@ bower install elasticsearch
 ---------
 
 === Download
- * v12.0.0-rc5: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-12.0.0-rc5.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-12.0.0-rc5.tar.gz[tar.gz]
+ * v12.0.0: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-12.0.0.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-12.0.0.tar.gz[tar.gz]
 
 NOTE: Here's an example that integrates elasticsearch.js with React https://github.com/scotchfield/elasticsearch-react-example/[on GitHub]
 
