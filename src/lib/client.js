@@ -58,7 +58,7 @@ function Client(config) {
 
     _.each(EsApiClient.prototype, _.bind(function (Fn, prop) {
       if (Fn.prototype instanceof clientAction.ApiNamespace) {
-        this[prop] = new Fn(this.transport);
+        this[prop] = new Fn(this.transport, this);
       }
     }, this));
 

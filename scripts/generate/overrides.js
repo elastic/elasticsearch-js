@@ -208,6 +208,45 @@ function (spec) {
       'reindex.rethrottle': [
         '/_update_by_query/{task_id}/_rethrottle',
         '/_delete_by_query/{task_id}/_rethrottle'
+      ],
+      'reindexRethrottle': [
+        '/_update_by_query/{task_id}/_rethrottle'
+      ]
+    }
+  },
+  {
+    version: '>=5.0.0',
+    mergeConcatParams: {
+      bulk: {
+        refresh: {
+          options: ['']
+        }
+      },
+      create: {
+        refresh: {
+          options: ['']
+        }
+      },
+      index: {
+        refresh: {
+          options: ['']
+        }
+      },
+      update: {
+        refresh: {
+          options: ['']
+        }
+      },
+      delete: {
+        refresh: {
+          options: ['']
+        }
+      }
+    },
+    aliases: {
+      'reindexRethrottle': [
+        '/_update_by_query/{task_id}/_rethrottle',
+        '/_delete_by_query/{task_id}/_rethrottle'
       ]
     }
   }

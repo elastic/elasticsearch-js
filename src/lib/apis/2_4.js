@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'reindex', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'nodes', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -1987,11 +1987,11 @@ api.getTemplate = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {Boolean} params.refresh - Refresh the affected shards after performing the operation
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -2033,7 +2033,7 @@ api.index = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -5224,8 +5224,6 @@ api.putTemplate = ca({
   method: 'PUT'
 });
 
-api.reindex = namespace();
-
 /**
  * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
  *
@@ -5234,7 +5232,7 @@ api.reindex = namespace();
  * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
- * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {Number} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
  */
 api.reindex = ca({
   params: {
@@ -5259,7 +5257,7 @@ api.reindex = ca({
       name: 'wait_for_completion'
     },
     requestsPerSecond: {
-      type: 'float',
+      type: 'number',
       'default': 0,
       name: 'requests_per_second'
     }
@@ -5272,16 +5270,16 @@ api.reindex = ca({
 });
 
 /**
- * Perform a [reindex.rethrottle](https://www.elastic.co/guide/en/elasticsearch/plugins/master/plugins-reindex.html) request
+ * Perform a [reindexRethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/docs-reindex.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Float} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+ * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
  * @param {String} params.taskId - The task id to rethrottle
  */
-api.reindex.prototype.rethrottle = ca({
+api.reindexRethrottle = ca({
   params: {
     requestsPerSecond: {
-      type: 'float',
+      type: 'number',
       required: true,
       name: 'requests_per_second'
     }
@@ -5324,13 +5322,13 @@ api.renderSearchTemplate = ca({
  * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
   params: {
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     scrollId: {
       type: 'string',
@@ -5374,7 +5372,7 @@ api.scroll = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
@@ -5386,7 +5384,7 @@ api.scroll = ca({
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {Text} params.suggestText - The source text for which the suggestions should be returned
+ * @param {String} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
@@ -5464,7 +5462,7 @@ api.search = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -5519,7 +5517,7 @@ api.search = ca({
       name: 'suggest_size'
     },
     suggestText: {
-      type: 'text',
+      type: 'string',
       name: 'suggest_text'
     },
     timeout: {
@@ -5752,7 +5750,7 @@ api.searchShards = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -5785,7 +5783,7 @@ api.searchTemplate = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -6406,12 +6404,12 @@ api.termvectors = ca({
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
- * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
- * @param {Anything} params.scriptId - The id of a stored script
+ * @param {String} params.script - The URL-encoded script definition (instead of using request body)
+ * @param {String} params.scriptId - The id of a stored script
  * @param {Boolean} params.scriptedUpsert - True if the script referenced in script or script_id should be called to perform inserts - defaults to false
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -6447,8 +6445,11 @@ api.update = ca({
     routing: {
       type: 'string'
     },
-    script: {},
+    script: {
+      type: 'string'
+    },
     scriptId: {
+      type: 'string',
       name: 'script_id'
     },
     scriptedUpsert: {
@@ -6462,7 +6463,7 @@ api.update = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -6514,7 +6515,7 @@ api.update = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Date, Number} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
  * @param {Number} params.size - Number of hits to return (default: 10)
@@ -6527,7 +6528,7 @@ api.update = ca({
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {Text} params.suggestText - The source text for which the suggestions should be returned
+ * @param {String} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
@@ -6535,9 +6536,9 @@ api.update = ca({
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
  * @param {String} params.consistency - Explicit write consistency setting for the operation
- * @param {Integer} params.scrollSize - Size on the scroll request powering the update_by_query
+ * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
- * @param {Float} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
+ * @param {Number} params.requestsPerSecond - The throttle for this request in sub-requests per second. 0 means set no throttle.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -6619,7 +6620,7 @@ api.updateByQuery = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -6676,7 +6677,7 @@ api.updateByQuery = ca({
       name: 'suggest_size'
     },
     suggestText: {
-      type: 'text',
+      type: 'string',
       name: 'suggest_text'
     },
     timeout: {
@@ -6710,7 +6711,7 @@ api.updateByQuery = ca({
       ]
     },
     scrollSize: {
-      type: 'integer',
+      type: 'number',
       name: 'scroll_size'
     },
     waitForCompletion: {
@@ -6719,7 +6720,7 @@ api.updateByQuery = ca({
       name: 'wait_for_completion'
     },
     requestsPerSecond: {
-      type: 'float',
+      type: 'number',
       'default': 0,
       name: 'requests_per_second'
     }
@@ -6754,11 +6755,11 @@ api.updateByQuery = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
  * @param {String} params.parent - ID of the parent document
- * @param {Boolean} params.refresh - Refresh the index after performing the operation
+ * @param {Boolean} params.refresh - Refresh the affected shards after performing the operation
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID

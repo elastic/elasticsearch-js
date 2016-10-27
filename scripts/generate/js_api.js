@@ -24,6 +24,7 @@ module.exports = function (branch, done) {
   var version = Version.fromBranch(branch);
   var overrides = version.mergeOpts(require('./overrides'), {
     aliases: {},
+    mergeConcatParams: {},
     paramAsBody: {},
     clientActionModifier: false
   });
@@ -196,6 +197,22 @@ module.exports = function (branch, done) {
       def.url.parts = _.transform(def.url.parts, transformParamKeys, {});
 
       var allParams = _.extend({}, def.url.params, def.url.parts);
+      _.forOwn(allParams, (paramSpec, paramName) => {
+        const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
+        if (toMerge) {
+          _.mergeWith(paramSpec, toMerge, (dest, src) => {
+            if (_.isArray(dest) && _.isArray(src)) {
+              return dest.concat(src)
+            }
+          })
+        }
+
+        if (paramSpec.options) {
+          const invalidOpts = paramSpec.options.some(opt => typeof opt !== 'string')
+          if (invalidOpts) throw new Error(`${name} has options that are not strings...`)
+        }
+      })
+
       var spec = {
         name: name,
         methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),

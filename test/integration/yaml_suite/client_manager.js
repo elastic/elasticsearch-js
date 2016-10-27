@@ -103,9 +103,7 @@ module.exports = {
         return Bluebird.all([
           client.indices.delete({ index: '*', ignore: 404 }),
           client.indices.deleteTemplate({ name: '*', ignore: 404 }),
-          client.snapshot.getRepository({
-            snapshot: '_all'
-          })
+          client.snapshot.getRepository()
           .then(_.keys)
           .map(function (repo) {
             return client.snapshot.get({
