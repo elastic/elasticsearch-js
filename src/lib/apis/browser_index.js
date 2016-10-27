@@ -1,10 +1,10 @@
 module.exports = {
-  '_default': require('./2_3'),
+  '_default': require('./5_0'),
+  '5.0': require('./5_0'),
+  '2.4': require('./2_4'),
   '2.3': require('./2_3'),
   '2.2': require('./2_2'),
   '2.1': require('./2_1'),
-  '2.0': require('./2_0'),
-  '1.7': require('./1_7'),
-  '2.4': require('./2_4'),
+  '5.x': require('./5_x'),
   'master': require('./master')
 };

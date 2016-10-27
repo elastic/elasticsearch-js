@@ -1044,7 +1044,7 @@ api.getSource = ca({
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -1097,7 +1097,7 @@ api.index = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -2871,13 +2871,13 @@ api.ping = ca({
  * Perform a [scroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
   params: {
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     scrollId: {
       type: 'string',
@@ -2919,7 +2919,7 @@ api.scroll = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
@@ -2931,7 +2931,7 @@ api.scroll = ca({
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {Text} params.suggestText - The source text for which the suggestions should be returned
+ * @param {String} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
@@ -2997,7 +2997,7 @@ api.search = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -3053,7 +3053,7 @@ api.search = ca({
       name: 'suggest_size'
     },
     suggestText: {
-      type: 'text',
+      type: 'string',
       name: 'suggest_text'
     },
     timeout: {
@@ -3150,10 +3150,10 @@ api.suggest = ca({
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
- * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
+ * @param {String} params.script - The URL-encoded script definition (instead of using request body)
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -3200,7 +3200,9 @@ api.update = ca({
     routing: {
       type: 'string'
     },
-    script: {},
+    script: {
+      type: 'string'
+    },
     timeout: {
       type: 'time'
     },
@@ -3208,7 +3210,7 @@ api.update = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -3251,7 +3253,7 @@ api.update = ca({
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID

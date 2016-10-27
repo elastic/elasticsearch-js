@@ -229,7 +229,7 @@ Options:::
 `timestamp`::
 `Date, Number` -- Explicit timestamp for the document
 `ttl`::
-`Duration` -- Expiration time for the document
+`Date, Number` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -713,7 +713,7 @@ Options:::
 `timestamp`::
 `Date, Number` -- Explicit timestamp for the document
 `ttl`::
-`Duration` -- Expiration time for the document
+`Date, Number` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -1105,7 +1105,7 @@ client.search({
 
 [horizontal]
 `scroll`::
-`Duration` -- Specify how long a consistent view of the index should be maintained for scrolled search
+`Date, Number` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `scrollId`::
 `String` -- The scroll ID
 
@@ -1203,7 +1203,7 @@ Options:::
 `routing`::
 `String, String[], Boolean` -- A comma-separated list of specific routing values
 `scroll`::
-`Duration` -- Specify how long a consistent view of the index should be maintained for scrolled search
+`Date, Number` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `searchType`::
 `String` -- Search operation type
 Options:::
@@ -1240,7 +1240,7 @@ Options:::
 `suggestSize`::
 `Number` -- How many suggestions to return in response
 `suggestText`::
-`Text` -- The source text for which the suggestions should be returned
+`String` -- The source text for which the suggestions should be returned
 `timeout`::
 `Date, Number` -- Explicit operation timeout
 `version`::
@@ -1437,13 +1437,13 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `script`::
-`Anything` -- The URL-encoded script definition (instead of using request body)
+`String` -- The URL-encoded script definition (instead of using request body)
 `timeout`::
 `Date, Number` -- Explicit operation timeout
 `timestamp`::
 `Date, Number` -- Explicit timestamp for the document
 `ttl`::
-`Duration` -- Expiration time for the document
+`Date, Number` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::

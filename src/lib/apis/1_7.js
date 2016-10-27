@@ -1993,7 +1993,7 @@ api.getTemplate = ca({
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -2043,7 +2043,7 @@ api.index = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -4614,7 +4614,6 @@ api.msearch = ca({
  * @param {Boolean} params.realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
  * @param {String} params.index - The index in which the document resides.
  * @param {String} params.type - The type of the document.
- * @param {String} params.id - The id of the document.
  */
 api.mtermvectors = ca({
   params: {
@@ -5296,13 +5295,13 @@ api.putTemplate = ca({
  * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/1.6/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
   params: {
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     scrollId: {
       type: 'string',
@@ -5346,7 +5345,7 @@ api.scroll = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
@@ -5357,7 +5356,7 @@ api.scroll = ca({
  * @param {String} params.suggestField - Specify which field to use for suggestions
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {Text} params.suggestText - The source text for which the suggestions should be returned
+ * @param {String} params.suggestText - The source text for which the suggestions should be returned
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
@@ -5435,7 +5434,7 @@ api.search = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -5488,7 +5487,7 @@ api.search = ca({
       name: 'suggest_size'
     },
     suggestText: {
-      type: 'text',
+      type: 'string',
       name: 'suggest_text'
     },
     timeout: {
@@ -5721,7 +5720,7 @@ api.searchShards = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Duration} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -5754,7 +5753,7 @@ api.searchTemplate = ca({
       type: 'list'
     },
     scroll: {
-      type: 'duration'
+      type: 'time'
     },
     searchType: {
       type: 'enum',
@@ -6257,12 +6256,12 @@ api.termvector = ca({
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
- * @param {Anything} params.script - The URL-encoded script definition (instead of using request body)
- * @param {Anything} params.scriptId - The id of a stored script
+ * @param {String} params.script - The URL-encoded script definition (instead of using request body)
+ * @param {String} params.scriptId - The id of a stored script
  * @param {Boolean} params.scriptedUpsert - True if the script referenced in script or script_id should be called to perform inserts - defaults to false
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -6306,8 +6305,11 @@ api.update = ca({
     routing: {
       type: 'string'
     },
-    script: {},
+    script: {
+      type: 'string'
+    },
     scriptId: {
+      type: 'string',
       name: 'script_id'
     },
     scriptedUpsert: {
@@ -6321,7 +6323,7 @@ api.update = ca({
       type: 'time'
     },
     ttl: {
-      type: 'duration'
+      type: 'time'
     },
     version: {
       type: 'number'
@@ -6363,7 +6365,7 @@ api.update = ca({
  * @param {String} params.routing - Specific routing value
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Duration} params.ttl - Expiration time for the document
+ * @param {Date, Number} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
