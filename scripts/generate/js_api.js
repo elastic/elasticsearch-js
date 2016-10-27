@@ -92,18 +92,24 @@ module.exports = function (branch, done) {
       clientActionModifier: overrides.clientActionModifier
     };
 
-    var create = _.assign({}, _.find(apiSpec.actions, { name: 'index' }), {
-      name: 'create',
-      location: 'create',
-      proxy: 'index',
-      transformBody: 'params.op_type = \'create\';'
-    });
+    if (!_.find(apiSpec.actions, { name: 'create' })) {
+      var create = _.assign(
+        {},
+        _.cloneDeep(_.find(apiSpec.actions, { name: 'index' })),
+        {
+          name: 'create',
+          location: 'create',
+          proxy: 'index',
+          transformBody: 'params.op_type = \'create\';'
+        }
+      );
 
-    if (create.allParams && create.allParams.opType) {
-      delete create.allParams.opType;
+      if (create.allParams && create.allParams.opType) {
+        delete create.allParams.opType;
+      }
+
+      apiSpec.proxies.push(create);
     }
-
-    apiSpec.proxies.push(create);
 
     [].concat(apiSpec.actions, apiSpec.proxies)
     .forEach(function (action) {
