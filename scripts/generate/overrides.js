@@ -208,6 +208,9 @@ function (spec) {
       'reindex.rethrottle': [
         '/_update_by_query/{task_id}/_rethrottle',
         '/_delete_by_query/{task_id}/_rethrottle'
+      ],
+      'reindexRethrottle': [
+        '/_update_by_query/{task_id}/_rethrottle'
       ]
     }
   },
@@ -239,6 +242,12 @@ function (spec) {
           options: ['']
         }
       }
+    },
+    aliases: {
+      'reindexRethrottle': [
+        '/_update_by_query/{task_id}/_rethrottle',
+        '/_delete_by_query/{task_id}/_rethrottle'
+      ]
     }
   }
 ];
