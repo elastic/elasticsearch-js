@@ -1986,6 +1986,7 @@ api.getTemplate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.consistency - Explicit write consistency setting for the operation
+ * @param {String} [params.opType=index] - Explicit operation type
  * @param {String} params.parent - ID of the parent document
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} params.routing - Specific routing value

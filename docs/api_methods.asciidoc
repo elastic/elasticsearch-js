@@ -330,82 +330,6 @@ Options:::
 
 link:#[back to top]
 
-[[api-create]]
-=== `create`
-
-[source,js]
---------
-client.create([params, [callback]])
---------
-
-Adds a typed JSON document in a specific index, making it searchable. If a document with the same `index`, `type`, and `id` already exists, an error will occur.
-
-The default method is `POST` and the usual <<api-conventions,params and return values>> apply. See http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[the elasticsearch docs] for more about this method.
-
-.Create a document
-[source,js]
----------
-client.create({
-  index: 'myindex',
-  type: 'mytype',
-  id: '1',
-  body: {
-    title: 'Test 1',
-    tags: ['y', 'z'],
-    published: true,
-    published_at: '2013-01-01',
-    counter: 1
-  }
-}, function (error, response) {
-  // ...
-});
----------
-
-
-*Params*
-
-[horizontal]
-`waitForActiveShards`::
-`String` -- Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-`parent`::
-`String` -- ID of the parent document
-`refresh`::
-`String` -- If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-Options:::
- * `"true"`
- * `"false"`
- * `"wait_for"`
- * `""`
-
-`routing`::
-`String` -- Specific routing value
-`timeout`::
-`Date, Number` -- Explicit operation timeout
-`timestamp`::
-`Date, Number` -- Explicit timestamp for the document
-`ttl`::
-`Date, Number` -- Expiration time for the document
-`version`::
-`Number` -- Explicit version number for concurrency control
-`versionType`::
-`String` -- Specific version type
-Options:::
- * `"internal"`
- * `"external"`
- * `"external_gte"`
- * `"force"`
-
-`pipeline`::
-`String` -- The pipeline id to preprocess incoming documents with
-`id`::
-`String` -- Document ID
-`index`::
-`String` -- The name of the index
-`type`::
-`String` -- The type of the document
-
-link:#[back to top]
-
 [[api-delete]]
 === `delete`
 
@@ -1060,6 +984,12 @@ client.index({
 [horizontal]
 `waitForActiveShards`::
 `String` -- Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+`[opType=index]`::
+`String` -- Explicit operation type
+Options:::
+ * `"index"`
+ * `"create"`
+
 `parent`::
 `String` -- ID of the parent document
 `refresh`::

@@ -864,6 +864,12 @@ Options:::
  * `"quorum"`
  * `"all"`
 
+`[opType=index]`::
+`String` -- Explicit operation type
+Options:::
+ * `"index"`
+ * `"create"`
+
 `parent`::
 `String` -- ID of the parent document
 `refresh`::

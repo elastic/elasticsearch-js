@@ -2584,6 +2584,7 @@ api.getTemplate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+ * @param {String} [params.opType=index] - Explicit operation type
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
@@ -7133,28 +7134,4 @@ api.updateByQuery = ca({
     }
   ],
   method: 'POST'
-});
-
-/**
- * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
- * @param {String} params.parent - ID of the parent document
- * @param {String} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
- * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
- * @param {Number} params.version - Explicit version number for concurrency control
- * @param {String} params.versionType - Specific version type
- * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
- * @param {String} params.id - Document ID
- * @param {String} params.index - The name of the index
- * @param {String} params.type - The type of the document
- */
-api.create = ca.proxy(api.index, {
-  transform: function (params) {
-    params.op_type = 'create';
-  }
 });
