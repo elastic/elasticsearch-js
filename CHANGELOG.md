@@ -1,5 +1,8 @@
 # elasticsearch-js changelog
 
+## 12.0 (Oct 26 2016)
+ - apiVersion `"5.0"` is now the default
+
 ## 11.0 (Apr 5 2016)
  - apiVersion `"2.3"` is now the default
  - updated APIs, to use the new API's exposed by the `v5.0.0-alpha1` of elasticsearch use the `"master"` api version.
