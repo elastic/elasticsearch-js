@@ -50,6 +50,8 @@ include::api_methods_1_0.asciidoc[]
 
 include::api_methods_0_90.asciidoc[]
 
+include::changelog.asciidoc[]
+
 include::host.asciidoc[]
 
 include::transport.asciidoc[]

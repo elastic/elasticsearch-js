@@ -2691,51 +2691,18 @@ api.indices = namespace();
  * Perform a [indices.analyze](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {String} params.analyzer - The name of the analyzer to use
- * @param {String, String[], Boolean} params.charFilter - A comma-separated list of character filters to use for the analysis
- * @param {String} params.field - Use the analyzer configured for this field (instead of passing the analyzer name)
- * @param {String, String[], Boolean} params.filter - A comma-separated list of filters to use for the analysis
  * @param {String} params.index - The name of the index to scope the operation
  * @param {Boolean} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
- * @param {String, String[], Boolean} params.text - The text on which the analysis should be performed (when request body is not used)
- * @param {String} params.tokenizer - The name of the tokenizer to use for the analysis
- * @param {Boolean} params.explain - With `true`, outputs more advanced details. (default: false)
- * @param {String, String[], Boolean} params.attributes - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
  * @param {String} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
   params: {
-    analyzer: {
-      type: 'string'
-    },
-    charFilter: {
-      type: 'list',
-      name: 'char_filter'
-    },
-    field: {
-      type: 'string'
-    },
-    filter: {
-      type: 'list'
-    },
     index: {
       type: 'string'
     },
     preferLocal: {
       type: 'boolean',
       name: 'prefer_local'
-    },
-    text: {
-      type: 'list'
-    },
-    tokenizer: {
-      type: 'string'
-    },
-    explain: {
-      type: 'boolean'
-    },
-    attributes: {
-      type: 'list'
     },
     format: {
       type: 'enum',
