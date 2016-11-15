@@ -24,6 +24,11 @@ var hostDefaults = {
   }
 };
 
+var base64 = function (str) {
+  var buffer = Buffer.from ? Buffer.from(str, 'utf8') : new Buffer(str, 'utf8')
+  return buffer.toString('base64')
+}
+
 describe('Host class', function () {
   describe('construction', function () {
     it('properly sets the defaults', function () {
@@ -120,7 +125,7 @@ describe('Host class', function () {
         expect(host.host).to.eql('pizza.com');
         expect(host.port).to.eql(888);
         expect(host.path).to.eql('/path');
-        expect(host.headers).to.eql({ Authorization: 'Basic ' + (new Buffer('joe:diner')).toString('base64') });
+        expect(host.headers).to.eql({ Authorization: 'Basic ' + base64('joe:diner') });
         expect(host.query).to.eql({
           query: 'yes'
         });
@@ -133,6 +138,14 @@ describe('Host class', function () {
       var host = new Host(1234);
 
       expect(host).to.eql(hostDefaults);
+    });
+
+    it('defaults auth values from the `httpAuth` setting', function () {
+      var host = new Host('http://localhost:9200', {
+        httpAuth: 'username:password'
+      });
+
+      expect(host.headers).to.have.property('Authorization', 'Basic ' + base64('username:password'));
     });
   });
 

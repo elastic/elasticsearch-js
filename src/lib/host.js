@@ -100,6 +100,10 @@ function Host(config, globalConfig) {
     config = {};
   }
 
+  if (!config.auth && globalConfig.httpAuth) {
+    config.auth = globalConfig.httpAuth
+  }
+
   if (config.auth) {
     config.headers = config.headers || {};
     config.headers.Authorization = 'Basic ' + btoa(config.auth);
