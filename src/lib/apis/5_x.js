@@ -603,6 +603,7 @@ api.cat.prototype.nodeattrs = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {Boolean} params.fullId - Return the full node ID instead of the shortened version (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -614,6 +615,10 @@ api.cat.prototype.nodes = ca({
   params: {
     format: {
       type: 'string'
+    },
+    fullId: {
+      type: 'boolean',
+      name: 'full_id'
     },
     local: {
       type: 'boolean'
@@ -1164,17 +1169,15 @@ api.cat.prototype.threadPool = ca({
     v: {
       type: 'boolean',
       'default': false
-    },
-    threadPoolPatterns: {
-      type: 'list',
-      name: 'thread_pool_patterns'
     }
   },
   urls: [
     {
-      fmt: '/_cat/thread_pool/<%=threadPools%>',
+      fmt: '/_cat/thread_pool/<%=threadPoolPatterns%>',
       req: {
-        threadPools: {}
+        threadPoolPatterns: {
+          type: 'list'
+        }
       }
     },
     {
@@ -1275,7 +1278,7 @@ api.cluster.prototype.getSettings = ca({
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.waitForActiveShards - Wait until the specified number of shards is active
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
- * @param {String} params.waitForEvents - Wait until all currently queued events with the given priorty are processed
+ * @param {String} params.waitForEvents - Wait until all currently queued events with the given priority are processed
  * @param {Boolean} params.waitForNoRelocatingShards - Whether to wait until there are no relocating shards in the cluster
  * @param {String} params.waitForStatus - Wait until cluster is in a specific state
  * @param {String, String[], Boolean} params.index - Limit the information returned to a specific index
@@ -1597,7 +1600,6 @@ api.cluster.prototype.stats = ca({
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to restrict the results
  * @param {String, String[], Boolean} params.type - A comma-separated list of types to restrict the results
  */
@@ -1656,10 +1658,6 @@ api.count = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     }
   },
   urls: [
@@ -1952,7 +1950,6 @@ api['delete'] = ca({
  * @param {String} [params.conflicts=abort] - What to do when the delete-by-query hits version conflicts?
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
@@ -1973,7 +1970,8 @@ api['delete'] = ca({
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the delete-by-query is complete.
- * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
+ * @param {Number} params.requestsPerSecond - The throttle for this request in sub-requests per second. -1 means no throttle.
+ * @param {Integer} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -2030,10 +2028,6 @@ api.deleteByQuery = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     },
     preference: {
       type: 'string'
@@ -2114,6 +2108,10 @@ api.deleteByQuery = ca({
       type: 'number',
       'default': 0,
       name: 'requests_per_second'
+    },
+    slices: {
+      type: 'integer',
+      'default': 1
     }
   },
   urls: [
@@ -2239,7 +2237,6 @@ api.exists = ca({
  * @param {String} params.df - The default field for query string query (default: _all)
  * @param {String, String[], Boolean} params.storedFields - A comma-separated list of stored fields to return in the response
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.parent - The ID of the parent document
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
@@ -2278,10 +2275,6 @@ api.explain = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     },
     parent: {
       type: 'string'
@@ -4238,6 +4231,7 @@ api.indices.prototype.refresh = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.dryRun - If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
  * @param {String} params.alias - The name of the alias to rollover
@@ -4247,6 +4241,10 @@ api.indices.prototype.rollover = ca({
   params: {
     timeout: {
       type: 'time'
+    },
+    dryRun: {
+      type: 'boolean',
+      name: 'dry_run'
     },
     masterTimeout: {
       type: 'time',
@@ -4586,6 +4584,7 @@ api.indices.prototype.updateAliases = ca({
  * Perform a [indices.upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: false)
@@ -4594,6 +4593,10 @@ api.indices.prototype.updateAliases = ca({
  */
 api.indices.prototype.upgrade = ca({
   params: {
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
     expandWildcards: {
       type: 'enum',
       'default': 'open',
@@ -4649,7 +4652,6 @@ api.indices.prototype.upgrade = ca({
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {Boolean} params.rewrite - Provide a more detailed explanation showing the actual Lucene query that will be executed.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
@@ -4705,10 +4707,6 @@ api.indices.prototype.validateQuery = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     },
     rewrite: {
       type: 'boolean'
@@ -4881,6 +4879,7 @@ api.ingest.prototype.simulate = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
@@ -4901,6 +4900,9 @@ api.mget = ca({
     },
     refresh: {
       type: 'boolean'
+    },
+    routing: {
+      type: 'string'
     },
     _source: {
       type: 'list'
@@ -5736,7 +5738,8 @@ api.putTemplate = ca({
  * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
- * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
+ * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+ * @param {Integer} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
  */
 api.reindex = ca({
   params: {
@@ -5760,6 +5763,10 @@ api.reindex = ca({
       type: 'number',
       'default': 0,
       name: 'requests_per_second'
+    },
+    slices: {
+      type: 'integer',
+      'default': 1
     }
   },
   url: {
@@ -5869,7 +5876,6 @@ api.scroll = ca({
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
@@ -5953,10 +5959,6 @@ api.search = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     },
     preference: {
       type: 'string'
@@ -6939,7 +6941,6 @@ api.update = ca({
  * @param {String} [params.conflicts=abort] - What to do when the update by query hits version conflicts?
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
  * @param {String} params.pipeline - Ingest pipeline to set on index requests made by this action. (default: none)
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
@@ -6962,7 +6963,8 @@ api.update = ca({
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the update by query operation is complete.
- * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
+ * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+ * @param {Integer} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -7019,10 +7021,6 @@ api.updateByQuery = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    lowercaseExpandedTerms: {
-      type: 'boolean',
-      name: 'lowercase_expanded_terms'
     },
     pipeline: {
       type: 'string'
@@ -7110,6 +7108,10 @@ api.updateByQuery = ca({
       type: 'number',
       'default': 0,
       name: 'requests_per_second'
+    },
+    slices: {
+      type: 'integer',
+      'default': 1
     }
   },
   urls: [

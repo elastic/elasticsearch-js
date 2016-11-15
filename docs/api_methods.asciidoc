@@ -447,12 +447,6 @@ Options:::
 
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
-`explain`::
-`Boolean` -- Specify whether to return detailed information about score computation as part of a hit
-`storedFields`::
-`String, String[], Boolean` -- A comma-separated list of stored fields to return as part of a hit
-`docvalueFields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return as the docvalue representation of a field for each hit
 `from`::
 `Number` -- Starting offset (default: 0)
 `ignoreUnavailable`::
@@ -507,29 +501,14 @@ Options:::
 `Number` -- The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
 `stats`::
 `String, String[], Boolean` -- Specific 'tag' of the request for logging and statistical purposes
-`suggestField`::
-`String` -- Specify which field to use for suggestions
-`[suggestMode=missing]`::
-`String` -- Specify suggest mode
-Options:::
- * `"missing"`
- * `"popular"`
- * `"always"`
-
-`suggestSize`::
-`Number` -- How many suggestions to return in response
-`suggestText`::
-`String` -- The source text for which the suggestions should be returned
-`[timeout=1m]`::
-`Date, Number` -- Time each individual bulk request should wait for shards that are unavailable.
-`trackScores`::
-`Boolean` -- Whether to calculate and return scores even if they are not used for sorting
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
 `requestCache`::
 `Boolean` -- Specify if request cache should be used for this request or not, defaults to index level setting
 `refresh`::
 `Boolean` -- Should the effected indexes be refreshed?
+`[timeout=1m]`::
+`Date, Number` -- Time each individual bulk request should wait for shards that are unavailable.
 `waitForActiveShards`::
 `String` -- Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 `scrollSize`::
@@ -537,7 +516,7 @@ Options:::
 `waitForCompletion`::
 `Boolean` -- Should the request should block until the delete-by-query is complete.
 `requestsPerSecond`::
-`Number` -- The throttle for this request in sub-requests per second. -1 means set no throttle.
+`Number` -- The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 `type`::
@@ -1099,6 +1078,8 @@ client.mget({
 `Boolean` -- Specify whether to perform the operation in realtime or search mode
 `refresh`::
 `Boolean` -- Refresh the shard containing the document before performing the operation
+`routing`::
+`String` -- Specific routing value
 `_source`::
 `String, String[], Boolean` -- True or false to return the _source field or not, or a list of fields to return
 `_sourceExclude`::
@@ -2166,14 +2147,6 @@ Options:::
 
 `df`::
 `String` -- The field to use as default where no field prefix is given in the query string
-`explain`::
-`Boolean` -- Specify whether to return detailed information about score computation as part of a hit
-`storedFields`::
-`String, String[], Boolean` -- A comma-separated list of stored fields to return as part of a hit
-`docvalueFields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return as the docvalue representation of a field for each hit
-`fielddataFields`::
-`String, String[], Boolean` -- A comma-separated list of fields to return as the docvalue representation of a field for each hit
 `from`::
 `Number` -- Starting offset (default: 0)
 `ignoreUnavailable`::
@@ -2181,7 +2154,7 @@ Options:::
 `allowNoIndices`::
 `Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[conflicts=abort]`::
-`String` -- What to do when the reindex hits version conflicts?
+`String` -- What to do when the update by query hits version conflicts?
 Options:::
  * `"abort"`
  * `"proceed"`
@@ -2230,23 +2203,6 @@ Options:::
 `Number` -- The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
 `stats`::
 `String, String[], Boolean` -- Specific 'tag' of the request for logging and statistical purposes
-`suggestField`::
-`String` -- Specify which field to use for suggestions
-`[suggestMode=missing]`::
-`String` -- Specify suggest mode
-Options:::
- * `"missing"`
- * `"popular"`
- * `"always"`
-
-`suggestSize`::
-`Number` -- How many suggestions to return in response
-`suggestText`::
-`String` -- The source text for which the suggestions should be returned
-`[timeout=1m]`::
-`Date, Number` -- Time each individual bulk request should wait for shards that are unavailable.
-`trackScores`::
-`Boolean` -- Whether to calculate and return scores even if they are not used for sorting
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
 `versionType`::
@@ -2255,12 +2211,14 @@ Options:::
 `Boolean` -- Specify if request cache should be used for this request or not, defaults to index level setting
 `refresh`::
 `Boolean` -- Should the effected indexes be refreshed?
+`[timeout=1m]`::
+`Date, Number` -- Time each individual bulk request should wait for shards that are unavailable.
 `waitForActiveShards`::
 `String` -- Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 `scrollSize`::
 `Number` -- Size on the scroll request powering the update_by_query
 `waitForCompletion`::
-`Boolean` -- Should the request should block until the reindex is complete.
+`Boolean` -- Should the request should block until the update by query operation is complete.
 `requestsPerSecond`::
 `Number` -- The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
 `index`::
@@ -2636,6 +2594,8 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 [horizontal]
 `format`::
 `String` -- a short version of the Accept header, e.g. json, yaml
+`fullId`::
+`Boolean` -- Return the full node ID instead of the shortened version (default: false)
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
@@ -3071,7 +3031,7 @@ Options:::
 `waitForNodes`::
 `String` -- Wait until the specified number of nodes is available
 `waitForEvents`::
-`String` -- Wait until all currently queued events with the given priorty are processed
+`String` -- Wait until all currently queued events with the given priority are processed
 Options:::
  * `"immediate"`
  * `"urgent"`
@@ -4310,6 +4270,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 [horizontal]
 `timeout`::
 `Date, Number` -- Explicit operation timeout
+`dryRun`::
+`Boolean` -- If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
 `masterTimeout`::
 `Date, Number` -- Specify timeout for connection to master
 `waitForActiveShards`::
@@ -4532,6 +4494,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 *Params*
 
 [horizontal]
+`allowNoIndices`::
+`Boolean` -- Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 `[expandWildcards=open]`::
 `String` -- Whether to expand wildcard expression to concrete indices that are open, closed or both.
 Options:::

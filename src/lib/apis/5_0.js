@@ -567,6 +567,7 @@ api.cat.prototype.nodeattrs = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {Boolean} params.fullId - Return the full node ID instead of the shortened version (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
@@ -577,6 +578,10 @@ api.cat.prototype.nodes = ca({
   params: {
     format: {
       type: 'string'
+    },
+    fullId: {
+      type: 'boolean',
+      name: 'full_id'
     },
     local: {
       type: 'boolean'
@@ -1033,17 +1038,15 @@ api.cat.prototype.threadPool = ca({
     v: {
       type: 'boolean',
       'default': false
-    },
-    threadPoolPatterns: {
-      type: 'list',
-      name: 'thread_pool_patterns'
     }
   },
   urls: [
     {
-      fmt: '/_cat/thread_pool/<%=threadPools%>',
+      fmt: '/_cat/thread_pool/<%=threadPoolPatterns%>',
       req: {
-        threadPools: {}
+        threadPoolPatterns: {
+          type: 'list'
+        }
       }
     },
     {
@@ -1144,7 +1147,7 @@ api.cluster.prototype.getSettings = ca({
  * @param {Date, Number} params.timeout - Explicit operation timeout
  * @param {String} params.waitForActiveShards - Wait until the specified number of shards is active
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
- * @param {String} params.waitForEvents - Wait until all currently queued events with the given priorty are processed
+ * @param {String} params.waitForEvents - Wait until all currently queued events with the given priority are processed
  * @param {Boolean} params.waitForNoRelocatingShards - Whether to wait until there are no relocating shards in the cluster
  * @param {String} params.waitForStatus - Wait until cluster is in a specific state
  * @param {String, String[], Boolean} params.index - Limit the information returned to a specific index
@@ -1815,9 +1818,6 @@ api['delete'] = ca({
  * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
- * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
- * @param {String, String[], Boolean} params.storedFields - A comma-separated list of stored fields to return as part of a hit
- * @param {String, String[], Boolean} params.docvalueFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
  * @param {Number} params.from - Starting offset (default: 0)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -1838,19 +1838,14 @@ api['delete'] = ca({
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {Number} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
- * @param {String} params.suggestField - Specify which field to use for suggestions
- * @param {String} [params.suggestMode=missing] - Specify suggest mode
- * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {String} params.suggestText - The source text for which the suggestions should be returned
- * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
- * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
+ * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the delete-by-query is complete.
- * @param {Number} params.requestsPerSecond - The throttle for this request in sub-requests per second. -1 means set no throttle.
+ * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -1874,17 +1869,6 @@ api.deleteByQuery = ca({
     },
     df: {
       type: 'string'
-    },
-    explain: {
-      type: 'boolean'
-    },
-    storedFields: {
-      type: 'list',
-      name: 'stored_fields'
-    },
-    docvalueFields: {
-      type: 'list',
-      name: 'docvalue_fields'
     },
     from: {
       type: 'number'
@@ -1971,36 +1955,6 @@ api.deleteByQuery = ca({
     stats: {
       type: 'list'
     },
-    suggestField: {
-      type: 'string',
-      name: 'suggest_field'
-    },
-    suggestMode: {
-      type: 'enum',
-      'default': 'missing',
-      options: [
-        'missing',
-        'popular',
-        'always'
-      ],
-      name: 'suggest_mode'
-    },
-    suggestSize: {
-      type: 'number',
-      name: 'suggest_size'
-    },
-    suggestText: {
-      type: 'string',
-      name: 'suggest_text'
-    },
-    timeout: {
-      type: 'time',
-      'default': '1m'
-    },
-    trackScores: {
-      type: 'boolean',
-      name: 'track_scores'
-    },
     version: {
       type: 'boolean'
     },
@@ -2010,6 +1964,10 @@ api.deleteByQuery = ca({
     },
     refresh: {
       type: 'boolean'
+    },
+    timeout: {
+      type: 'time',
+      'default': '1m'
     },
     waitForActiveShards: {
       type: 'string',
@@ -4152,6 +4110,7 @@ api.indices.prototype.refresh = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {Boolean} params.dryRun - If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
  * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
  * @param {String} params.alias - The name of the alias to rollover
@@ -4161,6 +4120,10 @@ api.indices.prototype.rollover = ca({
   params: {
     timeout: {
       type: 'time'
+    },
+    dryRun: {
+      type: 'boolean',
+      name: 'dry_run'
     },
     masterTimeout: {
       type: 'time',
@@ -4500,6 +4463,7 @@ api.indices.prototype.updateAliases = ca({
  * Perform a [indices.upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.waitForCompletion - Specify whether the request should block until the all segments are upgraded (default: false)
@@ -4508,6 +4472,10 @@ api.indices.prototype.updateAliases = ca({
  */
 api.indices.prototype.upgrade = ca({
   params: {
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
     expandWildcards: {
       type: 'enum',
       'default': 'open',
@@ -4795,6 +4763,7 @@ api.ingest.prototype.simulate = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
@@ -4815,6 +4784,9 @@ api.mget = ca({
     },
     refresh: {
       type: 'boolean'
+    },
+    routing: {
+      type: 'string'
     },
     _source: {
       type: 'list'
@@ -6839,14 +6811,10 @@ api.update = ca({
  * @param {Boolean} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
  * @param {String} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {String} params.df - The field to use as default where no field prefix is given in the query string
- * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
- * @param {String, String[], Boolean} params.storedFields - A comma-separated list of stored fields to return as part of a hit
- * @param {String, String[], Boolean} params.docvalueFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
- * @param {String, String[], Boolean} params.fielddataFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
  * @param {Number} params.from - Starting offset (default: 0)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
- * @param {String} [params.conflicts=abort] - What to do when the reindex hits version conflicts?
+ * @param {String} [params.conflicts=abort] - What to do when the update by query hits version conflicts?
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {Boolean} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
  * @param {Boolean} params.lowercaseExpandedTerms - Specify whether query terms should be lowercased
@@ -6864,19 +6832,14 @@ api.update = ca({
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {Number} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {String, String[], Boolean} params.stats - Specific 'tag' of the request for logging and statistical purposes
- * @param {String} params.suggestField - Specify which field to use for suggestions
- * @param {String} [params.suggestMode=missing] - Specify suggest mode
- * @param {Number} params.suggestSize - How many suggestions to return in response
- * @param {String} params.suggestText - The source text for which the suggestions should be returned
- * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
- * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {Boolean} params.versionType - Should the document increment the version number (internal) on hit or not (reindex)
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
+ * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
- * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
+ * @param {Boolean} params.waitForCompletion - Should the request should block until the update by query operation is complete.
  * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means set no throttle as does "unlimited" which is the only non-float this accepts.
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -6901,21 +6864,6 @@ api.updateByQuery = ca({
     },
     df: {
       type: 'string'
-    },
-    explain: {
-      type: 'boolean'
-    },
-    storedFields: {
-      type: 'list',
-      name: 'stored_fields'
-    },
-    docvalueFields: {
-      type: 'list',
-      name: 'docvalue_fields'
-    },
-    fielddataFields: {
-      type: 'list',
-      name: 'fielddata_fields'
     },
     from: {
       type: 'number'
@@ -7005,36 +6953,6 @@ api.updateByQuery = ca({
     stats: {
       type: 'list'
     },
-    suggestField: {
-      type: 'string',
-      name: 'suggest_field'
-    },
-    suggestMode: {
-      type: 'enum',
-      'default': 'missing',
-      options: [
-        'missing',
-        'popular',
-        'always'
-      ],
-      name: 'suggest_mode'
-    },
-    suggestSize: {
-      type: 'number',
-      name: 'suggest_size'
-    },
-    suggestText: {
-      type: 'string',
-      name: 'suggest_text'
-    },
-    timeout: {
-      type: 'time',
-      'default': '1m'
-    },
-    trackScores: {
-      type: 'boolean',
-      name: 'track_scores'
-    },
     version: {
       type: 'boolean'
     },
@@ -7048,6 +6966,10 @@ api.updateByQuery = ca({
     },
     refresh: {
       type: 'boolean'
+    },
+    timeout: {
+      type: 'time',
+      'default': '1m'
     },
     waitForActiveShards: {
       type: 'string',

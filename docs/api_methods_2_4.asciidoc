@@ -971,6 +971,8 @@ client.mget({
 `Boolean` -- Specify whether to perform the operation in realtime or search mode
 `refresh`::
 `Boolean` -- Refresh the shard containing the document before performing the operation
+`routing`::
+`String` -- Specific routing value
 `_source`::
 `String, String[], Boolean` -- True or false to return the _source field or not, or a list of fields to return
 `_sourceExclude`::

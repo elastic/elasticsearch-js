@@ -4384,6 +4384,7 @@ api.info = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {Boolean} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {Boolean} params.refresh - Refresh the shard containing the document before performing the operation
+ * @param {String} params.routing - Specific routing value
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {String, String[], Boolean} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {String, String[], Boolean} params._sourceInclude - A list of fields to extract and return from the _source field
@@ -4403,6 +4404,9 @@ api.mget = ca({
     },
     refresh: {
       type: 'boolean'
+    },
+    routing: {
+      type: 'string'
     },
     _source: {
       type: 'list'
