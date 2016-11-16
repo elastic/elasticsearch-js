@@ -64,6 +64,8 @@ Options:::
 `DurationString` -- Explicit operation timeout
 `index`::
 `String` -- Default index for items which don't provide one
+`body`::
+`Object[], JSONLines` -- The request body, as either an array of objects or new-line delimited JSON objects. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-bulk.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -87,6 +89,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 [horizontal]
 `scrollId`::
 `String, String[], Boolean` -- A comma-separated list of scroll IDs to clear
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -165,6 +169,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of indices to restrict the results
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the results
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-count.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -244,6 +250,8 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -310,6 +318,8 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-delete.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -396,6 +406,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of indices to restrict the operation; use `_all` to perform the operation on all indices
 `type`::
 `String, String[], Boolean` -- A comma-separated list of types to restrict the operation
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-delete-by-query.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -447,6 +459,8 @@ client.exists({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -539,6 +553,8 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-explain.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -734,6 +750,8 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -817,6 +835,8 @@ client.mget({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-multi-get.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -893,6 +913,8 @@ client.mlt({
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-more-like-this.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -943,6 +965,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names to use as default
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to use as default
+`body`::
+`Object[], JSONLines` -- The request body, as either an array of objects or new-line delimited JSON objects. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-multi-search.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1043,6 +1067,8 @@ client.percolate({
 `String` -- The name of the index with a registered percolator query
 `type`::
 `String` -- The document type
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1114,6 +1140,8 @@ client.search({
 `DurationString` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `scrollId`::
 `String` -- The scroll ID
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1255,6 +1283,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to search; leave empty to perform the operation on all types
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-search.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1323,6 +1353,8 @@ Options:::
 `String` -- The URL-encoded request definition (instead of using request body)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-search.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1464,6 +1496,8 @@ Options:::
 `String` -- The name of the index
 `type`::
 `String` -- The type of the document
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-update.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1660,6 +1694,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Exit the JVM as well (default: true)
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1804,6 +1840,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `Boolean` -- Simulate the operation only and return the resulting state
 `filterMetadata`::
 `Boolean` -- Don't return cluster state metadata (default: false)
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-reroute.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1882,6 +1920,8 @@ Options:::
  * `"detailed"`
  * `"text"`
 
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-analyze.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1929,6 +1969,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index name to limit the operation
 `recycler`::
 `Boolean` -- Clear the recycler cache
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-clearcache.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1957,6 +1999,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1984,6 +2028,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-create-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2011,6 +2057,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2040,6 +2088,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `String` -- The name of the index with an alias
 `name`::
 `String` -- The name of the alias to be deleted
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2067,6 +2117,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` for all indices
 `type`::
 `String` -- The name of the document type to delete
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2094,6 +2146,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `DurationString` -- Specify timeout for connection to master
 `name`::
 `String` -- The name of the template
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2123,6 +2177,8 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 `String` -- The name of the warmer (supports wildcards); leave empty to delete all warmers
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2146,6 +2202,8 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 [horizontal]
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to check
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-settings.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2177,6 +2235,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 `name`::
 `String, String[], Boolean` -- A comma-separated list of alias names to return
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2208,6 +2268,8 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to check the types across all indices
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to check
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-types-exists.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2243,6 +2305,8 @@ Options:::
 `Boolean` -- Refresh the index after performing the operation
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-flush.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2453,6 +2517,8 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2494,6 +2560,8 @@ Options:::
 `Boolean` -- Specify whether the request should block until the merge process is finished (default: true)
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-optimize.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2523,6 +2591,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `String` -- The name of the index with an alias
 `name`::
 `String` -- The name of the alias to be created or updated
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2554,6 +2624,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to perform the operation on all indices
 `type`::
 `String` -- The name of the document type
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-put-mapping.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2579,6 +2651,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-update-settings.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2608,6 +2682,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `DurationString` -- Specify timeout for connection to master
 `name`::
 `String` -- The name of the template
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2637,6 +2713,8 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `String` -- The name of the warmer
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2668,6 +2746,8 @@ Options:::
 `Anything` -- TODO: ?
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-refresh.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2728,6 +2808,8 @@ Options:::
 
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string for all indices
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2893,6 +2975,8 @@ client.indices.updateAliases({
 `DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
+`body`::
+`Object, JSON` -- The request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2932,5 +3016,7 @@ Options:::
 `String, String[], Boolean` -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
 `type`::
 `String, String[], Boolean` -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
+`body`::
+`Object, JSON` -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-validate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
