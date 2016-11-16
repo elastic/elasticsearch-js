@@ -31,18 +31,22 @@ The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-c
 *Params*
 
 [horizontal]<%
-_.each(action.allParams, function (param, paramName) { %>
-`<%= paramWithDefault(paramName, param.default) %>`::
-`<%= paramType(param.type) %>` -- <%= joinParagraphs(param.description || '', 4) %><%
-if (param.type === 'enum') {%>
-Options:::<%
-_.each(param.options, function (opt) {%>
- * `"<%= opt %>"`<%
-});%>
-<%
-} // endif enum
-
-}); // endeach param %>
+_.each(action.allParams, function (param, paramName) {
+  
+  // param name
+  print(`\n\`${paramWithDefault(paramName, param.default)}\`::`)
+  
+  // param type and description
+  print(`\n\`${paramType(param.type, paramName)}\` -- ${joinParagraphs(param.description || '', 4)}`)
+  
+  if (param.type === 'enum') {
+    print('\nOptions:::')
+    _.each(param.options, function (opt) {
+      print(`\n * \`"${opt}"\``)
+    })
+    print('\n')
+  }
+}); %>
 
 link:#[back to top]<%
 
