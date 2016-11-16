@@ -248,6 +248,9 @@ function (spec) {
         '/_update_by_query/{task_id}/_rethrottle',
         '/_delete_by_query/{task_id}/_rethrottle'
       ]
+    },
+    examples: {
+      scroll: 'scroll_5.0+.asciidoc'
     }
   }
 ];

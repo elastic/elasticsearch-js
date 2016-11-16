@@ -26,12 +26,9 @@ module.exports = function (branch, done) {
     aliases: {},
     mergeConcatParams: {},
     paramAsBody: {},
-    clientActionModifier: false
-  });
-
-  var examples = version.mergeOpts(require('../../docs/_examples/index.js'), {
+    clientActionModifier: false,
     examples: {}
-  }).examples;
+  });
 
   var steps = [
     readSpecFiles,
@@ -113,7 +110,7 @@ module.exports = function (branch, done) {
 
     [].concat(apiSpec.actions, apiSpec.proxies)
     .forEach(function (action) {
-      var examplePath = examples[action.name] || action.name + '.asciidoc';
+      var examplePath = overrides.examples[action.name] || action.name + '.asciidoc';
 
       try {
         action.examples = fs.readFileSync(fromRoot('docs/_examples', examplePath), 'utf8');
