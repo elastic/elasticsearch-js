@@ -170,11 +170,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
 
       var extraData = _.omit(cause, ['type', 'reason']);
       if (_.size(extraData)) {
-        memo += ', with { ' + qs.stringify(extraData, ' ', '=', {
-          encodeURIComponent: function (v) {
-            return String(v).split('\n').join('\\n');
-          }
-        }) + ' }';
+        memo += ', with ' + prettyPrint(extraData);
       }
 
       return memo;
@@ -194,3 +190,23 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
     errors[name] = StatusCodeError;
   });
 });
+
+
+function prettyPrint(data) {
+  const path = []
+  return (function print(v) {
+    if (typeof v === 'object') {
+      if (path.indexOf(v) > -1) return '[circular]'
+      path.push(v)
+      try {
+        return '{ ' + _.map(v, function (subv, name) {
+          return name + '=' + print(subv)
+        }).join(' & ') + ' }'
+      } finally {
+        path.pop()
+      }
+    } else {
+      return JSON.stringify(v)
+    }
+  }(data))
+}
