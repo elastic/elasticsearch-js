@@ -77,6 +77,10 @@ var templateGlobals = {
         return 'String';
       case 'list':
         return 'String, String[], Boolean';
+      case 'bulkbody':
+        return 'Object[], JSONLines';
+      case 'body':
+        return 'Object, JSON';
       default:
         return _.ucfirst(type);
     }

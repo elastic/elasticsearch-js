@@ -31,8 +31,8 @@ The default method is `<%= action.spec.method || 'GET' %>` and the usual <<api-c
 *Params*
 
 [horizontal]<%
-_.each(action.allParams, function (param, paramName) {
-  
+
+var printParam = function (param, paramName) {
   // param name
   print(`\n\`${paramWithDefault(paramName, param.default)}\`::`)
   
@@ -46,7 +46,23 @@ _.each(action.allParams, function (param, paramName) {
     })
     print('\n')
   }
-}); %>
+}
+
+_.each(action.allParams, printParam)
+
+if (action.spec.method && action.spec.method !== 'GET') {
+  var bodyTitle = `${action.spec.needBody ? 'The' : 'An optional'} request body`
+  var bodyTypeDesc = action.spec.bulkBody
+    ? 'as either an array of objects or new-line delimited JSON objects'
+    : 'as either JSON or a JSON serializable object'  
+
+  printParam({
+    type: action.spec.bulkBody ? 'bulkbody' : 'body',
+    description: `${bodyTitle}, ${bodyTypeDesc}. See ${action.docUrl}[the elasticsearch docs] for details about what can be specified here.`
+  }, 'body')
+}
+
+%>
 
 link:#[back to top]<%
 
