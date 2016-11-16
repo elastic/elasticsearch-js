@@ -55,7 +55,7 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `type`::
 `String` -- Default document type for items which don't provide one
 `fields`::
@@ -294,9 +294,9 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
 `Duration` -- Expiration time for the document
 `version`::
@@ -360,7 +360,7 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -877,9 +877,9 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
 `Duration` -- Expiration time for the document
 `version`::
@@ -1576,7 +1576,7 @@ Options:::
 `suggestText`::
 `Text` -- The source text for which the suggestions should be returned
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `trackScores`::
 `Boolean` -- Whether to calculate and return scores even if they are not used for sorting
 `version`::
@@ -1993,9 +1993,9 @@ Options:::
 `scriptedUpsert`::
 `Boolean` -- True if the script referenced in script or script_id should be called to perform inserts - defaults to false
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
 `Duration` -- Expiration time for the document
 `version`::
@@ -2036,7 +2036,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2077,7 +2077,7 @@ Options:::
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2110,7 +2110,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2151,7 +2151,7 @@ Options:::
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2184,7 +2184,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2248,7 +2248,7 @@ Options:::
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2283,7 +2283,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2314,7 +2314,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2345,7 +2345,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2376,7 +2376,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2407,7 +2407,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2444,7 +2444,7 @@ Options:::
  * `"g"`
 
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2506,7 +2506,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2539,7 +2539,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `h`::
 `String, String[], Boolean` -- Comma-separated list of column names to display
 `help`::
@@ -2572,9 +2572,9 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 
 link:#[back to top]
 
@@ -2606,9 +2606,9 @@ Options:::
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `waitForActiveShards`::
 `Number` -- Wait until the specified number of shards is active
 `waitForNodes`::
@@ -2648,7 +2648,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 
 link:#[back to top]
 
@@ -2673,9 +2673,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 
 link:#[back to top]
 
@@ -2704,9 +2704,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 `metric`::
 `String, String[], Boolean` -- Limit the information returned to the specified metrics. Defaults to all but metadata
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 
 link:#[back to top]
 
@@ -2731,7 +2731,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `ignoreUnavailable`::
@@ -2776,7 +2776,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -2892,9 +2892,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `allowNoIndices`::
@@ -2931,9 +2931,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `updateAllTypes`::
 `Boolean` -- Whether to update the mapping for all fields with the same name across all types or not
 `index`::
@@ -2960,9 +2960,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
 
@@ -2987,9 +2987,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit timestamp for the document
+`DurationString` -- Explicit timestamp for the document
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names (supports wildcards); use `_all` for all indices
 `name`::
@@ -3016,9 +3016,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `name`::
 `String` -- The name of the template
 
@@ -3043,7 +3043,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `name`::
 `String, String[], Boolean` -- A comma-separated list of warmer names to delete (supports wildcards); use `_all` to delete all warmers in the specified indices. You must specify a name either in the uri or in the parameters.
 `index`::
@@ -3146,7 +3146,7 @@ The default method is `HEAD` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `name`::
@@ -3368,7 +3368,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `index`::
@@ -3524,7 +3524,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `name`::
@@ -3629,9 +3629,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `allowNoIndices`::
@@ -3713,9 +3713,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit timestamp for the document
+`DurationString` -- Explicit timestamp for the document
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
 `name`::
@@ -3742,9 +3742,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `allowNoIndices`::
@@ -3785,7 +3785,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed)
 `allowNoIndices`::
@@ -3828,9 +3828,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `create`::
 `Boolean` -- Whether the index template should only be added if new or can also replace an existing one
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `flatSettings`::
 `Boolean` -- Return settings in flat format (default: false)
 `name`::
@@ -3857,7 +3857,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `ignoreUnavailable`::
 `Boolean` -- Whether specified concrete indices should be ignored when unavailable (missing or closed) in the search request to warm
 `allowNoIndices`::
@@ -4105,9 +4105,9 @@ client.indices.updateAliases({
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Request timeout
+`DurationString` -- Request timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 
 link:#[back to top]
 
@@ -4230,7 +4230,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `interval`::
-`Date, Number` -- The interval for the second sampling of threads
+`DurationString` -- The interval for the second sampling of threads
 `snapshots`::
 `Number` -- Number of samples of thread stacktrace (default: 10)
 `threads`::
@@ -4245,7 +4245,7 @@ Options:::
  * `"block"`
 
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
@@ -4274,7 +4274,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `human`::
 `Boolean` -- Whether to return time and byte values in human-readable format.
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `nodeId`::
 `String, String[], Boolean` -- A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 `metric`::
@@ -4320,7 +4320,7 @@ Options:::
 `types`::
 `String, String[], Boolean` -- A comma-separated list of document types for the `indexing` index metric
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `metric`::
 `String, String[], Boolean` -- Limit the information returned to the specified metrics
 `indexMetric`::
@@ -4349,7 +4349,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `waitForCompletion`::
 `Boolean` -- Should this request wait until the operation has completed before returning
 `repository`::
@@ -4378,9 +4378,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `verify`::
 `Boolean` -- Whether to verify the repository after creation
 `repository`::
@@ -4407,7 +4407,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `repository`::
 `String` -- A repository name
 `snapshot`::
@@ -4434,9 +4434,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `repository`::
 `String, String[], Boolean` -- A comma-separated list of repository names
 
@@ -4461,7 +4461,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `repository`::
 `String` -- A repository name
 `snapshot`::
@@ -4488,7 +4488,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `repository`::
@@ -4515,7 +4515,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `waitForCompletion`::
 `Boolean` -- Should this request wait until the operation has completed before returning
 `repository`::
@@ -4544,7 +4544,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `repository`::
 `String` -- A repository name
 `snapshot`::
@@ -4571,9 +4571,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `repository`::
 `String` -- A repository name
 

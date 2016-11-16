@@ -20,7 +20,7 @@ api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', '
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.type - Default document type for items which don't provide one
  * @param {String, String[], Boolean} params.fields - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
@@ -108,7 +108,7 @@ api.cat = namespace();
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -164,7 +164,7 @@ api.cat.prototype.aliases = ca({
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -235,7 +235,7 @@ api.cat.prototype.allocation = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -291,7 +291,7 @@ api.cat.prototype.count = ca({
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -365,7 +365,7 @@ api.cat.prototype.fielddata = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -437,7 +437,7 @@ api.cat.prototype.help = ca({
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {String} params.health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
  * @param {Boolean} params.help - Return help information
@@ -516,7 +516,7 @@ api.cat.prototype.indices = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -560,7 +560,7 @@ api.cat.prototype.master = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -605,7 +605,7 @@ api.cat.prototype.nodeattrs = ca({
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.fullId - Return the full node ID instead of the shortened version (default: false)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -653,7 +653,7 @@ api.cat.prototype.nodes = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -697,7 +697,7 @@ api.cat.prototype.pendingTasks = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -741,7 +741,7 @@ api.cat.prototype.plugins = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.bytes - The unit in which to display byte values
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -809,7 +809,7 @@ api.cat.prototype.recovery = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -900,7 +900,7 @@ api.cat.prototype.segments = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -955,7 +955,7 @@ api.cat.prototype.shards = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.ignoreUnavailable - Set to true to ignore unavailable snapshots
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -1070,7 +1070,7 @@ api.cat.prototype.tasks = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -1126,7 +1126,7 @@ api.cat.prototype.templates = ca({
  * @param {String} params.format - a short version of the Accept header, e.g. json, yaml
  * @param {String} params.size - The multiplier in which to display values
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String, String[], Boolean} params.h - Comma-separated list of column names to display
  * @param {Boolean} params.help - Return help information
  * @param {String, String[], Boolean} params.s - Comma-separated list of column names or column aliases to sort by
@@ -1240,8 +1240,8 @@ api.cluster.prototype.allocationExplain = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.includeDefaults - Whether to return all default clusters setting.
  */
 api.cluster.prototype.getSettings = ca({
@@ -1274,8 +1274,8 @@ api.cluster.prototype.getSettings = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} [params.level=cluster] - Specify the level of detail for returned information
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.waitForActiveShards - Wait until the specified number of shards is active
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
  * @param {String} params.waitForEvents - Wait until all currently queued events with the given priority are processed
@@ -1359,7 +1359,7 @@ api.cluster.prototype.health = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  */
 api.cluster.prototype.pendingTasks = ca({
   params: {
@@ -1381,8 +1381,8 @@ api.cluster.prototype.pendingTasks = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  */
 api.cluster.prototype.putSettings = ca({
   params: {
@@ -1412,8 +1412,8 @@ api.cluster.prototype.putSettings = ca({
  * @param {Boolean} params.explain - Return an explanation of why the commands can or cannot be executed
  * @param {Boolean} params.retryFailed - Retries allocation of shards that are blocked due to too many subsequent allocation failures
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics. Defaults to all but metadata
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  */
 api.cluster.prototype.reroute = ca({
   params: {
@@ -1459,7 +1459,7 @@ api.cluster.prototype.reroute = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -1552,7 +1552,7 @@ api.cluster.prototype.state = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.cluster.prototype.stats = ca({
@@ -1791,9 +1791,9 @@ api.countPercolate = ca({
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
@@ -1874,7 +1874,7 @@ api.create = ca({
  * @param {String} params.parent - ID of parent document
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - The document ID
@@ -1953,9 +1953,9 @@ api['delete'] = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
- * @param {Date, Number} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
+ * @param {DurationString} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
@@ -1966,7 +1966,7 @@ api['delete'] = ca({
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
- * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
+ * @param {DurationString} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the delete-by-query is complete.
@@ -2581,9 +2581,9 @@ api.getTemplate = ca({
  * @param {String} params.parent - ID of the parent document
  * @param {String} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.pipeline - The pipeline id to preprocess incoming documents with
@@ -2801,8 +2801,8 @@ api.indices.prototype.clearCache = ca({
  * Perform a [indices.close](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -2853,8 +2853,8 @@ api.indices.prototype.close = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} params.waitForActiveShards - Set the number of active shards to wait for before the operation returns.
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.updateAllTypes - Whether to update the mapping for all fields with the same name across all types or not
  * @param {String} params.index - The name of the index
  */
@@ -2891,8 +2891,8 @@ api.indices.prototype.create = ca({
  * Perform a [indices.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
  */
 api.indices.prototype['delete'] = ca({
@@ -2920,8 +2920,8 @@ api.indices.prototype['delete'] = ca({
  * Perform a [indices.deleteAlias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit timestamp for the document
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit timestamp for the document
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names (supports wildcards); use `_all` for all indices
  * @param {String, String[], Boolean} params.name - A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
  */
@@ -2953,8 +2953,8 @@ api.indices.prototype.deleteAlias = ca({
  * Perform a [indices.deleteTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.deleteTemplate = ca({
@@ -3089,7 +3089,7 @@ api.indices.prototype.existsAlias = ca({
  * Perform a [indices.existsTemplate](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String} params.name - The name of the template
  */
@@ -3741,7 +3741,7 @@ api.indices.prototype.getSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.name - The comma separated names of the index templates
  */
@@ -3829,8 +3829,8 @@ api.indices.prototype.getUpgrade = ca({
  * Perform a [indices.open](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3880,8 +3880,8 @@ api.indices.prototype.open = ca({
  * Perform a [indices.putAlias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit timestamp for the document
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit timestamp for the document
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
  * @param {String} params.name - The name of the alias to be created or updated
  */
@@ -3913,8 +3913,8 @@ api.indices.prototype.putAlias = ca({
  * Perform a [indices.putMapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3984,7 +3984,7 @@ api.indices.prototype.putMapping = ca({
  * Perform a [indices.putSettings](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.preserveExisting - Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
  * @param {Boolean} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {Boolean} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -4049,8 +4049,8 @@ api.indices.prototype.putSettings = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
  * @param {Boolean} params.create - Whether the index template should only be added if new or can also replace an existing one
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {String} params.name - The name of the template
  */
@@ -4187,9 +4187,9 @@ api.indices.prototype.refresh = ca({
  * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.dryRun - If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
  * @param {String} params.alias - The name of the alias to rollover
  * @param {String} params.newIndex - The name of the rollover index
@@ -4360,8 +4360,8 @@ api.indices.prototype.shardStores = ca({
  * Perform a [indices.shrink](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.waitForActiveShards - Set the number of active shards to wait for on the shrunken index before the operation returns.
  * @param {String} params.index - The name of the source index to shrink
  * @param {String} params.target - The name of the target index to shrink into
@@ -4517,8 +4517,8 @@ api.indices.prototype.stats = ca({
  * Perform a [indices.updateAliases](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Request timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Request timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  */
 api.indices.prototype.updateAliases = ca({
   params: {
@@ -4713,8 +4713,8 @@ api.ingest = namespace();
  * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.id - Pipeline ID
  */
 api.ingest.prototype.deletePipeline = ca({
@@ -4742,7 +4742,7 @@ api.ingest.prototype.deletePipeline = ca({
  * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String} params.id - Comma separated list of pipeline ids. Wildcards supported
  */
 api.ingest.prototype.getPipeline = ca({
@@ -4771,8 +4771,8 @@ api.ingest.prototype.getPipeline = ca({
  * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.id - Pipeline ID
  */
 api.ingest.prototype.putPipeline = ca({
@@ -5187,12 +5187,12 @@ api.nodes = namespace();
  * Perform a [nodes.hotThreads](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.interval - The interval for the second sampling of threads
+ * @param {DurationString} params.interval - The interval for the second sampling of threads
  * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
  * @param {Boolean} params.ignoreIdleThreads - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
  * @param {String} params.type - The type to sample (default: cpu)
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.nodes.prototype.hotThreads = ca({
@@ -5243,7 +5243,7 @@ api.nodes.prototype.hotThreads = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.flatSettings - Return settings in flat format (default: false)
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {String, String[], Boolean} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
  */
@@ -5328,7 +5328,7 @@ api.nodes.prototype.info = ca({
  * @param {Boolean} params.human - Whether to return time and byte values in human-readable format.
  * @param {String} [params.level=node] - Return indices stats aggregated at index, node or shard level
  * @param {String, String[], Boolean} params.types - A comma-separated list of document types for the `indexing` index metric
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.metric - Limit the information returned to the specified metrics
  * @param {String, String[], Boolean} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -5692,7 +5692,7 @@ api.putTemplate = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
- * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
+ * @param {DurationString} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Boolean} params.waitForCompletion - Should the request should block until the reindex is complete.
  * @param {Number} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
@@ -5786,7 +5786,7 @@ api.renderSearchTemplate = ca({
  * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
@@ -5836,7 +5836,7 @@ api.scroll = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
@@ -5849,7 +5849,7 @@ api.scroll = ca({
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
  * @param {String} params.suggestText - The source text for which the suggestions should be returned
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
@@ -6105,7 +6105,7 @@ api.searchShards = ca({
  * @param {String} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Boolean} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {Boolean} params.profile - Specify whether to profile the query execution
@@ -6192,7 +6192,7 @@ api.snapshot = namespace();
  * Perform a [snapshot.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
  * @param {String} params.repository - A repository name
  * @param {String} params.snapshot - A snapshot name
@@ -6227,8 +6227,8 @@ api.snapshot.prototype.create = ca({
  * Perform a [snapshot.createRepository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.verify - Whether to verify the repository after creation
  * @param {String} params.repository - A repository name
  */
@@ -6261,7 +6261,7 @@ api.snapshot.prototype.createRepository = ca({
  * Perform a [snapshot.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {String} params.repository - A repository name
  * @param {String} params.snapshot - A snapshot name
  */
@@ -6290,8 +6290,8 @@ api.snapshot.prototype['delete'] = ca({
  * Perform a [snapshot.deleteRepository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
  */
 api.snapshot.prototype.deleteRepository = ca({
@@ -6319,7 +6319,7 @@ api.snapshot.prototype.deleteRepository = ca({
  * Perform a [snapshot.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.ignoreUnavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
  * @param {String} params.repository - A repository name
  * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
@@ -6352,7 +6352,7 @@ api.snapshot.prototype.get = ca({
  * Perform a [snapshot.getRepository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {String, String[], Boolean} params.repository - A comma-separated list of repository names
  */
@@ -6385,7 +6385,7 @@ api.snapshot.prototype.getRepository = ca({
  * Perform a [snapshot.restore](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.waitForCompletion - Should this request wait until the operation has completed before returning
  * @param {String} params.repository - A repository name
  * @param {String} params.snapshot - A snapshot name
@@ -6420,7 +6420,7 @@ api.snapshot.prototype.restore = ca({
  * Perform a [snapshot.status](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {Boolean} params.ignoreUnavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
  * @param {String} params.repository - A repository name
  * @param {String, String[], Boolean} params.snapshot - A comma-separated list of snapshot names
@@ -6466,8 +6466,8 @@ api.snapshot.prototype.status = ca({
  * Perform a [snapshot.verifyRepository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.repository - A repository name
  */
 api.snapshot.prototype.verifyRepository = ca({
@@ -6795,9 +6795,9 @@ api.termvectors = ca({
  * @param {String} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -6902,9 +6902,9 @@ api.update = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
- * @param {Date, Number} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
+ * @param {DurationString} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {String, String[], Boolean} params._source - True or false to return the _source field or not, or a list of fields to return
@@ -6916,7 +6916,7 @@ api.update = ca({
  * @param {Boolean} params.versionType - Should the document increment the version number (internal) on hit or not (reindex)
  * @param {Boolean} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {Boolean} params.refresh - Should the effected indexes be refreshed?
- * @param {Date, Number} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
+ * @param {DurationString} [params.timeout=1m] - Time each individual bulk request should wait for shards that are unavailable.
  * @param {String} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {Number} params.scrollSize - Size on the scroll request powering the update_by_query
  * @param {Boolean} params.waitForCompletion - Should the request should block until the update by query operation is complete.

@@ -61,7 +61,7 @@ Options:::
 `type`::
 `String` -- Default document type for items which don't provide one
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `index`::
 `String` -- Default index for items which don't provide one
 
@@ -225,11 +225,11 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
-`Date, Number` -- Expiration time for the document
+`DurationString` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -295,7 +295,7 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -391,7 +391,7 @@ Options:::
 `source`::
 `String` -- The URL-encoded query definition (instead of using the request body)
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to restrict the operation; use `_all` to perform the operation on all indices
 `type`::
@@ -715,11 +715,11 @@ Options:::
 `routing`::
 `String` -- Specific routing value
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
-`Date, Number` -- Expiration time for the document
+`DurationString` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -1111,7 +1111,7 @@ client.search({
 
 [horizontal]
 `scroll`::
-`Date, Number` -- Specify how long a consistent view of the index should be maintained for scrolled search
+`DurationString` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `scrollId`::
 `String` -- The scroll ID
 
@@ -1209,7 +1209,7 @@ Options:::
 `routing`::
 `String, String[], Boolean` -- A comma-separated list of specific routing values
 `scroll`::
-`Date, Number` -- Specify how long a consistent view of the index should be maintained for scrolled search
+`DurationString` -- Specify how long a consistent view of the index should be maintained for scrolled search
 `searchType`::
 `String` -- Search operation type
 Options:::
@@ -1248,7 +1248,7 @@ Options:::
 `suggestText`::
 `String` -- The source text for which the suggestions should be returned
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `version`::
 `Boolean` -- Specify whether to return document version as part of a hit
 `index`::
@@ -1445,11 +1445,11 @@ Options:::
 `script`::
 `String` -- The URL-encoded script definition (instead of using request body)
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `timestamp`::
-`Date, Number` -- Explicit timestamp for the document
+`Timestamp` -- Explicit timestamp for the document
 `ttl`::
-`Date, Number` -- Expiration time for the document
+`DurationString` -- Expiration time for the document
 `version`::
 `Number` -- Explicit version number for concurrency control
 `versionType`::
@@ -1511,9 +1511,9 @@ Options:::
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Explicit operation timeout for connection to master node
+`DurationString` -- Explicit operation timeout for connection to master node
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `waitForActiveShards`::
 `Number` -- Wait until the specified number of shards is active
 `waitForNodes`::
@@ -1563,7 +1563,7 @@ client.cluster.nodeHotThreads({
 
 [horizontal]
 `interval`::
-`Date, Number` -- The interval for the second sampling of threads
+`DurationString` -- The interval for the second sampling of threads
 `snapshots`::
 `Number` -- Number of samples of thread stacktrace (default: 10)
 `threads`::
@@ -1628,7 +1628,7 @@ client.cluster.nodeInfo({ jvm: true })
 `threadPool`::
 `Boolean` -- Return information about the thread pool
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `transport`::
 `Boolean` -- Return information about transport
 `nodeId`::
@@ -1655,7 +1655,7 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `delay`::
-`Date, Number` -- Set the delay for the operation (default: 1s)
+`DurationString` -- Set the delay for the operation (default: 1s)
 `exit`::
 `Boolean` -- Exit the JVM as well (default: true)
 `nodeId`::
@@ -1762,7 +1762,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 
 link:#[back to top]
 
@@ -1840,7 +1840,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 `local`::
 `Boolean` -- Return local information, do not retrieve the state from master node (default: false)
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 
 link:#[back to top]
 
@@ -1952,9 +1952,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
 
@@ -1979,9 +1979,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
 
@@ -2006,9 +2006,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
 
@@ -2033,9 +2033,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit timestamp for the document
+`DurationString` -- Explicit timestamp for the document
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index with an alias
 `name`::
@@ -2062,7 +2062,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` for all indices
 `type`::
@@ -2089,9 +2089,9 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `name`::
 `String` -- The name of the template
 
@@ -2116,7 +2116,7 @@ The default method is `DELETE` and the usual <<api-conventions,params and return
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
 `name`::
@@ -2296,7 +2296,7 @@ The default method is `GET` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 
@@ -2448,9 +2448,9 @@ The default method is `POST` and the usual <<api-conventions,params and return v
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index
 
@@ -2516,9 +2516,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Explicit timestamp for the document
+`DurationString` -- Explicit timestamp for the document
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String` -- The name of the index with an alias
 `name`::
@@ -2547,9 +2547,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `ignoreConflicts`::
 `Boolean` -- Specify whether to ignore conflicts while updating the mapping (default: false)
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` to perform the operation on all indices
 `type`::
@@ -2576,7 +2576,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
@@ -2603,9 +2603,9 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 `order`::
 `Number` -- The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
 `timeout`::
-`Date, Number` -- Explicit operation timeout
+`DurationString` -- Explicit operation timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `name`::
 `String` -- The name of the template
 
@@ -2630,7 +2630,7 @@ The default method is `PUT` and the usual <<api-conventions,params and return va
 
 [horizontal]
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
 `name`::
@@ -2888,9 +2888,9 @@ client.indices.updateAliases({
 
 [horizontal]
 `timeout`::
-`Date, Number` -- Request timeout
+`DurationString` -- Request timeout
 `masterTimeout`::
-`Date, Number` -- Specify timeout for connection to master
+`DurationString` -- Specify timeout for connection to master
 `index`::
 `String, String[], Boolean` -- A comma-separated list of index names to filter aliases
 

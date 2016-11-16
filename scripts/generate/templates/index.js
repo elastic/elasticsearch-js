@@ -66,10 +66,11 @@ var templateGlobals = {
     }
   },
 
-  paramType: function (type) {
+  paramType: function (type, paramName) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
       case 'time':
-        return 'Date, Number';
+        if (paramName === 'timestamp') return 'Timestamp'
+        return 'DurationString';
       case 'any':
         return 'Anything';
       case 'enum':

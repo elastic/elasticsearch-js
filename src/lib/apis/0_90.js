@@ -12,7 +12,7 @@ api._namespaces = ['cluster', 'indices'];
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Explicitely set the replication type
  * @param {String} params.type - Default document type for items which don't provide one
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String} params.index - Default index for items which don't provide one
  */
 api.bulk = ca({
@@ -109,8 +109,8 @@ api.cluster.prototype.getSettings = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {String} [params.level=cluster] - Specify the level of detail for returned information
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Explicit operation timeout for connection to master node
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Explicit operation timeout for connection to master node
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Number} params.waitForActiveShards - Wait until the specified number of shards is active
  * @param {String} params.waitForNodes - Wait until the specified number of nodes is available
  * @param {Number} params.waitForRelocatingShards - Wait until the specified number of relocating shards is finished
@@ -180,7 +180,7 @@ api.cluster.prototype.health = ca({
  * Perform a [cluster.nodeHotThreads](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-hot-threads.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.interval - The interval for the second sampling of threads
+ * @param {DurationString} params.interval - The interval for the second sampling of threads
  * @param {Number} params.snapshots - Number of samples of thread stacktrace (default: 10)
  * @param {Number} params.threads - Specify the number of threads to provide information for (default: 3)
  * @param {String} params.type - The type to sample (default: cpu)
@@ -235,7 +235,7 @@ api.cluster.prototype.nodeHotThreads = ca({
  * @param {Boolean} params.process - Return information about the Elasticsearch process
  * @param {Boolean} params.settings - Return information about node settings
  * @param {Boolean} params.threadPool - Return information about the thread pool
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.transport - Return information about transport
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
@@ -298,7 +298,7 @@ api.cluster.prototype.nodeInfo = ca({
  * Perform a [cluster.nodeShutdown](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.delay - Set the delay for the operation (default: 1s)
+ * @param {DurationString} params.delay - Set the delay for the operation (default: 1s)
  * @param {Boolean} params.exit - Exit the JVM as well (default: true)
  * @param {String, String[], Boolean} params.nodeId - A comma-separated list of node IDs or names to perform the operation on; use `_local` to perform the operation on the node you're connected to, leave empty to perform the operation on all nodes
  */
@@ -407,7 +407,7 @@ api.cluster.prototype.nodeStats = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  */
 api.cluster.prototype.pendingTasks = ca({
   params: {
@@ -471,7 +471,7 @@ api.cluster.prototype.reroute = ca({
  * @param {Boolean} params.filterNodes - Do not return information about nodes
  * @param {Boolean} params.filterRoutingTable - Do not return information about shard allocation (`routing_table` and `routing_nodes`)
  * @param {Boolean} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  */
 api.cluster.prototype.state = ca({
   params: {
@@ -585,7 +585,7 @@ api.count = ca({
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - The document ID
@@ -664,7 +664,7 @@ api['delete'] = ca({
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String} params.routing - Specific routing value
  * @param {String} params.source - The URL-encoded query definition (instead of using the request body)
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to restrict the operation; use `_all` to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of types to restrict the operation
  */
@@ -1043,9 +1043,9 @@ api.getSource = ca({
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -1289,8 +1289,8 @@ api.indices.prototype.clearCache = ca({
  * Perform a [indices.close](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.close = ca({
@@ -1318,8 +1318,8 @@ api.indices.prototype.close = ca({
  * Perform a [indices.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-create-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.create = ca({
@@ -1347,8 +1347,8 @@ api.indices.prototype.create = ca({
  * Perform a [indices.delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of indices to delete; use `_all` or empty string to delete all indices
  */
 api.indices.prototype['delete'] = ca({
@@ -1381,8 +1381,8 @@ api.indices.prototype['delete'] = ca({
  * Perform a [indices.deleteAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit timestamp for the document
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit timestamp for the document
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.index - The name of the index with an alias
  * @param {String} params.name - The name of the alias to be deleted
  */
@@ -1414,7 +1414,7 @@ api.indices.prototype.deleteAlias = ca({
  * Perform a [indices.deleteMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` for all indices
  * @param {String} params.type - The name of the document type to delete
  */
@@ -1443,8 +1443,8 @@ api.indices.prototype.deleteMapping = ca({
  * Perform a [indices.deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.deleteTemplate = ca({
@@ -1472,7 +1472,7 @@ api.indices.prototype.deleteTemplate = ca({
  * Perform a [indices.deleteWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register warmer for; use `_all` or empty string to perform the operation on all indices
  * @param {String} params.name - The name of the warmer (supports wildcards); leave empty to delete all warmers
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register warmer for; use `_all` or empty string to perform the operation on all types
@@ -1712,7 +1712,7 @@ api.indices.prototype.getAlias = ca({
  * Perform a [indices.getAliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.getAliases = ca({
@@ -1917,8 +1917,8 @@ api.indices.prototype.getWarmer = ca({
  * Perform a [indices.open](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.index - The name of the index
  */
 api.indices.prototype.open = ca({
@@ -2008,8 +2008,8 @@ api.indices.prototype.optimize = ca({
  * Perform a [indices.putAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Explicit timestamp for the document
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit timestamp for the document
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.index - The name of the index with an alias
  * @param {String} params.name - The name of the alias to be created or updated
  */
@@ -2063,8 +2063,8 @@ api.indices.prototype.putAlias = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Boolean} params.ignoreConflicts - Specify whether to ignore conflicts while updating the mapping (default: false)
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` to perform the operation on all indices
  * @param {String} params.type - The name of the document type
  */
@@ -2101,7 +2101,7 @@ api.indices.prototype.putMapping = ca({
  * Perform a [indices.putSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.putSettings = ca({
@@ -2133,8 +2133,8 @@ api.indices.prototype.putSettings = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {Number} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String} params.name - The name of the template
  */
 api.indices.prototype.putTemplate = ca({
@@ -2166,7 +2166,7 @@ api.indices.prototype.putTemplate = ca({
  * Perform a [indices.putWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to register the warmer for; use `_all` or empty string to perform the operation on all indices
  * @param {String} params.name - The name of the warmer
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to register the warmer for; leave empty to perform the operation on all types
@@ -2488,8 +2488,8 @@ api.indices.prototype.status = ca({
  * Perform a [indices.updateAliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.timeout - Request timeout
- * @param {Date, Number} params.masterTimeout - Specify timeout for connection to master
+ * @param {DurationString} params.timeout - Request timeout
+ * @param {DurationString} params.masterTimeout - Specify timeout for connection to master
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to filter aliases
  */
 api.indices.prototype.updateAliases = ca({
@@ -2872,7 +2872,7 @@ api.ping = ca({
  * Perform a [scroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.scrollId - The scroll ID
  */
 api.scroll = ca({
@@ -2920,7 +2920,7 @@ api.scroll = ca({
  * @param {String} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {String} params.q - Query in the Lucene query string syntax
  * @param {String, String[], Boolean} params.routing - A comma-separated list of specific routing values
- * @param {Date, Number} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
+ * @param {DurationString} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {String} params.searchType - Search operation type
  * @param {Number} params.size - Number of hits to return (default: 10)
  * @param {String, String[], Boolean} params.sort - A comma-separated list of <field>:<direction> pairs
@@ -2933,7 +2933,7 @@ api.scroll = ca({
  * @param {String} [params.suggestMode=missing] - Specify suggest mode
  * @param {Number} params.suggestSize - How many suggestions to return in response
  * @param {String} params.suggestText - The source text for which the suggestions should be returned
- * @param {Date, Number} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timeout - Explicit operation timeout
  * @param {Boolean} params.version - Specify whether to return document version as part of a hit
  * @param {String, String[], Boolean} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {String, String[], Boolean} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -3152,9 +3152,9 @@ api.suggest = ca({
  * @param {Number} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {String} params.routing - Specific routing value
  * @param {String} params.script - The URL-encoded script definition (instead of using request body)
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
@@ -3252,9 +3252,9 @@ api.update = ca({
  * @param {Boolean} params.refresh - Refresh the index after performing the operation
  * @param {String} [params.replication=sync] - Specific replication type
  * @param {String} params.routing - Specific routing value
- * @param {Date, Number} params.timeout - Explicit operation timeout
- * @param {Date, Number} params.timestamp - Explicit timestamp for the document
- * @param {Date, Number} params.ttl - Expiration time for the document
+ * @param {DurationString} params.timeout - Explicit operation timeout
+ * @param {DurationString} params.timestamp - Explicit timestamp for the document
+ * @param {DurationString} params.ttl - Expiration time for the document
  * @param {Number} params.version - Explicit version number for concurrency control
  * @param {String} params.versionType - Specific version type
  * @param {String} params.id - Document ID
