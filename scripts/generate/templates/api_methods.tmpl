@@ -37,7 +37,7 @@ var printParam = function (param, paramName) {
   print(`\n\`${paramWithDefault(paramName, param.default)}\`::`)
   
   // param type and description
-  print(`\n\`${paramType(param.type, paramName)}\` -- ${joinParagraphs(param.description || '', 4)}`)
+  print(`\n${paramType(param.type, paramName)} -- ${joinParagraphs(param.description || '', 4)}`)
   
   if (param.type === 'enum') {
     print('\nOptions:::')

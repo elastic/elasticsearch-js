@@ -69,20 +69,28 @@ var templateGlobals = {
   paramType: function (type, paramName) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
       case 'time':
+      case 'duration':
         if (paramName === 'timestamp') return 'Timestamp'
-        return 'DurationString';
+        return '<<api-param-type-duration-string,`DurationString`>>';
       case 'any':
-        return 'Anything';
+        return 'anything';
       case 'enum':
-        return 'String';
+      case 'string':
+      case 'text':
+        return '<<api-param-type-string,`String`>>';
+      case 'boolean':
+        return '<<api-param-type-boolean,`Boolean`>>';
+      case 'number':
+      case 'integer':
+        return '<<api-param-type-number,`Number`>>';
       case 'list':
-        return 'String, String[], Boolean';
+        return '<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>';
       case 'bulkbody':
-        return 'Object[], JSONLines';
+        return '<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>>';
       case 'body':
-        return 'Object, JSON';
+        return '<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>>';
       default:
-        return _.ucfirst(type);
+        throw new Error(`unknown type "${type}"`);
     }
   },
 

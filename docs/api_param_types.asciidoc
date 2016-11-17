@@ -1,0 +1,23 @@
+[[api-param-types]]
+== API Param Types
+
+The <<api-reference>> describes the type that each parameter accepts, this reference describes each of those types in more a little more detail.
+
+[horizontal]
+`Boolean`[[api-param-type-boolean]]:: -- `true` or `false`.
+
+`Number`[[api-param-type-number]]:: -- A basic JavaScript number.
+
+`String`[[api-param-type-string]]:: -- A basic JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String[String].
+
+`String[]`[[api-param-type-string-array]]:: -- An array of strings.
+
+`Object`[[api-param-type-object]]:: -- A JSON serializable object.
+
+`Object[]`[[api-param-type-object-array]]:: -- An array of JSON serializable objects.
+
+`JSON`[[api-param-type-json]]:: -- A string or `Buffer` containing a serialized JSON object.
+
+`JSONLines`[[api-param-type-json-lines]]:: -- A string or `Buffer` of new-line (`\n`) delimited JSON objects.
+
+`DurationString`[[api-param-type-duration-string]]:: -- A string that represents a duration of time with a number followed by an https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#time-units[elasticsearch time unit]. `30m` is thirty minutes, `2d` is two days, and so on.
