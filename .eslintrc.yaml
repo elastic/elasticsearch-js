@@ -44,6 +44,7 @@ rules:
   yoda: off
   no-restricted-properties: warn
   no-prototype-builtins: warn
+  prefer-spread: off
   import/no-dynamic-require: off
   import/no-internal-modules: off
   import/newline-after-import: off
