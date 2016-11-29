@@ -130,7 +130,7 @@ describe('Log class', function () {
   describe('instance without one output listening to all events', function () {
     var log, call;
     beforeEach(function () {
-      call = void 0;
+      call = undefined;
       log = new Log({
         log: [
           {
@@ -159,7 +159,7 @@ describe('Log class', function () {
       expect(call.event).to.eql('error');
       expect(call.args[0]).to.be(err);
 
-      call = void 0;
+      call = undefined;
 
       log.error('error');
       expect(call.event).to.eql('error');

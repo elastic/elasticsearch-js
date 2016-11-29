@@ -64,7 +64,7 @@ XhrConnector.prototype.request = function (params, cb) {
 
   if (headers) {
     for (var key in headers) {
-      if (headers[key] !== void 0) {
+      if (headers[key] !== undefined) {
         xhr.setRequestHeader(key, headers[key]);
       }
     }
@@ -74,12 +74,12 @@ XhrConnector.prototype.request = function (params, cb) {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
       log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
-      var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
+      var err = xhr.status ? undefined : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
       cb(err, xhr.responseText, xhr.status);
     }
   };
 
-  xhr.send(params.body || void 0);
+  xhr.send(params.body || undefined);
 
   return function () {
     xhr.abort();

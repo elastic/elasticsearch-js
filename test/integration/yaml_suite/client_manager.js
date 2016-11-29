@@ -47,7 +47,7 @@ module.exports = {
           } else {
             // create a new client
             doCreateClient(function () {
-              cb(void 0, client);
+              cb(undefined, client);
             });
           }
         });

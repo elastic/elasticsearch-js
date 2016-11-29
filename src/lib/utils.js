@@ -377,7 +377,7 @@ _.createArray = function (input, transform) {
 
   for (i = 0; i < input.length; i += 1) {
     item = transform(input[i]);
-    if (item === void 0) {
+    if (item === undefined) {
       return false;
     } else {
       output.push(item);

@@ -325,7 +325,7 @@ describe('Transport Class', function () {
       trans = new Transport({ suggestCompression: true });
       stub(trans, 'request', function (params, cb) {
         process.nextTick(function () {
-          cb(void 0, {
+          cb(undefined, {
             ok: true,
             cluster_name: 'clustername',
             nodes: nodeList

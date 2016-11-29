@@ -22,7 +22,7 @@ var server = new XhrServer(function (request) {
       response.times -= 1;
     }
 
-    request.receive(response.status, response.body || void 0);
+    request.receive(response.status, response.body || undefined);
   } else {
     throw new Error('No known match for request: ' + JSON.stringify(reqDetails));
   }

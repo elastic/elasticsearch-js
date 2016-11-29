@@ -105,7 +105,7 @@ function JenkinsReporter(runner) {
       log(chalk.red('x'));
     }
 
-    var errMsg = void 0;
+    var errMsg;
 
     if (test.err) {
       errMsg = test.err.stack || test.err.toString();

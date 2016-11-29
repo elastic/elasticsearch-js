@@ -108,7 +108,7 @@ function spawnStep(cmd, args, cwd) {
       verbose: argv.verbose,
       cwd: cwd
     }, function (status) {
-      done(status ? new Error('Non-zero exit code: ' + status) : void 0);
+      done(status ? new Error('Non-zero exit code: ' + status) : undefined);
     });
   };
 }

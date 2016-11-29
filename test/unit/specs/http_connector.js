@@ -37,7 +37,7 @@ describe('Http Connector', function () {
     return function (req) {
       process.nextTick(function () {
         // causes the request to quit and callback
-        req.emit('error', withErr || void 0);
+        req.emit('error', withErr || undefined);
       });
     };
   }

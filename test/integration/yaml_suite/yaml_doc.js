@@ -279,7 +279,7 @@ YamlDoc.prototype = {
     var remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i += 1) {
-      if (from[steps[i]] === void 0) {
+      if (from[steps[i]] === undefined) {
         remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
         from = from[remainingSteps];
         break;
@@ -356,7 +356,7 @@ YamlDoc.prototype = {
 
     // resolve the catch arg to a value used for matching once the request is complete
     switch (args.catch) {
-      case void 0:
+      case undefined:
         catcher = null;
         break;
       case 'missing':
