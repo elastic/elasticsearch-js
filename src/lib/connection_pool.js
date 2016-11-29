@@ -65,7 +65,7 @@ ConnectionPool.calcDeadTimeoutOptions = {
     return baseTimeout;
   },
   exponential: function (attempt, baseTimeout) {
-    return Math.min(baseTimeout * 2 * Math.pow(2, (attempt * 0.5 - 1)), this.maxDeadTimeout);
+    return Math.min(baseTimeout * 2 * Math.pow(2, ((attempt * 0.5) - 1)), this.maxDeadTimeout);
   }
 };
 
