@@ -1,6 +1,6 @@
 var _ = require('./utils');
 
-var extractHostPartsRE1x = /\[\/*([^:]+):(\d+)\]/;
+var extractHostPartsRE1x = /\[\/*([^:]+):(\d+)]/;
 
 function makeNodeParser(hostProp) {
   return function (nodes) {
