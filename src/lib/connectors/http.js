@@ -13,8 +13,9 @@ var handles = {
   https: require('https')
 };
 var _ = require('../utils');
+var parseUrl = require('url').parse;
 var qs = require('querystring');
-var KeepAliveAgent = require('./_keep_alive_agent');
+var AgentKeepAlive = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 var zlib = require('zlib');
 
@@ -65,7 +66,7 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     _.each(agent.freeSockets, collectSockets);
     _.each(toRemove, function (args) {
       var host = args[0], socket = args[1];
-      agent.removeSocket(socket, host);
+      agent.removeSocket(socket, parseUrl(host));
       socket.destroy();
     });
   }
@@ -79,7 +80,7 @@ HttpConnector.prototype.createAgent = function (config) {
   }
 
   if (config.keepAlive) {
-    Agent = this.useSsl ? KeepAliveAgent.SSL : KeepAliveAgent;
+    Agent = this.useSsl ? AgentKeepAlive.HttpsAgent : AgentKeepAlive;
     this.on('status set', this.bound.onStatusSet);
   }
 
@@ -88,14 +89,6 @@ HttpConnector.prototype.createAgent = function (config) {
 
 HttpConnector.prototype.makeAgentConfig = function (config) {
   var agentConfig = {
-    /*
-     * As HTTP/HTTPS Agent defaults keepAlive to false, in the case where we
-     * desire HTTP keep-alive, we need to set it appropriately. This could be
-     * done in the wrapper, but I don't see any good reason not to simply set
-     * it here. ¯\_(ツ)_/¯
-     *
-     * https://github.com/elastic/elasticsearch-js/issues/107
-     */
     keepAlive: config.keepAlive,
     maxSockets: config.maxSockets,
     minSockets: config.minSockets
