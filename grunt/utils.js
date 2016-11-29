@@ -65,9 +65,9 @@ utils.increaseVersion = function (version, type) {
 utils.replaceAll = function (str, replace, replacement) {
   var out = '';
   var remaining = str;
-  var i = 0;
 
-  while (~(i = remaining.indexOf(replace))) {
+  while (remaining.indexOf(replace) !== -1) {
+    var i = remaining.indexOf(replace);
     out += remaining.substring(0, i) + replacement;
     remaining = remaining.substr(i + replace.length);
   }

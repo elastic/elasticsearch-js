@@ -256,7 +256,8 @@ Transport.prototype.request = function (params, cb) {
 
     self._timeout(requestTimeoutId);
     var parsedBody;
-    var isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
+    var contentType = (headers && headers['content-type']) || '';
+    var isJson = contentType.indexOf('application/json') > -1;
 
     if (!err && body) {
       if (isJson) {

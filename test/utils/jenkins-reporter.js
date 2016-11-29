@@ -111,7 +111,7 @@ function JenkinsReporter(runner) {
       errMsg = test.err.stack || test.err.toString();
 
       // FF / Opera do not add the message
-      if (!~errMsg.indexOf(test.err.message)) {
+      if (errMsg.indexOf(test.err.message) === -1) {
         errMsg = test.err.message + '\n' + errMsg;
       }
 
