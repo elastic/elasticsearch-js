@@ -100,7 +100,7 @@ describe('Log class', function () {
       expect(Log.join([{ foo: 'bar' }])).to.eql('{\n  "foo": "bar"\n}\n');
     });
 
-    it('fully stringifies deeply nested objects', function() {
+    it('fully stringifies deeply nested objects', function () {
       var object = { foo: { bar: { baz: 'value' } } };
       var expected = '{\n  "bar": {\n    "baz": "value"\n  }\n}\n';
       expect(Log.join(object)).to.eql(expected);
