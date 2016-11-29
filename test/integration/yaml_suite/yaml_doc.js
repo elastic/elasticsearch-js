@@ -219,7 +219,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   each: function (ittr) {
-    for (var i = 0; i < this._actions.length; i++) {
+    for (var i = 0; i < this._actions.length; i += 1) {
       if (ittr(this._actions[i].testable, this._actions[i].name) === false) {
         break;
       }
@@ -278,7 +278,7 @@ YamlDoc.prototype = {
     });
     var remainingSteps;
 
-    for (i = 0; from != null && i < steps.length; i++) {
+    for (i = 0; from != null && i < steps.length; i += 1) {
       if (from[steps[i]] === void 0) {
         remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
         from = from[remainingSteps];

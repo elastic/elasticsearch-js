@@ -19,7 +19,7 @@ var server = new XhrServer(function (request) {
       var i = interceptors.indexOf(response);
       complete.push(interceptors.splice(i, 1));
     } else {
-      response.times--;
+      response.times -= 1;
     }
 
     request.receive(response.status, response.body || void 0);

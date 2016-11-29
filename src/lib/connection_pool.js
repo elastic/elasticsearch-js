@@ -151,7 +151,7 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
  */
 ConnectionPool.prototype._onConnectionRevived = function (connection) {
   var timeout;
-  for (var i = 0; i < this._timeouts.length; i++) {
+  for (var i = 0; i < this._timeouts.length; i += 1) {
     if (this._timeouts[i].conn === connection) {
       timeout = this._timeouts[i];
       if (timeout.id) {
@@ -171,7 +171,7 @@ ConnectionPool.prototype._onConnectionRevived = function (connection) {
 ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
   var timeout;
   if (alreadyWasDead) {
-    for (var i = 0; i < this._timeouts.length; i++) {
+    for (var i = 0; i < this._timeouts.length; i += 1) {
       if (this._timeouts[i].conn === connection) {
         timeout = this._timeouts[i];
         break;
@@ -182,7 +182,7 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
       conn: connection,
       attempt: 0,
       revive: function (cb) {
-        timeout.attempt++;
+        timeout.attempt += 1;
         connection.ping(function (err) {
           connection.setStatus(err ? 'dead' : 'alive');
           if (cb && typeof cb === 'function') {
@@ -310,7 +310,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   var host;
   var toRemove = _.clone(this.index);
 
-  for (i = 0; i < hosts.length; i++) {
+  for (i = 0; i < hosts.length; i += 1) {
     host = hosts[i];
     id = host.toString();
     if (this.index[id]) {
@@ -323,7 +323,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   }
 
   var removeIds = _.keys(toRemove);
-  for (i = 0; i < removeIds.length; i++) {
+  for (i = 0; i < removeIds.length; i += 1) {
     this.removeConnection(this.index[removeIds[i]]);
   }
 };

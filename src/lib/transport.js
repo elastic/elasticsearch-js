@@ -236,7 +236,7 @@ Transport.prototype.request = function (params, cb) {
       ;
 
       if (remainingRetries) {
-        remainingRetries--;
+        remainingRetries -= 1;
         self.log.error('Request error, retrying' + errMsg);
         self.connectionPool.select(sendReqWithConnection);
       } else {

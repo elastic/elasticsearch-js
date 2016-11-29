@@ -47,7 +47,7 @@ Json.prototype.bulkBody = function (val) {
   var body = '', i;
 
   if (_.isArray(val)) {
-    for (i = 0; i < val.length; i++) {
+    for (i = 0; i < val.length; i += 1) {
       body += this.serialize(val[i]) + '\n';
     }
   } else if (typeof val === 'string') {

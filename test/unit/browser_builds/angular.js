@@ -9,7 +9,6 @@ describe('Angular esFactory', function () {
     require('../../../src/elasticsearch.angular.js');
   });
 
-  var uuid = (function () { var i = 0; return function () { return ++i; }; }());
   var esFactory;
   var $http;
   var $rootScope;

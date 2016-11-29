@@ -95,7 +95,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     var word = '';
     var code, c, upper, lower;
 
-    for (; i < string.length; i++) {
+    for (; i < string.length; i += 1) {
       code = string.charCodeAt(i);
       c = string.charAt(i);
       lower = (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
@@ -375,7 +375,7 @@ _.createArray = function (input, transform) {
     input = [input];
   }
 
-  for (i = 0; i < input.length; i++) {
+  for (i = 0; i < input.length; i += 1) {
     item = transform(input[i]);
     if (item === void 0) {
       return false;

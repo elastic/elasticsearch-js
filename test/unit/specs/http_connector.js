@@ -317,7 +317,7 @@ describe('Http Connector', function () {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var elements = [];
-      for (var i = 0; i < 500; i++) {
+      for (var i = 0; i < 500; i += 1) {
         elements.push({ USER: 'doc' });
       }
       var body = JSON.stringify(elements);
@@ -343,7 +343,7 @@ describe('Http Connector', function () {
       var server = nock('http://esjs.com:9200');
       var con = new HttpConnection(new Host('http://esjs.com:9200'));
       var elements = [];
-      for (var i = 0; i < 500; i++) {
+      for (var i = 0; i < 500; i += 1) {
         elements.push({ USER: 'doc' });
       }
       var body = JSON.stringify(elements);

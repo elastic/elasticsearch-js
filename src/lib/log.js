@@ -46,7 +46,7 @@ function Log(config) {
       'a logger config object, or an array of logger config objects.');
   }
 
-  for (i = 0; i < outputs.length; i++) {
+  for (i = 0; i < outputs.length; i += 1) {
     this.addOutput(outputs[i]);
   }
 }

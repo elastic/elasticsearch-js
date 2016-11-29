@@ -94,14 +94,14 @@ function JenkinsReporter(runner) {
 
   runner.on('test end', function (test) {
     if (test.state === 'passed') {
-      pass++;
+      pass += 1;
       log(chalk.green('.'));
     } else if (test.pending) {
-      pending++;
+      pending += 1;
       log(chalk.grey('.'));
       return;
     } else {
-      fail++;
+      fail += 1;
       log(chalk.red('x'));
     }
 

@@ -54,7 +54,7 @@ utils.increaseVersion = function (version, type) {
   // increment the version type
   next[i] += 1;
   // clear out all following numbers
-  for (i ++; i < next.length; i++) next[i] = 0;
+  for (i += 1; i < next.length; i += 1) next[i] = 0;
   // join back together with '.'
   return next.join('.');
 };

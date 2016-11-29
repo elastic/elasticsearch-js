@@ -599,7 +599,7 @@ describe('Transport Class', function () {
           var connections;
           var attempts = 0;
           function failRequest(params, cb) {
-            attempts++;
+            attempts += 1;
             process.nextTick(function () {
               cb(new Error('Unable to do that thing you wanted'));
             });

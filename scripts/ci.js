@@ -85,7 +85,7 @@ task('SAUCE_LABS', false, function () {
     // attempt to run tests on saucelabs and retry if it fails
     var saucelabsAttempts = 0;
     function trySaucelabs() {
-      saucelabsAttempts++;
+      saucelabsAttempts += 1;
       return new Promise(function (resolve, reject) {
         log(chalk.green('saucelabs attempt #', saucelabsAttempts));
         spawn(GRUNT, ['saucelabs-mocha'], function (cp) {

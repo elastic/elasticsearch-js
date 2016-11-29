@@ -327,7 +327,7 @@ module.exports = function (branch, done) {
       };
 
       function hasMethod(/* ...methods */) {
-        for (var i = 0; i < arguments.length; i++) {
+        for (var i = 0; i < arguments.length; i += 1) {
           if (~action._methods.indexOf(arguments[i])) {
             continue;
           } else {
