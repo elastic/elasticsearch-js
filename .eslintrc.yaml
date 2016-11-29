@@ -4,6 +4,9 @@ extends: "@spalger/personal/es6"
 env:
   node: true
 
+settings:
+  import/resolver: webpack
+
 rules:
   comma-dangle: off
   semi: off
@@ -39,3 +42,13 @@ rules:
   prefer-template: off
   quote-props: off
   yoda: off
+  no-restricted-properties: warn
+  no-prototype-builtins: warn
+  import/no-dynamic-require: off
+  import/no-internal-modules: off
+  import/newline-after-import: off
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies:
+        - "**/elasticsearch-js/{test,scripts,webpack_config,grunt}/**/*.js"
+        - "**/elasticsearch-js/Gruntfile.js"
