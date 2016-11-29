@@ -344,23 +344,21 @@ module.exports = function (branch, done) {
 
       if (action._methods.length === 1) {
         method = action._methods[0];
-      } else {
-        // we need to define what the default method(s) will be
-        if (hasMethod('DELETE', 'POST')) {
-          method = 'POST';
-        }
-        else if (methodsAre('DELETE')) {
-          method = 'DELETE';
-        }
-        else if (methodsAre('POST', 'PUT')) {
-          method = action.name.match(/put/i) ? 'PUT' : 'POST';
-        }
-        else if (methodsAre('GET', 'POST')) {
-          method = 'POST';
-        }
-        else if (methodsAre('GET', 'HEAD')) {
-          method = 'GET';
-        }
+      }
+      else if (hasMethod('DELETE', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('DELETE')) {
+        method = 'DELETE';
+      }
+      else if (methodsAre('POST', 'PUT')) {
+        method = action.name.match(/put/i) ? 'PUT' : 'POST';
+      }
+      else if (methodsAre('GET', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('GET', 'HEAD')) {
+        method = 'GET';
       }
 
       if (method) {

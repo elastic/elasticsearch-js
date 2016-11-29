@@ -112,13 +112,11 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
       if (upper || lower) {
         if (lower && word.length) {
           word += c;
-        } else {
-          if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
-            word = c.toUpperCase();
-          }
-          else {
-            word = c.toLowerCase();
-          }
+        } else if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
+          word = c.toUpperCase();
+        }
+        else {
+          word = c.toLowerCase();
         }
       }
     }

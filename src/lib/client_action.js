@@ -197,13 +197,10 @@ function resolveUrl(url, params) {
       if (!params.hasOwnProperty(key) || params[key] == null) {
         // missing a required param
         return false;
+      } else if (castType[url.req[key].type]) {
+        vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
       } else {
-        // cast of copy required param
-        if (castType[url.req[key].type]) {
-          vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
-        } else {
-          vars[key] = params[key];
-        }
+        vars[key] = params[key];
       }
     }
   }
