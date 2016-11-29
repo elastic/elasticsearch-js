@@ -4,7 +4,7 @@
   var es = require('./elasticsearch');
 
   function defer() {
-    var def = $.Deferred();
+    var def = $.Deferred(); // eslint-disable-line
     // def.promise is usually a property (in normal implementations)
     // we override the promise to keep things working
     def.promise = def.promise();
