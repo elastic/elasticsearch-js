@@ -15,16 +15,12 @@ function Json() {}
  * @return {String|Error} - A string is always returned, unless an error occured. then it will be that error.
  */
 Json.prototype.serialize = function (val, replacer, spaces) {
-  switch (typeof val) {
-    case 'string':
-      return val;
-    case 'object':
-      if (val) {
-        return JSON.stringify(val, replacer, spaces);
-      }
-    /* falls through */
-    default:
-      return;
+  if (typeof val === 'string') {
+    return val;
+  }
+
+  if (val && typeof val === 'object') {
+    return JSON.stringify(val, replacer, spaces);
   }
 };
 
