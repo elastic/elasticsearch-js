@@ -116,6 +116,12 @@ var statusCodes = {
   404: 'Not Found',
 
   /**
+   * Unauthorized
+   * @param {String} [msg] - An error message that will probably end up in a log.
+   */
+  401: 'Unauthorized',
+
+  /**
    * Bad Request
    * @param {String} [msg] - An error message that will probably end up in a log.
    */
