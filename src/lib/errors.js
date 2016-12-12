@@ -1,5 +1,4 @@
 var _ = require('./utils');
-var qs = require('querystring');
 var errors = module.exports;
 
 var canCapture = (typeof Error.captureStackTrace === 'function');
@@ -159,7 +158,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
       // errors from es now come in two forms, an error string < 2.0 and
       // an object >= 2.0
       // TODO: remove after dropping support for < 2.0
-      ErrorAbstract.call(this, msg || primaryName, StatusCodeError);
+      ErrorAbstract.call(this, msg || primaryName, StatusCodeError, metadata);
       return this;
     }
 
