@@ -22,14 +22,11 @@ Almost all of the methods on the client accept two arguments:
 
 ==== Ping the cluster
 
-.Send a HEAD request to "/?hello=elasticsearch" and allow up to 30 seconds for it to complete.
+.Send a HEAD request to "/" and allow up to 30 seconds for it to complete.
 [source,js]
 -----------------
 client.ping({
   requestTimeout: 30000,
-
-  // undocumented params are appended to the query string
-  hello: "elasticsearch"
 }, function (error) {
   if (error) {
     console.error('elasticsearch cluster is down!');
