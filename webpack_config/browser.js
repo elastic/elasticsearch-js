@@ -14,8 +14,7 @@ module.exports = {
     loaders: [
       ignoreLoader([
         'src/lib/connectors/jquery.js',
-        'src/lib/connectors/angular.js',
-        'promise/lib/es6-extensions',
+        'src/lib/connectors/angular.js'
       ]),
     ],
   },
