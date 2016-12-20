@@ -72,13 +72,56 @@ describe('Client instances creation', function () {
         done();
       };
 
-      var client = new es.Client({
+      client = new es.Client({
         log: [
           { type: 'stream', stream: new NullStream() }
         ]
       });
 
       client.transport.log.error(new Error());
+    });
+  });
+
+  describe('plugins', function () {
+    afterEach(function () {
+      client.close();
+    });
+
+    const plugins = [
+      function (Client) {
+        Client.prototype.marco = function () {
+          return Promise.resolve('polo');
+        };
+      },
+      function (Client, config) {
+        Client.prototype.pluginCount = function () {
+          return Promise.resolve(config.plugins.length);
+        };
+      }
+    ];
+
+    it('can be added during instantiation', function (done) {
+      client = new es.Client({ plugins: plugins });
+      expect(client.marco).to.be.a('function');
+      expect(client.pluginCount).to.be.a('function');
+
+      Promise.all([client.marco(), client.pluginCount()]).then(values => {
+        expect(values).to.eql(['polo', 2]);
+        done();
+      }).catch(done);
+    });
+
+    it('can be added after instantiation', function (done) {
+      client = new es.Client();
+      client.addPlugins(plugins);
+
+      expect(client.marco).to.be.a('function');
+      expect(client.pluginCount).to.be.a('function');
+
+      Promise.all([client.marco(), client.pluginCount()]).then(values => {
+        expect(values).to.eql(['polo', 2]);
+        done();
+      }).catch(done);
     });
   });
 
