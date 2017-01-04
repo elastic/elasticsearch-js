@@ -60,7 +60,7 @@ Send a HEAD request to `/` and allow up to 1 second for it to complete.
 ```js
 client.ping({
   // ping usually has a 3000ms timeout
-  requestTimeout: Infinity
+  requestTimeout: 1000
 }, function (error) {
   if (error) {
     console.trace('elasticsearch cluster is down!');
