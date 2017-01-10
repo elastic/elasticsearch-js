@@ -204,7 +204,7 @@ client.countPercolate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -249,7 +249,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1020,7 +1020,7 @@ client.mpercolate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1045,7 +1045,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document being percolated to use as default.
 `body`::
-<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1170,7 +1170,7 @@ client.percolate([params, [callback]])
 
 Match a document against registered percolator queries.
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 .First, Register queries named “alert-1” and “alert-2” for the “myindex” index
 [source,js]
@@ -1297,7 +1297,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/master/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
