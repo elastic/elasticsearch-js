@@ -1552,7 +1552,6 @@ api.cluster.prototype.state = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
@@ -1561,10 +1560,6 @@ api.cluster.prototype.stats = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     },
     timeout: {
       type: 'time'
@@ -3390,7 +3385,6 @@ api.indices.prototype.forcemerge = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return version and creation date values in human-readable format.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.feature - A comma-separated list of features
@@ -3422,10 +3416,6 @@ api.indices.prototype.get = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     },
     includeDefaults: {
       type: 'boolean',
@@ -3700,7 +3690,6 @@ api.indices.prototype.getMapping = ca({
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return version and creation date values in human-readable format.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.name - The name of the settings that should be included
@@ -3735,10 +3724,6 @@ api.indices.prototype.getSettings = ca({
     },
     local: {
       type: 'boolean'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     },
     includeDefaults: {
       type: 'boolean',
@@ -3825,7 +3810,6 @@ api.indices.prototype.getTemplate = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.getUpgrade = ca({
@@ -3848,10 +3832,6 @@ api.indices.prototype.getUpgrade = ca({
         'all'
       ],
       name: 'expand_wildcards'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     }
   },
   urls: [
@@ -4137,7 +4117,6 @@ api.indices.prototype.putTemplate = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.detailed - Whether to display detailed information about shard recovery
  * @param {<<api-param-type-boolean,`Boolean`>>} params.activeOnly - Display only those recoveries that are currently on-going
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.recovery = ca({
@@ -4150,10 +4129,6 @@ api.indices.prototype.recovery = ca({
       type: 'boolean',
       'default': false,
       name: 'active_only'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     }
   },
   urls: [
@@ -4287,7 +4262,6 @@ api.indices.prototype.rollover = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {anything} params.operationThreading - TODO: ?
  * @param {<<api-param-type-boolean,`Boolean`>>} params.verbose - Includes detailed memory usage by Lucene.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
@@ -4312,10 +4286,6 @@ api.indices.prototype.segments = ca({
         'all'
       ],
       name: 'expand_wildcards'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     },
     operationThreading: {
       name: 'operation_threading'
@@ -4446,9 +4416,9 @@ api.indices.prototype.shrink = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.groups - A comma-separated list of search groups for `search` index metric
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-string,`String`>>} [params.level=indices] - Return stats aggregated at cluster, index or shard level
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.types - A comma-separated list of document types for the `indexing` index metric
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeSegmentFileSizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - Limit the information returned the specific metrics.
  */
@@ -4468,10 +4438,6 @@ api.indices.prototype.stats = ca({
     groups: {
       type: 'list'
     },
-    human: {
-      type: 'boolean',
-      'default': false
-    },
     level: {
       type: 'enum',
       'default': 'indices',
@@ -4483,6 +4449,11 @@ api.indices.prototype.stats = ca({
     },
     types: {
       type: 'list'
+    },
+    includeSegmentFileSizes: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_segment_file_sizes'
     }
   },
   urls: [
@@ -5286,7 +5257,6 @@ api.nodes.prototype.hotThreads = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - A comma-separated list of metrics you wish returned. Leave empty to return all.
@@ -5296,10 +5266,6 @@ api.nodes.prototype.info = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
-    },
-    human: {
-      type: 'boolean',
-      'default': false
     },
     timeout: {
       type: 'time'
@@ -5369,10 +5335,10 @@ api.nodes.prototype.info = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fielddataFields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.groups - A comma-separated list of search groups for `search` index metric
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-string,`String`>>} [params.level=node] - Return indices stats aggregated at index, node or shard level
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.types - A comma-separated list of document types for the `indexing` index metric
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeSegmentFileSizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - Limit the information returned to the specified metrics
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.indexMetric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -5393,10 +5359,6 @@ api.nodes.prototype.stats = ca({
     groups: {
       type: 'boolean'
     },
-    human: {
-      type: 'boolean',
-      'default': false
-    },
     level: {
       type: 'enum',
       'default': 'node',
@@ -5411,6 +5373,11 @@ api.nodes.prototype.stats = ca({
     },
     timeout: {
       type: 'time'
+    },
+    includeSegmentFileSizes: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_segment_file_sizes'
     }
   },
   urls: [
@@ -6834,7 +6801,7 @@ api.termvectors = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
- * @param {<<api-param-type-string,`String`>>} params.lang - The script language (default: groovy)
+ * @param {<<api-param-type-string,`String`>>} params.lang - The script language (default: painless)
  * @param {<<api-param-type-string,`String`>>} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-number,`Number`>>} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
