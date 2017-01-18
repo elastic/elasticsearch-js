@@ -51,11 +51,15 @@ module.exports = function (branch, done) {
 
   function readSpecFiles(done) {
     var apiDir = path.join(esDir, 'rest-api-spec/api/');
-    files = fs.readdirSync(apiDir).map(function (filename) {
-      var module = require(apiDir + filename);
-      delete require.cache[apiDir + filename];
-      return module;
-    });
+    files = fs.readdirSync(apiDir)
+      .filter(function (filename) {
+        return filename[0] !== '_'
+      })
+      .map(function (filename) {
+        var module = require(apiDir + filename);
+        delete require.cache[apiDir + filename];
+        return module;
+      });
     done();
   }
 
