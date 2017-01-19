@@ -54,7 +54,7 @@ utils.increaseVersion = function (version, type) {
   // increment the version type
   next[i] += 1;
   // clear out all following numbers
-  for (i ++; i < next.length; i++) next[i] = 0;
+  for (i += 1; i < next.length; i += 1) next[i] = 0;
   // join back together with '.'
   return next.join('.');
 };
@@ -65,9 +65,9 @@ utils.increaseVersion = function (version, type) {
 utils.replaceAll = function (str, replace, replacement) {
   var out = '';
   var remaining = str;
-  var i = 0;
 
-  while (~(i = remaining.indexOf(replace))) {
+  while (remaining.indexOf(replace) !== -1) {
+    var i = remaining.indexOf(replace);
     out += remaining.substring(0, i) + replacement;
     remaining = remaining.substr(i + replace.length);
   }

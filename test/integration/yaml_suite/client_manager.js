@@ -32,7 +32,8 @@ module.exports = {
           maxRetries: 0,
           requestTimeout: 100
         }, function (err, resp) {
-          if (err && --attemptsRemaining) {
+          attemptsRemaining -= 1;
+          if (err && attemptsRemaining > 0) {
             setTimeout(ping, timeout);
           } else if (err) {
             cb(new Error('unable to establish contact with ES at ' + JSON.stringify({
@@ -46,7 +47,7 @@ module.exports = {
           } else {
             // create a new client
             doCreateClient(function () {
-              cb(void 0, client);
+              cb(undefined, client);
             });
           }
         });

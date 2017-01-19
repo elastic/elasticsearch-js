@@ -288,9 +288,8 @@ describe('Connection Pool', function () {
     it('will return all values from the alive list by default', function () {
       var pool = new ConnectionPool({});
       pool._conns.alive = new Array(1000);
-      var length = pool._conns.alive.length;
-      while (length--) {
-        pool._conns.alive[length] = length;
+      for (var i = 0; i < pool._conns.alive.length; i += 1) {
+        pool._conns.alive[i] = i
       }
 
       var result = pool.getConnections();

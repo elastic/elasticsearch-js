@@ -187,7 +187,7 @@ describe('Utils', function () {
       it('ignores long form empty vals (null, false, undef)', function () {
         expect(_.toLowerString(null)).to.eql('');
         expect(_.toLowerString(false)).to.eql('');
-        expect(_.toLowerString(void 0)).to.eql('');
+        expect(_.toLowerString(undefined)).to.eql('');
       });
 
       it('uses the objects own toString', function () {
@@ -207,7 +207,7 @@ describe('Utils', function () {
       it('ignores long form empty vals (null, false, undef)', function () {
         expect(_.toUpperString(null)).to.eql('');
         expect(_.toUpperString(false)).to.eql('');
-        expect(_.toUpperString(void 0)).to.eql('');
+        expect(_.toUpperString(undefined)).to.eql('');
       });
 
       it('uses the objects own toString', function () {

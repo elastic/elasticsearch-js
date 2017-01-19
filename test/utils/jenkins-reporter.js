@@ -94,24 +94,24 @@ function JenkinsReporter(runner) {
 
   runner.on('test end', function (test) {
     if (test.state === 'passed') {
-      pass++;
+      pass += 1;
       log(chalk.green('.'));
     } else if (test.pending) {
-      pending++;
+      pending += 1;
       log(chalk.grey('.'));
       return;
     } else {
-      fail++;
+      fail += 1;
       log(chalk.red('x'));
     }
 
-    var errMsg = void 0;
+    var errMsg;
 
     if (test.err) {
       errMsg = test.err.stack || test.err.toString();
 
       // FF / Opera do not add the message
-      if (!~errMsg.indexOf(test.err.message)) {
+      if (errMsg.indexOf(test.err.message) === -1) {
         errMsg = test.err.message + '\n' + errMsg;
       }
 

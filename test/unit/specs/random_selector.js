@@ -9,7 +9,7 @@ describe('Random Selector', function () {
 
     _.times(1000, function () {
       var choice = randomSelector(choices);
-      log[choice]++;
+      log[choice] += 1;
     });
 
     expect(_.filter(log, function (count) {
