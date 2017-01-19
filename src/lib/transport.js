@@ -213,7 +213,7 @@ Transport.prototype.request = function (params, cb) {
       return;
     }
 
-    requestAborter = void 0;
+    requestAborter = undefined;
 
     if (err instanceof errors.RequestTypeError) {
       self.log.error('Connection refused to execute the request', err);
@@ -236,7 +236,7 @@ Transport.prototype.request = function (params, cb) {
       ;
 
       if (remainingRetries) {
-        remainingRetries--;
+        remainingRetries -= 1;
         self.log.error('Request error, retrying' + errMsg);
         self.connectionPool.select(sendReqWithConnection);
       } else {
@@ -245,7 +245,7 @@ Transport.prototype.request = function (params, cb) {
       }
     } else {
       self.log.debug('Request complete');
-      respond(void 0, body, status, headers);
+      respond(undefined, body, status, headers);
     }
   }
 
@@ -256,7 +256,8 @@ Transport.prototype.request = function (params, cb) {
 
     self._timeout(requestTimeoutId);
     var parsedBody;
-    var isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
+    var contentType = (headers && headers['content-type']) || '';
+    var isJson = contentType.indexOf('application/json') > -1;
 
     if (!err && body) {
       if (isJson) {
@@ -296,7 +297,7 @@ Transport.prototype.request = function (params, cb) {
     if (params.castExists) {
       if (err && err instanceof errors.NotFound) {
         parsedBody = false;
-        err = void 0;
+        err = undefined;
       } else {
         parsedBody = !err;
       }
@@ -307,7 +308,7 @@ Transport.prototype.request = function (params, cb) {
       if (err) {
         cb(err, parsedBody, status);
       } else {
-        cb(void 0, parsedBody, status);
+        cb(undefined, parsedBody, status);
       }
     } else if (err) {
       err.body = parsedBody;
@@ -339,7 +340,7 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (connection) {
-    sendReqWithConnection(void 0, connection);
+    sendReqWithConnection(undefined, connection);
   } else {
     self.connectionPool.select(sendReqWithConnection);
   }
@@ -355,7 +356,7 @@ Transport.prototype._timeout = function (cb, delay) {
 
   if ('function' !== typeof cb) {
     id = cb;
-    cb = void 0;
+    cb = undefined;
   }
 
   if (cb) {

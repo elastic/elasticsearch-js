@@ -100,7 +100,7 @@ describe('Log class', function () {
       expect(Log.join([{ foo: 'bar' }])).to.eql('{\n  "foo": "bar"\n}\n');
     });
 
-    it('fully stringifies deeply nested objects', function() {
+    it('fully stringifies deeply nested objects', function () {
       var object = { foo: { bar: { baz: 'value' } } };
       var expected = '{\n  "bar": {\n    "baz": "value"\n  }\n}\n';
       expect(Log.join(object)).to.eql(expected);
@@ -130,7 +130,7 @@ describe('Log class', function () {
   describe('instance without one output listening to all events', function () {
     var log, call;
     beforeEach(function () {
-      call = void 0;
+      call = undefined;
       log = new Log({
         log: [
           {
@@ -159,7 +159,7 @@ describe('Log class', function () {
       expect(call.event).to.eql('error');
       expect(call.args[0]).to.be(err);
 
-      call = void 0;
+      call = undefined;
 
       log.error('error');
       expect(call.event).to.eql('error');

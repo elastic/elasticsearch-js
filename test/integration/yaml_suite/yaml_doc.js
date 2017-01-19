@@ -219,7 +219,7 @@ YamlDoc.prototype = {
    * @return {undefined}
    */
   each: function (ittr) {
-    for (var i = 0; i < this._actions.length; i++) {
+    for (var i = 0; i < this._actions.length; i += 1) {
       if (ittr(this._actions[i].testable, this._actions[i].name) === false) {
         break;
       }
@@ -278,8 +278,8 @@ YamlDoc.prototype = {
     });
     var remainingSteps;
 
-    for (i = 0; from != null && i < steps.length; i++) {
-      if (from[steps[i]] === void 0) {
+    for (i = 0; from != null && i < steps.length; i += 1) {
+      if (from[steps[i]] === undefined) {
         remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
         from = from[remainingSteps];
         break;
@@ -356,7 +356,7 @@ YamlDoc.prototype = {
 
     // resolve the catch arg to a value used for matching once the request is complete
     switch (args.catch) {
-      case void 0:
+      case undefined:
         catcher = null;
         break;
       case 'missing':

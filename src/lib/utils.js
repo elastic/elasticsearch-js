@@ -95,7 +95,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     var word = '';
     var code, c, upper, lower;
 
-    for (; i < string.length; i++) {
+    for (; i < string.length; i += 1) {
       code = string.charCodeAt(i);
       c = string.charAt(i);
       lower = (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
@@ -112,13 +112,11 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
       if (upper || lower) {
         if (lower && word.length) {
           word += c;
-        } else {
-          if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
-            word = c.toUpperCase();
-          }
-          else {
-            word = c.toLowerCase();
-          }
+        } else if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
+          word = c.toUpperCase();
+        }
+        else {
+          word = c.toLowerCase();
         }
       }
     }
@@ -375,9 +373,9 @@ _.createArray = function (input, transform) {
     input = [input];
   }
 
-  for (i = 0; i < input.length; i++) {
+  for (i = 0; i < input.length; i += 1) {
     item = transform(input[i]);
-    if (item === void 0) {
+    if (item === undefined) {
       return false;
     } else {
       output.push(item);

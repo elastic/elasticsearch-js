@@ -32,7 +32,7 @@ if (Writable) {
     }
 
     var cb;
-    if (typeof(arguments[arguments.length - 1]) === 'function') {
+    if (typeof arguments[arguments.length - 1] === 'function') {
       cb = arguments[arguments.length - 1];
     }
 
@@ -42,9 +42,9 @@ if (Writable) {
   };
 
   MockWritableStream.prototype.end = function (data, encoding, cb) {
-    if (typeof(data) === 'function') {
+    if (typeof data === 'function') {
       cb = data;
-    } else if (typeof(encoding) === 'function') {
+    } else if (typeof encoding === 'function') {
       cb = encoding;
       this.write(data);
     } else if (arguments.length > 0) {

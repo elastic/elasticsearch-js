@@ -325,7 +325,7 @@ describe('Transport Class', function () {
       trans = new Transport({ suggestCompression: true });
       stub(trans, 'request', function (params, cb) {
         process.nextTick(function () {
-          cb(void 0, {
+          cb(undefined, {
             ok: true,
             cluster_name: 'clustername',
             nodes: nodeList
@@ -599,7 +599,7 @@ describe('Transport Class', function () {
           var connections;
           var attempts = 0;
           function failRequest(params, cb) {
-            attempts++;
+            attempts += 1;
             process.nextTick(function () {
               cb(new Error('Unable to do that thing you wanted'));
             });

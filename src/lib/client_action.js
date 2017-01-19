@@ -108,7 +108,7 @@ var castType = {
       }).join(',');
     }
 
-    for (var i = 0; i < param.options.length; i++) {
+    for (var i = 0; i < param.options.length; i += 1) {
       if (param.options[i] === String(val)) {
         return param.options[i];
       }
@@ -192,18 +192,15 @@ function resolveUrl(url, params) {
       url.reqParamKeys = _.keys(url.req);
     }
 
-    for (i = 0; i < url.reqParamKeys.length; i ++) {
+    for (i = 0; i < url.reqParamKeys.length; i += 1) {
       key = url.reqParamKeys[i];
       if (!params.hasOwnProperty(key) || params[key] == null) {
         // missing a required param
         return false;
+      } else if (castType[url.req[key].type]) {
+        vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
       } else {
-        // cast of copy required param
-        if (castType[url.req[key].type]) {
-          vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
-        } else {
-          vars[key] = params[key];
-        }
+        vars[key] = params[key];
       }
     }
   }
@@ -214,7 +211,7 @@ function resolveUrl(url, params) {
       url.optParamKeys = _.keys(url.opt);
     }
 
-    for (i = 0; i < url.optParamKeys.length; i ++) {
+    for (i = 0; i < url.optParamKeys.length; i += 1) {
       key = url.optParamKeys[i];
       if (params[key]) {
         if (castType[url.opt[key].type] || params[key] == null) {
@@ -278,7 +275,7 @@ function exec(transport, spec, params, cb) {
     // only one url option
     request.path = resolveUrl(spec.url, params);
   } else {
-    for (i = 0; i < spec.urls.length; i++) {
+    for (i = 0; i < spec.urls.length; i += 1) {
       if (request.path = resolveUrl(spec.urls[i], params)) {
         break;
       }
@@ -340,7 +337,7 @@ function exec(transport, spec, params, cb) {
     }
   }
 
-  for (i = 0; i < spec.requireParamKeys.length; i ++) {
+  for (i = 0; i < spec.requireParamKeys.length; i += 1) {
     if (!query.hasOwnProperty(spec.requireParamKeys[i])) {
       throw new TypeError('Missing required parameter ' + spec.requireParamKeys[i]);
     }

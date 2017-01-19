@@ -36,7 +36,7 @@ function makeJUnitXml(runnerName, testDetails) {
 
     var suite = suites.ele('testsuite', {
       package: 'elasticsearch-js',
-      id: suiteCount++,
+      id: suiteCount += 1,
       name: suiteInfo.name,
       timestamp: moment(suiteInfo.start).toJSON(),
       hostname: 'localhost',

@@ -36,7 +36,7 @@ module.exports = function (branch, done) {
     writeApiFile
   ];
 
-  if (!~utils.unstableBranches.indexOf(branch)) {
+  if (utils.unstableBranches.indexOf(branch) === -1) {
     steps.push(
       ensureDocsDir,
       formatDocVars,
@@ -74,7 +74,7 @@ module.exports = function (branch, done) {
 
     // collect the namespaces from the action locations
     var namespaces = _.filter(_.map(actions, function (action) {
-      if (~action.location.indexOf('.')) {
+      if (action.location.indexOf('.') > -1) {
         var path = action.location.split('.').slice(0, -1);
         _.pull(path, 'prototype');
         return path.join('.');
@@ -331,9 +331,9 @@ module.exports = function (branch, done) {
       };
 
       function hasMethod(/* ...methods */) {
-        for (var i = 0; i < arguments.length; i++) {
-          if (~action._methods.indexOf(arguments[i])) {
-            continue;
+        for (var i = 0; i < arguments.length; i += 1) {
+          if (action._methods.indexOf(arguments[i]) > -1) {
+            continue; // eslint-disable-line no-continue
           } else {
             return false;
           }
@@ -348,23 +348,21 @@ module.exports = function (branch, done) {
 
       if (action._methods.length === 1) {
         method = action._methods[0];
-      } else {
-        // we need to define what the default method(s) will be
-        if (hasMethod('DELETE', 'POST')) {
-          method = 'POST';
-        }
-        else if (methodsAre('DELETE')) {
-          method = 'DELETE';
-        }
-        else if (methodsAre('POST', 'PUT')) {
-          method = action.name.match(/put/i) ? 'PUT' : 'POST';
-        }
-        else if (methodsAre('GET', 'POST')) {
-          method = 'POST';
-        }
-        else if (methodsAre('GET', 'HEAD')) {
-          method = 'GET';
-        }
+      }
+      else if (hasMethod('DELETE', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('DELETE')) {
+        method = 'DELETE';
+      }
+      else if (methodsAre('POST', 'PUT')) {
+        method = action.name.match(/put/i) ? 'PUT' : 'POST';
+      }
+      else if (methodsAre('GET', 'POST')) {
+        method = 'POST';
+      }
+      else if (methodsAre('GET', 'HEAD')) {
+        method = 'GET';
       }
 
       if (method) {

@@ -154,7 +154,7 @@ HttpConnector.prototype.request = function (params, cb) {
     incoming && incoming.removeAllListeners();
 
     if ((err instanceof Error) === false) {
-      err = void 0;
+      err = undefined;
     }
 
     log.trace(params.method, reqParams, params.body, response, status);

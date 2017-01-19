@@ -94,7 +94,8 @@ describe('Connection Abstract', function () {
 
       stub(conn, 'request', function (params, cb) {
         setTimeout(function () {
-          expect(++order).to.eql(2);
+          order += 1;
+          expect(order).to.eql(2);
           cb();
         }, 10001);
       });
@@ -102,7 +103,8 @@ describe('Connection Abstract', function () {
       conn.ping({
         requestTimeout: 100
       }, function (err) {
-        expect(++order).to.eql(1);
+        order += 1;
+        expect(order).to.eql(1);
         expect(err).to.be.an(errors.RequestTimeout);
       });
 
@@ -120,19 +122,22 @@ describe('Connection Abstract', function () {
 
       stub(conn, 'request', function (params, cb) {
         setTimeout(function () {
-          expect(++order).to.eql(3);
+          order += 1;
+          expect(order).to.eql(3);
           cb();
         }, 10001);
 
         return function () {
-          expect(++order).to.eql(1);
+          order += 1;
+          expect(order).to.eql(1);
         };
       });
 
       conn.ping({
         requestTimeout: 100
       }, function (err) {
-        expect(++order).to.eql(2);
+        order += 1;
+        expect(order).to.eql(2);
         expect(err).to.be.an(errors.RequestTimeout);
       });
 

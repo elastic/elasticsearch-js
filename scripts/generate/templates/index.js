@@ -58,7 +58,7 @@ var templateGlobals = {
     try {
       return fs.readFileSync(path.join(__dirname, '../../../docs/_descriptions/' + action + '.asciidoc'));
     } catch (e) {
-      if (~e.message.indexOf('ENOENT')) {
+      if (e.message.indexOf('ENOENT') > -1) {
         return '// no description';
       } else {
         throw e;

@@ -16,7 +16,7 @@ function mockClient() {
       request: function (params, cb) {
         if (typeof cb === 'function') {
           process.nextTick(function () {
-            cb(void 0, params);
+            cb(undefined, params);
           });
         } else {
           return Promise.resolve(params);
@@ -106,7 +106,7 @@ describe('Client Action runner', function () {
       var action = makeClientActionProxy(function (params, cb) {
         client = this;
         process.nextTick(function () {
-          cb(void 0, params);
+          cb(undefined, params);
         });
       });
 
@@ -694,7 +694,7 @@ describe('Client Action runner', function () {
       var action = makeClientAction({});
 
       action({}, function (err, params) {
-        expect(params.requestTimeout).be(void 0);
+        expect(params.requestTimeout).be(undefined);
         done();
       });
     });

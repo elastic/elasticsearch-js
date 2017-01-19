@@ -65,7 +65,7 @@ ConnectionPool.calcDeadTimeoutOptions = {
     return baseTimeout;
   },
   exponential: function (attempt, baseTimeout) {
-    return Math.min(baseTimeout * 2 * Math.pow(2, (attempt * 0.5 - 1)), this.maxDeadTimeout);
+    return Math.min(baseTimeout * 2 * Math.pow(2, ((attempt * 0.5) - 1)), this.maxDeadTimeout);
   }
 };
 
@@ -86,7 +86,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.selector(this._conns.alive, cb);
     } else {
       try {
-        _.nextTick(cb, void 0, this.selector(this._conns.alive));
+        _.nextTick(cb, undefined, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
@@ -94,7 +94,7 @@ ConnectionPool.prototype.select = function (cb) {
   } else if (this._timeouts.length) {
     this._selectDeadConnection(cb);
   } else {
-    _.nextTick(cb, void 0);
+    _.nextTick(cb, undefined);
   }
 };
 
@@ -151,7 +151,7 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
  */
 ConnectionPool.prototype._onConnectionRevived = function (connection) {
   var timeout;
-  for (var i = 0; i < this._timeouts.length; i++) {
+  for (var i = 0; i < this._timeouts.length; i += 1) {
     if (this._timeouts[i].conn === connection) {
       timeout = this._timeouts[i];
       if (timeout.id) {
@@ -171,7 +171,7 @@ ConnectionPool.prototype._onConnectionRevived = function (connection) {
 ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
   var timeout;
   if (alreadyWasDead) {
-    for (var i = 0; i < this._timeouts.length; i++) {
+    for (var i = 0; i < this._timeouts.length; i += 1) {
       if (this._timeouts[i].conn === connection) {
         timeout = this._timeouts[i];
         break;
@@ -182,7 +182,7 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
       conn: connection,
       attempt: 0,
       revive: function (cb) {
-        timeout.attempt++;
+        timeout.attempt += 1;
         connection.ping(function (err) {
           connection.setStatus(err ? 'dead' : 'alive');
           if (cb && typeof cb === 'function') {
@@ -210,7 +210,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
   process.nextTick(function next() {
     var timeout = orderedTimeouts.shift();
     if (!timeout) {
-      cb(void 0);
+      cb(undefined);
       return;
     }
 
@@ -225,11 +225,11 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
           log.warning('Unable to revive connection: ' + timeout.conn.id);
           process.nextTick(next);
         } else {
-          cb(void 0, timeout.conn);
+          cb(undefined, timeout.conn);
         }
       });
     } else {
-      cb(void 0, timeout.conn);
+      cb(undefined, timeout.conn);
     }
   });
 };
@@ -310,7 +310,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   var host;
   var toRemove = _.clone(this.index);
 
-  for (i = 0; i < hosts.length; i++) {
+  for (i = 0; i < hosts.length; i += 1) {
     host = hosts[i];
     id = host.toString();
     if (this.index[id]) {
@@ -323,7 +323,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   }
 
   var removeIds = _.keys(toRemove);
-  for (i = 0; i < removeIds.length; i++) {
+  for (i = 0; i < removeIds.length; i += 1) {
     this.removeConnection(this.index[removeIds[i]]);
   }
 };
