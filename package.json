@@ -8,6 +8,7 @@
   "main": "src/elasticsearch.js",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "13.0.0-alpha1",
+  "keywords" : ["elasticsearch", "mapping", "REST"],
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
