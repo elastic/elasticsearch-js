@@ -5,7 +5,7 @@ var errors = require('../../../src/lib/errors');
 var sinon = require('sinon');
 var expect = require('expect.js');
 var _ = require('lodash');
-var nodeList = require('../../fixtures/short_node_list.json');
+var nodeList = require('../../fixtures/short_node_list.5.0.json');
 var stub = require('../../utils/auto_release_stub').make();
 
 /**
@@ -371,12 +371,12 @@ describe('Transport Class', function () {
         expect(hosts).to.have.length(2);
 
         expect(hosts[0]).to.be.a(Host);
-        expect(hosts[0].host).to.eql('10.10.10.100');
-        expect(hosts[0].port).to.eql(9205);
+        expect(hosts[0].host).to.eql('127.0.0.1');
+        expect(hosts[0].port).to.eql(9400);
 
         expect(hosts[0]).to.be.a(Host);
-        expect(hosts[1].host).to.eql('10.10.10.101');
-        expect(hosts[1].port).to.eql(9205);
+        expect(hosts[1].host).to.eql('published.hostname');
+        expect(hosts[1].port).to.eql(9440);
         done();
       });
     });

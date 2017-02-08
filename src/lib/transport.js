@@ -33,7 +33,7 @@ function Transport(config) {
   self.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
   // setup endpoint to use for sniffing
-  self.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/clear';
+  self.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/http';
 
   // setup requestTimeout default
   self.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
@@ -396,6 +396,15 @@ Transport.prototype.sniff = function (cb) {
 
   this.request({
     path: this.sniffEndpoint,
+    query: {
+      filter_path: [
+        'nodes.*.http.publish_address',
+        'nodes.*.name',
+        'nodes.*.hostname',
+        'nodes.*.host',
+        'nodes.*.version',
+      ].join(','),
+    },
     method: 'GET'
   }, function (err, resp, status) {
     if (!err && resp && resp.nodes) {

@@ -1,11 +1,11 @@
 var _ = require('./utils');
 
-var extractHostPartsRE1x = /\[\/*([^:]+):(\d+)\]/;
+var extractHostPartsRE1x = /\[(?:(.*)\/)?(.+?):(\d+)\]/;
 
 function makeNodeParser(hostProp) {
   return function (nodes) {
     return _.transform(nodes, function (hosts, node, id) {
-      var address = node[hostProp]
+      var address = _.get(node, hostProp)
       if (!address) return;
 
       var host = {
@@ -14,21 +14,20 @@ function makeNodeParser(hostProp) {
         _meta: {
           id: id,
           name: node.name,
-          hostname: node.hostname,
           version: node.version
         }
       };
 
       var malformedError = new Error(
         'Malformed ' + hostProp + '.' +
-        ' Got ' + JSON.stringify(node[hostProp]) +
+        ' Got ' + JSON.stringify(address) +
         ' and expected it to match "{hostname?}/{ip}:{port}".'
       );
 
       var matches1x = extractHostPartsRE1x.exec(address);
       if (matches1x) {
-        host.host = matches1x[1];
-        host.port = parseInt(matches1x[2], 10);
+        host.host = matches1x[1] || matches1x[2];
+        host.port = parseInt(matches1x[3], 10);
         hosts.push(host);
         return;
       }
@@ -57,5 +56,4 @@ function makeNodeParser(hostProp) {
   };
 }
 
-module.exports = makeNodeParser('http_address');
-module.exports.thrift = makeNodeParser('transport_address');
+module.exports = makeNodeParser('http.publish_address');

@@ -1,0 +1,30 @@
+{
+  "id1": {
+    "name": "name1",
+    "transport_address": "inet[/10.10.10.100:9301]",
+    "host": "spalger",
+    "ip": "192.168.1.1",
+    "version": "1.0.4-SNAPSHOT",
+    "build": "311a60b",
+    "http_address": "inet[/10.10.10.100:9205]",
+    "http": {
+      "bound_address": "inet[/10.10.10.100:9205]",
+      "publish_address": "inet[/10.10.10.100:9205]",
+      "max_content_length_in_bytes": 104857600
+    }
+  },
+  "id2": {
+    "name": "name2",
+    "transport_address": "inet[published.hostname/10.10.10.101:9301]",
+    "host": "spalger",
+    "ip": "192.168.1.1",
+    "version": "1.0.4-SNAPSHOT",
+    "build": "311a60b",
+    "http_address": "inet[published.hostname/10.10.10.101:9205]",
+    "http": {
+      "bound_address": "inet[/10.10.10.101:9205]",
+      "publish_address": "inet[published.hostname/10.10.10.101:9205]",
+      "max_content_length_in_bytes": 104857600
+    }
+  }
+}
