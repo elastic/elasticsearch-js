@@ -19,8 +19,10 @@
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
     },
-    "default_api_branch": "5.0",
+    "default_api_branch": "5.2",
     "supported_es_branches": [
+      "5.2",
+      "5.1",
       "5.0",
       "2.4",
       "2.3",
@@ -39,6 +41,7 @@
     ],
     "unstable_es_branches": [
       "5.x",
+      "5.3",
       "master"
     ]
   },
