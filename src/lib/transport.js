@@ -7,7 +7,6 @@ module.exports = Transport;
 var _ = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
-var Promise = require('promise/lib/es6-extensions');
 var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
 var findCommonProtocol = require('./transport/find_common_protocol');
 
@@ -101,6 +100,13 @@ Transport.nodesToHostCallbacks = {
 };
 
 Transport.prototype.defer = function () {
+  if (typeof Promise === 'undefined') {
+    throw new Error(
+      'No Promise implementation found. In order for elasticsearch-js to create promises ' +
+      'either specify the `defer` configuration or include a global Promise shim'
+    )
+  }
+
   var defer = {};
   defer.promise = new Promise(function (resolve, reject) {
     defer.resolve = resolve;
