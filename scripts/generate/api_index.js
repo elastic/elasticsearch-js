@@ -15,7 +15,7 @@ module.exports = function (done) {
 
   console.log(chalk.white.bold('wrote'), 'api index to', nodeApiIndex);
 
-  write(browserApiIndex, require('./templates').apiIndex({
+  write(browserApiIndex, require('./templates').apiIndexBrowser({
     branches: utils.browserBranches
   }), 'utf8');
 

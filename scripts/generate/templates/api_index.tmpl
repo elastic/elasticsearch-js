@@ -1,14 +1,14 @@
 module.exports = {
 <%
 
+
   branches.forEach(function (branch, i, list) {
-    var req = "require('./" + _.snakeCase(branch) + "')";
-    if (branch === utils.branches._default) {
-      print("  '_default': " + req + ',\n');
+    function printVersion(name) {
+      print(`  get '${name}'() { return require('./${_.snakeCase(branch)}'); },\n`)
     }
 
-    print("  '" + branch + "': " + req + (i === list.length - 1 ? '' : ',\n'));
+    if (branch === utils.branches._default) printVersion('_default');
+    printVersion(branch);
   });
 
-%>
-};
+%>};

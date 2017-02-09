@@ -126,5 +126,6 @@ module.exports = {
   apiMethods: templates.api_methods,
   docsIndex: templates.docs_index,
   apiIndex: templates.api_index,
+  apiIndexBrowser: templates.api_index_browser,
   configurationDocs: templates.configuration_docs,
 };
