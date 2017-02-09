@@ -28,29 +28,7 @@ include::api_methods_5_0.asciidoc[]
 
 include::api_methods_2_4.asciidoc[]
 
-include::api_methods_2_3.asciidoc[]
-
-include::api_methods_2_2.asciidoc[]
-
-include::api_methods_2_1.asciidoc[]
-
-include::api_methods_2_0.asciidoc[]
-
 include::api_methods_1_7.asciidoc[]
-
-include::api_methods_1_6.asciidoc[]
-
-include::api_methods_1_5.asciidoc[]
-
-include::api_methods_1_4.asciidoc[]
-
-include::api_methods_1_3.asciidoc[]
-
-include::api_methods_1_2.asciidoc[]
-
-include::api_methods_1_1.asciidoc[]
-
-include::api_methods_1_0.asciidoc[]
 
 include::api_methods_0_90.asciidoc[]
 
