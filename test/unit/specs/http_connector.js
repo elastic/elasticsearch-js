@@ -5,9 +5,10 @@ describe('Http Connector', function () {
   var nock = require('nock');
   var sinon = require('sinon');
   var util = require('util');
+  var parseUrl = require('url').parse;
   var http = require('http');
   var https = require('https');
-  var KeepAliveAgent = require('../../../src/lib/connectors/_keep_alive_agent');
+  var AgentKeepAlive = require('agentkeepalive');
 
   var Host = require('../../../src/lib/host');
   var errors = require('../../../src/lib/errors');
@@ -173,7 +174,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
-        expect(http.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent);
+        expect(http.request.lastCall.args[0].agent).to.be.a(AgentKeepAlive);
         done();
       });
     });
@@ -183,7 +184,7 @@ describe('Http Connector', function () {
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
-        expect(https.request.lastCall.args[0].agent).to.be.a(KeepAliveAgent.SSL);
+        expect(https.request.lastCall.args[0].agent).to.be.a(AgentKeepAlive.HttpsAgent);
         done();
       });
     });
@@ -473,11 +474,6 @@ describe('Http Connector', function () {
   });
 
   describe('Connection cleanup', function () {
-    // skip these tests if native keep alive requests are supported
-    if (KeepAliveAgent.supportsNativeKeepAlive) {
-      return;
-    }
-
     it('destroys any connections created', function (done) {
       this.timeout(5 * 60 * 1000);
       var cp = require('child_process');
@@ -524,7 +520,8 @@ describe('Http Connector', function () {
         { destroy: function () {} },
         { destroy: function () {} }
       ];
-      con.agent.sockets['http://localhost/'] = sockets;
+      var name = con.agent.getName(parseUrl('http://localhost/'));
+      con.agent.sockets[name] = sockets;
       con.setStatus('closed');
       expect(sockets).to.eql([]);
     });
