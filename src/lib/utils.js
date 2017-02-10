@@ -1,5 +1,6 @@
 var path = require('path');
 var nodeUtils = require('util');
+var lodash = require('lodash-node/modern');
 
 /**
  * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
@@ -9,7 +10,7 @@ var nodeUtils = require('util');
  * @class utils
  * @static
  */
-var _ = require('lodash').assign({}, require('lodash'), nodeUtils);
+var _ = lodash.assign({}, lodash, nodeUtils);
 
 /**
  * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
@@ -18,6 +19,8 @@ var _ = require('lodash').assign({}, require('lodash'), nodeUtils);
  * @type {function}
  */
 _.joinPath = path.join;
+
+_.get = require('lodash.get');
 
 /**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
