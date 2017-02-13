@@ -98,7 +98,7 @@ function dirRegex(dir, regexp) {
 function dirOpts(dir, opts) {
   opts = _.isArray(opts) ? opts : [opts];
   return dirFilter(dir, function (name) {
-    return _.includes(opts, name);
+    return _.include(opts, name);
   });
 }
 
@@ -174,7 +174,7 @@ function clearGeneratedFiles() {
   generatedFiles.push(dirRegex(paths.src, esArchives));
 
   var rmSteps = _.chain(generatedFiles)
-  .flattenDeep()
+  .flatten()
   .uniq()
   .map(function (path) {
     return spawnStep('rm', ['-rf', path]);
@@ -202,7 +202,7 @@ function createArchive(branch) {
     var dir = paths.getArchiveDir(branch);
     var tarball = paths.getArchiveTarball(branch);
     var specPathInRepo = paths.getSpecPathInRepo(branch);
-    var subDirCount = _.countBy(specPathInRepo, _.partial(_.eq, '/')).true || 0;
+    var subDirCount = _.countBy(specPathInRepo, p => p === '/').true || 0;
 
     if (isDirectory(dir)) {
       console.log(branch + ' archive already exists');

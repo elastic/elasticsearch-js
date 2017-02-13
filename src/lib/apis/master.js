@@ -4801,6 +4801,7 @@ api.mget = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -4819,6 +4820,10 @@ api.msearch = ca({
     maxConcurrentSearches: {
       type: 'number',
       name: 'max_concurrent_searches'
+    },
+    typedKeys: {
+      type: 'boolean',
+      name: 'typed_keys'
     }
   },
   urls: [
@@ -4855,6 +4860,7 @@ api.msearch = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -4869,6 +4875,10 @@ api.msearchTemplate = ca({
         'dfs_query_and_fetch'
       ],
       name: 'search_type'
+    },
+    typedKeys: {
+      type: 'boolean',
+      name: 'typed_keys'
     }
   },
   urls: [
@@ -5574,6 +5584,7 @@ api.scroll = ca({
  * @param {<<api-param-type-string,`String`>>} params.suggestText - The source text for which the suggestions should be returned
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-boolean,`Boolean`>>} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
@@ -5713,6 +5724,10 @@ api.search = ca({
       type: 'boolean',
       name: 'track_scores'
     },
+    typedKeys: {
+      type: 'boolean',
+      name: 'typed_keys'
+    },
     version: {
       type: 'boolean'
     },
@@ -5820,6 +5835,7 @@ api.searchShards = ca({
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-boolean,`Boolean`>>} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.profile - Specify whether to profile the query execution
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -5868,6 +5884,10 @@ api.searchTemplate = ca({
     },
     profile: {
       type: 'boolean'
+    },
+    typedKeys: {
+      type: 'boolean',
+      name: 'typed_keys'
     }
   },
   urls: [
