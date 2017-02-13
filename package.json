@@ -8,7 +8,11 @@
   "main": "src/elasticsearch.js",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "13.0.0-alpha1",
-  "keywords" : ["elasticsearch", "mapping", "REST"],
+  "keywords": [
+    "elasticsearch",
+    "mapping",
+    "REST"
+  ],
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
@@ -91,7 +95,8 @@
     "agentkeepalive": "^2.2.0",
     "chalk": "^1.0.0",
     "lodash-node": "~2.4",
-    "lodash.get": "^4.4.2"
+    "lodash.get": "^4.4.2",
+    "lodash.isempty": "^4.4.0"
   },
   "repository": {
     "type": "git",
