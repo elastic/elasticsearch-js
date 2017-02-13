@@ -94,7 +94,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 *Params*
 
 [horizontal]
-`scrollId`::
+`scroll_id`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of scroll IDs to clear
 `body`::
 <<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
