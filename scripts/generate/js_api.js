@@ -207,7 +207,7 @@ module.exports = function (branch, done) {
       _.forOwn(allParams, (paramSpec, paramName) => {
         const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
         if (toMerge) {
-          _.mergeWith(paramSpec, toMerge, (dest, src) => {
+          _.merge(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
               return dest.concat(src)
             }
@@ -263,7 +263,7 @@ module.exports = function (branch, done) {
 
         urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
 
-        return _.omitBy({
+        return _.omit({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + _.camelCase(match) + '%>';
           }),
