@@ -2010,7 +2010,7 @@ api.deleteByQuery = ca({
       name: 'requests_per_second'
     },
     slices: {
-      type: 'integer',
+      type: 'number',
       'default': 1
     }
   },
@@ -5455,7 +5455,7 @@ api.reindex = ca({
       name: 'requests_per_second'
     },
     slices: {
-      type: 'integer',
+      type: 'number',
       'default': 1
     }
   },
@@ -6742,7 +6742,7 @@ api.updateByQuery = ca({
       name: 'requests_per_second'
     },
     slices: {
-      type: 'integer',
+      type: 'number',
       'default': 1
     }
   },
