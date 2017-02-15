@@ -2,14 +2,8 @@ module.exports = [
   {
     version: '*',
     paramAsBody: {
-      scroll: {
-        param: 'scrollId',
-        body: 'scroll_id'
-      },
-      clearScroll: {
-        param: 'scrollId',
-        body: 'scroll_id'
-      }
+      scroll: 'scrollId',
+      clearScroll: 'scrollId',
     }
   },
   {
@@ -258,6 +252,19 @@ function (spec) {
     },
     examples: {
       scroll: 'scroll_5.0+.asciidoc'
+    }
+  },
+  {
+    version: '>=5.3',
+    paramAsBody: {
+      scroll: {
+        param: 'scrollId',
+        body: 'scroll_id'
+      },
+      clearScroll: {
+        param: 'scrollId',
+        body: 'scroll_id'
+      }
     }
   }
 ];
