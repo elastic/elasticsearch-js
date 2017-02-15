@@ -255,7 +255,13 @@ function exec(transport, spec, params, cb) {
   }
 
   if (!params.body && spec.paramAsBody) {
-    params.body = params[spec.paramAsBody];
+    if (typeof spec.paramAsBody === 'object') {
+      params.body = {};
+      params.body[spec.paramAsBody.body] = params[spec.paramAsBody.param];
+    } else {
+      params.body = params[spec.paramAsBody];
+    }
+
     delete params[spec.paramAsBody];
   }
 

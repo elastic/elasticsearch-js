@@ -2,8 +2,14 @@ module.exports = [
   {
     version: '*',
     paramAsBody: {
-      scroll: 'scrollId',
-      clearScroll: 'scrollId'
+      scroll: {
+        param: 'scrollId',
+        body: 'scroll_id'
+      },
+      clearScroll: {
+        param: 'scrollId',
+        body: 'scroll_id'
+      }
     }
   },
   {
