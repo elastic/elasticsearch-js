@@ -46,7 +46,6 @@ Version.prototype.mergeOpts = function (versioned, overrides) {
   const candidates = versioned
     .filter(o => this.satisfies(o.version))
     .map(o => _.omit(o, 'version'))
-    .reverse()
 
   return _.merge({}, overrides || {}, ...candidates)
 };
