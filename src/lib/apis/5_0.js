@@ -1075,10 +1075,7 @@ api.clearScroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: {
-    param: 'scrollId',
-    body: 'scroll_id'
-  },
+  paramAsBody: 'scrollId',
   method: 'DELETE'
 });
 
@@ -5738,10 +5735,7 @@ api.scroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: {
-    param: 'scrollId',
-    body: 'scroll_id'
-  },
+  paramAsBody: 'scrollId',
   method: 'POST'
 });
 
