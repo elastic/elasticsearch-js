@@ -60,4 +60,4 @@ Json.prototype.bulkBody = function (val) {
   return body;
 };
 
-Json.prototype.bulkBody.contentType = 'application/x-ldjson';
+Json.prototype.bulkBody.contentType = 'application/x-ndjson';

@@ -505,7 +505,7 @@ describe('Transport Class', function () {
         ];
 
         stub(conn, 'request', function (params) {
-          expect(params.headers).to.have.property('content-type', 'application/x-ldjson');
+          expect(params.headers).to.have.property('content-type', 'application/x-ndjson');
           expect(params.body).to.eql(
             '{"_id":"simple body"}\n' +
             '{"name":"ഢധയമബ"}\n'
