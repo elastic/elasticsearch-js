@@ -160,9 +160,9 @@ Logs in a format that can be executed with bash, where everything is commented e
 Options:
 
 `curlHost`:::
-`Sting` --  Default is `"localhost"`.
+`String` --  Default is `"localhost"`.
 `curlPort`:::
-`Sting` --  Default is `9200`.
+`String` --  Default is `9200`.
 
 `"stream"`::
 Send log messages to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">WriteableStream</a>
