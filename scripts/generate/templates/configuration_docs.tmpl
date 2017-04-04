@@ -128,22 +128,29 @@ Default::: `60000`
 Default::: `3000`
 
 
+`maxSockets`[[config-keep-alive-max-sockets]]:: `Number` -- Maximum number of sockets to allow per host.
+
+Default::: `Infinity`
+
 
 `keepAlive`[[config-keep-alive]]:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
 
 Default::: `true`
 
 
+`keepAliveInterval`[[config-keep-alive-interval]]:: `Number` -- How often, in milliseconds, should TCP KeepAlive packets be sent over sockets being kept alive. Only relevant if `keepAlive` is set to `true`.
 
-`maxSockets`[[config-max-sockets]]:: `Number` -- Maximum number of concurrent requests that can be made to any node.
-
-Default::: `10`
-
+Default::: `1000`
 
 
-`minSockets`[[config-min-sockets]]:: `Number` -- Minimum number of sockets to keep connected to a node, only applies when `keepAlive` is true
+`keepAliveMaxFreeSockets`[[config-keep-alive-max-free-sockets]]:: `Number` -- Maximum number of inactive sockets to keep connected to a node. Only relevant if `keepAlive` is set to `true`.
 
-Default::: `10`
+Default::: `256`
+
+
+`keepAliveFreeSocketTimeout`[[config-keep-alive-free-socket-timeout]]:: `Number` -- Sets inactive sockets to timeout after milliseconds of inactivity. Only relevant if `keepAlive` is set to `true`.
+
+Default::: `60000`
 
 
 `suggestCompression`[[config-suggest-compression]]:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.

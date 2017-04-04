@@ -38,11 +38,11 @@ function HttpConnector(host, config) {
   this.useSsl = this.host.protocol === 'https';
 
   config = _.defaults(config || {}, {
+    maxSockets: Infinity,
     keepAlive: true,
-    minSockets: 10,
-    // 10 makes sense but 11 actually keeps 10 sockets around
-    // https://github.com/mikeal/forever-agent/issues/8
-    maxSockets: 11
+    keepAliveInterval: 1000,
+    keepAliveMaxFreeSockets: 256,
+    keepAliveFreeSocketTimeout: 60000
   });
 
   this.agent = config.createNodeAgent ? config.createNodeAgent(this, config) : this.createAgent(config);
@@ -90,8 +90,10 @@ HttpConnector.prototype.createAgent = function (config) {
 HttpConnector.prototype.makeAgentConfig = function (config) {
   var agentConfig = {
     keepAlive: config.keepAlive,
+    keepAliveMsecs: config.keepAliveInterval,
     maxSockets: config.maxSockets,
-    minSockets: config.minSockets
+    maxFreeSockets: config.keepAliveMaxFreeSockets,
+    freeSocketKeepAliveTimeout: config.keepAliveFreeSocketTimeout
   };
 
   if (this.useSsl) {
