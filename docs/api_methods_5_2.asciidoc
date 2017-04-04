@@ -1,11 +1,11 @@
-[[api-reference]]
-== 5.3 API
+[[api-reference-5-2]]
+== 5.2 API
 
 
-NOTE: This is currently the default API, but in upcoming versions that will change. We recommend setting the `apiVersion` config param when you instantiate your client to make sure that the API does not change unexpectedly.
+NOTE: At this time, you must opt into the 5.2 API by setting the `apiVersion` config parameter.
 
 
-[[api-bulk]]
+[[api-bulk-5-2]]
 === `bulk`
 
 [source,js]
@@ -76,7 +76,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-clearscroll]]
+[[api-clearscroll-5-2]]
 === `clearScroll`
 
 [source,js]
@@ -101,7 +101,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-count]]
+[[api-count-5-2]]
 === `count`
 
 [source,js]
@@ -201,7 +201,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-countpercolate]]
+[[api-countpercolate-5-2]]
 === `countPercolate`
 
 [source,js]
@@ -260,7 +260,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-create]]
+[[api-create-5-2]]
 === `create`
 
 [source,js]
@@ -338,7 +338,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-delete]]
+[[api-delete-5-2]]
 === `delete`
 
 [source,js]
@@ -403,7 +403,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletebyquery]]
+[[api-deletebyquery-5-2]]
 === `deleteByQuery`
 
 [source,js]
@@ -521,7 +521,7 @@ Options:::
 <<api-param-type-string,`String`>> -- Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 `scrollSize`::
 <<api-param-type-number,`Number`>> -- Size on the scroll request powering the update_by_query
-`[waitForCompletion=true]`::
+`waitForCompletion`::
 <<api-param-type-boolean,`Boolean`>> -- Should the request should block until the delete-by-query is complete.
 `requestsPerSecond`::
 <<api-param-type-number,`Number`>> -- The throttle for this request in sub-requests per second. -1 means no throttle.
@@ -536,7 +536,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-deletescript]]
+[[api-deletescript-5-2]]
 === `deleteScript`
 
 [source,js]
@@ -563,7 +563,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-deletetemplate]]
+[[api-deletetemplate-5-2]]
 === `deleteTemplate`
 
 [source,js]
@@ -588,7 +588,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-exists]]
+[[api-exists-5-2]]
 === `exists`
 
 [source,js]
@@ -641,7 +641,7 @@ client.exists({
 
 link:#[back to top]
 
-[[api-explain]]
+[[api-explain-5-2]]
 === `explain`
 
 [source,js]
@@ -731,7 +731,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-fieldstats]]
+[[api-fieldstats-5-2]]
 === `fieldStats`
 
 [source,js]
@@ -776,7 +776,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-get]]
+[[api-get-5-2]]
 === `get`
 
 [source,js]
@@ -841,7 +841,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-getscript]]
+[[api-getscript-5-2]]
 === `getScript`
 
 [source,js]
@@ -866,7 +866,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-getsource]]
+[[api-getsource-5-2]]
 === `getSource`
 
 [source,js]
@@ -920,7 +920,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-gettemplate]]
+[[api-gettemplate-5-2]]
 === `getTemplate`
 
 [source,js]
@@ -943,7 +943,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-index]]
+[[api-index-5-2]]
 === `index`
 
 [source,js]
@@ -1030,7 +1030,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-info]]
+[[api-info-5-2]]
 === `info`
 
 [source,js]
@@ -1046,7 +1046,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/[the elasticsea
 
 
 
-[[api-mget]]
+[[api-mget-5-2]]
 === `mget`
 
 [source,js]
@@ -1117,7 +1117,7 @@ client.mget({
 
 link:#[back to top]
 
-[[api-mpercolate]]
+[[api-mpercolate-5-2]]
 === `mpercolate`
 
 [source,js]
@@ -1156,7 +1156,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-msearch]]
+[[api-msearch-5-2]]
 === `msearch`
 
 [source,js]
@@ -1208,7 +1208,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-msearchtemplate]]
+[[api-msearchtemplate-5-2]]
 === `msearchTemplate`
 
 [source,js]
@@ -1243,7 +1243,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-mtermvectors]]
+[[api-mtermvectors-5-2]]
 === `mtermvectors`
 
 [source,js]
@@ -1302,7 +1302,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-percolate]]
+[[api-percolate-5-2]]
 === `percolate`
 
 [source,js]
@@ -1443,7 +1443,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-ping]]
+[[api-ping-5-2]]
 === `ping`
 
 [source,js]
@@ -1459,7 +1459,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/[the elasticsea
 
 
 
-[[api-putscript]]
+[[api-putscript-5-2]]
 === `putScript`
 
 [source,js]
@@ -1486,7 +1486,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-puttemplate]]
+[[api-puttemplate-5-2]]
 === `putTemplate`
 
 [source,js]
@@ -1511,7 +1511,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-reindex]]
+[[api-reindex-5-2]]
 === `reindex`
 
 [source,js]
@@ -1535,7 +1535,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 <<api-param-type-duration-string,`DurationString`>> -- Time each individual bulk request should wait for shards that are unavailable.
 `waitForActiveShards`::
 <<api-param-type-string,`String`>> -- Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-`[waitForCompletion=true]`::
+`waitForCompletion`::
 <<api-param-type-boolean,`Boolean`>> -- Should the request should block until the reindex is complete.
 `requestsPerSecond`::
 <<api-param-type-number,`Number`>> -- The throttle to set on this request in sub-requests per second. -1 means no throttle.
@@ -1546,7 +1546,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-reindexrethrottle]]
+[[api-reindexrethrottle-5-2]]
 === `reindexRethrottle`
 
 [source,js]
@@ -1573,7 +1573,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-rendersearchtemplate]]
+[[api-rendersearchtemplate-5-2]]
 === `renderSearchTemplate`
 
 [source,js]
@@ -1598,7 +1598,7 @@ Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasti
 
 link:#[back to top]
 
-[[api-scroll]]
+[[api-scroll-5-2]]
 === `scroll`
 
 [source,js]
@@ -1653,7 +1653,7 @@ client.search({
 
 link:#[back to top]
 
-[[api-search]]
+[[api-search-5-2]]
 === `search`
 
 [source,js]
@@ -1802,7 +1802,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchshards]]
+[[api-searchshards-5-2]]
 === `searchShards`
 
 [source,js]
@@ -1847,7 +1847,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-searchtemplate]]
+[[api-searchtemplate-5-2]]
 === `searchTemplate`
 
 [source,js]
@@ -1904,7 +1904,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-suggest]]
+[[api-suggest-5-2]]
 === `suggest`
 
 [source,js]
@@ -1978,7 +1978,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-termvectors]]
+[[api-termvectors-5-2]]
 === `termvectors`
 
 [source,js]
@@ -2037,7 +2037,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-update]]
+[[api-update-5-2]]
 === `update`
 
 [source,js]
@@ -2177,7 +2177,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-updatebyquery]]
+[[api-updatebyquery-5-2]]
 === `updateByQuery`
 
 [source,js]
@@ -2275,7 +2275,7 @@ Options:::
 <<api-param-type-string,`String`>> -- Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 `scrollSize`::
 <<api-param-type-number,`Number`>> -- Size on the scroll request powering the update_by_query
-`[waitForCompletion=true]`::
+`waitForCompletion`::
 <<api-param-type-boolean,`Boolean`>> -- Should the request should block until the update by query operation is complete.
 `requestsPerSecond`::
 <<api-param-type-number,`Number`>> -- The throttle to set on this request in sub-requests per second. -1 means no throttle.
@@ -2290,7 +2290,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-aliases]]
+[[api-cat-aliases-5-2]]
 === `cat.aliases`
 
 [source,js]
@@ -2327,7 +2327,7 @@ Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasti
 
 link:#[back to top]
 
-[[api-cat-allocation]]
+[[api-cat-allocation-5-2]]
 === `cat.allocation`
 
 [source,js]
@@ -2379,7 +2379,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-count]]
+[[api-cat-count-5-2]]
 === `cat.count`
 
 [source,js]
@@ -2416,7 +2416,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-fielddata]]
+[[api-cat-fielddata-5-2]]
 === `cat.fielddata`
 
 [source,js]
@@ -2468,7 +2468,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-health]]
+[[api-cat-health-5-2]]
 === `cat.health`
 
 [source,js]
@@ -2505,7 +2505,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-help]]
+[[api-cat-help-5-2]]
 === `cat.help`
 
 [source,js]
@@ -2530,7 +2530,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-indices]]
+[[api-cat-indices-5-2]]
 === `cat.indices`
 
 [source,js]
@@ -2584,7 +2584,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-master]]
+[[api-cat-master-5-2]]
 === `cat.master`
 
 [source,js]
@@ -2619,7 +2619,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-nodeattrs]]
+[[api-cat-nodeattrs-5-2]]
 === `cat.nodeattrs`
 
 [source,js]
@@ -2654,7 +2654,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-nodes]]
+[[api-cat-nodes-5-2]]
 === `cat.nodes`
 
 [source,js]
@@ -2691,7 +2691,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-pendingtasks]]
+[[api-cat-pendingtasks-5-2]]
 === `cat.pendingTasks`
 
 [source,js]
@@ -2726,7 +2726,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-plugins]]
+[[api-cat-plugins-5-2]]
 === `cat.plugins`
 
 [source,js]
@@ -2761,7 +2761,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-recovery]]
+[[api-cat-recovery-5-2]]
 === `cat.recovery`
 
 [source,js]
@@ -2811,7 +2811,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cat-repositories]]
+[[api-cat-repositories-5-2]]
 === `cat.repositories`
 
 [source,js]
@@ -2846,7 +2846,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-segments]]
+[[api-cat-segments-5-2]]
 === `cat.segments`
 
 [source,js]
@@ -2879,7 +2879,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-shards]]
+[[api-cat-shards-5-2]]
 === `cat.shards`
 
 [source,js]
@@ -2916,7 +2916,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-snapshots]]
+[[api-cat-snapshots-5-2]]
 === `cat.snapshots`
 
 [source,js]
@@ -2953,7 +2953,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-tasks]]
+[[api-cat-tasks-5-2]]
 === `cat.tasks`
 
 [source,js]
@@ -2994,7 +2994,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-templates]]
+[[api-cat-templates-5-2]]
 === `cat.templates`
 
 [source,js]
@@ -3031,7 +3031,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cat-threadpool]]
+[[api-cat-threadpool-5-2]]
 === `cat.threadPool`
 
 [source,js]
@@ -3078,7 +3078,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-allocationexplain]]
+[[api-cluster-allocationexplain-5-2]]
 === `cluster.allocationExplain`
 
 [source,js]
@@ -3105,7 +3105,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cluster-getsettings]]
+[[api-cluster-getsettings-5-2]]
 === `cluster.getSettings`
 
 [source,js]
@@ -3134,7 +3134,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cluster-health]]
+[[api-cluster-health-5-2]]
 === `cluster.health`
 
 [source,js]
@@ -3193,7 +3193,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-pendingtasks]]
+[[api-cluster-pendingtasks-5-2]]
 === `cluster.pendingTasks`
 
 [source,js]
@@ -3218,7 +3218,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cluster-putsettings]]
+[[api-cluster-putsettings-5-2]]
 === `cluster.putSettings`
 
 [source,js]
@@ -3247,7 +3247,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cluster-reroute]]
+[[api-cluster-reroute-5-2]]
 === `cluster.reroute`
 
 [source,js]
@@ -3282,7 +3282,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-cluster-state]]
+[[api-cluster-state-5-2]]
 === `cluster.state`
 
 [source,js]
@@ -3325,7 +3325,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-cluster-stats]]
+[[api-cluster-stats-5-2]]
 === `cluster.stats`
 
 [source,js]
@@ -3345,6 +3345,8 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 [horizontal]
 `flatSettings`::
 <<api-param-type-boolean,`Boolean`>> -- Return settings in flat format (default: false)
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `timeout`::
 <<api-param-type-duration-string,`DurationString`>> -- Explicit operation timeout
 `nodeId`::
@@ -3352,7 +3354,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-analyze]]
+[[api-indices-analyze-5-2]]
 === `indices.analyze`
 
 [source,js]
@@ -3401,7 +3403,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-clearcache]]
+[[api-indices-clearcache-5-2]]
 === `indices.clearCache`
 
 [source,js]
@@ -3450,7 +3452,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-close]]
+[[api-indices-close-5-2]]
 === `indices.close`
 
 [source,js]
@@ -3492,7 +3494,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-create]]
+[[api-indices-create-5-2]]
 === `indices.create`
 
 [source,js]
@@ -3525,7 +3527,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-delete]]
+[[api-indices-delete-5-2]]
 === `indices.delete`
 
 [source,js]
@@ -3554,7 +3556,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-deletealias]]
+[[api-indices-deletealias-5-2]]
 === `indices.deleteAlias`
 
 [source,js]
@@ -3585,7 +3587,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-deletetemplate]]
+[[api-indices-deletetemplate-5-2]]
 === `indices.deleteTemplate`
 
 [source,js]
@@ -3614,7 +3616,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-exists]]
+[[api-indices-exists-5-2]]
 === `indices.exists`
 
 [source,js]
@@ -3653,7 +3655,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existsalias]]
+[[api-indices-existsalias-5-2]]
 === `indices.existsAlias`
 
 [source,js]
@@ -3694,7 +3696,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-existstemplate]]
+[[api-indices-existstemplate-5-2]]
 === `indices.existsTemplate`
 
 [source,js]
@@ -3723,7 +3725,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-existstype]]
+[[api-indices-existstype-5-2]]
 === `indices.existsType`
 
 [source,js]
@@ -3764,7 +3766,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-flush]]
+[[api-indices-flush-5-2]]
 === `indices.flush`
 
 [source,js]
@@ -3805,7 +3807,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-flushsynced]]
+[[api-indices-flushsynced-5-2]]
 === `indices.flushSynced`
 
 [source,js]
@@ -3842,7 +3844,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-forcemerge]]
+[[api-indices-forcemerge-5-2]]
 === `indices.forcemerge`
 
 [source,js]
@@ -3889,7 +3891,7 @@ anything -- TODO: ?
 
 link:#[back to top]
 
-[[api-indices-get]]
+[[api-indices-get-5-2]]
 === `indices.get`
 
 [source,js]
@@ -3923,6 +3925,8 @@ Options:::
 
 `flatSettings`::
 <<api-param-type-boolean,`Boolean`>> -- Return settings in flat format (default: false)
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return version and creation date values in human-readable format.
 `includeDefaults`::
 <<api-param-type-boolean,`Boolean`>> -- Whether to return all default setting for each of the indices.
 `index`::
@@ -3932,7 +3936,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getalias]]
+[[api-indices-getalias-5-2]]
 === `indices.getAlias`
 
 [source,js]
@@ -3971,7 +3975,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getfieldmapping]]
+[[api-indices-getfieldmapping-5-2]]
 === `indices.getFieldMapping`
 
 [source,js]
@@ -4014,7 +4018,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getmapping]]
+[[api-indices-getmapping-5-2]]
 === `indices.getMapping`
 
 [source,js]
@@ -4053,7 +4057,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-getsettings]]
+[[api-indices-getsettings-5-2]]
 === `indices.getSettings`
 
 [source,js]
@@ -4087,6 +4091,8 @@ Options:::
 <<api-param-type-boolean,`Boolean`>> -- Return settings in flat format (default: false)
 `local`::
 <<api-param-type-boolean,`Boolean`>> -- Return local information, do not retrieve the state from master node (default: false)
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return version and creation date values in human-readable format.
 `includeDefaults`::
 <<api-param-type-boolean,`Boolean`>> -- Whether to return all default setting for each of the indices.
 `index`::
@@ -4096,7 +4102,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-gettemplate]]
+[[api-indices-gettemplate-5-2]]
 === `indices.getTemplate`
 
 [source,js]
@@ -4125,7 +4131,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-getupgrade]]
+[[api-indices-getupgrade-5-2]]
 === `indices.getUpgrade`
 
 [source,js]
@@ -4155,12 +4161,14 @@ Options:::
  * `"none"`
  * `"all"`
 
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 link:#[back to top]
 
-[[api-indices-open]]
+[[api-indices-open-5-2]]
 === `indices.open`
 
 [source,js]
@@ -4201,7 +4209,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putalias]]
+[[api-indices-putalias-5-2]]
 === `indices.putAlias`
 
 [source,js]
@@ -4232,7 +4240,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-putmapping]]
+[[api-indices-putmapping-5-2]]
 === `indices.putMapping`
 
 [source,js]
@@ -4277,7 +4285,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-putsettings]]
+[[api-indices-putsettings-5-2]]
 === `indices.putSettings`
 
 [source,js]
@@ -4320,7 +4328,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-puttemplate]]
+[[api-indices-puttemplate-5-2]]
 === `indices.putTemplate`
 
 [source,js]
@@ -4355,7 +4363,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-recovery]]
+[[api-indices-recovery-5-2]]
 === `indices.recovery`
 
 [source,js]
@@ -4377,12 +4385,14 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 <<api-param-type-boolean,`Boolean`>> -- Whether to display detailed information about shard recovery
 `activeOnly`::
 <<api-param-type-boolean,`Boolean`>> -- Display only those recoveries that are currently on-going
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 link:#[back to top]
 
-[[api-indices-refresh]]
+[[api-indices-refresh-5-2]]
 === `indices.refresh`
 
 [source,js]
@@ -4423,7 +4433,7 @@ anything -- TODO: ?
 
 link:#[back to top]
 
-[[api-indices-rollover]]
+[[api-indices-rollover-5-2]]
 === `indices.rollover`
 
 [source,js]
@@ -4458,7 +4468,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-segments]]
+[[api-indices-segments-5-2]]
 === `indices.segments`
 
 [source,js]
@@ -4488,6 +4498,8 @@ Options:::
  * `"none"`
  * `"all"`
 
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `operationThreading`::
 anything -- TODO: ?
 `verbose`::
@@ -4497,7 +4509,7 @@ anything -- TODO: ?
 
 link:#[back to top]
 
-[[api-indices-shardstores]]
+[[api-indices-shardstores-5-2]]
 === `indices.shardStores`
 
 [source,js]
@@ -4536,7 +4548,7 @@ anything -- TODO: ?
 
 link:#[back to top]
 
-[[api-indices-shrink]]
+[[api-indices-shrink-5-2]]
 === `indices.shrink`
 
 [source,js]
@@ -4569,7 +4581,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-indices-stats]]
+[[api-indices-stats-5-2]]
 === `indices.stats`
 
 [source,js]
@@ -4595,6 +4607,8 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
 `groups`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of search groups for `search` index metric
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `[level=indices]`::
 <<api-param-type-string,`String`>> -- Return stats aggregated at cluster, index or shard level
 Options:::
@@ -4613,7 +4627,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-updatealiases]]
+[[api-indices-updatealiases-5-2]]
 === `indices.updateAliases`
 
 [source,js]
@@ -4653,7 +4667,7 @@ client.indices.updateAliases({
 
 link:#[back to top]
 
-[[api-indices-upgrade]]
+[[api-indices-upgrade-5-2]]
 === `indices.upgrade`
 
 [source,js]
@@ -4694,7 +4708,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-indices-validatequery]]
+[[api-indices-validatequery-5-2]]
 === `indices.validateQuery`
 
 [source,js]
@@ -4755,7 +4769,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-ingest-deletepipeline]]
+[[api-ingest-deletepipeline-5-2]]
 === `ingest.deletePipeline`
 
 [source,js]
@@ -4784,7 +4798,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-ingest-getpipeline]]
+[[api-ingest-getpipeline-5-2]]
 === `ingest.getPipeline`
 
 [source,js]
@@ -4809,7 +4823,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-ingest-putpipeline]]
+[[api-ingest-putpipeline-5-2]]
 === `ingest.putPipeline`
 
 [source,js]
@@ -4838,7 +4852,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-ingest-simulate]]
+[[api-ingest-simulate-5-2]]
 === `ingest.simulate`
 
 [source,js]
@@ -4865,7 +4879,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-nodes-hotthreads]]
+[[api-nodes-hotthreads-5-2]]
 === `nodes.hotThreads`
 
 [source,js]
@@ -4905,7 +4919,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-nodes-info]]
+[[api-nodes-info-5-2]]
 === `nodes.info`
 
 [source,js]
@@ -4925,6 +4939,8 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 [horizontal]
 `flatSettings`::
 <<api-param-type-boolean,`Boolean`>> -- Return settings in flat format (default: false)
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `timeout`::
 <<api-param-type-duration-string,`DurationString`>> -- Explicit operation timeout
 `nodeId`::
@@ -4934,7 +4950,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-nodes-stats]]
+[[api-nodes-stats-5-2]]
 === `nodes.stats`
 
 [source,js]
@@ -4960,6 +4976,8 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
 `groups`::
 <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of search groups for `search` index metric
+`human`::
+<<api-param-type-boolean,`Boolean`>> -- Whether to return time and byte values in human-readable format.
 `[level=node]`::
 <<api-param-type-string,`String`>> -- Return indices stats aggregated at index, node or shard level
 Options:::
@@ -4982,7 +5000,7 @@ Options:::
 
 link:#[back to top]
 
-[[api-snapshot-create]]
+[[api-snapshot-create-5-2]]
 === `snapshot.create`
 
 [source,js]
@@ -5013,7 +5031,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-createrepository]]
+[[api-snapshot-createrepository-5-2]]
 === `snapshot.createRepository`
 
 [source,js]
@@ -5044,7 +5062,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-delete]]
+[[api-snapshot-delete-5-2]]
 === `snapshot.delete`
 
 [source,js]
@@ -5073,7 +5091,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-deleterepository]]
+[[api-snapshot-deleterepository-5-2]]
 === `snapshot.deleteRepository`
 
 [source,js]
@@ -5102,7 +5120,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-get]]
+[[api-snapshot-get-5-2]]
 === `snapshot.get`
 
 [source,js]
@@ -5131,7 +5149,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-getrepository]]
+[[api-snapshot-getrepository-5-2]]
 === `snapshot.getRepository`
 
 [source,js]
@@ -5158,7 +5176,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-restore]]
+[[api-snapshot-restore-5-2]]
 === `snapshot.restore`
 
 [source,js]
@@ -5189,7 +5207,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-status]]
+[[api-snapshot-status-5-2]]
 === `snapshot.status`
 
 [source,js]
@@ -5218,7 +5236,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-snapshot-verifyrepository]]
+[[api-snapshot-verifyrepository-5-2]]
 === `snapshot.verifyRepository`
 
 [source,js]
@@ -5247,7 +5265,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-tasks-cancel]]
+[[api-tasks-cancel-5-2]]
 === `tasks.cancel`
 
 [source,js]
@@ -5280,7 +5298,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-tasks-get]]
+[[api-tasks-get-5-2]]
 === `tasks.get`
 
 [source,js]
@@ -5305,7 +5323,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 link:#[back to top]
 
-[[api-tasks-list]]
+[[api-tasks-list-5-2]]
 === `tasks.list`
 
 [source,js]
