@@ -8,6 +8,7 @@
   * Switched back to `agentkeepalive` for managing keep-alive connections https://github.com/elastic/elasticsearch-js/issues/476[#476]
   * `keepAlive*` settings have changed, and the defaults have been updated to match node.js/agentkeep defaults https://github.com/elastic/elasticsearch-js/commit/87cc201c0693a30953033c7d15dd4019f61b2b0f[87cc201]
   * `bulk` and other APIs that send line-delimited JSON bodies now use the `Content-Type: application/x-ndjson` header https://github.com/elastic/elasticsearch-js/pull/507[#507]
+  * `"console"` reporter is now available in Node.js for environments where that is preferred to `"stdout"` https://github.com/elastic/elasticsearch-js/pull/496[#523]
   * minor changes to `apiVersion` will no longer be released as a major release
   ** When we decided to have elasticsearch-js support multiple version of Elasticsearch, we included an `apiVersion` configuration paramter for users to choose the API that each client should expose. This setting had a default value that matched the most recent version of Elasticsearch at the time of release. Since Elasticsearch didn't make specific guarantees about backwards compatibility elasticsearch-js released a new major version every time the default `apiVersion` changed.
 +
