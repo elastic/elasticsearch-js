@@ -258,11 +258,11 @@ function exec(transport, spec, params, cb) {
     if (typeof spec.paramAsBody === 'object') {
       params.body = {};
       params.body[spec.paramAsBody.body] = params[spec.paramAsBody.param];
+      delete params[spec.paramAsBody.param];
     } else {
       params.body = params[spec.paramAsBody];
+      delete params[spec.paramAsBody];
     }
-
-    delete params[spec.paramAsBody];
   }
 
   // verify that we have the body if needed
