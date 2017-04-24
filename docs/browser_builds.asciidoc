@@ -13,10 +13,16 @@ If you use bower to manage your dependencies, then just run:
 bower install elasticsearch
 ---------
 
+=== NPM
+If you use npm to manage your dependencies, then just run:
+
+[source,shell]
+---------
+npm install elasticsearch-browser
+---------
+
 === Download
  * v13.0.0-rc2: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-13.0.0-rc2.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-13.0.0-rc2.tar.gz[tar.gz]
-
-NOTE: Here's an example that integrates elasticsearch.js with React https://github.com/scotchfield/elasticsearch-react-example/[on GitHub]
 
 === Angular Build
   * Registers an `esFactory` factory in the `"elasticsearch"` module
