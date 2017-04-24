@@ -7,7 +7,7 @@
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "13.0.0-rc2",
+  "version": "13.0.0",
   "keywords": [
     "elasticsearch",
     "mapping",
