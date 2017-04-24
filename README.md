@@ -1,4 +1,4 @@
-# elasticsearch.js 13.0.0-beta2
+# elasticsearch.js 14.0.0-SNAPSHOT
 
 The official low-level Elasticsearch client for Node.js and the browser.
 

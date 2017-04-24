@@ -22,7 +22,7 @@ npm install elasticsearch-browser
 ---------
 
 === Download
- * v13.0.0-beta2: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-13.0.0-beta2.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-13.0.0-beta2.tar.gz[tar.gz]
+ * v14.0.0-SNAPSHOT: https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-14.0.0-SNAPSHOT.zip[zip], https://download.elasticsearch.org/elasticsearch/elasticsearch-js/elasticsearch-js-14.0.0-SNAPSHOT.tar.gz[tar.gz]
 
 === Angular Build
   * Registers an `esFactory` factory in the `"elasticsearch"` module
