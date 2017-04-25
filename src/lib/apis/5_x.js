@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'remote', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html) request
@@ -5988,6 +5988,19 @@ api.reindexRethrottle = ca({
     }
   },
   method: 'POST'
+});
+
+api.remote = namespace();
+
+/**
+ * Perform a [remote.info](http://www.elastic.co/guide/en/elasticsearch/reference/master/remote-info.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.remote.prototype.info = ca({
+  url: {
+    fmt: '/_remote/info'
+  }
 });
 
 /**
