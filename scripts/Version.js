@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var pkg = require('../package.json');
 var branches = pkg.config.supported_es_branches;
+var branchVersions = pkg.config.branch_versions;
 var semver = require('semver');
 
 var maxMinorVersion = function (majorV) {
@@ -17,15 +18,16 @@ function Version(v) {
 
 Version.fromBranch = function (branch) {
   var m;
-
-  // master === the highest version number
-  if (branch === 'master') return new Version('6.0.0');
+  var majorMinorRegex = /^\d+\.\d+$/;
 
   // n.m -> n.m.0
-  if (m = branch.match(/^\d+\.\d+$/)) return new Version(branch + '.0');
+  if (m = branch.match(majorMinorRegex)) return new Version(branch + '.0');
 
   // n.x -> n.(maxVersion + 1).0
   if (m = branch.match(/^(\d+)\.x$/i)) return maxMinorVersion(m[1]).increment('minor');
+
+  var branchVersion = branchVersions[branch];
+  if (branchVersion && branchVersion.match(majorMinorRegex)) return new Version(branchVersion + '.0');
 
   throw new Error('unable to convert branch "' + branch + '" to semver');
 };
