@@ -18,16 +18,15 @@ function Version(v) {
 
 Version.fromBranch = function (branch) {
   var m;
-  var majorMinorRegex = /^\d+\.\d+$/;
-
-  // n.m -> n.m.0
-  if (m = branch.match(majorMinorRegex)) return new Version(branch + '.0');
-
-  // n.x -> n.(maxVersion + 1).0
-  if (m = branch.match(/^(\d+)\.x$/i)) return maxMinorVersion(m[1]).increment('minor');
 
   var branchVersion = branchVersions[branch];
-  if (branchVersion && branchVersion.match(majorMinorRegex)) return new Version(branchVersion + '.0');
+  var versionString = branchVersion ? branchVersion : branch;
+
+  // n.m -> n.m.0
+  if (m = versionString.match(/^\d+\.\d+$/)) return new Version(versionString + '.0');
+
+  // n.x -> n.(maxVersion + 1).0
+  if (m = versionString.match(/^(\d+)\.x$/i)) return maxMinorVersion(m[1]).increment('minor');
 
   throw new Error('unable to convert branch "' + branch + '" to semver');
 };
