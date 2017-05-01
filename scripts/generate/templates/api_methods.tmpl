@@ -21,7 +21,7 @@ _.each(actions, function (action) {
 client.<%= action.name %>([params, [callback]])
 --------
 
-<%= description(action.name) %>
+<%= action.description %>
 
 Check the *<<api-conventions>>* and <%= action.docUrl %>[the elasticsearch docs] for more information pertaining to this method.
 

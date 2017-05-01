@@ -249,9 +249,6 @@ function (spec) {
         '/_update_by_query/{task_id}/_rethrottle',
         '/_delete_by_query/{task_id}/_rethrottle'
       ]
-    },
-    examples: {
-      scroll: 'scroll_5.0+.asciidoc'
     }
   },
   {
@@ -265,6 +262,32 @@ function (spec) {
         param: 'scrollId',
         body: 'scroll_id'
       }
+    }
+  },
+  // description overrides by major version
+  {
+    version: '0.90.x',
+    descriptions: {
+      search: 'search_1.x.asciidoc'
+    }
+  },
+  {
+    version: '1.x',
+    descriptions: {
+      search: 'search_1.x.asciidoc'
+    }
+  },
+  {
+    version: '2.x',
+    descriptions: {
+      search: 'search_2.x.asciidoc'
+    }
+  },
+  // examples changed at 5.0
+  {
+    version: '<5.0.0',
+    examples: {
+      scroll: 'scroll_<5.0.asciidoc'
     }
   }
 ];
