@@ -266,5 +266,15 @@ function (spec) {
         body: 'scroll_id'
       }
     }
+  },
+  {
+    version: '>=5.3,<5.5',
+    paramAsBody: {
+      clearScroll: {
+        param: 'scrollId',
+        body: 'scroll_id',
+        castToArray: true,
+      }
+    }
   }
 ];
