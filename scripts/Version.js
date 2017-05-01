@@ -21,7 +21,7 @@ function nextMinorVersion(major) {
     // ensure all values in tuples are not NaN
     .filter(vt => vt.every(v => !isNaN(v)))
     // ensure that major version in tuple matches major (both as a string)
-    .filter(vt => `${vt[0]}` === `${major}`)
+    .filter(vt => vt[0] === parseFloat(major))
     // sort by the minor version in each tuple
     .sort((vta, vtb) => vtb[1] - vta[1])
     // get the minor version from the first tuple
@@ -56,7 +56,6 @@ Version.prototype.increment = function (which) {
 };
 
 Version.prototype.satisfies = function (range) {
-  debugger
   return semver.satisfies(this.version, range);
 };
 
