@@ -1663,7 +1663,7 @@ client.search([params, [callback]])
 
 Return documents matching a query, aggregations/facets, highlighted snippets, suggestions, and more. Write your queries as either http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-uri-request.html[simple query strings] in the `q` parameter, or by specifying a http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html[full request definition] using the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL] in the `body` parameter.
 
-TIP: https://github.com/danpaz/bodybuilder[bodybuilder], https://github.com/holidayextras/esq[esq], or https://github.com/sudo-suhas/elastic-builder[elastic-builder] can be used to make building query bodies easier.
+TIP: https://github.com/danpaz/bodybuilder[bodybuilder] and https://github.com/sudo-suhas/elastic-builder[elastic-builder] can be used to make building query bodies easier.
 
 
 

@@ -27,7 +27,8 @@ module.exports = function (branch, done) {
     mergeConcatParams: {},
     paramAsBody: {},
     clientActionModifier: false,
-    examples: {}
+    examples: {},
+    descriptions: {},
   });
 
   var steps = [
@@ -115,11 +116,18 @@ module.exports = function (branch, done) {
     [].concat(apiSpec.actions, apiSpec.proxies)
     .forEach(function (action) {
       var examplePath = overrides.examples[action.name] || action.name + '.asciidoc';
+      var descriptionPath = overrides.descriptions[action.name] || action.name + '.asciidoc';
 
       try {
         action.examples = fs.readFileSync(fromRoot('docs/_examples', examplePath), 'utf8');
       } catch (e) {
         action.examples = '// no examples';
+      }
+
+      try {
+        action.description = fs.readFileSync(fromRoot('docs/_descriptions', descriptionPath), 'utf8');
+      } catch (e) {
+        action.description = '// no description';
       }
     })
 
