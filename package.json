@@ -36,7 +36,10 @@
     "unstable_es_branches": [
       "5.x",
       "master"
-    ]
+    ],
+    "branch_versions": {
+     "master": "6.0"
+    }
   },
   "devDependencies": {
     "@spalger/eslint-config-personal": "^0.4.0",
