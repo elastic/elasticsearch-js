@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'remote', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -1206,7 +1206,10 @@ api.clearScroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: 'scrollId',
+  paramAsBody: {
+    param: 'scrollId',
+    body: 'scroll_id'
+  },
   method: 'DELETE'
 });
 
@@ -5679,6 +5682,19 @@ api.reindexRethrottle = ca({
   method: 'POST'
 });
 
+api.remote = namespace();
+
+/**
+ * Perform a [remote.info](http://www.elastic.co/guide/en/elasticsearch/reference/master/remote-info.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.remote.prototype.info = ca({
+  url: {
+    fmt: '/_remote/info'
+  }
+});
+
 /**
  * Perform a [renderSearchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
  *
@@ -5732,7 +5748,10 @@ api.scroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: 'scrollId',
+  paramAsBody: {
+    param: 'scrollId',
+    body: 'scroll_id'
+  },
   method: 'POST'
 });
 
