@@ -1,7 +1,7 @@
 [[changelog]]
 == Changelog
 
-=== 13.0.0 (Apr 24 2016)
+=== 13.0.0 (Apr 24 2017)
 
   * apiVersion `"5.3"` is now the default
   * Fixed the way that http addresses are sniffed from the cluster https://github.com/elastic/elasticsearch-js/issues/496[#496]
