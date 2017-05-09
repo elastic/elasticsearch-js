@@ -35,6 +35,7 @@
     ],
     "unstable_es_branches": [
       "5.x",
+      "5.4",
       "master"
     ]
   },

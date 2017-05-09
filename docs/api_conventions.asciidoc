@@ -11,7 +11,7 @@ By default, all api methods accept the following parameters. They are omitted fr
 `body`::
 `String, Anything` -- The body to send along with this request. If the body is a string it will be passed along as is, otherwise it is passed to the serializer and converted to either JSON or a newline separated list of JSON objects based on the API method.
 +
-NOTE: the https://github.com/fullscale/elastic.js[elastic.js] or https://github.com/danpaz/bodybuilder[bodybuilder] libraries can be used to make building request bodies simpler.
+NOTE: the https://github.com/danpaz/bodybuilder[bodybuilder], https://github.com/sudo-suhas/elastic-builder[elastic-builder] or https://github.com/fullscale/elastic.js[elastic.js] libraries can be used to make building request bodies simpler.
 
 `ignore`::
 +

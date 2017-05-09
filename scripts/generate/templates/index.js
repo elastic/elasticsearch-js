@@ -54,18 +54,6 @@ var templateGlobals = {
     return block.split('\n\n').join('\n+\n');
   },
 
-  description: function (action) {
-    try {
-      return fs.readFileSync(path.join(__dirname, '../../../docs/_descriptions/' + action + '.asciidoc'));
-    } catch (e) {
-      if (~e.message.indexOf('ENOENT')) {
-        return '// no description';
-      } else {
-        throw e;
-      }
-    }
-  },
-
   paramType: function (type, paramName) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
       case 'time':

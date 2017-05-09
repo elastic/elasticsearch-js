@@ -63,6 +63,7 @@ Options in node :::
   * `'1.7'`
   * `'0.90'`
   * `'5.x'` (unstable)
+  * `'5.4'` (unstable)
   * `'master'` (unstable)
 
 Options in the browser :::
@@ -72,6 +73,7 @@ Options in the browser :::
   * `'5.0'`
   * `'2.4'`
   * `'5.x'` (unstable)
+  * `'5.4'` (unstable)
   * `'master'` (unstable)
 
 
