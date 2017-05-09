@@ -257,7 +257,11 @@ function exec(transport, spec, params, cb) {
   if (!params.body && spec.paramAsBody) {
     if (typeof spec.paramAsBody === 'object') {
       params.body = {};
-      params.body[spec.paramAsBody.body] = params[spec.paramAsBody.param];
+      if (spec.paramAsBody.castToArray) {
+        params.body[spec.paramAsBody.body] = [].concat(params[spec.paramAsBody.param]);
+      } else {
+        params.body[spec.paramAsBody.body] = params[spec.paramAsBody.param];
+      }
       delete params[spec.paramAsBody.param];
     } else {
       params.body = params[spec.paramAsBody];
