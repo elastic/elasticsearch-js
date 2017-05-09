@@ -289,5 +289,15 @@ function (spec) {
     examples: {
       scroll: 'scroll_<5.0.asciidoc'
     }
+  },
+  {
+    version: '>=5.3,<5.5',
+    paramAsBody: {
+      clearScroll: {
+        param: 'scrollId',
+        body: 'scroll_id',
+        castToArray: true,
+      }
+    }
   }
 ];
