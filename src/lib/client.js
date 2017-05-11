@@ -27,7 +27,7 @@
 module.exports = Client;
 
 var Transport = require('./transport');
-var clientAction = require('./client_action');
+var components = require('./components');
 var _ = require('./utils');
 
 function Client(config) {
@@ -56,15 +56,23 @@ function Client(config) {
 
     this.transport = new Transport(config);
 
+    this.addPlugins = (plugins = []) => {
+      // append the new plugins to the config
+      config.plugins = (config.plugins || []).concat(plugins);
+
+      _.each(plugins, setup => {
+        setup(Constructor, config, components);
+      });
+    };
+
     _.each(EsApiClient.prototype, _.bind(function (Fn, prop) {
-      if (Fn.prototype instanceof clientAction.ApiNamespace) {
+      if (Fn.prototype instanceof components.clientAction.ApiNamespace) {
         this[prop] = new Fn(this.transport, this);
       }
     }, this));
 
     delete this._namespaces;
   }
-
 
   EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '_default');
   if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
@@ -77,24 +85,7 @@ function Client(config) {
     Constructor.prototype = _.cloneDeep(Constructor.prototype);
 
     _.each(config.plugins, function (setup) {
-      Constructor = setup(Constructor, config, {
-        apis: require('./apis'),
-        connectors: require('./connectors'),
-        loggers: require('./loggers'),
-        selectors: require('./selectors'),
-        serializers: require('./serializers'),
-        Client: require('./client'),
-        clientAction: clientAction,
-        Connection: require('./connection'),
-        ConnectionPool: require('./connection_pool'),
-        Errors: require('./errors'),
-        Host: require('./host'),
-        Log: require('./log'),
-        Logger: require('./logger'),
-        NodesToHost: require('./nodes_to_host'),
-        Transport: require('./transport'),
-        utils: require('./utils')
-      }) || Constructor;
+      Constructor = setup(Constructor, config, components) || Constructor;
     });
   }
 
