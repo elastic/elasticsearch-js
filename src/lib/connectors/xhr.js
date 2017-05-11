@@ -60,6 +60,26 @@ XhrConnector.prototype.request = function (params, cb) {
   var headers = host.getHeaders(params.headers);
   var async = params.async === false ? false : asyncDefault;
 
+  function parseResponseHeaders(headerStr) {
+    var headers = {};
+    if (!headerStr) {
+      return headers;
+    }
+    var headerPairs = headerStr.split('\u000d\u000a');
+    for (var i = 0; i < headerPairs.length; i++) {
+      var headerPair = headerPairs[i];
+      // Can't use split() here because it does the wrong thing
+      // if the header value has the string ": " in it.
+      var index = headerPair.indexOf('\u003a\u0020');
+      if (index > 0) {
+        var key = headerPair.substring(0, index);
+        var val = headerPair.substring(index + 2);
+        headers[key] = val;
+      }
+    }
+    return headers;
+  }
+
   xhr.open(params.method || 'GET', url, async);
 
   if (headers) {
@@ -75,7 +95,8 @@ XhrConnector.prototype.request = function (params, cb) {
       clearTimeout(timeoutId);
       log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
       var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
-      cb(err, xhr.responseText, xhr.status);
+      var headers = parseResponseHeaders(xhr.getAllResponseHeaders());
+      cb(err, xhr.responseText, xhr.status, headers);
     }
   };
 
