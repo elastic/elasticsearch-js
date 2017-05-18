@@ -37,6 +37,9 @@ function Transport(config) {
   // setup requestTimeout default
   self.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
 
+  // setup the connectionTimeout default
+  self.connectionTimeout = config.hasOwnProperty('connectionTimeout') ? config.connectionTimeout : false;
+
   if (config.hasOwnProperty('defer')) {
     self.defer = config.defer;
   }
@@ -136,11 +139,13 @@ Transport.prototype.request = function (params, cb) {
   var self = this;
   var remainingRetries = this.maxRetries;
   var requestTimeout = this.requestTimeout;
+  var connectionTimeout = this.connectionTimeout;
 
   var connection; // set in sendReqWithConnection
   var aborted = false; // several connector will respond with an error when the request is aborted
   var requestAborter; // an abort function, returned by connection#request()
   var requestTimeoutId; // the id of the ^timeout
+  var connectionTimeoutId; // the id of the connection timeout
   var ret; // the object returned to the user, might be a promise
   var defer; // the defer object, will be set when we are using promises.
 
@@ -190,6 +195,10 @@ Transport.prototype.request = function (params, cb) {
     requestTimeout = params.requestTimeout;
   }
 
+  if (params.hasOwnProperty('connectionTimeout')) {
+    connectionTimeout = params.connectionTimeout;
+  }
+
   params.req = {
     method: params.method,
     path: params.path || '/',
@@ -197,6 +206,17 @@ Transport.prototype.request = function (params, cb) {
     body: body,
     headers: headers
   };
+
+  function clearTimeouts() {
+    self._timeout(requestTimeoutId);
+    self._timeout(connectionTimeoutId);
+  }
+
+  function isAbortedOrExpired(id) {
+    return function() {
+      return aborted || (id !== undefined && id !== null && self._timers.indexOf(id) === -1);
+    }
+  }
 
   function sendReqWithConnection(err, _connection) {
     if (aborted) {
@@ -256,11 +276,11 @@ Transport.prototype.request = function (params, cb) {
   }
 
   function respond(err, body, status, headers) {
-    if (aborted) {
+    if (isAbortedOrExpired(connectionTimeoutId)()) {
       return;
     }
 
-    self._timeout(requestTimeoutId);
+    clearTimeouts();
     var parsedBody;
     var isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
 
@@ -331,9 +351,34 @@ Transport.prototype.request = function (params, cb) {
 
     aborted = true;
     remainingRetries = 0;
-    self._timeout(requestTimeoutId);
+    clearTimeouts();
     if (typeof requestAborter === 'function') {
       requestAborter();
+    }
+  }
+
+  function abortConnectionRequest() {
+    if (isAbortedOrExpired(connectionTimeoutId)()) {
+      return;
+    }
+
+    if (remainingRetries) {
+      remainingRetries--;
+      self._timeout(connectionTimeoutId);
+      setupConnectionTimeout();
+      self.log.debug('Connection Timeout after ' + connectionTimeout + 'ms, retrying');
+      self.connectionPool.select(sendReqWithConnection);
+    } else {
+      respond(new errors.ConnectionTimeout('Connection Timeout after ' + connectionTimeout * self.maxRetries + 'ms'));
+      abortRequest();
+    }
+  }
+
+  function setupConnectionTimeout() {
+    if (typeof connectionTimeout === 'number' && connectionTimeout !== Infinity) {
+      connectionTimeoutId = self._timeout(function () {
+        abortConnectionRequest();
+      }, connectionTimeout);
     }
   }
 
@@ -343,6 +388,8 @@ Transport.prototype.request = function (params, cb) {
       abortRequest();
     }, requestTimeout);
   }
+
+  setupConnectionTimeout();
 
   if (connection) {
     sendReqWithConnection(void 0, connection);
@@ -367,8 +414,8 @@ Transport.prototype._timeout = function (cb, delay) {
   if (cb) {
     // set the timer
     id = setTimeout(function () {
-      _.pull(timers, id);
       cb();
+      _.pull(timers, id);
     }, delay);
 
     timers.push(id);
