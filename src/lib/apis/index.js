@@ -1,6 +1,6 @@
 module.exports = {
+  get '_default'() { return require('./5_4'); },
   get '5.4'() { return require('./5_4'); },
-  get '_default'() { return require('./5_3'); },
   get '5.3'() { return require('./5_3'); },
   get '5.2'() { return require('./5_2'); },
   get '5.1'() { return require('./5_1'); },
