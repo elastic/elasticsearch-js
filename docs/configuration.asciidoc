@@ -55,6 +55,7 @@ WARNING: This default will track the latest version of Elasticsearch, and is onl
 Default ::: `'5.3'`
 
 Options in node :::
+  * `'5.4'`
   * `'5.3'`
   * `'5.2'`
   * `'5.1'`
@@ -63,17 +64,17 @@ Options in node :::
   * `'1.7'`
   * `'0.90'`
   * `'5.x'` (unstable)
-  * `'5.4'` (unstable)
+  * `'5.5'` (unstable)
   * `'master'` (unstable)
 
 Options in the browser :::
+  * `'5.4'`
   * `'5.3'`
   * `'5.2'`
   * `'5.1'`
   * `'5.0'`
-  * `'2.4'`
   * `'5.x'` (unstable)
-  * `'5.4'` (unstable)
+  * `'5.5'` (unstable)
   * `'master'` (unstable)
 
 

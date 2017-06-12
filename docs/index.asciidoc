@@ -20,6 +20,8 @@ include::logging.asciidoc[]
 
 include::development.asciidoc[]
 
+include::api_methods_5_4.asciidoc[]
+
 include::api_methods.asciidoc[]
 
 include::api_methods_5_2.asciidoc[]
