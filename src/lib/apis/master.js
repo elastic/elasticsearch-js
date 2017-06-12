@@ -5749,7 +5749,7 @@ api.reindexRethrottle = ca({
 api.remote = namespace();
 
 /**
- * Perform a [remote.info](http://www.elastic.co/guide/en/elasticsearch/reference/master/remote-info.html) request
+ * Perform a [remote.info](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
