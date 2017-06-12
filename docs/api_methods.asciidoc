@@ -669,7 +669,7 @@ client.existsSource([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/5.4/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -710,7 +710,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document; use `_all` to fetch the first document matching the ID across all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/5.4/docs-get.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -814,7 +814,7 @@ client.fieldCaps([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-field-caps.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -839,7 +839,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-field-caps.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5124,7 +5124,7 @@ client.remote.info([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/master/remote-info.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/5.4/cluster-remote-info.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
