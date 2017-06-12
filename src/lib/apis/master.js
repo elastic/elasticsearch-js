@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'remote', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'ingest.processor', 'nodes', 'remote', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
@@ -3453,7 +3453,6 @@ api.indices.prototype.forcemerge = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether to return all default setting for each of the indices.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.feature - A comma-separated list of features
  */
 api.indices.prototype.get = ca({
   params: {
@@ -3489,32 +3488,14 @@ api.indices.prototype.get = ca({
       name: 'include_defaults'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=feature%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        feature: {
-          type: 'list',
-          options: [
-            '_settings',
-            '_mappings',
-            '_aliases'
-          ]
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>',
+    req: {
+      index: {
+        type: 'list'
       }
     }
-  ]
+  }
 });
 
 /**
@@ -4852,6 +4833,17 @@ api.ingest.prototype.getPipeline = ca({
 });
 
 /**
+ * Perform a [ingest.processor.grok](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.ingest.prototype.processor.prototype.grok = ca({
+  url: {
+    fmt: '/_ingest/processor/grok'
+  }
+});
+
+/**
  * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -5051,6 +5043,7 @@ api.msearch = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+ * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -5069,6 +5062,10 @@ api.msearchTemplate = ca({
     typedKeys: {
       type: 'boolean',
       name: 'typed_keys'
+    },
+    maxConcurrentSearches: {
+      type: 'number',
+      name: 'max_concurrent_searches'
     }
   },
   urls: [
@@ -5546,6 +5543,67 @@ api.nodes.prototype.stats = ca({
 });
 
 /**
+ * Perform a [nodes.usage](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - Limit the information returned to the specified metrics
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ */
+api.nodes.prototype.usage = ca({
+  params: {
+    human: {
+      type: 'boolean',
+      'default': false
+    },
+    timeout: {
+      type: 'time'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_nodes/<%=nodeId%>/usage/<%=metric%>',
+      req: {
+        nodeId: {
+          type: 'list'
+        },
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'rest_actions'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/<%=nodeId%>/usage',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/usage/<%=metric%>',
+      req: {
+        metric: {
+          type: 'list',
+          options: [
+            '_all',
+            'rest_actions'
+          ]
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/usage'
+    }
+  ]
+});
+
+/**
  * Perform a [ping](http://www.elastic.co/guide/) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -5562,10 +5620,16 @@ api.ping = ca({
  * Perform a [putScript](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-string,`String`>>} params.context - Context name to compile script against
  * @param {<<api-param-type-string,`String`>>} params.id - Script ID
  * @param {<<api-param-type-string,`String`>>} params.lang - Script language
  */
 api.putScript = ca({
+  params: {
+    context: {
+      type: 'string'
+    }
+  },
   urls: [
     {
       fmt: '/_scripts/<%=lang%>/<%=id%>',
@@ -5579,9 +5643,9 @@ api.putScript = ca({
       }
     },
     {
-      fmt: '/_scripts/<%=lang%>',
+      fmt: '/_scripts/<%=id%>',
       req: {
-        lang: {
+        id: {
           type: 'string'
         }
       }
@@ -5790,6 +5854,7 @@ api.scroll = ca({
  * @param {<<api-param-type-string,`String`>>} params.suggestText - The source text for which the suggestions should be returned
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-boolean,`Boolean`>>} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.trackTotalHits - Indicate if the number of documents that match the query should be tracked
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
@@ -5930,6 +5995,10 @@ api.search = ca({
     trackScores: {
       type: 'boolean',
       name: 'track_scores'
+    },
+    trackTotalHits: {
+      type: 'boolean',
+      name: 'track_total_hits'
     },
     typedKeys: {
       type: 'boolean',
@@ -6264,6 +6333,7 @@ api.snapshot.prototype.deleteRepository = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.verbose - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
  * @param {<<api-param-type-string,`String`>>} params.repository - A repository name
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.snapshot - A comma-separated list of snapshot names
  */
@@ -6276,6 +6346,9 @@ api.snapshot.prototype.get = ca({
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
+    },
+    verbose: {
+      type: 'boolean'
     }
   },
   url: {
