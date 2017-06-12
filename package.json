@@ -25,6 +25,7 @@
     },
     "default_api_branch": "5.3",
     "supported_es_branches": [
+      "5.4",
       "5.3",
       "5.2",
       "5.1",
@@ -35,7 +36,7 @@
     ],
     "unstable_es_branches": [
       "5.x",
-      "5.4",
+      "5.5",
       "master"
     ]
   },
