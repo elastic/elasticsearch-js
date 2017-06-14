@@ -30,6 +30,7 @@ Check out the [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/clie
  - [Browser Builds](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/browser-builds.html)
  - [API](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
  - [Configuration](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html)
+ - [Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/changelog.html)
  - [Development/Contributing](https://github.com/elastic/elasticsearch-js/blob/master/CONTRIBUTING.md)
  - [Extending Core Components](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extending_core_components.html)
  - [Logging](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html)
