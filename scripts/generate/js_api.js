@@ -75,11 +75,11 @@ module.exports = function (branch, done) {
 
     // collect the namespaces from the action locations
     var namespaces = _.filter(_.map(actions, function (action) {
-      if (~action.location.indexOf('.')) {
-        var path = action.location.split('.').slice(0, -1);
-        _.pull(path, 'prototype');
-        return path.join('.');
-      }
+      return action.location
+        .split('.')
+        .slice(0, -1)
+        .filter(step => step !== 'prototype')
+        .join('.prototype.')
     }));
 
     // seperate the proxy actions
