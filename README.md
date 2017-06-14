@@ -1,4 +1,4 @@
-# elasticsearch.js 13.1.0
+# elasticsearch.js 13.1.1
 
 The official low-level Elasticsearch client for Node.js and the browser.
 
