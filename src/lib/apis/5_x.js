@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'ingest.processor', 'nodes', 'remote', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'ingest.prototype.processor', 'nodes', 'remote', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html) request
@@ -4981,6 +4981,8 @@ api.ingest.prototype.getPipeline = ca({
     }
   ]
 });
+
+api.ingest.prototype.processor = namespace();
 
 /**
  * Perform a [ingest.processor.grok](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request

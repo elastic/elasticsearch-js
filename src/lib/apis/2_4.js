@@ -5279,7 +5279,7 @@ api.reindex = ca({
  * Perform a [reindexRethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/docs-reindex.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+ * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. "unlimited" means set no throttle, otherwise it must be a float greater than 0.
  * @param {<<api-param-type-string,`String`>>} params.taskId - The task id to rethrottle
  */
 api.reindexRethrottle = ca({

@@ -1460,7 +1460,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 
 [horizontal]
 `requestsPerSecond`::
-<<api-param-type-number,`Number`>> -- The throttle to set on this request in sub-requests per second. 0 means set no throttle. As does "unlimited". Otherwise it must be a float.
+<<api-param-type-number,`Number`>> -- The throttle to set on this request in sub-requests per second. "unlimited" means set no throttle, otherwise it must be a float greater than 0.
 `taskId`::
 <<api-param-type-string,`String`>> -- The task id to rethrottle
 `body`::
