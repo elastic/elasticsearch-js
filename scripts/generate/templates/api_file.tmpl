@@ -10,7 +10,12 @@ var api = module.exports = {};
 api._namespaces = <%= stringify(namespaces) %>;<%
 
 _.each(actions, function (action) {
-  var namespace = action.location.split('.').shift();
+  const namespace = action.location
+    .split('.')
+    .slice(0, -1)
+    .filter(step => step !== 'prototype')
+    .join('.prototype.');
+    
   if (_.include(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
