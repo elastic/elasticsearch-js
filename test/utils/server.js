@@ -97,8 +97,8 @@ app
   .get('/screencast-reporter.js', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.js'))
 
   // libs
-  .get('/angular.js', sendFile(root + '/bower_components/angular/angular.js'))
-  .get('/angular-mocks.js', sendFile(root + '/bower_components/angular-mocks/angular-mocks.js'))
+  .get('/angular.js', sendFile(root + '/node_modules/angular/angular.js'))
+  .get('/angular-mocks.js', sendFile(root + '/node_modules/angular-mocks/angular-mocks.js'))
   .get('/jquery.js', sendFile(root + '/node_modules/jquery/dist/jquery.js'))
 
   // builds

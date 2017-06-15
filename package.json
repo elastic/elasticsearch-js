@@ -43,6 +43,8 @@
   "devDependencies": {
     "@elastic/eslint-config-kibana": "^0.6.1",
     "@elastic/eslint-plugin-kibana-custom": "^1.0.3",
+    "angular": "1",
+    "angular-mocks": "1",
     "async": "~0.8.0",
     "babel-eslint": "^7.2.3",
     "blanket": "^1.2.3",
