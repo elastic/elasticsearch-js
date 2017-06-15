@@ -1,7 +1,5 @@
 const expect = require('expect.js');
 const Log = require('../../src/lib/log');
-const LoggerAbstract = require('../../src/lib/logger');
-const TracerLogger = require('../../src/lib/loggers/tracer');
 const now = new Date('2013-03-01T00:00:00Z');
 const sinon = require('sinon');
 
@@ -24,7 +22,7 @@ module.exports = function (makeLogger) {
     });
 
     it('listens for the loggers\' "closing" event', function () {
-      const logger = makeLogger(parent);
+      makeLogger(parent);
       expect(parent.listenerCount('closing')).to.eql(1);
     });
   });
@@ -38,7 +36,7 @@ module.exports = function (makeLogger) {
     });
 
     it('listens to just error when log is explicitly error', function () {
-      const logger = makeLogger(parent, 'error');
+      makeLogger(parent, 'error');
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(0);
       expect(parent.listenerCount('info')).to.eql(0);
@@ -47,7 +45,7 @@ module.exports = function (makeLogger) {
     });
 
     it('listens for all the events when level is "trace"', function () {
-      const logger = makeLogger(parent, 'trace');
+      makeLogger(parent, 'trace');
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(1);
       expect(parent.listenerCount('info')).to.eql(1);
@@ -56,7 +54,7 @@ module.exports = function (makeLogger) {
     });
 
     it('listens for specific events when level is an array', function () {
-      const logger = makeLogger(parent, ['error', 'trace']);
+      makeLogger(parent, ['error', 'trace']);
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(0);
       expect(parent.listenerCount('info')).to.eql(0);
@@ -87,7 +85,7 @@ module.exports = function (makeLogger) {
     });
 
     it('emits events because something is listening', function () {
-      const logger = makeLogger(parent, 'trace');
+      makeLogger(parent, 'trace');
       stub(parent, 'emit');
 
       parent.error(new Error('error message'));
@@ -142,7 +140,7 @@ module.exports = function (makeLogger) {
   describe('#onError', function () {
     it('uses the Error name when it is not just "Error"', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('TypeError');
       });
 
@@ -152,7 +150,7 @@ module.exports = function (makeLogger) {
 
     it('uses "ERROR" when the error name is "Error"', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('ERROR');
       });
 
@@ -164,7 +162,7 @@ module.exports = function (makeLogger) {
   describe('#onWarning', function () {
     it('uses the "WARNING" label', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('WARNING');
       });
       logger.onWarning('message');
@@ -185,7 +183,7 @@ module.exports = function (makeLogger) {
   describe('#onInfo', function () {
     it('uses the "INFO" label', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('INFO');
       });
       logger.onInfo('message');
@@ -206,7 +204,7 @@ module.exports = function (makeLogger) {
   describe('#onDebug', function () {
     it('uses the "DEBUG" label', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('DEBUG');
       });
       logger.onDebug('message');
@@ -227,7 +225,7 @@ module.exports = function (makeLogger) {
   describe('#onTrace', function () {
     it('uses the "TRACE" label', function () {
       const logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function (label) {
         expect(label).to.eql('TRACE');
       });
       logger.onTrace(Log.normalizeTraceArgs('GET', 'http://place/thing?me=true', '{}', '{"ok": true}', 200));

@@ -31,7 +31,6 @@ describe('Stdio Logger', function () {
     const now = '2013-01-01T00:00:00Z';
     const nowDate = new Date(now);
     const nowTime = nowDate.getTime();
-    let clock;
 
     beforeEach(function () {
       stub.autoRelease(sinon.useFakeTimers(nowTime));

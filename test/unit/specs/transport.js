@@ -59,7 +59,7 @@ describe('Transport Class', function () {
 
     it('Throws an error when connectionPool config is set wrong', function () {
       expect(function () {
-        const trans = new Transport({
+        new Transport({
           connectionPool: 'pasta'
         });
       }).to.throwError(/invalid connectionpool/i);
@@ -166,7 +166,7 @@ describe('Transport Class', function () {
     describe('host config', function () {
       it('rejects non-strings/objects', function () {
         expect(function () {
-          const trans = new Transport({
+          new Transport({
             host: [
               'localhost',
               9393
@@ -175,7 +175,7 @@ describe('Transport Class', function () {
         }).to.throwError(TypeError);
 
         expect(function () {
-          const trans = new Transport({
+          new Transport({
             host: [
               [9292]
             ]
@@ -288,7 +288,7 @@ describe('Transport Class', function () {
         const _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
-        const trans = new Transport({
+        new Transport({
           hosts: 'localhost'
         });
 
@@ -298,7 +298,7 @@ describe('Transport Class', function () {
         const _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
-        const trans = new Transport({
+        new Transport({
           hosts: 'localhost',
           randomizeHosts: false
         });

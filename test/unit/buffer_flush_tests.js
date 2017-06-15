@@ -48,7 +48,7 @@ module.exports = function (makeLogger) {
           once.call(process, event, handler);
         });
 
-        const logger = makeLogger();
+        makeLogger();
 
         expect(function () {
           // call the event handler

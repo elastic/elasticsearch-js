@@ -1,11 +1,9 @@
 describe('Logger Abstract', function () {
   const expect = require('expect.js');
-  const sinon = require('sinon');
   const Log = require('../../../src/lib/log');
   const LoggerAbstract = require('../../../src/lib/logger');
 
   let parentLog;
-  const stub = require('../../utils/auto_release_stub').make();
 
   function makeLogger(parent, levels) {
     return new LoggerAbstract(parent || parentLog, {

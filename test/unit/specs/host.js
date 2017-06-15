@@ -1,5 +1,4 @@
 const Host = require('../../../src/lib/host');
-const _ = require('lodash');
 const expect = require('expect.js');
 const url = require('url');
 const expectSubObject = require('../../utils/expect_sub_object');

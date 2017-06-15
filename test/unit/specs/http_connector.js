@@ -3,15 +3,12 @@ describe('Http Connector', function () {
   const _ = require('lodash');
   const expect = require('expect.js');
   const nock = require('nock');
-  const sinon = require('sinon');
-  const util = require('util');
   const parseUrl = require('url').parse;
   const http = require('http');
   const https = require('https');
   const AgentKeepAlive = require('agentkeepalive');
 
   const Host = require('../../../src/lib/host');
-  const errors = require('../../../src/lib/errors');
   const HttpConnection = require('../../../src/lib/connectors/http');
   const ConnectionAbstract = require('../../../src/lib/connection');
 
@@ -62,7 +59,7 @@ describe('Http Connector', function () {
 
     it('expects the host to have a protocol of http or https', function () {
       expect(function () {
-        const con = new HttpConnection(new Host('thrifty://es.com/stuff'));
+        new HttpConnection(new Host('thrifty://es.com/stuff'));
       }).to.throwError(/invalid protocol/i);
     });
 
@@ -254,7 +251,7 @@ describe('Http Connector', function () {
       stub(con.log, 'error');
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function () {
         expect(con.log.error.callCount).to.eql(0);
         done();
       });
@@ -264,7 +261,7 @@ describe('Http Connector', function () {
       const con = new HttpConnection(new Host('https://google.com'));
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err) {
         expect(err).to.be.an(Error);
         expect(err.message).to.eql('no more message :(');
         done();
@@ -275,7 +272,7 @@ describe('Http Connector', function () {
       const con = new HttpConnection(new Host('https://google.com'));
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(undefined);
         done();
       });
@@ -414,7 +411,7 @@ describe('Http Connector', function () {
       stub(http.ClientRequest.prototype, 'setNoDelay');
       const server = nock('http://localhost').get('/').reply(200);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function () {
         expect(http.ClientRequest.prototype.setNoDelay.callCount).to.eql(1);
         expect(http.ClientRequest.prototype.setNoDelay.lastCall.args[0]).to.eql(true);
         server.done();
@@ -433,7 +430,7 @@ describe('Http Connector', function () {
 
       con.request({
         body: body
-      }, function (err, resp, status) {
+      }, function () {
         expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
         server.done();
         done();
@@ -449,7 +446,7 @@ describe('Http Connector', function () {
       .once()
       .reply(200, respBody);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(respBody);
         server.done();
         done();
@@ -465,7 +462,7 @@ describe('Http Connector', function () {
       .once()
       .reply(200, respBody);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(respBody);
         server.done();
         done();

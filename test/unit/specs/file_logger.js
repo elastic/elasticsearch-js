@@ -76,7 +76,7 @@ describe('File Logger', function () {
           once.call(process, event, handler);
         });
 
-        const logger = makeLogger();
+        makeLogger();
 
         expect(function () {
           // call the event handler

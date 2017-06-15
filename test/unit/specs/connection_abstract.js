@@ -17,11 +17,11 @@ describe('Connection Abstract', function () {
 
   it('requires a valid host', function () {
     expect(function () {
-      const conn = new ConnectionAbstract();
+      new ConnectionAbstract();
     }).to.throwError(TypeError);
 
     expect(function () {
-      const conn = new ConnectionAbstract({});
+      new ConnectionAbstract({});
     }).to.throwError(TypeError);
   });
 

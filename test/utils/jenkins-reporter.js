@@ -40,9 +40,6 @@ function JenkinsReporter(runner) {
   Base.call(this, runner);
 
   const stats = this.stats;
-  let pass = 0;
-  let pending = 0;
-  let fail = 0;
   const rootSuite = {
     results: [],
     suites: []
@@ -94,14 +91,11 @@ function JenkinsReporter(runner) {
 
   runner.on('test end', function (test) {
     if (test.state === 'passed') {
-      pass++;
       log(chalk.green('.'));
     } else if (test.pending) {
-      pending++;
       log(chalk.grey('.'));
       return;
     } else {
-      fail++;
       log(chalk.red('x'));
     }
 

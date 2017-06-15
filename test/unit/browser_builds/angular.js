@@ -2,18 +2,14 @@
 const _ = require('lodash');
 const expect = require('expect.js');
 const Promise = require('bluebird');
-const sinon = require('sinon');
 
 describe('Angular esFactory', function () {
   before(function () {
     require('../../../src/elasticsearch.angular.js');
   });
 
-  const uuid = (function () { let i = 0; return function () { return ++i; }; }());
   let esFactory;
-  let $http;
   let $rootScope;
-  let $httpBackend;
 
   function bootstrap(env) {
     beforeEach(function () {
@@ -37,10 +33,8 @@ describe('Angular esFactory', function () {
     });
 
     beforeEach(angular.mock.inject(function ($injector) {
-      $http = $injector.get('$http');
       esFactory = $injector.get('esFactory');
       $rootScope = $injector.get('$rootScope');
-      $httpBackend = $injector.get('$httpBackend');
     }));
   }
 
@@ -70,7 +64,6 @@ describe('Angular esFactory', function () {
 
     it('returns an error created by calling a method incorrectly', function () {
       const client = esFactory({ hosts: null });
-      let err;
 
       const prom = client.get().then(function () {
         throw new Error('expected request to fail');
