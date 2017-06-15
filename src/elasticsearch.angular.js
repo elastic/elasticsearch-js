@@ -4,8 +4,8 @@
  *
  * It will also instruct the client to use Angular's $http service for it's ajax requests
  */
-var AngularConnector = require('./lib/connectors/angular');
-var Client = require('./lib/client');
+const AngularConnector = require('./lib/connectors/angular');
+const Client = require('./lib/client');
 
 process.angular_build = true;
 
@@ -13,7 +13,7 @@ process.angular_build = true;
 angular.module('elasticsearch', [])
   .factory('esFactory', ['$injector', '$q', function ($injector, $q) {
 
-    var factory = function (config) {
+    const factory = function (config) {
       config = config || {};
       config.connectionClass = AngularConnector;
       config.$injector = $injector;

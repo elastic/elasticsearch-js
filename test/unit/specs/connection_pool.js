@@ -1,11 +1,11 @@
-var ConnectionPool = require('../../../src/lib/connection_pool');
-var Host = require('../../../src/lib/host');
-var ConnectionAbstract = require('../../../src/lib/connection');
-var _ = require('lodash');
-var EventEmitter = require('events').EventEmitter;
-var expect = require('expect.js');
-var sinon = require('sinon');
-var stub = require('../../utils/auto_release_stub').make();
+const ConnectionPool = require('../../../src/lib/connection_pool');
+const Host = require('../../../src/lib/host');
+const ConnectionAbstract = require('../../../src/lib/connection');
+const _ = require('lodash');
+const EventEmitter = require('events').EventEmitter;
+const expect = require('expect.js');
+const sinon = require('sinon');
+const stub = require('../../utils/auto_release_stub').make();
 
 function listenerCount(emitter, event) {
   if (EventEmitter.listenerCount) {
@@ -19,7 +19,7 @@ function listenerCount(emitter, event) {
 
 describe('Connection Pool', function () {
   describe('Adding/Removing/Syncing Connections', function () {
-    var pool, host, connection, host2, connection2;
+    let pool, host, connection, host2, connection2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
@@ -93,7 +93,7 @@ describe('Connection Pool', function () {
   });
 
   describe('Connection selection', function () {
-    var pool, host, host2;
+    let pool, host, host2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
@@ -135,7 +135,7 @@ describe('Connection Pool', function () {
         return list[0];
       };
 
-      var selected = null;
+      let selected = null;
 
       pool.select(function (err, selection) {
         if (err) { throw err; }
@@ -163,20 +163,20 @@ describe('Connection Pool', function () {
   describe('Connection selection with no living nodes', function () {
     it('should ping all of the dead nodes, in order of oldest timeout, and return the first that\'s okay',
     function (done) {
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      const clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
       stub.autoRelease(clock);
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         deadTimeout: 10000
       });
 
-      var connections = [
+      const connections = [
         new ConnectionAbstract(new Host('http://localhost:9200')),
         new ConnectionAbstract(new Host('http://localhost:9201')),
         new ConnectionAbstract(new Host('http://localhost:9202')),
         new ConnectionAbstract(new Host('http://localhost:9203'))
       ];
-      var pingQueue = _.shuffle(connections);
-      var expectedSelection = pingQueue[pingQueue.length - 1];
+      const pingQueue = _.shuffle(connections);
+      const expectedSelection = pingQueue[pingQueue.length - 1];
 
       _.each(pingQueue, function (conn) {
         pool.addConnection(conn);
@@ -184,7 +184,7 @@ describe('Connection Pool', function () {
           if (typeof params === 'function') {
             cb = params;
           }
-          var expectedConn = pingQueue.shift();
+          const expectedConn = pingQueue.shift();
           expect(conn).to.be(expectedConn);
           if (pingQueue.length) {
             process.nextTick(function () {
@@ -211,7 +211,7 @@ describe('Connection Pool', function () {
   });
 
   describe('Connection state management', function () {
-    var pool, host, host2, connection, connection2;
+    let pool, host, host2, connection, connection2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
@@ -243,12 +243,12 @@ describe('Connection Pool', function () {
     });
 
     it('clears and resets the timeout when a connection redies', function () {
-      var clock = sinon.useFakeTimers();
+      const clock = sinon.useFakeTimers();
       stub.autoRelease(clock);
 
       connection.setStatus('dead');
       expect(_.size(clock.timers)).to.eql(1);
-      var id = _(clock.timers).keys().first();
+      const id = _(clock.timers).keys().first();
 
       // it re-dies
       connection.setStatus('dead');
@@ -257,8 +257,8 @@ describe('Connection Pool', function () {
     });
 
     it('does nothing when a connection is re-alive', function () {
-      var last = pool._conns.alive[pool._conns.alive.length - 1];
-      var first = pool._conns.alive[0];
+      const last = pool._conns.alive[pool._conns.alive.length - 1];
+      const first = pool._conns.alive[0];
 
       expect(last).to.not.be(first);
 
@@ -286,17 +286,17 @@ describe('Connection Pool', function () {
 
   describe('#getConnections', function () {
     it('will return all values from the alive list by default', function () {
-      var pool = new ConnectionPool({});
+      const pool = new ConnectionPool({});
       pool._conns.alive = new Array(1000);
-      var length = pool._conns.alive.length;
+      let length = pool._conns.alive.length;
       while (length--) {
         pool._conns.alive[length] = length;
       }
 
-      var result = pool.getConnections();
+      const result = pool.getConnections();
       expect(result.length).to.be(1000);
       expect(_.reduce(result, function (sum, num) {
-        sum += num
+        sum += num;
         return sum;
       }, 0)).to.eql(499500);
     });
@@ -304,14 +304,14 @@ describe('Connection Pool', function () {
 
   describe('#calcDeadTimeout', function () {
     it('should be configurable via config.calcDeadTimeout', function () {
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         calcDeadTimeout: 'flat'
       });
       expect(pool.calcDeadTimeout).to.be(ConnectionPool.calcDeadTimeoutOptions.flat);
       pool.close();
     });
     it('"flat" always returns the base timeout', function () {
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         calcDeadTimeout: 'flat'
       });
       expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
@@ -319,7 +319,7 @@ describe('Connection Pool', function () {
       expect(pool.calcDeadTimeout(25, 10000)).to.eql(10000);
     });
     it('"exponential" always increases the timeout based on the attempts', function () {
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         calcDeadTimeout: 'exponential'
       });
       expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
@@ -327,7 +327,7 @@ describe('Connection Pool', function () {
       expect(pool.calcDeadTimeout(25, 10000)).to.be.greaterThan(10000);
     });
     it('"exponential" produces predicatable results', function () {
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         calcDeadTimeout: 'exponential'
       });
       expect(pool.calcDeadTimeout(0, 1000)).to.eql(1000);
@@ -336,7 +336,7 @@ describe('Connection Pool', function () {
       expect(pool.calcDeadTimeout(25, 30000)).to.eql(18e5);
     });
     it('"exponential" repects config.maxDeadtimeout', function () {
-      var pool = new ConnectionPool({
+      const pool = new ConnectionPool({
         calcDeadTimeout: 'exponential',
         maxDeadTimeout: 10000
       });

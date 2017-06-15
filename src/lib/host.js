@@ -4,13 +4,13 @@
  */
 module.exports = Host;
 
-var url = require('url');
-var qs = require('querystring');
-var _ = require('./utils');
+const url = require('url');
+const qs = require('querystring');
+const _ = require('./utils');
 
-var startsWithProtocolRE = /^([a-z]+:)?\/\//;
-var defaultProto = 'http:';
-var btoa;
+const startsWithProtocolRE = /^([a-z]+:)?\/\//;
+let defaultProto = 'http:';
+let btoa;
 
 if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
   defaultProto = window.location.protocol;
@@ -21,13 +21,13 @@ btoa = btoa || function (data) {
   return (new Buffer(data, 'utf8')).toString('base64');
 };
 
-var urlParseFields = [
+const urlParseFields = [
   'protocol', 'hostname', 'pathname', 'port', 'auth', 'query'
 ];
 
-var simplify = ['host', 'path'];
+const simplify = ['host', 'path'];
 
-var sslDefaults = {
+const sslDefaults = {
   pfx: null,
   key: null,
   passphrase: null,
@@ -61,11 +61,11 @@ function Host(config, globalConfig) {
   this.ssl = _.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
 
   if (typeof config === 'string') {
-    var firstColon = config.indexOf(':');
-    var firstSlash = config.indexOf('/');
-    var noSlash = firstSlash === -1;
-    var portNoPath = firstColon > -1 && noSlash;
-    var portWithPath = !portNoPath && firstColon < firstSlash;
+    const firstColon = config.indexOf(':');
+    const firstSlash = config.indexOf('/');
+    const noSlash = firstSlash === -1;
+    const portNoPath = firstColon > -1 && noSlash;
+    const portWithPath = !portNoPath && firstColon < firstSlash;
     if ((noSlash || portNoPath || portWithPath) && !startsWithProtocolRE.test(config)) {
       config = defaultProto + '//' + config;
     }
@@ -73,7 +73,7 @@ function Host(config, globalConfig) {
     // default logic for the port is to use 9200 for the default. When a string is specified though,
     // we will use the default from the protocol of the string.
     if (!config.port) {
-      var proto = config.protocol || 'http';
+      let proto = config.protocol || 'http';
       if (proto.charAt(proto.length - 1) === ':') {
         proto = proto.substring(0, proto.length - 1);
       }
@@ -86,7 +86,7 @@ function Host(config, globalConfig) {
   if (_.isObject(config)) {
     // move hostname/portname to host/port semi-intelligently.
     _.each(simplify, function (to) {
-      var from = to + 'name';
+      const from = to + 'name';
       if (config[from] && config[to]) {
         if (config[to].indexOf(config[from]) === 0) {
           config[to] = config[from];
@@ -101,7 +101,7 @@ function Host(config, globalConfig) {
   }
 
   if (!config.auth && globalConfig.httpAuth) {
-    config.auth = globalConfig.httpAuth
+    config.auth = globalConfig.httpAuth;
   }
 
   if (config.auth) {
@@ -145,14 +145,14 @@ function Host(config, globalConfig) {
 Host.prototype.makeUrl = function (params) {
   params = params || {};
   // build the port
-  var port = '';
+  let port = '';
   if (this.port !== Host.defaultPorts[this.protocol]) {
     // add an actual port
     port = ':' + this.port;
   }
 
   // build the path
-  var path = '' + (this.path || '') + (params.path || '');
+  let path = '' + (this.path || '') + (params.path || '');
 
   // if path doesn't start with '/' add it.
   if (path.charAt(0) !== '/') {
@@ -160,7 +160,7 @@ Host.prototype.makeUrl = function (params) {
   }
 
   // build the query string
-  var query = qs.stringify(this.getQuery(params.query));
+  const query = qs.stringify(this.getQuery(params.query));
 
   if (this.host) {
     return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
@@ -175,7 +175,7 @@ function objectPropertyGetter(prop, preOverride) {
       overrides = preOverride.call(this, overrides);
     }
 
-    var obj = this[prop];
+    let obj = this[prop];
     if (!obj && !overrides) {
       return null;
     }

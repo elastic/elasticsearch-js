@@ -1,4 +1,4 @@
-var _ = require('./utils');
+const _ = require('./utils');
 
 /**
  * Abstract class providing common functionality to loggers
@@ -27,7 +27,7 @@ function padNumToTen(n) {
  * @return {String} - Timestamp in ISO 8601 UTC
  */
 LoggerAbstract.prototype.timestamp = function () {
-  var d = new Date();
+  const d = new Date();
   return d.getUTCFullYear() + '-' +
     padNumToTen(d.getUTCMonth() + 1) + '-' +
     padNumToTen(d.getUTCDate()) + 'T' +
@@ -37,7 +37,7 @@ LoggerAbstract.prototype.timestamp = function () {
 };
 
 function indent(text, spaces) {
-  var space = _.repeat(' ', spaces || 2);
+  const space = _.repeat(' ', spaces || 2);
   return (text || '').split(/\r?\n/).map(function (line) {
     return space + line;
   }).join('\n');
@@ -65,7 +65,7 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
   this.listeningLevels = [];
 
   _.each(levels, _.bind(function (level) {
-    var fnName = 'on' + _.ucfirst(level);
+    const fnName = 'on' + _.ucfirst(level);
     if (this.bound[fnName]) {
       this.listeningLevels.push(level);
       this.log.on(level, this.bound[fnName]);

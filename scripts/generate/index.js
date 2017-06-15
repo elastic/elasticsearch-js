@@ -1,8 +1,8 @@
 /* jshint curly: false */
-var async = require('async');
-var fs = require('fs');
-var spawn = require('../_spawn');
-var argv = require('optimist')
+const async = require('async');
+const fs = require('fs');
+const spawn = require('../_spawn');
+let argv = require('optimist')
   .options({
     verbose: {
       alias: 'v',
@@ -27,15 +27,15 @@ var argv = require('optimist')
     }
   });
 
-var path = require('path');
-var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-var utils = require(fromRoot('grunt/utils'));
-var _ = require(fromRoot('src/lib/utils'));
-var esUrl = process.env.ES_REPO
+const path = require('path');
+const fromRoot = path.join.bind(path, require('find-root')(__dirname));
+const utils = require(fromRoot('grunt/utils'));
+const _ = require(fromRoot('src/lib/utils'));
+const esUrl = process.env.ES_REPO
   ? path.resolve(process.cwd(), process.env.ES_REPO)
   : 'https://github.com/elastic/elasticsearch.git';
 
-var branches;
+let branches;
 
 if (process.env.npm_config_argv) {
   // when called by NPM
@@ -51,7 +51,7 @@ if (argv.branch) {
   branches = utils.branches;
 }
 
-var paths = {
+const paths = {
   root: fromRoot('.'),
   src: fromRoot('src'),
   esSrc: fromRoot('src/_elasticsearch_'),
@@ -70,7 +70,7 @@ var paths = {
 };
 
 function isDirectory(dir) {
-  var stat;
+  let stat;
   try { stat = fs.statSync(dir); } catch (e) {}
   return (stat && stat.isDirectory());
 }
@@ -129,15 +129,15 @@ function initStep() {
 }
 
 function fetchBranchesStep() {
-  var branchArgs = branches.map(function (b) { return b + ':' + b; });
+  const branchArgs = branches.map(function (b) { return b + ':' + b; });
   return spawnStep('git', ['fetch', '--no-tags', '--force', 'origin'].concat(branchArgs), paths.esSrc);
 }
 
 
 function findGeneratedApiFiles() {
-  var anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
-  var anyApiJsFiled = /^.+\.js$/;
-  var allBranches = _.isEqual(branches, utils.branches);
+  const anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
+  const anyApiJsFiled = /^.+\.js$/;
+  const allBranches = _.isEqual(branches, utils.branches);
 
   if (allBranches) {
     return [
@@ -147,11 +147,11 @@ function findGeneratedApiFiles() {
   }
 
   return branches.reduce(function (files, branch) {
-    var b = _.snakeCase(branch);
+    const b = _.snakeCase(branch);
 
     files.push(dirOpts(paths.docs, 'api_methods_' + b + '.asciidoc'));
 
-    var isDefault = branch === utils.branches._default;
+    const isDefault = branch === utils.branches._default;
     if (isDefault) {
       files.push(dirOpts(paths.docs, 'api_methods.asciidoc'));
     }
@@ -164,8 +164,8 @@ function findGeneratedApiFiles() {
 
 
 function clearGeneratedFiles() {
-  var esArchives = /^_elasticsearch_(master|[\dx_]+|\.tar)$/;
-  var generatedFiles = [];
+  const esArchives = /^_elasticsearch_(master|[\dx_]+|\.tar)$/;
+  const generatedFiles = [];
 
   if (argv.api) {
     generatedFiles.push(findGeneratedApiFiles());
@@ -173,7 +173,7 @@ function clearGeneratedFiles() {
 
   generatedFiles.push(dirRegex(paths.src, esArchives));
 
-  var rmSteps = _.chain(generatedFiles)
+  const rmSteps = _.chain(generatedFiles)
   .flatten()
   .uniq()
   .map(function (path) {
@@ -191,7 +191,7 @@ function clearGeneratedFiles() {
 function removePrevArchive(branch) {
   if (!argv.update) return;
 
-  var dir = paths.getArchiveDir(branch);
+  const dir = paths.getArchiveDir(branch);
   if (!isDirectory(dir)) return;
 
   return spawnStep('rm', ['-rf', dir], paths.root);
@@ -199,10 +199,10 @@ function removePrevArchive(branch) {
 
 function createArchive(branch) {
   return function (done) {
-    var dir = paths.getArchiveDir(branch);
-    var tarball = paths.getArchiveTarball(branch);
-    var specPathInRepo = paths.getSpecPathInRepo(branch);
-    var subDirCount = _.countBy(specPathInRepo, p => p === '/').true || 0;
+    const dir = paths.getArchiveDir(branch);
+    const tarball = paths.getArchiveTarball(branch);
+    const specPathInRepo = paths.getSpecPathInRepo(branch);
+    const subDirCount = _.countBy(specPathInRepo, p => p === '/').true || 0;
 
     if (isDirectory(dir)) {
       console.log(branch + ' archive already exists');
@@ -227,7 +227,7 @@ function generateStep(branch) {
   };
 }
 
-var steps = [
+const steps = [
   initStep(),
   clearGeneratedFiles(),
   fetchBranchesStep()

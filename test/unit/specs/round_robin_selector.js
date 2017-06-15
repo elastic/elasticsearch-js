@@ -1,12 +1,12 @@
 describe('Round Robin Selector', function () {
-  var selector = require('../../../src/lib/selectors/round_robin');
-  var _ = require('lodash');
-  var expect = require('expect.js');
+  const selector = require('../../../src/lib/selectors/round_robin');
+  const _ = require('lodash');
+  const expect = require('expect.js');
 
   it('chooses options in order', function () {
-    var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-    var expected = _.clone(options);
-    var selections = [];
+    const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const expected = _.clone(options);
+    const selections = [];
 
     _.times(options.length, function () {
       selections.push(selector(options));

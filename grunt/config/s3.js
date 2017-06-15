@@ -1,4 +1,4 @@
-var config = {};
+let config = {};
 try {
   config = require('../../.aws-config.json');
 } catch (e) {}

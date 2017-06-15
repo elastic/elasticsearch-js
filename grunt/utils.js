@@ -1,10 +1,10 @@
-var _ = require('../src/lib/utils');
+const _ = require('../src/lib/utils');
 
-var root = require('find-root')(__dirname);
-var pkg = require(root + '/package.json');
-var stable = pkg.config.supported_es_branches;
-var unstable = pkg.config.unstable_es_branches;
-var branches = [].concat(stable, unstable);
+const root = require('find-root')(__dirname);
+const pkg = require(root + '/package.json');
+const stable = pkg.config.supported_es_branches;
+const unstable = pkg.config.unstable_es_branches;
+const branches = [].concat(stable, unstable);
 
 var utils = {
   branchSuffix: function (branch) {
@@ -29,7 +29,7 @@ utils.minorVersion = function (version) {
  * increment the version based on the release "type"
  */
 utils.increaseVersion = function (version, type) {
-  var i;
+  let i;
   switch (type) {
     case 'major':
       i = 0;
@@ -47,14 +47,14 @@ utils.increaseVersion = function (version, type) {
   }
 
   // breakout the current version
-  var next = version.split('.').map(function (n) {
+  const next = version.split('.').map(function (n) {
     return parseInt(n, 10);
   });
 
   // increment the version type
   next[i] += 1;
   // clear out all following numbers
-  for (i ++; i < next.length; i++) next[i] = 0;
+  for (i++; i < next.length; i++) next[i] = 0;
   // join back together with '.'
   return next.join('.');
 };
@@ -63,9 +63,9 @@ utils.increaseVersion = function (version, type) {
  * replace all instances of `replace` with `replacement` without creating a regexp object
  */
 utils.replaceAll = function (str, replace, replacement) {
-  var out = '';
-  var remaining = str;
-  var i = 0;
+  let out = '';
+  let remaining = str;
+  let i = 0;
 
   while (~(i = remaining.indexOf(replace))) {
     out += remaining.substring(0, i) + replacement;

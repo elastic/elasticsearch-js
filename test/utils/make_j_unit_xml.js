@@ -24,17 +24,17 @@
  */
 module.exports = makeJUnitXml;
 
-var testXml = require('xmlbuilder');
-var suites = testXml.create('testsuites');
-var suiteCount = 0;
-var moment = require('moment');
-var _ = require('lodash');
-var chalk = require('chalk');
+const testXml = require('xmlbuilder');
+const suites = testXml.create('testsuites');
+let suiteCount = 0;
+const moment = require('moment');
+const _ = require('lodash');
+const chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
   _.each(testDetails.suites, function serializeSuite(suiteInfo) {
 
-    var suite = suites.ele('testsuite', {
+    const suite = suites.ele('testsuite', {
       package: 'elasticsearch-js',
       id: suiteCount++,
       name: suiteInfo.name,
@@ -47,8 +47,8 @@ function makeJUnitXml(runnerName, testDetails) {
     });
 
     _.each(suiteInfo.results, function (testInfo) {
-      var section;
-      var integration = false;
+      let section;
+      let integration = false;
 
       if (suiteInfo.name.match(/\/.*\.yaml$/)) {
         section = suiteInfo.name.split('/').slice(0, -1).join('/').replace(/\./g, '/');
@@ -61,7 +61,7 @@ function makeJUnitXml(runnerName, testDetails) {
         integration = true;
       }
 
-      var testcase = suite.ele('testcase', {
+      const testcase = suite.ele('testcase', {
         name: testInfo.name,
         time: (testInfo.time || 0) / 1000,
         classname: runnerName + (integration ? ' - integration' : '') + '.' + section
@@ -93,8 +93,8 @@ function makeJUnitXml(runnerName, testDetails) {
 }
 
 function giveOutput(el, info) {
-  var out = info.stdout.trim();
-  var err = info.stderr.trim();
+  const out = info.stdout.trim();
+  const err = info.stderr.trim();
 
   if (out) {
     el.ele('system-out', {}).cdata(chalk.stripColor(out));

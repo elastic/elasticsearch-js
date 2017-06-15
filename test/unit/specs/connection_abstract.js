@@ -1,42 +1,42 @@
-var ConnectionAbstract = require('../../../src/lib/connection');
-var Host = require('../../../src/lib/host');
-var sinon = require('sinon');
-var expect = require('expect.js');
-var _ = require('lodash');
-var errors = require('../../../src/lib/errors');
+const ConnectionAbstract = require('../../../src/lib/connection');
+const Host = require('../../../src/lib/host');
+const sinon = require('sinon');
+const expect = require('expect.js');
+const _ = require('lodash');
+const errors = require('../../../src/lib/errors');
 
-var stub = require('../../utils/auto_release_stub').make();
+const stub = require('../../utils/auto_release_stub').make();
 
 describe('Connection Abstract', function () {
-  var host = new Host('localhost:9200');
+  const host = new Host('localhost:9200');
 
   it('constructs with defaults for host, and bound', function () {
-    var conn = new ConnectionAbstract(host);
+    const conn = new ConnectionAbstract(host);
     expect(conn.host).to.be(host);
   });
 
   it('requires a valid host', function () {
     expect(function () {
-      var conn = new ConnectionAbstract();
+      const conn = new ConnectionAbstract();
     }).to.throwError(TypeError);
 
     expect(function () {
-      var conn = new ConnectionAbstract({});
+      const conn = new ConnectionAbstract({});
     }).to.throwError(TypeError);
   });
 
   it('required that the request method is overridden', function () {
     expect(function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
       conn.request();
     }).to.throwError(/overwrit/);
   });
 
   describe('#ping', function () {
     it('accpets just a callback', function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
       stub(conn, 'request');
-      var cb = function () {};
+      const cb = function () {};
       conn.ping(cb);
       expect(conn.request.callCount).to.eql(1);
       expect(conn.request.lastCall.args[0]).to.be.a('object');
@@ -44,7 +44,7 @@ describe('Connection Abstract', function () {
     });
 
     it('accpets just params', function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
       stub(conn, 'request');
       conn.ping({});
       expect(conn.request.callCount).to.eql(1);
@@ -53,9 +53,9 @@ describe('Connection Abstract', function () {
     });
 
     it('allows overriding the requestTimeout, method, and path', function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
       stub(conn, 'request');
-      var params = {
+      const params = {
         method: 'HEAD',
         path: '/',
         requestTimeout: 10000
@@ -67,8 +67,8 @@ describe('Connection Abstract', function () {
     });
 
     it('defaults to the pingTimeout in the config', function () {
-      var conn = new ConnectionAbstract(host, { pingTimeout: 5000 });
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      const conn = new ConnectionAbstract(host, { pingTimeout: 5000 });
+      const clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
       stub.autoRelease(clock);
 
       stub(conn, 'request');
@@ -80,17 +80,17 @@ describe('Connection Abstract', function () {
     });
 
     it('calls it\'s own request method', function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
       stub(conn, 'request');
       conn.ping();
       expect(conn.request.callCount).to.eql(1);
     });
 
     it('sets a timer for the request', function (done) {
-      var conn = new ConnectionAbstract(host);
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      const conn = new ConnectionAbstract(host);
+      const clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
       stub.autoRelease(clock);
-      var order = 0;
+      let order = 0;
 
       stub(conn, 'request', function (params, cb) {
         setTimeout(function () {
@@ -113,10 +113,10 @@ describe('Connection Abstract', function () {
       });
     });
     it('calls the requestAborter if req takes too long', function (done) {
-      var conn = new ConnectionAbstract(host);
-      var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+      const conn = new ConnectionAbstract(host);
+      const clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
       stub.autoRelease(clock);
-      var order = 0;
+      let order = 0;
 
       stub(conn, 'request', function (params, cb) {
         setTimeout(function () {
@@ -148,8 +148,8 @@ describe('Connection Abstract', function () {
 
   describe('#setStatus', function () {
     it('emits the "status set" event with `new`, `old` & `conn` args', function () {
-      var conn = new ConnectionAbstract(host);
-      var emitted = false;
+      const conn = new ConnectionAbstract(host);
+      let emitted = false;
 
       conn.emit = function (eventName) {
         emitted = {
@@ -164,7 +164,7 @@ describe('Connection Abstract', function () {
     });
 
     it('stores the status in this.status', function () {
-      var conn = new ConnectionAbstract(host);
+      const conn = new ConnectionAbstract(host);
 
       conn.setStatus('closed');
       expect(conn.status).to.eql('closed');

@@ -1,9 +1,9 @@
-var opts = {
+const opts = {
   xhr: require('./xhr'),
   jquery: require('./jquery'),
   angular: require('./angular')
 };
-var _ = require('../utils');
+const _ = require('../utils');
 
 // remove modules that have been ignored by browserify
 _.each(opts, function (conn, name) {

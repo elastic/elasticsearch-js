@@ -1,4 +1,4 @@
-var _ = require('../utils');
+const _ = require('../utils');
 
 
 /**
@@ -11,9 +11,9 @@ var _ = require('../utils');
  * @return {undefined}
  */
 module.exports = function setupSniffOnConnectionFault(transport) {
-  var failures = 0;
-  var pool = transport.connectionPool;
-  var originalOnDied = pool._onConnectionDied;
+  let failures = 0;
+  const pool = transport.connectionPool;
+  const originalOnDied = pool._onConnectionDied;
 
   // do the actual sniff, if the sniff is unable to
   // connect to a node this function will be called again by the connectionPool
@@ -24,8 +24,8 @@ module.exports = function setupSniffOnConnectionFault(transport) {
 
   // create a function that will count down to a
   // point n milliseconds into the future
-  var countdownTo = function (ms) {
-    var start = _.now();
+  const countdownTo = function (ms) {
+    const start = _.now();
     return function () {
       return start - ms;
     };
@@ -33,12 +33,12 @@ module.exports = function setupSniffOnConnectionFault(transport) {
 
   // overwrite the function, but still call it
   pool._onConnectionDied = function (connection, wasAlreadyDead) {
-    var ret = originalOnDied.call(pool, connection, wasAlreadyDead);
+    const ret = originalOnDied.call(pool, connection, wasAlreadyDead);
 
     // clear the failures if this is the first failure we have seen
     failures = work.timerId ? failures + 1 : 0;
 
-    var ms = pool.calcDeadTimeout(failures, 1000);
+    const ms = pool.calcDeadTimeout(failures, 1000);
 
     if (work.timerId && ms < work.timerId && work.countdown()) {
       // clear the timer

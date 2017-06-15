@@ -1,6 +1,6 @@
 /* global angular */
-var _ = require('../utils');
-var JsonSerializer = require('../serializers/json');
+const _ = require('../utils');
+const JsonSerializer = require('../serializers/json');
 
 function AngularSerializer() {}
 _.inherits(AngularSerializer, JsonSerializer);

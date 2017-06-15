@@ -1,10 +1,10 @@
-var clock = require('sinon').useFakeTimers();
-var Client = require('../../src/elasticsearch').Client;
-var _ = require('lodash');
-var times = require('async').times;
+const clock = require('sinon').useFakeTimers();
+const Client = require('../../src/elasticsearch').Client;
+const _ = require('lodash');
+const times = require('async').times;
 
 process.once('message', function (port) {
-  var es = new Client({
+  const es = new Client({
     host: 'http://127.0.0.1:' + port,
     log: false
   });
@@ -19,8 +19,8 @@ process.once('message', function (port) {
     }, done);
     clock.tick(10);
   }, function (err) {
-    var conns = es.transport.connectionPool._conns;
-    var sockets = _([].concat(conns.dead, conns.alive))
+    const conns = es.transport.connectionPool._conns;
+    const sockets = _([].concat(conns.dead, conns.alive))
       .transform(function (sockets, conn) {
         sockets.push(_.values(conn.agent.sockets), _.values(conn.agent.freeSockets));
       }, [])
@@ -29,7 +29,7 @@ process.once('message', function (port) {
 
     es.close();
 
-    var out = {
+    const out = {
       socketCount: err || sockets.length,
       remaining: _.filter(sockets, { destroyed: true }).length - sockets.length,
       timeouts: _.size(clock.timers) && _.map(clock.timers, 'func').map(String)

@@ -1,12 +1,12 @@
-var errors = require('../../../src/lib/errors');
-var expect = require('expect.js');
-var _ = require('lodash');
+const errors = require('../../../src/lib/errors');
+const expect = require('expect.js');
+const _ = require('lodash');
 
 _.each(errors, function (CustomError, name) {
   if (name.charAt(0) !== '_') {
     describe(name, function () {
       it('extend the ErrorAbstract and Error classes', function () {
-        var err = new CustomError();
+        const err = new CustomError();
         expect(err).to.be.an(Error);
         expect(err).to.be.an(errors._Abstract);
       });
@@ -16,9 +16,9 @@ _.each(errors, function (CustomError, name) {
 
 describe('Error Abstract', function () {
   it('provides a stack property in the browser', function () {
-    var isBrowser = process.browser;
+    const isBrowser = process.browser;
     process.browser = true;
-    var err = new errors._Abstract();
+    const err = new errors._Abstract();
     process.browser = isBrowser;
 
     expect(err.stack).to.be.a('string');
@@ -27,7 +27,7 @@ describe('Error Abstract', function () {
 
 describe('StatusCodeError', function () {
   it('exposes status code as a number', function () {
-    var err = new errors['404']();
+    const err = new errors['404']();
     expect(err.status).to.be(404);
     expect(err.status).to.not.be('404');
   });

@@ -1,13 +1,13 @@
 
-const rel = require('path').resolve.bind(null, __dirname, '..')
+const rel = require('path').resolve.bind(null, __dirname, '..');
 
 function ignoreLoader(ignores) {
   return {
     loader: 'null-loader',
     test(path) {
-      return ignores.some(ignore => path.includes(ignore))
+      return ignores.some(ignore => path.includes(ignore));
     },
-  }
+  };
 }
 
 function jsLoader() {
@@ -15,7 +15,7 @@ function jsLoader() {
     loader: 'babel-loader',
     test: /\.js$/,
     include: rel('src'),
-  }
+  };
 }
 
-module.exports = { ignoreLoader, jsLoader, rel }
+module.exports = { ignoreLoader, jsLoader, rel };

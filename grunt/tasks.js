@@ -1,8 +1,8 @@
 module.exports = function (grunt) {
-  var Promise = require('bluebird');
-  var utils = require('./utils');
-  var readFile = Promise.promisify(require('fs').readFile);
-  var writeFile = Promise.promisify(require('fs').writeFile);
+  const Promise = require('bluebird');
+  const utils = require('./utils');
+  const readFile = Promise.promisify(require('fs').readFile);
+  const writeFile = Promise.promisify(require('fs').writeFile);
 
 
   // Default task runs the build process.
@@ -11,12 +11,12 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test', function (branch) {
-    var tasks = [
+    const tasks = [
       branch ? 'run:generate_' + branch : 'run:generate',
       'mochacov:unit'
     ];
 
-    var branches = branch ? [branch] : utils.branches;
+    const branches = branch ? [branch] : utils.branches;
 
     process.env.ES_PORT = process.env.ES_PORT || 9400;
     process.env.ES_HOST = process.env.ES_HOST || 'localhost';
@@ -38,10 +38,10 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('version', function (nextVersion) {
-    var root = require('path').join.bind(null, __dirname, '..');
-    var readmePath = root('README.md');
-    var packagePath = root('package.json');
-    var browserBuildsPath = root('docs/browser_builds.asciidoc');
+    const root = require('path').join.bind(null, __dirname, '..');
+    const readmePath = root('README.md');
+    const packagePath = root('package.json');
+    const browserBuildsPath = root('docs/browser_builds.asciidoc');
 
     Promise.all([
       require(packagePath),
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
       readFile(browserBuildsPath, 'utf8')
     ])
     .spread(function (pkg, readme, browserBuilds) {
-      var current = pkg.version;
+      const current = pkg.version;
 
       pkg.version = nextVersion;
       browserBuilds = utils.replaceAll(browserBuilds, current, nextVersion);

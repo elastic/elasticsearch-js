@@ -1,11 +1,11 @@
 describe('Nodes to host callback', function () {
-  var callback = require('../../../src/lib/nodes_to_host');
-  var expect = require('expect.js');
+  const callback = require('../../../src/lib/nodes_to_host');
+  const expect = require('expect.js');
 
-  var nodes90 = require('../../fixtures/short_node_list.0.90.json');
-  var nodes10 = require('../../fixtures/short_node_list.1.0.json');
-  var nodes20 = require('../../fixtures/short_node_list.2.0.json');
-  var nodes50 = require('../../fixtures/short_node_list.5.0.json');
+  const nodes90 = require('../../fixtures/short_node_list.0.90.json');
+  const nodes10 = require('../../fixtures/short_node_list.1.0.json');
+  const nodes20 = require('../../fixtures/short_node_list.2.0.json');
+  const nodes50 = require('../../fixtures/short_node_list.5.0.json');
 
   context('0.x style', function () {
     it('properly creates host objects', function () {
@@ -109,7 +109,7 @@ describe('Nodes to host callback', function () {
 
 
   it('ignores hosts that don\'t have an http_host property', function () {
-    var hosts = callback({
+    const hosts = callback({
       node_id: {
         not: 'much of a node'
       }

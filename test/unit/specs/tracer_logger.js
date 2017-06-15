@@ -1,10 +1,10 @@
 describe('Tracer Logger', function () {
 
-  var Log = require('../../../src/lib/log');
-  var TracerLogger = require('../../../src/lib/loggers/tracer');
-  var sinon = require('sinon');
-  var expect = require('expect.js');
-  var parentLog;
+  const Log = require('../../../src/lib/log');
+  const TracerLogger = require('../../../src/lib/loggers/tracer');
+  const sinon = require('sinon');
+  const expect = require('expect.js');
+  let parentLog;
 
   beforeEach(function () {
     parentLog = new Log();
@@ -16,21 +16,21 @@ describe('Tracer Logger', function () {
 
   function makeLogger(parent, levels) {
     parent = parent || parentLog;
-    var config = {
+    const config = {
       levels: Log.parseLevels(levels || 'trace')
     };
     return new TracerLogger(parent, config);
   }
 
-  var stub = require('../../utils/auto_release_stub').make();
+  const stub = require('../../utils/auto_release_stub').make();
 
   // require('../generic_logger_tests')(makeLogger);
 
   describe('#formatTraceMessage', function () {
     it('includes the original host', function () {
-      var logger = makeLogger();
+      const logger = makeLogger();
 
-      var formatted = logger._formatTraceMessage({
+      const formatted = logger._formatTraceMessage({
         method: 'DELETE',
         url: 'https://originalHost.com:9522/path/to/thing?qs=100',
         body: '{ "yes": true }',
@@ -45,7 +45,7 @@ describe('Tracer Logger', function () {
   });
 
   describe('#write', function () {
-    var logger;
+    let logger;
     beforeEach(function () {
       logger = makeLogger();
       stub(logger.stream, 'write');

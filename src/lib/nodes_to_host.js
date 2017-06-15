@@ -1,14 +1,14 @@
-var _ = require('./utils');
+const _ = require('./utils');
 
-var extractHostPartsRE1x = /\[(?:(.*)\/)?(.+?):(\d+)\]/;
+const extractHostPartsRE1x = /\[(?:(.*)\/)?(.+?):(\d+)\]/;
 
 function makeNodeParser(hostProp) {
   return function (nodes) {
     return _.transform(nodes, function (hosts, node, id) {
-      var address = _.get(node, hostProp)
+      let address = _.get(node, hostProp);
       if (!address) return;
 
-      var host = {
+      const host = {
         host: undefined,
         port: undefined,
         _meta: {
@@ -18,13 +18,13 @@ function makeNodeParser(hostProp) {
         }
       };
 
-      var malformedError = new Error(
+      const malformedError = new Error(
         'Malformed ' + hostProp + '.' +
         ' Got ' + JSON.stringify(address) +
         ' and expected it to match "{hostname?}/{ip}:{port}".'
       );
 
-      var matches1x = extractHostPartsRE1x.exec(address);
+      const matches1x = extractHostPartsRE1x.exec(address);
       if (matches1x) {
         host.host = matches1x[1] || matches1x[2];
         host.port = parseInt(matches1x[3], 10);
@@ -33,7 +33,7 @@ function makeNodeParser(hostProp) {
       }
 
       if (address.indexOf('/') > -1) {
-        var withHostParts = address.split('/');
+        const withHostParts = address.split('/');
         if (withHostParts.length !== 2) throw malformedError;
 
         host.host = withHostParts.shift();
@@ -44,7 +44,7 @@ function makeNodeParser(hostProp) {
         throw malformedError;
       }
 
-      var addressParts = address.split(':');
+      const addressParts = address.split(':');
       if (addressParts.length !== 2) {
         throw malformedError;
       }

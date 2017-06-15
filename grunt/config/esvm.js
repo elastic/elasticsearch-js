@@ -1,14 +1,14 @@
-var get = require('lodash.get');
-var utils = require('../utils');
-var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
+const get = require('lodash.get');
+const utils = require('../utils');
+const fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
-var release = process.env.ES_RELEASE;
-var ref = process.env.ES_REF;
-var port = parseFloat(get(process.env, 'ES_PORT', 9400));
-var host = get(process.env, 'ES_HOST', 'localhost');
+const release = process.env.ES_RELEASE;
+const ref = process.env.ES_REF;
+const port = parseFloat(get(process.env, 'ES_PORT', 9400));
+const host = get(process.env, 'ES_HOST', 'localhost');
 
-var Version = require('../../scripts/Version');
-var versionedOpts = [
+const Version = require('../../scripts/Version');
+const versionedOpts = [
   {
     version: '*',
     directory: fromRoot('esvm'),
@@ -90,8 +90,8 @@ utils.branches.forEach(function (branch) {
 
 // ci target, based on env variables
 (function () {
-  var v;
-  var opts = {
+  let v;
+  const opts = {
     config: {
       'http.port': port
     }

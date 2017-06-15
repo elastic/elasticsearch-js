@@ -1,7 +1,7 @@
 describe('Yaml Test Reader', function () {
-  var YamlDoc = require('../../integration/yaml_suite/yaml_doc');
-  var compare = YamlDoc.compareRangeToVersion;
-  var expect = require('expect.js');
+  const YamlDoc = require('../../integration/yaml_suite/yaml_doc');
+  const compare = YamlDoc.compareRangeToVersion;
+  const expect = require('expect.js');
 
   describe('version range comparison', function () {
     it('supports unbounded ranges', function () {

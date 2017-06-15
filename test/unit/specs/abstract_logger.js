@@ -1,11 +1,11 @@
 describe('Logger Abstract', function () {
-  var expect = require('expect.js');
-  var sinon = require('sinon');
-  var Log = require('../../../src/lib/log');
-  var LoggerAbstract = require('../../../src/lib/logger');
+  const expect = require('expect.js');
+  const sinon = require('sinon');
+  const Log = require('../../../src/lib/log');
+  const LoggerAbstract = require('../../../src/lib/logger');
 
-  var parentLog;
-  var stub = require('../../utils/auto_release_stub').make();
+  let parentLog;
+  const stub = require('../../utils/auto_release_stub').make();
 
   function makeLogger(parent, levels) {
     return new LoggerAbstract(parent || parentLog, {
@@ -24,7 +24,7 @@ describe('Logger Abstract', function () {
   describe('#write', function () {
     it('requires that it is overwritten', function () {
       expect(function () {
-        var logger = makeLogger();
+        const logger = makeLogger();
         logger.write();
       }).to.throwError(/overwritten/);
     });

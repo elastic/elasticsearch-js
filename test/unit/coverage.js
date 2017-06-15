@@ -1,4 +1,4 @@
-var blanket = require('blanket')({
+const blanket = require('blanket')({
   pattern: require('path').join(__dirname, '../../src')
 });
 

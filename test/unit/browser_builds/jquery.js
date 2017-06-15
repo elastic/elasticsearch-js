@@ -1,6 +1,6 @@
 /* global $ */
-var expect = require('expect.js');
-var Transport = require('../../../src/lib/transport');
+const expect = require('expect.js');
+const Transport = require('../../../src/lib/transport');
 
 describe('jQuery.es namespace', function () {
   it('is defined on the global jQuery', function () {
@@ -12,7 +12,7 @@ describe('jQuery.es namespace', function () {
   });
 
   it('can create a client', function () {
-    var client = new $.es.Client({ hosts: null });
+    const client = new $.es.Client({ hosts: null });
     expect(client).to.have.keys('transport');
     expect(client.transport).to.be.a($.es.Transport);
     client.close();

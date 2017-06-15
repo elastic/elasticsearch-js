@@ -1,10 +1,10 @@
 /* global jQuery */
 (function ($) {
   process.jquery_build = true;
-  var es = require('./elasticsearch');
+  const es = require('./elasticsearch');
 
   function defer() {
-    var def = $.Deferred();
+    const def = $.Deferred();
     // def.promise is usually a property (in normal implementations)
     // we override the promise to keep things working
     def.promise = def.promise();

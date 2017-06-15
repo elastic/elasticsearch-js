@@ -6,13 +6,13 @@
  */
 module.exports = YamlFile;
 
-var YamlDoc = require('./yaml_doc');
-var clientManager = require('./client_manager');
-var _ = require('../../../src/lib/utils');
-var async = require('async');
+const YamlDoc = require('./yaml_doc');
+const clientManager = require('./client_manager');
+const _ = require('../../../src/lib/utils');
+const async = require('async');
 
 function YamlFile(filename, docs) {
-  var file = this;
+  const file = this;
 
   // file level skipping flag
   file.skipping = false;

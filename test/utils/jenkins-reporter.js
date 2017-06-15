@@ -6,16 +6,16 @@
  */
 module.exports = JenkinsReporter;
 
-var Base = require('mocha/lib/reporters/base');
-var _ = require('lodash');
-var chalk = require('chalk');
-var makeJUnitXml = require('./make_j_unit_xml');
-var fs = require('fs');
-var path = require('path');
-var inspect = require('util').inspect;
+const Base = require('mocha/lib/reporters/base');
+const _ = require('lodash');
+const chalk = require('chalk');
+const makeJUnitXml = require('./make_j_unit_xml');
+const fs = require('fs');
+const path = require('path');
+const inspect = require('util').inspect;
 
-var log = (function () {
-  var locked = _.bind(process.stdout.write, process.stdout);
+const log = (function () {
+  const locked = _.bind(process.stdout.write, process.stdout);
   return function (str) {
     if (typeof str !== 'string') {
       str = inspect(str);
@@ -24,9 +24,9 @@ var log = (function () {
   };
 }());
 
-var integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
-var unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
-var output;
+const integration = _.find(process.argv, function (arg) { return arg.indexOf('test/integration') > -1; });
+const unit = _.find(process.argv, function (arg) { return arg.indexOf('test/unit') > -1; });
+let output;
 
 if (unit) {
   output = path.join(__dirname, '../junit-node-unit.xml');
@@ -39,16 +39,16 @@ if (unit) {
 function JenkinsReporter(runner) {
   Base.call(this, runner);
 
-  var stats = this.stats;
-  var pass = 0;
-  var pending = 0;
-  var fail = 0;
-  var rootSuite = {
+  const stats = this.stats;
+  let pass = 0;
+  let pending = 0;
+  let fail = 0;
+  const rootSuite = {
     results: [],
     suites: []
   };
 
-  var stack = [rootSuite];
+  const stack = [rootSuite];
 
   function indt() {
     return (new Array(stack.length + 1)).join('  ');
@@ -105,7 +105,7 @@ function JenkinsReporter(runner) {
       log(chalk.red('x'));
     }
 
-    var errMsg = void 0;
+    let errMsg = void 0;
 
     if (test.err) {
       errMsg = test.err.stack || test.err.toString();
@@ -146,7 +146,7 @@ function JenkinsReporter(runner) {
 
   runner.on('hook end', function (hook) {
     if (hook.title.indexOf('"after each"') > -1 && stack[0] && stack[0].results.length) {
-      var result = _.last(stack[0].results);
+      const result = _.last(stack[0].results);
       result.stdout += stack[0].stdout;
       result.stderr += stack[0].stderr;
       stack[0].stdout = stack[0].stderr = '';
@@ -155,10 +155,10 @@ function JenkinsReporter(runner) {
 
   runner.on('end', function () {
     restoreStdio();
-    var xml = makeJUnitXml('node ' + process.version, {
+    const xml = makeJUnitXml('node ' + process.version, {
       stats: stats,
       suites: _.map(rootSuite.suites, function removeElements(suite) {
-        var s = {
+        const s = {
           name: suite.name,
           start: suite.start,
           time: suite.time || 0,
@@ -186,8 +186,8 @@ function JenkinsReporter(runner) {
 
   // overload the write methods on stdout and stderr
   ['stdout', 'stderr'].forEach(function (name) {
-    var obj = process[name];
-    var orig = obj.write;
+    const obj = process[name];
+    const orig = obj.write;
     obj.write = function (chunk) {
       if (stack[0]) {
         stack[0][name] = (stack[0][name] || '') + chunk;

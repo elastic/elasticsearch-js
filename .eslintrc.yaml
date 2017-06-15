@@ -14,3 +14,4 @@ rules:
   no-empty: warn
   space-before-function-paren: warn
   no-restricted-globals: warn
+  prefer-const: warn

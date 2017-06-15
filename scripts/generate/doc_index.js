@@ -1,12 +1,12 @@
 module.exports = function (done) {
-  var _ = require('../../src/lib/utils');
-  var utils = require('../../grunt/utils');
+  const _ = require('../../src/lib/utils');
+  const utils = require('../../grunt/utils');
 
-  var chalk = require('chalk');
-  var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
-  var write = require('fs').writeFile;
+  const chalk = require('chalk');
+  const fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
+  const write = require('fs').writeFile;
 
-  var outputPath = fromRoot('docs/index.asciidoc');
+  const outputPath = fromRoot('docs/index.asciidoc');
 
   write(outputPath, require('./templates').docsIndex({
     apiFiles: utils.stableBranches.map(function (branch) {

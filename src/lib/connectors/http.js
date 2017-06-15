@@ -8,16 +8,16 @@
  */
 module.exports = HttpConnector;
 
-var handles = {
+const handles = {
   http: require('http'),
   https: require('https')
 };
-var _ = require('../utils');
-var parseUrl = require('url').parse;
-var qs = require('querystring');
-var AgentKeepAlive = require('agentkeepalive');
-var ConnectionAbstract = require('../connection');
-var zlib = require('zlib');
+const _ = require('../utils');
+const parseUrl = require('url').parse;
+const qs = require('querystring');
+const AgentKeepAlive = require('agentkeepalive');
+const ConnectionAbstract = require('../connection');
+const zlib = require('zlib');
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -51,9 +51,9 @@ _.inherits(HttpConnector, ConnectionAbstract);
 
 HttpConnector.prototype.onStatusSet = _.handler(function (status) {
   if (status === 'closed') {
-    var agent = this.agent;
-    var toRemove = [];
-    var collectSockets = function (sockets, host) {
+    const agent = this.agent;
+    const toRemove = [];
+    const collectSockets = function (sockets, host) {
       _.each(sockets, function (s) {
         if (s) toRemove.push([host, s]);
       });
@@ -65,7 +65,7 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
     _.each(agent.sockets, collectSockets);
     _.each(agent.freeSockets, collectSockets);
     _.each(toRemove, function (args) {
-      var host = args[0], socket = args[1];
+      let host = args[0], socket = args[1];
       agent.removeSocket(socket, parseUrl(host));
       socket.destroy();
     });
@@ -73,7 +73,7 @@ HttpConnector.prototype.onStatusSet = _.handler(function (status) {
 });
 
 HttpConnector.prototype.createAgent = function (config) {
-  var Agent = this.hand.Agent; // the class
+  let Agent = this.hand.Agent; // the class
 
   if (config.forever) {
     config.keepAlive = config.forever;
@@ -88,7 +88,7 @@ HttpConnector.prototype.createAgent = function (config) {
 };
 
 HttpConnector.prototype.makeAgentConfig = function (config) {
-  var agentConfig = {
+  const agentConfig = {
     keepAlive: config.keepAlive,
     keepAliveMsecs: config.keepAliveInterval,
     maxSockets: config.maxSockets,
@@ -105,9 +105,9 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
 
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};
-  var host = this.host;
+  const host = this.host;
 
-  var reqParams = {
+  const reqParams = {
     method: params.method || 'GET',
     protocol: host.protocol + ':',
     hostname: host.host,
@@ -121,7 +121,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
     reqParams.path = '/';
   }
 
-  var query = host.getQuery(params.query);
+  const query = host.getQuery(params.query);
   if (query) {
     reqParams.path = reqParams.path + '?' + qs.stringify(query);
   }
@@ -130,19 +130,19 @@ HttpConnector.prototype.makeReqParams = function (params) {
 };
 
 HttpConnector.prototype.request = function (params, cb) {
-  var incoming;
-  var timeoutId;
-  var request;
-  var status = 0;
-  var headers = {};
-  var log = this.log;
-  var response;
+  let incoming;
+  let timeoutId;
+  let request;
+  let status = 0;
+  let headers = {};
+  const log = this.log;
+  let response;
 
-  var reqParams = this.makeReqParams(params);
+  const reqParams = this.makeReqParams(params);
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  var cleanUp = _.bind(function (err) {
+  const cleanUp = _.bind(function (err) {
     clearTimeout(timeoutId);
 
     request && request.removeAllListeners();
@@ -166,7 +166,7 @@ HttpConnector.prototype.request = function (params, cb) {
     headers = incoming.headers;
     response = '';
 
-    var encoding = (headers['content-encoding'] || '').toLowerCase();
+    const encoding = (headers['content-encoding'] || '').toLowerCase();
     if (encoding === 'gzip' || encoding === 'deflate') {
       incoming = incoming.pipe(zlib.createUnzip());
     }

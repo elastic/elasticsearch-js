@@ -4,25 +4,25 @@
  */
 module.exports = Transport;
 
-var _ = require('./utils');
-var errors = require('./errors');
-var Host = require('./host');
-var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
-var findCommonProtocol = require('./transport/find_common_protocol');
+const _ = require('./utils');
+const errors = require('./errors');
+const Host = require('./host');
+const patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
+const findCommonProtocol = require('./transport/find_common_protocol');
 
 function Transport(config) {
-  var self = this;
+  const self = this;
   config = self._config = config || {};
 
-  var LogClass = (typeof config.log === 'function') ? config.log : require('./log');
+  const LogClass = (typeof config.log === 'function') ? config.log : require('./log');
   config.log = self.log = new LogClass(config);
 
   // setup the connection pool
-  var ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
+  const ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
   self.connectionPool = new ConnectionPool(config);
 
   // setup the serializer
-  var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
+  const Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
   self.serializer = new Serializer(config);
 
   // setup the nodesToHostCallback
@@ -42,14 +42,14 @@ function Transport(config) {
   }
 
   // randomizeHosts option
-  var randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
+  const randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
 
   if (config.host) {
     config.hosts = config.host;
   }
 
   if (config.hosts) {
-    var hostsConfig = _.createArray(config.hosts, function (val) {
+    let hostsConfig = _.createArray(config.hosts, function (val) {
       if (_.isPlainObject(val) || _.isString(val) || val instanceof Host) {
         return val;
       }
@@ -104,10 +104,10 @@ Transport.prototype.defer = function () {
     throw new Error(
       'No Promise implementation found. In order for elasticsearch-js to create promises ' +
       'either specify the `defer` configuration or include a global Promise shim'
-    )
+    );
   }
 
-  var defer = {};
+  const defer = {};
   defer.promise = new Promise(function (resolve, reject) {
     defer.resolve = resolve;
     defer.reject = reject;
@@ -133,19 +133,19 @@ Transport.prototype.defer = function () {
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
  */
 Transport.prototype.request = function (params, cb) {
-  var self = this;
-  var remainingRetries = this.maxRetries;
-  var requestTimeout = this.requestTimeout;
+  const self = this;
+  let remainingRetries = this.maxRetries;
+  let requestTimeout = this.requestTimeout;
 
-  var connection; // set in sendReqWithConnection
-  var aborted = false; // several connector will respond with an error when the request is aborted
-  var requestAborter; // an abort function, returned by connection#request()
-  var requestTimeoutId; // the id of the ^timeout
-  var ret; // the object returned to the user, might be a promise
-  var defer; // the defer object, will be set when we are using promises.
+  let connection; // set in sendReqWithConnection
+  let aborted = false; // several connector will respond with an error when the request is aborted
+  let requestAborter; // an abort function, returned by connection#request()
+  let requestTimeoutId; // the id of the ^timeout
+  let ret; // the object returned to the user, might be a promise
+  let defer; // the defer object, will be set when we are using promises.
 
-  var body = params.body;
-  var headers = !params.headers ? {} : _.transform(params.headers, function (headers, val, name) {
+  let body = params.body;
+  const headers = !params.headers ? {} : _.transform(params.headers, function (headers, val, name) {
     headers[String(name).toLowerCase()] = val;
   });
 
@@ -173,8 +173,8 @@ Transport.prototype.request = function (params, cb) {
 
   // serialize the body
   if (body) {
-    var serializer = self.serializer;
-    var serializeFn = serializer[params.bulkBody ? 'bulkBody' : 'serialize'];
+    const serializer = self.serializer;
+    const serializeFn = serializer[params.bulkBody ? 'bulkBody' : 'serialize'];
 
     body = serializeFn.call(serializer, body);
     if (!headers['content-type']) {
@@ -230,7 +230,7 @@ Transport.prototype.request = function (params, cb) {
     if (err) {
       connection.setStatus('dead');
 
-      var errMsg = err.message || '';
+      let errMsg = err.message || '';
 
       errMsg =
         '\n' +
@@ -261,8 +261,8 @@ Transport.prototype.request = function (params, cb) {
     }
 
     self._timeout(requestTimeoutId);
-    var parsedBody;
-    var isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
+    let parsedBody;
+    const isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
 
     if (!err && body) {
       if (isJson) {
@@ -283,7 +283,7 @@ Transport.prototype.request = function (params, cb) {
       && (!params.ignore || !_.include(params.ignore, status))
     ) {
 
-      var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
+      const errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
       errorMetadata.statusCode = status;
       errorMetadata.response = body;
 
@@ -356,8 +356,8 @@ Transport.prototype.request = function (params, cb) {
 Transport.prototype._timeout = function (cb, delay) {
   if (this.closed) return;
 
-  var id;
-  var timers = this._timers || (this._timers = []);
+  let id;
+  const timers = this._timers || (this._timers = []);
 
   if ('function' !== typeof cb) {
     id = cb;
@@ -378,7 +378,7 @@ Transport.prototype._timeout = function (cb, delay) {
   if (id) {
     clearTimeout(id);
 
-    var i = this._timers.indexOf(id);
+    const i = this._timers.indexOf(id);
     if (i !== -1) {
       this._timers.splice(i, 1);
     }
@@ -392,10 +392,10 @@ Transport.prototype._timeout = function (cb, delay) {
  * @param  {Function} cb - Function to call back once complete
  */
 Transport.prototype.sniff = function (cb) {
-  var self = this;
-  var nodesToHostCallback = this.nodesToHostCallback;
-  var log = this.log;
-  var sniffedNodesProtocol = this.sniffedNodesProtocol;
+  const self = this;
+  const nodesToHostCallback = this.nodesToHostCallback;
+  const log = this.log;
+  const sniffedNodesProtocol = this.sniffedNodesProtocol;
 
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
@@ -414,7 +414,7 @@ Transport.prototype.sniff = function (cb) {
     method: 'GET'
   }, function (err, resp, status) {
     if (!err && resp && resp.nodes) {
-      var hostsConfigs;
+      let hostsConfigs;
 
       try {
         hostsConfigs = nodesToHostCallback(resp.nodes);
@@ -441,7 +441,7 @@ Transport.prototype.sniff = function (cb) {
  *                                         that will be used to create Host objects.
  */
 Transport.prototype.setHosts = function (hostsConfigs) {
-  var globalConfig = this._config;
+  const globalConfig = this._config;
   this.connectionPool.setHosts(_.map(hostsConfigs, function (conf) {
     return (conf instanceof Host) ? conf : new Host(conf, globalConfig);
   }));

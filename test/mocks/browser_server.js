@@ -1,22 +1,22 @@
-var interceptors = [];
-var complete = [];
-var MockHttpRequest = require('./browser_http');
-var XhrServer = MockHttpRequest.MockHttpServer;
-var parseUrl = MockHttpRequest.prototype.parseUri;
-var _ = require('lodash');
+const interceptors = [];
+const complete = [];
+const MockHttpRequest = require('./browser_http');
+const XhrServer = MockHttpRequest.MockHttpServer;
+const parseUrl = MockHttpRequest.prototype.parseUri;
+const _ = require('lodash');
 
-var server = new XhrServer(function (request) {
-  var reqDetails = {
+const server = new XhrServer(function (request) {
+  const reqDetails = {
     method: request.method,
     host: request.urlParts.host,
     path: request.urlParts.relative
   };
-  var response = _.find(interceptors, reqDetails);
+  const response = _.find(interceptors, reqDetails);
 
   if (response) {
     // remove of tick down the times
     if (response.times === 1) {
-      var i = interceptors.indexOf(response);
+      const i = interceptors.indexOf(response);
       complete.push(interceptors.splice(i, 1));
     } else {
       response.times--;
@@ -31,8 +31,8 @@ var server = new XhrServer(function (request) {
 server.start();
 
 var mockNock = module.exports = function (url) {
-  var parsedUrl = parseUrl(url);
-  var req = {
+  const parsedUrl = parseUrl(url);
+  const req = {
     method: 'GET',
     host: parsedUrl.host,
     times: 1

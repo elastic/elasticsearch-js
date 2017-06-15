@@ -4,13 +4,13 @@
 // which prevent sinon from being able to ensure
 // timeouts aren't being left behind
 
-var express = require('express');
-var app = express().post('/_search', function (req, res) {
+const express = require('express');
+const app = express().post('/_search', function (req, res) {
   res.json(200, { hits: { hits: [] } });
 });
 
-var server = require('http').createServer(app);
+const server = require('http').createServer(app);
 server.listen(function () {
-  var port = server.address().port;
+  const port = server.address().port;
   process.connected ? process.send(port) : console.log(port);
 });

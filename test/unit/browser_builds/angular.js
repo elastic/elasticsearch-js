@@ -1,23 +1,23 @@
 /* global angular */
-var _ = require('lodash');
-var expect = require('expect.js');
-var Promise = require('bluebird');
-var sinon = require('sinon');
+const _ = require('lodash');
+const expect = require('expect.js');
+const Promise = require('bluebird');
+const sinon = require('sinon');
 
 describe('Angular esFactory', function () {
   before(function () {
     require('../../../src/elasticsearch.angular.js');
   });
 
-  var uuid = (function () { var i = 0; return function () { return ++i; }; }());
-  var esFactory;
-  var $http;
-  var $rootScope;
-  var $httpBackend;
+  const uuid = (function () { let i = 0; return function () { return ++i; }; }());
+  let esFactory;
+  let $http;
+  let $rootScope;
+  let $httpBackend;
 
   function bootstrap(env) {
     beforeEach(function () {
-      var promiseProvider = _.noop;
+      let promiseProvider = _.noop;
       if (env.bluebirdPromises) {
         promiseProvider = function ($provide) {
           $provide.service('$q', function () {
@@ -59,7 +59,7 @@ describe('Angular esFactory', function () {
     });
 
     it('returns a new client when it is called', function () {
-      var client = esFactory({
+      const client = esFactory({
         hosts: null
       });
 
@@ -69,10 +69,10 @@ describe('Angular esFactory', function () {
     });
 
     it('returns an error created by calling a method incorrectly', function () {
-      var client = esFactory({ hosts: null });
-      var err;
+      const client = esFactory({ hosts: null });
+      let err;
 
-      var prom = client.get().then(function () {
+      const prom = client.get().then(function () {
         throw new Error('expected request to fail');
       }, function (err) {
         expect(err).to.have.property('message');
