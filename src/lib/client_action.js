@@ -183,7 +183,9 @@ const castType = {
 };
 
 function resolveUrl(url, params) {
-  let vars = {}, i, key;
+  const vars = {};
+  let i;
+  let key;
 
   if (url.req) {
     // url has required params

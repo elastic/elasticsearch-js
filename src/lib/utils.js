@@ -97,7 +97,10 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
     let i = 0;
     const words = [];
     let word = '';
-    let code, c, upper, lower;
+    let code;
+    let c;
+    let upper;
+    let lower;
 
     for (; i < string.length; i++) {
       code = string.charCodeAt(i);

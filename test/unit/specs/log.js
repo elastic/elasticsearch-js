@@ -128,7 +128,8 @@ describe('Log class', function () {
   });
 
   describe('instance without one output listening to all events', function () {
-    let log, call;
+    let log;
+    let call;
     beforeEach(function () {
       call = void 0;
       log = new Log({

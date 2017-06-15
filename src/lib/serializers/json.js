@@ -44,7 +44,8 @@ Json.prototype.deserialize = function (str) {
 };
 
 Json.prototype.bulkBody = function (val) {
-  let body = '', i;
+  let body = '';
+  let i;
 
   if (_.isArray(val)) {
     for (i = 0; i < val.length; i++) {

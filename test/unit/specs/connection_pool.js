@@ -19,7 +19,11 @@ function listenerCount(emitter, event) {
 
 describe('Connection Pool', function () {
   describe('Adding/Removing/Syncing Connections', function () {
-    let pool, host, connection, host2, connection2;
+    let pool;
+    let host;
+    let connection;
+    let host2;
+    let connection2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
@@ -93,7 +97,9 @@ describe('Connection Pool', function () {
   });
 
   describe('Connection selection', function () {
-    let pool, host, host2;
+    let pool;
+    let host;
+    let host2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
@@ -211,7 +217,11 @@ describe('Connection Pool', function () {
   });
 
   describe('Connection state management', function () {
-    let pool, host, host2, connection, connection2;
+    let pool;
+    let host;
+    let host2;
+    let connection;
+    let connection2;
 
     beforeEach(function () {
       pool = new ConnectionPool({});
