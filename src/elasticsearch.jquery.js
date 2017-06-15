@@ -4,7 +4,7 @@
   const es = require('./elasticsearch');
 
   function defer() {
-    const def = $.Deferred();
+    const def = new $.Deferred();
     // def.promise is usually a property (in normal implementations)
     // we override the promise to keep things working
     def.promise = def.promise();

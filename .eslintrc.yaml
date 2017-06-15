@@ -2,7 +2,6 @@
 extends: "@elastic/eslint-config-kibana"
 
 rules:
-  new-cap: warn
   space-unary-ops: warn
   dot-notation: warn
   quotes: warn

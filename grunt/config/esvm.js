@@ -102,7 +102,7 @@ utils.branches.forEach(function (branch) {
     opts.version = v.version;
   }
   else if (ref) {
-    v = new Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
+    v = Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
     opts.branch = ref;
     opts.fresh = true;
   }

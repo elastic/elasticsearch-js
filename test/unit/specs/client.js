@@ -36,7 +36,7 @@ describe('Client instances creation', function () {
 
     it('inherits the ' + prev + ' API when specified', function () {
       client.close();
-      client = es.Client({
+      client = new es.Client({
         apiVersion: prev
       });
       expect(client.bulk).to.be(apis[prev].bulk);
