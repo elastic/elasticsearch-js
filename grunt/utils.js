@@ -6,7 +6,7 @@ const stable = pkg.config.supported_es_branches;
 const unstable = pkg.config.unstable_es_branches;
 const branches = [].concat(stable, unstable);
 
-var utils = {
+const utils = {
   branchSuffix: function (branch) {
     return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
   },

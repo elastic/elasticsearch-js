@@ -343,8 +343,8 @@ _.funcEnum = function (config, name, opts, def) {
         return opts[val];
       }
     /* falls through */
-    default:
-      var err = 'Invalid ' + name + ' "' + val + '", expected a function';
+    default: {
+      let err = 'Invalid ' + name + ' "' + val + '", expected a function';
       switch (_.size(opts)) {
         case 0:
           break;
@@ -356,6 +356,7 @@ _.funcEnum = function (config, name, opts, def) {
           break;
       }
       throw new TypeError(err);
+    }
   }
 };
 

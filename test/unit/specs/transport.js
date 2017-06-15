@@ -722,6 +722,7 @@ describe('Transport Class', function () {
         });
 
         const con = getConnection(tran);
+        let ret; // eslint-disable-line prefer-const
         stub(con, 'request', function () {
           process.nextTick(function () {
             ret.abort();
@@ -731,7 +732,7 @@ describe('Transport Class', function () {
           };
         });
 
-        var ret = tran.request({});
+        ret = tran.request({});
       });
       it('ignores the response from the connection when the connector does not support aborting', function (done) {
         const tran = new Transport({

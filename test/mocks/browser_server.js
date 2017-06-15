@@ -30,7 +30,7 @@ const server = new XhrServer(function (request) {
 
 server.start();
 
-var mockNock = module.exports = function (url) {
+const mockNock = module.exports = function (url) {
   const parsedUrl = parseUrl(url);
   const req = {
     method: 'GET',
@@ -38,7 +38,7 @@ var mockNock = module.exports = function (url) {
     times: 1
   };
 
-  var modifyReq = {
+  const modifyReq = {
     get: function (path) {
       req.path = path;
       req.method = 'GET';

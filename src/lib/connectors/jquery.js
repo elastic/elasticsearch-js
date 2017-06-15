@@ -26,7 +26,7 @@ JqueryConnector.prototype.request = function (params, cb) {
     done: cb
   };
 
-  var jqXHR = jQuery.ajax(ajax)
+  const jqXHR = jQuery.ajax(ajax)
     .done(function (data) {
       cb(null, data, jqXHR.statusCode(), {
         'content-type': jqXHR.getResponseHeader('content-type')

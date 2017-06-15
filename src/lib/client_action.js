@@ -327,8 +327,8 @@ function exec(transport, spec, params, cb) {
         case 'method':
           request.method = _.toUpperString(params[key]);
           break;
-        default:
-          var paramSpec = spec.params[key];
+        default: {
+          const paramSpec = spec.params[key];
           if (paramSpec) {
           // param keys don't always match the param name, in those cases it's stored in the param def as "name"
             paramSpec.name = paramSpec.name || key;
@@ -346,6 +346,7 @@ function exec(transport, spec, params, cb) {
           } else {
             query[key] = params[key];
           }
+        }
       }
     }
   }

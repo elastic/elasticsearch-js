@@ -17,7 +17,7 @@ module.exports = function setupSniffOnConnectionFault(transport) {
 
   // do the actual sniff, if the sniff is unable to
   // connect to a node this function will be called again by the connectionPool
-  var work = function () {
+  const work = function () {
     work.timerId = transport._timeout(work.timerId);
     transport.sniff();
   };

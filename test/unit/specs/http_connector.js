@@ -481,12 +481,13 @@ describe('Http Connector', function () {
       const fixture = _.partial(path.join, __dirname, '../../fixtures');
       let timeout; // start the timeout once we hear back from the client
 
+      let client; // eslint-disable-line prefer-const
       const server = cp.fork(fixture('keepalive_server.js'))
         .on('message', function (port) {
           client.send(port);
         });
 
-      var client = cp.fork(fixture('keepalive.js'))
+      client = cp.fork(fixture('keepalive.js'))
         .on('message', function (output) {
           expect(output).to.have.property('remaining', 0);
           expect(output).to.have.property('timeouts', 0);

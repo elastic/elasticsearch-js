@@ -403,11 +403,11 @@ YamlDoc.prototype = {
     }
 
     const client = clientManager.get();
-    var clientActionName = _.map(action.split('.'), _.camelCase).join('.');
+    const clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     const clientAction = this.get(clientActionName, client);
     _.assign(inputParams, args[action]);
 
-    var params = _.transform(inputParams, _.bind(function (params, val, name) {
+    const params = _.transform(inputParams, _.bind(function (params, val, name) {
       const camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
@@ -426,7 +426,7 @@ YamlDoc.prototype = {
       }
 
       // for ercursively traversing the params to replace '$stashed' vars
-      var transformObject = function (vals, val, i) {
+      const transformObject = function (vals, val, i) {
         if (_.isString(val)) {
           val = (val[0] === '$') ? this.get(val) : val;
         } else if (_.isPlainObject(val) || _.isArray(val)) {
