@@ -1,5 +1,5 @@
+.DS_Store
 dist
-bower_components
 npm-debug.log
 node_modules
 scripts/scratch*
@@ -7,9 +7,10 @@ test/integration/yaml_suite/log
 .aws-config.json
 .idea
 esvm
+.es-snapshot-repos
+/tmp
 
 ## generated files
-src/_elasticsearch*/
 src/bower*/
 junit-*.xml
 elasticsearch*.log
@@ -19,6 +20,7 @@ coverage.html
 html_docs
 
 ## just in .npmignore
+/bower_components
 .eslintrc
 .travis.yml
 CHANGELOG.md
