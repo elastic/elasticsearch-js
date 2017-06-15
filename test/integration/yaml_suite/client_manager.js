@@ -76,7 +76,7 @@ module.exports = {
 
       if (logConfig && logConfig.type === 'tracer') {
         try {
-          fs.unlinkSync(fromRoot('elasticsearch-tracer.log'));
+          fs.unlinkSync(fromRoot('tmp/tracer.log'));
         } catch (error) {
           if (error.code !== 'ENOENT') {
             throw error;

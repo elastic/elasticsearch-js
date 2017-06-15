@@ -21,7 +21,7 @@ function Tracer(log, config) {
   if (config.path === false) {
     config.stream = process.stderr;
   } else {
-    config.stream = fs.createWriteStream(config.path || 'elasticsearch-tracer.log');
+    config.stream = fs.createWriteStream(config.path || 'tmp/tracer.log');
   }
 
   this.curlHost = config.curlHost || 'localhost';

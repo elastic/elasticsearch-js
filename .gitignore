@@ -12,7 +12,6 @@ esvm
 ## generated files
 src/bower*/
 junit-*.xml
-elasticsearch*.log
 sauce_connect.lo*
 coverage.html
 .snapshots
