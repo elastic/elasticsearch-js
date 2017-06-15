@@ -1,4 +1,4 @@
 ---
-extends: ../.eslintrc
+extends: ../.eslintrc.yaml
 env:
   mocha: true
