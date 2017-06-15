@@ -43,19 +43,18 @@ function install_node {
 
   echo "installing node $version";
   crit nvm install "$version"
+}
 
-  if [[ "$(which npm)" == "" ]]; then
-    echo "npm is missing, reinstalling node version $version";
-    crit nvm deactivate;
-    crit nvm uninstall "$version";
-    install_node "$version";
-    return
-  fi
+function install_yarn {
+  mkdir .bin
+  curl -L https://github.com/yarnpkg/yarn/releases/download/v0.24.2/yarn-0.24.2.js > .bin/yarn
+  chmod +x .bin/yarn
+  PATH="$(pwd)/.bin:$PATH"
 }
 
 get_lock
 install_node "$(cat ./.node-version)"
-npm install
+yarn
 release_lock
 
 ES_PATH_REPO="./.es-snapshot-repos/$EXECUTOR_NUMBER/" ES_PORT=$((9400 + EXECUTOR_NUMBER)) RUN=NODE_UNIT,NODE_INTEGRATION VERBOSE=true node ./scripts/ci.js
