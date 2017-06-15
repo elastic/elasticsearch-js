@@ -77,7 +77,11 @@ module.exports = {
       if (logConfig && logConfig.type === 'tracer') {
         try {
           fs.unlinkSync(fromRoot('elasticsearch-tracer.log'));
-        } catch (e) {}
+        } catch (error) {
+          if (error.code !== 'ENOENT') {
+            throw error;
+          }
+        }
       }
 
       // close existing client

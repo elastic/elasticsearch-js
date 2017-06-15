@@ -70,9 +70,16 @@ const paths = {
 };
 
 function isDirectory(dir) {
-  let stat;
-  try { stat = fs.statSync(dir); } catch (e) {}
-  return (stat && stat.isDirectory());
+  try {
+    const stat = fs.statSync(dir);
+    return stat.isDirectory();
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return false;
+    }
+
+    throw error;
+  }
 }
 
 function dirFilter(dir, fn) {

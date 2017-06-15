@@ -39,7 +39,9 @@ Json.prototype.deserialize = function (str) {
   if (typeof str === 'string') {
     try {
       return JSON.parse(str);
-    } catch (e) {}
+    } catch (e) {
+      return undefined;
+    }
   }
 };
 

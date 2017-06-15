@@ -1,7 +1,11 @@
 let config = {};
 try {
   config = require('../../.aws-config.json');
-} catch (e) {}
+} catch (error) {
+  if (error.code !== 'ENOENT') {
+    throw error;
+  }
+}
 
 module.exports = {
   upload_archives: {
