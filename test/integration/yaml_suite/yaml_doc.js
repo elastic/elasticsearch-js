@@ -449,7 +449,7 @@ YamlDoc.prototype = {
       catcher = null;
     }
 
-    let timeoutId;
+    let timeoutId; // eslint-disable-line prefer-const
     const cb = _.bind(function (error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);

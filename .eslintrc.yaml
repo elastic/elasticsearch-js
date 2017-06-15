@@ -1,5 +1,2 @@
 ---
 extends: "@elastic/eslint-config-kibana"
-
-rules:
-  prefer-const: warn

@@ -55,13 +55,12 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
   let requestTimeout = this.pingTimeout;
   let requestTimeoutId;
   let aborted;
-  let abort;
 
   if (params && params.hasOwnProperty('requestTimeout')) {
     requestTimeout = params.requestTimeout;
   }
 
-  abort = this.request(_.defaults(params || {}, {
+  const abort = this.request(_.defaults(params || {}, {
     path: '/',
     method: 'HEAD'
   }), function (err) {

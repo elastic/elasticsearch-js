@@ -133,11 +133,11 @@ HttpConnector.prototype.makeReqParams = function (params) {
 HttpConnector.prototype.request = function (params, cb) {
   let incoming;
   let timeoutId;
-  let request;
   let status = 0;
   let headers = {};
   const log = this.log;
   let response;
+  let request; // eslint-disable-line prefer-const
 
   const reqParams = this.makeReqParams(params);
 
