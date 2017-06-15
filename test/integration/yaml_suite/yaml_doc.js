@@ -344,6 +344,8 @@ YamlDoc.prototype = {
    */
   do_do: function (args, done) {
     let catcher;
+    let clientActionName; //eslint-disable-line prefer-const
+    let params; //eslint-disable-line prefer-const
 
     if (process.env.LOG_DO) {
       const __done = done;
@@ -403,11 +405,11 @@ YamlDoc.prototype = {
     }
 
     const client = clientManager.get();
-    const clientActionName = _.map(action.split('.'), _.camelCase).join('.');
+    clientActionName = _.map(action.split('.'), _.camelCase).join('.');
     const clientAction = this.get(clientActionName, client);
     _.assign(inputParams, args[action]);
 
-    const params = _.transform(inputParams, _.bind(function (params, val, name) {
+    params = _.transform(inputParams, _.bind(function (params, val, name) {
       const camelName = _.camelCase(name);
 
       // search through the params and url peices to find this param name
