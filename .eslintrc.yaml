@@ -2,6 +2,5 @@
 extends: "@elastic/eslint-config-kibana"
 
 rules:
-  space-before-function-paren: warn
   no-restricted-globals: warn
   prefer-const: warn
