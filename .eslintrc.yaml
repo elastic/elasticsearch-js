@@ -2,5 +2,4 @@
 extends: "@elastic/eslint-config-kibana"
 
 rules:
-  no-restricted-globals: warn
   prefer-const: warn
