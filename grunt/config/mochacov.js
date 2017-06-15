@@ -65,7 +65,7 @@ const config = {
 grunt.registerTask('mocha_integration', function (branch) {
   grunt.config.set(
     'mochacov.integration.src',
-    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+    'tmp/yaml_tests/' + _.snakeCase(branch) + '/index.js'
   );
   grunt.task.run('mochacov:integration');
 });
@@ -73,7 +73,7 @@ grunt.registerTask('mocha_integration', function (branch) {
 grunt.registerTask('mocha_jenkins_integration', function (branch) {
   grunt.config.set(
     'mochacov.jenkins_integration.src',
-    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+    'tmp/yaml_tests/' + _.snakeCase(branch) + '/index.js'
   );
   grunt.task.run('mochacov:jenkins_integration');
 });

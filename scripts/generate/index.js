@@ -54,6 +54,7 @@ if (argv.branch) {
 const TMP_DIR = fromRoot('tmp');
 const ES_REPO_DIR = path.join(TMP_DIR, 'es/repo');
 const ES_BRANCHES_DIR = path.join(TMP_DIR, 'es/branches');
+const YAML_TESTS_DIR = path.join(TMP_DIR, 'yaml_tests');
 
 const paths = {
   root: fromRoot('.'),
@@ -183,7 +184,9 @@ function clearGeneratedFiles() {
     generatedFiles.push(findGeneratedApiFiles());
   }
 
-  generatedFiles.push(dirRegex(paths.src, esArchives));
+  if (argv.api) {
+    generatedFiles.push(YAML_TESTS_DIR);
+  }
 
   const rmSteps = _.chain(generatedFiles)
   .flatten()
@@ -234,7 +237,7 @@ function generateStep(branch) {
   return function (done) {
     async.parallel([
       argv.api && async.apply(require('./js_api'), branch),
-      argv.tests && async.apply(require('./yaml_tests'), branch, ES_BRANCHES_DIR)
+      argv.tests && async.apply(require('./yaml_tests'), branch, ES_BRANCHES_DIR, YAML_TESTS_DIR)
     ].filter(Boolean), done);
   };
 }

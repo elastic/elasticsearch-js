@@ -1,4 +1,4 @@
-module.exports = function (branch, ES_BRANCHES_DIR, done) {
+module.exports = function (branch, ES_BRANCHES_DIR, YAML_TESTS_DIR, done) {
   /**
    * Creates a JSON version of the YAML test suite that can be simply bundled for use in the browser.
    */
@@ -7,10 +7,12 @@ module.exports = function (branch, ES_BRANCHES_DIR, done) {
   const async = require('async');
   const chalk = require('chalk');
   const path = require('path');
+  const mkdirp = require('mkdirp');
   const fromRoot = path.join.bind(path, require('find-root')(__dirname));
   const _ = require(fromRoot('src/lib/utils'));
   const tests = {}; // populated in readYamlTests
 
+  const RUN_SCRIPT_PATH = fromRoot('test/integration/yaml_suite/run');
   const esDir = path.join(ES_BRANCHES_DIR, _.snakeCase(branch));
 
   // generate the yaml tests
@@ -43,15 +45,21 @@ module.exports = function (branch, ES_BRANCHES_DIR, done) {
   }
 
   function writeYamlTests(done) {
-    const testFile = fromRoot('test/integration/yaml_suite/yaml_tests_' + _.snakeCase(branch) + '.json');
+    const testFile = path.join(YAML_TESTS_DIR, _.snakeCase(branch), 'spec.json');
+
+    mkdirp.sync(path.dirname(testFile));
     fs.writeFileSync(testFile, JSON.stringify(tests, null, '  '), 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML tests as JSON to', testFile);
     done();
   }
 
   function writeTestIndex(done) {
-    const file = fromRoot('test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js');
-    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');\n', 'utf8');
+    const file = path.join(YAML_TESTS_DIR, _.snakeCase(branch), 'index.js');
+    const fileDir = path.dirname(file);
+    const relativeRunFile = path.relative(fileDir, RUN_SCRIPT_PATH);
+
+    mkdirp.sync(fileDir);
+    fs.writeFileSync(file, 'require(\'' + relativeRunFile + '\')(\'' + branch + '\');\n', 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML index to', file);
     done();
   }
