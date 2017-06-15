@@ -41,16 +41,17 @@
     ]
   },
   "devDependencies": {
-    "@spalger/eslint-config-personal": "^0.4.0",
+    "@elastic/eslint-config-kibana": "^0.6.1",
+    "@elastic/eslint-plugin-kibana-custom": "^1.0.3",
     "async": "~0.8.0",
-    "babel-eslint": "^6.0.4",
+    "babel-eslint": "^7.2.3",
     "blanket": "^1.2.3",
     "bluebird": "^2.9.14",
-    "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^8.0.0",
-    "eslint-plugin-import": "^1.6.1",
-    "eslint-plugin-jsx-a11y": "^1.0.4",
-    "eslint-plugin-react": "^5.0.1",
+    "eslint": "^3.19.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-mocha": "^4.10.1",
+    "eslint-plugin-react": "^7.1.0",
     "expect.js": "^0.3.1",
     "express": "~3.4.7",
     "find-root": "~0.1.1",
@@ -108,8 +109,7 @@
   "scripts": {
     "test": "grunt test",
     "generate": "node scripts/generate",
-    "grunt": "grunt",
-    "eslint": "eslint src scripts test grunt Gruntfile.js"
+    "grunt": "grunt"
   },
   "engines": {
     "node": ">=0.8"

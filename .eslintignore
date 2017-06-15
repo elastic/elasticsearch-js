@@ -1,3 +1,7 @@
-src/_*
-src/bower_es_js
-src/lib/apis
+/src/_*
+/src/bower_es_js
+/src/lib/apis
+/node_modules
+/bower_components
+/dist
+/html_docs
