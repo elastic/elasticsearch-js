@@ -19,7 +19,7 @@ module.exports = function (branch, done) {
   let docVars; // slightly modified clone of apiSpec for the docs
 
   const branchSuffix = utils.branchSuffix(branch);
-  const esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+  const esDir = fromRoot('tmp/es/branches', _.snakeCase(branch));
 
   const version = Version.fromBranch(branch);
   const overrides = version.mergeOpts(require('./overrides'), {

@@ -1,4 +1,4 @@
-module.exports = function (branch, done) {
+module.exports = function (branch, ES_BRANCHES_DIR, done) {
   /**
    * Creates a JSON version of the YAML test suite that can be simply bundled for use in the browser.
    */
@@ -11,7 +11,7 @@ module.exports = function (branch, done) {
   const _ = require(fromRoot('src/lib/utils'));
   const tests = {}; // populated in readYamlTests
 
-  const esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+  const esDir = path.join(ES_BRANCHES_DIR, _.snakeCase(branch));
 
   // generate the yaml tests
   async.series([

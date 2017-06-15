@@ -8,11 +8,11 @@ test/integration/yaml_suite/log
 .idea
 esvm
 .es-snapshot-repos
+/tmp
 
 ## generated files
 test/integration/yaml_suite/yaml_tests*.json
 test/integration/yaml_suite/index*.js
-src/_elasticsearch*
 src/bower*/
 junit-*.xml
 elasticsearch*.log
