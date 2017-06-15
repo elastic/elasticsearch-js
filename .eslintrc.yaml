@@ -2,7 +2,6 @@
 extends: "@elastic/eslint-config-kibana"
 
 rules:
-  quotes: warn
   no-use-before-define: warn
   no-empty: warn
   space-before-function-paren: warn
