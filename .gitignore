@@ -7,7 +7,6 @@ test/integration/yaml_suite/log
 .aws-config.json
 .idea
 esvm
-.es-snapshot-repos
 /tmp
 
 ## generated files

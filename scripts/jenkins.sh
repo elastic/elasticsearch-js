@@ -57,4 +57,4 @@ install_node "$(cat ./.node-version)"
 yarn
 release_lock
 
-ES_PATH_REPO="./.es-snapshot-repos/$EXECUTOR_NUMBER/" ES_PORT=$((9400 + EXECUTOR_NUMBER)) RUN=NODE_UNIT,NODE_INTEGRATION VERBOSE=true node ./scripts/ci.js
+ES_PATH_REPO="./tmp/.es-snapshot-repos/$EXECUTOR_NUMBER/" ES_PORT=$((9400 + EXECUTOR_NUMBER)) RUN=NODE_UNIT,NODE_INTEGRATION VERBOSE=true node ./scripts/ci.js

@@ -11,12 +11,12 @@ const Version = require('../../scripts/Version');
 const versionedOpts = [
   {
     version: '*',
-    directory: fromRoot('esvm'),
+    directory: fromRoot('tmp/esvm'),
     nodes: 1,
     quiet: false,
     logLevel: 'ERROR',
     config: {
-      'path.data': fromRoot('esvm/data_dir'),
+      'path.data': fromRoot('tmp/esvm/data_dir'),
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
       'http.port': port,
@@ -71,7 +71,7 @@ const versionedOpts = [
     version: '>=1.6',
     config: {
       'script.inline': true,
-      'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
+      'path.repo': process.env.ES_PATH_REPO || fromRoot('tmp/.es-snapshot-repos'),
       'repositories.url.allowed_urls': 'http://snapshot.*'
     }
   }
