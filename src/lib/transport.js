@@ -419,7 +419,7 @@ Transport.prototype.sniff = function (cb) {
       try {
         hostsConfigs = nodesToHostCallback(resp.nodes);
       } catch (e) {
-        log.error(new Error('Unable to convert node list from ' + this.sniffEndpoint +
+        log.error(new Error('Unable to convert node list from ' + self.sniffEndpoint +
           ' to hosts durring sniff. Encountered error:\n' + (e.stack || e.message)));
         return;
       }
