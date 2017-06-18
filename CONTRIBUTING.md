@@ -15,7 +15,7 @@ Please write test cases to exercise your changes.
 1. Install dev dependencies.
 
   ```sh
-  npm install
+  yarn
   ```
 
 2. Install Grunt.

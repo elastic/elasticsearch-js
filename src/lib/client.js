@@ -26,9 +26,9 @@
 
 module.exports = Client;
 
-var Transport = require('./transport');
-var clientAction = require('./client_action');
-var _ = require('./utils');
+const Transport = require('./transport');
+const clientAction = require('./client_action');
+const _ = require('./utils');
 
 function Client(config) {
   config = config || {};
@@ -71,7 +71,7 @@ function Client(config) {
     config.sniffEndpoint = '/_cluster/nodes';
   }
 
-  var Constructor = EsApiClient;
+  let Constructor = EsApiClient;
 
   if (config.plugins) {
     Constructor.prototype = _.cloneDeep(Constructor.prototype);

@@ -1,8 +1,8 @@
 /* jshint curly: false */
-var async = require('async');
-var fs = require('fs');
-var spawn = require('../_spawn');
-var argv = require('optimist')
+const async = require('async');
+const fs = require('fs');
+const spawn = require('../_spawn');
+let argv = require('optimist')
   .options({
     verbose: {
       alias: 'v',
@@ -27,15 +27,15 @@ var argv = require('optimist')
     }
   });
 
-var path = require('path');
-var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-var utils = require(fromRoot('grunt/utils'));
-var _ = require(fromRoot('src/lib/utils'));
-var esUrl = process.env.ES_REPO
+const path = require('path');
+const fromRoot = path.join.bind(path, require('find-root')(__dirname));
+const utils = require(fromRoot('grunt/utils'));
+const _ = require(fromRoot('src/lib/utils'));
+const esUrl = process.env.ES_REPO
   ? path.resolve(process.cwd(), process.env.ES_REPO)
   : 'https://github.com/elastic/elasticsearch.git';
 
-var branches;
+let branches;
 
 if (process.env.npm_config_argv) {
   // when called by NPM
@@ -51,18 +51,22 @@ if (argv.branch) {
   branches = utils.branches;
 }
 
-var paths = {
+const TMP_DIR = fromRoot('tmp');
+const ES_REPO_DIR = path.join(TMP_DIR, 'es/repo');
+const ES_BRANCHES_DIR = path.join(TMP_DIR, 'es/branches');
+const YAML_TESTS_DIR = path.join(TMP_DIR, 'yaml_tests');
+
+const paths = {
   root: fromRoot('.'),
   src: fromRoot('src'),
-  esSrc: fromRoot('src/_elasticsearch_'),
   docs: fromRoot('docs'),
   docsIndex: fromRoot('docs/index.asciidoc'),
   apiSrc: 'src/lib/apis',
   getArchiveDir: function (branch) {
-    return fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+    return path.join(ES_BRANCHES_DIR, _.snakeCase(branch));
   },
   getArchiveTarball: function (branch) {
-    return fromRoot('src/_elasticsearch_' + _.snakeCase(branch) + '.tar');
+    return path.join(ES_BRANCHES_DIR, _.snakeCase(branch) + '.tar');
   },
   getSpecPathInRepo: function (branch) {
     return /^v?(master|[2-9]\.)/.test(branch) ? 'rest-api-spec/src/main/resources/rest-api-spec' : 'rest-api-spec';
@@ -70,9 +74,16 @@ var paths = {
 };
 
 function isDirectory(dir) {
-  var stat;
-  try { stat = fs.statSync(dir); } catch (e) {}
-  return (stat && stat.isDirectory());
+  try {
+    const stat = fs.statSync(dir);
+    return stat.isDirectory();
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return false;
+    }
+
+    throw error;
+  }
 }
 
 function dirFilter(dir, fn) {
@@ -115,29 +126,30 @@ function spawnStep(cmd, args, cwd) {
 
 function initStep() {
   return function (done) {
-    if (isDirectory(paths.esSrc)) {
+    if (isDirectory(ES_REPO_DIR)) {
       async.series([
-        spawnStep('git', ['remote', 'set-url', 'origin', esUrl], paths.esSrc)
+        spawnStep('git', ['remote', 'set-url', 'origin', esUrl], ES_REPO_DIR)
       ], done);
     } else {
       async.series([
-        spawnStep('git', ['init', '--bare', paths.esSrc], paths.root),
-        spawnStep('git', ['remote', 'add', 'origin', esUrl], paths.esSrc)
+        spawnStep('mkdir', ['-p', path.dirname(ES_REPO_DIR)], paths.root),
+        spawnStep('git', ['init', '--bare', ES_REPO_DIR], paths.root),
+        spawnStep('git', ['remote', 'add', 'origin', esUrl], ES_REPO_DIR)
       ], done);
     }
   };
 }
 
 function fetchBranchesStep() {
-  var branchArgs = branches.map(function (b) { return b + ':' + b; });
-  return spawnStep('git', ['fetch', '--no-tags', '--force', 'origin'].concat(branchArgs), paths.esSrc);
+  const branchArgs = branches.map(function (b) { return b + ':' + b; });
+  return spawnStep('git', ['fetch', '--depth=1', '--no-tags', '--force', 'origin'].concat(branchArgs), ES_REPO_DIR);
 }
 
 
 function findGeneratedApiFiles() {
-  var anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
-  var anyApiJsFiled = /^.+\.js$/;
-  var allBranches = _.isEqual(branches, utils.branches);
+  const anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
+  const anyApiJsFiled = /^.+\.js$/;
+  const allBranches = _.isEqual(branches, utils.branches);
 
   if (allBranches) {
     return [
@@ -147,11 +159,11 @@ function findGeneratedApiFiles() {
   }
 
   return branches.reduce(function (files, branch) {
-    var b = _.snakeCase(branch);
+    const b = _.snakeCase(branch);
 
     files.push(dirOpts(paths.docs, 'api_methods_' + b + '.asciidoc'));
 
-    var isDefault = branch === utils.branches._default;
+    const isDefault = branch === utils.branches._default;
     if (isDefault) {
       files.push(dirOpts(paths.docs, 'api_methods.asciidoc'));
     }
@@ -164,16 +176,19 @@ function findGeneratedApiFiles() {
 
 
 function clearGeneratedFiles() {
-  var esArchives = /^_elasticsearch_(master|[\dx_]+|\.tar)$/;
-  var generatedFiles = [];
+  const generatedFiles = [
+    ES_BRANCHES_DIR,
+  ];
 
   if (argv.api) {
     generatedFiles.push(findGeneratedApiFiles());
   }
 
-  generatedFiles.push(dirRegex(paths.src, esArchives));
+  if (argv.api) {
+    generatedFiles.push(YAML_TESTS_DIR);
+  }
 
-  var rmSteps = _.chain(generatedFiles)
+  const rmSteps = _.chain(generatedFiles)
   .flatten()
   .uniq()
   .map(function (path) {
@@ -191,7 +206,7 @@ function clearGeneratedFiles() {
 function removePrevArchive(branch) {
   if (!argv.update) return;
 
-  var dir = paths.getArchiveDir(branch);
+  const dir = paths.getArchiveDir(branch);
   if (!isDirectory(dir)) return;
 
   return spawnStep('rm', ['-rf', dir], paths.root);
@@ -199,10 +214,10 @@ function removePrevArchive(branch) {
 
 function createArchive(branch) {
   return function (done) {
-    var dir = paths.getArchiveDir(branch);
-    var tarball = paths.getArchiveTarball(branch);
-    var specPathInRepo = paths.getSpecPathInRepo(branch);
-    var subDirCount = _.countBy(specPathInRepo, p => p === '/').true || 0;
+    const dir = paths.getArchiveDir(branch);
+    const tarball = paths.getArchiveTarball(branch);
+    const specPathInRepo = paths.getSpecPathInRepo(branch);
+    const subDirCount = _.countBy(specPathInRepo, p => p === '/').true || 0;
 
     if (isDirectory(dir)) {
       console.log(branch + ' archive already exists');
@@ -210,8 +225,8 @@ function createArchive(branch) {
     }
 
     async.series([
-      spawnStep('mkdir', [dir], paths.root),
-      spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, specPathInRepo], paths.esSrc),
+      spawnStep('mkdir', ['-p', dir], paths.root),
+      spawnStep('git', ['archive', '--format', 'tar', '--output', tarball, branch, specPathInRepo], ES_REPO_DIR),
       spawnStep('tar', ['-x', '-f', tarball, '-C', dir, '--strip-components', subDirCount]),
       spawnStep('rm', [tarball])
     ], done);
@@ -222,12 +237,12 @@ function generateStep(branch) {
   return function (done) {
     async.parallel([
       argv.api && async.apply(require('./js_api'), branch),
-      argv.tests && async.apply(require('./yaml_tests'), branch)
+      argv.tests && async.apply(require('./yaml_tests'), branch, ES_BRANCHES_DIR, YAML_TESTS_DIR)
     ].filter(Boolean), done);
   };
 }
 
-var steps = [
+const steps = [
   initStep(),
   clearGeneratedFiles(),
   fetchBranchesStep()

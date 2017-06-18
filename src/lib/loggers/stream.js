@@ -12,8 +12,8 @@
 
 module.exports = Stream;
 
-var LoggerAbstract = require('../logger');
-var _ = require('../utils');
+const LoggerAbstract = require('../logger');
+const _ = require('../utils');
 
 function Stream(log, config) {
   LoggerAbstract.call(this, log, config);
@@ -36,7 +36,7 @@ Stream.prototype.cleanUpListeners = _.handler(function () {
 // flush the write buffer to stderr synchronously
 Stream.prototype.onProcessExit = _.handler(function () {
   // process is dying, lets manually flush the buffer synchronously to stderr.
-  var unwritten = _.getUnwrittenFromStream(this.stream);
+  const unwritten = _.getUnwrittenFromStream(this.stream);
   if (unwritten) {
     console.error('Log stream did not get to finish writing. Flushing to stderr');
     console.error(unwritten);

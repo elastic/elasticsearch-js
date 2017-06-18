@@ -9,8 +9,8 @@
 
 module.exports = ConnectionPool;
 
-var _ = require('./utils');
-var Log = require('./log');
+const _ = require('./utils');
+const Log = require('./log');
 
 function ConnectionPool(config) {
   config = config || {};
@@ -107,14 +107,14 @@ ConnectionPool.prototype.select = function (cb) {
  * @param  {ConnectionAbstract} connection - the connection object itself
  */
 ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, connection) {
-  var index;
+  let index;
 
-  var died = (status === 'dead');
-  var wasAlreadyDead = (died && oldStatus === 'dead');
-  var revived = (!died && oldStatus === 'dead');
-  var noChange = (oldStatus === status);
-  var from = this._conns[oldStatus];
-  var to = this._conns[status];
+  const died = (status === 'dead');
+  const wasAlreadyDead = (died && oldStatus === 'dead');
+  const revived = (!died && oldStatus === 'dead');
+  const noChange = (oldStatus === status);
+  const from = this._conns[oldStatus];
+  const to = this._conns[status];
 
   if (noChange && !died) {
     return true;
@@ -150,8 +150,8 @@ ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, co
  * @param  {ConnectionAbstract} connection
  */
 ConnectionPool.prototype._onConnectionRevived = function (connection) {
-  var timeout;
-  for (var i = 0; i < this._timeouts.length; i++) {
+  let timeout;
+  for (let i = 0; i < this._timeouts.length; i++) {
     if (this._timeouts[i].conn === connection) {
       timeout = this._timeouts[i];
       if (timeout.id) {
@@ -169,9 +169,9 @@ ConnectionPool.prototype._onConnectionRevived = function (connection) {
  * @param  {Boolean} alreadyWasDead - If the connection was preivously dead this must be set to true
  */
 ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
-  var timeout;
+  let timeout;
   if (alreadyWasDead) {
-    for (var i = 0; i < this._timeouts.length; i++) {
+    for (let i = 0; i < this._timeouts.length; i++) {
       if (this._timeouts[i].conn === connection) {
         timeout = this._timeouts[i];
         break;
@@ -198,17 +198,17 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
     clearTimeout(timeout.id);
   }
 
-  var ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
+  const ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
   timeout.id = setTimeout(timeout.revive, ms);
   timeout.runAt = _.now() + ms;
 };
 
 ConnectionPool.prototype._selectDeadConnection = function (cb) {
-  var orderedTimeouts = _.sortBy(this._timeouts, 'runAt');
-  var log = this.log;
+  const orderedTimeouts = _.sortBy(this._timeouts, 'runAt');
+  const log = this.log;
 
   process.nextTick(function next() {
-    var timeout = orderedTimeouts.shift();
+    const timeout = orderedTimeouts.shift();
     if (!timeout) {
       cb(void 0);
       return;
@@ -247,7 +247,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
  * @param {Number} [limit] - optional limit on the number of connections to return
  */
 ConnectionPool.prototype.getConnections = function (status, limit) {
-  var list;
+  let list;
   if (status) {
     list = this._conns[status];
   } else {
@@ -304,11 +304,11 @@ ConnectionPool.prototype.removeConnection = function (connection) {
  * @param {Host[]} hosts - An array of Host instances.
  */
 ConnectionPool.prototype.setHosts = function (hosts) {
-  var connection;
-  var i;
-  var id;
-  var host;
-  var toRemove = _.clone(this.index);
+  let connection;
+  let i;
+  let id;
+  let host;
+  const toRemove = _.clone(this.index);
 
   for (i = 0; i < hosts.length; i++) {
     host = hosts[i];
@@ -322,7 +322,7 @@ ConnectionPool.prototype.setHosts = function (hosts) {
     }
   }
 
-  var removeIds = _.keys(toRemove);
+  const removeIds = _.keys(toRemove);
   for (i = 0; i < removeIds.length; i++) {
     this.removeConnection(this.index[removeIds[i]]);
   }

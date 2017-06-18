@@ -1,12 +1,12 @@
 describe('Client instances creation', function () {
-  var stream = require('stream');
-  var util = require('util');
+  const stream = require('stream');
+  const util = require('util');
 
-  var es = require('../../../src/elasticsearch');
-  var apis = require('../../../src/lib/apis');
-  var expect = require('expect.js');
-  var stub = require('../../utils/auto_release_stub').make();
-  var client;
+  const es = require('../../../src/elasticsearch');
+  const apis = require('../../../src/lib/apis');
+  const expect = require('expect.js');
+  const stub = require('../../utils/auto_release_stub').make();
+  let client;
 
   describe('', function () {
     beforeEach(function () {
@@ -18,16 +18,16 @@ describe('Client instances creation', function () {
     });
 
     it('throws an error linking to the es module when you try to instanciate the exports', function () {
-      var Es = es;
+      const Es = es;
       expect(function () {
-        var c = new Es();
-        return c
+        const c = new Es();
+        return c;
       }).to.throwError(/previous "elasticsearch" module/);
     });
 
-    var pkg = require('../../../package.json');
-    var def = pkg.config.default_api_branch;
-    var prev = pkg.config.supported_es_branches[pkg.config.supported_es_branches.indexOf(def) + 1];
+    const pkg = require('../../../package.json');
+    const def = pkg.config.default_api_branch;
+    const prev = pkg.config.supported_es_branches[pkg.config.supported_es_branches.indexOf(def) + 1];
 
     it('inherits the ' + def + ' API by default', function () {
       expect(client.bulk).to.be(apis[def].bulk);
@@ -36,7 +36,7 @@ describe('Client instances creation', function () {
 
     it('inherits the ' + prev + ' API when specified', function () {
       client.close();
-      client = es.Client({
+      client = new es.Client({
         apiVersion: prev
       });
       expect(client.bulk).to.be(apis[prev].bulk);
@@ -44,7 +44,7 @@ describe('Client instances creation', function () {
     });
 
     it('closing the client causes it\'s transport to be closed', function () {
-      var called = false;
+      let called = false;
       client.transport.close = function () {
         called = true;
       };
@@ -72,7 +72,7 @@ describe('Client instances creation', function () {
         done();
       };
 
-      var client = new es.Client({
+      const client = new es.Client({
         log: [
           { type: 'stream', stream: new NullStream() }
         ]

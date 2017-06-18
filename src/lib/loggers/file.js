@@ -11,9 +11,9 @@
 
 module.exports = File;
 
-var StreamLogger = require('./stream');
-var _ = require('../utils');
-var fs = require('fs');
+const StreamLogger = require('./stream');
+const _ = require('../utils');
+const fs = require('fs');
 
 function File(log, config) {
   config = config || {};
@@ -32,7 +32,7 @@ function File(log, config) {
 _.inherits(File, StreamLogger);
 
 File.prototype.onProcessExit = _.handler(function () {
-  var toWrite = _.getUnwrittenFromStream(this.stream);
+  const toWrite = _.getUnwrittenFromStream(this.stream);
   if (toWrite) {
     fs.appendFileSync(this.path, toWrite);
   }

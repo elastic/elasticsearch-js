@@ -7,7 +7,7 @@
  * @return {Connection} - The selected connection
  */
 module.exports = function (connections) {
-  var connection = connections[0];
+  const connection = connections[0];
   connections.push(connections.shift());
   return connection;
 };

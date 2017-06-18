@@ -7,10 +7,10 @@ module.exports = XhrConnector;
 
 /* jshint browser:true */
 
-var _ = require('../utils');
-var ConnectionAbstract = require('../connection');
-var ConnectionFault = require('../errors').ConnectionFault;
-var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
+const _ = require('../utils');
+const ConnectionAbstract = require('../connection');
+const ConnectionFault = require('../errors').ConnectionFault;
+const asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 
 function XhrConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
@@ -21,7 +21,7 @@ _.inherits(XhrConnector, ConnectionAbstract);
  * Simply returns an XHR object cross browser
  * @type {Function}
  */
-var getXhr = _.noop;
+let getXhr = _.noop;
 
 if (typeof XMLHttpRequest !== 'undefined') {
   // rewrite the getXhr method to always return the native implementation
@@ -34,7 +34,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
   .map(function (appName) {
     /* jshint unused: false */
     try {
-      var test = new window.ActiveXObject(appName); // eslint-disable-line no-unused-vars
+      const test = new window.ActiveXObject(appName); // eslint-disable-line no-unused-vars
       return function () {
         return new window.ActiveXObject(appName);
       };
@@ -51,19 +51,19 @@ if (!getXhr) {
 }
 
 XhrConnector.prototype.request = function (params, cb) {
-  var xhr = getXhr();
-  var timeoutId;
-  var host = this.host;
-  var log = this.log;
+  const xhr = getXhr();
+  let timeoutId;
+  const host = this.host;
+  const log = this.log;
 
-  var url = host.makeUrl(params);
-  var headers = host.getHeaders(params.headers);
-  var async = params.async === false ? false : asyncDefault;
+  const url = host.makeUrl(params);
+  const headers = host.getHeaders(params.headers);
+  const async = params.async === false ? false : asyncDefault;
 
   xhr.open(params.method || 'GET', url, async);
 
   if (headers) {
-    for (var key in headers) {
+    for (const key in headers) {
       if (headers[key] !== void 0) {
         xhr.setRequestHeader(key, headers[key]);
       }
@@ -74,7 +74,7 @@ XhrConnector.prototype.request = function (params, cb) {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
       log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
-      var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
+      const err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
       cb(err, xhr.responseText, xhr.status);
     }
   };

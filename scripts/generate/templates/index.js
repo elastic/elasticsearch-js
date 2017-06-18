@@ -1,8 +1,8 @@
 
-var _ = require('../../../src/lib/utils');
-var utils = require('../../../grunt/utils');
-var fs = require('fs');
-var path = require('path');
+const _ = require('../../../src/lib/utils');
+const utils = require('../../../grunt/utils');
+const fs = require('fs');
+const path = require('path');
 
 
 /**
@@ -31,20 +31,20 @@ function stringify(thing, pretty) {
  * We'll collect the templates here
  * @type {Object}
  */
-var templates = {};
+const templates = {};
 
 /**
  * These keys will be available as local variables to each template
  * @type {Object}
  */
-var templateGlobals = {
+const templateGlobals = {
 
   stringify: stringify,
 
   _: _,
 
   indent: function (block, spaces) {
-    var indent = _.repeat(' ', spaces);
+    const indent = _.repeat(' ', spaces);
     return block.split('\n').map(function (line) {
       return indent + line;
     }).join('\n');
@@ -58,7 +58,7 @@ var templateGlobals = {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
       case 'time':
       case 'duration':
-        if (paramName === 'timestamp') return 'Timestamp'
+        if (paramName === 'timestamp') return 'Timestamp';
         return '<<api-param-type-duration-string,`DurationString`>>';
       case 'any':
         return 'anything';
@@ -96,7 +96,7 @@ var templateGlobals = {
 };
 
 fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
-  var name = filename.replace(/\..+$/, '');
+  const name = filename.replace(/\..+$/, '');
   if (name !== 'index') {
     templates[name] = _.template(
       fs.readFileSync(path.resolve(__dirname, filename), 'utf8'),

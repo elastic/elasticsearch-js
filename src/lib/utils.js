@@ -1,6 +1,6 @@
-var path = require('path');
-var nodeUtils = require('util');
-var lodash = require('lodash');
+const path = require('path');
+const nodeUtils = require('util');
+const lodash = require('lodash');
 
 /**
  * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
@@ -10,7 +10,7 @@ var lodash = require('lodash');
  * @class utils
  * @static
  */
-var _ = lodash.assign({}, lodash, nodeUtils);
+const _ = lodash.assign({}, lodash, nodeUtils);
 
 /**
  * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
@@ -67,7 +67,7 @@ _.each([
   'Function',
   'RegExp'
 ], function (type) {
-  var check = _['is' + type];
+  const check = _['is' + type];
 
   _['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
@@ -94,10 +94,13 @@ _.ucfirst = function (word) {
  */
 function adjustWordCase(firstWordCap, otherWordsCap, sep) {
   return function (string) {
-    var i = 0;
-    var words = [];
-    var word = '';
-    var code, c, upper, lower;
+    let i = 0;
+    const words = [];
+    let word = '';
+    let code;
+    let c;
+    let upper;
+    let lower;
 
     for (; i < string.length; i++) {
       code = string.charCodeAt(i);
@@ -210,7 +213,7 @@ _.isNumeric = function (val) {
 };
 
 // regexp to test for intervals
-var intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
+const intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
 
 /**
  * Test if a string represents an interval (eg. 1m, 2Y)
@@ -315,7 +318,7 @@ _.scheduled = _.handler;
  */
 _.makeBoundMethods = function (obj) {
   obj.bound = {};
-  for (var prop in obj) {
+  for (const prop in obj) {
     // dearest maintainer, we want to look through the prototype
     if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
       obj.bound[prop] = _.bind(obj[prop], obj);
@@ -332,7 +335,7 @@ _.noop = function () {};
  * @return {Function|undefined} - If a valid option was specified, then the constructor is returned
  */
 _.funcEnum = function (config, name, opts, def) {
-  var val = config[name];
+  const val = config[name];
   switch (typeof val) {
     case 'undefined':
       return opts[def];
@@ -343,8 +346,8 @@ _.funcEnum = function (config, name, opts, def) {
         return opts[val];
       }
     /* falls through */
-    default:
-      var err = 'Invalid ' + name + ' "' + val + '", expected a function';
+    default: {
+      let err = 'Invalid ' + name + ' "' + val + '", expected a function';
       switch (_.size(opts)) {
         case 0:
           break;
@@ -356,6 +359,7 @@ _.funcEnum = function (config, name, opts, def) {
           break;
       }
       throw new TypeError(err);
+    }
   }
 };
 
@@ -371,9 +375,9 @@ _.funcEnum = function (config, name, opts, def) {
  */
 _.createArray = function (input, transform) {
   transform = typeof transform === 'function' ? transform : _.identity;
-  var output = [];
-  var item;
-  var i;
+  const output = [];
+  let item;
+  let i;
 
   if (!_.isArray(input)) {
     input = [input];
@@ -399,11 +403,11 @@ _.createArray = function (input, transform) {
  * @return {string} - the remaining test to be written to the stream
  */
 _.getUnwrittenFromStream = function (stream) {
-  var writeBuffer = _.getStreamWriteBuffer(stream);
+  const writeBuffer = _.getStreamWriteBuffer(stream);
   if (!writeBuffer) return;
 
   // flush the write buffer
-  var out = '';
+  let out = '';
   if (!writeBuffer.length) return out;
 
   _.each(writeBuffer, function (writeReq) {
@@ -423,7 +427,7 @@ _.getUnwrittenFromStream = function (stream) {
 _.getStreamWriteBuffer = function (stream) {
   if (!stream || !stream._writableState) return;
 
-  var writeState = stream._writableState;
+  const writeState = stream._writableState;
 
   if (writeState.getBuffer) {
     return writeState.getBuffer();
@@ -433,7 +437,7 @@ _.getStreamWriteBuffer = function (stream) {
 };
 
 _.clearWriteStreamBuffer = function (stream) {
-  var buffer = _.getStreamWriteBuffer(stream);
+  const buffer = _.getStreamWriteBuffer(stream);
   return buffer && buffer.splice(0);
 };
 

@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var expect = require('expect.js');
+const _ = require('lodash');
+const expect = require('expect.js');
 module.exports = function expectSubObject(obj, subObj) {
   _.forOwn(subObj, function (val, prop) {
     if (typeof obj[prop] === 'object') {

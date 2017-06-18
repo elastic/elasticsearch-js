@@ -1,15 +1,15 @@
-var fs = require('fs');
-var spawn = require('../_spawn');
-var async = require('async');
-var _ = require('lodash');
+const fs = require('fs');
+const spawn = require('../_spawn');
+const async = require('async');
+const _ = require('lodash');
 
-var root = require('path').join(__dirname, '../..');
-var bowerDir = root + '/src/bower_es_js';
+const root = require('path').join(__dirname, '../..');
+const bowerDir = root + '/src/bower_es_js';
 
 // get both the bower and node package files
-var bowerJson = require(bowerDir + '/bower.json');
-var bowerPackageJson = require(bowerDir + '/package.json');
-var esjsJson = require(root + '/package.json');
+const bowerJson = require(bowerDir + '/bower.json');
+const bowerPackageJson = require(bowerDir + '/package.json');
+const esjsJson = require(root + '/package.json');
 
 // update the version to match the node version
 bowerJson.version = esjsJson.version;

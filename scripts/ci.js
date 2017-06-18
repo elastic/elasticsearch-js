@@ -17,25 +17,25 @@
  *
  *******/
 
-var Promise = require('bluebird');
-var _ = require('lodash');
-var through2 = require('through2');
-var map = require('through2-map');
-var split = require('split');
-var join = require('path').join;
-var cp = require('child_process');
-var chalk = require('chalk');
-var format = require('util').format;
+const Promise = require('bluebird');
+const _ = require('lodash');
+const through2 = require('through2');
+const map = require('through2-map');
+const split = require('split');
+const join = require('path').join;
+const cp = require('child_process');
+const chalk = require('chalk');
+const format = require('util').format;
 
-var NL_RE = /(\r?\n)/g;
-var ROOT = join(__dirname, '..');
-var GRUNT = join(ROOT, 'node_modules', '.bin', 'grunt');
-var ENV = _.clone(process.env);
-var JENKINS = !!ENV.JENKINS_HOME;
-var TASKS = [];
+const NL_RE = /(\r?\n)/g;
+const ROOT = join(__dirname, '..');
+const GRUNT = join(ROOT, 'node_modules', '.bin', 'grunt');
+const ENV = _.clone(process.env);
+const JENKINS = !!ENV.JENKINS_HOME;
+const TASKS = [];
 
-var output; // main output stream
-var taskOut; // task output stream
+let output; // main output stream
+let taskOut; // task output stream
 
 task('NODE_UNIT', true, function () {
   if (!JENKINS) {
@@ -46,11 +46,11 @@ task('NODE_UNIT', true, function () {
 });
 
 task('NODE_INTEGRATION', true, function () {
-  var branch = ENV.ES_REF;
+  const branch = ENV.ES_REF;
 
   return node('scripts/generate', '--no-api', '--branch', branch)
   .then(function () {
-    var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
+    const target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
     return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
   });
 });
@@ -58,9 +58,9 @@ task('NODE_INTEGRATION', true, function () {
 task('SAUCE_LABS', false, function () {
   return new Promise(function (resolve, reject) {
     // build the clients and start the server, once the server is ready call trySaucelabs()
-    var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
+    const serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
     spawn(GRUNT, serverTasks, function (proc) {
-      var toLines = split();
+      const toLines = split();
 
       proc.stdout
       .pipe(toLines)
@@ -83,14 +83,14 @@ task('SAUCE_LABS', false, function () {
     .catch(_.noop);
 
     // attempt to run tests on saucelabs and retry if it fails
-    var saucelabsAttempts = 0;
+    let saucelabsAttempts = 0;
     function trySaucelabs() {
       saucelabsAttempts++;
       return new Promise(function (resolve, reject) {
         log(chalk.green('saucelabs attempt #', saucelabsAttempts));
         spawn(GRUNT, ['saucelabs-mocha'], function (cp) {
 
-          var failedTests = 0;
+          let failedTests = 0;
           cp.stdout
           .pipe(split())
           .pipe(map(function (line) {
@@ -141,7 +141,7 @@ execTask('SETUP', function () {
       }
     }
 
-    var match;
+    let match;
     if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
       return [match[1], null];
     }
@@ -206,7 +206,7 @@ execTask('SETUP', function () {
  * utils
  ******/
 function log() {
-  var chunk = format.apply(null, arguments);
+  const chunk = format.apply(null, arguments);
   (taskOut || output || process.stdout).write(chunk + '\n');
 }
 
@@ -218,15 +218,15 @@ function logImportant(text) {
 
 function push(m) {
   return function () {
-    var args = _.toArray(arguments);
-    var cb = args.pop();
+    const args = _.toArray(arguments);
+    const cb = args.pop();
     this.push(m.apply(this, args));
     cb();
   };
 }
 
 function indent() {
-  var str = through2(
+  const str = through2(
     push(function (chunk) { return String(chunk).replace(NL_RE, '$1  '); }),
     push(function () { return '\n'; })
   );
@@ -281,7 +281,7 @@ function execTask(name, task) {
 
 function spawn(file, args, block) {
   return new Promise(function (resolve, reject) {
-    var proc = cp.spawn(file, args, {
+    const proc = cp.spawn(file, args, {
       cwd: ROOT,
       env: ENV,
       stdio: [0, 'pipe', 'pipe']
@@ -290,7 +290,7 @@ function spawn(file, args, block) {
     proc.stdout.pipe(taskOut, { end: false });
     proc.stderr.pipe(taskOut, { end: false });
 
-    var stdout = '';
+    let stdout = '';
     proc.stdout
     .pipe(through2(function (chunk, enc, cb) {
       stdout += chunk;

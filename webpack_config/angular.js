@@ -1,5 +1,5 @@
-const DefinePlugin = require('webpack/lib/DefinePlugin')
-const { ignoreLoader, rel } = require('./lib')
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+const { ignoreLoader, rel } = require('./lib');
 
 module.exports = {
   context: rel('src'),
@@ -22,4 +22,4 @@ module.exports = {
       'process.env.NODE_ENV': '"production"',
     }),
   ],
-}
+};

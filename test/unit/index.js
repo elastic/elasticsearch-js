@@ -1,6 +1,6 @@
 require('bluebird').longStackTraces();
 
-var specDir = __dirname + '/specs';
+const specDir = __dirname + '/specs';
 require('fs').readdirSync(specDir).forEach(function (file) {
   require(specDir + '/' + file);
 });

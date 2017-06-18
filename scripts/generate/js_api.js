@@ -3,26 +3,26 @@ module.exports = function (branch, done) {
    * Read the API actions form the rest-api-spec repo.
    * @type {[type]}
    */
-  var _ = require('../../src/lib/utils');
-  var utils = require('../../grunt/utils');
-  var fs = require('fs');
-  var async = require('async');
-  var chalk = require('chalk');
-  var path = require('path');
-  var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-  var templates = require('./templates');
-  var Version = require('../Version');
-  var urlParamRE = /\{(\w+)\}/g;
+  const _ = require('../../src/lib/utils');
+  const utils = require('../../grunt/utils');
+  const fs = require('fs');
+  const async = require('async');
+  const chalk = require('chalk');
+  const path = require('path');
+  const fromRoot = path.join.bind(path, require('find-root')(__dirname));
+  const templates = require('./templates');
+  const Version = require('../Version');
+  const urlParamRE = /\{(\w+)\}/g;
 
-  var files; // populated in readSpecFiles
-  var apiSpec; // populated by parseSpecFiles
-  var docVars; // slightly modified clone of apiSpec for the docs
+  let files; // populated in readSpecFiles
+  let apiSpec; // populated by parseSpecFiles
+  let docVars; // slightly modified clone of apiSpec for the docs
 
-  var branchSuffix = utils.branchSuffix(branch);
-  var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+  const branchSuffix = utils.branchSuffix(branch);
+  const esDir = fromRoot('tmp/es/branches', _.snakeCase(branch));
 
-  var version = Version.fromBranch(branch);
-  var overrides = version.mergeOpts(require('./overrides'), {
+  const version = Version.fromBranch(branch);
+  const overrides = version.mergeOpts(require('./overrides'), {
     aliases: {},
     mergeConcatParams: {},
     paramAsBody: {},
@@ -31,7 +31,7 @@ module.exports = function (branch, done) {
     descriptions: {},
   });
 
-  var steps = [
+  const steps = [
     readSpecFiles,
     parseSpecFiles,
     writeApiFile
@@ -51,13 +51,13 @@ module.exports = function (branch, done) {
   });
 
   function readSpecFiles(done) {
-    var apiDir = path.join(esDir, 'rest-api-spec/api/');
+    const apiDir = path.join(esDir, 'rest-api-spec/api/');
     files = fs.readdirSync(apiDir)
       .filter(function (filename) {
-        return filename[0] !== '_'
+        return filename[0] !== '_';
       })
       .map(function (filename) {
-        var module = require(apiDir + filename);
+        const module = require(apiDir + filename);
         delete require.cache[apiDir + filename];
         return module;
       });
@@ -65,7 +65,7 @@ module.exports = function (branch, done) {
   }
 
   function parseSpecFiles(done) {
-    var actions = [];
+    const actions = [];
 
     files.forEach(function (spec) {
       __puke__transformSpec(spec).forEach(function (action) {
@@ -74,16 +74,16 @@ module.exports = function (branch, done) {
     });
 
     // collect the namespaces from the action locations
-    var namespaces = _.filter(_.map(actions, function (action) {
+    const namespaces = _.filter(_.map(actions, function (action) {
       return action.location
         .split('.')
         .slice(0, -1)
         .filter(step => step !== 'prototype')
-        .join('.prototype.')
+        .join('.prototype.');
     }));
 
     // seperate the proxy actions
-    var groups = _.groupBy(actions, function (action) {
+    const groups = _.groupBy(actions, function (action) {
       return action.proxy ? 'proxies' : 'normal';
     });
 
@@ -95,7 +95,7 @@ module.exports = function (branch, done) {
     };
 
     if (!_.find(apiSpec.actions, { name: 'create' })) {
-      var create = _.assign(
+      const create = _.assign(
         {},
         _.cloneDeep(_.find(apiSpec.actions, { name: 'index' })),
         {
@@ -115,8 +115,8 @@ module.exports = function (branch, done) {
 
     [].concat(apiSpec.actions, apiSpec.proxies)
     .forEach(function (action) {
-      var examplePath = overrides.examples[action.name] || action.name + '.asciidoc';
-      var descriptionPath = overrides.descriptions[action.name] || action.name + '.asciidoc';
+      const examplePath = overrides.examples[action.name] || action.name + '.asciidoc';
+      const descriptionPath = overrides.descriptions[action.name] || action.name + '.asciidoc';
 
       try {
         action.examples = fs.readFileSync(fromRoot('docs/_examples', examplePath), 'utf8');
@@ -129,13 +129,13 @@ module.exports = function (branch, done) {
       } catch (e) {
         action.description = '// no description';
       }
-    })
+    });
 
     done();
   }
 
   function writeApiFile(done) {
-    var outputPath = fromRoot('src/lib/apis/' + _.snakeCase(branch) + '.js');
+    const outputPath = fromRoot('src/lib/apis/' + _.snakeCase(branch) + '.js');
     fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
     console.log(chalk.white.bold('wrote'), apiSpec.actions.length, 'api actions to', outputPath);
     done();
@@ -173,7 +173,7 @@ module.exports = function (branch, done) {
   }
 
   function writeMethodDocs(done) {
-    var filename = fromRoot('docs/api_methods' + branchSuffix + '.asciidoc');
+    const filename = fromRoot('docs/api_methods' + branchSuffix + '.asciidoc');
     fs.writeFile(
       filename,
       templates.apiMethods(docVars),
@@ -187,7 +187,7 @@ module.exports = function (branch, done) {
   }
 
   function __puke__transformSpec(spec) { // eslint-disable-line
-    var actions = [];
+    const actions = [];
 
     // itterate all of the specs within the file, should only be one
     _.each(spec, function (def, name) {
@@ -198,10 +198,10 @@ module.exports = function (branch, done) {
         def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
       }
 
-      var steps = name.split('.');
+      const steps = name.split('.');
 
       function transformParamKeys(note, param, key) {
-        var cmlKey = _.camelCase(key);
+        const cmlKey = _.camelCase(key);
         if (cmlKey !== key) {
           param.name = key;
         }
@@ -211,24 +211,24 @@ module.exports = function (branch, done) {
       def.url.params = _.transform(def.url.params, transformParamKeys, {});
       def.url.parts = _.transform(def.url.parts, transformParamKeys, {});
 
-      var allParams = _.extend({}, def.url.params, def.url.parts);
+      const allParams = _.extend({}, def.url.params, def.url.parts);
       _.forOwn(allParams, (paramSpec, paramName) => {
-        const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
+        const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName]);
         if (toMerge) {
           _.merge(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
-              return dest.concat(src)
+              return dest.concat(src);
             }
-          })
+          });
         }
 
         if (paramSpec.options) {
-          const invalidOpts = paramSpec.options.some(opt => typeof opt !== 'string')
-          if (invalidOpts) throw new Error(`${name} has options that are not strings...`)
+          const invalidOpts = paramSpec.options.some(opt => typeof opt !== 'string');
+          if (invalidOpts) throw new Error(`${name} has options that are not strings...`);
         }
-      })
+      });
 
-      var spec = {
+      const spec = {
         name: name,
         methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
         params: def.url.params,
@@ -248,15 +248,15 @@ module.exports = function (branch, done) {
         spec.requestTimeout = 3000;
       }
 
-      var urls = _.difference(def.url.paths, overrides.aliases[name]);
-      var urlSignatures = [];
+      let urls = _.difference(def.url.paths, overrides.aliases[name]);
+      const urlSignatures = [];
       urls = _.map(urls, function (url) {
-        var optionalVars = {};
-        var requiredVars = {};
-        var param;
-        var name;
-        var target;
-        var match;
+        const optionalVars = {};
+        const requiredVars = {};
+        let param;
+        let name;
+        let target;
+        let match;
 
         if (url.charAt(0) !== '/') {
           url = '/' + url;
@@ -317,10 +317,10 @@ module.exports = function (branch, done) {
       }
 
       // escape method names with "special" keywords
-      var location = spec.name.split('.').join('.prototype.')
+      const location = spec.name.split('.').join('.prototype.')
         .replace(/(^|\.)(delete|default)(\.|$)/g, '[\'$2\']');
 
-      var action = {
+      const action = {
         _methods: spec.methods,
         spec: _.pick(spec, [
           'params',
@@ -339,7 +339,7 @@ module.exports = function (branch, done) {
       };
 
       function hasMethod(/* ...methods */) {
-        for (var i = 0; i < arguments.length; i++) {
+        for (let i = 0; i < arguments.length; i++) {
           if (~action._methods.indexOf(arguments[i])) {
             continue;
           } else {
@@ -352,7 +352,7 @@ module.exports = function (branch, done) {
         return hasMethod.apply(null, arguments) && arguments.length === action._methods.length;
       }
 
-      var method;
+      let method;
 
       if (action._methods.length === 1) {
         method = action._methods[0];

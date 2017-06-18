@@ -1,3 +1,3 @@
-var nock = require('nock');
+const nock = require('nock');
 nock.disableNetConnect();
 module.exports = nock;

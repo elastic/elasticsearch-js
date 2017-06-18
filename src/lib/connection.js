@@ -1,10 +1,10 @@
 module.exports = ConnectionAbstract;
 
-var _ = require('./utils');
-var EventEmitter = require('events').EventEmitter;
-var Log = require('./log');
-var Host = require('./host');
-var errors = require('./errors');
+const _ = require('./utils');
+const EventEmitter = require('events').EventEmitter;
+const Log = require('./log');
+const Host = require('./host');
+const errors = require('./errors');
 
 /**
  * Abstract class used for Connection classes
@@ -52,16 +52,15 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
     cb = typeof cb === 'function' ? cb : null;
   }
 
-  var requestTimeout = this.pingTimeout;
-  var requestTimeoutId;
-  var aborted;
-  var abort;
+  let requestTimeout = this.pingTimeout;
+  let requestTimeoutId;
+  let aborted;
 
   if (params && params.hasOwnProperty('requestTimeout')) {
     requestTimeout = params.requestTimeout;
   }
 
-  abort = this.request(_.defaults(params || {}, {
+  const abort = this.request(_.defaults(params || {}, {
     path: '/',
     method: 'HEAD'
   }), function (err) {
@@ -88,7 +87,7 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
 };
 
 ConnectionAbstract.prototype.setStatus = function (status) {
-  var origStatus = this.status;
+  const origStatus = this.status;
   this.status = status;
 
   this.emit('status set', status, origStatus, this);

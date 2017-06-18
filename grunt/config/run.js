@@ -1,6 +1,6 @@
-var utils = require('../utils');
+const utils = require('../utils');
 
-var config = {
+const config = {
   generate: {
     exec: 'node ./scripts/generate/index.js',
     options: {

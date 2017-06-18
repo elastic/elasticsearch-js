@@ -1,32 +1,29 @@
 describe('Http Connector', function () {
 
-  var _ = require('lodash');
-  var expect = require('expect.js');
-  var nock = require('nock');
-  var sinon = require('sinon');
-  var util = require('util');
-  var parseUrl = require('url').parse;
-  var http = require('http');
-  var https = require('https');
-  var AgentKeepAlive = require('agentkeepalive');
+  const _ = require('lodash');
+  const expect = require('expect.js');
+  const nock = require('nock');
+  const parseUrl = require('url').parse;
+  const http = require('http');
+  const https = require('https');
+  const AgentKeepAlive = require('agentkeepalive');
 
-  var Host = require('../../../src/lib/host');
-  var errors = require('../../../src/lib/errors');
-  var HttpConnection = require('../../../src/lib/connectors/http');
-  var ConnectionAbstract = require('../../../src/lib/connection');
+  const Host = require('../../../src/lib/host');
+  const HttpConnection = require('../../../src/lib/connectors/http');
+  const ConnectionAbstract = require('../../../src/lib/connection');
 
-  var expectSubObject = require('../../utils/expect_sub_object');
-  var MockRequest = require('../../mocks/request');
-  var MockIncommingMessage = require('../../mocks/incomming_message');
-  var zlib = require('zlib');
+  const expectSubObject = require('../../utils/expect_sub_object');
+  const MockRequest = require('../../mocks/request');
+  const MockIncommingMessage = require('../../mocks/incomming_message');
+  const zlib = require('zlib');
 
   nock.disableNetConnect();
 
-  var stub = require('../../utils/auto_release_stub').make();
+  const stub = require('../../utils/auto_release_stub').make();
 
   function makeStubReqMethod(prep) {
     return function (params, cb) {
-      var req = new MockRequest();
+      const req = new MockRequest();
       if (prep) {
         prep(req, params, cb);
       }
@@ -45,12 +42,12 @@ describe('Http Connector', function () {
 
   describe('Constructor', function () {
     it('creates an object that extends ConnectionAbstract', function () {
-      var con = new HttpConnection(new Host());
+      const con = new HttpConnection(new Host());
       expect(con).to.be.a(ConnectionAbstract);
     });
 
     it('sets certain defaults', function () {
-      var con = new HttpConnection(new Host());
+      const con = new HttpConnection(new Host());
 
       expect(con.hand).to.be(require('http'));
       // con.requestTimeout
@@ -62,27 +59,27 @@ describe('Http Connector', function () {
 
     it('expects the host to have a protocol of http or https', function () {
       expect(function () {
-        var con = new HttpConnection(new Host('thrifty://es.com/stuff'));
+        new HttpConnection(new Host('thrifty://es.com/stuff'));
       }).to.throwError(/invalid protocol/i);
     });
 
     it('allows defining a custom agent', function () {
-      var football = {};
-      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(football) });
+      const football = {};
+      const con = new HttpConnection(new Host(), { createNodeAgent: _.constant(football) });
       expect(con.agent).to.be(football);
     });
 
     it('allows setting agent to false', function () {
-      var con = new HttpConnection(new Host(), { createNodeAgent: _.constant(false) });
+      const con = new HttpConnection(new Host(), { createNodeAgent: _.constant(false) });
       expect(con.agent).to.be(false);
     });
   });
 
   describe('#makeReqParams', function () {
     it('properly reads the host object', function () {
-      var host = new Host('john:dude@pizza.com:9200/pizza/cheese?shrooms=true');
-      var con = new HttpConnection(host, {});
-      var reqParams = con.makeReqParams();
+      const host = new Host('john:dude@pizza.com:9200/pizza/cheese?shrooms=true');
+      const con = new HttpConnection(host, {});
+      const reqParams = con.makeReqParams();
 
       expect(reqParams).to.not.have.property('auth');
       expect(reqParams).to.eql({
@@ -97,13 +94,13 @@ describe('Http Connector', function () {
     });
 
     it('merges a query object with the hosts\'', function () {
-      var con = new HttpConnection(new Host({
+      const con = new HttpConnection(new Host({
         query: {
           user_id: 123
         }
       }));
 
-      var reqParams = con.makeReqParams({
+      const reqParams = con.makeReqParams({
         query: {
           jvm: 'yes'
         }
@@ -113,8 +110,8 @@ describe('Http Connector', function () {
     });
 
     it('merges the path prefix', function () {
-      var con = new HttpConnection(new Host('https://google.com/path/prefix/for/user/1'));
-      var reqParams = con.makeReqParams({
+      const con = new HttpConnection(new Host('https://google.com/path/prefix/for/user/1'));
+      const reqParams = con.makeReqParams({
         method: 'GET',
         path: '/items',
         query: {
@@ -128,9 +125,9 @@ describe('Http Connector', function () {
     });
 
     it('merges the query', function () {
-      var con = new HttpConnection(new Host('http://google.com/pref-x?userId=12345&token=42069'));
+      const con = new HttpConnection(new Host('http://google.com/pref-x?userId=12345&token=42069'));
 
-      var reqParams = con.makeReqParams({
+      const reqParams = con.makeReqParams({
         method: 'PUT',
         path: '/stuff',
         query: {
@@ -144,9 +141,9 @@ describe('Http Connector', function () {
     });
 
     it('Works well with minimum params', function () {
-      var con = new HttpConnection(new Host('http://google.com'));
+      const con = new HttpConnection(new Host('http://google.com'));
 
-      var reqParams = con.makeReqParams({
+      const reqParams = con.makeReqParams({
         method: 'PUT',
         path: '/stuff'
       });
@@ -170,7 +167,7 @@ describe('Http Connector', function () {
     });
 
     it('calls http based on the host', function (done) {
-      var con = new HttpConnection(new Host('http://google.com'));
+      const con = new HttpConnection(new Host('http://google.com'));
       con.request({}, function () {
         expect(http.request.callCount).to.be(1);
         expect(https.request.callCount).to.be(0);
@@ -180,7 +177,7 @@ describe('Http Connector', function () {
     });
 
     it('calls https based on the host', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
+      const con = new HttpConnection(new Host('https://google.com'));
       con.request({}, function () {
         expect(http.request.callCount).to.be(0);
         expect(https.request.callCount).to.be(1);
@@ -190,7 +187,7 @@ describe('Http Connector', function () {
     });
 
     it('does not log error events', function (done) {
-      var con = new HttpConnection(new Host('http://google.com'));
+      const con = new HttpConnection(new Host('http://google.com'));
 
       stub(con.log, 'error');
       stub(con.log, 'trace');
@@ -217,7 +214,7 @@ describe('Http Connector', function () {
     });
 
     it('logs error events', function (done) {
-      var con = new HttpConnection(new Host('http://google.com'));
+      const con = new HttpConnection(new Host('http://google.com'));
 
       stub(con.log, 'error');
 
@@ -238,7 +235,7 @@ describe('Http Connector', function () {
     function makeStubReqWithMsgWhichErrorsMidBody(err) {
       return makeStubReqMethod(function (req, params, cb) {
         process.nextTick(function () {
-          var incom = new MockIncommingMessage();
+          const incom = new MockIncommingMessage();
           incom.statusCode = 200;
           setTimeout(function () {
             incom.emit('data', '{ "not json"');
@@ -250,21 +247,21 @@ describe('Http Connector', function () {
     }
 
     it('does not log errors', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
+      const con = new HttpConnection(new Host('https://google.com'));
       stub(con.log, 'error');
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function () {
         expect(con.log.error.callCount).to.eql(0);
         done();
       });
     });
 
     it('passes the original error on', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
+      const con = new HttpConnection(new Host('https://google.com'));
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody(new Error('no more message :(')));
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err) {
         expect(err).to.be.an(Error);
         expect(err.message).to.eql('no more message :(');
         done();
@@ -272,17 +269,17 @@ describe('Http Connector', function () {
     });
 
     it('does not pass the partial body along', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
+      const con = new HttpConnection(new Host('https://google.com'));
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(undefined);
         done();
       });
     });
 
     it('does not pass the status code along', function (done) {
-      var con = new HttpConnection(new Host('https://google.com'));
+      const con = new HttpConnection(new Host('https://google.com'));
       stub(https, 'request', makeStubReqWithMsgWhichErrorsMidBody());
 
       con.request({}, function (err, resp, status) {
@@ -294,9 +291,9 @@ describe('Http Connector', function () {
 
   describe('#request\'s responder', function () {
     it('collects the whole request body', function (done) {
-      var server = nock('http://esjs.com:9200');
-      var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var body = '{ "USER": "doc" }';
+      const server = nock('http://esjs.com:9200');
+      const con = new HttpConnection(new Host('http://esjs.com:9200'));
+      const body = '{ "USER": "doc" }';
 
       server
         .get('/users/1')
@@ -315,13 +312,13 @@ describe('Http Connector', function () {
     });
 
     it('collects the whole request body (gzip compressed)', function (done) {
-      var server = nock('http://esjs.com:9200');
-      var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var elements = [];
-      for (var i = 0; i < 500; i++) {
+      const server = nock('http://esjs.com:9200');
+      const con = new HttpConnection(new Host('http://esjs.com:9200'));
+      const elements = [];
+      for (let i = 0; i < 500; i++) {
         elements.push({ USER: 'doc' });
       }
-      var body = JSON.stringify(elements);
+      const body = JSON.stringify(elements);
       zlib.gzip(body, function (err, compressedBody) {
         server
           .get('/users/1')
@@ -341,13 +338,13 @@ describe('Http Connector', function () {
     });
 
     it('collects the whole request body (deflate compressed)', function (done) {
-      var server = nock('http://esjs.com:9200');
-      var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var elements = [];
-      for (var i = 0; i < 500; i++) {
+      const server = nock('http://esjs.com:9200');
+      const con = new HttpConnection(new Host('http://esjs.com:9200'));
+      const elements = [];
+      for (let i = 0; i < 500; i++) {
         elements.push({ USER: 'doc' });
       }
-      var body = JSON.stringify(elements);
+      const body = JSON.stringify(elements);
       zlib.deflate(body, function (err, compressedBody) {
         server
           .get('/users/1')
@@ -367,9 +364,9 @@ describe('Http Connector', function () {
     });
 
     it('Can handle decompression errors', function (done) {
-      var server = nock('http://esjs.com:9200');
-      var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var body = 'blah';
+      const server = nock('http://esjs.com:9200');
+      const con = new HttpConnection(new Host('http://esjs.com:9200'));
+      const body = 'blah';
       server
         .get('/users/1')
         .reply(200, body, { 'Content-Encoding': 'gzip' });
@@ -387,9 +384,9 @@ describe('Http Connector', function () {
     });
 
     it('Ignores serialization errors', function (done) {
-      var server = nock('http://esjs.com:9200');
-      var con = new HttpConnection(new Host('http://esjs.com:9200'));
-      var body = '{ "USER":';
+      const server = nock('http://esjs.com:9200');
+      const con = new HttpConnection(new Host('http://esjs.com:9200'));
+      const body = '{ "USER":';
 
       // partial body
       server
@@ -410,11 +407,11 @@ describe('Http Connector', function () {
 
   describe('HTTP specifics', function () {
     it('uses TCP no delay', function (done) {
-      var con = new HttpConnection(new Host('localhost'));
+      const con = new HttpConnection(new Host('localhost'));
       stub(http.ClientRequest.prototype, 'setNoDelay');
-      var server = nock('http://localhost').get('/').reply(200);
+      const server = nock('http://localhost').get('/').reply(200);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function () {
         expect(http.ClientRequest.prototype.setNoDelay.callCount).to.eql(1);
         expect(http.ClientRequest.prototype.setNoDelay.lastCall.args[0]).to.eql(true);
         server.done();
@@ -423,17 +420,17 @@ describe('Http Connector', function () {
     });
 
     it('sets the Content-Length header properly', function (done) {
-      var con = new HttpConnection(new Host('localhost'));
+      const con = new HttpConnection(new Host('localhost'));
       stub(http.ClientRequest.prototype, 'setHeader');
-      var server = nock('http://localhost').get('/').reply(200);
+      const server = nock('http://localhost').get('/').reply(200);
 
-      var body = 'pasta and 𝄞';
+      const body = 'pasta and 𝄞';
       expect(body.length).to.eql(12); // nope
       expect(Buffer.byteLength(body, 'utf8')).to.eql(14); // yep
 
       con.request({
         body: body
-      }, function (err, resp, status) {
+      }, function () {
         expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
         server.done();
         done();
@@ -441,15 +438,15 @@ describe('Http Connector', function () {
     });
 
     it('does not set the Accept-Encoding header by default', function (done) {
-      var con = new HttpConnection(new Host());
-      var respBody = 'i should not be encoded';
-      var server = nock('http://localhost:9200')
+      const con = new HttpConnection(new Host());
+      const respBody = 'i should not be encoded';
+      const server = nock('http://localhost:9200')
       .matchHeader('accept-encoding', undefined)
       .get('/')
       .once()
       .reply(200, respBody);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(respBody);
         server.done();
         done();
@@ -457,15 +454,15 @@ describe('Http Connector', function () {
     });
 
     it('sets the Accept-Encoding header when specified', function (done) {
-      var con = new HttpConnection(new Host({ suggestCompression: true }));
-      var respBody = 'i should be encoded';
-      var server = nock('http://localhost:9200')
+      const con = new HttpConnection(new Host({ suggestCompression: true }));
+      const respBody = 'i should be encoded';
+      const server = nock('http://localhost:9200')
       .matchHeader('accept-encoding', 'gzip,deflate')
       .get('/')
       .once()
       .reply(200, respBody);
 
-      con.request({}, function (err, resp, status) {
+      con.request({}, function (err, resp) {
         expect(resp).to.be(respBody);
         server.done();
         done();
@@ -476,17 +473,18 @@ describe('Http Connector', function () {
   describe('Connection cleanup', function () {
     it('destroys any connections created', function (done) {
       this.timeout(5 * 60 * 1000);
-      var cp = require('child_process');
-      var path = require('path');
-      var fixture = _.partial(path.join, __dirname, '../../fixtures');
-      var timeout; // start the timeout once we hear back from the client
+      const cp = require('child_process');
+      const path = require('path');
+      const fixture = _.partial(path.join, __dirname, '../../fixtures');
+      let timeout; // start the timeout once we hear back from the client
 
-      var server = cp.fork(fixture('keepalive_server.js'))
+      let client; // eslint-disable-line prefer-const
+      const server = cp.fork(fixture('keepalive_server.js'))
         .on('message', function (port) {
           client.send(port);
         });
 
-      var client = cp.fork(fixture('keepalive.js'))
+      client = cp.fork(fixture('keepalive.js'))
         .on('message', function (output) {
           expect(output).to.have.property('remaining', 0);
           expect(output).to.have.property('timeouts', 0);
@@ -507,8 +505,8 @@ describe('Http Connector', function () {
     });
 
     it('properly removes all elements from the socket', function () {
-      var con = new HttpConnection(new Host('localhost'));
-      var sockets = [
+      const con = new HttpConnection(new Host('localhost'));
+      const sockets = [
         { destroy: function () {} },
         { destroy: function () {} },
         { destroy: function () {} },
@@ -520,7 +518,7 @@ describe('Http Connector', function () {
         { destroy: function () {} },
         { destroy: function () {} }
       ];
-      var name = con.agent.getName(parseUrl('http://localhost/'));
+      const name = con.agent.getName(parseUrl('http://localhost/'));
       con.agent.sockets[name] = sockets;
       con.setStatus('closed');
       expect(sockets).to.eql([]);

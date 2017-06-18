@@ -1,22 +1,22 @@
-var get = require('lodash.get');
-var utils = require('../utils');
-var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
+const get = require('lodash.get');
+const utils = require('../utils');
+const fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
-var release = process.env.ES_RELEASE;
-var ref = process.env.ES_REF;
-var port = parseFloat(get(process.env, 'ES_PORT', 9400));
-var host = get(process.env, 'ES_HOST', 'localhost');
+const release = process.env.ES_RELEASE;
+const ref = process.env.ES_REF;
+const port = parseFloat(get(process.env, 'ES_PORT', 9400));
+const host = get(process.env, 'ES_HOST', 'localhost');
 
-var Version = require('../../scripts/Version');
-var versionedOpts = [
+const Version = require('../../scripts/Version');
+const versionedOpts = [
   {
     version: '*',
-    directory: fromRoot('esvm'),
+    directory: fromRoot('tmp/esvm'),
     nodes: 1,
     quiet: false,
     logLevel: 'ERROR',
     config: {
-      'path.data': fromRoot('esvm/data_dir'),
+      'path.data': fromRoot('tmp/esvm/data_dir'),
       'node.name': 'elasticsearch_js_test_runner',
       'cluster.name': 'elasticsearch_js_test_runners',
       'http.port': port,
@@ -71,7 +71,7 @@ var versionedOpts = [
     version: '>=1.6',
     config: {
       'script.inline': true,
-      'path.repo': process.env.ES_PATH_REPO || fromRoot('.es-snapshot-repos'),
+      'path.repo': process.env.ES_PATH_REPO || fromRoot('tmp/.es-snapshot-repos'),
       'repositories.url.allowed_urls': 'http://snapshot.*'
     }
   }
@@ -90,8 +90,8 @@ utils.branches.forEach(function (branch) {
 
 // ci target, based on env variables
 (function () {
-  var v;
-  var opts = {
+  let v;
+  const opts = {
     config: {
       'http.port': port
     }
@@ -102,7 +102,7 @@ utils.branches.forEach(function (branch) {
     opts.version = v.version;
   }
   else if (ref) {
-    v = new Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
+    v = Version.fromBranch(String(ref).replace(/v?(\d+\.\d+)\..+/, '$1'));
     opts.branch = ref;
     opts.fresh = true;
   }

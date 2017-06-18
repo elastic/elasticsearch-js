@@ -1,14 +1,14 @@
 describe('Random Selector', function () {
-  var randomSelector = require('../../../src/lib/selectors/random');
-  var _ = require('lodash');
-  var expect = require('expect.js');
+  const randomSelector = require('../../../src/lib/selectors/random');
+  const _ = require('lodash');
+  const expect = require('expect.js');
 
   it('chooses a selection by random', function () {
-    var log = { a: 0, b: 0, c: 0 };
-    var choices = _.keys(log);
+    const log = { a: 0, b: 0, c: 0 };
+    const choices = _.keys(log);
 
     _.times(1000, function () {
-      var choice = randomSelector(choices);
+      const choice = randomSelector(choices);
       log[choice]++;
     });
 

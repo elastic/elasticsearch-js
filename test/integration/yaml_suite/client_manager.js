@@ -1,22 +1,22 @@
-var BROWSER = process.env.browser;
-var VERBOSE = process.env.VERBOSE;
-var JENKINS = !!process.env.JENKINS_HOME;
+const BROWSER = process.env.browser;
+const VERBOSE = process.env.VERBOSE;
+const JENKINS = !!process.env.JENKINS_HOME;
 
-var es;
+let es;
 if (BROWSER) {
   es = window.elasticsearch;
 } else {
   es = require('../../../src/elasticsearch');
 }
 
-var _ = require('../../../src/lib/utils');
-var path = require('path');
-var fs = require('fs');
-var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
-var Bluebird = require('bluebird');
+const _ = require('../../../src/lib/utils');
+const path = require('path');
+const fs = require('fs');
+const fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
+const Bluebird = require('bluebird');
 
 // current client
-var client = null;
+let client = null;
 
 module.exports = {
   create: function create(apiVersion, port, host, cb) {
@@ -24,8 +24,8 @@ module.exports = {
     doCreateClient({
       logConfig: null
     }, function () {
-      var attemptsRemaining = 60;
-      var timeout = 500;
+      let attemptsRemaining = 60;
+      const timeout = 500;
 
       (function ping() {
         client.info({
@@ -59,7 +59,7 @@ module.exports = {
         options = {};
       }
 
-      var logConfig = {};
+      let logConfig = {};
       if (_.has(options, 'logConfig')) {
         logConfig = options.logConfig;
       } else {
@@ -76,8 +76,12 @@ module.exports = {
 
       if (logConfig && logConfig.type === 'tracer') {
         try {
-          fs.unlinkSync(fromRoot('elasticsearch-tracer.log'));
-        } catch (e) {}
+          fs.unlinkSync(fromRoot('tmp/tracer.log'));
+        } catch (error) {
+          if (error.code !== 'ENOENT') {
+            throw error;
+          }
+        }
       }
 
       // close existing client

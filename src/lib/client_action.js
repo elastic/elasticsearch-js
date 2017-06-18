@@ -1,5 +1,5 @@
 
-var _ = require('./utils');
+const _ = require('./utils');
 
 /**
  * Constructs a client action factory that uses specific defaults
@@ -37,7 +37,7 @@ exports.namespaceFactory = function () {
 function makeFactoryWithModifier(modifier) {
   modifier = modifier || _.identity;
 
-  var factory = function (spec) {
+  const factory = function (spec) {
     spec = modifier(spec);
 
     if (!_.isPlainObject(spec.params)) {
@@ -63,7 +63,7 @@ function makeFactoryWithModifier(modifier) {
         if (typeof cb === 'function') {
           _.nextTick(cb, e);
         } else {
-          var def = this.transport.defer();
+          const def = this.transport.defer();
           def.reject(e);
           return def.promise;
         }
@@ -96,7 +96,7 @@ function makeFactoryWithModifier(modifier) {
   return factory;
 }
 
-var castType = {
+const castType = {
   'enum': function validSelection(param, val, name) {
     if (_.isString(val) && val.indexOf(',') > -1) {
       val = commaSepList(val);
@@ -108,7 +108,7 @@ var castType = {
       }).join(',');
     }
 
-    for (var i = 0; i < param.options.length; i++) {
+    for (let i = 0; i < param.options.length; i++) {
       if (param.options[i] === String(val)) {
         return param.options[i];
       }
@@ -183,7 +183,9 @@ var castType = {
 };
 
 function resolveUrl(url, params) {
-  var vars = {}, i, key;
+  const vars = {};
+  let i;
+  let key;
 
   if (url.req) {
     // url has required params
@@ -192,7 +194,7 @@ function resolveUrl(url, params) {
       url.reqParamKeys = _.keys(url.req);
     }
 
-    for (i = 0; i < url.reqParamKeys.length; i ++) {
+    for (i = 0; i < url.reqParamKeys.length; i++) {
       key = url.reqParamKeys[i];
       if (!params.hasOwnProperty(key) || params[key] == null) {
         // missing a required param
@@ -214,7 +216,7 @@ function resolveUrl(url, params) {
       url.optParamKeys = _.keys(url.opt);
     }
 
-    for (i = 0; i < url.optParamKeys.length; i ++) {
+    for (i = 0; i < url.optParamKeys.length; i++) {
       key = url.optParamKeys[i];
       if (params[key]) {
         if (castType[url.opt[key].type] || params[key] == null) {
@@ -223,7 +225,7 @@ function resolveUrl(url, params) {
           vars[key] = params[key];
         }
       } else {
-        vars[key] = url.opt[key]['default'];
+        vars[key] = url.opt[key].default;
       }
     }
   }
@@ -243,11 +245,11 @@ function resolveUrl(url, params) {
 
 
 function exec(transport, spec, params, cb) {
-  var request = {
+  const request = {
     method: spec.method
   };
-  var query = {};
-  var i;
+  const query = {};
+  let i;
 
   // pass the timeout from the spec
   if (spec.requestTimeout) {
@@ -297,7 +299,7 @@ function exec(transport, spec, params, cb) {
 
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
-    var minUrl = spec.url || spec.urls[spec.urls.length - 1];
+    const minUrl = spec.url || spec.urls[spec.urls.length - 1];
     throw new TypeError('Unable to build a path with those params. Supply at least ' + _.keys(minUrl.req).join(', '));
   }
 
@@ -312,7 +314,7 @@ function exec(transport, spec, params, cb) {
     }, []);
   }
 
-  for (var key in params) {
+  for (const key in params) {
     if (params.hasOwnProperty(key) && params[key] != null) {
       switch (key) {
         case 'body':
@@ -327,8 +329,8 @@ function exec(transport, spec, params, cb) {
         case 'method':
           request.method = _.toUpperString(params[key]);
           break;
-        default:
-          var paramSpec = spec.params[key];
+        default: {
+          const paramSpec = spec.params[key];
           if (paramSpec) {
           // param keys don't always match the param name, in those cases it's stored in the param def as "name"
             paramSpec.name = paramSpec.name || key;
@@ -339,18 +341,19 @@ function exec(transport, spec, params, cb) {
                 query[paramSpec.name] = params[key];
               }
 
-              if (paramSpec['default'] && query[paramSpec.name] === paramSpec['default']) {
+              if (paramSpec.default && query[paramSpec.name] === paramSpec.default) {
                 delete query[paramSpec.name];
               }
             }
           } else {
             query[key] = params[key];
           }
+        }
       }
     }
   }
 
-  for (i = 0; i < spec.requireParamKeys.length; i ++) {
+  for (i = 0; i < spec.requireParamKeys.length; i++) {
     if (!query.hasOwnProperty(spec.requireParamKeys[i])) {
       throw new TypeError('Missing required parameter ' + spec.requireParamKeys[i]);
     }

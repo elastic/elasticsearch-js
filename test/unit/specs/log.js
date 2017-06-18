@@ -1,6 +1,6 @@
-var Log = require('../../../src/lib/log');
-var _ = require('lodash');
-var expect = require('expect.js');
+const Log = require('../../../src/lib/log');
+const _ = require('lodash');
+const expect = require('expect.js');
 
 describe('Log class', function () {
   describe('::parseLevels', function () {
@@ -32,7 +32,7 @@ describe('Log class', function () {
   });
 
   describe('#addOutput', function () {
-    var log;
+    let log;
 
     Log.loggers.stub = function (log, config) {
       this.config = config;
@@ -47,7 +47,7 @@ describe('Log class', function () {
     });
 
     it('Accepts a config object with `level: "{{level}}"`', function () {
-      var logger = log.addOutput({
+      const logger = log.addOutput({
         type: 'stub',
         level: 'warning'
       });
@@ -58,7 +58,7 @@ describe('Log class', function () {
     });
 
     it('Accepts a config object with `level: ["{{level}}"]`', function () {
-      var logger = log.addOutput({
+      const logger = log.addOutput({
         type: 'stub',
         level: ['warning']
       });
@@ -70,7 +70,7 @@ describe('Log class', function () {
 
 
     it('Accepts a config object with `levels: "{{level}}"`', function () {
-      var logger = log.addOutput({
+      const logger = log.addOutput({
         type: 'stub',
         levels: 'warning'
       });
@@ -81,7 +81,7 @@ describe('Log class', function () {
     });
 
     it('Accepts a config object with `levels: ["{{level}}"]`', function () {
-      var logger = log.addOutput({
+      const logger = log.addOutput({
         type: 'stub',
         level: ['warning']
       });
@@ -100,15 +100,15 @@ describe('Log class', function () {
       expect(Log.join([{ foo: 'bar' }])).to.eql('{\n  "foo": "bar"\n}\n');
     });
 
-    it('fully stringifies deeply nested objects', function() {
-      var object = { foo: { bar: { baz: 'value' } } };
-      var expected = '{\n  "bar": {\n    "baz": "value"\n  }\n}\n';
+    it('fully stringifies deeply nested objects', function () {
+      const object = { foo: { bar: { baz: 'value' } } };
+      const expected = '{\n  "bar": {\n    "baz": "value"\n  }\n}\n';
       expect(Log.join(object)).to.eql(expected);
     });
   });
 
   describe('instance without any outputs', function () {
-    var log;
+    let log;
     beforeEach(function () {
       log = new Log();
     });
@@ -128,13 +128,14 @@ describe('Log class', function () {
   });
 
   describe('instance without one output listening to all events', function () {
-    var log, call;
+    let log;
+    let call;
     beforeEach(function () {
       call = void 0;
       log = new Log({
         log: [
           {
-            type: function (log, config) {
+            type: function (log) {
               log.on('error', _.noop);
               log.on('warning', _.noop);
               log.on('info', _.noop);
@@ -154,7 +155,7 @@ describe('Log class', function () {
     });
 
     it('should emit an "error" event with an Error object arg', function () {
-      var err = new Error('error');
+      const err = new Error('error');
       log.error(err);
       expect(call.event).to.eql('error');
       expect(call.args[0]).to.be(err);
@@ -200,7 +201,7 @@ describe('Log class', function () {
 
   describe('constructor', function () {
     it('looks for output config options at config.log', function () {
-      var log = new Log({ log: { type: process.browser ? 'console' : 'stdio', level: 'error' } });
+      const log = new Log({ log: { type: process.browser ? 'console' : 'stdio', level: 'error' } });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
       expect(log.listenerCount('info')).to.eql(0);
@@ -209,7 +210,7 @@ describe('Log class', function () {
     });
 
     it('accepts a string and treat it as a log level', function () {
-      var log = new Log({ log: 'error' });
+      const log = new Log({ log: 'error' });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
       expect(log.listenerCount('info')).to.eql(0);
@@ -218,7 +219,7 @@ describe('Log class', function () {
     });
 
     it('accepts an array of strings and treat it as a log level config', function () {
-      var log = new Log({ log: ['error', 'trace'] });
+      const log = new Log({ log: ['error', 'trace'] });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
       expect(log.listenerCount('info')).to.eql(0);
@@ -227,7 +228,7 @@ describe('Log class', function () {
     });
 
     it('accepts an array of output config objects', function () {
-      var log = new Log({ log: [{ level: 'error' }, { level: 'trace' }] });
+      const log = new Log({ log: [{ level: 'error' }, { level: 'trace' }] });
       expect(log.listenerCount('error')).to.eql(2);
       expect(log.listenerCount('warning')).to.eql(1);
       expect(log.listenerCount('info')).to.eql(1);
@@ -237,22 +238,22 @@ describe('Log class', function () {
 
     it('rejects numbers and other truthy data-types', function () {
       expect(function () {
-        var log = new Log({ log: 1515 });
+        new Log({ log: 1515 });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: /regexp/ });
+        new Log({ log: /regexp/ });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: new Date() });
+        new Log({ log: new Date() });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [1515] });
+        new Log({ log: [1515] });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [/regexp/] });
+        new Log({ log: [/regexp/] });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [new Date()] });
+        new Log({ log: [new Date()] });
       }).to.throwError(/invalid logging output config/i);
     });
   });

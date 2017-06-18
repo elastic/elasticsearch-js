@@ -1,8 +1,7 @@
-var expect = require('expect.js');
-var Transport = require('../../../src/lib/transport');
+const expect = require('expect.js');
 
 describe('elasticsearch namespace', function () {
-  var es = window.elasticsearch;
+  const es = window.elasticsearch;
   it('is defined on the window', function () {
     expect(es).to.be.ok();
   });
@@ -12,7 +11,7 @@ describe('elasticsearch namespace', function () {
   });
 
   it('can create a client', function () {
-    var client = new es.Client({ hosts: null });
+    const client = new es.Client({ hosts: null });
     expect(client).to.have.keys('transport');
     expect(client.transport).to.be.a(es.Transport);
     client.close();

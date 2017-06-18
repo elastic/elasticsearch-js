@@ -6,9 +6,9 @@
  */
 module.exports = MockIncommingMessage;
 
-var sinon = require('sinon');
-var util = require('util');
-var Readable = require('stream').Readable;
+const sinon = require('sinon');
+const util = require('util');
+let Readable = require('stream').Readable;
 
 if (!Readable) {
   Readable = require('events').EventEmitter;

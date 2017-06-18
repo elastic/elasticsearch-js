@@ -1,14 +1,14 @@
 describe('Stream Logger', function () {
-  var Log = require('../../../src/lib/log');
-  var StreamLogger = require('../../../src/lib/loggers/stream');
-  var MockWritableStream = require('../../mocks/writable_stream');
-  var once = require('events').EventEmitter.prototype.once;
-  var stream = new MockWritableStream();
-  var _ = require('../../../src/lib/utils');
-  var expect = require('expect.js');
-  var parentLog;
+  const Log = require('../../../src/lib/log');
+  const StreamLogger = require('../../../src/lib/loggers/stream');
+  const MockWritableStream = require('../../mocks/writable_stream');
+  const once = require('events').EventEmitter.prototype.once;
+  const stream = new MockWritableStream();
+  const _ = require('../../../src/lib/utils');
+  const expect = require('expect.js');
+  let parentLog;
 
-  var stub = require('../../utils/auto_release_stub').make();
+  const stub = require('../../utils/auto_release_stub').make();
 
   beforeEach(function () {
     stub(stream, 'write');
@@ -24,7 +24,7 @@ describe('Stream Logger', function () {
 
   function makeLogger(parent, levels) {
     parent = parent || parentLog;
-    var config = {
+    const config = {
       levels: Log.parseLevels(levels || 'trace'),
       stream: stream
     };
@@ -36,12 +36,12 @@ describe('Stream Logger', function () {
   describe('buffer flush', function () {
     if (require('stream').Writable) {
       it('writes everything in the buffer to console.error', function () {
-        var logger = makeLogger();
-        var line = 'This string is written 10 times to create buffered output\n';
+        const logger = makeLogger();
+        const line = 'This string is written 10 times to create buffered output\n';
 
         // get the last handler for process's "exit" event
-        var exitHandlers = process._events.exit;
-        var exitHandler = _.isArray(exitHandlers) ? _.last(exitHandlers) : exitHandlers;
+        const exitHandlers = process._events.exit;
+        const exitHandler = _.isArray(exitHandlers) ? _.last(exitHandlers) : exitHandlers;
 
         // allow the logger to acctually write to the stream
         stream.write.restore();
@@ -52,7 +52,7 @@ describe('Stream Logger', function () {
         });
 
         // collect everything that is written to console.error
-        var flushedOutput = '';
+        let flushedOutput = '';
         stub(console, 'error', function (str) {
           flushedOutput += str;
         });
@@ -69,7 +69,7 @@ describe('Stream Logger', function () {
       });
     } else {
       it('does not fall apart with non streams2 streams', function () {
-        var exitHandler;
+        let exitHandler;
         stub(process, 'once', function (event, handler) {
           if (event === 'exit') {
             exitHandler = handler;
@@ -77,7 +77,7 @@ describe('Stream Logger', function () {
           once.call(process, event, handler);
         });
 
-        var logger = makeLogger();
+        makeLogger();
 
         expect(function () {
           // call the event handler

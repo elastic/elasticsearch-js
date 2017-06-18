@@ -1,16 +1,16 @@
 module.exports = function (makeLogger) {
-  var expect = require('expect.js');
-  var stub = require('../utils/auto_release_stub').make();
-  var fs = require('fs');
-  var once = require('events').EventEmitter.prototype.once;
-  var _ = require('lodash');
+  const expect = require('expect.js');
+  const stub = require('../utils/auto_release_stub').make();
+  const fs = require('fs');
+  const once = require('events').EventEmitter.prototype.once;
+  const _ = require('lodash');
 
   describe('buffer flush', function () {
     if (require('stream').Writable) {
       it('writes everything in the buffer to console.error', function () {
-        var line = 'This string is written 10 times to create buffered output\n';
+        const line = 'This string is written 10 times to create buffered output\n';
 
-        var exitHandler;
+        let exitHandler;
         stub(process, 'once', function (event, handler) {
           if (event === 'exit') {
             exitHandler = handler;
@@ -18,7 +18,7 @@ module.exports = function (makeLogger) {
           once.call(process, event, handler);
         });
 
-        var logger = makeLogger();
+        const logger = makeLogger();
 
         // write the line 10 times
         _.times(10, function () {
@@ -26,7 +26,7 @@ module.exports = function (makeLogger) {
         });
 
         // collect everything that is written to fs.appendFileSync
-        var flushedOutput = '';
+        let flushedOutput = '';
         stub(fs, 'appendFileSync', function (path, str) {
           flushedOutput += str;
         });
@@ -40,7 +40,7 @@ module.exports = function (makeLogger) {
       });
     } else {
       it('does not fall apart with non streams2 streams', function () {
-        var exitHandler;
+        let exitHandler;
         stub(process, 'once', function (event, handler) {
           if (event === 'exit') {
             exitHandler = handler;
@@ -48,7 +48,7 @@ module.exports = function (makeLogger) {
           once.call(process, event, handler);
         });
 
-        var logger = makeLogger();
+        makeLogger();
 
         expect(function () {
           // call the event handler

@@ -1,8 +1,8 @@
-var _ = require('./utils');
-var errors = module.exports;
+const _ = require('./utils');
+const errors = module.exports;
 
-var canCapture = (typeof Error.captureStackTrace === 'function');
-var canStack = !!(new Error()).stack;
+const canCapture = (typeof Error.captureStackTrace === 'function');
+const canStack = !!(new Error()).stack;
 
 function ErrorAbstract(msg, constructor, metadata) {
   this.message = msg;
@@ -91,7 +91,7 @@ errors.RequestTypeError = function RequestTypeError(feature) {
 };
 _.inherits(errors.RequestTypeError, ErrorAbstract);
 
-var statusCodes = [
+const statusCodes = [
   [300, 'Multiple Choices'],
   [301, 'Moved Permanently'],
   [302, 'Found'],
@@ -137,18 +137,18 @@ var statusCodes = [
 ];
 
 _.each(statusCodes, function createStatusCodeError(tuple) {
-  var status = tuple[0];
-  var names = tuple[1];
-  var allNames = [].concat(names, status);
-  var primaryName = allNames[0];
-  var className = _.studlyCase(primaryName);
+  const status = tuple[0];
+  const names = tuple[1];
+  let allNames = [].concat(names, status);
+  const primaryName = allNames[0];
+  const className = _.studlyCase(primaryName);
   allNames = _.uniq(allNames.concat(className));
 
   function StatusCodeError(msg, metadata) {
     this.status = status;
     this.displayName = className;
 
-    var esErrObject = null;
+    let esErrObject = null;
     if (_.isPlainObject(msg)) {
       esErrObject = msg;
       msg = null;
@@ -167,7 +167,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
 
       memo += '[' + cause.type + '] ' + cause.reason;
 
-      var extraData = _.omit(cause, ['type', 'reason']);
+      const extraData = _.omit(cause, ['type', 'reason']);
       if (_.size(extraData)) {
         memo += ', with ' + prettyPrint(extraData);
       }
@@ -192,20 +192,20 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
 
 
 function prettyPrint(data) {
-  const path = []
+  const path = [];
   return (function print(v) {
     if (typeof v === 'object') {
-      if (path.indexOf(v) > -1) return '[circular]'
-      path.push(v)
+      if (path.indexOf(v) > -1) return '[circular]';
+      path.push(v);
       try {
         return '{ ' + _.map(v, function (subv, name) {
-          return name + '=' + print(subv)
-        }).join(' & ') + ' }'
+          return name + '=' + print(subv);
+        }).join(' & ') + ' }';
       } finally {
-        path.pop()
+        path.pop();
       }
     } else {
-      return JSON.stringify(v)
+      return JSON.stringify(v);
     }
-  }(data))
+  }(data));
 }

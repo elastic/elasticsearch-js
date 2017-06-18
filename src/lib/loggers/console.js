@@ -12,8 +12,8 @@
 
 module.exports = Console;
 
-var LoggerAbstract = require('../logger');
-var _ = require('../utils');
+const LoggerAbstract = require('../logger');
+const _ = require('../utils');
 
 function Console(log, config) {
   LoggerAbstract.call(this, log, config);
@@ -48,7 +48,7 @@ Console.prototype.write = function (label, message, to) {
  * @return {undefined}
  */
 Console.prototype.onError = _.handler(function (e) {
-  var to = console.error ? 'error' : 'log';
+  const to = console.error ? 'error' : 'log';
   this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message, to);
 });
 

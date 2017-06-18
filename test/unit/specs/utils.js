@@ -1,7 +1,7 @@
-var _ = require('../../../src/lib/utils');
-var expect = require('expect.js');
+const _ = require('../../../src/lib/utils');
+const expect = require('expect.js');
 
-var stub = require('../../utils/auto_release_stub').make();
+const stub = require('../../utils/auto_release_stub').make();
 
 describe('Utils', function () {
 
@@ -238,14 +238,14 @@ describe('Utils', function () {
   describe('#deepMerge', function () {
 
     it('returns the same object that was passed', function () {
-      var obj = {
+      const obj = {
         foo: 'bar'
       };
       expect(_.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
     });
 
     it('concats arrays', function () {
-      var obj = {
+      const obj = {
         foo: ['bax', 'boz']
       };
       _.deepMerge(obj, { foo: ['boop'] });
@@ -253,7 +253,7 @@ describe('Utils', function () {
     });
 
     it('wont merge values of different types', function () {
-      var obj = {
+      const obj = {
         foo: ['stop', 'foo', 'stahp']
       };
       _.deepMerge(obj, { foo: 'string' });
@@ -261,7 +261,7 @@ describe('Utils', function () {
     });
 
     it('works recursively', function () {
-      var obj = {
+      const obj = {
         foo: 'bar',
         bax: {
           foo: ['bax', 'boz']
@@ -275,8 +275,8 @@ describe('Utils', function () {
 
   describe('#createArray', function () {
     it('accepts an array of things and simply returns a copy of it', function () {
-      var inp = [{ a: 1 }, 'pizza'];
-      var out = _.createArray(inp);
+      const inp = [{ a: 1 }, 'pizza'];
+      const out = _.createArray(inp);
       expect(out).to.eql(inp);
       expect(out).to.not.be(inp);
     });
@@ -309,28 +309,28 @@ describe('Utils', function () {
      * _.funcEnum(object, key, opts, default);
      */
     it('tests if the value at key in object is a function, returns it if so', function () {
-      var config = {
+      const config = {
         func: function () {}
       };
       expect(_.funcEnum(config, 'func', {}, 'toString'))
         .to.be(config.func);
     });
     it('tests if the value at key in object is undefined, returns the option at key default if so', function () {
-      var config = {
+      const config = {
         func: undefined
       };
       expect(_.funcEnum(config, 'func', {}, 'toString'))
         .to.be(Object.prototype.toString);
     });
     it('tests if the value at key in object is a string, returns the option at that key if so', function () {
-      var config = {
+      const config = {
         'config key name': 'toString'
       };
       expect(_.funcEnum(config, 'config key name', { toString: 'pizza' }, 'toJSON'))
         .to.be('pizza');
     });
     it('throws an informative error if the selection if invalid', function () {
-      var config = {
+      const config = {
         'config': 'val'
       };
 
@@ -350,15 +350,15 @@ describe('Utils', function () {
 
   describe('#applyArgs', function () {
     _.times(10, function (i) {
-      var method = i > 5 ? 'apply' : 'call';
-      var argCount = i + 1;
-      var slice = 1;
+      const method = i > 5 ? 'apply' : 'call';
+      const argCount = i + 1;
+      const slice = 1;
 
       it('uses ' + method + ' with ' + i + ' args', function () {
-        var func = function () {};
+        const func = function () {};
         stub(func, method);
 
-        var args = _.map(new Array(i), function (val, i) { return i; });
+        const args = _.map(new Array(i), function (val, i) { return i; });
         _.applyArgs(func, null, args);
 
         expect(func[method].callCount).to.eql(1);
@@ -371,11 +371,11 @@ describe('Utils', function () {
 
       it('slices the arguments properly before calling ' + method + ' with ' + argCount + ' args sliced at ' + slice,
       function () {
-        var func = function () {};
+        const func = function () {};
         stub(func, method);
 
-        var args = _.map(new Array(argCount), function (val, i) { return i; });
-        var expected = args.slice(slice);
+        const args = _.map(new Array(argCount), function (val, i) { return i; });
+        const expected = args.slice(slice);
         _.applyArgs(func, null, args, slice);
 
         expect(func[method].callCount).to.eql(1);
@@ -397,14 +397,14 @@ describe('Utils', function () {
     });
 
     if (require('stream').Writable) {
-      var MockWritableStream = require('../../mocks/writable_stream');
+      const MockWritableStream = require('../../mocks/writable_stream');
       it('ignores empty stream', function () {
-        var stream = new MockWritableStream();
+        const stream = new MockWritableStream();
         expect(_.getUnwrittenFromStream(stream)).to.be('');
       });
 
       it('returns only what is in the buffer', function () {
-        var stream = new MockWritableStream();
+        const stream = new MockWritableStream();
         stream.write('hot');
         stream.write('dog');
         expect(_.getUnwrittenFromStream(stream)).to.be('dog');

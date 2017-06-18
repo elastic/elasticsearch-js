@@ -1,16 +1,16 @@
 /* eslint-disable import/no-unresolved */
-var express = require('express');
-var http = require('http');
-var fs = require('fs');
-var _ = require('lodash');
-var async = require('async');
-var root = require('path').join(__dirname, '../..');
-var browserify = require('browserify');
-var pkg = require(root + '/package.json');
-var unitSpecDir = root + '/test/unit/specs';
-var browserBuildsDir = root + '/test/unit/browser_builds';
+const express = require('express');
+const http = require('http');
+const fs = require('fs');
+const _ = require('lodash');
+const async = require('async');
+const root = require('path').join(__dirname, '../..');
+const browserify = require('browserify');
+const pkg = require(root + '/package.json');
+const unitSpecDir = root + '/test/unit/specs';
+const browserBuildsDir = root + '/test/unit/browser_builds';
 
-var testFiles = {};
+const testFiles = {};
 
 testFiles.unit = _(fs.readdirSync(unitSpecDir))
   .difference([
@@ -33,12 +33,12 @@ testFiles.build = fs.readdirSync(browserBuildsDir)
       return browserBuildsDir + '/' + file;
     }
 
-    return null
+    return null;
   })
   .filter(Boolean);
 
 // generic aliasify instance
-var aliasify = require('aliasify').configure({
+const aliasify = require('aliasify').configure({
   aliases: pkg.browser,
   excludeExtensions: 'json',
   // verbose: false,
@@ -46,7 +46,7 @@ var aliasify = require('aliasify').configure({
 });
 
 // queue for bundle requests, two at a time
-var bundleQueue = async.queue(function (task, done) {
+const bundleQueue = async.queue(function (task, done) {
   task(done);
 }, 2);
 
@@ -54,16 +54,16 @@ var bundleQueue = async.queue(function (task, done) {
 function bundleTests(name) {
   return function (req, res, next) {
     bundleQueue.push(function (_cb) {
-      var done = function (err) {
+      const done = function (err) {
         if (err) { return next(err); }
         _cb(err);
       };
 
       res.set('Content-Type', 'application/javascript');
 
-      var b = browserify(testFiles[name]);
+      const b = browserify(testFiles[name]);
       b.transform(aliasify);
-      var str = b.bundle({
+      const str = b.bundle({
         insertGlobals: true
       });
 
@@ -81,7 +81,7 @@ function sendFile(file) {
   };
 }
 
-var app = express();
+const app = express();
 
 app
   .use(app.router)
@@ -97,8 +97,8 @@ app
   .get('/screencast-reporter.js', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.js'))
 
   // libs
-  .get('/angular.js', sendFile(root + '/bower_components/angular/angular.js'))
-  .get('/angular-mocks.js', sendFile(root + '/bower_components/angular-mocks/angular-mocks.js'))
+  .get('/angular.js', sendFile(root + '/node_modules/angular/angular.js'))
+  .get('/angular-mocks.js', sendFile(root + '/node_modules/angular-mocks/angular-mocks.js'))
   .get('/jquery.js', sendFile(root + '/node_modules/jquery/dist/jquery.js'))
 
   // builds

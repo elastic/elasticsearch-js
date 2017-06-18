@@ -12,14 +12,14 @@
 
 module.exports = Stdio;
 
-var chalk = require('chalk');
+const chalk = require('chalk');
 // let the user define if they want color in the client config.
 chalk.enabled = true;
 
-var LoggerAbstract = require('../logger');
-var _ = require('../utils');
+const LoggerAbstract = require('../logger');
+const _ = require('../utils');
 
-var defaultColors = {
+const defaultColors = {
   error: chalk.red.bold,
   warning: chalk.yellow.bold,
   info: chalk.cyan.bold,

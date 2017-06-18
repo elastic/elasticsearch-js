@@ -1,6 +1,6 @@
-var _ = require('./utils');
-var url = require('url');
-var EventEmitter = require('events').EventEmitter;
+const _ = require('./utils');
+const url = require('url');
+const EventEmitter = require('events').EventEmitter;
 
 /**
  * Log bridge, which is an [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -21,8 +21,8 @@ function Log(config) {
   config = config || {};
   if (!config.log) return;
 
-  var i;
-  var outputs;
+  let i;
+  let outputs;
 
   if (_.isArrayOfStrings(config.log)) {
     outputs = [{
@@ -150,15 +150,16 @@ Log.levels = [
  */
 Log.parseLevels = function (input) {
   switch (typeof input) {
-    case 'string':
-      var i = _.indexOf(Log.levels, input);
+    case 'string': {
+      const i = _.indexOf(Log.levels, input);
       if (i >= 0) {
         return Log.levels.slice(0, i + 1);
       }
+    }
     /* fall through */
     case 'object':
       if (_.isArray(input)) {
-        var valid = _.intersection(input, Log.levels);
+        const valid = _.intersection(input, Log.levels);
         if (valid.length === input.length) {
           return valid;
         }
@@ -209,7 +210,7 @@ Log.prototype.addOutput = function (config) {
   config.levels = Log.parseLevels(config.levels || config.level || 'warning');
   delete config.level;
 
-  var Logger = _.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
+  const Logger = _.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
   return new Logger(this, config);
 };
 

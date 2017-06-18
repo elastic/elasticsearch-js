@@ -1,34 +1,18 @@
-var Transport = require('../../../src/lib/transport');
-var ConnectionPool = require('../../../src/lib/connection_pool');
-var Host = require('../../../src/lib/host');
-var errors = require('../../../src/lib/errors');
-var expect = require('expect.js');
+const Transport = require('../../../src/lib/transport');
+const ConnectionPool = require('../../../src/lib/connection_pool');
+const errors = require('../../../src/lib/errors');
+const expect = require('expect.js');
 
-var sinon = require('sinon');
-var nock = require('../../mocks/server.js');
-var through2 = require('through2');
-var _ = require('lodash');
-var stub = require('../../utils/auto_release_stub').make();
-
-/**
- * Allows the tests call #request() without it doing anything past trying to select
- * a connection.
- * @param  {Transport} tran - the transport to neuter
- */
-function shortCircuitRequest(tran, delay) {
-  stub(tran.connectionPool, 'select', function (cb) {
-    setTimeout(cb, delay);
-  });
-}
-
-function getConnection(transport, status) {
-  return transport.connectionPool.getConnections(status || 'alive', 1).pop();
-}
+const sinon = require('sinon');
+const nock = require('../../mocks/server.js');
+const through2 = require('through2');
+const _ = require('lodash');
+const stub = require('../../utils/auto_release_stub').make();
 
 describe('Transport + Mock server', function () {
   describe('#request', function () {
     describe('server responds', function () {
-      var serverMock;
+      let serverMock;
 
       before(function () {
         serverMock = nock('http://localhost')
@@ -79,7 +63,7 @@ describe('Transport + Mock server', function () {
 
       describe('with a 400 status code', function () {
         it('passes back a 400/BadRequest error', function (done) {
-          var trans = new Transport({
+          const trans = new Transport({
             hosts: 'localhost'
           });
 
@@ -98,7 +82,7 @@ describe('Transport + Mock server', function () {
       describe('with a 404 status code', function () {
         describe('and castExists is set', function () {
           it('sends back false', function (done) {
-            var trans = new Transport({
+            const trans = new Transport({
               hosts: 'localhost'
             });
 
@@ -115,7 +99,7 @@ describe('Transport + Mock server', function () {
         });
         describe('and the castExists param is not set', function () {
           it('sends back a 404/NotFound error', function (done) {
-            var trans = new Transport({
+            const trans = new Transport({
               hosts: 'localhost'
             });
 
@@ -134,7 +118,7 @@ describe('Transport + Mock server', function () {
 
       describe('with a 500 status code', function () {
         it('passes back a 500/InternalServerError error', function (done) {
-          var trans = new Transport({
+          const trans = new Transport({
             hosts: 'localhost'
           });
 
@@ -152,7 +136,7 @@ describe('Transport + Mock server', function () {
 
       describe('with a 530 status code', function () {
         it('passes back a Generic error', function (done) {
-          var trans = new Transport({
+          const trans = new Transport({
             hosts: 'localhost'
           });
 
@@ -170,7 +154,7 @@ describe('Transport + Mock server', function () {
       describe('with a 200 status code', function () {
         describe('and the castExists param is set', function () {
           it('sends back true', function (done) {
-            var trans = new Transport({
+            const trans = new Transport({
               hosts: 'localhost'
             });
 
@@ -187,7 +171,7 @@ describe('Transport + Mock server', function () {
         });
         describe('with a partial response body', function () {
           it('sends back a serialization error', function (done) {
-            var trans = new Transport({
+            const trans = new Transport({
               hosts: 'localhost'
             });
 
@@ -203,13 +187,13 @@ describe('Transport + Mock server', function () {
         });
         describe('with a valid response body', function () {
           it('sends back the body and status code with no error', function (done) {
-            var trans = new Transport({
+            const trans = new Transport({
               hosts: 'localhost'
             });
 
             trans.request({
               path: '/',
-            }, function (err, body, status) {
+            }, function (err, body) {
               expect(err).to.be(undefined);
               expect(body).to.eql({
                 'the answer': 42
@@ -222,13 +206,13 @@ describe('Transport + Mock server', function () {
 
       describe('with plain text', function () {
         it('notices the content-type header and returns the text', function (done) {
-          var trans = new Transport({
+          const trans = new Transport({
             hosts: 'localhost'
           });
 
           trans.request({
             path: '/hottie-threads',
-          }, function (err, body, status) {
+          }, function (err, body) {
             expect(err).to.be(undefined);
             expect(body).to.match(/s?he said/g);
             done();
@@ -239,13 +223,13 @@ describe('Transport + Mock server', function () {
 
     describe('return value', function () {
       it('resolves the promise it with the response body', function (done) {
-        var serverMock = nock('http://esbox.1.com')
+        nock('http://esbox.1.com')
           .get('/')
           .reply(200, {
             good: 'day'
           });
 
-        var tran = new Transport({
+        const tran = new Transport({
           hosts: 'http://esbox.1.com'
         });
 
@@ -260,13 +244,13 @@ describe('Transport + Mock server', function () {
 
     describe('timeout', function () {
       it('clears the timeout when the request is complete', function () {
-        var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+        const clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
         stub.autoRelease(clock);
-        var tran = new Transport({
+        const tran = new Transport({
           host: 'http://localhost:9200'
         });
 
-        var server = nock('http://localhost:9200')
+        nock('http://localhost:9200')
           .get('/')
           .reply(200, {
             i: 'am here'
@@ -282,11 +266,11 @@ describe('Transport + Mock server', function () {
       });
 
       it('timeout responds with a requestTimeout error', function (done) {
-        var tran = new Transport({
+        const tran = new Transport({
           host: 'http://localhost:9200'
         });
 
-        var server = nock('http://localhost:9200')
+        nock('http://localhost:9200')
           .get('/')
           .delay(1000)
           .reply(200, {
@@ -295,7 +279,7 @@ describe('Transport + Mock server', function () {
 
         tran.request({
           requestTimeout: 25
-        }, function (err, resp, status) {
+        }, function (err) {
           expect(err).to.be.a(errors.RequestTimeout);
           done();
         });
@@ -304,13 +288,13 @@ describe('Transport + Mock server', function () {
 
     describe('sniffOnConnectionFault', function () {
       it('schedules a sniff when sniffOnConnectionFault is set and a connection failes', function () {
-        var clock = sinon.useFakeTimers('setTimeout');
+        const clock = sinon.useFakeTimers('setTimeout');
         stub.autoRelease(clock);
 
-        var serverMock = nock('http://esbox.1.com')
+        nock('http://esbox.1.com')
           .get('/')
           .reply(200, function () {
-            var str = through2(function (chunk, enc, cb) {
+            const str = through2(function (chunk, enc, cb) {
               cb(new Error('force error'));
             });
 
@@ -324,7 +308,7 @@ describe('Transport + Mock server', function () {
 
         stub(ConnectionPool.prototype, '_onConnectionDied');
         stub(Transport.prototype, 'sniff');
-        var tran = new Transport({
+        const tran = new Transport({
           hosts: 'http://esbox.1.com',
           sniffOnConnectionFault: true,
           maxRetries: 0
@@ -338,12 +322,12 @@ describe('Transport + Mock server', function () {
         .then(function () {
           throw new Error('expected the request to fail');
         })
-        .catch(function (err) {
+        .catch(function () {
           expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
           expect(tran.sniff.callCount).to.eql(0);
           expect(_.size(clock.timers)).to.eql(1);
 
-          var timeout = _.values(clock.timers).pop();
+          const timeout = _.values(clock.timers).pop();
           timeout.func();
           expect(tran.sniff.callCount).to.eql(1);
         });

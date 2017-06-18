@@ -1,12 +1,12 @@
-var root = require('find-root')(__dirname);
-var rel = require('path').resolve.bind(null, root);
-var rootReq = function (p) { return require(rel(p)); };
-var _ = rootReq('src/lib/utils');
-var grunt = require('grunt');
+const root = require('find-root')(__dirname);
+const rel = require('path').resolve.bind(null, root);
+const rootReq = function (p) { return require(rel(p)); };
+const _ = rootReq('src/lib/utils');
+const grunt = require('grunt');
 
-var JENKINS_REPORTER = rel('test/utils/jenkins-reporter.js');
+const JENKINS_REPORTER = rel('test/utils/jenkins-reporter.js');
 
-var config = {
+const config = {
   unit: {
     src: 'test/unit/index.js',
     options: {
@@ -65,7 +65,7 @@ var config = {
 grunt.registerTask('mocha_integration', function (branch) {
   grunt.config.set(
     'mochacov.integration.src',
-    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+    'tmp/yaml_tests/' + _.snakeCase(branch) + '/index.js'
   );
   grunt.task.run('mochacov:integration');
 });
@@ -73,7 +73,7 @@ grunt.registerTask('mocha_integration', function (branch) {
 grunt.registerTask('mocha_jenkins_integration', function (branch) {
   grunt.config.set(
     'mochacov.jenkins_integration.src',
-    'test/integration/yaml_suite/index_' + _.snakeCase(branch) + '.js'
+    'tmp/yaml_tests/' + _.snakeCase(branch) + '/index.js'
   );
   grunt.task.run('mochacov:jenkins_integration');
 });

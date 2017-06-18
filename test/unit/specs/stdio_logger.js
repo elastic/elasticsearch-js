@@ -1,10 +1,10 @@
 describe('Stdio Logger', function () {
 
-  var Log = require('../../../src/lib/log');
-  var StdioLogger = require('../../../src/lib/loggers/stdio');
-  var expect = require('expect.js');
-  var sinon = require('sinon');
-  var parentLog;
+  const Log = require('../../../src/lib/log');
+  const StdioLogger = require('../../../src/lib/loggers/stdio');
+  const expect = require('expect.js');
+  const sinon = require('sinon');
+  let parentLog;
 
   beforeEach(function () {
     parentLog = new Log();
@@ -16,37 +16,36 @@ describe('Stdio Logger', function () {
 
   function makeLogger(parent, levels) {
     parent = parent || parentLog;
-    var config = {
+    const config = {
       levels: Log.parseLevels(levels || 'trace')
     };
     return new StdioLogger(parent, config);
   }
 
-  var stub = require('../../utils/auto_release_stub').make();
+  const stub = require('../../utils/auto_release_stub').make();
 
   require('../generic_logger_tests')(makeLogger);
 
   describe('colorizing', function () {
-    var chalk = require('chalk');
-    var now = '2013-01-01T00:00:00Z';
-    var nowDate = new Date(now);
-    var nowTime = nowDate.getTime();
-    var clock;
+    const chalk = require('chalk');
+    const now = '2013-01-01T00:00:00Z';
+    const nowDate = new Date(now);
+    const nowTime = nowDate.getTime();
 
     beforeEach(function () {
       stub.autoRelease(sinon.useFakeTimers(nowTime));
     });
 
     it('uses colors when it\'s supported', function () {
-      var logger = makeLogger();
-      var hasColor = require('chalk').supportsColor;
+      const logger = makeLogger();
+      const hasColor = require('chalk').supportsColor;
       expect(logger.color).to.be(hasColor);
     });
 
     it('obeys the logger.color === false', function () {
-      var logger = makeLogger();
+      const logger = makeLogger();
       stub(process.stdout, 'write');
-      var withoutColor = 'Elasticsearch INFO: ' + now + '\n  something\n\n';
+      const withoutColor = 'Elasticsearch INFO: ' + now + '\n  something\n\n';
 
       logger.color = false;
       logger.onInfo('something');
@@ -54,10 +53,10 @@ describe('Stdio Logger', function () {
     });
 
     it('obeys the logger.color === true', function () {
-      var logger = makeLogger();
+      const logger = makeLogger();
 
       stub(process.stdout, 'write');
-      var withoutColor = 'Elasticsearch DEBUG: ' + now + '\n  be weary\n\n';
+      const withoutColor = 'Elasticsearch DEBUG: ' + now + '\n  be weary\n\n';
 
       logger.color = true;
       logger.onDebug('be weary');

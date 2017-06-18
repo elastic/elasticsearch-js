@@ -1,15 +1,15 @@
 
-var sinon = require('sinon');
+const sinon = require('sinon');
 
 exports.make = function () {
-  var log = [];
+  const log = [];
   afterEach(function () {
-    var stub;
+    let stub;
     while (stub = log.pop()) {
       stub.restore();
     }
   });
-  var stubber = function () {
+  const stubber = function () {
     log.push(sinon.stub.apply(sinon, arguments));
   };
 

@@ -1,18 +1,15 @@
 module.exports = function (branch) {
-  var path = require('path');
-  var jsYaml = require('js-yaml');
-  var YamlFile = require('./yaml_file');
-  var root = require('find-root')(__dirname);
-  var rootReq = function (loc) { return require(path.join(root, loc)); };
-  var _ = rootReq('src/lib/utils');
-  var utils = rootReq('grunt/utils');
-  var es = rootReq('src/elasticsearch');
-  var clientManager = require('./client_manager');
+  const path = require('path');
+  const YamlFile = require('./yaml_file');
+  const root = require('find-root')(__dirname);
+  const rootReq = function (loc) { return require(path.join(root, loc)); };
+  const _ = rootReq('src/lib/utils');
+  const clientManager = require('./client_manager');
 
-  var port = parseInt(process.env.ES_PORT || 9200, 10);
-  var host = process.env.ES_HOST || 'localhost';
-  var _release = branch.match(/^v(\d+\.\d+)\.\d+$/);
-  var apiVersion = _release ? _release[1] : branch;
+  const port = parseInt(process.env.ES_PORT || 9200, 10);
+  const host = process.env.ES_HOST || 'localhost';
+  const _release = branch.match(/^v(\d+\.\d+)\.\d+$/);
+  const apiVersion = _release ? _release[1] : branch;
 
   console.log('  branch:', branch);
   console.log('  port:', port);
@@ -32,8 +29,8 @@ module.exports = function (branch) {
       return clientManager.get().clearEs();
     });
 
-    var files = _.map(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
-      return new YamlFile(filename, docs);
+    _.each(require('./yaml_tests_' + _.snakeCase(branch) + '.json'), function (docs, filename) {
+      new YamlFile(filename, docs);
     });
 
   });

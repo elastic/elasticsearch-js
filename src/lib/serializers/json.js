@@ -4,7 +4,7 @@
  */
 module.exports = Json;
 
-var _ = require('../utils');
+const _ = require('../utils');
 
 function Json() {}
 
@@ -39,12 +39,15 @@ Json.prototype.deserialize = function (str) {
   if (typeof str === 'string') {
     try {
       return JSON.parse(str);
-    } catch (e) {}
+    } catch (e) {
+      return undefined;
+    }
   }
 };
 
 Json.prototype.bulkBody = function (val) {
-  var body = '', i;
+  let body = '';
+  let i;
 
   if (_.isArray(val)) {
     for (i = 0; i < val.length; i++) {

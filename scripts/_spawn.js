@@ -1,11 +1,11 @@
 module.exports = _spawn;
 
-var map = require('through2-map');
-var split = require('split');
-var chalk = require('chalk');
-var spawn = require('child_process').spawn;
-var path = require('path');
-var root = path.resolve(__dirname, '../');
+const map = require('through2-map');
+const split = require('split');
+const chalk = require('chalk');
+const spawn = require('child_process').spawn;
+const path = require('path');
+const root = path.resolve(__dirname, '../');
 
 function indent(line) {
   line = String(line).trim();
@@ -26,7 +26,7 @@ function _spawn(cmd, args, opts, cb) {
     opts.verbose = false;
   }
 
-  var conf = {
+  const conf = {
     stdio: [
       'ignore',
       opts.verbose ? 'pipe' : 'ignore',
@@ -34,7 +34,7 @@ function _spawn(cmd, args, opts, cb) {
     ]
   };
 
-  var subdir;
+  let subdir;
 
   if (opts.cwd) {
     conf.cwd = opts.cwd;
@@ -43,7 +43,7 @@ function _spawn(cmd, args, opts, cb) {
 
   console.log(chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') + cmd + ' ' + args.join(' '));
 
-  var cp = spawn(cmd, args, conf);
+  const cp = spawn(cmd, args, conf);
 
   if (opts.verbose) {
     consume(cp.stdout);
