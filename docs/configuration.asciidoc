@@ -181,6 +181,11 @@ Defaults:::
 Default::: If all of the hosts/host passed to the client via configuration use the same protocol then this defaults to that protocol, otherwise it defaults to `"http"`.
 
 
+`sniffedNodesFilterPath`[[config-sniffed-filter-path]]:: `String` -- Defines the https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#common-options-response-filtering:`filter_path` used when fetching the node list from Elasticsearch.
+
+Default::: `'nodes.*.http.publish_address,nodes.*.name,nodes.*.hostname,nodes.*.host,nodes.*.version'`
+
+
 `ssl`[[config-ssl]]:: `Object` -- An object defining HTTPS/SSL configuration to use for all nodes. The properties of this mimic the options accepted by http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] with the exception of `rejectUnauthorized`, which defaults to `false` allowing self-signed certificates to work out-of-the-box.
 +
 Additional information available in <<auth-reference>>.
