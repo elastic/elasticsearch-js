@@ -4178,8 +4178,6 @@ api.indices.prototype.recovery = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {<<api-param-type-boolean,`Boolean`>>} params.force - Force a refresh even if not required
- * @param {anything} params.operationThreading - TODO: ?
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.refresh = ca({
@@ -4202,13 +4200,6 @@ api.indices.prototype.refresh = ca({
         'all'
       ],
       name: 'expand_wildcards'
-    },
-    force: {
-      type: 'boolean',
-      'default': false
-    },
-    operationThreading: {
-      name: 'operation_threading'
     }
   },
   urls: [
