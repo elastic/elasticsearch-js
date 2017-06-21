@@ -1,6 +1,10 @@
 [[changelog]]
 == Changelog
 
+=== 13.2.0 (Jun 21 2017)
+
+  * Added `sniffedNodesFilterPath` config parameter to allow customizing the `filter_path` sent when sniffing for new nodes. https://github.com/elastic/elasticsearch-js/pull/559[#599]
+
 === 13.1.2 (Jun 21 2017)
 
   * Update APIs after resolving https://github.com/elastic/elasticsearch/issues/25234[#25234]
