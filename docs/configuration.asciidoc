@@ -181,7 +181,7 @@ Defaults:::
 Default::: If all of the hosts/host passed to the client via configuration use the same protocol then this defaults to that protocol, otherwise it defaults to `"http"`.
 
 
-`sniffedNodesFilterPath`[[config-sniffed-filter-path]]:: `String` -- Defines the https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#common-options-response-filtering:`filter_path` used when fetching the node list from Elasticsearch.
+`sniffedNodesFilterPath`[[config-sniffed-filter-path]]:: `String` -- Defines the https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#common-options-response-filtering[`filter_path`] used when fetching the node list from Elasticsearch.
 
 Default::: `'nodes.*.http.publish_address,nodes.*.name,nodes.*.hostname,nodes.*.host,nodes.*.version'`
 
