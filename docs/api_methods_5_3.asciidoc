@@ -15,7 +15,7 @@ client.bulk([params, [callback]])
 
 Perform many index/delete operations in a single API call.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Perform three operations in a single request
 [source,js]
@@ -72,7 +72,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>> -- Default index for items which don't provide one
 `body`::
-<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See {ref-53}/docs-bulk.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -86,7 +86,7 @@ client.clearScroll([params, [callback]])
 
 Clear the scroll request created by specifying the scroll parameter to search.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -97,7 +97,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `scrollId`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of scroll IDs to clear
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -111,7 +111,7 @@ client.count([params, [callback]])
 
 Get the number of documents for the cluster, index, type, or a query.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-count.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-count.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Get the number of all documents in the cluster
 [source,js]
@@ -197,7 +197,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of types to restrict the results
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-count.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-count.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -211,7 +211,7 @@ client.countPercolate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -256,7 +256,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -270,7 +270,7 @@ client.create([params, [callback]])
 
 Adds a typed JSON document in a specific index, making it searchable. If a document with the same `index`, `type`, and `id` already exists, an error will occur.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Create a document
 [source,js]
@@ -334,7 +334,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -348,7 +348,7 @@ client.delete([params, [callback]])
 
 Delete a typed JSON document from a specific index based on its id.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-delete.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Delete the document `/myindex/mytype/1`
 [source,js]
@@ -399,7 +399,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-delete.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -413,7 +413,7 @@ client.deleteByQuery([params, [callback]])
 
 Delete documents from one or more indices and one or more types based on a query.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete-by-query.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-delete-by-query.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Deleting documents with a simple query
 [source,js]
@@ -532,7 +532,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete-by-query.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/docs-delete-by-query.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -546,7 +546,7 @@ client.deleteScript([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -559,7 +559,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `lang`::
 <<api-param-type-string,`String`>> -- Script language
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-scripting.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -573,7 +573,7 @@ client.deleteTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -584,7 +584,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Template ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -598,7 +598,7 @@ client.exists([params, [callback]])
 
 Returns a boolean indicating whether or not a given document exists.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Check that the document `/myindex/mytype/1` exist
 [source,js]
@@ -637,7 +637,7 @@ client.exists({
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document (use `_all` to fetch the first document matching the ID across all types)
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-get.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -651,7 +651,7 @@ client.explain([params, [callback]])
 
 Provides details about a specific document's score in relation to a specific query. It will also tell you if the document matches the specified query. Also check out http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html[percolaters].
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-explain.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-explain.html[the elasticsearch docs] for more information pertaining to this method.
 
 .See how a document is scored against a simple query
 [source,js]
@@ -727,7 +727,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-explain.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-explain.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -741,7 +741,7 @@ client.fieldStats([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-stats.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-field-stats.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -772,7 +772,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-stats.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-field-stats.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -786,7 +786,7 @@ client.get([params, [callback]])
 
 Get a typed JSON document from the index based on its id.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Get `/myindex/mytype/1`
 [source,js]
@@ -851,7 +851,7 @@ client.getScript([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -877,7 +877,7 @@ client.getSource([params, [callback]])
 Get the source of a document by its index, type and id.
 
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-get.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -930,7 +930,7 @@ client.getTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -958,7 +958,7 @@ Optimistic concurrency control is performed, when the `version` argument is spec
 By default, the document will be available for `get()` actions immediately, but will only be available for searching after an index refresh (which can happen automatically or manually). See <<api-indices-refresh>>.
 
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Create or update a document
 [source,js]
@@ -1026,7 +1026,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1056,7 +1056,7 @@ client.mget([params, [callback]])
 
 Get multiple documents based on an index, type (optional) and ids. The body required by mget can take two forms: an array of document locations, or an array of document ids.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-get.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-multi-get.html[the elasticsearch docs] for more information pertaining to this method.
 
 .An array of doc locations. Useful for getting documents from different indices.
 [source,js]
@@ -1113,7 +1113,7 @@ client.mget({
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-get.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/docs-multi-get.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1127,7 +1127,7 @@ client.mpercolate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1152,7 +1152,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document being percolated to use as default.
 `body`::
-<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See {ref-53}/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1166,7 +1166,7 @@ client.msearch([params, [callback]])
 
 Execute several search requests within the same request.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-multi-search.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Perform multiple different searches, the body is made up of meta/data pairs
 [source,js]
@@ -1204,7 +1204,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to use as default
 `body`::
-<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See {ref-53}/search-multi-search.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1253,7 +1253,7 @@ client.mtermvectors([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-termvectors.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-multi-termvectors.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1298,7 +1298,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-termvectors.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-multi-termvectors.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1312,7 +1312,7 @@ client.percolate([params, [callback]])
 
 Match a document against registered percolator queries.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 .First, Register queries named “alert-1” and “alert-2” for the “myindex” index
 [source,js]
@@ -1439,7 +1439,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1469,7 +1469,7 @@ client.putScript([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-scripting.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1482,7 +1482,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `lang`::
 <<api-param-type-string,`String`>> -- Script language
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/modules-scripting.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1496,7 +1496,7 @@ client.putTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1507,7 +1507,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Template ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1521,7 +1521,7 @@ client.reindex([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-reindex.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1542,7 +1542,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `[slices=1]`::
 <<api-param-type-number,`Number`>> -- The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/docs-reindex.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1556,7 +1556,7 @@ client.reindexRethrottle([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-reindex.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1569,7 +1569,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `taskId`::
 <<api-param-type-string,`String`>> -- The task id to rethrottle
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-reindex.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1583,7 +1583,7 @@ client.renderSearchTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1594,7 +1594,7 @@ Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasti
 `id`::
 <<api-param-type-string,`String`>> -- The id of the stored search template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1608,7 +1608,7 @@ client.scroll([params, [callback]])
 
 Scroll a search request (retrieve the next set of results) after specifying the scroll parameter in a `search()` call.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Collect every title in the index that contains the word "test"
 [source,js]
@@ -1649,7 +1649,7 @@ client.search({
 `scrollId`::
 <<api-param-type-string,`String`>> -- The scroll ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1667,7 +1667,7 @@ TIP: https://github.com/danpaz/bodybuilder[bodybuilder] and https://github.com/s
 
 
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-search.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-search.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Search with a simple query string query
 [source,js]
@@ -1798,7 +1798,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-search.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-search.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1812,7 +1812,7 @@ client.searchShards([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-shards.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1843,7 +1843,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-shards.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1914,7 +1914,7 @@ client.suggest([params, [callback]])
 
 The suggest feature suggests similar looking terms based on a provided text by using a specific suggester.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-suggesters.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-suggesters.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Return query terms suggestions (“auto-correction”)
 [source,js]
@@ -1974,7 +1974,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-suggesters.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/search-suggesters.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1988,7 +1988,7 @@ client.termvectors([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-termvectors.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-termvectors.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2033,7 +2033,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- The id of the document, when not specified a doc param should be supplied.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-termvectors.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-termvectors.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2050,7 +2050,7 @@ Update parts of a document. The required body parameter can contain one of two t
   * a partial document, which will be merged with the existing one.
   * a `script` which will update the document content
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-update.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Update document title using partial document
 [source,js]
@@ -2173,7 +2173,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-update.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2187,7 +2187,7 @@ client.updateByQuery([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/docs-update-by-query.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2286,7 +2286,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/docs-update-by-query.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2337,7 +2337,7 @@ client.cat.allocation([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-allocation.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-allocation.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2389,7 +2389,7 @@ client.cat.count([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-count.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-count.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2426,7 +2426,7 @@ client.cat.fielddata([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-fielddata.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-fielddata.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2478,7 +2478,7 @@ client.cat.health([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-health.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-health.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2515,7 +2515,7 @@ client.cat.help([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2540,7 +2540,7 @@ client.cat.indices([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-indices.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-indices.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2594,7 +2594,7 @@ client.cat.master([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-master.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-master.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2629,7 +2629,7 @@ client.cat.nodeattrs([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodeattrs.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-nodeattrs.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2664,7 +2664,7 @@ client.cat.nodes([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodes.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-nodes.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2701,7 +2701,7 @@ client.cat.pendingTasks([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-pending-tasks.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-pending-tasks.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2736,7 +2736,7 @@ client.cat.plugins([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-plugins.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-plugins.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2771,7 +2771,7 @@ client.cat.recovery([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-recovery.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-recovery.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2821,7 +2821,7 @@ client.cat.repositories([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-repositories.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2856,7 +2856,7 @@ client.cat.segments([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-segments.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-segments.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2889,7 +2889,7 @@ client.cat.shards([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-shards.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-shards.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2926,7 +2926,7 @@ client.cat.snapshots([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -2963,7 +2963,7 @@ client.cat.tasks([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/tasks.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3004,7 +3004,7 @@ client.cat.templates([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-templates.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-templates.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3041,7 +3041,7 @@ client.cat.threadPool([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-thread-pool.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cat-thread-pool.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3088,7 +3088,7 @@ client.cluster.allocationExplain([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-explain.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-allocation-explain.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3101,7 +3101,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `includeDiskInfo`::
 <<api-param-type-boolean,`Boolean`>> -- Return information about disk usage and shard sizes (default: false)
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-explain.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/cluster-allocation-explain.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3115,7 +3115,7 @@ client.cluster.getSettings([params, [callback]])
 
 Get cluster settings (previously set with `putSettings()`)
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3144,7 +3144,7 @@ client.cluster.health([params, [callback]])
 
 Get a very simple status on the health of the cluster.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-health.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-health.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3203,7 +3203,7 @@ client.cluster.pendingTasks([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-pending.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-pending.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3228,7 +3228,7 @@ client.cluster.putSettings([params, [callback]])
 
 Update cluster wide specific settings.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3243,7 +3243,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `timeout`::
 <<api-param-type-duration-string,`DurationString`>> -- Explicit operation timeout
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/cluster-update-settings.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3257,7 +3257,7 @@ client.cluster.reroute([params, [callback]])
 
 Explicitly execute a cluster reroute allocation command including specific commands.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-reroute.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3278,7 +3278,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `timeout`::
 <<api-param-type-duration-string,`DurationString`>> -- Explicit operation timeout
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/cluster-reroute.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3292,7 +3292,7 @@ client.cluster.state([params, [callback]])
 
 Get comprehensive details about the state of the whole cluster (indices settings, allocations, etc).
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-state.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-state.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3335,7 +3335,7 @@ client.cluster.stats([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-stats.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3362,7 +3362,7 @@ client.indices.analyze([params, [callback]])
 
 Perform the analysis process on a text and return the tokens breakdown of the text.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-analyze.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-analyze.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3397,7 +3397,7 @@ Options:::
  * `"text"`
 
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-analyze.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-analyze.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3411,7 +3411,7 @@ client.indices.clearCache([params, [callback]])
 
 Clear either all caches or specific cached associated with one ore more indices.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-clearcache.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-clearcache.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3446,7 +3446,7 @@ Options:::
 `request`::
 <<api-param-type-boolean,`Boolean`>> -- Clear request cache
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-clearcache.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-clearcache.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3461,7 +3461,7 @@ client.indices.close([params, [callback]])
 Close an index to remove its overhead from the cluster. Closed index is blocked for read/write operations.
 
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-open-close.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3488,7 +3488,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma separated list of indices to close
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3502,7 +3502,7 @@ client.indices.create([params, [callback]])
 
 Create an index in Elasticsearch.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-create-index.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-create-index.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3521,7 +3521,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `index`::
 <<api-param-type-string,`String`>> -- The name of the index
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-create-index.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-create-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3535,7 +3535,7 @@ client.indices.delete([params, [callback]])
 
 Delete an index in Elasticsearch
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-delete-index.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3550,7 +3550,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-delete-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3564,7 +3564,7 @@ client.indices.deleteAlias([params, [callback]])
 
 Delete a specific alias.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3581,7 +3581,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `name`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3595,7 +3595,7 @@ client.indices.deleteTemplate([params, [callback]])
 
 Delete an index template by its name.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3610,7 +3610,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `name`::
 <<api-param-type-string,`String`>> -- The name of the template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3624,7 +3624,7 @@ client.indices.exists([params, [callback]])
 
 Return a boolean indicating whether given index exists.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-exists.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3649,7 +3649,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of indices to check
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-exists.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3663,7 +3663,7 @@ client.indices.existsAlias([params, [callback]])
 
 Return a boolean indicating whether given alias exists.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3690,7 +3690,7 @@ Options:::
 `name`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of alias names to return
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3704,7 +3704,7 @@ client.indices.existsTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3719,7 +3719,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `name`::
 <<api-param-type-string,`String`>> -- The name of the template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3733,7 +3733,7 @@ client.indices.existsType([params, [callback]])
 
 Check if a type/types exists in an index/indices.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-types-exists.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-types-exists.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3760,7 +3760,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to check
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-types-exists.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-types-exists.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3774,7 +3774,7 @@ client.indices.flush([params, [callback]])
 
 Explicitly flush one or more indices.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-flush.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-flush.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3801,7 +3801,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string for all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-flush.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-flush.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3815,7 +3815,7 @@ client.indices.flushSynced([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-synced-flush.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-synced-flush.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3838,7 +3838,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string for all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-synced-flush.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-synced-flush.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3852,7 +3852,7 @@ client.indices.forcemerge([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-forcemerge.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-forcemerge.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3885,7 +3885,7 @@ anything -- TODO: ?
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-forcemerge.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-forcemerge.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3899,7 +3899,7 @@ client.indices.get([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-index.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-get-index.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3942,7 +3942,7 @@ client.indices.getAlias([params, [callback]])
 
 Retrieve a specified alias.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3981,7 +3981,7 @@ client.indices.getFieldMapping([params, [callback]])
 
 Retrieve mapping definition of a specific field.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-field-mapping.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-get-field-mapping.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4024,7 +4024,7 @@ client.indices.getMapping([params, [callback]])
 
 Retrieve mapping definition of index or index/type.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-mapping.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-get-mapping.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4063,7 +4063,7 @@ client.indices.getSettings([params, [callback]])
 
 Retrieve settings for one or more (or all) indices.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-settings.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-get-settings.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4106,7 +4106,7 @@ client.indices.getTemplate([params, [callback]])
 
 Retrieve an index template by its name.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4135,7 +4135,7 @@ client.indices.getUpgrade([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-upgrade.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4170,7 +4170,7 @@ client.indices.open([params, [callback]])
 
 Open a closed index, making it available for search.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-open-close.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4197,7 +4197,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma separated list of indices to open
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-open-close.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4211,7 +4211,7 @@ client.indices.putAlias([params, [callback]])
 
 Create an alias for a specific index/indices.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4228,7 +4228,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `name`::
 <<api-param-type-string,`String`>> -- The name of the alias to be created or updated
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4242,7 +4242,7 @@ client.indices.putMapping([params, [callback]])
 
 Register specific mapping definition for a specific type.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-put-mapping.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-put-mapping.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4273,7 +4273,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The name of the document type
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-put-mapping.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/indices-put-mapping.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4287,7 +4287,7 @@ client.indices.putSettings([params, [callback]])
 
 Change specific index level settings in real time.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-update-settings.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4316,7 +4316,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-update-settings.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/indices-update-settings.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4330,7 +4330,7 @@ client.indices.putTemplate([params, [callback]])
 
 Create an index template that will automatically be applied to new indices created.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-templates.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4351,7 +4351,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `name`::
 <<api-param-type-string,`String`>> -- The name of the template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/indices-templates.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4365,7 +4365,7 @@ client.indices.recovery([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-recovery.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-recovery.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4392,7 +4392,7 @@ client.indices.refresh([params, [callback]])
 
 Explicitly refresh one or more index, making all operations performed since the last refresh available for search.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-refresh.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-refresh.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4415,7 +4415,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-refresh.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-refresh.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4429,7 +4429,7 @@ client.indices.rollover([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-index.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-rollover-index.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4450,7 +4450,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `newIndex`::
 <<api-param-type-string,`String`>> -- The name of the rollover index
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-index.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-rollover-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4464,7 +4464,7 @@ client.indices.segments([params, [callback]])
 
 Retrieve low level segments information that a Lucene index (shard level) is built with.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-segments.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-segments.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4503,7 +4503,7 @@ client.indices.shardStores([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shards-stores.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-shards-stores.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4542,7 +4542,7 @@ client.indices.shrink([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-shrink-index.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4561,7 +4561,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `target`::
 <<api-param-type-string,`String`>> -- The name of the target index to shrink into
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-shrink-index.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4575,7 +4575,7 @@ client.indices.stats([params, [callback]])
 
 Retrieve statistics on different operations happening on an index.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-stats.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-stats.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4619,7 +4619,7 @@ client.indices.updateAliases([params, [callback]])
 
 Update specified aliases.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-aliases.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Perform an atomic alias swap, for a rotating index
 [source,js]
@@ -4645,7 +4645,7 @@ client.indices.updateAliases({
 `masterTimeout`::
 <<api-param-type-duration-string,`DurationString`>> -- Specify timeout for connection to master
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/indices-aliases.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4659,7 +4659,7 @@ client.indices.upgrade([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/indices-upgrade.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4686,7 +4686,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/indices-upgrade.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4700,7 +4700,7 @@ client.indices.validateQuery([params, [callback]])
 
 Validate a potentially expensive query without executing it.
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-validate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/search-validate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4747,7 +4747,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-validate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/search-validate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4761,7 +4761,7 @@ client.ingest.deletePipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-53}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4776,7 +4776,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {plugins-53}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4790,7 +4790,7 @@ client.ingest.getPipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-53}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4815,7 +4815,7 @@ client.ingest.putPipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-53}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4830,7 +4830,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {plugins-53}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4844,7 +4844,7 @@ client.ingest.simulate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-53}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4857,7 +4857,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {plugins-53}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4871,7 +4871,7 @@ client.nodes.hotThreads([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-hot-threads.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-nodes-hot-threads.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4911,7 +4911,7 @@ client.nodes.info([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-info.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-nodes-info.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4940,7 +4940,7 @@ client.nodes.stats([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-stats.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/cluster-nodes-stats.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4988,7 +4988,7 @@ client.snapshot.create([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5005,7 +5005,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `snapshot`::
 <<api-param-type-string,`String`>> -- A snapshot name
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5019,7 +5019,7 @@ client.snapshot.createRepository([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5036,7 +5036,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `repository`::
 <<api-param-type-string,`String`>> -- A repository name
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5050,7 +5050,7 @@ client.snapshot.delete([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5065,7 +5065,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `snapshot`::
 <<api-param-type-string,`String`>> -- A snapshot name
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5079,7 +5079,7 @@ client.snapshot.deleteRepository([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5094,7 +5094,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `repository`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of repository names
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5108,7 +5108,7 @@ client.snapshot.get([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5137,7 +5137,7 @@ client.snapshot.getRepository([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5164,7 +5164,7 @@ client.snapshot.restore([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5181,7 +5181,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `snapshot`::
 <<api-param-type-string,`String`>> -- A snapshot name
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5195,7 +5195,7 @@ client.snapshot.status([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5224,7 +5224,7 @@ client.snapshot.verifyRepository([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/modules-snapshots.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5239,7 +5239,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `repository`::
 <<api-param-type-string,`String`>> -- A repository name
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/modules-snapshots.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5253,7 +5253,7 @@ client.tasks.cancel([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/tasks.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5272,7 +5272,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `taskId`::
 <<api-param-type-string,`String`>> -- Cancel the task with specified task id (node_id:task_number)
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-53}/tasks.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -5286,7 +5286,7 @@ client.tasks.get([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/tasks.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -5311,7 +5311,7 @@ client.tasks.list([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-53}/tasks.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
