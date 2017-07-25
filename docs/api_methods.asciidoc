@@ -15,7 +15,7 @@ client.bulk([params, [callback]])
 
 Perform many index/delete operations in a single API call.
 
-Check the *<<api-conventions>>* and /docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref}/docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Perform three operations in a single request
 [source,js]
@@ -1699,7 +1699,7 @@ client.renderSearchTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref}/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1710,7 +1710,7 @@ Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasti
 `id`::
 <<api-param-type-string,`String`>> -- The id of the stored search template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref}/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -3748,7 +3748,7 @@ client.indices.exists([params, [callback]])
 
 Return a boolean indicating whether given index exists.
 
-Check the *<<api-conventions>>* and http://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref}/indices-exists.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3777,7 +3777,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref}/indices-exists.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4893,7 +4893,7 @@ client.ingest.deletePipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-50}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4908,7 +4908,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {plugins-50}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4922,7 +4922,7 @@ client.ingest.getPipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4947,7 +4947,7 @@ client.ingest.putPipeline([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-50}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4962,7 +4962,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {plugins-50}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -4976,7 +4976,7 @@ client.ingest.simulate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {plugins-50}/ingest.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -4989,7 +4989,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `id`::
 <<api-param-type-string,`String`>> -- Pipeline ID
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {plugins-50}/ingest.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 

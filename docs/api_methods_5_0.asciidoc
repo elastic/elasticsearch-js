@@ -15,7 +15,7 @@ client.bulk([params, [callback]])
 
 Perform many index/delete operations in a single API call.
 
-Check the *<<api-conventions>>* and {ref-50}/5.6/docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-50}/docs-bulk.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Perform three operations in a single request
 [source,js]
@@ -72,7 +72,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>> -- Default index for items which don't provide one
 `body`::
-<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See {ref-50}/5.6/docs-bulk.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object-array,`Object[]`>>, <<api-param-type-json-lines,`JSONLines`>> -- The request body, as either an array of objects or new-line delimited JSON objects. See {ref-50}/docs-bulk.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -86,7 +86,7 @@ client.clearScroll([params, [callback]])
 
 Clear the scroll request created by specifying the scroll parameter to search.
 
-Check the *<<api-conventions>>* and {ref-50}/5.6/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-50}/search-request-scroll.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -97,7 +97,7 @@ Check the *<<api-conventions>>* and {ref-50}/5.6/search-request-scroll.html[the 
 `scrollId`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of scroll IDs to clear
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/5.6//search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -111,7 +111,7 @@ client.count([params, [callback]])
 
 Get the number of documents for the cluster, index, type, or a query.
 
-Check the *<<api-conventions>>* and {ref-50}/5.6//search-count.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-50}/search-count.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Get the number of all documents in the cluster
 [source,js]
@@ -199,7 +199,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of types to restrict the results
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/5.6/search-count.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/search-count.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -213,7 +213,7 @@ client.countPercolate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and {ref-50}/5.6/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-50}/search-percolate.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -258,7 +258,7 @@ Options:::
 `id`::
 <<api-param-type-string,`String`>> -- Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/5.6/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See {ref-50}/search-percolate.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -272,7 +272,7 @@ client.create([params, [callback]])
 
 Adds a typed JSON document in a specific index, making it searchable. If a document with the same `index`, `type`, and `id` already exists, an error will occur.
 
-Check the *<<api-conventions>>* and {ref-50}/5.6/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and {ref-50}/docs-index_.html[the elasticsearch docs] for more information pertaining to this method.
 
 .Create a document
 [source,js]
@@ -336,7 +336,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>> -- The type of the document
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-50}/5.6/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See {ref-50}/docs-index_.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
