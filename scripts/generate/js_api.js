@@ -33,7 +33,9 @@ module.exports = function (branch, done) {
 
   var steps = [
     readSpecFiles,
-    parseSpecFiles,
+    function (done) {
+      parseSpecFiles(branch, done);
+    },
     writeApiFile
   ];
 
@@ -64,11 +66,11 @@ module.exports = function (branch, done) {
     done();
   }
 
-  function parseSpecFiles(done) {
+  function parseSpecFiles(branch, done) {
     var actions = [];
 
     files.forEach(function (spec) {
-      __puke__transformSpec(spec).forEach(function (action) {
+      __puke__transformSpec(branch, spec).forEach(function (action) {
         actions.push(action);
       });
     });
@@ -186,7 +188,7 @@ module.exports = function (branch, done) {
     );
   }
 
-  function __puke__transformSpec(spec) { // eslint-disable-line
+  function __puke__transformSpec(branch, spec) { // eslint-disable-line
     var actions = [];
 
     // itterate all of the specs within the file, should only be one
@@ -197,6 +199,11 @@ module.exports = function (branch, done) {
       if (name === 'cat.aliases') {
         def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
       }
+
+      def.documentation = def.documentation.replace(
+        /^https?:\/\/.+?\/guide\/en\/elasticsearch\/(.+?)\/.+?\//,
+        `https://www.elastic.co/guide/en/elasticsearch/$1/${branch}/`
+      );
 
       var steps = name.split('.');
 
