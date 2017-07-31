@@ -1,20 +1,5 @@
 = elasticsearch.js
 
-:ref: https://www.elastic.co/guide/en/elasticsearch/reference/5.4
-:ref-50: https://www.elastic.co/guide/en/elasticsearch/reference/5.0
-:ref-51: https://www.elastic.co/guide/en/elasticsearch/reference/5.1
-:ref-52: https://www.elastic.co/guide/en/elasticsearch/reference/5.2
-:ref-53: https://www.elastic.co/guide/en/elasticsearch/reference/5.3
-:ref-54: https://www.elastic.co/guide/en/elasticsearch/reference/5.4
-:ref-55: https://www.elastic.co/guide/en/elasticsearch/reference/5.5
-:ref-56: https://www.elastic.co/guide/en/elasticsearch/reference/5.6
-
-:plugins-50: https://www.elastic.co/guide/en/elasticsearch/plugins/5.0
-:plugins-51: https://www.elastic.co/guide/en/elasticsearch/plugins/5.1
-
-
-
-
 include::about.asciidoc[]
 
 include::browser_builds.asciidoc[]
@@ -34,6 +19,8 @@ include::extensions.asciidoc[]
 include::logging.asciidoc[]
 
 include::development.asciidoc[]
+
+include::api_methods_5_5.asciidoc[]
 
 include::api_methods.asciidoc[]
 

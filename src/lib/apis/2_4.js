@@ -83,7 +83,7 @@ api.bulk = ca({
 api.cat = namespace();
 
 /**
- * Perform a [cat.aliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html) request
+ * Perform a [cat.aliases](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/cat.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
@@ -875,7 +875,10 @@ api.clearScroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: 'scrollId',
+  paramAsBody: {
+    param: 'scrollId',
+    body: 'scroll_id'
+  },
   method: 'DELETE'
 });
 
@@ -5302,7 +5305,7 @@ api.reindexRethrottle = ca({
 });
 
 /**
- * Perform a [renderSearchTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/2.4/search-template.html) request
+ * Perform a [renderSearchTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.id - The id of the stored search template
@@ -5354,7 +5357,10 @@ api.scroll = ca({
       fmt: '/_search/scroll'
     }
   ],
-  paramAsBody: 'scrollId',
+  paramAsBody: {
+    param: 'scrollId',
+    body: 'scroll_id'
+  },
   method: 'POST'
 });
 
@@ -5748,7 +5754,7 @@ api.searchShards = ca({
 });
 
 /**
- * Perform a [searchTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
+ * Perform a [searchTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)

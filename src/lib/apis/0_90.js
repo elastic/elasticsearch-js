@@ -5,7 +5,7 @@ var api = module.exports = {};
 api._namespaces = ['cluster', 'indices'];
 
 /**
- * Perform a [bulk](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-bulk.html) request
+ * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-bulk.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.consistency - Explicit write consistency setting for the operation
@@ -73,7 +73,7 @@ api.bulk = ca({
 });
 
 /**
- * Perform a [clearScroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
+ * Perform a [clearScroll](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.scrollId - A comma-separated list of scroll IDs to clear
@@ -94,7 +94,7 @@ api.clearScroll = ca({
 api.cluster = namespace();
 
 /**
- * Perform a [cluster.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
+ * Perform a [cluster.getSettings](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -105,7 +105,7 @@ api.cluster.prototype.getSettings = ca({
 });
 
 /**
- * Perform a [cluster.health](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-health.html) request
+ * Perform a [cluster.health](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-health.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.level=cluster] - Specify the level of detail for returned information
@@ -178,7 +178,7 @@ api.cluster.prototype.health = ca({
 });
 
 /**
- * Perform a [cluster.nodeHotThreads](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-hot-threads.html) request
+ * Perform a [cluster.nodeHotThreads](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-nodes-hot-threads.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.interval - The interval for the second sampling of threads
@@ -223,7 +223,7 @@ api.cluster.prototype.nodeHotThreads = ca({
 });
 
 /**
- * Perform a [cluster.nodeInfo](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-info.html) request
+ * Perform a [cluster.nodeInfo](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-nodes-info.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.all - Return all available information
@@ -296,7 +296,7 @@ api.cluster.prototype.nodeInfo = ca({
 });
 
 /**
- * Perform a [cluster.nodeShutdown](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html) request
+ * Perform a [cluster.nodeShutdown](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-nodes-shutdown.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.delay - Set the delay for the operation (default: 1s)
@@ -329,7 +329,7 @@ api.cluster.prototype.nodeShutdown = ca({
 });
 
 /**
- * Perform a [cluster.nodeStats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-nodes-stats.html) request
+ * Perform a [cluster.nodeStats](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-nodes-stats.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.all - Return all available information
@@ -404,7 +404,7 @@ api.cluster.prototype.nodeStats = ca({
 });
 
 /**
- * Perform a [cluster.pendingTasks](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-pending.html) request
+ * Perform a [cluster.pendingTasks](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-pending.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
@@ -426,7 +426,7 @@ api.cluster.prototype.pendingTasks = ca({
 });
 
 /**
- * Perform a [cluster.putSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
+ * Perform a [cluster.putSettings](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -438,7 +438,7 @@ api.cluster.prototype.putSettings = ca({
 });
 
 /**
- * Perform a [cluster.reroute](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-reroute.html) request
+ * Perform a [cluster.reroute](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-reroute.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.dryRun - Simulate the operation only and return the resulting state
@@ -462,7 +462,7 @@ api.cluster.prototype.reroute = ca({
 });
 
 /**
- * Perform a [cluster.state](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/cluster-state.html) request
+ * Perform a [cluster.state](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/cluster-state.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.filterBlocks - Do not return information about blocks
@@ -514,7 +514,7 @@ api.cluster.prototype.state = ca({
 });
 
 /**
- * Perform a [count](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-count.html) request
+ * Perform a [count](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-count.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -578,7 +578,7 @@ api.count = ca({
 });
 
 /**
- * Perform a [delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-delete.html) request
+ * Perform a [delete](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-delete.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.consistency - Specific write consistency setting for the operation
@@ -653,7 +653,7 @@ api['delete'] = ca({
 });
 
 /**
- * Perform a [deleteByQuery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-delete-by-query.html) request
+ * Perform a [deleteByQuery](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-delete-by-query.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.analyzer - The analyzer to use for the query string
@@ -749,7 +749,7 @@ api.deleteByQuery = ca({
 });
 
 /**
- * Perform a [exists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html) request
+ * Perform a [exists](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
@@ -797,7 +797,7 @@ api.exists = ca({
 });
 
 /**
- * Perform a [explain](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-explain.html) request
+ * Perform a [explain](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-explain.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.analyzeWildcard - Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
@@ -895,7 +895,7 @@ api.explain = ca({
 });
 
 /**
- * Perform a [get](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html) request
+ * Perform a [get](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields to return in the response
@@ -960,7 +960,7 @@ api.get = ca({
 });
 
 /**
- * Perform a [getSource](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-get.html) request
+ * Perform a [getSource](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
@@ -1034,7 +1034,7 @@ api.getSource = ca({
 });
 
 /**
- * Perform a [index](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-index_.html) request
+ * Perform a [index](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-index_.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.consistency - Explicit write consistency setting for the operation
@@ -1147,7 +1147,7 @@ api.index = ca({
 api.indices = namespace();
 
 /**
- * Perform a [indices.analyze](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-analyze.html) request
+ * Perform a [indices.analyze](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-analyze.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.analyzer - The name of the analyzer to use
@@ -1209,7 +1209,7 @@ api.indices.prototype.analyze = ca({
 });
 
 /**
- * Perform a [indices.clearCache](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-clearcache.html) request
+ * Perform a [indices.clearCache](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-clearcache.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.fieldData - Clear field data
@@ -1287,7 +1287,7 @@ api.indices.prototype.clearCache = ca({
 });
 
 /**
- * Perform a [indices.close](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
+ * Perform a [indices.close](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1316,7 +1316,7 @@ api.indices.prototype.close = ca({
 });
 
 /**
- * Perform a [indices.create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-create-index.html) request
+ * Perform a [indices.create](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-create-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1345,7 +1345,7 @@ api.indices.prototype.create = ca({
 });
 
 /**
- * Perform a [indices.delete](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-index.html) request
+ * Perform a [indices.delete](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-delete-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1379,7 +1379,7 @@ api.indices.prototype['delete'] = ca({
 });
 
 /**
- * Perform a [indices.deleteAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.deleteAlias](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit timestamp for the document
@@ -1412,7 +1412,7 @@ api.indices.prototype.deleteAlias = ca({
 });
 
 /**
- * Perform a [indices.deleteMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html) request
+ * Perform a [indices.deleteMapping](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-delete-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
@@ -1441,7 +1441,7 @@ api.indices.prototype.deleteMapping = ca({
 });
 
 /**
- * Perform a [indices.deleteTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
+ * Perform a [indices.deleteTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1470,7 +1470,7 @@ api.indices.prototype.deleteTemplate = ca({
 });
 
 /**
- * Perform a [indices.deleteWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
+ * Perform a [indices.deleteWarmer](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
@@ -1524,7 +1524,7 @@ api.indices.prototype.deleteWarmer = ca({
 });
 
 /**
- * Perform a [indices.exists](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-settings.html) request
+ * Perform a [indices.exists](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-get-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of indices to check
@@ -1542,7 +1542,7 @@ api.indices.prototype.exists = ca({
 });
 
 /**
- * Perform a [indices.existsAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.existsAlias](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -1586,7 +1586,7 @@ api.indices.prototype.existsAlias = ca({
 });
 
 /**
- * Perform a [indices.existsType](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-types-exists.html) request
+ * Perform a [indices.existsType](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-types-exists.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -1620,7 +1620,7 @@ api.indices.prototype.existsType = ca({
 });
 
 /**
- * Perform a [indices.flush](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-flush.html) request
+ * Perform a [indices.flush](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-flush.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.force - Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)
@@ -1667,7 +1667,7 @@ api.indices.prototype.flush = ca({
 });
 
 /**
- * Perform a [indices.getAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.getAlias](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -1710,7 +1710,7 @@ api.indices.prototype.getAlias = ca({
 });
 
 /**
- * Perform a [indices.getAliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.getAliases](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1738,7 +1738,7 @@ api.indices.prototype.getAliases = ca({
 });
 
 /**
- * Perform a [indices.getFieldMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-field-mapping.html) request
+ * Perform a [indices.getFieldMapping](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-get-field-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether the default mapping values should be returned as well
@@ -1791,7 +1791,7 @@ api.indices.prototype.getFieldMapping = ca({
 });
 
 /**
- * Perform a [indices.getMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html) request
+ * Perform a [indices.getMapping](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
@@ -1825,7 +1825,7 @@ api.indices.prototype.getMapping = ca({
 });
 
 /**
- * Perform a [indices.getSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html) request
+ * Perform a [indices.getSettings](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-get-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
@@ -1847,7 +1847,7 @@ api.indices.prototype.getSettings = ca({
 });
 
 /**
- * Perform a [indices.getTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
+ * Perform a [indices.getTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.name - The name of the template
@@ -1869,7 +1869,7 @@ api.indices.prototype.getTemplate = ca({
 });
 
 /**
- * Perform a [indices.getWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
+ * Perform a [indices.getWarmer](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to restrict the operation; use `_all` to perform the operation on all indices
@@ -1915,7 +1915,7 @@ api.indices.prototype.getWarmer = ca({
 });
 
 /**
- * Perform a [indices.open](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
+ * Perform a [indices.open](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1944,7 +1944,7 @@ api.indices.prototype.open = ca({
 });
 
 /**
- * Perform a [indices.optimize](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-optimize.html) request
+ * Perform a [indices.optimize](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-optimize.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flush - Specify whether the index should be flushed after performing the operation (default: true)
@@ -2006,7 +2006,7 @@ api.indices.prototype.optimize = ca({
 });
 
 /**
- * Perform a [indices.putAlias](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.putAlias](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit timestamp for the document
@@ -2060,7 +2060,7 @@ api.indices.prototype.putAlias = ca({
 });
 
 /**
- * Perform a [indices.putMapping](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-put-mapping.html) request
+ * Perform a [indices.putMapping](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-put-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreConflicts - Specify whether to ignore conflicts while updating the mapping (default: false)
@@ -2099,7 +2099,7 @@ api.indices.prototype.putMapping = ca({
 });
 
 /**
- * Perform a [indices.putSettings](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-update-settings.html) request
+ * Perform a [indices.putSettings](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-update-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
@@ -2130,7 +2130,7 @@ api.indices.prototype.putSettings = ca({
 });
 
 /**
- * Perform a [indices.putTemplate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
+ * Perform a [indices.putTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-templates.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-number,`Number`>>} params.order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -2164,7 +2164,7 @@ api.indices.prototype.putTemplate = ca({
 });
 
 /**
- * Perform a [indices.putWarmer](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
+ * Perform a [indices.putWarmer](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-warmers.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
@@ -2211,7 +2211,7 @@ api.indices.prototype.putWarmer = ca({
 });
 
 /**
- * Perform a [indices.refresh](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-refresh.html) request
+ * Perform a [indices.refresh](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-refresh.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -2250,7 +2250,7 @@ api.indices.prototype.refresh = ca({
 });
 
 /**
- * Perform a [indices.segments](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-segments.html) request
+ * Perform a [indices.segments](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-segments.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -2288,7 +2288,7 @@ api.indices.prototype.segments = ca({
 });
 
 /**
- * Perform a [indices.snapshotIndex](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html) request
+ * Perform a [indices.snapshotIndex](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-gateway-snapshot.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -2323,7 +2323,7 @@ api.indices.prototype.snapshotIndex = ca({
 });
 
 /**
- * Perform a [indices.stats](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-stats.html) request
+ * Perform a [indices.stats](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-stats.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.all - Return all available information
@@ -2440,7 +2440,7 @@ api.indices.prototype.stats = ca({
 });
 
 /**
- * Perform a [indices.status](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-status.html) request
+ * Perform a [indices.status](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-status.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -2486,7 +2486,7 @@ api.indices.prototype.status = ca({
 });
 
 /**
- * Perform a [indices.updateAliases](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
+ * Perform a [indices.updateAliases](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/indices-aliases.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Request timeout
@@ -2511,7 +2511,7 @@ api.indices.prototype.updateAliases = ca({
 });
 
 /**
- * Perform a [indices.validateQuery](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-validate.html) request
+ * Perform a [indices.validateQuery](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-validate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.explain - Return detailed information about the error
@@ -2585,7 +2585,7 @@ api.info = ca({
 });
 
 /**
- * Perform a [mget](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-multi-get.html) request
+ * Perform a [mget](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-multi-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields to return in the response
@@ -2653,7 +2653,7 @@ api.mget = ca({
 });
 
 /**
- * Perform a [mlt](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-more-like-this.html) request
+ * Perform a [mlt](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-more-like-this.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-number,`Number`>>} params.boostTerms - The boost factor
@@ -2775,7 +2775,7 @@ api.mlt = ca({
 });
 
 /**
- * Perform a [msearch](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-multi-search.html) request
+ * Perform a [msearch](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-multi-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
@@ -2827,7 +2827,7 @@ api.msearch = ca({
 });
 
 /**
- * Perform a [percolate](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-percolate.html) request
+ * Perform a [percolate](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-percolate.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
@@ -2870,7 +2870,7 @@ api.ping = ca({
 });
 
 /**
- * Perform a [scroll](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
+ * Perform a [scroll](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-request-scroll.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
@@ -2904,7 +2904,7 @@ api.scroll = ca({
 });
 
 /**
- * Perform a [search](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-search.html) request
+ * Perform a [search](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.analyzer - The analyzer to use for the query string
@@ -3093,7 +3093,7 @@ api.search = ca({
 });
 
 /**
- * Perform a [suggest](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/search-search.html) request
+ * Perform a [suggest](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/search-search.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} [params.ignoreIndices=none] - When performed on multiple indices, allows to ignore `missing` ones
@@ -3140,7 +3140,7 @@ api.suggest = ca({
 });
 
 /**
- * Perform a [update](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-update.html) request
+ * Perform a [update](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-update.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.consistency - Explicit write consistency setting for the operation
@@ -3244,7 +3244,7 @@ api.update = ca({
 });
 
 /**
- * Perform a [create](http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/docs-index_.html) request
+ * Perform a [create](https://www.elastic.co/guide/en/elasticsearch/reference/0.90/docs-index_.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.consistency - Explicit write consistency setting for the operation
