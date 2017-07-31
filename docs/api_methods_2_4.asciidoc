@@ -1478,7 +1478,7 @@ client.renderSearchTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1489,7 +1489,7 @@ Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasti
 `id`::
 <<api-param-type-string,`String`>> -- The id of the stored search template
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -1818,7 +1818,7 @@ client.searchTemplate([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1859,7 +1859,7 @@ Options:::
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-template.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 
@@ -2284,7 +2284,7 @@ client.cat.aliases([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/2.4/cat.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
