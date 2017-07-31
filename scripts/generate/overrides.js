@@ -252,7 +252,7 @@ function (spec) {
     }
   },
   {
-    version: '>=5.3',
+    version: '>=2.0',
     paramAsBody: {
       scroll: {
         param: 'scrollId',
