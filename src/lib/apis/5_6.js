@@ -4348,8 +4348,6 @@ api.indices.prototype.recovery = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
- * @param {<<api-param-type-boolean,`Boolean`>>} params.force - Force a refresh even if not required
- * @param {anything} params.operationThreading - TODO: ?
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.refresh = ca({
@@ -4372,13 +4370,6 @@ api.indices.prototype.refresh = ca({
         'all'
       ],
       name: 'expand_wildcards'
-    },
-    force: {
-      type: 'boolean',
-      'default': false
-    },
-    operationThreading: {
-      name: 'operation_threading'
     }
   },
   urls: [
@@ -5197,6 +5188,7 @@ api.mpercolate = ca({
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+ * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -5219,6 +5211,11 @@ api.msearch = ca({
     typedKeys: {
       type: 'boolean',
       name: 'typed_keys'
+    },
+    preFilterShardSize: {
+      type: 'number',
+      'default': 128,
+      name: 'pre_filter_shard_size'
     }
   },
   urls: [
@@ -6120,6 +6117,8 @@ api.scroll = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {<<api-param-type-number,`Number`>>} [params.batchedReduceSize=512] - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
+ * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default grows with the number of nodes in the cluster but is at most 256.] - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+ * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -6272,6 +6271,16 @@ api.search = ca({
       type: 'number',
       'default': 512,
       name: 'batched_reduce_size'
+    },
+    maxConcurrentShardRequests: {
+      type: 'number',
+      'default': 'The default grows with the number of nodes in the cluster but is at most 256.',
+      name: 'max_concurrent_shard_requests'
+    },
+    preFilterShardSize: {
+      type: 'number',
+      'default': 128,
+      name: 'pre_filter_shard_size'
     }
   },
   urls: [
