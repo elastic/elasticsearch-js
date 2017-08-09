@@ -1,6 +1,6 @@
 module.exports = {
+  '_default': require('./5_5'),
   '5.5': require('./5_5'),
-  '_default': require('./5_4'),
   '5.4': require('./5_4'),
   '5.3': require('./5_3'),
   '5.2': require('./5_2'),

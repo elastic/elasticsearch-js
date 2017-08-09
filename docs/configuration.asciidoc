@@ -52,7 +52,7 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `'5.4'`
+Default ::: `'5.5'`
 
 Options in node :::
   * `'5.5'`
