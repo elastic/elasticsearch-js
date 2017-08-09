@@ -1,6 +1,11 @@
 [[changelog]]
 == Changelog
 
+=== 13.3.0 (Aug 9 2017)
+  
+  * apiVersion `"5.5"` is now the default
+  * Use JSON version of scroll/clearScroll API in for apiVerion 2.0+ https://github.com/elastic/elasticsearch-js/pull/576[#576]
+
 === 13.2.0 (Jun 21 2017)
 
   * Added `sniffedNodesFilterPath` config parameter to allow customizing the `filter_path` sent when sniffing for new nodes. https://github.com/elastic/elasticsearch-js/pull/559[#599]
