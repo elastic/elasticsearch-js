@@ -1,5 +1,5 @@
 [[logging]]
-== Setup logging
+== Setup Logging
 Every application needs to have some solution for logging, and there isn't a standard in JavaScript, so instead of forcing you to rely on a specific logging module we created a bare bones logging solution and <<logging-customization>> will show you how to configure it. That said, our implementation of logging is very minimal and ***it is highly recommended that you use something like https://github.com/trentm/node-bunyan[Bunyan] once you move to production***.
 
 === Using A Library
