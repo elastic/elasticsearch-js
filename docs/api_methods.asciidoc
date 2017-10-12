@@ -1748,7 +1748,7 @@ client.search({
   if (response.hits.total > allTitles.length) {
     // ask elasticsearch for the next set of hits from this search
     client.scroll({
-      scrollId: response._scroll_id,
+      scroll_id: response._scroll_id,
       scroll: '30s'
     }, getMoreUntilDone);
   } else {
@@ -1764,7 +1764,7 @@ client.search({
 [horizontal]
 `scroll`::
 <<api-param-type-duration-string,`DurationString`>> -- Specify how long a consistent view of the index should be maintained for scrolled search
-`scrollId`::
+`scroll_id`::
 <<api-param-type-string,`String`>> -- The scroll ID
 `body`::
 <<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/5.5/search-request-scroll.html[the elasticsearch docs] for details about what can be specified here.
