@@ -11,7 +11,7 @@ var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
 var namespace = require('../client_action').namespaceFactory;
 var api = module.exports = {};
 
-api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'ingest.prototype.processor', 'nodes', 'remote', 'snapshot', 'tasks'];
+api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', 'tasks'];
 
 /**
  * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/docs-bulk.html) request
@@ -853,6 +853,7 @@ api.cat.prototype.repositories = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {<<api-param-type-string,`String`>>} params.bytes - The unit in which to display byte values
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.h - Comma-separated list of column names to display
  * @param {<<api-param-type-boolean,`Boolean`>>} params.help - Return help information
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.s - Comma-separated list of column names or column aliases to sort by
@@ -863,6 +864,22 @@ api.cat.prototype.segments = ca({
   params: {
     format: {
       type: 'string'
+    },
+    bytes: {
+      type: 'enum',
+      options: [
+        'b',
+        'k',
+        'kb',
+        'm',
+        'mb',
+        'g',
+        'gb',
+        't',
+        'tb',
+        'p',
+        'pb'
+      ]
     },
     h: {
       type: 'list'
@@ -899,6 +916,7 @@ api.cat.prototype.segments = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.format - a short version of the Accept header, e.g. json, yaml
+ * @param {<<api-param-type-string,`String`>>} params.bytes - The unit in which to display byte values
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.h - Comma-separated list of column names to display
@@ -911,6 +929,22 @@ api.cat.prototype.shards = ca({
   params: {
     format: {
       type: 'string'
+    },
+    bytes: {
+      type: 'enum',
+      options: [
+        'b',
+        'k',
+        'kb',
+        'm',
+        'mb',
+        'g',
+        'gb',
+        't',
+        'tb',
+        'p',
+        'pb'
+      ]
     },
     local: {
       type: 'boolean'
@@ -1409,6 +1443,17 @@ api.cluster.prototype.putSettings = ca({
 });
 
 /**
+ * Perform a [cluster.remoteInfo](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/cluster-remote-info.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.cluster.prototype.remoteInfo = ca({
+  url: {
+    fmt: '/_remote/info'
+  }
+});
+
+/**
  * Perform a [cluster.reroute](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/cluster-reroute.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -1592,13 +1637,14 @@ api.cluster.prototype.stats = ca({
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-number,`Number`>>} params.minScore - Include only documents with a specific `_score` value in the result
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
- * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.routing - A comma-separated list of specific routing values
  * @param {<<api-param-type-string,`String`>>} params.q - Query in the Lucene query string syntax
  * @param {<<api-param-type-string,`String`>>} params.analyzer - The analyzer to use for the query string
  * @param {<<api-param-type-boolean,`Boolean`>>} params.analyzeWildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
  * @param {<<api-param-type-string,`String`>>} [params.defaultOperator=OR] - The default operator for query string query (AND or OR)
  * @param {<<api-param-type-string,`String`>>} params.df - The field to use as default where no field prefix is given in the query string
  * @param {<<api-param-type-boolean,`Boolean`>>} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+ * @param {<<api-param-type-number,`Number`>>} params.terminateAfter - The maximum count for each shard, upon reaching which the query execution will terminate early
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of indices to restrict the results
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of types to restrict the results
  */
@@ -1631,7 +1677,7 @@ api.count = ca({
       type: 'string'
     },
     routing: {
-      type: 'string'
+      type: 'list'
     },
     q: {
       type: 'string'
@@ -1657,6 +1703,10 @@ api.count = ca({
     },
     lenient: {
       type: 'boolean'
+    },
+    terminateAfter: {
+      type: 'number',
+      name: 'terminate_after'
     }
   },
   urls: [
@@ -2046,10 +2096,20 @@ api.deleteByQuery = ca({
  * Perform a [deleteScript](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>} params.id - Script ID
- * @param {<<api-param-type-string,`String`>>} params.lang - Script language
  */
 api.deleteScript = ca({
+  params: {
+    timeout: {
+      type: 'time'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
   url: {
     fmt: '/_scripts/<%=id%>',
     req: {
@@ -2447,7 +2507,6 @@ api.get = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.id - Script ID
- * @param {<<api-param-type-string,`String`>>} params.lang - Script language
  */
 api.getScript = ca({
   url: {
@@ -4724,14 +4783,12 @@ api.ingest.prototype.getPipeline = ca({
   ]
 });
 
-api.ingest.prototype.processor = namespace();
-
 /**
- * Perform a [ingest.processor.grok](https://www.elastic.co/guide/en/elasticsearch/plugins/6.0/ingest.html) request
+ * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/plugins/6.0/ingest.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
-api.ingest.prototype.processor.prototype.grok = ca({
+api.ingest.prototype.processorGrok = ca({
   url: {
     fmt: '/_ingest/processor/grok'
   }
@@ -5520,12 +5577,20 @@ api.ping = ca({
  * Perform a [putScript](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>} params.context - Context name to compile script against
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
+ * @param {<<api-param-type-string,`String`>>} params.context - Script context
  * @param {<<api-param-type-string,`String`>>} params.id - Script ID
- * @param {<<api-param-type-string,`String`>>} params.lang - Script language
  */
 api.putScript = ca({
   params: {
+    timeout: {
+      type: 'time'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
     context: {
       type: 'string'
     }
@@ -5537,7 +5602,9 @@ api.putScript = ca({
         id: {
           type: 'string'
         },
-        context: {}
+        context: {
+          type: 'string'
+        }
       }
     },
     {
@@ -5623,19 +5690,6 @@ api.reindexRethrottle = ca({
     }
   },
   method: 'POST'
-});
-
-api.remote = namespace();
-
-/**
- * Perform a [remote.info](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/cluster-remote-info.html) request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- */
-api.remote.prototype.info = ca({
-  url: {
-    fmt: '/_remote/info'
-  }
 });
 
 /**
@@ -6399,17 +6453,16 @@ api.tasks = namespace();
  * Perform a [tasks.cancel](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/tasks.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
  * @param {<<api-param-type-string,`String`>>} params.parentNode - Cancel tasks with specified parent node.
- * @param {<<api-param-type-string,`String`>>} params.parentTask - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+ * @param {<<api-param-type-string,`String`>>} params.parentTaskId - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
  * @param {<<api-param-type-string,`String`>>} params.taskId - Cancel the task with specified task id (node_id:task_number)
  */
 api.tasks.prototype.cancel = ca({
   params: {
-    nodeId: {
-      type: 'list',
-      name: 'node_id'
+    nodes: {
+      type: 'list'
     },
     actions: {
       type: 'list'
@@ -6418,9 +6471,9 @@ api.tasks.prototype.cancel = ca({
       type: 'string',
       name: 'parent_node'
     },
-    parentTask: {
+    parentTaskId: {
       type: 'string',
-      name: 'parent_task'
+      name: 'parent_task_id'
     }
   },
   urls: [
@@ -6467,19 +6520,18 @@ api.tasks.prototype.get = ca({
  * Perform a [tasks.list](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/tasks.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.detailed - Return detailed task information (default: false)
  * @param {<<api-param-type-string,`String`>>} params.parentNode - Return tasks with specified parent node.
- * @param {<<api-param-type-string,`String`>>} params.parentTask - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
+ * @param {<<api-param-type-string,`String`>>} params.parentTaskId - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
  * @param {<<api-param-type-string,`String`>>} [params.groupBy=nodes] - Group tasks by nodes or parent/child relationships
  */
 api.tasks.prototype.list = ca({
   params: {
-    nodeId: {
-      type: 'list',
-      name: 'node_id'
+    nodes: {
+      type: 'list'
     },
     actions: {
       type: 'list'
@@ -6491,9 +6543,9 @@ api.tasks.prototype.list = ca({
       type: 'string',
       name: 'parent_node'
     },
-    parentTask: {
+    parentTaskId: {
       type: 'string',
-      name: 'parent_task'
+      name: 'parent_task_id'
     },
     waitForCompletion: {
       type: 'boolean',
