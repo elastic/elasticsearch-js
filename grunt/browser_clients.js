@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       'copy:dist_to_named_dir',
       'compress:' + type + '_zip',
       'compress:' + type + '_tarball',
-      's3:upload_archives'
+      'aws_s3:upload_archives'
     ]);
   });
 
