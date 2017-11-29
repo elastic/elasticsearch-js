@@ -33,7 +33,14 @@ JqueryConnector.prototype.request = function (params, cb) {
       });
     })
     .fail(function (a, b, err) {
-      cb(new ConnectionFault(err && err.message));
+      // if response is available, execute cb. Else throw ConnectionFault
+      if (a && a.responseText) {
+        cb(null, a.responseText, a.statusCode(), {
+          'content-type': a.getResponseHeader('content-type')
+        });
+      } else {
+        cb(new ConnectionFault(err && err.message));
+      }
     });
 
   return function () {
