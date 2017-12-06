@@ -76,7 +76,7 @@ For many searches you will want to define a search document that tells elasticse
 
   * https://www.youtube.com/watch?v=52G5ZzE0XpY#t=1471[Clinton Gormley "Getting down and dirty with Elasticsearch"]
   * http://okfnlabs.org/blog/2013/07/01/elasticsearch-query-tutorial.html#query-dsl-overview[Querying Elasticsearch - A Tutorial and Guide]
-  * http://exploringelasticsearch.com/book/searching-data/the-query-dsl-and-the-search-api.html[The Query DSL and the Search API - Searching Data - Exploring Elasticsearch]
+  * http://exploringelasticsearch.com/searching_data.html#ch-searching-data[The Search API - Searching Data - Exploring Elasticsearch]
 
 Now for some examples using the Query DSL.
 
