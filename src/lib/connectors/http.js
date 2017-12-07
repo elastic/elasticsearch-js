@@ -106,13 +106,17 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};
   var host = this.host;
-
+  var proxy = host.proxy;
+  var proxyUrlObj = null;
+  if(proxy){
+      proxyUrlObj = parseUrl(proxy);
+  }
   var reqParams = {
     method: params.method || 'GET',
     protocol: host.protocol + ':',
-    hostname: host.host,
-    port: host.port,
-    path: (host.path || '') + (params.path || ''),
+    hostname: proxyUrlObj?proxyUrlObj.hostname:host.host,
+    port: proxyUrlObj?proxyUrlObj.port:host.port,
+    path: proxyUrlObj?(host.host+":"+host.port+(host.path || '') + (params.path || '')):((host.path || '') + (params.path || '')),
     headers: host.getHeaders(params.headers),
     agent: this.agent
   };
