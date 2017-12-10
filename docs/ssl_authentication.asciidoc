@@ -22,7 +22,7 @@ var client = new elasticsearch.Client({
   host: [
     {
       host: 'es1.internal.org',
-      auth: 'user:password'
+      auth: 'user:password',
       protocol: 'https',
       port: 9200
     }
