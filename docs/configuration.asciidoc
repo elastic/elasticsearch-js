@@ -52,9 +52,10 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `'6.0'`
+Default ::: `'6.1'`
 
 Options in node :::
+  * `'6.1'`
   * `'6.0'`
   * `'5.6'`
   * `'5.5'`
@@ -67,15 +68,17 @@ Options in node :::
   * `'1.7'`
   * `'0.90'`
   * `'6.x'` (unstable)
+  * `'6.2'` (unstable)
   * `'master'` (unstable)
 
 Options in the browser :::
+  * `'6.1'`
   * `'6.0'`
   * `'5.6'`
   * `'5.5'`
   * `'5.4'`
-  * `'5.3'`
   * `'6.x'` (unstable)
+  * `'6.2'` (unstable)
   * `'master'` (unstable)
 
 
