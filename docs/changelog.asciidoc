@@ -1,11 +1,14 @@
 [[changelog]]
 == Changelog
 
+=== 14.1.0 (Jan 31 2018)
+  * apiVersion `"6.1"` is now the default
+  * Fix the way that `keepAliveFreeSocketTimeout` is used https://github.com/elastic/elasticsearch-js/pull/600[#600] (Thanks https://github.com/shaharmor[@shaharmor]!)
+
 === 14.0.0 (Nov 14 2017)
   * apiVersion `"6.0"` is now the default
 
 === 13.3.0 (Aug 9 2017)
-  
   * apiVersion `"5.5"` is now the default
   * Use JSON version of scroll/clearScroll API in for apiVerion 2.0+ https://github.com/elastic/elasticsearch-js/pull/576[#576]
 
@@ -46,10 +49,10 @@ Elasticsearch now guarantees backwards compatibility within a specific major ver
   ** Elasticsearch-js ships with individual API definitions for every minor version of Elasticsearch, leading to the library becoming  https://github.com/elastic/elasticsearch-js/issues/490[unnecessarily large]. In an effort to find a compromise between size and ease of use elasticsearch-js now only ships with `apiVersion` options for the latest minor release of Elasticsearch 1.x and 2.x (1.7 and 2.4 at this time).
 +
 If you use an older version of Elasticsearch 1.x or 2.x, please consider upgrading to get the latest features and bug fixes (https://www.elastic.co/support_policy[see section 7.1 of the support policy]). If you cannot upgrade then you have two options:
-  
+
   1. Use the `apiVersion` that matches the **major** version of your Elasticsearch install (1.4 => 1.7, 2.0 => 2.4, etc.). This definition may include new APIs or parameters that are mentioned in the docs but not actually available in your Elasticsearch version, but any methods or parameter you were using before 13.0 should work perfectly.
   2. Download the API definition file for the version you are using from the https://github.com/elastic/elasticsearch-js/tree/da99740e1196068bdc03f830a0964cf5f05f0925/src/lib/apis[12.1.1 source], and then attach it to the client like so:
-+  
++
 [source,js]
 --------
 const elasticsearch = require('elasticsearch')
