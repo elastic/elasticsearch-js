@@ -909,7 +909,7 @@ link:#[back to top]
 client.index([params, [callback]])
 --------
 
-Stores a typed JSON document in an index, making it searchable. When the `id` param is not set, a unique id will be auto-generated. When you specify an `id` either a new document will be created, or an existing document will be updated. To enforce "put-if-absent" behavior set the `opType` to `"create"` or use the `create()` method.
+Stores a typed JSON document in an index, making it searchable. When the `id` param is not set, a unique id will be auto-generated. When you specify an `id` either a new document will be created, or an existing document will be updated. To enforce "error-if-present" behavior set the `opType` to `"create"` or use the `create()` method.
 
 Optimistic concurrency control is performed, when the `version` argument is specified. By default, no version checks are performed.
 
