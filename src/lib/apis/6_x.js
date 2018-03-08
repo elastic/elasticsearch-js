@@ -1048,7 +1048,6 @@ api.cat.prototype.snapshots = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.detailed - Return detailed task information (default: false)
- * @param {<<api-param-type-string,`String`>>} params.parentNode - Return tasks with specified parent node.
  * @param {<<api-param-type-number,`Number`>>} params.parentTask - Return tasks with specified parent task id. Set to -1 to return all.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.h - Comma-separated list of column names to display
  * @param {<<api-param-type-boolean,`Boolean`>>} params.help - Return help information
@@ -1069,10 +1068,6 @@ api.cat.prototype.tasks = ca({
     },
     detailed: {
       type: 'boolean'
-    },
-    parentNode: {
-      type: 'string',
-      name: 'parent_node'
     },
     parentTask: {
       type: 'number',
@@ -5520,17 +5515,12 @@ api.nodes.prototype.stats = ca({
  * Perform a [nodes.usage](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/cluster-nodes-usage.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-boolean,`Boolean`>>} params.human - Whether to return time and byte values in human-readable format.
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - Limit the information returned to the specified metrics
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  */
 api.nodes.prototype.usage = ca({
   params: {
-    human: {
-      type: 'boolean',
-      'default': false
-    },
     timeout: {
       type: 'time'
     }
@@ -5840,6 +5830,7 @@ api.scroll = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-boolean,`Boolean`>>} params.trackScores - Whether to calculate and return scores even if they are not used for sorting
  * @param {<<api-param-type-boolean,`Boolean`>>} params.trackTotalHits - Indicate if the number of documents that match the query should be tracked
+ * @param {<<api-param-type-boolean,`Boolean`>>} [params.allowPartialSearchResults=true] - Indicate if an error should be returned if there is a partial search failure or timeout
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
@@ -5982,6 +5973,11 @@ api.search = ca({
     trackTotalHits: {
       type: 'boolean',
       name: 'track_total_hits'
+    },
+    allowPartialSearchResults: {
+      type: 'boolean',
+      'default': true,
+      name: 'allow_partial_search_results'
     },
     typedKeys: {
       type: 'boolean',
@@ -6509,7 +6505,6 @@ api.tasks = namespace();
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
- * @param {<<api-param-type-string,`String`>>} params.parentNode - Cancel tasks with specified parent node.
  * @param {<<api-param-type-string,`String`>>} params.parentTaskId - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
  * @param {<<api-param-type-string,`String`>>} params.taskId - Cancel the task with specified task id (node_id:task_number)
  */
@@ -6520,10 +6515,6 @@ api.tasks.prototype.cancel = ca({
     },
     actions: {
       type: 'list'
-    },
-    parentNode: {
-      type: 'string',
-      name: 'parent_node'
     },
     parentTaskId: {
       type: 'string',
@@ -6551,6 +6542,7 @@ api.tasks.prototype.cancel = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-string,`String`>>} params.taskId - Return the task with specified id (node_id:task_number)
  */
 api.tasks.prototype.get = ca({
@@ -6558,6 +6550,9 @@ api.tasks.prototype.get = ca({
     waitForCompletion: {
       type: 'boolean',
       name: 'wait_for_completion'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   url: {
@@ -6577,10 +6572,10 @@ api.tasks.prototype.get = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.actions - A comma-separated list of actions that should be returned. Leave empty to return all.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.detailed - Return detailed task information (default: false)
- * @param {<<api-param-type-string,`String`>>} params.parentNode - Return tasks with specified parent node.
  * @param {<<api-param-type-string,`String`>>} params.parentTaskId - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.waitForCompletion - Wait for the matching tasks to complete (default: false)
  * @param {<<api-param-type-string,`String`>>} [params.groupBy=nodes] - Group tasks by nodes or parent/child relationships
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  */
 api.tasks.prototype.list = ca({
   params: {
@@ -6592,10 +6587,6 @@ api.tasks.prototype.list = ca({
     },
     detailed: {
       type: 'boolean'
-    },
-    parentNode: {
-      type: 'string',
-      name: 'parent_node'
     },
     parentTaskId: {
       type: 'string',
@@ -6614,6 +6605,9 @@ api.tasks.prototype.list = ca({
         'none'
       ],
       name: 'group_by'
+    },
+    timeout: {
+      type: 'time'
     }
   },
   url: {
