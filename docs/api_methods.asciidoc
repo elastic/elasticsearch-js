@@ -1282,7 +1282,7 @@ client.rankEval([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/6.2/docs-rank-eval.html[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/6.2/search-rank-eval.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -1295,7 +1295,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 `type`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of document types to search; leave empty to perform the operation on all types
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/6.2/docs-rank-eval.html[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- The request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/6.2/search-rank-eval.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 

@@ -5638,7 +5638,7 @@ api.putScript = ca({
 });
 
 /**
- * Perform a [rankEval](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/docs-rank-eval.html) request
+ * Perform a [rankEval](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/search-rank-eval.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
