@@ -444,7 +444,7 @@ describe('Http Connector', function () {
       var con = new HttpConnection(new Host());
       var respBody = 'i should not be encoded';
       var server = nock('http://localhost:9200')
-      .matchHeader('accept-encoding', undefined)
+      .matchHeader('Accept-Encoding', undefined)
       .get('/')
       .once()
       .reply(200, respBody);
@@ -460,7 +460,7 @@ describe('Http Connector', function () {
       var con = new HttpConnection(new Host({ suggestCompression: true }));
       var respBody = 'i should be encoded';
       var server = nock('http://localhost:9200')
-      .matchHeader('accept-encoding', 'gzip,deflate')
+      .matchHeader('Accept-Encoding', 'gzip,deflate')
       .get('/')
       .once()
       .reply(200, respBody);
