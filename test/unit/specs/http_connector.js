@@ -434,7 +434,7 @@ describe('Http Connector', function () {
       con.request({
         body: body
       }, function (err, resp, status) {
-        expect(http.ClientRequest.prototype.setHeader.lastCall.args).to.eql(['Content-Length', 14]);
+        expect(http.ClientRequest.prototype.setHeader.args.find((arg) => arg[0] === 'Content-Length')).to.eql(['Content-Length', 14]);
         server.done();
         done();
       });
@@ -444,7 +444,10 @@ describe('Http Connector', function () {
       var con = new HttpConnection(new Host());
       var respBody = 'i should not be encoded';
       var server = nock('http://localhost:9200')
-      .matchHeader('accept-encoding', undefined)
+      .matchHeader('accept-encoding', function (v) {
+
+        return v === undefined;
+      })
       .get('/')
       .once()
       .reply(200, respBody);
