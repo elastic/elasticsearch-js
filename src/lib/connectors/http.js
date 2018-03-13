@@ -94,7 +94,6 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
     maxSockets: config.maxSockets,
     maxFreeSockets: config.keepAliveMaxFreeSockets,
     freeSocketKeepAliveTimeout: config.keepAliveFreeSocketTimeout,
-    keepAliveTimeout: config.keepAliveFreeSocketTimeout // support agentkeepalive 2.x
   };
 
   if (this.useSsl) {

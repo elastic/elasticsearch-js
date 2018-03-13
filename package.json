@@ -98,7 +98,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "agentkeepalive": "^2.2.0",
+    "agentkeepalive": "^3.4.1",
     "chalk": "^1.0.0",
     "lodash": "2.4.2",
     "lodash.get": "^4.4.2",
