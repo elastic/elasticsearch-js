@@ -3332,7 +3332,6 @@ api.indices.prototype.flushSynced = ca({
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-number,`Number`>>} params.maxNumSegments - The number of segments the index should be merged into (default: dynamic)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.onlyExpungeDeletes - Specify whether the operation should only expunge deleted documents
- * @param {<<api-param-type-boolean,`Boolean`>>} params.waitForMerge - Specify whether the request should block until the merge process is finished (default: true)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.indices.prototype.forcemerge = ca({
@@ -3366,10 +3365,6 @@ api.indices.prototype.forcemerge = ca({
     onlyExpungeDeletes: {
       type: 'boolean',
       name: 'only_expunge_deletes'
-    },
-    waitForMerge: {
-      type: 'boolean',
-      name: 'wait_for_merge'
     }
   },
   urls: [

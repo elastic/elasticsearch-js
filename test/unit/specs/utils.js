@@ -26,10 +26,10 @@ describe('Utils', function () {
       },
       Function: {
         is: [function () {}, function () {}],
-      },
-      RegExp: {
-        is: [/.*/, new RegExp('a')],
       }
+      // RegExp: {
+      // is: [/.*/, new RegExp('a')],
+      // }
     },
     function (thing, name) {
       describe('#isArrayOf' + name, function () {
