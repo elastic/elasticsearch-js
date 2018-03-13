@@ -61,11 +61,11 @@ function bundleTests(name) {
 
       res.set('Content-Type', 'application/javascript');
 
-      var b = browserify(testFiles[name]);
-      b.transform(aliasify);
-      var str = b.bundle({
+      var b = browserify(testFiles[name], {
         insertGlobals: true
       });
+      b.transform(aliasify);
+      var str = b.bundle();
 
       str.pipe(res);
       str.once('end', done);
@@ -90,7 +90,7 @@ app
   .get('/builds.html', sendFile(root + '/test/browser_build_unit_tests.html'))
 
   // support
-  .get('/expect.js', sendFile(root + '/node_modules/expect.js/expect.js'))
+  .get('/expect.js', sendFile(root + '/node_modules/expect.js/index.js'))
   .get('/mocha.css', sendFile(root + '/node_modules/mocha/mocha.css'))
   .get('/mocha.js', sendFile(root + '/node_modules/mocha/mocha.js'))
   .get('/screencast-reporter.css', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.css'))
