@@ -1,6 +1,10 @@
 [[changelog]]
 == Changelog
 
+=== 14.2.0 (Mar 12 2018)
+  * apiVersion `"6.2"` is now the default
+  * `agentkeepalive` upgraded from 2.2.0 to 3.4.1 for compatibility with IPv6 hostnames in SSL certificates https://github.com/elastic/elasticsearch-js/pull/642[#642]
+
 === 14.1.0 (Jan 31 2018)
   * apiVersion `"6.1"` is now the default
   * Fix the way that `keepAliveFreeSocketTimeout` is used https://github.com/elastic/elasticsearch-js/pull/600[#600] (Thanks https://github.com/shaharmor[@shaharmor]!)
