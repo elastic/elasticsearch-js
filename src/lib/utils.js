@@ -71,7 +71,10 @@ _.each([
 
   _['isArrayOf' + type + 's'] = function (arr) {
     // quick shallow check of arrays
-    return _.isArray(arr) && _.every(arr.slice(0, 10), check);
+    return _.isArray(arr) && _.every(arr.slice(0, 10), function (item) {
+
+      return check(item);
+    });
   };
 });
 
