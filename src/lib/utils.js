@@ -52,31 +52,16 @@ _.deepMerge = function (to, from) {
 };
 
 /**
- * Test if a value is an array and it's contents are of a specific type
+ * Test if a value is an array and its contents are string type
  *
- * @method isArrayOf<Strings|Object|Array|Finite|Function|RegExp>s
+ * @method isArrayOfStrings
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-_.each([
-  'String',
-  'Object',
-  'PlainObject',
-  'Array',
-  'Finite',
-  'Function',
-  'RegExp'
-], function (type) {
-  var check = _['is' + type];
-
-  _['isArrayOf' + type + 's'] = function (arr) {
-    // quick shallow check of arrays
-    return _.isArray(arr) && _.every(arr.slice(0, 10), function (item) {
-
-      return check(item);
-    });
-  };
-});
+_.isArrayOfStrings = function (arr) {
+  // quick shallow check of arrays
+  return _.isArray(arr) && _.every(arr.slice(0, 10), _.isString);
+};
 
 
 /**
