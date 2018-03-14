@@ -6,42 +6,20 @@ var stub = require('../../utils/auto_release_stub').make();
 describe('Utils', function () {
 
   describe('Additional Type Checkers', function () {
-    _.forEach({
-      Object: {
-        is: [[], /regexp/]
-      },
-      PlainObject: {
-        is: [{}, {}]
-      },
-      String: {
-        is: ['steamy', 'poop'],
+    describe('#isArrayOfStrings', function () {
+      const thing = {
+        is: ['creamy', 'poop'],
         not: {}
-      },
-      Array: {
-        is: [['im'], ['usefull']],
-      },
-      Finite: {
-        is: [11123, 777],
-        not: Infinity
-      },
-      Function: {
-        is: [function () {}, function () {}],
-      },
-      RegExp: {
-        is: [/.*/, new RegExp('a')],
-      }
-    },
-    function (thing, name) {
-      describe('#isArrayOf' + name, function () {
-        it('likes arrays of ' + name, function () {
-          expect(_['isArrayOf' + name + 's'](thing.is)).to.be(true);
-        });
+      };
 
-        it('dislikes when there is even one non ' + name, function () {
-          // notice a string in the array
-          thing.is.push(thing.not || ' not ');
-          expect(_['isArrayOf' + name + 's'](thing.is)).to.be(false);
-        });
+      it('likes arrays of strings', function () {
+        expect(_.isArrayOfStrings(thing.is)).to.be(true);
+      });
+
+      it('dislikes when there is even one non string', function () {
+        // notice a string in the array
+        thing.is.push(thing.not || ' not ');
+        expect(_.isArrayOfStrings(thing.is)).to.be(false);
       });
     });
 

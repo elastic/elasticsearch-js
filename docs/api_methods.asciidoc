@@ -3648,8 +3648,6 @@ Options:::
 <<api-param-type-number,`Number`>> -- The number of segments the index should be merged into (default: dynamic)
 `onlyExpungeDeletes`::
 <<api-param-type-boolean,`Boolean`>> -- Specify whether the operation should only expunge deleted documents
-`waitForMerge`::
-<<api-param-type-boolean,`Boolean`>> -- Specify whether the request should block until the merge process is finished (default: true)
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 `body`::

@@ -72,7 +72,7 @@ describe('Client instances creation', function () {
         done();
       };
 
-      var client = new es.Client({
+      client = new es.Client({
         log: [
           { type: 'stream', stream: new NullStream() }
         ]
