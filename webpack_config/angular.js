@@ -1,5 +1,5 @@
-const DefinePlugin = require('webpack/lib/DefinePlugin')
-const { ignoreLoader, rel } = require('./lib')
+const webpack = require('webpack')
+const { jsLoader, ignoreLoader, rel } = require('./lib')
 
 module.exports = {
   context: rel('src'),
@@ -9,7 +9,8 @@ module.exports = {
     path: rel('dist'),
   },
   module: {
-    loaders: [
+    rules: [
+      jsLoader(),
       ignoreLoader([
         'src/lib/connectors/jquery.js',
         'src/lib/connectors/xhr.js',
@@ -18,7 +19,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new DefinePlugin({
+    new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
   ],
