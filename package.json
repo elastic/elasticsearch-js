@@ -45,10 +45,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.41",
+    "@babel/preset-env": "^7.0.0-beta.41",
     "@spalger/eslint-config-personal": "^0.4.0",
     "aliasify": "^2.1.0",
     "async": "~0.8.0",
-    "babel-eslint": "^6.0.4",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^8.0.0-beta",
     "blanket": "^1.2.3",
     "bluebird": "^2.9.14",
     "browserify": "^16.1.1",
@@ -76,7 +79,7 @@
     "grunt-prompt": "^1.3.3",
     "grunt-run": "^0.6.0",
     "grunt-saucelabs": "^8.6.2",
-    "grunt-webpack": "^1.0.11",
+    "grunt-webpack": "^3.1.1",
     "jquery": "^3.3.1",
     "js-yaml": "^3.6.0",
     "load-grunt-config": "^0.19.2",
@@ -94,8 +97,8 @@
     "split": "~0.3.2",
     "through2": "~0.6.3",
     "through2-map": "~1.4.0",
-    "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1",
     "xmlbuilder": "~0.4.3"
   },
   "license": "Apache-2.0",
@@ -106,6 +109,9 @@
     "lodash.get": "^4.4.2",
     "lodash.isempty": "^4.4.0",
     "lodash.trimend": "^4.5.1"
+  },
+  "resolutions": {
+    "grunt-webpack/deep-for-each": "https://github.com/spalger/js-deep-for-each/releases/download/v2.0.2-fix-missing-lodash-dep/deep-for-each-2.0.2.tgz"
   },
   "repository": {
     "type": "git",

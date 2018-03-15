@@ -12,9 +12,23 @@ function ignoreLoader(ignores) {
 
 function jsLoader() {
   return {
-    loader: 'babel-loader',
     test: /\.js$/,
     include: rel('src'),
+    loader: 'babel-loader',
+    options: {
+      babelrc: false,
+      presets: [
+        ['@babel/preset-env', {
+          targets: {
+            browsers: [
+              'last 2 versions',
+              '> 5%',
+              'Safari 7', // for PhantomJS support
+            ]
+          }
+        }]
+      ]
+    }
   }
 }
 
