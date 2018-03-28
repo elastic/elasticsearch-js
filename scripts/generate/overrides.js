@@ -291,7 +291,7 @@ function (spec) {
     }
   },
   {
-    version: '>=5.3,<5.5',
+    version: '>=5.2 <5.5',
     paramAsBody: {
       clearScroll: {
         param: 'scrollId',
