@@ -1208,7 +1208,8 @@ api.clearScroll = ca({
   ],
   paramAsBody: {
     param: 'scrollId',
-    body: 'scroll_id'
+    body: 'scroll_id',
+    castToArray: true
   },
   method: 'DELETE'
 });

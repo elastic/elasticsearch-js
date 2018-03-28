@@ -2734,24 +2734,17 @@ api.indices.prototype.analyze = ca({
  * Perform a [indices.clearCache](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-boolean,`Boolean`>>} params.fieldData - Clear field data
  * @param {<<api-param-type-boolean,`Boolean`>>} params.fielddata - Clear field data
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields to clear when using the `fielddata` parameter (default: all)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.query - Clear query caches
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index name to limit the operation
- * @param {<<api-param-type-boolean,`Boolean`>>} params.recycler - Clear the recycler cache
- * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Clear request cache
  * @param {<<api-param-type-boolean,`Boolean`>>} params.request - Clear request cache
  */
 api.indices.prototype.clearCache = ca({
   params: {
-    fieldData: {
-      type: 'boolean',
-      name: 'field_data'
-    },
     fielddata: {
       type: 'boolean'
     },
@@ -2782,13 +2775,6 @@ api.indices.prototype.clearCache = ca({
     },
     index: {
       type: 'list'
-    },
-    recycler: {
-      type: 'boolean'
-    },
-    requestCache: {
-      type: 'boolean',
-      name: 'request_cache'
     },
     request: {
       type: 'boolean'
