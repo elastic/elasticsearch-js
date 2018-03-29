@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 14.2.2 (Mar 29 2018)
+  * Fix handling of `clearScroll`s `scrollId` parameter in the 5.2 API https://github.com/elastic/elasticsearch-js/issues/646[#646]
+
 === 14.2.1 (Mar 16 2018)
   * Transpile versions of the browser clients to ensure legacy browser compatibility https://github.com/elastic/elasticsearch-js/pull/645[#645]
 
