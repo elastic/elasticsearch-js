@@ -10,7 +10,6 @@ if (BROWSER) {
 }
 
 var _ = require('lodash-2');
-var Utils = require('../../../src/lib/utils');
 var path = require('path');
 var fs = require('fs');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
@@ -131,7 +130,7 @@ module.exports = {
         ]);
       };
 
-      Utils.nextTick(cb);
+      process.nextTick(cb);
     }
   },
   get: function () {
