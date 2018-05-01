@@ -3,7 +3,7 @@ describe('File Logger', function () {
   var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
   var _ = require('lodash-2');
-  var Utils = require('../../../src/lib/utils');
+  var utils = require('../../../src/lib/utils');
   var parentLog;
   var logger;
   var expect = require('expect.js');
@@ -16,7 +16,7 @@ describe('File Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-    logger && Utils.clearWriteStreamBuffer(logger.stream);
+    logger && utils.clearWriteStreamBuffer(logger.stream);
   });
 
   function makeLogger(parent, levels) {

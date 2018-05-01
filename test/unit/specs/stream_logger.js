@@ -5,7 +5,7 @@ describe('Stream Logger', function () {
   var once = require('events').EventEmitter.prototype.once;
   var stream = new MockWritableStream();
   var _ = require('lodash-2');
-  var Utils = require('../../../src/lib/utils');
+  var utils = require('../../../src/lib/utils');
   var expect = require('expect.js');
   var parentLog;
 
@@ -20,7 +20,7 @@ describe('Stream Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-    Utils.clearWriteStreamBuffer(stream);
+    utils.clearWriteStreamBuffer(stream);
   });
 
   function makeLogger(parent, levels) {

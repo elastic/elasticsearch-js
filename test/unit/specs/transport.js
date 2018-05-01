@@ -285,25 +285,25 @@ describe('Transport Class', function () {
 
     describe('randomizeHosts options', function () {
       it('calls _.shuffle be default', function () {
-        var Utils = require('../../../src/lib/utils');
+        var utils = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
-        stub(Utils, 'shuffle');
+        stub(utils, 'shuffle');
         var trans = new Transport({
           hosts: 'localhost'
         });
 
-        expect(Utils.shuffle.callCount).to.eql(1);
+        expect(utils.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
-        var Utils = require('../../../src/lib/utils');
+        var utils = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
-        stub(Utils, 'shuffle');
+        stub(utils, 'shuffle');
         var trans = new Transport({
           hosts: 'localhost',
           randomizeHosts: false
         });
 
-        expect(Utils.shuffle.callCount).to.eql(0);
+        expect(utils.shuffle.callCount).to.eql(0);
       });
     });
   });
