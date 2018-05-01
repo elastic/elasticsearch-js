@@ -1,6 +1,6 @@
 var clock = require('sinon').useFakeTimers();
 var Client = require('../../src/elasticsearch').Client;
-var _ = require('lodash');
+var _ = require('lodash-2');
 var times = require('async').times;
 
 process.once('message', function (port) {
@@ -24,7 +24,7 @@ process.once('message', function (port) {
       .transform(function (sockets, conn) {
         sockets.push(_.values(conn.agent.sockets), _.values(conn.agent.freeSockets));
       }, [])
-      .flatten()
+      .flattenDeep()
       .value();
 
     es.close();

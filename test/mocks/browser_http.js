@@ -27,7 +27,7 @@
 
 module.exports = MockHttpRequest;
 
-var _ = require('lodash');
+var _ = require('lodash-2');
 
 function MockHttpRequest() {
   // These are internal flags and data structures
@@ -227,7 +227,7 @@ MockHttpRequest.prototype = {
       }
       //TODO title case header
       r += header + ': ' + this.responseHeaders[header] + '\r\n';
-    }, this);
+    }.bind(this));
     return r;
   },
 
@@ -355,7 +355,7 @@ MockHttpRequest.prototype = {
     this.error = true;
     _.each(this.requestHeaders, function (header) {
       delete this.requestHeaders[header];
-    }, this);
+    }.bind(this));
 
     this.readyState = this.DONE;
     if (!this.async) {

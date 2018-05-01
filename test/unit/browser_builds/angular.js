@@ -1,5 +1,5 @@
 /* global angular */
-var _ = require('lodash');
+var _ = require('lodash-2');
 var expect = require('expect.js');
 var Promise = require('bluebird');
 var sinon = require('sinon');

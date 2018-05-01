@@ -1,6 +1,6 @@
 describe('Http Connector', function () {
 
-  var _ = require('lodash');
+  var _ = require('lodash-2');
   var expect = require('expect.js');
   var nock = require('nock');
   var sinon = require('sinon');

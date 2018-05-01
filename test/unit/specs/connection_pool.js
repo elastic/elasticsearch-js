@@ -1,7 +1,7 @@
 var ConnectionPool = require('../../../src/lib/connection_pool');
 var Host = require('../../../src/lib/host');
 var ConnectionAbstract = require('../../../src/lib/connection');
-var _ = require('lodash');
+var _ = require('lodash-2');
 var EventEmitter = require('events').EventEmitter;
 var expect = require('expect.js');
 var sinon = require('sinon');
@@ -248,12 +248,12 @@ describe('Connection Pool', function () {
 
       connection.setStatus('dead');
       expect(_.size(clock.timers)).to.eql(1);
-      var id = _(clock.timers).keys().first();
+      var id = _(clock.timers).keys().head();
 
       // it re-dies
       connection.setStatus('dead');
       expect(_.size(clock.timers)).to.eql(1);
-      expect(_(clock.timers).keys().first()).to.not.eql(id);
+      expect(_(clock.timers).keys().head()).to.not.eql(id);
     });
 
     it('does nothing when a connection is re-alive', function () {

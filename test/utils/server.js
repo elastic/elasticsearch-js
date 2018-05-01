@@ -2,7 +2,7 @@
 var express = require('express');
 var http = require('http');
 var fs = require('fs');
-var _ = require('lodash');
+var _ = require('lodash-2');
 var async = require('async');
 var root = require('path').join(__dirname, '../..');
 var browserify = require('browserify');
