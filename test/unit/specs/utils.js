@@ -1,3 +1,4 @@
+var _ = require('lodash-2');
 var Utils = require('../../../src/lib/utils');
 var expect = require('expect.js');
 
@@ -71,7 +72,7 @@ describe('Utils', function () {
 
 
     describe('#isInterval', function () {
-      Utils.forEach({
+      _.forEach({
         M: 'months',
         w: 'weeks',
         d: 'days',
@@ -273,7 +274,7 @@ describe('Utils', function () {
     });
     it('returns false when the transform function returns undefined', function () {
       expect(Utils.createArray(['str', 1], function (val) {
-        if (Utils.isString(val)) {
+        if (_.isString(val)) {
           return {
             val: val
           };
@@ -327,7 +328,7 @@ describe('Utils', function () {
   });
 
   describe('#applyArgs', function () {
-    Utils.times(10, function (i) {
+    _.times(10, function (i) {
       var method = i > 5 ? 'apply' : 'call';
       var argCount = i + 1;
       var slice = 1;
@@ -336,7 +337,7 @@ describe('Utils', function () {
         var func = function () {};
         stub(func, method);
 
-        var args = Utils.map(new Array(i), function (val, i) { return i; });
+        var args = _.map(new Array(i), function (val, i) { return i; });
         Utils.applyArgs(func, null, args);
 
         expect(func[method].callCount).to.eql(1);
@@ -352,7 +353,7 @@ describe('Utils', function () {
         var func = function () {};
         stub(func, method);
 
-        var args = Utils.map(new Array(argCount), function (val, i) { return i; });
+        var args = _.map(new Array(argCount), function (val, i) { return i; });
         var expected = args.slice(slice);
         Utils.applyArgs(func, null, args, slice);
 

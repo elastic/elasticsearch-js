@@ -2,6 +2,7 @@ describe('File Logger', function () {
   var Log = require('../../../src/lib/log');
   var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
+  var _ = require('lodash-2');
   var Utils = require('../../../src/lib/utils');
   var parentLog;
   var logger;
@@ -49,7 +50,7 @@ describe('File Logger', function () {
         var logger = makeLogger();
 
         // write the line 10 times
-        Utils.times(10, function () {
+        _.times(10, function () {
           logger.onDebug(line);
         });
 
