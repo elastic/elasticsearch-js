@@ -72,7 +72,7 @@ A very common use-case for elasticsearch is to sort through large collections of
 
 ==== Elasticsearch Query DSL
 
-For many searches you will want to define a search document that tells elasticsearch exactly how to find the documents you are looking for. To do this you will use the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[elasticsearch query DSL]. If you are not familiar with Elasticsearch's query DSL is it recommended that you research the topic at elasticsearch.org or watch/read one of these introductions:
+For many searches you will want to define a search document that tells elasticsearch exactly how to find the documents you are looking for. To do this you will use the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html[elasticsearch query DSL]. If you are not familiar with Elasticsearch's query DSL it is recommended that you research the topic at elasticsearch.org or watch/read one of these introductions:
 
   * https://www.youtube.com/watch?v=52G5ZzE0XpY#t=1471[Clinton Gormley "Getting down and dirty with Elasticsearch"]
   * http://okfnlabs.org/blog/2013/07/01/elasticsearch-query-tutorial.html#query-dsl-overview[Querying Elasticsearch - A Tutorial and Guide]
