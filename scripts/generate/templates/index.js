@@ -1,6 +1,7 @@
 
-var _ = require('../../../src/lib/utils');
-var utils = require('../../../grunt/utils');
+var _ = require('lodash');
+var utils = require('../../../src/lib/utils');
+var gruntUtils = require('../../../grunt/utils');
 var fs = require('fs');
 var path = require('path');
 
@@ -42,9 +43,10 @@ var templateGlobals = {
   stringify: stringify,
 
   _: _,
+  utils: utils,
 
   indent: function (block, spaces) {
-    var indent = _.repeat(' ', spaces);
+    var indent = utils.repeat(' ', spaces);
     return block.split('\n').map(function (line) {
       return indent + line;
     }).join('\n');
@@ -92,7 +94,7 @@ var templateGlobals = {
 
   partials: templates,
 
-  utils: utils
+  gruntUtils: gruntUtils
 };
 
 fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {

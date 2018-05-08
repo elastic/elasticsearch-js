@@ -1,5 +1,5 @@
 var ca = require('../client_action').makeFactoryWithModifier(function (spec) {
-  return require('../utils').merge(spec, {
+  return require('lodash-2').merge(spec, {
     params: {
       filterPath: {
         type: 'list',

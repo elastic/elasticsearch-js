@@ -15,7 +15,7 @@ _.each(actions, function (action) {
     .slice(0, -1)
     .filter(step => step !== 'prototype')
     .join('.prototype.');
-    
+
   if (_.include(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
@@ -23,12 +23,12 @@ _.each(actions, function (action) {
 api.<%= namespace %> = namespace();<%
   }%>
 
-<%= _.trimEnd(partials.client_action(action)) %><%
+<%= utils.trimEnd(partials.client_action(action)) %><%
 
 });
 
 _.each(proxies, function (action) {%>
 
-<%= _.trimEnd(partials.client_action_proxy(action)) %><%
+<%= utils.trimEnd(partials.client_action_proxy(action)) %><%
 });
 %>
