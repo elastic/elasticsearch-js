@@ -1,5 +1,5 @@
 var _ = require('lodash-2');
-var utils = require('../utils');
+var gruntUtils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
 var release = process.env.ES_RELEASE;
@@ -78,7 +78,7 @@ var versionedOpts = [
 ];
 
 // targets for each branch
-utils.branches.forEach(function (branch) {
+gruntUtils.branches.forEach(function (branch) {
   exports[branch] = {
     options: Version.fromBranch(branch).mergeOpts(versionedOpts, {
       branch: branch,

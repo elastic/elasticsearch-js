@@ -1,4 +1,4 @@
-var utils = require('../utils');
+var gruntUtils = require('../utils');
 
 var config = {
   generate: {
@@ -52,7 +52,7 @@ var config = {
   }
 };
 
-utils.branches.forEach(function (branch) {
+gruntUtils.branches.forEach(function (branch) {
   config['generate_' + branch] = {
     exec: 'node ./scripts/generate/index.js --branch=' + branch
   };
