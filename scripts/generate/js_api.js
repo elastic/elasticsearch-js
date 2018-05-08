@@ -221,7 +221,7 @@ module.exports = function (branch, done) {
 
       var allParams = _.extend({}, def.url.params, def.url.parts);
       _.forOwn(allParams, (paramSpec, paramName) => {
-        const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
+        const toMerge = utils.get(overrides, ['mergeConcatParams', name, paramName])
         if (toMerge) {
           _.merge(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
