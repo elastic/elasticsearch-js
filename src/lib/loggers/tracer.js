@@ -14,7 +14,8 @@ module.exports = Tracer;
 
 var StreamLogger = require('./stream');
 var fs = require('fs');
-var _ = require('../utils');
+var _ = require('lodash');
+var utils = require('../utils');
 var url = require('url');
 
 function Tracer(log, config) {
@@ -29,7 +30,7 @@ function Tracer(log, config) {
 
   StreamLogger.call(this, log, config);
 }
-_.inherits(Tracer, StreamLogger);
+utils.inherits(Tracer, StreamLogger);
 
 var usefulUrlFields = ['protocol', 'slashes', 'port', 'hostname', 'pathname', 'query'];
 

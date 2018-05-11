@@ -1,5 +1,6 @@
 
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 
 /**
  * Constructs a client action factory that uses specific defaults
@@ -61,7 +62,7 @@ function makeFactoryWithModifier(modifier) {
         return exec(this.transport, spec, _.clone(params), cb);
       } catch (e) {
         if (typeof cb === 'function') {
-          _.nextTick(cb, e);
+          utils.nextTick(cb, e);
         } else {
           var def = this.transport.defer();
           def.reject(e);
@@ -120,7 +121,7 @@ var castType = {
     ));
   },
   duration: function (param, val, name) {
-    if (_.isNumeric(val) || _.isInterval(val)) {
+    if (utils.isNumeric(val) || utils.isInterval(val)) {
       return val;
     } else {
       throw new TypeError(
@@ -151,7 +152,7 @@ var castType = {
     return (val === 'no' || val === 'off') ? false : !!val;
   },
   number: function (param, val, name) {
-    if (_.isNumeric(val)) {
+    if (utils.isNumeric(val)) {
       return val * 1;
     } else {
       throw new TypeError('Invalid ' + name + ': expected a number.');
@@ -170,7 +171,7 @@ var castType = {
     if (typeof val === 'string') {
       return val;
     }
-    else if (_.isNumeric(val)) {
+    else if (utils.isNumeric(val)) {
       return '' + val;
     }
     else if (val instanceof Date) {
@@ -325,7 +326,7 @@ function exec(transport, spec, params, cb) {
           request.ignore = _.isArray(params[key]) ? params[key] : [params[key]];
           break;
         case 'method':
-          request.method = _.toUpperString(params[key]);
+          request.method = utils.toUpperString(params[key]);
           break;
         default:
           var paramSpec = spec.params[key];

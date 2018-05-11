@@ -4,7 +4,7 @@
  */
 module.exports = Json;
 
-var _ = require('../utils');
+var _ = require('lodash');
 
 function Json() {}
 

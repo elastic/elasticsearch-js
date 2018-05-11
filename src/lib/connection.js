@@ -1,6 +1,7 @@
 module.exports = ConnectionAbstract;
 
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 var EventEmitter = require('events').EventEmitter;
 var Log = require('./log');
 var Host = require('./host');
@@ -26,9 +27,9 @@ function ConnectionAbstract(host, config) {
     throw new TypeError('Invalid host');
   }
 
-  _.makeBoundMethods(this);
+  utils.makeBoundMethods(this);
 }
-_.inherits(ConnectionAbstract, EventEmitter);
+utils.inherits(ConnectionAbstract, EventEmitter);
 
 /**
  * Make a request using this connection. Must be overridden by Connection classes, which can add whatever keys to

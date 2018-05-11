@@ -13,7 +13,8 @@
 module.exports = Console;
 
 var LoggerAbstract = require('../logger');
-var _ = require('../utils');
+var _ = require('lodash');
+var utils = require('../utils');
 
 function Console(log, config) {
   LoggerAbstract.call(this, log, config);
@@ -21,7 +22,7 @@ function Console(log, config) {
   // config/state
   this.color = _.has(config, 'color') ? !!config.color : true;
 }
-_.inherits(Console, LoggerAbstract);
+utils.inherits(Console, LoggerAbstract);
 
 /**
  * Override the LoggerAbstract's setup listeners to do a little extra setup
@@ -47,7 +48,7 @@ Console.prototype.write = function (label, message, to) {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-Console.prototype.onError = _.handler(function (e) {
+Console.prototype.onError = utils.handler(function (e) {
   var to = console.error ? 'error' : 'log';
   this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack || e.message, to);
 });
@@ -60,7 +61,7 @@ Console.prototype.onError = _.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onWarning = _.handler(function (msg) {
+Console.prototype.onWarning = utils.handler(function (msg) {
   this.write('WARNING', msg, console.warn ? 'warn' : 'log');
 });
 
@@ -72,7 +73,7 @@ Console.prototype.onWarning = _.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onInfo = _.handler(function (msg) {
+Console.prototype.onInfo = utils.handler(function (msg) {
   this.write('INFO', msg, console.info ? 'info' : 'log');
 });
 
@@ -84,7 +85,7 @@ Console.prototype.onInfo = _.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Console.prototype.onDebug = _.handler(function (msg) {
+Console.prototype.onDebug = utils.handler(function (msg) {
   this.write('DEBUG', msg, console.debug ? 'debug' : 'log');
 });
 /**
@@ -94,6 +95,6 @@ Console.prototype.onDebug = _.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Console.prototype.onTrace = _.handler(function (msg) {
+Console.prototype.onTrace = utils.handler(function (msg) {
   this.write('TRACE', this._formatTraceMessage(msg), 'log');
 });

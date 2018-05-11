@@ -6,7 +6,8 @@ module.exports = Host;
 
 var url = require('url');
 var qs = require('querystring');
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 
 var startsWithProtocolRE = /^([a-z]+:)?\/\//;
 var defaultProto = 'http:';
@@ -123,7 +124,7 @@ function Host(config, globalConfig) {
   }
 
   // make sure that the port is a number
-  if (_.isNumeric(this.port)) {
+  if (utils.isNumeric(this.port)) {
     this.port = parseInt(this.port, 10);
   } else {
     this.port = 9200;

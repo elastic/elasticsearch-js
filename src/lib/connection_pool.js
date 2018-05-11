@@ -9,12 +9,13 @@
 
 module.exports = ConnectionPool;
 
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 var Log = require('./log');
 
 function ConnectionPool(config) {
   config = config || {};
-  _.makeBoundMethods(this);
+  utils.makeBoundMethods(this);
 
   if (!config.log) {
     this.log = new Log();
@@ -27,16 +28,16 @@ function ConnectionPool(config) {
   this._config = config;
 
   // get the selector config var
-  this.selector = _.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
+  this.selector = utils.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
 
   // get the connection class
-  this.Connection = _.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
+  this.Connection = utils.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
     ConnectionPool.defaultConnectionClass);
 
   // time that connections will wait before being revived
   this.deadTimeout = config.hasOwnProperty('deadTimeout') ? config.deadTimeout : 60000;
   this.maxDeadTimeout = config.hasOwnProperty('maxDeadTimeout') ? config.maxDeadTimeout : 18e5;
-  this.calcDeadTimeout = _.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
+  this.calcDeadTimeout = utils.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
 
   // a map of connections to their "id" property, used when sniffing
   this.index = {};
@@ -86,7 +87,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.selector(this._conns.alive, cb);
     } else {
       try {
-        _.nextTick(cb, void 0, this.selector(this._conns.alive));
+        utils.nextTick(cb, void 0, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
@@ -94,7 +95,7 @@ ConnectionPool.prototype.select = function (cb) {
   } else if (this._timeouts.length) {
     this._selectDeadConnection(cb);
   } else {
-    _.nextTick(cb, void 0);
+    utils.nextTick(cb, void 0);
   }
 };
 
@@ -106,7 +107,7 @@ ConnectionPool.prototype.select = function (cb) {
  * @param  {String} oldStatus - the connection's old status
  * @param  {ConnectionAbstract} connection - the connection object itself
  */
-ConnectionPool.prototype.onStatusSet = _.handler(function (status, oldStatus, connection) {
+ConnectionPool.prototype.onStatusSet = utils.handler(function (status, oldStatus, connection) {
   var index;
 
   var died = (status === 'dead');
@@ -200,7 +201,7 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
 
   var ms = this.calcDeadTimeout(timeout.attempt, this.deadTimeout);
   timeout.id = setTimeout(timeout.revive, ms);
-  timeout.runAt = _.now() + ms;
+  timeout.runAt = utils.now() + ms;
 };
 
 ConnectionPool.prototype._selectDeadConnection = function (cb) {
