@@ -16,7 +16,7 @@ _.each(actions, function (action) {
     .filter(step => step !== 'prototype')
     .join('.prototype.');
 
-  if (_.include(namespaces, namespace)) {
+  if (_.includes(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
 

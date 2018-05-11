@@ -99,7 +99,7 @@ function dirRegex(dir, regexp) {
 function dirOpts(dir, opts) {
   opts = _.isArray(opts) ? opts : [opts];
   return dirFilter(dir, function (name) {
-    return _.include(opts, name);
+    return _.includes(opts, name);
   });
 }
 
