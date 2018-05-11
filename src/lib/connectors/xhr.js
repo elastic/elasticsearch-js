@@ -43,7 +43,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
     }
   })
   .compact()
-  .first();
+  .head();
 }
 
 if (!getXhr) {

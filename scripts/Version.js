@@ -1,4 +1,4 @@
-var _ = require('lodash-2');
+var _ = require('lodash');
 var pkg = require('../package.json');
 var branches = [...pkg.config.supported_es_branches, ...pkg.config.unstable_es_branches];
 var semver = require('semver');

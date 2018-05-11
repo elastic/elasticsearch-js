@@ -1,4 +1,4 @@
-var _ = require('lodash-2');
+var _ = require('lodash');
 var gruntUtils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 

@@ -1,4 +1,4 @@
-var _ = require('lodash-2');
+var _ = require('lodash');
 var utils = require('../../../src/lib/utils');
 var expect = require('expect.js');
 

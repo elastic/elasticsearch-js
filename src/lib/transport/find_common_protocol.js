@@ -1,4 +1,4 @@
-var _ = require('lodash-2');
+var _ = require('lodash');
 
 module.exports = function (hosts) {
   if (_.isEmpty(hosts)) return false;

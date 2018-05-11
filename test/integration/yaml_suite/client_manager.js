@@ -9,7 +9,7 @@ if (BROWSER) {
   es = require('../../../src/elasticsearch');
 }
 
-var _ = require('lodash-2');
+var _ = require('lodash');
 var path = require('path');
 var fs = require('fs');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));

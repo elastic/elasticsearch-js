@@ -1,5 +1,5 @@
 var Log = require('../../../src/lib/log');
-var _ = require('lodash-2');
+var _ = require('lodash');
 var expect = require('expect.js');
 
 describe('Log class', function () {

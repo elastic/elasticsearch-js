@@ -191,7 +191,7 @@ module.exports = [
 /* eslint-disable */
 clientActionModifier:
 function (spec) {
-  return require('lodash-2').merge(spec, {
+  return require('lodash').merge(spec, {
     params: {
       filterPath: {
         type: 'list',

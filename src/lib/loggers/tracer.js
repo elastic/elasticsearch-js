@@ -37,7 +37,7 @@ var usefulUrlFields = ['protocol', 'slashes', 'port', 'hostname', 'pathname', 'q
 Tracer.prototype._formatTraceMessage = function (req) {
   var reqUrl = _.pick(url.parse(req.url, true, false), usefulUrlFields);
 
-  var originalHost = url.format(_.pick(reqUrl, 'protocol', 'hostname', 'port'));
+  var originalHost = url.format(_.pick(reqUrl, ['protocol', 'hostname', 'port']));
 
   reqUrl.port = this.curlPort;
   reqUrl.hostname = this.curlHost;

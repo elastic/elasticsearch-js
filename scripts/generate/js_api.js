@@ -223,7 +223,7 @@ module.exports = function (branch, done) {
       _.forOwn(allParams, (paramSpec, paramName) => {
         const toMerge = utils.get(overrides, ['mergeConcatParams', name, paramName])
         if (toMerge) {
-          _.merge(paramSpec, toMerge, (dest, src) => {
+          _.mergeWith(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
               return dest.concat(src)
             }
@@ -274,12 +274,12 @@ module.exports = function (branch, done) {
           name = utils.camelCase(match[1]);
           param = def.url.parts[name] || {};
           target = (param.required || !param.default) ? requiredVars : optionalVars;
-          target[name] = _.omit(param, 'required', 'description', 'name');
+          target[name] = _.omit(param, ['required', 'description', 'name']);
         }
 
         urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
 
-        return _.omit({
+        return _.omitBy({
           fmt: url.replace(urlParamRE, function (full, match) {
             return '<%=' + utils.camelCase(match) + '%>';
           }),

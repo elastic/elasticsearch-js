@@ -7,7 +7,7 @@ var expect = require('expect.js');
 var sinon = require('sinon');
 var nock = require('../../mocks/server.js');
 var through2 = require('through2');
-var _ = require('lodash-2');
+var _ = require('lodash');
 var stub = require('../../utils/auto_release_stub').make();
 
 /**

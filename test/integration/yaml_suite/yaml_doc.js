@@ -9,7 +9,7 @@
  */
 module.exports = YamlDoc;
 
-var _ = require('lodash-2');
+var _ = require('lodash');
 var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;

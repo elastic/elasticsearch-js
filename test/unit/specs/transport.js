@@ -4,7 +4,7 @@ var errors = require('../../../src/lib/errors');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
-var _ = require('lodash-2');
+var _ = require('lodash');
 var nodeList = require('../../fixtures/short_node_list.5.0.json');
 var stub = require('../../utils/auto_release_stub').make();
 
@@ -285,7 +285,6 @@ describe('Transport Class', function () {
 
     describe('randomizeHosts options', function () {
       it('calls _.shuffle be default', function () {
-        var _ = require('lodash');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
         var trans = new Transport({
@@ -295,7 +294,6 @@ describe('Transport Class', function () {
         expect(_.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
-        var _ = require('lodash');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
         var trans = new Transport({

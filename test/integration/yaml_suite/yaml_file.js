@@ -8,7 +8,7 @@ module.exports = YamlFile;
 
 var YamlDoc = require('./yaml_doc');
 var clientManager = require('./client_manager');
-var _ = require('lodash-2');
+var _ = require('lodash');
 var async = require('async');
 
 function YamlFile(filename, docs) {
