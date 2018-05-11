@@ -1,12 +1,11 @@
 var _ = require('lodash');
-var utils = require('./utils');
 
 var extractHostPartsRE1x = /\[(?:(.*)\/)?(.+?):(\d+)\]/;
 
 function makeNodeParser(hostProp) {
   return function (nodes) {
     return _.transform(nodes, function (hosts, node, id) {
-      var address = utils.get(node, hostProp)
+      var address = _.get(node, hostProp)
       if (!address) return;
 
       var host = {

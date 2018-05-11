@@ -23,12 +23,12 @@ _.each(actions, function (action) {
 api.<%= namespace %> = namespace();<%
   }%>
 
-<%= utils.trimEnd(partials.client_action(action)) %><%
+<%= _.trimEnd(partials.client_action(action)) %><%
 
 });
 
 _.each(proxies, function (action) {%>
 
-<%= utils.trimEnd(partials.client_action_proxy(action)) %><%
+<%= _.trimEnd(partials.client_action_proxy(action)) %><%
 });
 %>

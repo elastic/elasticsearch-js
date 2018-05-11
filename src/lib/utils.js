@@ -20,9 +20,6 @@ utils.inherits = nodeUtils.inherits;
  */
 utils.joinPath = path.join; // @todo: unused
 
-utils.get = require('lodash.get');
-utils.trimEnd = require('lodash.trimend');
-
 /**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
  * key, but the values' types don't match to's value is left unmodified. Only Array and Object values are merged - that
