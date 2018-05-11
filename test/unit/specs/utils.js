@@ -158,26 +158,6 @@ describe('Utils', function () {
       });
     });
 
-    describe('#toLowerString', function () {
-      it('transforms normal strings', function () {
-        expect(utils.toLowerString('PASTA')).to.eql('pasta');
-      });
-
-      it('ignores long form empty vals (null, false, undef)', function () {
-        expect(utils.toLowerString(null)).to.eql('');
-        expect(utils.toLowerString(false)).to.eql('');
-        expect(utils.toLowerString(void 0)).to.eql('');
-      });
-
-      it('uses the objects own toString', function () {
-        expect(utils.toLowerString(['A', 'B'])).to.eql('a,b');
-      });
-
-      it('sorta kinda works on objects', function () {
-        expect(utils.toLowerString({ a: 'thing' })).to.eql('[object object]');
-      });
-    });
-
     describe('#toUpperString', function () {
       it('transforms normal strings', function () {
         expect(utils.toUpperString('PASTA')).to.eql('PASTA');

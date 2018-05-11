@@ -93,8 +93,7 @@ function Client(config) {
         Log: require('./log'),
         Logger: require('./logger'),
         NodesToHost: require('./nodes_to_host'),
-        Transport: require('./transport'),
-        utils: require('./utils') // @todo: this is not used in internal code, but decoupling lodash out of it is technically a breaking change from the plugin perspective?
+        Transport: require('./transport')
       }) || Constructor;
     });
   }

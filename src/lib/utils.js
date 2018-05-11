@@ -1,4 +1,3 @@
-var path = require('path');
 var _ = require('lodash');
 var nodeUtils = require('util');
 
@@ -11,14 +10,6 @@ var nodeUtils = require('util');
 var utils = {};
 
 utils.inherits = nodeUtils.inherits;
-
-/**
- * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
- *
- * @method utils.joinPath
- * @type {function}
- */
-utils.joinPath = path.join; // @todo: unused
 
 /**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
@@ -150,23 +141,6 @@ utils.camelCase = adjustWordCase(false, true, '');
 utils.snakeCase = adjustWordCase(false, false, '_');
 
 /**
- * Lower-case a string, and return an empty string if any is not a string
- *
- * @param any {*} - Something or nothing
- * @returns {string}
- */
-utils.toLowerString = function (any) { // @todo: unused
-  if (any) {
-    if (typeof any !== 'string') {
-      any = any.toString();
-    }
-  } else {
-    any = '';
-  }
-  return any.toLowerCase();
-};
-
-/**
  * Upper-case the string, return an empty string if any is not a string
  *
  * @param any {*} - Something or nothing
@@ -230,7 +204,7 @@ utils.repeat = function (what, times) {
  * @param [sliceIndex=0] {Integer} - The index that args should be sliced at, before feeding args to func
  * @returns {*} - the return value of func
  */
-utils.applyArgs = function (func, context, args, sliceIndex) { // @todo: only used inside utils
+utils.applyArgs = function (func, context, args, sliceIndex) {
   sliceIndex = sliceIndex || 0;
   switch (args.length - sliceIndex) {
     case 0:
@@ -280,7 +254,6 @@ utils.handler = function (func) {
   func._provideBound = true;
   return func;
 };
-utils.scheduled = utils.handler; // @todo: never used
 
 /**
  * Creates an "bound" property on an object, which all or a subset of methods from
@@ -307,8 +280,6 @@ utils.makeBoundMethods = function (obj) {
     }
   }
 };
-
-utils.noop = function () {}; // @todo: no longer used (100% compatible with lodash :troll:)
 
 /**
  * Implements the standard "string or constructor" check that I was copy/pasting everywhere
@@ -405,7 +376,7 @@ utils.getUnwrittenFromStream = function (stream) {
   return out;
 };
 
-utils.getStreamWriteBuffer = function (stream) { // @todo: only used internally
+utils.getStreamWriteBuffer = function (stream) {
   if (!stream || !stream._writableState) return;
 
   var writeState = stream._writableState;
@@ -417,7 +388,7 @@ utils.getStreamWriteBuffer = function (stream) { // @todo: only used internally
   }
 };
 
-utils.clearWriteStreamBuffer = function (stream) { // @todo: only used in unit tests
+utils.clearWriteStreamBuffer = function (stream) {
   var buffer = utils.getStreamWriteBuffer(stream);
   return buffer && buffer.splice(0);
 };
