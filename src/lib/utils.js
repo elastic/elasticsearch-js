@@ -246,7 +246,6 @@ utils.nextTick = function (cb) {
  * });
  * ```
  *
- * @alias utils.scheduled
  * @param  {Function} func - The method that is being defined
  * @return {Function}
  */
