@@ -78,7 +78,7 @@ describe('Stream Logger', function () {
           once.call(process, event, handler);
         });
 
-        var logger = makeLogger();
+        makeLogger();
 
         expect(function () {
           // call the event handler

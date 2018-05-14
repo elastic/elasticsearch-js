@@ -1,13 +1,10 @@
 module.exports = function (branch) {
   var path = require('path');
-  var jsYaml = require('js-yaml');
   var YamlFile = require('./yaml_file');
   var root = require('find-root')(__dirname);
   var rootReq = function (loc) { return require(path.join(root, loc)); };
   var _ = require('lodash');
   var utils = rootReq('src/lib/utils');
-  var gruntUtils = rootReq('grunt/utils');
-  var es = rootReq('src/elasticsearch');
   var clientManager = require('./client_manager');
 
   var port = parseInt(process.env.ES_PORT || 9200, 10);
@@ -33,7 +30,7 @@ module.exports = function (branch) {
       return clientManager.get().clearEs();
     });
 
-    var files = _.map(require('./yaml_tests_' + utils.snakeCase(branch) + '.json'), function (docs, filename) {
+    _.map(require('./yaml_tests_' + utils.snakeCase(branch) + '.json'), function (docs, filename) {
       return new YamlFile(filename, docs);
     });
 

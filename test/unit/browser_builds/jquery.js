@@ -1,6 +1,5 @@
 /* global $ */
 var expect = require('expect.js');
-var Transport = require('../../../src/lib/transport');
 
 describe('jQuery.es namespace', function () {
   it('is defined on the global jQuery', function () {

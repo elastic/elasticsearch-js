@@ -29,7 +29,7 @@ rules:
   no-undef: warn
   no-underscore-dangle: off
   no-unused-expressions: error
-  no-unused-vars: warn
+  no-unused-vars: error
   no-use-before-define: off
   object-shorthand: off
   one-var: off

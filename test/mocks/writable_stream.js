@@ -13,19 +13,19 @@ if (Writable) {
   MockWritableStream = module.exports = function (opts) {
     Writable.call(this, opts);
 
-    this._write = function (chunk, encoding, cb) {};
+    this._write = function () {};
   };
   util.inherits(MockWritableStream, Writable);
 } else {
   // Node < 0.10 did not provide a usefull stream abstract
   var Stream = require('stream').Stream;
-  module.exports = MockWritableStream = function (opts) {
+  module.exports = MockWritableStream = function () {
     Stream.call(this);
     this.writable = true;
   };
   util.inherits(MockWritableStream, Stream);
 
-  MockWritableStream.prototype.write = function (data) {
+  MockWritableStream.prototype.write = function () {
     if (!this.writable) {
       this.emit('error', new Error('stream not writable'));
       return false;
@@ -41,15 +41,15 @@ if (Writable) {
     }
   };
 
-  MockWritableStream.prototype.end = function (data, encoding, cb) {
-    if (typeof(data) === 'function') {
-      cb = data;
-    } else if (typeof(encoding) === 'function') {
-      cb = encoding;
+  MockWritableStream.prototype.end = function (data, encoding) {
+    if (typeof data === 'function') {
+      // no callback support
+    } else if (typeof encoding === 'function') {
       this.write(data);
     } else if (arguments.length > 0) {
       this.write(data, encoding);
     }
+
     this.writable = false;
   };
 

@@ -17,11 +17,13 @@ describe('Connection Abstract', function () {
 
   it('requires a valid host', function () {
     expect(function () {
-      var conn = new ConnectionAbstract();
+      // eslint-disable-next-line no-new
+      new ConnectionAbstract();
     }).to.throwError(TypeError);
 
     expect(function () {
-      var conn = new ConnectionAbstract({});
+      // eslint-disable-next-line no-new
+      new ConnectionAbstract({});
     }).to.throwError(TypeError);
   });
 

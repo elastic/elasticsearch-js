@@ -1,6 +1,5 @@
 var Transport = require('../../../src/lib/transport');
 var ConnectionPool = require('../../../src/lib/connection_pool');
-var Host = require('../../../src/lib/host');
 var errors = require('../../../src/lib/errors');
 var expect = require('expect.js');
 
@@ -9,21 +8,6 @@ var nock = require('../../mocks/server.js');
 var through2 = require('through2');
 var _ = require('lodash');
 var stub = require('../../utils/auto_release_stub').make();
-
-/**
- * Allows the tests call #request() without it doing anything past trying to select
- * a connection.
- * @param  {Transport} tran - the transport to neuter
- */
-function shortCircuitRequest(tran, delay) {
-  stub(tran.connectionPool, 'select', function (cb) {
-    setTimeout(cb, delay);
-  });
-}
-
-function getConnection(transport, status) {
-  return transport.connectionPool.getConnections(status || 'alive', 1).pop();
-}
 
 describe('Transport + Mock server', function () {
   describe('#request', function () {
@@ -209,7 +193,7 @@ describe('Transport + Mock server', function () {
 
             trans.request({
               path: '/',
-            }, function (err, body, status) {
+            }, function (err, body) {
               expect(err).to.be(undefined);
               expect(body).to.eql({
                 'the answer': 42
@@ -228,7 +212,7 @@ describe('Transport + Mock server', function () {
 
           trans.request({
             path: '/hottie-threads',
-          }, function (err, body, status) {
+          }, function (err, body) {
             expect(err).to.be(undefined);
             expect(body).to.match(/s?he said/g);
             done();
@@ -239,7 +223,7 @@ describe('Transport + Mock server', function () {
 
     describe('return value', function () {
       it('resolves the promise it with the response body', function (done) {
-        var serverMock = nock('http://esbox.1.com')
+        nock('http://esbox.1.com')
           .get('/')
           .reply(200, {
             good: 'day'
@@ -266,7 +250,7 @@ describe('Transport + Mock server', function () {
           host: 'http://localhost:9200'
         });
 
-        var server = nock('http://localhost:9200')
+        nock('http://localhost:9200')
           .get('/')
           .reply(200, {
             i: 'am here'
@@ -286,7 +270,7 @@ describe('Transport + Mock server', function () {
           host: 'http://localhost:9200'
         });
 
-        var server = nock('http://localhost:9200')
+        nock('http://localhost:9200')
           .get('/')
           .delay(1000)
           .reply(200, {
@@ -295,7 +279,7 @@ describe('Transport + Mock server', function () {
 
         tran.request({
           requestTimeout: 25
-        }, function (err, resp, status) {
+        }, function (err) {
           expect(err).to.be.a(errors.RequestTimeout);
           done();
         });
@@ -307,7 +291,7 @@ describe('Transport + Mock server', function () {
         var clock = sinon.useFakeTimers('setTimeout');
         stub.autoRelease(clock);
 
-        var serverMock = nock('http://esbox.1.com')
+        nock('http://esbox.1.com')
           .get('/')
           .reply(200, function () {
             var str = through2(function (chunk, enc, cb) {
@@ -338,7 +322,7 @@ describe('Transport + Mock server', function () {
         .then(function () {
           throw new Error('expected the request to fail');
         })
-        .catch(function (err) {
+        .catch(function () {
           expect(ConnectionPool.prototype._onConnectionDied.callCount).to.eql(1);
           expect(tran.sniff.callCount).to.eql(0);
           expect(_.size(clock.timers)).to.eql(1);

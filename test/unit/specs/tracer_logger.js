@@ -2,7 +2,6 @@ describe('Tracer Logger', function () {
 
   var Log = require('../../../src/lib/log');
   var TracerLogger = require('../../../src/lib/loggers/tracer');
-  var sinon = require('sinon');
   var expect = require('expect.js');
   var parentLog;
 

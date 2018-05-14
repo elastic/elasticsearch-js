@@ -1,5 +1,4 @@
 var expect = require('expect.js');
-var Transport = require('../../../src/lib/transport');
 
 describe('elasticsearch namespace', function () {
   var es = window.elasticsearch;

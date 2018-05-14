@@ -92,7 +92,7 @@ describe('Client Action runner', function () {
 
   describe('clientAction::proxy', function () {
     it('proxies to the passed function', function () {
-      var action = makeClientActionProxy(function (params, cb) {
+      var action = makeClientActionProxy(function () {
         throw new Error('proxy function called');
       });
 
@@ -110,7 +110,7 @@ describe('Client Action runner', function () {
         });
       });
 
-      action({}, function (err, params) {
+      action({}, function () {
         expect(client.transport.request).to.be.a('function');
         done();
       });
@@ -126,7 +126,7 @@ describe('Client Action runner', function () {
     });
 
     it('supports a param transformation function', function () {
-      var action = makeClientActionProxy(function (params, cb) {
+      var action = makeClientActionProxy(function (params) {
         expect(params).to.have.property('transformed');
       }, {
         transform: function (params) {
@@ -139,7 +139,7 @@ describe('Client Action runner', function () {
 
     it('returns the proxied function\'s return value', function () {
       var football = {};
-      var action = makeClientActionProxy(function (params, cb) {
+      var action = makeClientActionProxy(function () {
         return football;
       });
 
@@ -186,7 +186,7 @@ describe('Client Action runner', function () {
       it('rejects date values', function (done) {
         action({
           one: new Date()
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -196,7 +196,7 @@ describe('Client Action runner', function () {
         action({
           one: ['one'],
           two: [1304]
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -205,7 +205,7 @@ describe('Client Action runner', function () {
       it('rejects object', function (done) {
         action({
           one: { but: 'duration' }
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -242,7 +242,7 @@ describe('Client Action runner', function () {
       it('it rejects regexp', function (done) {
         action({
           one: /regexp!/g
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -253,7 +253,7 @@ describe('Client Action runner', function () {
           one: {
             pasta: 'sauce'
           }
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -302,7 +302,7 @@ describe('Client Action runner', function () {
       it('it rejects things not in the list', function (done) {
         action({
           one: 'not an opt'
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -417,7 +417,7 @@ describe('Client Action runner', function () {
       it('rejects dates', function (done) {
         action({
           one: new Date()
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -426,7 +426,7 @@ describe('Client Action runner', function () {
       it('rejects objects', function (done) {
         action({
           one: {}
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -435,7 +435,7 @@ describe('Client Action runner', function () {
       it('rejects arrays', function (done) {
         action({
           one: []
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -444,7 +444,7 @@ describe('Client Action runner', function () {
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -488,7 +488,7 @@ describe('Client Action runner', function () {
       it('rejects dates', function (done) {
         action({
           one: new Date()
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -497,7 +497,7 @@ describe('Client Action runner', function () {
       it('rejects objects', function (done) {
         action({
           one: {}
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -506,7 +506,7 @@ describe('Client Action runner', function () {
       it('rejects arrays', function (done) {
         action({
           one: []
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -515,7 +515,7 @@ describe('Client Action runner', function () {
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -559,7 +559,7 @@ describe('Client Action runner', function () {
       it('rejects objects', function (done) {
         action({
           one: {}
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -568,7 +568,7 @@ describe('Client Action runner', function () {
       it('rejects arrays', function (done) {
         action({
           one: []
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -577,7 +577,7 @@ describe('Client Action runner', function () {
       it('rejects regexp', function (done) {
         action({
           one: /pasta/g
-        }, function (err, params) {
+        }, function (err) {
           expect(err).to.be.a(TypeError);
           done();
         });
@@ -732,7 +732,7 @@ describe('Client Action runner', function () {
     it('rejects a url if it required params that are not present', function (done) {
       action(params({
         type: ['type1', 'type2']
-      }), function (err, resp) {
+      }), function (err) {
         expect(err).to.be.a(TypeError);
         params.check();
         done();
@@ -845,7 +845,7 @@ describe('Client Action runner', function () {
     it('enforces required params', function (done) {
       action(params({
         b: '3w'
-      }), function (err, resp) {
+      }), function (err) {
         expect(err).to.be.a(TypeError);
         params.check();
         done();

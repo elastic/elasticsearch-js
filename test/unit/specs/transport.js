@@ -59,7 +59,8 @@ describe('Transport Class', function () {
 
     it('Throws an error when connectionPool config is set wrong', function () {
       expect(function () {
-        var trans = new Transport({
+        // eslint-disable-next-line no-new
+        new Transport({
           connectionPool: 'pasta'
         });
       }).to.throwError(/invalid connectionpool/i);
@@ -166,7 +167,8 @@ describe('Transport Class', function () {
     describe('host config', function () {
       it('rejects non-strings/objects', function () {
         expect(function () {
-          var trans = new Transport({
+          // eslint-disable-next-line no-new
+          new Transport({
             host: [
               'localhost',
               9393
@@ -175,7 +177,8 @@ describe('Transport Class', function () {
         }).to.throwError(TypeError);
 
         expect(function () {
-          var trans = new Transport({
+          // eslint-disable-next-line no-new
+          new Transport({
             host: [
               [9292]
             ]
@@ -287,7 +290,8 @@ describe('Transport Class', function () {
       it('calls _.shuffle be default', function () {
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
-        var trans = new Transport({
+        // eslint-disable-next-line no-new
+        new Transport({
           hosts: 'localhost'
         });
 
@@ -296,7 +300,8 @@ describe('Transport Class', function () {
       it('skips the call to _.shuffle when false', function () {
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
-        var trans = new Transport({
+        // eslint-disable-next-line no-new
+        new Transport({
           hosts: 'localhost',
           randomizeHosts: false
         });

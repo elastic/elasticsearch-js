@@ -134,7 +134,7 @@ describe('Log class', function () {
       log = new Log({
         log: [
           {
-            type: function (log, config) {
+            type: function (log) {
               log.on('error', _.noop);
               log.on('warning', _.noop);
               log.on('info', _.noop);
@@ -237,22 +237,28 @@ describe('Log class', function () {
 
     it('rejects numbers and other truthy data-types', function () {
       expect(function () {
-        var log = new Log({ log: 1515 });
+        // eslint-disable-next-line no-new
+        new Log({ log: 1515 });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: /regexp/ });
+        // eslint-disable-next-line no-new
+        new Log({ log: /regexp/ });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: new Date() });
+        // eslint-disable-next-line no-new
+        new Log({ log: new Date() });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [1515] });
+        // eslint-disable-next-line no-new
+        new Log({ log: [1515] });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [/regexp/] });
+        // eslint-disable-next-line no-new
+        new Log({ log: [/regexp/] });
       }).to.throwError(/invalid logging output config/i);
       expect(function () {
-        var log = new Log({ log: [new Date()] });
+        // eslint-disable-next-line no-new
+        new Log({ log: [new Date()] });
       }).to.throwError(/invalid logging output config/i);
     });
   });
