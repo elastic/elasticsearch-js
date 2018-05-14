@@ -1,6 +1,10 @@
 [[changelog]]
 == Changelog
 
+=== 15.0.0 (May 14 2018)
+  * Upgrade from lodash 2 to lodash 4 (Thanks https://github.com/dominykas[@dominykas]!) https://github.com/elastic/elasticsearch-js/pull/660[#600]
+    - Because this is such a large shift, and it could have potentially subtle effects on the module, we've done a major version bump. Unless you are using custom plugins that rely on the old `utils`, this _should_ be the equivalent of a patch upgrade.
+
 === 14.2.2 (Mar 29 2018)
   * Fix handling of `clearScroll`s `scrollId` parameter in the 5.2 API https://github.com/elastic/elasticsearch-js/issues/646[#646]
 
