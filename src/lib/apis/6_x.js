@@ -3993,6 +3993,7 @@ api.indices.prototype.putMapping = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-boolean,`Boolean`>>} params.preserveExisting - Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -4005,6 +4006,9 @@ api.indices.prototype.putSettings = ca({
     masterTimeout: {
       type: 'time',
       name: 'master_timeout'
+    },
+    timeout: {
+      type: 'time'
     },
     preserveExisting: {
       type: 'boolean',
@@ -4341,6 +4345,7 @@ api.indices.prototype.shardStores = ca({
  * Perform a [indices.shrink](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-shrink-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.copySettings - whether or not to copy settings from the source index (defaults to false)
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Set the number of active shards to wait for on the shrunken index before the operation returns.
@@ -4349,6 +4354,10 @@ api.indices.prototype.shardStores = ca({
  */
 api.indices.prototype.shrink = ca({
   params: {
+    copySettings: {
+      type: 'boolean',
+      name: 'copy_settings'
+    },
     timeout: {
       type: 'time'
     },
@@ -4379,6 +4388,7 @@ api.indices.prototype.shrink = ca({
  * Perform a [indices.split](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-split-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.copySettings - whether or not to copy settings from the source index (defaults to false)
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Set the number of active shards to wait for on the shrunken index before the operation returns.
@@ -4387,6 +4397,10 @@ api.indices.prototype.shrink = ca({
  */
 api.indices.prototype.split = ca({
   params: {
+    copySettings: {
+      type: 'boolean',
+      name: 'copy_settings'
+    },
     timeout: {
       type: 'time'
     },
@@ -5622,22 +5636,34 @@ api.putScript = ca({
  * Perform a [rankEval](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/search-rank-eval.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+ * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
 api.rankEval = ca({
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_rank_eval',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
+  params: {
+    ignoreUnavailable: {
+      type: 'boolean',
+      name: 'ignore_unavailable'
     },
+    allowNoIndices: {
+      type: 'boolean',
+      name: 'allow_no_indices'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    }
+  },
+  urls: [
     {
       fmt: '/<%=index%>/_rank_eval',
       req: {
@@ -5746,6 +5772,18 @@ api.renderSearchTemplate = ca({
       fmt: '/_render/template'
     }
   ],
+  method: 'POST'
+});
+
+/**
+ * Perform a [scriptsPainlessExecute](https://www.elastic.co/guide/en/elasticsearch/painless/6.x/painless-execute-api.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ */
+api.scriptsPainlessExecute = ca({
+  url: {
+    fmt: '/_scripts/painless/_execute'
+  },
   method: 'POST'
 });
 

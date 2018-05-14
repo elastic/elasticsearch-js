@@ -2434,6 +2434,31 @@ api.indices.prototype.stats = ca({
       }
     },
     {
+      fmt: '/_stats/<%=metricFamily%>',
+      req: {
+        metricFamily: {
+          type: 'enum',
+          options: [
+            'completion',
+            'docs',
+            'fielddata',
+            'filter_cache',
+            'flush',
+            'get',
+            'groups',
+            'id_cache',
+            'ignore_indices',
+            'indexing',
+            'merge',
+            'refresh',
+            'search',
+            'store',
+            'warmer'
+          ]
+        }
+      }
+    },
+    {
       fmt: '/_stats'
     }
   ]
