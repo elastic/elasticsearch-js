@@ -1,5 +1,6 @@
 var config = {};
 try {
+  // eslint-disable-next-line
   config = require('../../.aws-config.json');
 } catch (e) {}
 

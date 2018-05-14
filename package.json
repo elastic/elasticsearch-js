@@ -13,6 +13,12 @@
     "mapping",
     "REST"
   ],
+  "scripts": {
+    "test": "grunt test",
+    "generate": "node scripts/generate",
+    "grunt": "grunt",
+    "lint": "eslint ."
+  },
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
     "./src/lib/loggers/index.js": "./src/lib/loggers/browser_index.js",
@@ -113,12 +119,6 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/elastic/elasticsearch-js.git"
-  },
-  "scripts": {
-    "test": "grunt test",
-    "generate": "node scripts/generate",
-    "grunt": "grunt",
-    "eslint": "eslint src scripts test grunt Gruntfile.js"
   },
   "engines": {
     "node": ">=0.8"
