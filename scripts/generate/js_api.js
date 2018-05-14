@@ -216,6 +216,7 @@ module.exports = function (branch, done) {
         note[cmlKey] = param;
       }
 
+      def.url.paths = def.url.paths.map(p => (p.startsWith('/') ? p : `/${p}`));
       def.url.params = _.transform(def.url.params, transformParamKeys, {});
       def.url.parts = _.transform(def.url.parts, transformParamKeys, {});
 
