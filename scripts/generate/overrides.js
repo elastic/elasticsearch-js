@@ -148,10 +148,12 @@ module.exports = [
       ],
       'indices.putMapping': [
         // '/{index}/_mapping/{type}',
+        // '/{index}/_mapping',
         // '/_mapping/{type}',
         '/{index}/{type}/_mapping',
         '/{index}/{type}/_mappings',
         '/{index}/_mappings/{type}',
+        '/{index}/_mappings',
         '/_mappings/{type}'
       ],
       'indices.stats': [
