@@ -16,7 +16,9 @@ describe('File Logger', function () {
 
   afterEach(function () {
     parentLog.close();
-    logger && utils.clearWriteStreamBuffer(logger.stream);
+    if (logger) {
+      utils.clearWriteStreamBuffer(logger.stream);
+    }
   });
 
   function makeLogger(parent, levels) {

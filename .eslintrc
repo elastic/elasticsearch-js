@@ -28,7 +28,7 @@ rules:
   no-shadow: warn
   no-undef: warn
   no-underscore-dangle: off
-  no-unused-expressions: warn
+  no-unused-expressions: error
   no-unused-vars: warn
   no-use-before-define: off
   object-shorthand: off

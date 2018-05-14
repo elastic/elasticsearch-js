@@ -36,6 +36,10 @@ process.once('message', function (port) {
     };
 
     clock.restore();
-    process.connected ? process.send(out) : console.log(out);
+    if (process.connected) {
+      process.send(out)
+    } else {
+      console.log(out);
+    }
   });
 });

@@ -146,8 +146,13 @@ HttpConnector.prototype.request = function (params, cb) {
   var cleanUp = _.bind(function (err) {
     clearTimeout(timeoutId);
 
-    request && request.removeAllListeners();
-    incoming && incoming.removeAllListeners();
+    if (request) {
+      request.removeAllListeners();
+    }
+
+    if (incoming) {
+      incoming.removeAllListeners();
+    }
 
     if ((err instanceof Error) === false) {
       err = void 0;

@@ -12,5 +12,9 @@ var app = express().post('/_search', function (req, res) {
 var server = require('http').createServer(app);
 server.listen(function () {
   var port = server.address().port;
-  process.connected ? process.send(port) : console.log(port);
+  if (process.connected) {
+    process.send(port)
+  } else {
+    console.log(port);
+  }
 });
