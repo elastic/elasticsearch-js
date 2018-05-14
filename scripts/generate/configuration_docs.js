@@ -1,5 +1,5 @@
 module.exports = function (done) {
-  var _ = require('../../src/lib/utils');
+  var _ = require('lodash');
 
   var chalk = require('chalk');
   var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));

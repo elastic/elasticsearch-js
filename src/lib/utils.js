@@ -1,27 +1,15 @@
-var path = require('path');
+var _ = require('lodash');
 var nodeUtils = require('util');
-var lodash = require('lodash');
 
 /**
- * Custom utils library, basically a modified version of [lodash](http://lodash.com/docs) +
- * [node.utils](http://nodejs.org/api/util.html#util_util) that doesn't use mixins to prevent
- * confusion when requiring lodash itself.
+ * Custom utils library
  *
  * @class utils
  * @static
  */
-var _ = lodash.assign({}, lodash, nodeUtils);
+var utils = {};
 
-/**
- * Link to [path.join](http://nodejs.org/api/path.html#path_path_join_path1_path2)
- *
- * @method _.joinPath
- * @type {function}
- */
-_.joinPath = path.join;
-
-_.get = require('lodash.get');
-_.trimEnd = require('lodash.trimend');
+utils.inherits = nodeUtils.inherits;
 
 /**
  * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
@@ -33,7 +21,7 @@ _.trimEnd = require('lodash.trimend');
  * @param  {Object} from - Object to pull changed from
  * @return {Object} - returns the modified to value
  */
-_.deepMerge = function (to, from) {
+utils.deepMerge = function (to, from) {
   _.each(from, function (fromVal, key) {
     switch (typeof to[key]) {
       case 'undefined':
@@ -44,7 +32,7 @@ _.deepMerge = function (to, from) {
           to[key] = to[key].concat(from[key]);
         }
         else if (_.isPlainObject(to[key]) && _.isPlainObject(from[key])) {
-          _.deepMerge(to[key], from[key]);
+          utils.deepMerge(to[key], from[key]);
         }
     }
   });
@@ -58,7 +46,7 @@ _.deepMerge = function (to, from) {
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-_.isArrayOfStrings = function (arr) {
+utils.isArrayOfStrings = function (arr) {
   // quick shallow check of arrays
   return _.isArray(arr) && _.every(arr.slice(0, 10), _.isString);
 };
@@ -71,7 +59,7 @@ _.isArrayOfStrings = function (arr) {
  * @param  {string} word - The word to transform
  * @return {string}
  */
-_.ucfirst = function (word) {
+utils.ucfirst = function (word) {
   return word[0].toUpperCase() + word.substring(1).toLowerCase();
 };
 
@@ -132,7 +120,7 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
  * @param  {String} string
  * @return {String}
  */
-_.studlyCase = adjustWordCase(true, true, '');
+utils.studlyCase = adjustWordCase(true, true, '');
 
 /**
  * Transform a string into camelCase
@@ -141,7 +129,7 @@ _.studlyCase = adjustWordCase(true, true, '');
  * @param  {String} string
  * @return {String}
  */
-_.camelCase = adjustWordCase(false, true, '');
+utils.camelCase = adjustWordCase(false, true, '');
 
 /**
  * Transform a string into snakeCase
@@ -150,24 +138,7 @@ _.camelCase = adjustWordCase(false, true, '');
  * @param  {String} string
  * @return {String}
  */
-_.snakeCase = adjustWordCase(false, false, '_');
-
-/**
- * Lower-case a string, and return an empty string if any is not a string
- *
- * @param any {*} - Something or nothing
- * @returns {string}
- */
-_.toLowerString = function (any) {
-  if (any) {
-    if (typeof any !== 'string') {
-      any = any.toString();
-    }
-  } else {
-    any = '';
-  }
-  return any.toLowerCase();
-};
+utils.snakeCase = adjustWordCase(false, false, '_');
 
 /**
  * Upper-case the string, return an empty string if any is not a string
@@ -175,7 +146,7 @@ _.toLowerString = function (any) {
  * @param any {*} - Something or nothing
  * @returns {string}
  */
-_.toUpperString = function (any) {
+utils.toUpperString = function (any) {
   if (any) {
     if (typeof any !== 'string') {
       any = any.toString();
@@ -193,7 +164,7 @@ _.toUpperString = function (any) {
  * @param  {*} val
  * @return {Boolean}
  */
-_.isNumeric = function (val) {
+utils.isNumeric = function (val) {
   return typeof val !== 'object' && val - parseFloat(val) >= 0;
 };
 
@@ -207,7 +178,7 @@ var intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
  * @param {String} val
  * @return {Boolean}
  */
-_.isInterval = function (val) {
+utils.isInterval = function (val) {
   return !!(val.match && val.match(intervalRE));
 };
 
@@ -220,7 +191,7 @@ _.isInterval = function (val) {
  * @param {Number} times - Times the string should be repeated
  * @return {String}
  */
-_.repeat = function (what, times) {
+utils.repeat = function (what, times) {
   return (new Array(times + 1)).join(what);
 };
 
@@ -233,7 +204,7 @@ _.repeat = function (what, times) {
  * @param [sliceIndex=0] {Integer} - The index that args should be sliced at, before feeding args to func
  * @returns {*} - the return value of func
  */
-_.applyArgs = function (func, context, args, sliceIndex) {
+utils.applyArgs = function (func, context, args, sliceIndex) {
   sliceIndex = sliceIndex || 0;
   switch (args.length - sliceIndex) {
     case 0:
@@ -259,9 +230,9 @@ _.applyArgs = function (func, context, args, sliceIndex) {
  * when it is called.
  * @return {[type]} [description]
  */
-_.nextTick = function (cb) {
+utils.nextTick = function (cb) {
   // bind the function and schedule it
-  process.nextTick(_.bindKey(_, 'applyArgs', cb, null, arguments, 1));
+  process.nextTick(_.bindKey(utils, 'applyArgs', cb, null, arguments, 1));
 };
 
 /**
@@ -269,21 +240,19 @@ _.nextTick = function (cb) {
  * flagging it to be bound to the object at object creation when "makeBoundMethods" is called
  *
  * ```
- * ClassName.prototype.methodName = _.handler(function () {
+ * ClassName.prototype.methodName = utils.handler(function () {
  *   // this will always be bound when called via classInstance.bound.methodName
  *   this === classInstance
  * });
  * ```
  *
- * @alias _.scheduled
  * @param  {Function} func - The method that is being defined
  * @return {Function}
  */
-_.handler = function (func) {
+utils.handler = function (func) {
   func._provideBound = true;
   return func;
 };
-_.scheduled = _.handler;
 
 /**
  * Creates an "bound" property on an object, which all or a subset of methods from
@@ -294,14 +263,14 @@ _.scheduled = _.handler;
  *   onEvent: function () {}
  * };
  *
- * _.makeBoundMethods(obj);
+ * utils.makeBoundMethods(obj);
  *
  * obj.bound.onEvent() // is bound to obj, and can safely be used as an event handler.
  * ```
  *
  * @param {Object} obj - The object to bind the methods to
  */
-_.makeBoundMethods = function (obj) {
+utils.makeBoundMethods = function (obj) {
   obj.bound = {};
   for (var prop in obj) {
     // dearest maintainer, we want to look through the prototype
@@ -311,15 +280,13 @@ _.makeBoundMethods = function (obj) {
   }
 };
 
-_.noop = function () {};
-
 /**
  * Implements the standard "string or constructor" check that I was copy/pasting everywhere
  * @param  {String|Function} val - the value that the user passed in
  * @param  {Object} opts - a map of the options
  * @return {Function|undefined} - If a valid option was specified, then the constructor is returned
  */
-_.funcEnum = function (config, name, opts, def) {
+utils.funcEnum = function (config, name, opts, def) {
   var val = config[name];
   switch (typeof val) {
     case 'undefined':
@@ -357,7 +324,7 @@ _.funcEnum = function (config, name, opts, def) {
  * @param  {Function} transform - A function called for each element of the resulting array
  * @return {Array|false} - an array on success, or false on failure.
  */
-_.createArray = function (input, transform) {
+utils.createArray = function (input, transform) {
   transform = typeof transform === 'function' ? transform : _.identity;
   var output = [];
   var item;
@@ -386,8 +353,8 @@ _.createArray = function (input, transform) {
  * @param  {WritableStream} stream - an instance of stream.Writable
  * @return {string} - the remaining test to be written to the stream
  */
-_.getUnwrittenFromStream = function (stream) {
-  var writeBuffer = _.getStreamWriteBuffer(stream);
+utils.getUnwrittenFromStream = function (stream) {
+  var writeBuffer = utils.getStreamWriteBuffer(stream);
   if (!writeBuffer) return;
 
   // flush the write buffer
@@ -408,7 +375,7 @@ _.getUnwrittenFromStream = function (stream) {
   return out;
 };
 
-_.getStreamWriteBuffer = function (stream) {
+utils.getStreamWriteBuffer = function (stream) {
   if (!stream || !stream._writableState) return;
 
   var writeState = stream._writableState;
@@ -420,16 +387,16 @@ _.getStreamWriteBuffer = function (stream) {
   }
 };
 
-_.clearWriteStreamBuffer = function (stream) {
-  var buffer = _.getStreamWriteBuffer(stream);
+utils.clearWriteStreamBuffer = function (stream) {
+  var buffer = utils.getStreamWriteBuffer(stream);
   return buffer && buffer.splice(0);
 };
 
 /**
  * return the current time in milliseconds since epoch
  */
-_.now = function () {
+utils.now = function () {
   return (typeof Date.now === 'function') ? Date.now() : (new Date()).getTime();
 };
 
-module.exports = _;
+module.exports = utils;

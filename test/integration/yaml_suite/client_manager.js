@@ -9,7 +9,7 @@ if (BROWSER) {
   es = require('../../../src/elasticsearch');
 }
 
-var _ = require('../../../src/lib/utils');
+var _ = require('lodash');
 var path = require('path');
 var fs = require('fs');
 var fromRoot = _.bindKey(path, 'join', require('find-root')(__dirname));
@@ -130,7 +130,7 @@ module.exports = {
         ]);
       };
 
-      _.nextTick(cb);
+      process.nextTick(cb);
     }
   },
   get: function () {

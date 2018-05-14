@@ -1,7 +1,7 @@
-var isEmpty = require('lodash.isempty');
+var _ = require('lodash');
 
 module.exports = function (hosts) {
-  if (isEmpty(hosts)) return false;
+  if (_.isEmpty(hosts)) return false;
 
   var commonProtocol = hosts.shift().protocol;
   for (var i = 0; i < hosts.length; i++) {
@@ -11,4 +11,4 @@ module.exports = function (hosts) {
   }
 
   return commonProtocol;
-}
+};

@@ -3,7 +3,7 @@ var opts = {
   jquery: require('./jquery'),
   angular: require('./angular')
 };
-var _ = require('../utils');
+var _ = require('lodash');
 
 // remove modules that have been ignored by browserify
 _.each(opts, function (conn, name) {

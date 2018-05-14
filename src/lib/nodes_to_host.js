@@ -1,4 +1,4 @@
-var _ = require('./utils');
+var _ = require('lodash');
 
 var extractHostPartsRE1x = /\[(?:(.*)\/)?(.+?):(\d+)\]/;
 

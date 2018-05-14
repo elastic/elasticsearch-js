@@ -15,8 +15,8 @@ _.each(actions, function (action) {
     .slice(0, -1)
     .filter(step => step !== 'prototype')
     .join('.prototype.');
-    
-  if (_.include(namespaces, namespace)) {
+
+  if (_.includes(namespaces, namespace)) {
     _.pull(namespaces, namespace);
 %>
 

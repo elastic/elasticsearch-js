@@ -1,6 +1,6 @@
 module.exports = function (done) {
-  var _ = require('../../src/lib/utils');
-  var utils = require('../../grunt/utils');
+  var _ = require('lodash');
+  var gruntUtils = require('../../grunt/utils');
 
   var chalk = require('chalk');
   var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
@@ -9,8 +9,8 @@ module.exports = function (done) {
   var outputPath = fromRoot('docs/index.asciidoc');
 
   write(outputPath, require('./templates').docsIndex({
-    apiFiles: utils.stableBranches.map(function (branch) {
-      return 'api_methods' + utils.branchSuffix(branch) + '.asciidoc';
+    apiFiles: gruntUtils.stableBranches.map(function (branch) {
+      return 'api_methods' + gruntUtils.branchSuffix(branch) + '.asciidoc';
     })
   }), 'utf8', done);
 

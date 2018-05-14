@@ -52,12 +52,12 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `<%= stringify(utils.branches._default) %>`
+Default ::: `<%= stringify(gruntUtils.branches._default) %>`
 <%
 
 function printBranch(branch, i) {
   print('  * `' + stringify(branch) + '`');
-  if (utils.unstableBranches.indexOf(branch) >= 0) {
+  if (gruntUtils.unstableBranches.indexOf(branch) >= 0) {
     print(' (unstable)');
   }
   print('\n');
@@ -65,9 +65,9 @@ function printBranch(branch, i) {
 
 %>
 Options in node :::
-<% utils.branches.forEach(printBranch); %>
+<% gruntUtils.branches.forEach(printBranch); %>
 Options in the browser :::
-<% utils.browserBranches.forEach(printBranch); %>
+<% gruntUtils.browserBranches.forEach(printBranch); %>
 
 
 `plugins`[[config-plugins]]:: `Function[]` -- Plugin instantiators that will be called when the Client initializes. Each function is called in order with the arguments `Constructor`, `config`, and `components`.
@@ -319,7 +319,7 @@ var client = new elasticsearch.Client({
       // choose the node with the smallest weight.
       selection = _(nodes).sortBy(function (node) {
         return node.host.weight;
-      }).first();
+      }).head();
     }
 
     return selection;

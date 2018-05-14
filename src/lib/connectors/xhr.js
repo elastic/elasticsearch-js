@@ -7,7 +7,7 @@ module.exports = XhrConnector;
 
 /* jshint browser:true */
 
-var _ = require('../utils');
+var utils = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
@@ -15,7 +15,7 @@ var asyncDefault = !(navigator && /PhantomJS/i.test(navigator.userAgent));
 function XhrConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_.inherits(XhrConnector, ConnectionAbstract);
+utils.inherits(XhrConnector, ConnectionAbstract);
 
 /**
  * Simply returns an XHR object cross browser
@@ -43,7 +43,7 @@ if (typeof XMLHttpRequest !== 'undefined') {
     }
   })
   .compact()
-  .first();
+  .head();
 }
 
 if (!getXhr) {

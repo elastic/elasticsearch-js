@@ -285,7 +285,6 @@ describe('Transport Class', function () {
 
     describe('randomizeHosts options', function () {
       it('calls _.shuffle be default', function () {
-        var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
         var trans = new Transport({
@@ -295,7 +294,6 @@ describe('Transport Class', function () {
         expect(_.shuffle.callCount).to.eql(1);
       });
       it('skips the call to _.shuffle when false', function () {
-        var _ = require('../../../src/lib/utils');
         stub(Transport.connectionPools.main.prototype, 'setHosts');
         stub(_, 'shuffle');
         var trans = new Transport({

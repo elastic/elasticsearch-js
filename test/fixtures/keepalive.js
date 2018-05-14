@@ -24,7 +24,7 @@ process.once('message', function (port) {
       .transform(function (sockets, conn) {
         sockets.push(_.values(conn.agent.sockets), _.values(conn.agent.freeSockets));
       }, [])
-      .flatten()
+      .flattenDeep()
       .value();
 
     es.close();

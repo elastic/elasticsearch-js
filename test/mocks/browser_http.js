@@ -227,7 +227,7 @@ MockHttpRequest.prototype = {
       }
       //TODO title case header
       r += header + ': ' + this.responseHeaders[header] + '\r\n';
-    }, this);
+    }.bind(this));
     return r;
   },
 
@@ -355,7 +355,7 @@ MockHttpRequest.prototype = {
     this.error = true;
     _.each(this.requestHeaders, function (header) {
       delete this.requestHeaders[header];
-    }, this);
+    }.bind(this));
 
     this.readyState = this.DONE;
     if (!this.async) {

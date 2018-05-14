@@ -12,7 +12,8 @@ var handles = {
   http: require('http'),
   https: require('https')
 };
-var _ = require('../utils');
+var _ = require('lodash');
+var utils = require('../utils');
 var parseUrl = require('url').parse;
 var qs = require('querystring');
 var AgentKeepAlive = require('agentkeepalive');
@@ -47,9 +48,9 @@ function HttpConnector(host, config) {
 
   this.agent = config.createNodeAgent ? config.createNodeAgent(this, config) : this.createAgent(config);
 }
-_.inherits(HttpConnector, ConnectionAbstract);
+utils.inherits(HttpConnector, ConnectionAbstract);
 
-HttpConnector.prototype.onStatusSet = _.handler(function (status) {
+HttpConnector.prototype.onStatusSet = utils.handler(function (status) {
   if (status === 'closed') {
     var agent = this.agent;
     var toRemove = [];

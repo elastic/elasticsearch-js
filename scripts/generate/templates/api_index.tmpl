@@ -4,10 +4,10 @@ module.exports = {
 
   branches.forEach(function (branch, i, list) {
     function printVersion(name) {
-      print(`  get '${name}'() { return require('./${_.snakeCase(branch)}'); },\n`)
+      print(`  get '${name}'() { return require('./${utils.snakeCase(branch)}'); },\n`)
     }
 
-    if (branch === utils.branches._default) printVersion('_default');
+    if (branch === gruntUtils.branches._default) printVersion('_default');
     printVersion(branch);
   });
 

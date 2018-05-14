@@ -1,11 +1,11 @@
-var get = require('lodash.get');
-var utils = require('../utils');
+var _ = require('lodash');
+var gruntUtils = require('../utils');
 var fromRoot = require('path').join.bind(null, __dirname, '..', '..');
 
 var release = process.env.ES_RELEASE;
 var ref = process.env.ES_REF;
-var port = parseFloat(get(process.env, 'ES_PORT', 9400));
-var host = get(process.env, 'ES_HOST', 'localhost');
+var port = parseFloat(_.get(process.env, 'ES_PORT', 9400));
+var host = _.get(process.env, 'ES_HOST', 'localhost');
 
 var Version = require('../../scripts/Version');
 var versionedOpts = [
@@ -78,7 +78,7 @@ var versionedOpts = [
 ];
 
 // targets for each branch
-utils.branches.forEach(function (branch) {
+gruntUtils.branches.forEach(function (branch) {
   exports[branch] = {
     options: Version.fromBranch(branch).mergeOpts(versionedOpts, {
       branch: branch,

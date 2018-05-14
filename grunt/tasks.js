@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
   var Promise = require('bluebird');
-  var utils = require('./utils');
+  var gruntUtils = require('./utils');
   var readFile = Promise.promisify(require('fs').readFile);
   var writeFile = Promise.promisify(require('fs').writeFile);
 
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
       'mochacov:unit'
     ];
 
-    var branches = branch ? [branch] : utils.branches;
+    var branches = branch ? [branch] : gruntUtils.branches;
 
     process.env.ES_PORT = process.env.ES_PORT || 9400;
     process.env.ES_HOST = process.env.ES_HOST || 'localhost';
@@ -52,20 +52,20 @@ module.exports = function (grunt) {
       var current = pkg.version;
 
       pkg.version = nextVersion;
-      browserBuilds = utils.replaceAll(browserBuilds, current, nextVersion);
+      browserBuilds = gruntUtils.replaceAll(browserBuilds, current, nextVersion);
 
-      readme = utils.replaceAll(readme, current, nextVersion);
+      readme = gruntUtils.replaceAll(readme, current, nextVersion);
 
-      readme = utils.replaceAll(
+      readme = gruntUtils.replaceAll(
         readme,
-        '/' + utils.minorVersion(current) + '.svg',
-        '/' + utils.minorVersion(nextVersion) + '.svg'
+        '/' + gruntUtils.minorVersion(current) + '.svg',
+        '/' + gruntUtils.minorVersion(nextVersion) + '.svg'
       );
 
-      readme = utils.replaceAll(
+      readme = gruntUtils.replaceAll(
         readme,
-        'branch=' + utils.minorVersion(current),
-        'branch=' + utils.minorVersion(nextVersion)
+        'branch=' + gruntUtils.minorVersion(current),
+        'branch=' + gruntUtils.minorVersion(nextVersion)
       );
 
       // write all files to disk

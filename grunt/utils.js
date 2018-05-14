@@ -1,4 +1,4 @@
-var _ = require('../src/lib/utils');
+var utils = require('../src/lib/utils');
 
 var root = require('find-root')(__dirname);
 var pkg = require(root + '/package.json');
@@ -6,9 +6,9 @@ var stable = pkg.config.supported_es_branches;
 var unstable = pkg.config.unstable_es_branches;
 var branches = [].concat(stable, unstable);
 
-var utils = {
+var gruntUtils = {
   branchSuffix: function (branch) {
-    return branch === utils.branches._default ? '' : '_' + _.snakeCase(branch);
+    return branch === gruntUtils.branches._default ? '' : '_' + utils.snakeCase(branch);
   },
   branches: branches,
   stableBranches: stable,
@@ -16,19 +16,19 @@ var utils = {
   browserBranches: stable.slice(0, 5).concat(unstable)
 };
 
-utils.branches._default = pkg.config.default_api_branch;
+gruntUtils.branches._default = pkg.config.default_api_branch;
 
 /*
  * trim down a version id to the minor version number ('1.5.1' => '1.5')
  */
-utils.minorVersion = function (version) {
+gruntUtils.minorVersion = function (version) {
   return version.split('.').slice(0, 2).join('.');
 };
 
 /*
  * increment the version based on the release "type"
  */
-utils.increaseVersion = function (version, type) {
+gruntUtils.increaseVersion = function (version, type) {
   var i;
   switch (type) {
     case 'major':
@@ -62,7 +62,7 @@ utils.increaseVersion = function (version, type) {
 /*
  * replace all instances of `replace` with `replacement` without creating a regexp object
  */
-utils.replaceAll = function (str, replace, replacement) {
+gruntUtils.replaceAll = function (str, replace, replacement) {
   var out = '';
   var remaining = str;
   var i = 0;
@@ -75,4 +75,4 @@ utils.replaceAll = function (str, replace, replacement) {
   return out + remaining;
 };
 
-module.exports = utils;
+module.exports = gruntUtils;

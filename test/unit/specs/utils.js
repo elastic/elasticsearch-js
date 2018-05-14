@@ -1,4 +1,5 @@
-var _ = require('../../../src/lib/utils');
+var _ = require('lodash');
+var utils = require('../../../src/lib/utils');
 var expect = require('expect.js');
 
 var stub = require('../../utils/auto_release_stub').make();
@@ -13,59 +14,59 @@ describe('Utils', function () {
       };
 
       it('likes arrays of strings', function () {
-        expect(_.isArrayOfStrings(thing.is)).to.be(true);
+        expect(utils.isArrayOfStrings(thing.is)).to.be(true);
       });
 
       it('dislikes when there is even one non string', function () {
         // notice a string in the array
         thing.is.push(thing.not || ' not ');
-        expect(_.isArrayOfStrings(thing.is)).to.be(false);
+        expect(utils.isArrayOfStrings(thing.is)).to.be(false);
       });
     });
 
     describe('#isNumeric', function () {
       it('likes integer literals', function () {
-        expect(_.isNumeric('-10')).to.be(true);
-        expect(_.isNumeric('0')).to.be(true);
-        expect(_.isNumeric('5')).to.be(true);
-        expect(_.isNumeric(-16)).to.be(true);
-        expect(_.isNumeric(0)).to.be(true);
-        expect(_.isNumeric(32)).to.be(true);
-        expect(_.isNumeric('040')).to.be(true);
-        expect(_.isNumeric('0xFF')).to.be(true);
-        expect(_.isNumeric(0xFFF)).to.be(true);
+        expect(utils.isNumeric('-10')).to.be(true);
+        expect(utils.isNumeric('0')).to.be(true);
+        expect(utils.isNumeric('5')).to.be(true);
+        expect(utils.isNumeric(-16)).to.be(true);
+        expect(utils.isNumeric(0)).to.be(true);
+        expect(utils.isNumeric(32)).to.be(true);
+        expect(utils.isNumeric('040')).to.be(true);
+        expect(utils.isNumeric('0xFF')).to.be(true);
+        expect(utils.isNumeric(0xFFF)).to.be(true);
       });
 
       it('likes float literals', function () {
-        expect(_.isNumeric('-1.6')).to.be(true);
-        expect(_.isNumeric('4.536')).to.be(true);
-        expect(_.isNumeric(-2.6)).to.be(true);
-        expect(_.isNumeric(3.1415)).to.be(true);
-        expect(_.isNumeric(8e5)).to.be(true);
-        expect(_.isNumeric('123e-2')).to.be(true);
+        expect(utils.isNumeric('-1.6')).to.be(true);
+        expect(utils.isNumeric('4.536')).to.be(true);
+        expect(utils.isNumeric(-2.6)).to.be(true);
+        expect(utils.isNumeric(3.1415)).to.be(true);
+        expect(utils.isNumeric(8e5)).to.be(true);
+        expect(utils.isNumeric('123e-2')).to.be(true);
       });
 
       it('dislikes non-numeric stuff', function () {
-        expect(_.isNumeric('')).to.be(false);
-        expect(_.isNumeric('        ')).to.be(false);
-        expect(_.isNumeric('\t\t')).to.be(false);
-        expect(_.isNumeric('abcdefghijklm1234567890')).to.be(false);
-        expect(_.isNumeric('xabcdefx')).to.be(false);
-        expect(_.isNumeric(true)).to.be(false);
-        expect(_.isNumeric(false)).to.be(false);
-        expect(_.isNumeric('bcfed5.2')).to.be(false);
-        expect(_.isNumeric('7.2acdgs')).to.be(false);
-        expect(_.isNumeric(undefined)).to.be(false);
-        expect(_.isNumeric(null)).to.be(false);
-        expect(_.isNumeric(NaN)).to.be(false);
-        expect(_.isNumeric(Infinity)).to.be(false);
-        expect(_.isNumeric(Number.POSITIVE_INFINITY)).to.be(false);
-        expect(_.isNumeric(Number.NEGATIVE_INFINITY)).to.be(false);
-        expect(_.isNumeric(new Date(2009, 1, 1))).to.be(false);
-        expect(_.isNumeric([])).to.be(false);
-        expect(_.isNumeric([1, 2, 3, 4])).to.be(false);
-        expect(_.isNumeric({})).to.be(false);
-        expect(_.isNumeric(function () {})).to.be(false);
+        expect(utils.isNumeric('')).to.be(false);
+        expect(utils.isNumeric('        ')).to.be(false);
+        expect(utils.isNumeric('\t\t')).to.be(false);
+        expect(utils.isNumeric('abcdefghijklm1234567890')).to.be(false);
+        expect(utils.isNumeric('xabcdefx')).to.be(false);
+        expect(utils.isNumeric(true)).to.be(false);
+        expect(utils.isNumeric(false)).to.be(false);
+        expect(utils.isNumeric('bcfed5.2')).to.be(false);
+        expect(utils.isNumeric('7.2acdgs')).to.be(false);
+        expect(utils.isNumeric(undefined)).to.be(false);
+        expect(utils.isNumeric(null)).to.be(false);
+        expect(utils.isNumeric(NaN)).to.be(false);
+        expect(utils.isNumeric(Infinity)).to.be(false);
+        expect(utils.isNumeric(Number.POSITIVE_INFINITY)).to.be(false);
+        expect(utils.isNumeric(Number.NEGATIVE_INFINITY)).to.be(false);
+        expect(utils.isNumeric(new Date(2009, 1, 1))).to.be(false);
+        expect(utils.isNumeric([])).to.be(false);
+        expect(utils.isNumeric([1, 2, 3, 4])).to.be(false);
+        expect(utils.isNumeric({})).to.be(false);
+        expect(utils.isNumeric(function () {})).to.be(false);
       });
     });
 
@@ -82,20 +83,20 @@ describe('Utils', function () {
       },
       function (name, unit) {
         it('likes ' + name, function () {
-          expect(_.isInterval('1' + unit)).to.be(true);
+          expect(utils.isInterval('1' + unit)).to.be(true);
         });
 
         it('likes decimal ' + name, function () {
-          expect(_.isInterval('1.5' + unit)).to.be(true);
+          expect(utils.isInterval('1.5' + unit)).to.be(true);
         });
       });
 
       it('dislikes more than one unit', function () {
-        expect(_.isInterval('1my')).to.be(false);
+        expect(utils.isInterval('1my')).to.be(false);
       });
 
       it('dislikes spaces', function () {
-        expect(_.isInterval('1 m')).to.be(false);
+        expect(utils.isInterval('1 m')).to.be(false);
       });
     });
   });
@@ -105,108 +106,88 @@ describe('Utils', function () {
 
     describe('#camelCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.camelCase('Neil Patrick.Harris-is_a.dog')).to.eql('neilPatrickHarrisIsADog');
+        expect(utils.camelCase('Neil Patrick.Harris-is_a.dog')).to.eql('neilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.camelCase('Json_parser')).to.eql('jsonParser');
+        expect(utils.camelCase('Json_parser')).to.eql('jsonParser');
       });
 
       it('handles leading _', function () {
-        expect(_.camelCase('_thing_one_')).to.eql('_thingOne');
+        expect(utils.camelCase('_thing_one_')).to.eql('_thingOne');
       });
 
       it('works on numbers', function () {
-        expect(_.camelCase('version 1.0')).to.eql('version10');
+        expect(utils.camelCase('version 1.0')).to.eql('version10');
       });
     });
 
     describe('#studlyCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.studlyCase('Neil Patrick.Harris-is_a.dog')).to.eql('NeilPatrickHarrisIsADog');
+        expect(utils.studlyCase('Neil Patrick.Harris-is_a.dog')).to.eql('NeilPatrickHarrisIsADog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.studlyCase('Json_parser')).to.eql('JsonParser');
+        expect(utils.studlyCase('Json_parser')).to.eql('JsonParser');
       });
 
       it('handles leading _', function () {
-        expect(_.studlyCase('_thing_one_')).to.eql('_ThingOne');
+        expect(utils.studlyCase('_thing_one_')).to.eql('_ThingOne');
       });
 
       it('works on numbers', function () {
-        expect(_.studlyCase('version 1.0')).to.eql('Version10');
+        expect(utils.studlyCase('version 1.0')).to.eql('Version10');
       });
     });
 
     describe('#snakeCase', function () {
       it('find spaces, underscores, and other natural word breaks', function () {
-        expect(_.snakeCase('Neil Patrick.Harris-is_a.dog')).to.eql('neil_patrick_harris_is_a_dog');
+        expect(utils.snakeCase('Neil Patrick.Harris-is_a.dog')).to.eql('neil_patrick_harris_is_a_dog');
       });
 
       it('ignores abreviations', function () {
-        expect(_.snakeCase('Json_parser')).to.eql('json_parser');
+        expect(utils.snakeCase('Json_parser')).to.eql('json_parser');
       });
 
       it('handles leading _', function () {
-        expect(_.snakeCase('_thing_one_')).to.eql('_thing_one');
+        expect(utils.snakeCase('_thing_one_')).to.eql('_thing_one');
       });
 
       it('works on numbers', function () {
-        expect(_.snakeCase('version 1.0')).to.eql('version_1_0');
-      });
-    });
-
-    describe('#toLowerString', function () {
-      it('transforms normal strings', function () {
-        expect(_.toLowerString('PASTA')).to.eql('pasta');
-      });
-
-      it('ignores long form empty vals (null, false, undef)', function () {
-        expect(_.toLowerString(null)).to.eql('');
-        expect(_.toLowerString(false)).to.eql('');
-        expect(_.toLowerString(void 0)).to.eql('');
-      });
-
-      it('uses the objects own toString', function () {
-        expect(_.toLowerString(['A', 'B'])).to.eql('a,b');
-      });
-
-      it('sorta kinda works on objects', function () {
-        expect(_.toLowerString({ a: 'thing' })).to.eql('[object object]');
+        expect(utils.snakeCase('version 1.0')).to.eql('version_1_0');
       });
     });
 
     describe('#toUpperString', function () {
       it('transforms normal strings', function () {
-        expect(_.toUpperString('PASTA')).to.eql('PASTA');
+        expect(utils.toUpperString('PASTA')).to.eql('PASTA');
       });
 
       it('ignores long form empty vals (null, false, undef)', function () {
-        expect(_.toUpperString(null)).to.eql('');
-        expect(_.toUpperString(false)).to.eql('');
-        expect(_.toUpperString(void 0)).to.eql('');
+        expect(utils.toUpperString(null)).to.eql('');
+        expect(utils.toUpperString(false)).to.eql('');
+        expect(utils.toUpperString(void 0)).to.eql('');
       });
 
       it('uses the objects own toString', function () {
-        expect(_.toUpperString(['A', 'B'])).to.eql('A,B');
+        expect(utils.toUpperString(['A', 'B'])).to.eql('A,B');
       });
 
       it('sorta kinda works on objects', function () {
-        expect(_.toUpperString({ a: 'thing' })).to.eql('[OBJECT OBJECT]');
+        expect(utils.toUpperString({ a: 'thing' })).to.eql('[OBJECT OBJECT]');
       });
     });
 
     describe('#repeat', function () {
       it('repeats strings', function () {
-        expect(_.repeat(' ', 5)).to.eql('     ');
-        expect(_.repeat('foobar', 2)).to.eql('foobarfoobar');
+        expect(utils.repeat(' ', 5)).to.eql('     ');
+        expect(utils.repeat('foobar', 2)).to.eql('foobarfoobar');
       });
     });
 
     describe('#ucfirst', function () {
       it('only capitalized the first letter, lowercases everything else', function () {
-        expect(_.ucfirst('ALGER')).to.eql('Alger');
+        expect(utils.ucfirst('ALGER')).to.eql('Alger');
       });
     });
 
@@ -219,14 +200,14 @@ describe('Utils', function () {
       var obj = {
         foo: 'bar'
       };
-      expect(_.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
+      expect(utils.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
     });
 
     it('concats arrays', function () {
       var obj = {
         foo: ['bax', 'boz']
       };
-      _.deepMerge(obj, { foo: ['boop'] });
+      utils.deepMerge(obj, { foo: ['boop'] });
       expect(obj.foo).to.have.length(3);
     });
 
@@ -234,7 +215,7 @@ describe('Utils', function () {
       var obj = {
         foo: ['stop', 'foo', 'stahp']
       };
-      _.deepMerge(obj, { foo: 'string' });
+      utils.deepMerge(obj, { foo: 'string' });
       expect(obj.foo).to.have.length(3);
     });
 
@@ -245,7 +226,7 @@ describe('Utils', function () {
           foo: ['bax', 'boz']
         }
       };
-      _.deepMerge(obj, { bax: { foo: ['poo'] } });
+      utils.deepMerge(obj, { bax: { foo: ['poo'] } });
       expect(obj.bax.foo).to.have.length(3);
     });
 
@@ -254,25 +235,25 @@ describe('Utils', function () {
   describe('#createArray', function () {
     it('accepts an array of things and simply returns a copy of it', function () {
       var inp = [{ a: 1 }, 'pizza'];
-      var out = _.createArray(inp);
+      var out = utils.createArray(inp);
       expect(out).to.eql(inp);
       expect(out).to.not.be(inp);
     });
     it('accepts a primitive value and calls the the transform function', function (done) {
-      _.createArray('str', function (val) {
+      utils.createArray('str', function (val) {
         expect(val).to.be('str');
         done();
       });
     });
     it('wraps any non-array in an array', function () {
-      expect(_.createArray({})).to.eql([{}]);
-      expect(_.createArray('')).to.eql(['']);
-      expect(_.createArray(123)).to.eql([123]);
-      expect(_.createArray(/abc/)).to.eql([/abc/]);
-      expect(_.createArray(false)).to.eql([false]);
+      expect(utils.createArray({})).to.eql([{}]);
+      expect(utils.createArray('')).to.eql(['']);
+      expect(utils.createArray(123)).to.eql([123]);
+      expect(utils.createArray(/abc/)).to.eql([/abc/]);
+      expect(utils.createArray(false)).to.eql([false]);
     });
     it('returns false when the transform function returns undefined', function () {
-      expect(_.createArray(['str', 1], function (val) {
+      expect(utils.createArray(['str', 1], function (val) {
         if (_.isString(val)) {
           return {
             val: val
@@ -290,21 +271,21 @@ describe('Utils', function () {
       var config = {
         func: function () {}
       };
-      expect(_.funcEnum(config, 'func', {}, 'toString'))
+      expect(utils.funcEnum(config, 'func', {}, 'toString'))
         .to.be(config.func);
     });
     it('tests if the value at key in object is undefined, returns the option at key default if so', function () {
       var config = {
         func: undefined
       };
-      expect(_.funcEnum(config, 'func', {}, 'toString'))
+      expect(utils.funcEnum(config, 'func', {}, 'toString'))
         .to.be(Object.prototype.toString);
     });
     it('tests if the value at key in object is a string, returns the option at that key if so', function () {
       var config = {
         'config key name': 'toString'
       };
-      expect(_.funcEnum(config, 'config key name', { toString: 'pizza' }, 'toJSON'))
+      expect(utils.funcEnum(config, 'config key name', { toString: 'pizza' }, 'toJSON'))
         .to.be('pizza');
     });
     it('throws an informative error if the selection if invalid', function () {
@@ -313,15 +294,15 @@ describe('Utils', function () {
       };
 
       expect(function () {
-        _.funcEnum(config, 'config', {});
+        utils.funcEnum(config, 'config', {});
       }).to.throwError(/expected a function/i);
 
       expect(function () {
-        _.funcEnum(config, 'config', { main: 'default' }, 'main');
+        utils.funcEnum(config, 'config', { main: 'default' }, 'main');
       }).to.throwError(/expected a function or main/i);
 
       expect(function () {
-        _.funcEnum(config, 'config', { main: 'default', other: 'default' }, 'main');
+        utils.funcEnum(config, 'config', { main: 'default', other: 'default' }, 'main');
       }).to.throwError(/expected a function or one of main, other/i);
     });
   });
@@ -337,7 +318,7 @@ describe('Utils', function () {
         stub(func, method);
 
         var args = _.map(new Array(i), function (val, i) { return i; });
-        _.applyArgs(func, null, args);
+        utils.applyArgs(func, null, args);
 
         expect(func[method].callCount).to.eql(1);
         if (method === 'apply') {
@@ -354,7 +335,7 @@ describe('Utils', function () {
 
         var args = _.map(new Array(argCount), function (val, i) { return i; });
         var expected = args.slice(slice);
-        _.applyArgs(func, null, args, slice);
+        utils.applyArgs(func, null, args, slice);
 
         expect(func[method].callCount).to.eql(1);
         if (method === 'apply') {
@@ -368,24 +349,24 @@ describe('Utils', function () {
 
   describe('#getUnwrittenFromStream', function () {
     it('ignores things that do not have writableState', function () {
-      expect(_.getUnwrittenFromStream()).to.be(undefined);
-      expect(_.getUnwrittenFromStream(false)).to.be(undefined);
-      expect(_.getUnwrittenFromStream([])).to.be(undefined);
-      expect(_.getUnwrittenFromStream({})).to.be(undefined);
+      expect(utils.getUnwrittenFromStream()).to.be(undefined);
+      expect(utils.getUnwrittenFromStream(false)).to.be(undefined);
+      expect(utils.getUnwrittenFromStream([])).to.be(undefined);
+      expect(utils.getUnwrittenFromStream({})).to.be(undefined);
     });
 
     if (require('stream').Writable) {
       var MockWritableStream = require('../../mocks/writable_stream');
       it('ignores empty stream', function () {
         var stream = new MockWritableStream();
-        expect(_.getUnwrittenFromStream(stream)).to.be('');
+        expect(utils.getUnwrittenFromStream(stream)).to.be('');
       });
 
       it('returns only what is in the buffer', function () {
         var stream = new MockWritableStream();
         stream.write('hot');
         stream.write('dog');
-        expect(_.getUnwrittenFromStream(stream)).to.be('dog');
+        expect(utils.getUnwrittenFromStream(stream)).to.be('dog');
       });
     }
   });

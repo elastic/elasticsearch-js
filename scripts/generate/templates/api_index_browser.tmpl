@@ -2,8 +2,8 @@ module.exports = {
 <%
 
   branches.forEach(function (branch, i, list) {
-    var req = "require('./" + _.snakeCase(branch) + "')";
-    if (branch === utils.branches._default) {
+    var req = "require('./" + utils.snakeCase(branch) + "')";
+    if (branch === gruntUtils.branches._default) {
       print("  '_default': " + req + ',\n');
     }
 

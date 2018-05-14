@@ -29,8 +29,9 @@ var argv = require('optimist')
 
 var path = require('path');
 var fromRoot = path.join.bind(path, require('find-root')(__dirname));
-var utils = require(fromRoot('grunt/utils'));
-var _ = require(fromRoot('src/lib/utils'));
+var _ = require('lodash');
+var utils = require(fromRoot('src/lib/utils'));
+var gruntUtils = require(fromRoot('grunt/utils'));
 var esUrl = process.env.ES_REPO
   ? path.resolve(process.cwd(), process.env.ES_REPO)
   : 'https://github.com/elastic/elasticsearch.git';
@@ -48,7 +49,7 @@ if (process.env.npm_config_argv) {
 if (argv.branch) {
   branches = [argv.branch];
 } else {
-  branches = utils.branches;
+  branches = gruntUtils.branches;
 }
 
 var paths = {
@@ -59,10 +60,10 @@ var paths = {
   docsIndex: fromRoot('docs/index.asciidoc'),
   apiSrc: 'src/lib/apis',
   getArchiveDir: function (branch) {
-    return fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+    return fromRoot('src/_elasticsearch_' + utils.snakeCase(branch));
   },
   getArchiveTarball: function (branch) {
-    return fromRoot('src/_elasticsearch_' + _.snakeCase(branch) + '.tar');
+    return fromRoot('src/_elasticsearch_' + utils.snakeCase(branch) + '.tar');
   },
   getSpecPathInRepo: function (branch) {
     return /^v?(master|[2-9]\.)/.test(branch) ? 'rest-api-spec/src/main/resources/rest-api-spec' : 'rest-api-spec';
@@ -98,7 +99,7 @@ function dirRegex(dir, regexp) {
 function dirOpts(dir, opts) {
   opts = _.isArray(opts) ? opts : [opts];
   return dirFilter(dir, function (name) {
-    return _.include(opts, name);
+    return _.includes(opts, name);
   });
 }
 
@@ -137,7 +138,7 @@ function fetchBranchesStep() {
 function findGeneratedApiFiles() {
   var anyApiMethodDocs = /^(configuration|index|api_methods).*\.asciidoc$/;
   var anyApiJsFiled = /^.+\.js$/;
-  var allBranches = _.isEqual(branches, utils.branches);
+  var allBranches = _.isEqual(branches, gruntUtils.branches);
 
   if (allBranches) {
     return [
@@ -147,11 +148,11 @@ function findGeneratedApiFiles() {
   }
 
   return branches.reduce(function (files, branch) {
-    var b = _.snakeCase(branch);
+    var b = utils.snakeCase(branch);
 
     files.push(dirOpts(paths.docs, 'api_methods_' + b + '.asciidoc'));
 
-    var isDefault = branch === utils.branches._default;
+    var isDefault = branch === gruntUtils.branches._default;
     if (isDefault) {
       files.push(dirOpts(paths.docs, 'api_methods.asciidoc'));
     }

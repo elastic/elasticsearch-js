@@ -4,7 +4,8 @@
  */
 module.exports = Transport;
 
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 var errors = require('./errors');
 var Host = require('./host');
 var patchSniffOnConnectionFault = require('./transport/sniff_on_connection_fault');
@@ -18,15 +19,15 @@ function Transport(config) {
   config.log = self.log = new LogClass(config);
 
   // setup the connection pool
-  var ConnectionPool = _.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
+  var ConnectionPool = utils.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
   self.connectionPool = new ConnectionPool(config);
 
   // setup the serializer
-  var Serializer = _.funcEnum(config, 'serializer', Transport.serializers, 'json');
+  var Serializer = utils.funcEnum(config, 'serializer', Transport.serializers, 'json');
   self.serializer = new Serializer(config);
 
   // setup the nodesToHostCallback
-  self.nodesToHostCallback = _.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
+  self.nodesToHostCallback = utils.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
 
   // setup max retries
   self.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
@@ -49,7 +50,7 @@ function Transport(config) {
   }
 
   if (config.hosts) {
-    var hostsConfig = _.createArray(config.hosts, function (val) {
+    var hostsConfig = utils.createArray(config.hosts, function (val) {
       if (_.isPlainObject(val) || _.isString(val) || val instanceof Host) {
         return val;
       }
@@ -179,7 +180,7 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (body && params.method === 'GET') {
-    _.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
+    utils.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
     return ret;
   }
 
@@ -292,7 +293,7 @@ Transport.prototype.request = function (params, cb) {
     if (
       (!err || err instanceof errors.Serialization)
       && (status < 200 || status >= 300)
-      && (!params.ignore || !_.include(params.ignore, status))
+      && (!params.ignore || !_.includes(params.ignore, status))
     ) {
 
       var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);

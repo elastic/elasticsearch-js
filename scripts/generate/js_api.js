@@ -3,8 +3,9 @@ module.exports = function (branch, done) {
    * Read the API actions form the rest-api-spec repo.
    * @type {[type]}
    */
-  var _ = require('../../src/lib/utils');
-  var utils = require('../../grunt/utils');
+  var _ = require('lodash');
+  var utils = require('../../src/lib/utils');
+  var gruntUtils = require('../../grunt/utils');
   var fs = require('fs');
   var async = require('async');
   var chalk = require('chalk');
@@ -18,8 +19,8 @@ module.exports = function (branch, done) {
   var apiSpec; // populated by parseSpecFiles
   var docVars; // slightly modified clone of apiSpec for the docs
 
-  var branchSuffix = utils.branchSuffix(branch);
-  var esDir = fromRoot('src/_elasticsearch_' + _.snakeCase(branch));
+  var branchSuffix = gruntUtils.branchSuffix(branch);
+  var esDir = fromRoot('src/_elasticsearch_' + utils.snakeCase(branch));
 
   var version = Version.fromBranch(branch);
   var overrides = version.mergeOpts(require('./overrides'), {
@@ -39,7 +40,7 @@ module.exports = function (branch, done) {
     writeApiFile
   ];
 
-  if (!~utils.unstableBranches.indexOf(branch)) {
+  if (!~gruntUtils.unstableBranches.indexOf(branch)) {
     steps.push(
       ensureDocsDir,
       formatDocVars,
@@ -137,7 +138,7 @@ module.exports = function (branch, done) {
   }
 
   function writeApiFile(done) {
-    var outputPath = fromRoot('src/lib/apis/' + _.snakeCase(branch) + '.js');
+    var outputPath = fromRoot('src/lib/apis/' + utils.snakeCase(branch) + '.js');
     fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
     console.log(chalk.white.bold('wrote'), apiSpec.actions.length, 'api actions to', outputPath);
     done();
@@ -169,7 +170,7 @@ module.exports = function (branch, done) {
       'name'
     );
     docVars.branch = branch;
-    docVars.branchIsDefault = branch === utils.branches._default;
+    docVars.branchIsDefault = branch === gruntUtils.branches._default;
     docVars.branchSuffix = branchSuffix.replace(/_/g, '-');
     done();
   }
@@ -194,7 +195,7 @@ module.exports = function (branch, done) {
     // itterate all of the specs within the file, should only be one
     _.each(spec, function (def, name) {
       // camelcase the name
-      name = _.map(name.split('.'), _.camelCase).join('.');
+      name = _.map(name.split('.'), utils.camelCase).join('.');
 
       if (name === 'cat.aliases') {
         def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
@@ -208,7 +209,7 @@ module.exports = function (branch, done) {
       var steps = name.split('.');
 
       function transformParamKeys(note, param, key) {
-        var cmlKey = _.camelCase(key);
+        var cmlKey = utils.camelCase(key);
         if (cmlKey !== key) {
           param.name = key;
         }
@@ -222,7 +223,7 @@ module.exports = function (branch, done) {
       _.forOwn(allParams, (paramSpec, paramName) => {
         const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
         if (toMerge) {
-          _.merge(paramSpec, toMerge, (dest, src) => {
+          _.mergeWith(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
               return dest.concat(src)
             }
@@ -240,7 +241,7 @@ module.exports = function (branch, done) {
         methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
         params: def.url.params,
         body: def.body || null,
-        path2lib: _.repeat('../', steps.length + 1) + 'lib/'
+        path2lib: utils.repeat('../', steps.length + 1) + 'lib/'
       };
 
       if (def.body && def.body.required) {
@@ -270,17 +271,17 @@ module.exports = function (branch, done) {
         }
 
         while (match = urlParamRE.exec(url)) {
-          name = _.camelCase(match[1]);
+          name = utils.camelCase(match[1]);
           param = def.url.parts[name] || {};
           target = (param.required || !param.default) ? requiredVars : optionalVars;
-          target[name] = _.omit(param, 'required', 'description', 'name');
+          target[name] = _.omit(param, ['required', 'description', 'name']);
         }
 
         urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
 
-        return _.omit({
+        return _.omitBy({
           fmt: url.replace(urlParamRE, function (full, match) {
-            return '<%=' + _.camelCase(match) + '%>';
+            return '<%=' + utils.camelCase(match) + '%>';
           }),
           opt: _.size(optionalVars) ? optionalVars : null,
           req: _.size(requiredVars) ? requiredVars : null,

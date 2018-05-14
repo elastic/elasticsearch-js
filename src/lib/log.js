@@ -1,4 +1,5 @@
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 var url = require('url');
 var EventEmitter = require('events').EventEmitter;
 
@@ -24,12 +25,12 @@ function Log(config) {
   var i;
   var outputs;
 
-  if (_.isArrayOfStrings(config.log)) {
+  if (utils.isArrayOfStrings(config.log)) {
     outputs = [{
       levels: config.log
     }];
   } else {
-    outputs = _.createArray(config.log, function (val) {
+    outputs = utils.createArray(config.log, function (val) {
       if (_.isPlainObject(val)) {
         return val;
       }
@@ -50,7 +51,7 @@ function Log(config) {
     this.addOutput(outputs[i]);
   }
 }
-_.inherits(Log, EventEmitter);
+utils.inherits(Log, EventEmitter);
 
 Log.loggers = require('./loggers');
 
@@ -209,7 +210,7 @@ Log.prototype.addOutput = function (config) {
   config.levels = Log.parseLevels(config.levels || config.level || 'warning');
   delete config.level;
 
-  var Logger = _.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
+  var Logger = utils.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
   return new Logger(this, config);
 };
 

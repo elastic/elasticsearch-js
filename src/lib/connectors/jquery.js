@@ -7,14 +7,14 @@
  */
 module.exports = JqueryConnector;
 
-var _ = require('../utils');
+var utils = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
 
 function JqueryConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 }
-_.inherits(JqueryConnector, ConnectionAbstract);
+utils.inherits(JqueryConnector, ConnectionAbstract);
 
 JqueryConnector.prototype.request = function (params, cb) {
   var ajax = {

@@ -28,7 +28,8 @@ module.exports = Client;
 
 var Transport = require('./transport');
 var clientAction = require('./client_action');
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 
 function Client(config) {
   config = config || {};
@@ -66,7 +67,7 @@ function Client(config) {
   }
 
 
-  EsApiClient.prototype = _.funcEnum(config, 'apiVersion', Client.apis, '_default');
+  EsApiClient.prototype = utils.funcEnum(config, 'apiVersion', Client.apis, '_default');
   if (!config.sniffEndpoint && EsApiClient.prototype === Client.apis['0.90']) {
     config.sniffEndpoint = '/_cluster/nodes';
   }
@@ -92,8 +93,7 @@ function Client(config) {
         Log: require('./log'),
         Logger: require('./logger'),
         NodesToHost: require('./nodes_to_host'),
-        Transport: require('./transport'),
-        utils: require('./utils')
+        Transport: require('./transport')
       }) || Constructor;
     });
   }

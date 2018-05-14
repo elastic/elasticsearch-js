@@ -1,4 +1,5 @@
-var _ = require('./utils');
+var _ = require('lodash');
+var utils = require('./utils');
 var errors = module.exports;
 
 var canCapture = (typeof Error.captureStackTrace === 'function');
@@ -34,7 +35,7 @@ function ErrorAbstract(msg, constructor, metadata) {
   }
 }
 errors._Abstract = ErrorAbstract;
-_.inherits(ErrorAbstract, Error);
+utils.inherits(ErrorAbstract, Error);
 
 /**
  * Connection Error
@@ -43,7 +44,7 @@ _.inherits(ErrorAbstract, Error);
 errors.ConnectionFault = function ConnectionFault(msg) {
   ErrorAbstract.call(this, msg || 'Connection Failure', errors.ConnectionFault);
 };
-_.inherits(errors.ConnectionFault, ErrorAbstract);
+utils.inherits(errors.ConnectionFault, ErrorAbstract);
 
 /**
  * No Living Connections
@@ -52,7 +53,7 @@ _.inherits(errors.ConnectionFault, ErrorAbstract);
 errors.NoConnections = function NoConnections(msg) {
   ErrorAbstract.call(this, msg || 'No Living connections', errors.NoConnections);
 };
-_.inherits(errors.NoConnections, ErrorAbstract);
+utils.inherits(errors.NoConnections, ErrorAbstract);
 
 /**
  * Generic Error
@@ -61,7 +62,7 @@ _.inherits(errors.NoConnections, ErrorAbstract);
 errors.Generic = function Generic(msg, metadata) {
   ErrorAbstract.call(this, msg || 'Generic Error', errors.Generic, metadata);
 };
-_.inherits(errors.Generic, ErrorAbstract);
+utils.inherits(errors.Generic, ErrorAbstract);
 
 /**
  * Request Timeout Error
@@ -70,7 +71,7 @@ _.inherits(errors.Generic, ErrorAbstract);
 errors.RequestTimeout = function RequestTimeout(msg) {
   ErrorAbstract.call(this, msg || 'Request Timeout', errors.RequestTimeout);
 };
-_.inherits(errors.RequestTimeout, ErrorAbstract);
+utils.inherits(errors.RequestTimeout, ErrorAbstract);
 
 
 /**
@@ -80,7 +81,7 @@ _.inherits(errors.RequestTimeout, ErrorAbstract);
 errors.Serialization = function Serialization(msg) {
   ErrorAbstract.call(this, msg || 'Unable to parse/serialize body', errors.Serialization);
 };
-_.inherits(errors.Serialization, ErrorAbstract);
+utils.inherits(errors.Serialization, ErrorAbstract);
 
 
 /**
@@ -89,7 +90,7 @@ _.inherits(errors.Serialization, ErrorAbstract);
 errors.RequestTypeError = function RequestTypeError(feature) {
   ErrorAbstract.call(this, 'Cross-domain AJAX requests ' + feature + ' are not supported', errors.RequestTypeError);
 };
-_.inherits(errors.RequestTypeError, ErrorAbstract);
+utils.inherits(errors.RequestTypeError, ErrorAbstract);
 
 var statusCodes = [
   [300, 'Multiple Choices'],
@@ -141,7 +142,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
   var names = tuple[1];
   var allNames = [].concat(names, status);
   var primaryName = allNames[0];
-  var className = _.studlyCase(primaryName);
+  var className = utils.studlyCase(primaryName);
   allNames = _.uniq(allNames.concat(className));
 
   function StatusCodeError(msg, metadata) {
@@ -183,7 +184,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
     ErrorAbstract.call(this, msg || primaryName, StatusCodeError, metadata);
     return this;
   }
-  _.inherits(StatusCodeError, ErrorAbstract);
+  utils.inherits(StatusCodeError, ErrorAbstract);
 
   allNames.forEach(function (name) {
     errors[name] = StatusCodeError;

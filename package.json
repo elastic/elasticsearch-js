@@ -105,10 +105,7 @@
   "dependencies": {
     "agentkeepalive": "^3.4.1",
     "chalk": "^1.0.0",
-    "lodash": "2.4.2",
-    "lodash.get": "^4.4.2",
-    "lodash.isempty": "^4.4.0",
-    "lodash.trimend": "^4.5.1"
+    "lodash": "^4.17.10"
   },
   "resolutions": {
     "grunt-webpack/deep-for-each": "https://github.com/spalger/js-deep-for-each/releases/download/v2.0.2-fix-missing-lodash-dep/deep-for-each-2.0.2.tgz"
