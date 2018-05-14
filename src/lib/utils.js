@@ -12,34 +12,6 @@ var utils = {};
 utils.inherits = nodeUtils.inherits;
 
 /**
- * Recursively merge two objects, walking into each object and concating arrays. If both to and from have a value at a
- * key, but the values' types don't match to's value is left unmodified. Only Array and Object values are merged - that
- * it to say values with a typeof "object"
- *
- * @param  {Object} to - Object to merge into (no cloning, the original object
- *   is modified)
- * @param  {Object} from - Object to pull changed from
- * @return {Object} - returns the modified to value
- */
-utils.deepMerge = function (to, from) {
-  _.each(from, function (fromVal, key) {
-    switch (typeof to[key]) {
-      case 'undefined':
-        to[key] = from[key];
-        break;
-      case 'object':
-        if (_.isArray(to[key]) && _.isArray(from[key])) {
-          to[key] = to[key].concat(from[key]);
-        }
-        else if (_.isPlainObject(to[key]) && _.isPlainObject(from[key])) {
-          utils.deepMerge(to[key], from[key]);
-        }
-    }
-  });
-  return to;
-};
-
-/**
  * Test if a value is an array and its contents are string type
  *
  * @method isArrayOfStrings

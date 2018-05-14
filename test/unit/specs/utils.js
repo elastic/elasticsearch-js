@@ -193,45 +193,6 @@ describe('Utils', function () {
 
   });
 
-
-  describe('#deepMerge', function () {
-
-    it('returns the same object that was passed', function () {
-      var obj = {
-        foo: 'bar'
-      };
-      expect(utils.deepMerge(obj, { bar: 'baz' })).to.eql(obj);
-    });
-
-    it('concats arrays', function () {
-      var obj = {
-        foo: ['bax', 'boz']
-      };
-      utils.deepMerge(obj, { foo: ['boop'] });
-      expect(obj.foo).to.have.length(3);
-    });
-
-    it('wont merge values of different types', function () {
-      var obj = {
-        foo: ['stop', 'foo', 'stahp']
-      };
-      utils.deepMerge(obj, { foo: 'string' });
-      expect(obj.foo).to.have.length(3);
-    });
-
-    it('works recursively', function () {
-      var obj = {
-        foo: 'bar',
-        bax: {
-          foo: ['bax', 'boz']
-        }
-      };
-      utils.deepMerge(obj, { bax: { foo: ['poo'] } });
-      expect(obj.bax.foo).to.have.length(3);
-    });
-
-  });
-
   describe('#createArray', function () {
     it('accepts an array of things and simply returns a copy of it', function () {
       var inp = [{ a: 1 }, 'pizza'];
