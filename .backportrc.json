@@ -1,0 +1,8 @@
+{
+  "upstream": "elastic/elasticsearch-js",
+  "branches": [
+    { "name": "15.x", "checked": true },
+    "14.x"
+  ],
+  "labels": ["backport"]
+}

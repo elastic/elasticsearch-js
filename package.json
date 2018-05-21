@@ -58,6 +58,7 @@
     "async": "~0.8.0",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^8.0.0-beta",
+    "backport": "^3.0.2",
     "blanket": "^1.2.3",
     "bluebird": "^2.9.14",
     "browserify": "^16.1.1",
