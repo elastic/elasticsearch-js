@@ -5,6 +5,11 @@ This page aims to list useful extensions for the elasticsearch.js client provide
 
 For information about writing extensions, check out the <<extending_core_components>> page.
 
+=== superagent-elasticsearch
+This `Connection` class allows you to send all requests from an elasticsearch.js `Client` instance with https://github.com/visionmedia/superagent[superagent]. `superagent` has support for all sorts of authentication strategies (eg. kerberos, in-house CAs, etc.), but also supports a `beforeEachRequest` hook powers all kinds of per-request tweaking.
+
+superagent-elasticsearch is available on https://www.npmjs.com/package/superagent-elasticsearch[npm].
+
 === http-aws-es
 Makes elasticsearch-js compatible with https://aws.amazon.com/elasticsearch-service/[Amazon ES]. It uses the https://www.npmjs.com/package/aws-sdk[aws-sdk] to make signed requests to an Amazon ES endpoint.
 
