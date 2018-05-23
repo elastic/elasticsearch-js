@@ -1,14 +1,12 @@
 .Perform an atomic alias swap, for a rotating index
 [source,js]
 ---------
-client.indices.updateAliases({
+const response = await client.indices.updateAliases({
   body: {
     actions: [
       { remove: { index: 'logstash-2014.04', alias: 'logstash-current' } },
       { add:    { index: 'logstash-2014.05', alias: 'logstash-current' } }
     ]
   }
-}).then(function (response) {
-  // ...
-}, errorHandler);
+});
 ---------

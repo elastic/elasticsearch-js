@@ -1,25 +1,21 @@
 .Deleting documents with a simple query
 [source,js]
 ---------
-client.deleteByQuery({
+await client.deleteByQuery({
   index: 'myindex',
   q: 'test'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Deleting documents using the Query DSL
 [source,js]
 ---------
-client.deleteByQuery({
+await client.deleteByQuery({
   index: 'posts',
   body: {
     query: {
       term: { published: false }
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
