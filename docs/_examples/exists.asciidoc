@@ -1,15 +1,9 @@
 .Check that the document `/myindex/mytype/1` exist
 [source,js]
 ---------
-client.exists({
+const exists = await client.exists({
   index: 'myindex',
   type: 'mytype',
   id: 1
-}, function (error, exists) {
-  if (exists === true) {
-    // ...
-  } else {
-    // ...
-  }
 });
 ---------

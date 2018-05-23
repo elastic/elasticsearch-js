@@ -1,10 +1,7 @@
 .Return information about JVM
 [source,js]
 ---------
-client.cluster.nodeInfo({ jvm: true })
-  .then(function (response) {
-    // enjoy your sweet info!
-  }, function (error) {
-    // scream!
-  })
+const response = await client.cluster.nodeInfo({
+  jvm: true
+});
 ---------

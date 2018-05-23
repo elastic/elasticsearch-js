@@ -1,7 +1,7 @@
 .Perform multiple different searches, the body is made up of meta/data pairs
 [source,js]
 ---------
-client.msearch({
+const response = await client.msearch({
   body: [
     // match all query, on all indices and types
     {},
