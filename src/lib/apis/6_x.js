@@ -3664,6 +3664,7 @@ api.indices.prototype.getMapping = ca({
  * Perform a [indices.getSettings](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-get-settings.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open,closed] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3675,6 +3676,10 @@ api.indices.prototype.getMapping = ca({
  */
 api.indices.prototype.getSettings = ca({
   params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'

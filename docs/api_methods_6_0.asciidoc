@@ -116,26 +116,21 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Get the number of all documents in the cluster
 [source,js]
 ---------
-client.count(function (error, response, status) {
-  // check for and handle error
-  var count = response.count;
-});
+const { count } = await client.count();
 ---------
 
 .Get the number of documents in an index
 [source,js]
 ---------
-client.count({
+const { count } = await client.count({
   index: 'index_name'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Get the number of documents matching a query
 [source,js]
 ---------
-client.count({
+const { count } = await client.count({
   index: 'index_name',
   body: {
     query: {
@@ -148,8 +143,6 @@ client.count({
       }
     }
   }
-}, function (err, response) {
-  // ...
 });
 ---------
 
@@ -218,7 +211,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Create a document
 [source,js]
 ---------
-client.create({
+await client.create({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -229,10 +222,9 @@ client.create({
     published_at: '2013-01-01',
     counter: 1
   }
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -292,14 +284,13 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Delete the document `/myindex/mytype/1`
 [source,js]
 ---------
-client.delete({
+await client.delete({
   index: 'myindex',
   type: 'mytype',
   id: '1'
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -357,28 +348,25 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Deleting documents with a simple query
 [source,js]
 ---------
-client.deleteByQuery({
+await client.deleteByQuery({
   index: 'myindex',
   q: 'test'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Deleting documents using the Query DSL
 [source,js]
 ---------
-client.deleteByQuery({
+await client.deleteByQuery({
   index: 'posts',
   body: {
     query: {
       term: { published: false }
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -519,18 +507,13 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Check that the document `/myindex/mytype/1` exist
 [source,js]
 ---------
-client.exists({
+const exists = await client.exists({
   index: 'myindex',
   type: 'mytype',
   id: 1
-}, function (error, exists) {
-  if (exists === true) {
-    // ...
-  } else {
-    // ...
-  }
 });
 ---------
+
 
 
 *Params*
@@ -645,7 +628,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .See how a document is scored against a simple query
 [source,js]
 ---------
-client.explain({
+const response = await client.explain({
   // the document to test
   index: 'myindex',
   type: 'mytype',
@@ -653,15 +636,13 @@ client.explain({
 
   // the query to score it against
   q: 'field:value'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .See how a document is scored against a query written in the Query DSL
 [source,js]
 ---------
-client.explain({
+const response = await client.explain({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -670,10 +651,9 @@ client.explain({
       match: { title: 'test' }
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -774,14 +754,13 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Get `/myindex/mytype/1`
 [source,js]
 ---------
-client.get({
+const response = await client.get({
   index: 'myindex',
   type: 'mytype',
   id: 1
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -921,7 +900,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Create or update a document
 [source,js]
 ---------
-client.index({
+const response = await client.index({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -930,10 +909,9 @@ client.index({
     tags: ['y', 'z'],
     published: true,
   }
-}, function (error, response) {
-
 });
 ---------
+
 
 
 *Params*
@@ -1015,7 +993,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .An array of doc locations. Useful for getting documents from different indices.
 [source,js]
 ---------
-client.mget({
+const response = await client.mget({
   body: {
     docs: [
       { _index: 'indexA', _type: 'typeA', _id: '1' },
@@ -1023,24 +1001,21 @@ client.mget({
       { _index: 'indexC', _type: 'typeC', _id: '1' }
     ]
   }
-}, function(error, response){
-  // ...
 });
 ---------
 
 .An array of ids. You must also specify the `index` and `type` that apply to all of the ids.
 [source,js]
 ---------
-client.mget({
+const response = await client.mget({
   index: 'myindex',
   type: 'mytype',
   body: {
     ids: [1, 2, 3]
   }
-}, function(error, response){
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -1086,7 +1061,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Perform multiple different searches, the body is made up of meta/data pairs
 [source,js]
 ---------
-client.msearch({
+const response = await client.msearch({
   body: [
     // match all query, on all indices and types
     {},
@@ -1374,30 +1349,40 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Collect every title in the index that contains the word "test"
 [source,js]
 ---------
-var allTitles = [];
+const allTitles = [];
+const responseQueue = [];
 
-// first we do a search, and specify a scroll timeout
-client.search({
+// start things off by searching, setting a scroll timeout, and pushing
+// our first response into the queue to be processed
+await client.search({
   index: 'myindex',
   scroll: '30s', // keep the search results "scrollable" for 30 seconds
   source: ['title'], // filter the source to only include the title field
   q: 'title:test'
-}, function getMoreUntilDone(error, response) {
-  // collect the title from each response
+})
+
+while (responseQueue.length) {
+  const response = responseQueue.shift();
+
+  // collect the titles from this response
   response.hits.hits.forEach(function (hit) {
-    allTitles.push(hit._source.title);
+    allTitles.push(hit.fields.title);
   });
 
-  if (response.hits.total > allTitles.length) {
-    // ask elasticsearch for the next set of hits from this search
-    client.scroll({
+  // check to see if we have collected all of the titles
+  if (response.hits.total === allTitles.length) {
+    console.log('every "test" title', allTitles);
+    break
+  }
+
+  // get the next response if there are more titles to fetch
+  responseQueue.push(
+    await client.scroll({
       scrollId: response._scroll_id,
       scroll: '30s'
-    }, getMoreUntilDone);
-  } else {
-    console.log('every "test" title', allTitles);
-  }
-});
+    })
+  );
+}
 ---------
 
 
@@ -1433,18 +1418,16 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Search with a simple query string query
 [source,js]
 ---------
-client.search({
+const response = await client.search({
   index: 'myindex',
   q: 'title:test'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Passing a full request definition in the Elasticsearch's Query DSL as a `Hash`
 [source,js]
 ---------
-client.search({
+const response = await client.search({
   index: 'myindex',
   body: {
     query: {
@@ -1460,10 +1443,9 @@ client.search({
       }
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -1750,7 +1732,7 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Update document title using partial document
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -1760,15 +1742,13 @@ client.update({
       title: 'Updated'
     }
   }
-}, function (error, response) {
-  // ...
 })
 ---------
 
 .Add a tag to document `tags` property using a `script`
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -1776,15 +1756,13 @@ client.update({
     script: 'ctx._source.tags += tag',
     params: { tag: 'some new tag' }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Increment a document counter by 1 or initialize it, when the document does not exist
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '777',
@@ -1794,15 +1772,13 @@ client.update({
       counter: 1
     }
   }
-}, function (error, response) {
-  // ...
 })
 ---------
 
 .Delete a document if it's tagged “to-delete”
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -1812,10 +1788,9 @@ client.update({
       tag: 'to-delete'
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
+
 
 
 *Params*
@@ -4363,17 +4338,16 @@ Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearc
 .Perform an atomic alias swap, for a rotating index
 [source,js]
 ---------
-client.indices.updateAliases({
+const response = await client.indices.updateAliases({
   body: {
     actions: [
       { remove: { index: 'logstash-2014.04', alias: 'logstash-current' } },
       { add:    { index: 'logstash-2014.05', alias: 'logstash-current' } }
     ]
   }
-}).then(function (response) {
-  // ...
-}, errorHandler);
+});
 ---------
+
 
 
 *Params*
