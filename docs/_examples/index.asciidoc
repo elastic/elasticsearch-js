@@ -1,7 +1,7 @@
 .Create or update a document
 [source,js]
 ---------
-client.index({
+const response = await client.index({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -10,7 +10,5 @@ client.index({
     tags: ['y', 'z'],
     published: true,
   }
-}, function (error, response) {
-
 });
 ---------

@@ -1,26 +1,21 @@
 .Get the number of all documents in the cluster
 [source,js]
 ---------
-client.count(function (error, response, status) {
-  // check for and handle error
-  var count = response.count;
-});
+const { count } = await client.count();
 ---------
 
 .Get the number of documents in an index
 [source,js]
 ---------
-client.count({
+const { count } = await client.count({
   index: 'index_name'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Get the number of documents matching a query
 [source,js]
 ---------
-client.count({
+const { count } = await client.count({
   index: 'index_name',
   body: {
     query: {
@@ -33,7 +28,5 @@ client.count({
       }
     }
   }
-}, function (err, response) {
-  // ...
 });
 ---------

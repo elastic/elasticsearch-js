@@ -1,7 +1,7 @@
 .Update document title using partial document
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -11,15 +11,13 @@ client.update({
       title: 'Updated'
     }
   }
-}, function (error, response) {
-  // ...
 })
 ---------
 
 .Add a tag to document `tags` property using a `script`
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -27,15 +25,13 @@ client.update({
     script: 'ctx._source.tags += tag',
     params: { tag: 'some new tag' }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .Increment a document counter by 1 or initialize it, when the document does not exist
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '777',
@@ -45,15 +41,13 @@ client.update({
       counter: 1
     }
   }
-}, function (error, response) {
-  // ...
 })
 ---------
 
 .Delete a document if it's tagged “to-delete”
 [source,js]
 ---------
-client.update({
+const response = await client.update({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -63,7 +57,5 @@ client.update({
       tag: 'to-delete'
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------

@@ -1,43 +1,41 @@
 .First, Register queries named “alert-1” and “alert-2” for the “myindex” index
 [source,js]
 ---------
-client.index({
-  index: 'myindex',
-  type: '.percolator',
-  id: 'alert-1',
-  body: {
-    // This query will be run against documents sent to percolate
-    query: {
-      query_string: {
-        query: 'foo'
+await Promise.all([
+  client.index({
+    index: 'myindex',
+    type: '.percolator',
+    id: 'alert-1',
+    body: {
+      // This query will be run against documents sent to percolate
+      query: {
+        query_string: {
+          query: 'foo'
+        }
       }
     }
-  }
-}, function (error, response) {
-  // ...
-});
+  }),
 
-client.index({
-  index: 'myindex',
-  type: '.percolator',
-  id: 'alert-2',
-  body: {
-    // This query will also be run against documents sent to percolate
-    query: {
-      query_string: {
-        query: 'bar'
+  client.index({
+    index: 'myindex',
+    type: '.percolator',
+    id: 'alert-2',
+    body: {
+      // This query will also be run against documents sent to percolate
+      query: {
+        query_string: {
+          query: 'bar'
+        }
       }
     }
-  }
-}, function (error, response) {
-  // ...
-});
+  })
+]);
 ---------
 
 .Then you can send documents to learn which query `_percolator` queries they match
 [source,js]
 ---------
-client.percolate({
+const response1 = await client.percolate({
   index: 'myindex',
   type: 'mytype',
   body: {
@@ -45,15 +43,15 @@ client.percolate({
       title: "Foo"
     }
   }
-}, function (error, response) {
-  // response would equal
-  // {
-  //   total: 1,
-  //   matches: [ { _index: 'myindex', _id: 'alert-1' } ]
-  // }
 });
 
-client.percolate({
+// response1 should look something like
+// {
+//   total: 1,
+//   matches: [ { _index: 'myindex', _id: 'alert-1' } ]
+// }
+
+const response2 = await client.percolate({
   index: 'myindex',
   type: 'mytype',
   body: {
@@ -61,14 +59,14 @@ client.percolate({
       title: "Foo Bar"
     }
   }
-}, function (error, response) {
-  // response would equal
-  // {
-  //   total: 2,
-  //   matches: [
-  //     { _index: 'myindex', _id: 'alert-1' },
-  //     { _index: 'myindex', _id: 'alert-2' }
-  //   ]
-  // }
 });
+
+// response2 should look something like
+// {
+//   total: 2,
+//   matches: [
+//     { _index: 'myindex', _id: 'alert-1' },
+//     { _index: 'myindex', _id: 'alert-2' }
+//   ]
+// }
 ---------

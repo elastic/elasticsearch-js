@@ -1,7 +1,7 @@
 .See how a document is scored against a simple query
 [source,js]
 ---------
-client.explain({
+const response = await client.explain({
   // the document to test
   index: 'myindex',
   type: 'mytype',
@@ -9,15 +9,13 @@ client.explain({
 
   // the query to score it against
   q: 'field:value'
-}, function (error, response) {
-  // ...
 });
 ---------
 
 .See how a document is scored against a query written in the Query DSL
 [source,js]
 ---------
-client.explain({
+const response = await client.explain({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -26,7 +24,5 @@ client.explain({
       match: { title: 'test' }
     }
   }
-}, function (error, response) {
-  // ...
 });
 ---------
