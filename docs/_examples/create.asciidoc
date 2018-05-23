@@ -1,7 +1,7 @@
 .Create a document
 [source,js]
 ---------
-client.create({
+await client.create({
   index: 'myindex',
   type: 'mytype',
   id: '1',
@@ -12,7 +12,5 @@ client.create({
     published_at: '2013-01-01',
     counter: 1
   }
-}, function (error, response) {
-  // ...
 });
 ---------

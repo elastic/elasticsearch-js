@@ -1,28 +1,38 @@
 .Collect every title in the index that contains the word "test"
 [source,js]
 ---------
-var allTitles = [];
+const allTitles = [];
+const responseQueue = [];
 
-// first we do a search, and specify a scroll timeout
-client.search({
+// start things off by searching, setting a scroll timeout, and pushing
+// our first response into the queue to be processed
+await client.search({
   index: 'myindex',
   scroll: '30s', // keep the search results "scrollable" for 30 seconds
   source: ['title'], // filter the source to only include the title field
   q: 'title:test'
-}, function getMoreUntilDone(error, response) {
-  // collect the title from each response
+})
+
+while (responseQueue.length) {
+  const response = responseQueue.shift();
+
+  // collect the titles from this response
   response.hits.hits.forEach(function (hit) {
-    allTitles.push(hit._source.title);
+    allTitles.push(hit.fields.title);
   });
 
-  if (response.hits.total > allTitles.length) {
-    // ask elasticsearch for the next set of hits from this search
-    client.scroll({
+  // check to see if we have collected all of the titles
+  if (response.hits.total === allTitles.length) {
+    console.log('every "test" title', allTitles);
+    break
+  }
+
+  // get the next response if there are more titles to fetch
+  responseQueue.push(
+    await client.scroll({
       scrollId: response._scroll_id,
       scroll: '30s'
-    }, getMoreUntilDone);
-  } else {
-    console.log('every "test" title', allTitles);
-  }
-});
+    })
+  );
+}
 ---------
