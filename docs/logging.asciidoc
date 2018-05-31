@@ -165,7 +165,7 @@ Options:
 `String` --  Default is `9200`.
 
 `"stream"`::
-Send log messages to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">WriteableStream</a>
+Send log messages to a http://nodejs.org/api/stream.html#stream_class_stream_writable[WriteableStream]
 +
 Options:
 
