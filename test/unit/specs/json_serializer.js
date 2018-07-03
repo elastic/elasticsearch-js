@@ -39,6 +39,24 @@ describe('JSON serializer', function () {
         ser.serialize(thing);
       }).to.throwError();
     });
+
+    it('utilizes replacer or spaces if passed', function () {
+      sinon.spy(JSON, 'stringify');
+      var ser = makeSerializer();
+      var thing = { name: 'thing' };
+      ser.serialize(thing, null, 2);
+      expect(JSON.stringify.withArgs(thing, null, 2).calledOnce).to.be(true);
+      JSON.stringify.restore();
+    });
+
+    it('should call JSON.stringify with value only', function () {
+      sinon.spy(JSON, 'stringify');
+      var ser = makeSerializer();
+      var thing = { name: 'thing' };
+      ser.serialize(thing);
+      expect(JSON.stringify.withArgs(thing).calledOnce).to.be(true);
+      JSON.stringify.restore();
+    });
   });
 
   describe('#deserialize', function () {
