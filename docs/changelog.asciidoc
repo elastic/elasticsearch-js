@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 15.1.1 (July 3 2018)
+  * Fix JSON serialization bug affecting some objects with non-enumerable properties https://github.com/elastic/elasticsearch-js/issues/504[#504]
+
 === 15.1.0 (July 3 2018)
   * apiVersion `"6.3"` is now the default
 
