@@ -22,8 +22,6 @@ include::development.asciidoc[]
 
 include::api_methods.asciidoc[]
 
-include::api_methods.asciidoc[]
-
 include::api_methods_6_2.asciidoc[]
 
 include::api_methods_6_1.asciidoc[]
