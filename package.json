@@ -32,7 +32,6 @@
     "default_api_branch": "6.3",
     "supported_es_branches": [
       "6.3",
-      "6.3",
       "6.2",
       "6.1",
       "6.0",
