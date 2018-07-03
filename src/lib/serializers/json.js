@@ -20,7 +20,11 @@ Json.prototype.serialize = function (val, replacer, spaces) {
       return val;
     case 'object':
       if (val) {
-        return JSON.stringify(val, replacer, spaces);
+        if (replacer || spaces) {
+          return JSON.stringify(val, replacer, spaces);
+        } else {
+          return JSON.stringify(val);
+        }
       }
     /* falls through */
     default:
