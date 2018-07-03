@@ -175,7 +175,7 @@ function clearGeneratedFiles() {
   generatedFiles.push(dirRegex(paths.src, esArchives));
 
   var rmSteps = _.chain(generatedFiles)
-  .flatten()
+  .flattenDeep()
   .uniq()
   .map(function (path) {
     return spawnStep('rm', ['-rf', path]);
