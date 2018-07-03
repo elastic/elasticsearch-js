@@ -2499,9 +2499,16 @@ api.get = ca({
  * Perform a [getScript](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>} params.id - Script ID
  */
 api.getScript = ca({
+  params: {
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    }
+  },
   url: {
     fmt: '/_scripts/<%=id%>',
     req: {
@@ -3597,6 +3604,7 @@ api.indices.prototype.getFieldMapping = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types
@@ -3621,6 +3629,10 @@ api.indices.prototype.getMapping = ca({
         'all'
       ],
       name: 'expand_wildcards'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
     },
     local: {
       type: 'boolean'
