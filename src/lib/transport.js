@@ -206,9 +206,8 @@ Transport.prototype.request = function (params, cb) {
 
   const pingRequest = params.path === '/' && params.method === 'HEAD';
   if (pingRequest) {
-    const pingParam = params.hasOwnProperty('pingTimeout') && params.pingTimeout;
     const requestParam = params.hasOwnProperty('requestTimeout') && params.requestTimeout;
-    requestTimeout = pingParam || requestParam || this.pingTimeout || requestTimeout;
+    requestTimeout = requestParam || this.pingTimeout;
   }
 
   params.req = {
