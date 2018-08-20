@@ -103,7 +103,7 @@
     "optimist": "~0.6.0",
     "readable-stream": "^3.0.1",
     "semver": "^4.3.6",
-    "sinon": "^1.17.4",
+    "sinon": "^6.1.5",
     "split": "~0.3.2",
     "standard": "^11.0.1",
     "tap": "^12.0.1",
