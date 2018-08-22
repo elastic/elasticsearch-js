@@ -106,6 +106,7 @@
     "sinon": "^6.1.5",
     "split": "~0.3.2",
     "standard": "^11.0.1",
+    "string-to-stream": "^1.1.1",
     "tap": "^12.0.1",
     "through2": "~0.6.3",
     "through2-map": "~1.4.0",
