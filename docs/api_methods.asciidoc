@@ -1407,12 +1407,14 @@ const responseQueue = [];
 
 // start things off by searching, setting a scroll timeout, and pushing
 // our first response into the queue to be processed
-await client.search({
-  index: 'myindex',
-  scroll: '30s', // keep the search results "scrollable" for 30 seconds
-  source: ['title'], // filter the source to only include the title field
-  q: 'title:test'
-})
+responseQueue.push(
+  await client.search({
+    index: 'myindex',
+    scroll: '30s', // keep the search results "scrollable" for 30 seconds
+    source: ['title'], // filter the source to only include the title field
+    q: 'title:test'
+  })
+);
 
 while (responseQueue.length) {
   const response = responseQueue.shift();
