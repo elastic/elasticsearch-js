@@ -160,7 +160,7 @@ test('request', t => {
       res.end(body)
     }
 
-    buildServer(handler, (port, server) => {
+    buildServer(handler, port => {
       const conn = new HttpConnection(new Host(`http://localhost:${port}`))
       conn.request({
         method: 'GET',
@@ -169,7 +169,6 @@ test('request', t => {
         t.error(err)
         t.strictEqual(res, body)
         t.strictEqual(status, 200)
-        server.close()
       })
     })
   })
@@ -189,7 +188,7 @@ test('request', t => {
       pipeline(sts(body), createGzip(), res, t.error)
     }
 
-    buildServer(handler, (port, server) => {
+    buildServer(handler, port => {
       const conn = new HttpConnection(new Host(`http://localhost:${port}`))
       conn.request({
         method: 'GET',
@@ -198,7 +197,6 @@ test('request', t => {
         t.error(err)
         t.strictEqual(res, body)
         t.strictEqual(status, 200)
-        server.close()
       })
     })
   })
@@ -218,7 +216,7 @@ test('request', t => {
       pipeline(sts(body), createDeflate(), res, t.error)
     }
 
-    buildServer(handler, (port, server) => {
+    buildServer(handler, port => {
       const conn = new HttpConnection(new Host(`http://localhost:${port}`))
       conn.request({
         method: 'GET',
@@ -227,7 +225,6 @@ test('request', t => {
         t.error(err)
         t.strictEqual(res, body)
         t.strictEqual(status, 200)
-        server.close()
       })
     })
   })
@@ -245,7 +242,7 @@ test('request', t => {
       res.end(body)
     }
 
-    buildServer(handler, (port, server) => {
+    buildServer(handler, port => {
       const conn = new HttpConnection(new Host(`http://localhost:${port}`))
       conn.request({
         method: 'GET',
@@ -254,7 +251,6 @@ test('request', t => {
         t.ok(err)
         t.strictEqual(res, undefined)
         t.strictEqual(status, undefined)
-        server.close()
       })
     })
   })
@@ -271,7 +267,7 @@ test('request', t => {
       res.end(body)
     }
 
-    buildServer(handler, (port, server) => {
+    buildServer(handler, port => {
       const conn = new HttpConnection(new Host(`http://localhost:${port}`))
       conn.request({
         method: 'GET',
@@ -280,7 +276,6 @@ test('request', t => {
         t.error(err)
         t.strictEqual(res, body)
         t.strictEqual(status, 200)
-        server.close()
       })
     })
   })
