@@ -23,3 +23,4 @@ html_docs
 /elasticsearch-*.tgz
 yarn.lock
 package-lock.json
+test/integration/tap/yaml
