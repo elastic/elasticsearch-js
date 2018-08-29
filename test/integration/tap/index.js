@@ -7,7 +7,9 @@ const yaml = require('js-yaml')
 const Git = require('simple-git')
 const ora = require('ora')
 const workq = require('workq')
+const minimist = require('minimist')
 const elasticsearch = require('../../../src/elasticsearch')
+const TestRunner = require('./test-runner')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, 'yaml')
@@ -20,7 +22,10 @@ function Runner (opts) {
   opts = opts || {}
 
   assert(opts.url, 'Missing url')
-  this.client = new elasticsearch.Client({ host: opts.url })
+  this.client = new elasticsearch.Client({
+    host: opts.url,
+    apiVersion: opts.apiVersion
+  })
   this.log = ora('Loading yaml suite').start()
   this.q = workq()
 }
@@ -31,20 +36,23 @@ function Runner (opts) {
 Runner.prototype.start = function () {
   const getTest = this.getTest.bind(this)
   const parse = this.parse.bind(this)
+  const client = this.client
   // Get the build hash of Elasticsearch
-  this.client.info((err, response, status) => {
+  client.info((err, response, status) => {
     if (err) {
       this.log.fail(err.message)
       return
     }
     const sha = response.version.build_hash
     // Set the repository to the given sha and run the test suite
-    this.withSHA(sha, () => runTest.call(this))
+    this.withSHA(sha, () => {
+      this.log.succeed('Done!')
+      runTest.call(this)
+    })
   })
 
   function runTest () {
     this.q.drain(done => {
-      this.log.succeed('Done!')
       done()
     })
 
@@ -53,8 +61,10 @@ Runner.prototype.start = function () {
 
     // run the tests of the given folder
     function folderWorker (q, testFolder, done) {
+      if (testFolder !== 'search') return done()
       const files = getTest(testFolder)
       files.forEach(file => {
+        if (file !== '100_stored_fields.yml') return
         // get the file path
         const path = join(yamlFolder, testFolder, file)
         // read the yaml file
@@ -63,16 +73,40 @@ Runner.prototype.start = function () {
         // every document is separated by '---', so we split on it
         // and then we remove the empty strings
         const yamlDocuments = data.split('---').filter(Boolean)
-        // Run every test separately
-        yamlDocuments.forEach(yamlDocument => q.add(testWorker, yamlDocument))
+        // instance the test runner
+        const t = TestRunner({ client })
+        t.context(file.slice(0, -4), end => {
+          // Run every test separately
+          yamlDocuments.forEach(yamlDocument => {
+            q.add(testWorker, t, parse(yamlDocument))
+          })
+
+          q.add(end)
+        })
       })
+
+      q.drain(done => {
+        done()
+      })
+
       done()
     }
 
-    function testWorker (q, yamlDocument, done) {
-      // parse the yaml configuration
-      const conf = parse(yamlDocument)
-      console.log(conf)
+    function testWorker (q, t, test, done) {
+      if (test.setup) {
+        t.setup(test.setup, q.child())
+      }
+
+      Object.keys(test)
+        .filter(name => name !== 'setup' && name !== 'teardown')
+        .forEach(name => {
+          t.exec(name, test[name], q.child())
+        })
+
+      if (test.teardown) {
+        t.teardown(test.teardown, q.child())
+      }
+
       done()
     }
   }
@@ -198,6 +232,19 @@ Runner.prototype.createFolder = function (name) {
   } catch (err) {
     return false
   }
+}
+
+if (require.main === module) {
+  const opts = minimist(process.argv.slice(2), {
+    string: ['url', 'version'],
+    default: {
+      url: 'localhost:9200',
+      version: '6.3'
+    }
+  })
+
+  const runner = Runner(opts)
+  runner.start()
 }
 
 module.exports = Runner
