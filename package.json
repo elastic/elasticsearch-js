@@ -106,7 +106,7 @@
     "optimist": "~0.6.0",
     "ora": "^3.0.0",
     "readable-stream": "^3.0.1",
-    "semver": "^4.3.6",
+    "semver": "^5.5.1",
     "simple-git": "^1.96.0",
     "sinon": "^6.1.5",
     "split": "~0.3.2",

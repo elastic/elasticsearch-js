@@ -43,15 +43,15 @@ Runner.prototype.start = function () {
       this.log.fail(err.message)
       return
     }
-    const sha = response.version.build_hash
+    const { number: version, build_hash: sha } = response.version
     // Set the repository to the given sha and run the test suite
     this.withSHA(sha, () => {
       this.log.succeed('Done!')
-      runTest.call(this)
+      runTest.call(this, version)
     })
   })
 
-  function runTest () {
+  function runTest (version) {
     this.q.drain(done => {
       done()
     })
@@ -74,7 +74,7 @@ Runner.prototype.start = function () {
         // and then we remove the empty strings
         const yamlDocuments = data.split('---').filter(Boolean)
         // instance the test runner
-        const t = TestRunner({ client })
+        const t = TestRunner({ client, version })
         t.context(file.slice(0, -4), end => {
           // Run every test separately
           yamlDocuments.forEach(yamlDocument => {
