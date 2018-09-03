@@ -52,10 +52,6 @@ Runner.prototype.start = function () {
   })
 
   function runTest (version) {
-    this.q.drain(done => {
-      done()
-    })
-
     const testFolders = getTest()
     testFolders.forEach(testFolder => this.q.add(folderWorker, testFolder))
 
@@ -64,29 +60,31 @@ Runner.prototype.start = function () {
       if (testFolder !== 'search') return done()
       const files = getTest(testFolder)
       files.forEach(file => {
-        if (file !== '100_stored_fields.yml') return
-        // get the file path
-        const path = join(yamlFolder, testFolder, file)
-        // read the yaml file
-        const data = readFileSync(path, 'utf8')
-        // get the test yaml, some file has multiple yaml documents inside,
-        // every document is separated by '---', so we split on it
-        // and then we remove the empty strings
-        const yamlDocuments = data.split('---').filter(Boolean)
-        // instance the test runner
-        const t = TestRunner({ client, version })
-        t.context(file.slice(0, -4), end => {
-          // Run every test separately
-          yamlDocuments.forEach(yamlDocument => {
-            q.add(testWorker, t, parse(yamlDocument))
+        // we must wrap the test runner in a queue
+        // because `t.context` is called asynchronously
+        // and we must enforce the order of the tests
+        q.add((q, done) => {
+          // get the file path
+          const path = join(yamlFolder, testFolder, file)
+          // read the yaml file
+          const data = readFileSync(path, 'utf8')
+          // get the test yaml, some file has multiple yaml documents inside,
+          // every document is separated by '---', so we split on the separator
+          // and then we remove the empty strings
+          const yamlDocuments = data.split('---').filter(Boolean)
+          // instance the test runner
+          const t = TestRunner({ client, version })
+          t.context(file.slice(0, -4), end => {
+            // Run every test separately
+            yamlDocuments.forEach(yamlDocument => {
+              q.add(testWorker, t, parse(yamlDocument))
+            })
+
+            q.add(end)
+
+            done()
           })
-
-          q.add(end)
         })
-      })
-
-      q.drain(done => {
-        done()
       })
 
       done()

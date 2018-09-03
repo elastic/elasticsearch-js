@@ -119,6 +119,31 @@ TestRunner.prototype.shouldSkip = function (action) {
 }
 
 /**
+ * Updates the array syntax of keys and values
+ * eg: 'hits.hits.1.stuff' to 'hits.hits[1].stuff'
+ * @param {object} the action to update
+ * @returns {obj} the updated action
+ */
+TestRunner.prototype.updateArraySyntax = function (obj) {
+  const newObj = {}
+
+  for (const key in obj) {
+    const newKey = key.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
+    const val = obj[key]
+
+    if (typeof val === 'string') {
+      newObj[newKey] = val.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
+    } else if (val !== null && typeof val === 'object') {
+      newObj[newKey] = this.updateArraySyntax(val)
+    } else {
+      newObj[newKey] = val
+    }
+  }
+
+  return newObj
+}
+
+/**
  * Fill the stashed values of a command
  * let's say the we have stashed the `master` value,
  *    is_true: nodes.$master.transport.profiles
@@ -184,8 +209,21 @@ TestRunner.prototype.set = function (key, name) {
 TestRunner.prototype.do = function (action, done) {
   const cmd = this.parseDo(action)
   delve(this.client, cmd.method).call(this.client, cmd.params, (err, body, status) => {
-    this.tap.error(err, `should not error: ${cmd.method}`)
-    this.response = body
+    if (action.catch) {
+      this.tap.true(
+        parseDoError(err, action.catch),
+        `the error should be: ${action.catch}`
+      )
+      this.response = err.response
+    } else {
+      this.tap.error(err, `should not error: ${cmd.method}`)
+      this.response = body
+    }
+
+    if (action.warning) {
+      this.tap.todo('Handle warnings')
+    }
+
     done()
   })
 }
@@ -457,11 +495,41 @@ TestRunner.prototype.parseDo = function (action) {
         acc.node_selector = action.node_selector
         break
       default:
-        acc.method = val
+        // converts underscore to camelCase
+        // eg: put_mapping => putMapping
+        acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
         acc.params = action[val]
     }
     return acc
   }, {})
+}
+
+function parseDoError (err, spec) {
+  const httpErrors = {
+    bad_request: 400,
+    unauthorized: 401,
+    forbidden: 403,
+    missing: 404,
+    request_timeout: 408,
+    conflict: 409,
+    unavailable: 503
+  }
+
+  if (httpErrors[spec]) {
+    return err.statusCode === httpErrors[spec]
+  }
+
+  if (spec === 'request') {
+    return err.statusCode >= 400 && err.statusCode < 600
+  }
+
+  if (spec.startsWith('/') && spec.endsWith('/')) {
+    return new RegExp(spec.slice(1, -1), 'g').test(err.message)
+  }
+
+  if (spec === 'param') {
+    return err instanceof TypeError
+  }
 }
 
 module.exports = TestRunner
