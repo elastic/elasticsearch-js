@@ -6,8 +6,8 @@ const { join } = require('path')
 const yaml = require('js-yaml')
 const Git = require('simple-git')
 const ora = require('ora')
-const workq = require('workq')
 const minimist = require('minimist')
+const tap = require('tap')
 const elasticsearch = require('../../../src/elasticsearch')
 const TestRunner = require('./test-runner')
 
@@ -25,9 +25,13 @@ function Runner (opts) {
   this.client = new elasticsearch.Client({
     host: opts.url,
     apiVersion: opts.apiVersion
+    // log: {
+    //   type: 'file',
+    //   level: 'trace',
+    //   path: './test.log'
+    // }
   })
   this.log = ora('Loading yaml suite').start()
-  this.q = workq()
 }
 
 /**
@@ -53,59 +57,53 @@ Runner.prototype.start = function () {
 
   function runTest (version) {
     const testFolders = getTest()
-    testFolders.forEach(testFolder => this.q.add(folderWorker, testFolder))
+    testFolders.forEach(runTestFolder)
+    function runTestFolder (testFolder) {
+      if (testFolder !== 'search') return
+      // create a subtest for the specific folder
+      tap.test(testFolder, { jobs: 1 }, tap => {
+        const files = getTest(testFolder)
+        files.forEach(file => {
+          // if (file !== '100_stored_fields.yml' && file !== '70_response_filtering.yml') return
+          // create a subtest for the specific folder + test file
+          tap.test(file.slice(0, -4), { jobs: 1 }, tap => {
+            const path = join(yamlFolder, testFolder, file)
+            // read the yaml file
+            const data = readFileSync(path, 'utf8')
+            // get the test yaml (as object), some file has multiple yaml documents inside,
+            // every document is separated by '---', so we split on the separator
+            // and then we remove the empty strings, finally we parse them
+            const tests = data
+              .split('---')
+              .map(s => s.trim())
+              .filter(Boolean)
+              .map(parse)
 
-    // run the tests of the given folder
-    function folderWorker (q, testFolder, done) {
-      if (testFolder !== 'search') return done()
-      const files = getTest(testFolder)
-      files.forEach(file => {
-        // we must wrap the test runner in a queue
-        // because `t.context` is called asynchronously
-        // and we must enforce the order of the tests
-        q.add((q, done) => {
-          // get the file path
-          const path = join(yamlFolder, testFolder, file)
-          // read the yaml file
-          const data = readFileSync(path, 'utf8')
-          // get the test yaml, some file has multiple yaml documents inside,
-          // every document is separated by '---', so we split on the separator
-          // and then we remove the empty strings
-          const yamlDocuments = data.split('---').filter(Boolean)
-          // instance the test runner
-          const t = TestRunner({ client, version })
-          t.context(file.slice(0, -4), end => {
-            // Run every test separately
-            yamlDocuments.forEach(yamlDocument => {
-              q.add(testWorker, t, parse(yamlDocument))
+            // get setup and teardown if present
+            var setupTest = null
+            var teardownTest = null
+            tests.forEach(test => {
+              if (test.setup) setupTest = test.setup
+              if (test.teardown) teardownTest = test.teardown
             })
 
-            q.add(end)
+            // run the tests
+            tests.forEach(test => {
+              const name = Object.keys(test)[0]
+              if (name === 'setup' || name === 'teardown') return
+              // create a subtest for the specific folder + test file + test name
+              tap.test(name, { jobs: 1 }, tap => {
+                const testRunner = TestRunner({ client, version, tap })
+                testRunner.run(setupTest, test[name], teardownTest, () => tap.end())
+              })
+            })
 
-            done()
+            tap.end()
           })
         })
+
+        tap.end()
       })
-
-      done()
-    }
-
-    function testWorker (q, t, test, done) {
-      if (test.setup) {
-        t.setup(test.setup, q.child())
-      }
-
-      Object.keys(test)
-        .filter(name => name !== 'setup' && name !== 'teardown')
-        .forEach(name => {
-          t.exec(name, test[name], q.child())
-        })
-
-      if (test.teardown) {
-        t.teardown(test.teardown, q.child())
-      }
-
-      done()
     }
   }
 }

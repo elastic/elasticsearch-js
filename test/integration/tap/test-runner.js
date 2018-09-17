@@ -3,6 +3,7 @@
 const t = require('tap')
 const delve = require('dlv')
 const semver = require('semver')
+const workq = require('workq')
 
 function TestRunner (opts) {
   if (!(this instanceof TestRunner)) {
@@ -13,68 +14,75 @@ function TestRunner (opts) {
   this.client = opts.client
   this.esVersion = opts.version
   this.response = null
+  this.currentDo = null
   this.stash = new Map()
-  this.tap = t
+  this.tap = opts.tap || t
+  this.q = opts.q || workq()
 }
 
 /**
- * Creates a new context to run the test as subtest
- * @param {string} the name of the test
- * @param {function} a callback that takes and `end` function as parameter
+ * Runs a cleanup, removes all indices and templates
+ * @param {queue}
+ * @params {function} done
  */
-TestRunner.prototype.context = function (name, cb) {
-  t.test(name, tap => {
-    this.tap = tap
+TestRunner.prototype.cleanup = function (q, done) {
+  this.tap.comment('Cleanup')
 
-    function end (q, done) {
-      this.tap.comment('Cleanup')
+  this.response = null
+  this.currentDo = null
+  this.stash = new Map()
 
-      this.response = null
-      this.stash = new Map()
-
-      q.add((q, done) => {
-        this.client.indices.delete({ index: '*', ignore: 404 }, err => {
-          this.tap.error(err, 'should not error: indices.delete')
-          done()
-        })
-      })
-
-      q.add((q, done) => {
-        this.client.indices.deleteTemplate({ name: '*', ignore: 404 }, err => {
-          this.tap.error(err, 'should not error: indices.deleteTemplate')
-          done()
-        })
-      })
-
-      q.add((q, done) => {
-        this.tap.end()
-        this.tap = t
-        done()
-      })
-
+  q.add((q, done) => {
+    this.client.indices.delete({ index: '*', ignore: 404 }, err => {
+      this.tap.error(err, 'should not error: indices.delete')
       done()
-    }
-
-    cb(end.bind(this))
+    })
   })
+
+  q.add((q, done) => {
+    this.client.indices.deleteTemplate({ name: '*', ignore: 404 }, err => {
+      this.tap.error(err, 'should not error: indices.deleteTemplate')
+      done()
+    })
+  })
+
+  done()
 }
 
 /**
- * Runs the test setup
- * @param {array} the actions to perform
- * @param {Queue}
+ * Runs the given test.
+ * It runs the test components in the following order:
+ *    - setup
+ *    - the actual test
+ *    - teardown
+ *    - cleanup
+ * @param {object} setup (null if not needed)
+ * @param {object} test
+ * @oaram {object} teardown (null if not needed)
+ * @param {function} end
  */
-TestRunner.prototype.setup = function (actions, q) {
-  this.exec('Setup', actions, q)
-}
+TestRunner.prototype.run = function (setup, test, teardown, end) {
+  if (setup) {
+    this.q.add((q, done) => {
+      this.exec('Setup', setup, q, done)
+    })
+  }
 
-/**
- * Runs the test teardown
- * @param {array} the actions to perform
- * @param {Queue}
- */
-TestRunner.prototype.teardown = function (actions, q) {
-  this.exec('Teardown', actions, q)
+  this.q.add((q, done) => {
+    this.exec('Test', test, q, done)
+  })
+
+  if (teardown) {
+    this.q.add((q, done) => {
+      this.exec('Teardown', teardown, q, done)
+    })
+  }
+
+  this.q.add((q, done) => {
+    this.cleanup(q, done)
+  })
+
+  this.q.add((q, done) => end() && done())
 }
 
 /**
@@ -207,8 +215,10 @@ TestRunner.prototype.set = function (key, name) {
  * @param {Queue}
  */
 TestRunner.prototype.do = function (action, done) {
+  this.currentDo = { do: action }
   const cmd = this.parseDo(action)
-  delve(this.client, cmd.method).call(this.client, cmd.params, (err, body, status) => {
+  const api = delve(this.client, cmd.method).bind(this.client)
+  api(cmd.params, (err, body, status) => {
     if (action.catch) {
       this.tap.true(
         parseDoError(err, action.catch),
@@ -234,7 +244,7 @@ TestRunner.prototype.do = function (action, done) {
  * @param {object} the actions to perform
  * @param {Queue}
  */
-TestRunner.prototype.exec = function (name, actions, q) {
+TestRunner.prototype.exec = function (name, actions, q, done) {
   this.tap.comment(name)
   for (var i = 0; i < actions.length; i++) {
     const action = this.fillStashedValues(actions[i])
@@ -346,6 +356,7 @@ TestRunner.prototype.exec = function (name, actions, q) {
       })
     }
   }
+  done()
 }
 
 /**
@@ -354,7 +365,7 @@ TestRunner.prototype.exec = function (name, actions, q) {
  * @param {string} an optional message
  */
 TestRunner.prototype.is_true = function (val, msg) {
-  this.tap.true(val, `expect truthy value: ${msg}`)
+  this.tap.true(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`, this.currentDo)
   return this
 }
 
@@ -364,7 +375,7 @@ TestRunner.prototype.is_true = function (val, msg) {
  * @param {string} an optional message
  */
 TestRunner.prototype.is_false = function (val, msg) {
-  this.tap.false(val, `expect falsey value: ${msg}`)
+  this.tap.false(val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`, this.currentDo)
   return this
 }
 
@@ -377,9 +388,9 @@ TestRunner.prototype.is_false = function (val, msg) {
  */
 TestRunner.prototype.match = function (val1, val2) {
   if (typeof val1 === 'object' && typeof val2 === 'object') {
-    this.tap.strictDeepEqual(val1, val2)
+    this.tap.strictDeepEqual(val1, val2, this.currentDo)
   } else {
-    this.tap.strictEqual(val1, val2)
+    this.tap.strictEqual(val1, val2, this.currentDo)
   }
   return this
 }
@@ -394,7 +405,7 @@ TestRunner.prototype.match = function (val1, val2) {
 TestRunner.prototype.lt = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 < val2)
+  this.tap.true(val1 < val2, this.currentDo)
   return this
 }
 
@@ -408,7 +419,7 @@ TestRunner.prototype.lt = function (val1, val2) {
 TestRunner.prototype.gt = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 > val2)
+  this.tap.true(val1 > val2, this.currentDo)
   return this
 }
 
@@ -422,7 +433,7 @@ TestRunner.prototype.gt = function (val1, val2) {
 TestRunner.prototype.lte = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 <= val2)
+  this.tap.true(val1 <= val2, this.currentDo)
   return this
 }
 
@@ -436,7 +447,7 @@ TestRunner.prototype.lte = function (val1, val2) {
 TestRunner.prototype.gte = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 >= val2)
+  this.tap.true(val1 >= val2, this.currentDo)
   return this
 }
 
@@ -448,9 +459,9 @@ TestRunner.prototype.gte = function (val1, val2) {
  */
 TestRunner.prototype.length = function (val, len) {
   if (typeof val === 'string' || Array.isArray(val)) {
-    this.tap.strictEqual(val.length, len)
+    this.tap.strictEqual(val.length, len, this.currentDo)
   } else if (typeof val === 'object' && val !== null) {
-    this.tap.strictEqual(Object.keys(val).length, len)
+    this.tap.strictEqual(Object.keys(val).length, len, this.currentDo)
   } else {
     this.tap.fail(`length: the given value is invalid: ${val}`)
   }
@@ -498,10 +509,32 @@ TestRunner.prototype.parseDo = function (action) {
         // converts underscore to camelCase
         // eg: put_mapping => putMapping
         acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
-        acc.params = action[val]
+        acc.params = camelify(action[val])
     }
     return acc
   }, {})
+
+  function camelify (obj) {
+    const newObj = {}
+
+    for (const key in obj) {
+      const newKey = key.replace(/_([a-z])/g, k => k[1].toUpperCase())
+      const val = obj[key]
+
+      if (
+        val !== null &&
+        typeof val === 'object' &&
+        !Array.isArray(val) &&
+        key !== 'body'
+      ) {
+        newObj[newKey] = camelify(val)
+      } else {
+        newObj[newKey] = val
+      }
+    }
+
+    return newObj
+  }
 }
 
 function parseDoError (err, spec) {
@@ -524,7 +557,7 @@ function parseDoError (err, spec) {
   }
 
   if (spec.startsWith('/') && spec.endsWith('/')) {
-    return new RegExp(spec.slice(1, -1), 'g').test(err.message)
+    return new RegExp(spec.slice(1, -1), 'g').test(err.response)
   }
 
   if (spec === 'param') {
