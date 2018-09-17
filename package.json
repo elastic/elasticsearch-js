@@ -19,7 +19,7 @@
     "generate": "node scripts/generate",
     "grunt": "grunt",
     "lint": "eslint .",
-    "elasticsearch": "docker run --rm --volume /tmp:/usr/share/elasticsearch/data  --env \"discovery.type=single-node\" -p 9200:9200 docker.elastic.co/elasticsearch/elasticsearch:6.4.0"
+    "elasticsearch": "docker run --rm --env \"discovery.type=single-node\" -p 9200:9200 docker.elastic.co/elasticsearch/elasticsearch:6.4.0"
   },
   "browser": {
     "./src/lib/connectors/index.js": "./src/lib/connectors/browser_index.js",
