@@ -1,9 +1,17 @@
 'use strict'
 
 const t = require('tap')
-const delve = require('dlv')
 const semver = require('semver')
 const workq = require('workq')
+
+const supportedFeatures = [
+  'gtelte',
+  'regex',
+  'benchmark',
+  'stash_in_path',
+  'groovy_scripting',
+  'headers'
+]
 
 function TestRunner (opts) {
   if (!(this instanceof TestRunner)) {
@@ -14,7 +22,6 @@ function TestRunner (opts) {
   this.client = opts.client
   this.esVersion = opts.version
   this.response = null
-  this.currentDo = null
   this.stash = new Map()
   this.tap = opts.tap || t
   this.q = opts.q || workq()
@@ -29,7 +36,6 @@ TestRunner.prototype.cleanup = function (q, done) {
   this.tap.comment('Cleanup')
 
   this.response = null
-  this.currentDo = null
   this.stash = new Map()
 
   q.add((q, done) => {
@@ -56,12 +62,21 @@ TestRunner.prototype.cleanup = function (q, done) {
  *    - the actual test
  *    - teardown
  *    - cleanup
+ * Internally uses a queue to guarantee the order of the test sections.
  * @param {object} setup (null if not needed)
  * @param {object} test
  * @oaram {object} teardown (null if not needed)
  * @param {function} end
  */
 TestRunner.prototype.run = function (setup, test, teardown, end) {
+  // if we should skip a feature in the setup/teardown section
+  // we should skip the entire test file
+  const skip = getSkip(setup) || getSkip(teardown)
+  if (skip && this.shouldSkip(skip)) {
+    this.skip(skip)
+    return end()
+  }
+
   if (setup) {
     this.q.add((q, done) => {
       this.exec('Setup', setup, q, done)
@@ -93,7 +108,8 @@ TestRunner.prototype.run = function (setup, test, teardown, end) {
 TestRunner.prototype.skip = function (action) {
   if (action.reason && action.version) {
     this.tap.skip(`Skip: ${action.reason} (${action.version})`)
-  // } else if (...) { // other reasons
+  } else if (action.features) {
+    this.tap.skip(`Skip: ${JSON.stringify(action.features)})`)
   } else {
     this.tap.skip('Skipped')
   }
@@ -108,7 +124,7 @@ TestRunner.prototype.skip = function (action) {
 TestRunner.prototype.shouldSkip = function (action) {
   // skip based on the version
   if (action.version) {
-    const [min, max] = action.version.split(' - ')
+    const [min, max] = action.version.split('-').map(v => v.trim())
     // if both `min` and `max` are specified
     if (min && max) {
       return semver.satisfies(this.esVersion, action.version)
@@ -123,6 +139,13 @@ TestRunner.prototype.shouldSkip = function (action) {
       throw new Error(`skip: Bad version range: ${action.version}`)
     }
   }
+
+  if (action.features) {
+    if (!Array.isArray(action.features)) action.features = [action.features]
+    // returns true if one of the features is not present in the supportedFeatures
+    return !!action.features.filter(f => !~supportedFeatures.indexOf(f)).length
+  }
+
   return false
 }
 
@@ -175,7 +198,7 @@ TestRunner.prototype.fillStashedValues = function (obj) {
           if (part[0] === '$') {
             const stashed = this.stash.get(part.slice(1))
             if (stashed == null) {
-              throw new Error(`Cannot find stashed value '${part}'`)
+              throw new Error(`Cannot find stashed value '${part}' for '${JSON.stringify(obj)}'`)
             }
             return stashed
           }
@@ -215,16 +238,25 @@ TestRunner.prototype.set = function (key, name) {
  * @param {Queue}
  */
 TestRunner.prototype.do = function (action, done) {
-  this.currentDo = { do: action }
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
   api(cmd.params, (err, body, status) => {
+    if (err == null && body == null) {
+      // TODO: fix this in the client
+      process.emitWarning('undefined body, it should be an empty string')
+      body = ''
+    }
+
     if (action.catch) {
       this.tap.true(
         parseDoError(err, action.catch),
         `the error should be: ${action.catch}`
       )
-      this.response = err.response
+      try {
+        this.response = JSON.parse(err.response)
+      } catch (e) {
+        this.response = err.response
+      }
     } else {
       this.tap.error(err, `should not error: ${cmd.method}`)
       this.response = body
@@ -247,18 +279,18 @@ TestRunner.prototype.do = function (action, done) {
 TestRunner.prototype.exec = function (name, actions, q, done) {
   this.tap.comment(name)
   for (var i = 0; i < actions.length; i++) {
-    const action = this.fillStashedValues(actions[i])
+    const action = actions[i]
 
     if (action.skip) {
       if (this.shouldSkip(action.skip)) {
-        this.skip(action.skip)
+        this.skip(this.fillStashedValues(action.skip))
         break
       }
     }
 
     if (action.do) {
       q.add((q, done) => {
-        this.do(action.do, done)
+        this.do(this.fillStashedValues(action.do), done)
       })
     }
 
@@ -274,8 +306,12 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.match)[0]
         this.match(
-          delve(this.response, key),
-          action.match[key]
+          key === '$body'
+            ? this.response
+            : delve(this.response, key),
+          key === '$body'
+            ? action.match[key]
+            : this.fillStashedValues(action.match[key])
         )
         done()
       })
@@ -286,7 +322,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
         const key = Object.keys(action.lt)[0]
         this.lt(
           delve(this.response, key),
-          action.lt[key]
+          this.fillStashedValues(action.lt[key])
         )
         done()
       })
@@ -297,7 +333,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
         const key = Object.keys(action.gt)[0]
         this.gt(
           delve(this.response, key),
-          action.gt[key]
+          this.fillStashedValues(action.gt[key])
         )
         done()
       })
@@ -308,7 +344,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
         const key = Object.keys(action.lte)[0]
         this.lte(
           delve(this.response, key),
-          action.lte[key]
+          this.fillStashedValues(action.lte[key])
         )
         done()
       })
@@ -319,7 +355,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
         const key = Object.keys(action.gte)[0]
         this.gte(
           delve(this.response, key),
-          action.gte[key]
+          this.fillStashedValues(action.gte[key])
         )
         done()
       })
@@ -330,7 +366,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
         const key = Object.keys(action.length)[0]
         this.length(
           delve(this.response, key),
-          action.length[key]
+          this.fillStashedValues(action.length[key])
         )
         done()
       })
@@ -340,7 +376,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         this.is_true(
           delve(this.response, action.is_true),
-          action.is_true
+          this.fillStashedValues(action.is_true)
         )
         done()
       })
@@ -350,7 +386,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         this.is_false(
           delve(this.response, action.is_false),
-          action.is_false
+          this.fillStashedValues(action.is_false)
         )
         done()
       })
@@ -365,7 +401,7 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
  * @param {string} an optional message
  */
 TestRunner.prototype.is_true = function (val, msg) {
-  this.tap.true(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`, this.currentDo)
+  this.tap.true(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`)
   return this
 }
 
@@ -375,22 +411,39 @@ TestRunner.prototype.is_true = function (val, msg) {
  * @param {string} an optional message
  */
 TestRunner.prototype.is_false = function (val, msg) {
-  this.tap.false(val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`, this.currentDo)
+  this.tap.false(val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`)
   return this
 }
 
 /**
  * Asserts that two values are the same
- * TODO: handle regular expressions
  * @param {any} the first value
  * @param {any} the second value
  * @returns {TestRunner}
  */
 TestRunner.prototype.match = function (val1, val2) {
+  // both values are objects
   if (typeof val1 === 'object' && typeof val2 === 'object') {
-    this.tap.strictDeepEqual(val1, val2, this.currentDo)
+    this.tap.strictDeepEqual(val1, val2)
+  // the first value is the body as string and the second a pattern string
+  } else if (
+    typeof val1 === 'string' && typeof val2 === 'string' &&
+    val2.startsWith('/') && (val2.endsWith('/\n') || val2.endsWith('/'))
+  ) {
+    const regStr = val2
+      // match all comments within a "regexp" match arg
+      .replace(/([\S\s]?)#[^\n]*\n/g, (match, prevChar) => {
+        return prevChar === '\\' ? match : `${prevChar}\n`
+      })
+      // remove all whitespace from the expression, all meaningful
+      // whitespace is represented with \s
+      .replace(/\s/g, '')
+      .slice(1, -1)
+    // 'm' adds the support for multiline regex
+    this.tap.match(val1, new RegExp(regStr, 'm'))
+  // everything else
   } else {
-    this.tap.strictEqual(val1, val2, this.currentDo)
+    this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}`)
   }
   return this
 }
@@ -405,7 +458,7 @@ TestRunner.prototype.match = function (val1, val2) {
 TestRunner.prototype.lt = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 < val2, this.currentDo)
+  this.tap.true(val1 < val2)
   return this
 }
 
@@ -419,7 +472,7 @@ TestRunner.prototype.lt = function (val1, val2) {
 TestRunner.prototype.gt = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 > val2, this.currentDo)
+  this.tap.true(val1 > val2)
   return this
 }
 
@@ -433,7 +486,7 @@ TestRunner.prototype.gt = function (val1, val2) {
 TestRunner.prototype.lte = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 <= val2, this.currentDo)
+  this.tap.true(val1 <= val2)
   return this
 }
 
@@ -447,7 +500,7 @@ TestRunner.prototype.lte = function (val1, val2) {
 TestRunner.prototype.gte = function (val1, val2) {
   this.tap.type(val1, 'number')
   this.tap.type(val2, 'number')
-  this.tap.true(val1 >= val2, this.currentDo)
+  this.tap.true(val1 >= val2)
   return this
 }
 
@@ -459,9 +512,9 @@ TestRunner.prototype.gte = function (val1, val2) {
  */
 TestRunner.prototype.length = function (val, len) {
   if (typeof val === 'string' || Array.isArray(val)) {
-    this.tap.strictEqual(val.length, len, this.currentDo)
+    this.tap.strictEqual(val.length, len)
   } else if (typeof val === 'object' && val !== null) {
-    this.tap.strictEqual(Object.keys(val).length, len, this.currentDo)
+    this.tap.strictEqual(Object.keys(val).length, len)
   } else {
     this.tap.fail(`length: the given value is invalid: ${val}`)
   }
@@ -518,7 +571,11 @@ TestRunner.prototype.parseDo = function (action) {
     const newObj = {}
 
     for (const key in obj) {
-      const newKey = key.replace(/_([a-z])/g, k => k[1].toUpperCase())
+      // if the key starts with `_` we should not camelify the first occurence
+      // eg: _source_include => _sourceInclude
+      const newKey = key[0] === '_'
+        ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+        : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
       const val = obj[key]
 
       if (
@@ -549,6 +606,13 @@ function parseDoError (err, spec) {
   }
 
   if (httpErrors[spec]) {
+    // Elasticsearch would have return a 400, but we are throwing an error
+    // directly form the client instead of firing the request
+    if (err.statusCode == null && httpErrors[spec] === 400) {
+      // TODO: remove validation from the client
+      process.emitWarning('Client side validation will be deprecated in the next Major release')
+      return err instanceof TypeError
+    }
     return err.statusCode === httpErrors[spec]
   }
 
@@ -563,6 +627,30 @@ function parseDoError (err, spec) {
   if (spec === 'param') {
     return err instanceof TypeError
   }
+
+  return false
+}
+
+function getSkip (arr) {
+  if (!Array.isArray(arr)) return null
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].skip) return arr[i].skip
+  }
+  return null
+}
+
+// code from https://github.com/developit/dlv
+// needed to support an edge case: `a\.b`
+// where `a.b` is a single field: { 'a.b': true }
+function delve (obj, key, def, p) {
+  p = 0
+  // handle the key with a dot inside that is not a part of the path
+  // and removes the backslashes from the key
+  key = key.split
+    ? key.split(/(?<!\\)\./g).map(k => k.replace(/\\/g, ''))
+    : key.replace(/\\/g, '')
+  while (obj && p < key.length) obj = obj[key[p++]]
+  return (obj === undefined || p < key.length) ? def : obj
 }
 
 module.exports = TestRunner
