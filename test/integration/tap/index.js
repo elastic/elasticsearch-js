@@ -63,12 +63,12 @@ Runner.prototype.start = function () {
       // TODO: some cat test are failing because of the regex of the body
       //       must investigate and  figure out what to do.
       if (testFolder.startsWith('cat.')) return
-      if (testFolder !== 'cluster.put_settings') return
+      // if (testFolder !== 'update') return
       // create a subtest for the specific folder
       tap.test(testFolder, { jobs: 1 }, tap1 => {
         const files = getTest(testFolder)
         files.forEach(file => {
-          // if (file !== '20_request_timeout.yml') return
+          // if (file !== '35_other_versions.yml') return
           // create a subtest for the specific folder + test file
           tap1.test(file.slice(0, -4), { jobs: 1 }, tap2 => {
             const path = join(yamlFolder, testFolder, file)

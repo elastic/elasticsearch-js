@@ -124,6 +124,7 @@ TestRunner.prototype.skip = function (action) {
 TestRunner.prototype.shouldSkip = function (action) {
   // skip based on the version
   if (action.version) {
+    if (action.version.trim() === 'all') return true
     const [min, max] = action.version.split('-').map(v => v.trim())
     // if both `min` and `max` are specified
     if (min && max) {
@@ -180,35 +181,21 @@ TestRunner.prototype.updateArraySyntax = function (obj) {
  *    is_true: nodes.$master.transport.profiles
  * becomes
  *    is_true: nodes.new_value.transport.profiles
- * @param {object} the action to update
- * @returns {object} the updated action
+ * @param {object|string} the action to update
+ * @returns {object|string} the updated action
  */
 TestRunner.prototype.fillStashedValues = function (obj) {
+  if (typeof obj === 'string') {
+    return getStashedValues.call(this, obj)
+  }
   // iterate every key of the object
   for (const key in obj) {
     const val = obj[key]
     // if the key value is a string, and the string includes '$'
     // we run the "update value" code
     if (typeof val === 'string' && val.includes('$')) {
-      const parts = val
-        // we split the string on the dots
-        .split('.')
-        // we update every field that start with '$'
-        .map(part => {
-          if (part[0] === '$') {
-            const stashed = this.stash.get(part.slice(1))
-            if (stashed == null) {
-              throw new Error(`Cannot find stashed value '${part}' for '${JSON.stringify(obj)}'`)
-            }
-            return stashed
-          }
-          return part
-        })
-        // recreate the string value
-        .join('.')
-
       // update the key value
-      obj[key] = parts
+      obj[key] = getStashedValues.call(this, val)
     }
 
     // go deep in the object
@@ -218,6 +205,26 @@ TestRunner.prototype.fillStashedValues = function (obj) {
   }
 
   return obj
+
+  function getStashedValues (str) {
+    return str
+      // we split the string on the dots
+      // handle the key with a dot inside that is not a part of the path
+      .split(/(?<!\\)\./g)
+      // we update every field that start with '$'
+      .map(part => {
+        if (part[0] === '$') {
+          const stashed = this.stash.get(part.slice(1))
+          if (stashed == null) {
+            throw new Error(`Cannot find stashed value '${part}' for '${JSON.stringify(obj)}'`)
+          }
+          return stashed
+        }
+        return part
+      })
+      // recreate the string value
+      .join('.')
+  }
 }
 
 /**
@@ -258,7 +265,7 @@ TestRunner.prototype.do = function (action, done) {
         this.response = err.response
       }
     } else {
-      this.tap.error(err, `should not error: ${cmd.method}`)
+      this.tap.error(err, `should not error: ${cmd.method}`, action)
       this.response = body
     }
 
@@ -306,12 +313,13 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.match)[0]
         this.match(
-          key === '$body'
+          // in some cases, the yaml refers to the body with an empty string
+          key === '$body' || key === ''
             ? this.response
-            : delve(this.response, key),
+            : delve(this.response, this.fillStashedValues(key)),
           key === '$body'
             ? action.match[key]
-            : this.fillStashedValues(action.match[key])
+            : this.fillStashedValues(action.match)[key]
         )
         done()
       })
@@ -321,8 +329,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.lt)[0]
         this.lt(
-          delve(this.response, key),
-          this.fillStashedValues(action.lt[key])
+          delve(this.response, this.fillStashedValues(key)),
+          this.fillStashedValues(action.lt)[key]
         )
         done()
       })
@@ -332,8 +340,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.gt)[0]
         this.gt(
-          delve(this.response, key),
-          this.fillStashedValues(action.gt[key])
+          delve(this.response, this.fillStashedValues(key)),
+          this.fillStashedValues(action.gt)[key]
         )
         done()
       })
@@ -343,8 +351,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.lte)[0]
         this.lte(
-          delve(this.response, key),
-          this.fillStashedValues(action.lte[key])
+          delve(this.response, this.fillStashedValues(key)),
+          this.fillStashedValues(action.lte)[key]
         )
         done()
       })
@@ -354,8 +362,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.gte)[0]
         this.gte(
-          delve(this.response, key),
-          this.fillStashedValues(action.gte[key])
+          delve(this.response, this.fillStashedValues(key)),
+          this.fillStashedValues(action.gte)[key]
         )
         done()
       })
@@ -365,8 +373,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.length)[0]
         this.length(
-          delve(this.response, key),
-          this.fillStashedValues(action.length[key])
+          delve(this.response, this.fillStashedValues(key)),
+          this.fillStashedValues(action.length)[key]
         )
         done()
       })
@@ -374,9 +382,10 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
 
     if (action.is_true) {
       q.add((q, done) => {
+        const isTrue = this.fillStashedValues(action.is_true)
         this.is_true(
-          delve(this.response, action.is_true),
-          this.fillStashedValues(action.is_true)
+          delve(this.response, isTrue),
+          isTrue
         )
         done()
       })
@@ -384,9 +393,10 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
 
     if (action.is_false) {
       q.add((q, done) => {
+        const isFalse = this.fillStashedValues(action.is_false)
         this.is_false(
-          delve(this.response, action.is_false),
-          this.fillStashedValues(action.is_false)
+          delve(this.response, isFalse),
+          isFalse
         )
         done()
       })
@@ -456,8 +466,7 @@ TestRunner.prototype.match = function (val1, val2) {
  * @returns {TestRunner}
  */
 TestRunner.prototype.lt = function (val1, val2) {
-  this.tap.type(val1, 'number')
-  this.tap.type(val2, 'number')
+  ;[val1, val2] = getNumbers(val1, val2)
   this.tap.true(val1 < val2)
   return this
 }
@@ -470,8 +479,7 @@ TestRunner.prototype.lt = function (val1, val2) {
  * @returns {TestRunner}
  */
 TestRunner.prototype.gt = function (val1, val2) {
-  this.tap.type(val1, 'number')
-  this.tap.type(val2, 'number')
+  ;[val1, val2] = getNumbers(val1, val2)
   this.tap.true(val1 > val2)
   return this
 }
@@ -484,8 +492,7 @@ TestRunner.prototype.gt = function (val1, val2) {
  * @returns {TestRunner}
  */
 TestRunner.prototype.lte = function (val1, val2) {
-  this.tap.type(val1, 'number')
-  this.tap.type(val2, 'number')
+  ;[val1, val2] = getNumbers(val1, val2)
   this.tap.true(val1 <= val2)
   return this
 }
@@ -498,8 +505,7 @@ TestRunner.prototype.lte = function (val1, val2) {
  * @returns {TestRunner}
 */
 TestRunner.prototype.gte = function (val1, val2) {
-  this.tap.type(val1, 'number')
-  this.tap.type(val2, 'number')
+  ;[val1, val2] = getNumbers(val1, val2)
   this.tap.true(val1 >= val2)
   return this
 }
@@ -570,13 +576,19 @@ TestRunner.prototype.parseDo = function (action) {
   function camelify (obj) {
     const newObj = {}
 
+    // TODO: add camelCase support for this fields
+    const doNotCamelify = ['copy_settings']
+
     for (const key in obj) {
-      // if the key starts with `_` we should not camelify the first occurence
-      // eg: _source_include => _sourceInclude
-      const newKey = key[0] === '_'
-        ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
-        : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
       const val = obj[key]
+      var newKey = key
+      if (!~doNotCamelify.indexOf(key)) {
+        // if the key starts with `_` we should not camelify the first occurence
+        // eg: _source_include => _sourceInclude
+        newKey = key[0] === '_'
+          ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+          : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
+      }
 
       if (
         val !== null &&
@@ -621,6 +633,11 @@ function parseDoError (err, spec) {
   }
 
   if (spec.startsWith('/') && spec.endsWith('/')) {
+    if (err.response == null) {
+      // TODO: remove validation from the client
+      process.emitWarning('Client side validation will be deprecated in the next Major release')
+      return err instanceof TypeError
+    }
     return new RegExp(spec.slice(1, -1), 'g').test(err.response)
   }
 
@@ -651,6 +668,21 @@ function delve (obj, key, def, p) {
     : key.replace(/\\/g, '')
   while (obj && p < key.length) obj = obj[key[p++]]
   return (obj === undefined || p < key.length) ? def : obj
+}
+
+// Gets two *maybe* numbers and returns two valida numbers
+// it throws if one or both are not a valid number
+// the returned value is an array with the new values
+function getNumbers (val1, val2) {
+  const val1Numeric = Number(val1)
+  if (isNaN(val1Numeric)) {
+    throw new TypeError(`val1 is not a valid number: ${val1}`)
+  }
+  const val2Numeric = Number(val2)
+  if (isNaN(val2Numeric)) {
+    throw new TypeError(`val2 is not a valid number: ${val2}`)
+  }
+  return [val1Numeric, val2Numeric]
 }
 
 module.exports = TestRunner
