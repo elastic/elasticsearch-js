@@ -37,6 +37,7 @@ function Transport(config) {
 
   // setup requestTimeout default
   self.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
+  self.pingTimeout = config.hasOwnProperty('pingTimeout') ? config.pingTimeout : 3000;
 
   if (config.hasOwnProperty('defer')) {
     self.defer = config.defer;
@@ -201,6 +202,12 @@ Transport.prototype.request = function (params, cb) {
 
   if (params.hasOwnProperty('requestTimeout')) {
     requestTimeout = params.requestTimeout;
+  }
+
+  const pingRequest = params.path === '/' && params.method === 'HEAD';
+  if (pingRequest) {
+    const requestParam = params.hasOwnProperty('requestTimeout') && params.requestTimeout;
+    requestTimeout = requestParam || this.pingTimeout;
   }
 
   params.req = {

@@ -253,10 +253,6 @@ module.exports = function (branch, done) {
         spec.bulkBody = true;
       }
 
-      if (name === 'ping') {
-        spec.requestTimeout = 3000;
-      }
-
       var urls = _.difference(def.url.paths, overrides.aliases[name]);
       var urlSignatures = [];
       urls = _.map(urls, function (url) {

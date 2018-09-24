@@ -5854,7 +5854,6 @@ api.ping = ca({
   url: {
     fmt: '/'
   },
-  requestTimeout: 3000,
   method: 'HEAD'
 });
 

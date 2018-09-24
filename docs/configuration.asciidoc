@@ -136,7 +136,7 @@ Default::: `30000`
 Default::: `60000`
 
 
-`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.
+`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.  Takes precedence over `requestTimeout` for ping requests.
 
 Default::: `3000`
 

@@ -788,6 +788,28 @@ describe('Transport Class', function () {
         });
       });
 
+      it('inherits the pingTimeout from the transport', function () {
+        var clock = sinon.useFakeTimers('setTimeout', 'clearTimeout');
+        stub.autoRelease(clock);
+        var tran = new Transport({
+          requestTimeout: 4000,
+          pingTimeout: 5000
+        });
+
+        var prom = tran.request({
+          path: '/',
+          method: 'HEAD'
+        });
+        // disregard promise, prevent bluebird's warnings
+        prom.then(_.noop, _.noop);
+
+        expect(_.size(clock.timers)).to.eql(1);
+        _.each(clock.timers, function (timer, id) {
+          expect(timer.callAt).to.eql(5000);
+          clearTimeout(id);
+        });
+      });
+
 
       _.each([false, 0, null], function (falsy) {
         it('skips the timeout when it is ' + falsy, function () {
