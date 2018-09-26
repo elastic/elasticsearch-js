@@ -2700,25 +2700,11 @@ api.indices = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.index - The name of the index to scope the operation
- * @param {<<api-param-type-boolean,`Boolean`>>} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
- * @param {<<api-param-type-string,`String`>>} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
   params: {
     index: {
       type: 'string'
-    },
-    preferLocal: {
-      type: 'boolean',
-      name: 'prefer_local'
-    },
-    format: {
-      type: 'enum',
-      'default': 'detailed',
-      options: [
-        'detailed',
-        'text'
-      ]
     }
   },
   urls: [
@@ -3391,6 +3377,7 @@ api.indices.prototype.forcemerge = ca({
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether to return all default setting for each of the indices.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
  */
 api.indices.prototype.get = ca({
@@ -3425,6 +3412,10 @@ api.indices.prototype.get = ca({
       type: 'boolean',
       'default': false,
       name: 'include_defaults'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
     }
   },
   url: {
@@ -5598,7 +5589,6 @@ api.ping = ca({
   url: {
     fmt: '/'
   },
-  requestTimeout: 3000,
   method: 'HEAD'
 });
 

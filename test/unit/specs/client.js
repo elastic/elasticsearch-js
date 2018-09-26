@@ -81,13 +81,4 @@ describe('Client instances creation', function () {
       client.transport.log.error(new Error());
     });
   });
-
-  describe('#ping', function () {
-    it('sets the default requestTimeout to 3000', function () {
-      stub(client.transport, 'request');
-      client.ping();
-      expect(client.transport.request.callCount).to.be(1);
-      expect(client.transport.request.lastCall.args[0].requestTimeout).to.be(3000);
-    });
-  });
 });
