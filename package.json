@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "tap test/unit/tap/*.test.js -J",
+    "test:unit": "tap test/unit/tap/*.test.js -J -T",
     "test:integration": "tap test/integration/tap/index.js -T",
     "generate": "node scripts/generate",
     "grunt": "grunt",
@@ -62,7 +62,6 @@
     "async": "~0.8.0",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^8.0.0-beta",
-    "backport": "^3.0.2",
     "blanket": "^1.2.3",
     "bluebird": "^2.9.14",
     "browserify": "^16.1.1",
