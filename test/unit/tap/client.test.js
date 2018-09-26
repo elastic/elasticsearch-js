@@ -4,7 +4,6 @@
 const { test } = require('tap')
 const { inherits } = require('util')
 const { Writable } = require('readable-stream')
-const { stub } = require('sinon')
 const es = require('../../../src/elasticsearch')
 
 test('Should be able to use the specified API version', t => {
@@ -69,18 +68,5 @@ test('Should accepts a stream type logger', t => {
   })
 
   client.transport.log.error(new Error())
-  client.close()
-})
-
-test('Ping should set the default requestTimeout to 3000', t => {
-  t.plan(2)
-
-  const client = new es.Client()
-  stub(client.transport, 'request')
-
-  client.ping()
-  t.is(client.transport.request.callCount, 1)
-  t.is(client.transport.request.lastCall.args[0].requestTimeout, 3000)
-
   client.close()
 })

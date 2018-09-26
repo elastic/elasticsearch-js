@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { stub } = require('sinon')
+const { stub, useFakeTimers } = require('sinon')
 const Transport = require('../../../src/lib/transport')
 const Host = require('../../../src/lib/host')
 const errors = require('../../../src/lib/errors')
@@ -494,6 +494,67 @@ test('Request aborter', t => {
       }
     })
     var ret = transport.request({})
+  })
+
+  t.end()
+})
+
+test('timeout', t => {
+  t.test('uses 30 seconds for the default', t => {
+    t.plan(2)
+    const clock = useFakeTimers()
+    const transport = new Transport({})
+
+    transport
+      .request({})
+      .then(noop, noop)
+
+    t.strictEqual(Object.keys(clock.timers).length, 1)
+    for (var key in clock.timers) {
+      t.strictEqual(clock.timers[key].delay, 30000)
+      clearTimeout(clock.timers[key].id)
+    }
+
+    clock.restore()
+  })
+
+  t.test('inherits the requestTimeout from the transport', t => {
+    t.plan(2)
+    const clock = useFakeTimers()
+    const transport = new Transport({ requestTimeout: 5000 })
+
+    transport
+      .request({})
+      .then(noop, noop)
+
+    t.strictEqual(Object.keys(clock.timers).length, 1)
+    for (var key in clock.timers) {
+      t.strictEqual(clock.timers[key].delay, 5000)
+      clearTimeout(clock.timers[key].id)
+    }
+
+    clock.restore()
+  })
+
+  t.test('inherits the pingTimeout from the transport', t => {
+    t.plan(2)
+    const clock = useFakeTimers()
+    const transport = new Transport({
+      requestTimeout: 4000,
+      pingTimeout: 5000
+    })
+
+    transport
+      .request({ path: '/', method: 'HEAD' })
+      .then(noop, noop)
+
+    t.strictEqual(Object.keys(clock.timers).length, 1)
+    for (var key in clock.timers) {
+      t.strictEqual(clock.timers[key].delay, 5000)
+      clearTimeout(clock.timers[key].id)
+    }
+
+    clock.restore()
   })
 
   t.end()
