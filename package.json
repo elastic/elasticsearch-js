@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "grunt test",
-    "test:unit": "tap test/unit/tap/*.test.js",
+    "test:unit": "tap test/unit/tap/*.test.js -J -T",
     "test:integration": "tap test/integration/tap/index.js -T",
     "generate": "node scripts/generate",
     "grunt": "grunt",
