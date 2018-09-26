@@ -455,7 +455,7 @@ TestRunner.prototype.match = function (val1, val2) {
       .replace(/\s/g, '')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    this.tap.match(val1, new RegExp(regStr, 'gm'), `should match pattern provided: ${val2}`)
+    this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}`)
   // everything else
   } else {
     this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}`)
