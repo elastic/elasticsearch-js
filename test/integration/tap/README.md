@@ -48,5 +48,5 @@ Inside the `index.js` file, you will find the connection, cloning, reading and p
 
 Checkout the [rest-api-spec readme](https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/README.asciidoc) if you want to know more about how the assertions work.
 
-## TODO
-- [ ] Run a specific test folder and file
+#### Why are we running the test with the `--harmony` flag?
+Because on Node v6 the regex lookbehinds are not supported.
