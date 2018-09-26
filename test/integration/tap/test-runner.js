@@ -30,7 +30,7 @@ function TestRunner (opts) {
 /**
  * Runs a cleanup, removes all indices and templates
  * @param {queue}
- * @params {function} done
+ * @param {function} done
  */
 TestRunner.prototype.cleanup = function (q, done) {
   this.tap.comment('Cleanup')
@@ -122,30 +122,35 @@ TestRunner.prototype.skip = function (action) {
  * @returns {boolean}
  */
 TestRunner.prototype.shouldSkip = function (action) {
+  var shouldSkip = false
   // skip based on the version
   if (action.version) {
     if (action.version.trim() === 'all') return true
     const [min, max] = action.version.split('-').map(v => v.trim())
     // if both `min` and `max` are specified
     if (min && max) {
-      return semver.satisfies(this.esVersion, action.version)
+      shouldSkip = semver.satisfies(this.esVersion, action.version)
     // if only `min` is specified
     } else if (min) {
-      return semver.gte(this.esVersion, min)
+      shouldSkip = semver.gte(this.esVersion, min)
     // if only `max` is specified
     } else if (max) {
-      return semver.lte(this.esVersion, max)
+      shouldSkip = semver.lte(this.esVersion, max)
     // something went wrong!
     } else {
       throw new Error(`skip: Bad version range: ${action.version}`)
     }
   }
 
+  if (shouldSkip) return true
+
   if (action.features) {
     if (!Array.isArray(action.features)) action.features = [action.features]
     // returns true if one of the features is not present in the supportedFeatures
-    return !!action.features.filter(f => !~supportedFeatures.indexOf(f)).length
+    shouldSkip = !!action.features.filter(f => !~supportedFeatures.indexOf(f)).length
   }
+
+  if (shouldSkip) return true
 
   return false
 }
@@ -450,7 +455,7 @@ TestRunner.prototype.match = function (val1, val2) {
       .replace(/\s/g, '')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    this.tap.match(val1, new RegExp(regStr, 'm'))
+    this.tap.match(val1, new RegExp(regStr, 'gm'), `should match pattern provided: ${val2}`)
   // everything else
   } else {
     this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}`)

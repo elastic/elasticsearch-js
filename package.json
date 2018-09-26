@@ -14,7 +14,7 @@
     "REST"
   ],
   "scripts": {
-    "test": "grunt test",
+    "test": "npm run test:unit && npm run test:integration",
     "test:unit": "tap test/unit/tap/*.test.js -J -T",
     "test:integration": "tap test/integration/tap/index.js -T",
     "generate": "node scripts/generate",
@@ -65,7 +65,6 @@
     "blanket": "^1.2.3",
     "bluebird": "^2.9.14",
     "browserify": "^16.1.1",
-    "dlv": "^1.1.2",
     "eslint": "^2.9.0",
     "eslint-config-airbnb": "^8.0.0",
     "eslint-plugin-import": "^1.6.1",
