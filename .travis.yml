@@ -18,13 +18,13 @@ before_install:
   - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
   - tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
   - ./elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*' &> /dev/null &
-  - sleep 10
+  - ./test/scripts/wait-cluster.sh
 
 install:
   - npm install
 
 script:
-  - npm run test:unit && npm run test:integration
+  - npm test
 
 notifications:
   email:
