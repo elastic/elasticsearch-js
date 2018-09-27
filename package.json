@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "tap test/unit/tap/*.test.js -J -T --harmony",
-    "test:integration": "tap test/integration/tap/index.js -T --harmony",
+    "test:unit": "tap test/unit/*.test.js -J -T --harmony",
+    "test:integration": "tap test/integration/index.js -T --harmony",
     "generate": "node scripts/generate",
     "grunt": "grunt",
     "lint": "eslint .",
