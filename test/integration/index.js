@@ -8,7 +8,7 @@ const Git = require('simple-git')
 const ora = require('ora')
 const minimist = require('minimist')
 const tap = require('tap')
-const elasticsearch = require('../../../src/elasticsearch')
+const elasticsearch = require('../../src/elasticsearch')
 const TestRunner = require('./test-runner')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
