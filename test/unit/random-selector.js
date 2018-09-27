@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const randomSelector = require('../../../src/lib/selectors/random')
+const randomSelector = require('../../src/lib/selectors/random')
 
 test('Should choose a selection randomly', t => {
   t.plan(3)

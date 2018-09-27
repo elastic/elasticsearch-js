@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const JsonSerializer = require('../../../src/lib/serializers/json')
+const JsonSerializer = require('../../src/lib/serializers/json')
 
 test('Serializer', t => {
   t.test('Should serialize an objects as JSON', t => {

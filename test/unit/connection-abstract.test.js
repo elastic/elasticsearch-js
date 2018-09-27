@@ -2,8 +2,8 @@
 
 const { test } = require('tap')
 const { stub } = require('sinon')
-const ConnectionAbstract = require('../../../src/lib/connection')
-const Host = require('../../../src/lib/host')
+const ConnectionAbstract = require('../../src/lib/connection')
+const Host = require('../../src/lib/host')
 const noop = () => {}
 
 test('Constructs with defaults for host', t => {

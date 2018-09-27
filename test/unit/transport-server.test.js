@@ -1,10 +1,9 @@
 'use strict'
 
 const { test } = require('tap')
-const { buildServer } = require('../../utils')
-const Transport = require('../../../src/lib/transport')
-const errors = require('../../../src/lib/errors')
-const ConnectionPool = require('../../../src/lib/connection_pool')
+const { buildServer } = require('../utils')
+const Transport = require('../../src/lib/transport')
+const errors = require('../../src/lib/errors')
 
 test('400', t => {
   t.plan(5)

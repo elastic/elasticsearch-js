@@ -2,11 +2,11 @@
 
 const { test } = require('tap')
 const { stub, useFakeTimers } = require('sinon')
-const Transport = require('../../../src/lib/transport')
-const Host = require('../../../src/lib/host')
-const errors = require('../../../src/lib/errors')
-const randomSelector = require('../../../src/lib/selectors/random')
-const nodeList = require('../../fixtures/short_node_list.5.0.json')
+const Transport = require('../../src/lib/transport')
+const Host = require('../../src/lib/host')
+const errors = require('../../src/lib/errors')
+const randomSelector = require('../../src/lib/selectors/random')
+const nodeList = require('../utils/fixtures/short_node_list.5.0.json')
 
 test('Constructor', t => {
   t.test('Accepts a log class', t => {

@@ -2,8 +2,8 @@
 
 const { test } = require('tap')
 const { stub } = require('sinon')
-const LoggerAbstract = require('../../../src/lib/logger')
-const Log = require('../../../src/lib/log')
+const LoggerAbstract = require('../../src/lib/logger')
+const Log = require('../../src/lib/log')
 
 function buildLogger (parent = new Log(), levels = []) {
   return new LoggerAbstract(parent, {

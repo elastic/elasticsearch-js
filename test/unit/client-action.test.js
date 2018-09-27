@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { factory: ca, proxyFactory: proxy } = require('../../../src/lib/client_action')
+const { factory: ca, proxyFactory: proxy } = require('../../src/lib/client_action')
 const noop = () => {}
 
 function mockClient () {

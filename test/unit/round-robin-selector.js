@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const rrSelector = require('../../../src/lib/selectors/round_robin')
+const rrSelector = require('../../src/lib/selectors/round_robin')
 
 test('Should choose a selection with round robin', t => {
   t.plan(1)

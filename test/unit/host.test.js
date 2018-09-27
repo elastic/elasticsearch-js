@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const Host = require('../../../src/lib/host')
+const Host = require('../../src/lib/host')
 
 const hostDefaults = {
   protocol: 'http',

@@ -5,10 +5,10 @@ const { pipeline } = require('readable-stream')
 const { createGzip, createDeflate } = require('zlib')
 const parseUrl = require('url').parse
 const sts = require('string-to-stream')
-const HttpConnection = require('../../../src/lib/connectors/http')
-const ConnectionAbstract = require('../../../src/lib/connection')
-const Host = require('../../../src/lib/host')
-const { IncomingMessage, ClientRequest, buildServer } = require('../../utils')
+const HttpConnection = require('../../src/lib/connectors/http')
+const ConnectionAbstract = require('../../src/lib/connection')
+const Host = require('../../src/lib/host')
+const { IncomingMessage, ClientRequest, buildServer } = require('../utils')
 
 test('Constructor', t => {
   t.test('Should create an object that extends ConnectionAbstract', t => {

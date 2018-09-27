@@ -1,9 +1,9 @@
 'use strict'
 
 const { test } = require('tap')
-const ConnectionAbstract = require('../../../src/lib/connection')
-const ConnectionPool = require('../../../src/lib/connection_pool')
-const Host = require('../../../src/lib/host')
+const ConnectionAbstract = require('../../src/lib/connection')
+const ConnectionPool = require('../../src/lib/connection_pool')
+const Host = require('../../src/lib/host')
 
 test('Adding/Removing/Syncing connections', t => {
   var pool = null

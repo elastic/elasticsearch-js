@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const errors = require('../../../src/lib/errors')
+const errors = require('../../src/lib/errors')
 
 test('Errors', t => {
   Object.keys(errors).forEach(name => {

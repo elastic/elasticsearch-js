@@ -4,14 +4,14 @@
 const { test } = require('tap')
 const { inherits } = require('util')
 const { Writable } = require('readable-stream')
-const es = require('../../../src/elasticsearch')
+const es = require('../../src/elasticsearch')
 
 test('Should be able to use the specified API version', t => {
-  const apis = require('../../../src/lib/apis')
+  const apis = require('../../src/lib/apis')
 
   t.test('Use the default API by default', t => {
     t.plan(1)
-    const pkg = require('../../../package.json')
+    const pkg = require('../../package.json')
     const { default_api_branch } = pkg.config
     const client = new es.Client()
     t.deepEqual(client.bulk, apis[default_api_branch].bulk)

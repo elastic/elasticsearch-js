@@ -1,12 +1,12 @@
 'use strict'
 
 const { test } = require('tap')
-const nodesToHost = require('../../../src/lib/nodes_to_host')
+const nodesToHost = require('../../src/lib/nodes_to_host')
 
-const nodes09 = require('../../fixtures/short_node_list.0.90.json')
-const nodes10 = require('../../fixtures/short_node_list.1.0.json')
-const nodes20 = require('../../fixtures/short_node_list.2.0.json')
-const nodes50 = require('../../fixtures/short_node_list.5.0.json')
+const nodes09 = require('../utils/fixtures/short_node_list.0.90.json')
+const nodes10 = require('../utils/fixtures/short_node_list.1.0.json')
+const nodes20 = require('../utils/fixtures/short_node_list.2.0.json')
+const nodes50 = require('../utils/fixtures/short_node_list.5.0.json')
 
 test('0.x style', t => {
   t.plan(1)
