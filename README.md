@@ -70,33 +70,39 @@ client.ping({
 
 Skip the callback to get a promise back
 ```js
-try {
-  const response = await client.search({
-    q: 'pants'
-  });
-  console.log(response.hits.hits)
-} catch (error) {
-  console.trace(error.message)
+const Search = async () => {
+  try {
+    const response = await client.search({
+      q: 'pants'
+    });
+    console.log(response.hits.hits)
+  } catch (error) {
+    console.trace(error.message)
+  }
 }
+Search()
 ```
 
 Find tweets that have "elasticsearch" in their body field
 ```js
-const response = await client.search({
-  index: 'twitter',
-  type: 'tweets',
-  body: {
-    query: {
-      match: {
-        body: 'elasticsearch'
+const Search = async () => {
+  const response = await client.search({
+    index: 'twitter',
+    type: 'tweets',
+    body: {
+      query: {
+        match: {
+          body: 'elasticsearch'
+        }
       }
     }
-  }
-})
+  })
 
-for (const tweet of response.hits.hits) {
-  console.log('tweet:', tweet);
+  for (const tweet of response.hits.hits) {
+    console.log('tweet:', tweet);
+  }
 }
+Search()
 ```
 
 More examples and detailed information about each method are available [here](http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html)
