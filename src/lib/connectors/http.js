@@ -130,28 +130,30 @@ HttpConnector.prototype.makeReqParams = function (params) {
   return reqParams;
 };
 
-HttpConnector.prototype.request = function (params, cb) {
+HttpConnector.prototype.request = function (params, _cb) {
+  var cb = _.once(_cb);
   var incoming;
-  var timeoutId;
   var request;
   var status = 0;
   var headers = {};
   var log = this.log;
-  var response;
+  var response = '';
 
   var reqParams = this.makeReqParams(params);
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  var cleanUp = _.bind(function (err) {
-    clearTimeout(timeoutId);
-
+  function cleanUp(err) {
     if (request) {
-      request.removeAllListeners();
+      request.removeListener('end', cleanUp);
+      request = null;
     }
 
     if (incoming) {
-      incoming.removeAllListeners();
+      incoming.removeListener('data', cleanUp);
+      incoming.removeListener('error', cleanUp);
+      incoming.removeListener('end', cleanUp);
+      incoming = null;
     }
 
     if ((err instanceof Error) === false) {
@@ -162,15 +164,18 @@ HttpConnector.prototype.request = function (params, cb) {
     if (err) {
       cb(err);
     } else {
-      cb(err, response, status, headers);
+      cb(err, response || void 0, status, headers);
     }
-  }, this);
+  }
+
+  function onData(chunk) {
+    response += chunk;
+  }
 
   request = this.hand.request(reqParams, function (_incoming) {
     incoming = _incoming;
     status = incoming.statusCode;
     headers = incoming.headers;
-    response = '';
 
     var encoding = (headers['content-encoding'] || '').toLowerCase();
     if (encoding === 'gzip' || encoding === 'deflate') {
@@ -178,15 +183,13 @@ HttpConnector.prototype.request = function (params, cb) {
     }
 
     incoming.setEncoding('utf8');
-    incoming.on('data', function (d) {
-      response += d;
-    });
+    incoming.on('data', onData);
 
-    incoming.on('error', cleanUp);
-    incoming.on('end', cleanUp);
+    incoming.once('error', cleanUp);
+    incoming.once('end', cleanUp);
   });
 
-  request.on('error', cleanUp);
+  request.once('error', cleanUp);
 
   request.setNoDelay(true);
   request.setSocketKeepAlive(true);
@@ -200,6 +203,8 @@ HttpConnector.prototype.request = function (params, cb) {
   }
 
   return function () {
-    request.abort();
+    if (request) {
+      request.abort();
+    }
   };
 };
