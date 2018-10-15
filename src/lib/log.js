@@ -235,9 +235,9 @@ Log.prototype.error = function (e) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.warning = function (/* ...msg */) {
+Log.prototype.warning = function (...args) {
   if (this.listenerCount('warning')) {
-    return this.emit('warning', Log.join(arguments));
+    return this.emit('warning', Log.join(args));
   }
 };
 
@@ -249,9 +249,9 @@ Log.prototype.warning = function (/* ...msg */) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.info = function (/* ...msg */) {
+Log.prototype.info = function (...args) {
   if (this.listenerCount('info')) {
-    return this.emit('info', Log.join(arguments));
+    return this.emit('info', Log.join(...args));
   }
 };
 
@@ -262,9 +262,9 @@ Log.prototype.info = function (/* ...msg */) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.debug = function (/* ...msg */) {
+Log.prototype.debug = function (...args) {
   if (this.listenerCount('debug')) {
-    return this.emit('debug', Log.join(arguments));
+    return this.emit('debug', Log.join(args));
   }
 };
 

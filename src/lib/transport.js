@@ -181,7 +181,7 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (body && params.method === 'GET') {
-    utils.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
+    process.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
     return ret;
   }
 

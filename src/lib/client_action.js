@@ -62,7 +62,7 @@ function makeFactoryWithModifier(modifier) {
         return exec(this.transport, spec, _.clone(params), cb);
       } catch (e) {
         if (typeof cb === 'function') {
-          utils.nextTick(cb, e);
+          process.nextTick(cb, e);
         } else {
           var def = this.transport.defer();
           def.reject(e);

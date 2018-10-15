@@ -87,7 +87,7 @@ ConnectionPool.prototype.select = function (cb) {
       this.selector(this._conns.alive, cb);
     } else {
       try {
-        utils.nextTick(cb, void 0, this.selector(this._conns.alive));
+        process.nextTick(cb, void 0, this.selector(this._conns.alive));
       } catch (e) {
         cb(e);
       }
@@ -95,7 +95,7 @@ ConnectionPool.prototype.select = function (cb) {
   } else if (this._timeouts.length) {
     this._selectDeadConnection(cb);
   } else {
-    utils.nextTick(cb, void 0);
+    process.nextTick(cb, void 0);
   }
 };
 
