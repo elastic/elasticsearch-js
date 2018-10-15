@@ -108,8 +108,6 @@ ConnectionPool.prototype.select = function (cb) {
  * @param  {ConnectionAbstract} connection - the connection object itself
  */
 ConnectionPool.prototype.onStatusSet = utils.handler(function (status, oldStatus, connection) {
-  var index;
-
   var died = (status === 'dead');
   var wasAlreadyDead = (died && oldStatus === 'dead');
   var revived = (!died && oldStatus === 'dead');
@@ -123,16 +121,14 @@ ConnectionPool.prototype.onStatusSet = utils.handler(function (status, oldStatus
 
   if (from !== to) {
     if (_.isArray(from)) {
-      index = from.indexOf(connection);
-      if (index !== -1) {
-        from.splice(index, 1);
+      if (_.includes(from, connection)) {
+        this._conns[oldStatus] = _.without(from, connection);
       }
     }
 
     if (_.isArray(to)) {
-      index = to.indexOf(connection);
-      if (index === -1) {
-        to.push(connection);
+      if (!_.includes(to, connection)) {
+        this._conns[status] = _.concat(to, [connection]);
       }
     }
   }
@@ -305,25 +301,21 @@ ConnectionPool.prototype.removeConnection = function (connection) {
  * @param {Host[]} hosts - An array of Host instances.
  */
 ConnectionPool.prototype.setHosts = function (hosts) {
-  var connection;
   var i;
-  var id;
-  var host;
-  var toRemove = _.clone(this.index);
+  var removeIds = _.keys(this.index);
 
   for (i = 0; i < hosts.length; i++) {
-    host = hosts[i];
-    id = host.toString();
+    const host = hosts[i];
+    const id = host.toString();
     if (this.index[id]) {
-      delete toRemove[id];
+      _.pull(removeIds, id);
     } else {
-      connection = new this.Connection(host, this._config);
+      const connection = new this.Connection(host, this._config);
       connection.id = id;
       this.addConnection(connection);
     }
   }
 
-  var removeIds = _.keys(toRemove);
   for (i = 0; i < removeIds.length; i++) {
     this.removeConnection(this.index[removeIds[i]]);
   }

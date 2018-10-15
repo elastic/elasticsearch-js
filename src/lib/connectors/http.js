@@ -106,15 +106,14 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
 
 HttpConnector.prototype.makeReqParams = function (params) {
   params = params || {};
-  var host = this.host;
 
   var reqParams = {
     method: params.method || 'GET',
-    protocol: host.protocol + ':',
-    hostname: host.host,
-    port: host.port,
-    path: (host.path || '') + (params.path || ''),
-    headers: host.getHeaders(params.headers),
+    protocol: this.host.protocol + ':',
+    hostname: this.host.host,
+    port: this.host.port,
+    path: (this.host.path || '') + (params.path || ''),
+    headers: this.host.getHeaders(params.headers),
     agent: this.agent
   };
 
@@ -122,7 +121,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
     reqParams.path = '/';
   }
 
-  var query = host.getQuery(params.query);
+  var query = this.host.getQuery(params.query);
   if (query) {
     reqParams.path = reqParams.path + '?' + qs.stringify(query);
   }
@@ -132,28 +131,18 @@ HttpConnector.prototype.makeReqParams = function (params) {
 
 HttpConnector.prototype.request = function (params, _cb) {
   var cb = _.once(_cb);
-  var incoming;
   var request;
   var status = 0;
   var headers = {};
   var log = this.log;
-  var response = '';
 
   var reqParams = this.makeReqParams(params);
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  function cleanUp(err) {
+  function cleanUp(err, response) {
     if (request) {
-      request.removeListener('end', cleanUp);
       request = null;
-    }
-
-    if (incoming) {
-      incoming.removeListener('data', onData);
-      incoming.removeListener('error', cleanUp);
-      incoming.removeListener('end', cleanUp);
-      incoming = null;
     }
 
     if ((err instanceof Error) === false) {
@@ -168,12 +157,8 @@ HttpConnector.prototype.request = function (params, _cb) {
     }
   }
 
-  function onData(chunk) {
-    response += chunk;
-  }
-
-  request = this.hand.request(reqParams, function (_incoming) {
-    incoming = _incoming;
+  request = this.hand.request(reqParams, function (incoming) {
+    var response = '';
     status = incoming.statusCode;
     headers = incoming.headers;
 
@@ -183,10 +168,14 @@ HttpConnector.prototype.request = function (params, _cb) {
     }
 
     incoming.setEncoding('utf8');
-    incoming.on('data', onData);
+    incoming.on('data', function (d) {
+      response += d;
+    });
 
     incoming.once('error', cleanUp);
-    incoming.once('end', cleanUp);
+    incoming.once('end', function () {
+      cleanUp(void 0, response)
+    });
   });
 
   request.once('error', cleanUp);

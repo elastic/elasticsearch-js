@@ -335,6 +335,7 @@ Transport.prototype.request = function (params, cb) {
       } else {
         cb(void 0, parsedBody, status);
       }
+      requestAborter = void 0;
     } else if (err) {
       err.body = parsedBody;
       err.status = status;
@@ -354,6 +355,7 @@ Transport.prototype.request = function (params, cb) {
     self._timeout(requestTimeoutId);
     if (typeof requestAborter === 'function') {
       requestAborter();
+      requestAborter = void 0;
     }
   }
 
@@ -377,7 +379,17 @@ Transport.prototype._timeout = function (cb, delay) {
   if (this.closed) return;
 
   var id;
-  var timers = this._timers || (this._timers = []);
+  if (this._timers == null) {
+    this._timers = [];
+  }
+
+  var removeTimer = (timerId) => {
+    this._timers = _.without(this._timers, timerId);
+  };
+
+  var addTimer = (timerId) => {
+    this._timers = _.concat(this._timers, [timerId]);
+  };
 
   if ('function' !== typeof cb) {
     id = cb;
@@ -387,21 +399,17 @@ Transport.prototype._timeout = function (cb, delay) {
   if (cb) {
     // set the timer
     id = setTimeout(function () {
-      _.pull(timers, id);
+      removeTimer(id);
       cb();
     }, delay);
 
-    timers.push(id);
+    addTimer(id);
     return id;
   }
 
   if (id) {
     clearTimeout(id);
-
-    var i = this._timers.indexOf(id);
-    if (i !== -1) {
-      this._timers.splice(i, 1);
-    }
+    removeTimer(id);
   }
 };
 
