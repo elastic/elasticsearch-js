@@ -251,7 +251,7 @@ Log.prototype.warning = function (...args) {
  */
 Log.prototype.info = function (...args) {
   if (this.listenerCount('info')) {
-    return this.emit('info', Log.join(...args));
+    return this.emit('info', Log.join(args));
   }
 };
 
