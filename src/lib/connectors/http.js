@@ -150,7 +150,7 @@ HttpConnector.prototype.request = function (params, _cb) {
     }
 
     if (incoming) {
-      incoming.removeListener('data', cleanUp);
+      incoming.removeListener('data', onData);
       incoming.removeListener('error', cleanUp);
       incoming.removeListener('end', cleanUp);
       incoming = null;
