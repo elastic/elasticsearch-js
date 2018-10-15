@@ -247,7 +247,7 @@ utils.makeBoundMethods = function (obj) {
   for (var prop in obj) {
     // dearest maintainer, we want to look through the prototype
     if (typeof obj[prop] === 'function' && obj[prop]._provideBound === true) {
-      obj.bound[prop] = _.bind(obj[prop], obj);
+      obj.bound[prop] = obj[prop].bind(obj);
     }
   }
 };

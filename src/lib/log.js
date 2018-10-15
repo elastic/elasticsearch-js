@@ -66,7 +66,7 @@ Log.prototype.close = function () {
 if (EventEmitter.prototype.listenerCount) {
   // If the event emitter implements it's own listenerCount method
   // we don't need to (newer nodes do this).
-  Log.prototype.listenerCount = EventEmitter.prototype.listenerCount;
+  // Log.prototype.listenerCount = EventEmitter.prototype.listenerCount;
 }
 else if (EventEmitter.listenerCount) {
   // some versions of node expose EventEmitter::listenerCount

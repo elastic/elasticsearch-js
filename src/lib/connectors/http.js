@@ -134,14 +134,17 @@ HttpConnector.prototype.request = function (params, _cb) {
   var request;
   var status = 0;
   var headers = {};
-  var log = this.log;
-
   var reqParams = this.makeReqParams(params);
+
+  var logRequest = (response) => {
+    this.log.trace(params.method, reqParams, params.body, response, status);
+  }
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
   function cleanUp(err, response) {
     if (request) {
+      request.removeListener('error', cleanUp);
       request = null;
     }
 
@@ -149,7 +152,7 @@ HttpConnector.prototype.request = function (params, _cb) {
       err = void 0;
     }
 
-    log.trace(params.method, reqParams, params.body, response, status);
+    logRequest(request);
     if (err) {
       cb(err);
     } else {

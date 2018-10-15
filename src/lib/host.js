@@ -111,9 +111,9 @@ function Host(config, globalConfig) {
     delete config.auth;
   }
 
-  _.forOwn(config, _.bind(function (val, prop) {
+  _.forOwn(config, (val, prop) => {
     if (val != null) this[prop] = _.clone(val);
-  }, this));
+  });
 
   // make sure the query string is parsed
   if (this.query === null) {
