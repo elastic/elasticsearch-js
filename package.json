@@ -1,0 +1,60 @@
+{
+  "name": "@elastic/elasticsearch",
+  "description": "The official Elasticsearch client for Node.js",
+  "main": "index.js",
+  "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
+  "version": "0.1.0",
+  "keywords": [
+    "elasticsearch",
+    "elastic",
+    "kibana",
+    "mapping",
+    "REST",
+    "search"
+  ],
+  "scripts": {
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "tap test/unit/*.test.js -J -T --harmony",
+    "test:integration": "tap test/integration/index.js -T --harmony",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "elasticsearch": "docker run --rm -e \"node.attr.testattr=test\" -e \"path.repo=/tmp\" -e \"repositories.url.allowed_urls=http://snapshot.*\" -p 9200:9200 docker.elastic.co/elasticsearch/elasticsearch:6.4.0"
+  },
+  "author": {
+    "name": "Tomas Della Vedova",
+    "company": "Elastic BV"
+  },
+  "original-author": {
+    "name": "Spencer Alger",
+    "company": "Elasticsearch BV"
+  },
+  "devDependencies": {
+    "js-yaml": "^3.12.0",
+    "minimist": "^1.2.0",
+    "ora": "^3.0.0",
+    "readable-stream": "^3.0.1",
+    "semver": "^5.5.1",
+    "simple-git": "^1.96.0",
+    "sinon": "^6.1.5",
+    "standard": "^12.0.0",
+    "string-to-stream": "^1.1.1",
+    "tap": "^12.0.1",
+    "workq": "^2.1.0"
+  },
+  "dependencies": {
+    "debug": "^4.1.0",
+    "once": "^1.4.0",
+    "simple-get": "^3.0.3"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elastic/elasticsearch-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elastic/elasticsearch-js/issues"
+  },
+  "engines": {
+    "node": ">=6"
+  }
+}
