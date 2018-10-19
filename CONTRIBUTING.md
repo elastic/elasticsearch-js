@@ -53,7 +53,7 @@ Please write test cases to exercise your changes.
 
 ### 4. Submit a pull request
 
-Push your local changes a forked copy of the repository and submit a pull request. In the pull request, describe what your changes do and be sure to link to any conversations regarding this implementation, eg "Closes #123".
+Push your local changes to a forked copy of the repository and submit a pull request. In the pull request, describe what your changes do and be sure to link to any conversations regarding this implementation, eg "Closes #123".
 
 ### 5. Sign the CLA
 
