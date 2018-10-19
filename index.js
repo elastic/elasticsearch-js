@@ -1,5 +1,6 @@
 'use strict'
 
+const { EventEmitter } = require('events')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const ConnectionPool = require('./lib/ConnectionPool')
@@ -17,16 +18,24 @@ const {
   kSelector
 } = symbols
 
-class Client {
+class Client extends EventEmitter {
   constructor (opts = {}) {
+    super()
     if (!opts.host) {
       throw new BadConfigurationError('Missing host option')
     }
 
-    // if (opts.log) {
-    //   this.on('response', console.log)
-    //   this.on('error', console.log)
-    // }
+    if (opts.log === true) {
+      this.on('request', console.log)
+      this.on('response', console.log)
+      this.on('error', console.log)
+    }
+
+    // The logging is exposed via events, which the user can
+    // listen to and log the message its preferred way
+    // we add a fake listener to the error event to avoid
+    // the "unhandled error event" error.
+    this.on('error', () => {})
 
     const Selector = selectors.RoundRobinSelector
     const options = Object.assign({}, {
@@ -38,15 +47,22 @@ class Client {
       maxRetries: 3,
       requestTimeout: 30000,
       sniffInterval: false,
-      sniffOnStart: false
+      sniffOnStart: false,
+      ssl: null
     }, opts)
 
     this[kSelector] = new options.Selector()
     this[kSerializer] = new options.Serializer()
     this[kConnectionPool] = new options.ConnectionPool({
-      selector: this[kSelector]
+      selector: this[kSelector],
+      ssl: options.ssl
     })
+
+    // Add the connections before initialize the Transport
+    this[kConnectionPool].addConnection(options.host)
+
     this[kTransport] = new options.Transport({
+      emit: this.emit.bind(this),
       connectionPool: this[kConnectionPool],
       serializer: this[kSerializer],
       maxRetries: options.maxRetries,
@@ -65,7 +81,6 @@ class Client {
     //   this[api] = apis[api]
     // })
 
-    this[kConnectionPool].addConnection(options.host)
   }
 }
 
