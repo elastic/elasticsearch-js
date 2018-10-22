@@ -48,14 +48,16 @@ class Client extends EventEmitter {
       requestTimeout: 30000,
       sniffInterval: false,
       sniffOnStart: false,
-      ssl: null
+      ssl: null,
+      agent: null
     }, opts)
 
     this[kSelector] = new options.Selector()
     this[kSerializer] = new options.Serializer()
     this[kConnectionPool] = new options.ConnectionPool({
       selector: this[kSelector],
-      ssl: options.ssl
+      ssl: options.ssl,
+      agent: null
     })
 
     // Add the connections before initialize the Transport
