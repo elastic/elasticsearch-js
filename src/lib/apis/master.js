@@ -2105,6 +2105,32 @@ api.deleteByQuery = ca({
 });
 
 /**
+ * Perform a [deleteByQueryRethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+ * @param {<<api-param-type-string,`String`>>} params.taskId - The task id to rethrottle
+ */
+api.deleteByQueryRethrottle = ca({
+  params: {
+    requestsPerSecond: {
+      type: 'number',
+      required: true,
+      name: 'requests_per_second'
+    }
+  },
+  url: {
+    fmt: '/_delete_by_query/<%=taskId%>/_rethrottle',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'POST'
+});
+
+/**
  * Perform a [deleteScript](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -2761,25 +2787,11 @@ api.indices = namespace();
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.index - The name of the index to scope the operation
- * @param {<<api-param-type-boolean,`Boolean`>>} params.preferLocal - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
- * @param {<<api-param-type-string,`String`>>} [params.format=detailed] - Format of the output
  */
 api.indices.prototype.analyze = ca({
   params: {
     index: {
       type: 'string'
-    },
-    preferLocal: {
-      type: 'boolean',
-      name: 'prefer_local'
-    },
-    format: {
-      type: 'enum',
-      'default': 'detailed',
-      options: [
-        'detailed',
-        'text'
-      ]
     }
   },
   urls: [
@@ -3442,6 +3454,7 @@ api.indices.prototype.forcemerge = ca({
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether wildcard expressions should get expanded to open or closed indices (default: open)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeDefaults - Whether to return all default setting for each of the indices.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names
  */
 api.indices.prototype.get = ca({
@@ -3476,6 +3489,10 @@ api.indices.prototype.get = ca({
       type: 'boolean',
       'default': false,
       name: 'include_defaults'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
     }
   },
   url: {
@@ -5034,6 +5051,7 @@ api.mget = ca({
  * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+ * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default grows with the number of nodes in the cluster but is at most 256.] - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -5061,6 +5079,11 @@ api.msearch = ca({
       type: 'number',
       'default': 128,
       name: 'pre_filter_shard_size'
+    },
+    maxConcurrentShardRequests: {
+      type: 'number',
+      'default': 'The default grows with the number of nodes in the cluster but is at most 256.',
+      name: 'max_concurrent_shard_requests'
     }
   },
   urls: [
@@ -5395,6 +5418,35 @@ api.nodes.prototype.info = ca({
       fmt: '/_nodes'
     }
   ]
+});
+
+/**
+ * Perform a [nodes.reloadSecureSettings](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-reload-secure-settings.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.nodeId - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
+ */
+api.nodes.prototype.reloadSecureSettings = ca({
+  params: {
+    timeout: {
+      type: 'time'
+    }
+  },
+  urls: [
+    {
+      fmt: '/_nodes/<%=nodeId%>/reload_secure_settings',
+      req: {
+        nodeId: {
+          type: 'list'
+        }
+      }
+    },
+    {
+      fmt: '/_nodes/reload_secure_settings'
+    }
+  ],
+  method: 'POST'
 });
 
 /**
@@ -7161,5 +7213,31 @@ api.updateByQuery = ca({
       }
     }
   ],
+  method: 'POST'
+});
+
+/**
+ * Perform a [updateByQueryRethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+ * @param {<<api-param-type-string,`String`>>} params.taskId - The task id to rethrottle
+ */
+api.updateByQueryRethrottle = ca({
+  params: {
+    requestsPerSecond: {
+      type: 'number',
+      required: true,
+      name: 'requests_per_second'
+    }
+  },
+  url: {
+    fmt: '/_update_by_query/<%=taskId%>/_rethrottle',
+    req: {
+      taskId: {
+        type: 'string'
+      }
+    }
+  },
   method: 'POST'
 });
