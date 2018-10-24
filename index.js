@@ -46,8 +46,12 @@ class Client extends EventEmitter {
       Selector,
       maxRetries: 3,
       requestTimeout: 30000,
+      pingTimeout: 3000,
       sniffInterval: false,
       sniffOnStart: false,
+      sniffEndpoint: '_nodes/_all/http',
+      sniffOnConnectionFault: false,
+      resurrectStrategy: 'ping',
       ssl: null,
       agent: null
     }, opts)
@@ -55,6 +59,8 @@ class Client extends EventEmitter {
     this[kSelector] = new options.Selector()
     this[kSerializer] = new options.Serializer()
     this[kConnectionPool] = new options.ConnectionPool({
+      pingTimeout: opts.pingTimeout,
+      resurrectStrategy: opts.resurrectStrategy,
       selector: this[kSelector],
       ssl: options.ssl,
       agent: null
@@ -70,7 +76,9 @@ class Client extends EventEmitter {
       maxRetries: options.maxRetries,
       requestTimeout: options.requestTimeout,
       sniffInterval: options.sniffInterval,
-      sniffOnStart: options.sniffOnStart
+      sniffOnStart: options.sniffOnStart,
+      sniffOnConnectionFault: options.sniffOnConnectionFault,
+      sniffEndpoint: options.sniffEndpoint
     })
 
     this.request = this[kTransport].request.bind(this[kTransport])
