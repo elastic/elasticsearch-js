@@ -44,7 +44,7 @@ Called after every HTTP request.
 `String, false-y` -- The body of the http request, if the body is false-y no body was sent
 
 `responseStatus`::
-`Integrer, false-y` -- The HTTP response status
+`Integer, false-y` -- The HTTP response status
 
 === Bunyan Example
 In the future we may add loggers for some of the more common libraries, but for now this is an exercise for the user. Here is a hint to get you started implementing a https://github.com/trentm/node-bunyan[Bunyan] log class. Be sure to check out the Bunyan repo for more info about setting things up.
