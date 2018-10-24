@@ -8,7 +8,8 @@ const {
   SerializationError,
   DeserializationError,
   TimeoutError,
-  ResponseError
+  ResponseError,
+  ConnectionError
 } = require('../../lib/errors')
 
 const ConnectionPool = require('../../lib/ConnectionPool')
@@ -90,6 +91,39 @@ test('Send POST', t => {
     }, (err, body) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+    })
+  })
+})
+
+test('Not JSON payload from server', t => {
+  t.plan(2)
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('hello!')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({
+      selector: new RoundRobinSelector()
+    })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, body) => {
+      t.error(err)
+      t.strictEqual(body, 'hello!')
     })
   })
 })
@@ -219,6 +253,45 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
       path: '/hello'
     }, (err, body) => {
       t.ok(err instanceof TimeoutError)
+    })
+  })
+})
+
+test('ConnectionError (should call markDead on the failing connection)', t => {
+  t.plan(2)
+
+  class CustomConnectionPool extends ConnectionPool {
+    markDead (connection) {
+      t.strictEqual(connection.id, 'node1')
+      super.markDead(connection)
+    }
+  }
+
+  buildServer(() => {}, ({ port }, server) => {
+    server.close()
+    const pool = new CustomConnectionPool({
+      selector: new RoundRobinSelector()
+    })
+    pool.addConnection({
+      host: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    })
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 0,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, body) => {
+      t.ok(err instanceof ConnectionError)
     })
   })
 })
@@ -468,4 +541,207 @@ test('Override requestTimeout', t => {
       t.deepEqual(body, { hello: 'world' })
     })
   })
+})
+
+test('sniff', t => {
+  t.test('sniffOnStart', t => {
+    t.plan(4)
+
+    class CustomConnectionPool extends ConnectionPool {
+      empty () {
+        t.ok('called')
+        return this
+      }
+
+      addConnection (hosts) {
+        // the first `addConnection` call should work
+        if (typeof hosts === 'string') {
+          return super.addConnection(hosts)
+        }
+        t.true(Array.isArray(hosts))
+      }
+
+      nodesToHost (nodes) {
+        t.ok('called')
+        return []
+      }
+    }
+
+    function handler (req, res) {
+      t.strictEqual(req.url, '/sniff')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new CustomConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      // eslint-disable-next-line
+      new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: true,
+        sniffEndpoint: '/sniff'
+      })
+    })
+  })
+
+  t.test('sniffOnConnectionFault', t => {
+    t.plan(4)
+
+    class CustomConnectionPool extends ConnectionPool {
+      empty () {
+        t.ok('called')
+        return this
+      }
+
+      addConnection (hosts) {
+        // the first `addConnection` call should work
+        if (typeof hosts === 'string') {
+          return super.addConnection(hosts)
+        }
+
+        t.true(Array.isArray(hosts))
+      }
+
+      nodesToHost (nodes) {
+        t.ok('called')
+        return []
+      }
+    }
+
+    function handler (req, res) {
+      if (req.url === '/other/sniff') {
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      } else {
+        setTimeout(() => res.end(), 1000)
+      }
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new CustomConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+      pool.addConnection(`http://localhost:${port}/other`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 0,
+        requestTimeout: 500,
+        sniffInterval: false,
+        sniffOnConnectionFault: true,
+        sniffEndpoint: '/sniff'
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/'
+      }, (err, body) => {
+        t.ok(err instanceof TimeoutError)
+      })
+    })
+  })
+
+  t.test('sniffInterval', t => {
+    t.plan(9)
+
+    class CustomConnectionPool extends ConnectionPool {
+      empty () {
+        return this
+      }
+
+      addConnection (hosts) {
+        // the first `addConnection` call should work
+        if (typeof hosts === 'string') {
+          return super.addConnection(hosts)
+        }
+      }
+
+      nodesToHost (nodes) {
+        return []
+      }
+    }
+
+    function handler (req, res) {
+      // this should be called 6 times
+      t.ok('called')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new CustomConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 3000,
+        sniffInterval: 1,
+        sniffEndpoint: '/sniff'
+      })
+
+      const params = { method: 'GET', path: '/' }
+      setTimeout(() => {
+        transport.request(params, t.error)
+      }, 100)
+
+      setTimeout(() => {
+        transport.request(params, t.error)
+      }, 200)
+
+      setTimeout(() => {
+        transport.request(params, t.error)
+      }, 300)
+    })
+  })
+
+  t.test('errored', t => {
+    t.plan(1)
+
+    class CustomConnectionPool extends ConnectionPool {
+      nodesToHost () {
+        t.fail('This should not be called')
+      }
+    }
+
+    buildServer(() => {}, ({ port }, server) => {
+      server.close()
+      const pool = new CustomConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 0,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffEndpoint: '/sniff'
+      })
+
+      transport.sniff((err, hosts) => {
+        t.ok(err instanceof ConnectionError)
+      })
+    })
+  })
+
+  t.end()
 })
