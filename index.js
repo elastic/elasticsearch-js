@@ -52,6 +52,7 @@ class Client extends EventEmitter {
       sniffEndpoint: '_nodes/_all/http',
       sniffOnConnectionFault: false,
       resurrectStrategy: 'ping',
+      randomizeHost: true,
       ssl: null,
       agent: null
     }, opts)
@@ -61,6 +62,7 @@ class Client extends EventEmitter {
     this[kConnectionPool] = new options.ConnectionPool({
       pingTimeout: opts.pingTimeout,
       resurrectStrategy: opts.resurrectStrategy,
+      randomizeHost: opts.randomizeHost,
       selector: this[kSelector],
       ssl: options.ssl,
       agent: null
