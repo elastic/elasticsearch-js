@@ -43,3 +43,6 @@ jspm_packages
 *.swp
 
 package-lock.json
+
+# elasticsearch repo or binary files
+elasticsearch*
