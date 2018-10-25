@@ -13,6 +13,22 @@ test('Basic', t => {
   t.deepEqual(s.deserialize(json), obj)
 })
 
+test('ndserialize', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = [
+    { hello: 'world' },
+    { winter: 'is coming' },
+    { you_know: 'for search' }
+  ]
+  t.strictEqual(
+    s.ndserialize(obj),
+    JSON.stringify(obj[0]) + '\n' +
+    JSON.stringify(obj[1]) + '\n' +
+    JSON.stringify(obj[2]) + '\n'
+  )
+})
+
 test('SerializationError', t => {
   t.plan(1)
   const s = new Serializer()
@@ -20,6 +36,17 @@ test('SerializationError', t => {
   obj.o = obj
   try {
     s.serialize(obj)
+    t.fail('Should fail')
+  } catch (err) {
+    t.ok(err instanceof SerializationError)
+  }
+})
+
+test('SerializationError ndserialize', t => {
+  t.plan(1)
+  const s = new Serializer()
+  try {
+    s.ndserialize({ hello: 'world' })
     t.fail('Should fail')
   } catch (err) {
     t.ok(err instanceof SerializationError)

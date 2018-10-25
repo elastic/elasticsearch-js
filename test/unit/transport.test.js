@@ -95,6 +95,63 @@ test('Send POST', t => {
   })
 })
 
+test('Send POST (ndjson)', t => {
+  t.plan(4)
+
+  const bulkBody = [
+    { hello: 'world' },
+    { winter: 'is coming' },
+    { you_know: 'for search' }
+  ]
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      'content-type': 'application/x-ndjson',
+      'content-length': '67'
+    })
+    var json = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { json += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.strictEqual(
+        json,
+        JSON.stringify(bulkBody[0]) + '\n' +
+        JSON.stringify(bulkBody[1]) + '\n' +
+        JSON.stringify(bulkBody[2]) + '\n'
+      )
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({
+      selector: new RoundRobinSelector()
+    })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      bulkBody
+    }, (err, body) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+    })
+  })
+})
+
 test('Not JSON payload from server', t => {
   t.plan(2)
   function handler (req, res) {
@@ -744,4 +801,161 @@ test('sniff', t => {
   })
 
   t.end()
+})
+
+test(`Should mark as dead connections where the statusCode is 502/3/4
+      and return a ResponseError if there are no more attempts`, t => {
+  ;[502, 503, 504].forEach(runTest)
+
+  function runTest (statusCode) {
+    t.test(statusCode, t => {
+      t.plan(3)
+      function handler (req, res) {
+        res.statusCode = statusCode
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      class CustomConnectionPool extends ConnectionPool {
+        markDead (connection) {
+          t.ok('called')
+          super.markDead(connection)
+        }
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new CustomConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection(`http://localhost:${port}`)
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 0,
+          requestTimeout: 30000,
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello'
+        }, (err, body) => {
+          t.ok(err instanceof ResponseError)
+          t.match(err, {
+            response: { hello: 'world' },
+            headers: { 'content-type': 'application/json;utf=8' },
+            statusCode: statusCode
+          })
+        })
+      })
+    })
+  }
+
+  t.end()
+})
+
+test('Should retry the request if the statusCode is 502/3/4', t => {
+  ;[502, 503, 504].forEach(runTest)
+
+  function runTest (statusCode) {
+    t.test(statusCode, t => {
+      t.plan(3)
+
+      var first = true
+      function handler (req, res) {
+        if (first) {
+          first = false
+          res.statusCode = statusCode
+        }
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      class CustomConnectionPool extends ConnectionPool {
+        markDead (connection) {
+          t.ok('called')
+        }
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new CustomConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection(`http://localhost:${port}`)
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 1,
+          requestTimeout: 30000,
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello'
+        }, (err, body) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+        })
+      })
+    })
+  }
+
+  t.end()
+})
+
+test('Ignore status code', t => {
+  t.plan(4)
+  function handler (req, res) {
+    res.statusCode = 404
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({
+      selector: new RoundRobinSelector()
+    })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello',
+      ignore: [404]
+    }, (err, body) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, body) => {
+      t.ok(err instanceof ResponseError)
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello',
+      ignore: [403, 405]
+    }, (err, body) => {
+      t.ok(err instanceof ResponseError)
+    })
+  })
 })
