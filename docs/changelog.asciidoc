@@ -1,5 +1,8 @@
 [[changelog]]
 == Changelog
+=== 15.2.0 (October 26 2018)
+  * apiVersion `"6.4"` is now the default
+  * `pingTimeout` takes precendence over `requestTimeout` for ping requests https://github.com/elastic/elasticsearch-js/pull/679[#679]
 
 === 15.1.1 (July 3 2018)
   * Fix JSON serialization bug affecting some objects with non-enumerable properties https://github.com/elastic/elasticsearch-js/issues/504[#504]
