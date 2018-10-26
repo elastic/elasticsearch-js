@@ -1,6 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
+const { stringify } = require('querystring')
 const Serializer = require('../../lib/Serializer')
 const { SerializationError, DeserializationError } = require('../../lib/errors')
 
@@ -26,6 +27,34 @@ test('ndserialize', t => {
     JSON.stringify(obj[0]) + '\n' +
     JSON.stringify(obj[1]) + '\n' +
     JSON.stringify(obj[2]) + '\n'
+  )
+})
+
+test('qserialize', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = {
+    hello: 'world',
+    you_know: 'for search'
+  }
+
+  t.strictEqual(
+    s.qserialize(obj),
+    stringify(obj)
+  )
+})
+
+test('qserialize (array)', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = {
+    hello: 'world',
+    arr: ['foo', 'bar']
+  }
+
+  t.strictEqual(
+    s.qserialize(obj),
+    'hello=world&arr=foo%2Cbar'
   )
 })
 

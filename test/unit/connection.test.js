@@ -192,3 +192,57 @@ test('Timeout support', t => {
     })
   })
 })
+
+test('querystring', t => {
+  t.test('Should concatenate the querystring', t => {
+    t.plan(2)
+
+    function handler (req, res) {
+      t.strictEqual(req.url, '/hello?hello=world&you_know=for%20search')
+      res.end('ok')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const connection = new Connection({
+        host: {
+          href: `http://localhost:${port}`,
+          protocol: 'http:'
+        }
+      })
+      connection.request({
+        path: '/hello',
+        method: 'GET',
+        querystring: 'hello=world&you_know=for%20search'
+      }, (err, res) => {
+        t.error(err)
+      })
+    })
+  })
+
+  t.test('If the querystring is null should not do anything', t => {
+    t.plan(2)
+
+    function handler (req, res) {
+      t.strictEqual(req.url, '/hello')
+      res.end('ok')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const connection = new Connection({
+        host: {
+          href: `http://localhost:${port}`,
+          protocol: 'http:'
+        }
+      })
+      connection.request({
+        path: '/hello',
+        method: 'GET',
+        querystring: null
+      }, (err, res) => {
+        t.error(err)
+      })
+    })
+  })
+
+  t.end()
+})

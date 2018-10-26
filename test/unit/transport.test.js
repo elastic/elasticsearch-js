@@ -359,13 +359,14 @@ test('Retry mechanism', t => {
   var count = 0
   function handler (req, res) {
     res.setHeader('Content-Type', 'application/json;utf=8')
-    if (count++ === 1) {
+    if (count > 0) {
       res.end(JSON.stringify({ hello: 'world' }))
     } else {
       setTimeout(() => {
         res.end(JSON.stringify({ hello: 'world' }))
       }, 1000)
     }
+    count++
   }
 
   buildServer(handler, ({ port }, server) => {
@@ -378,6 +379,9 @@ test('Retry mechanism', t => {
     }, {
       host: new URL(`http://localhost:${port}`),
       id: 'node2'
+    }, {
+      host: new URL(`http://localhost:${port}`),
+      id: 'node3'
     }])
 
     const transport = new Transport({
@@ -385,7 +389,7 @@ test('Retry mechanism', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 1,
-      requestTimeout: 500,
+      requestTimeout: 250,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -956,6 +960,43 @@ test('Ignore status code', t => {
       ignore: [403, 405]
     }, (err, body) => {
       t.ok(err instanceof ResponseError)
+    })
+  })
+})
+
+test('Should serialize the querystring', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    t.strictEqual(req.url, '/hello?hello=world&you_know=for%20search')
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({
+      selector: new RoundRobinSelector()
+    })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello',
+      querystring: {
+        hello: 'world',
+        you_know: 'for search'
+      }
+    }, (err, body) => {
+      t.error(err)
     })
   })
 })

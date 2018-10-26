@@ -135,7 +135,7 @@ test('API', t => {
       var connection = pool.addConnection(href)
       pool.markDead(connection)
       pool.resurrect(Date.now() + 1000 * 60 * 3, (isAlive, connection) => {
-        t.ok(isAlive === null)
+        t.true(isAlive)
         connection = pool.connections.get(connection.id)
         t.strictEqual(connection.deadCount, 1)
         t.true(connection.resurrectTimeout > 0)
