@@ -52,9 +52,11 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `'6.3'`
+Default ::: `'6.4'`
 
 Options in node :::
+  * `'6.5'`
+  * `'6.4'`
   * `'6.3'`
   * `'6.2'`
   * `'6.1'`
@@ -73,11 +75,11 @@ Options in node :::
   * `'master'` (unstable)
 
 Options in the browser :::
+  * `'6.5'`
+  * `'6.4'`
   * `'6.3'`
   * `'6.2'`
   * `'6.1'`
-  * `'6.0'`
-  * `'5.6'`
   * `'6.x'` (unstable)
   * `'master'` (unstable)
 
@@ -136,7 +138,7 @@ Default::: `30000`
 Default::: `60000`
 
 
-`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.  Takes precedence over `requestTimeout` for ping requests.
+`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.
 
 Default::: `3000`
 

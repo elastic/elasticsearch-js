@@ -705,7 +705,8 @@ link:#[back to top]
 client.explain([params, [callback]])
 --------
 
-Provides details about a specific document's score in relation to a specific query. It will also tell you if the document matches the specified query. Also check out http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html[percolaters].
+Provides details about a specific document's score in relation to a specific query. It will also tell you if the document matches the specified query.
+
 
 Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/5.5/search-explain.html[the elasticsearch docs] for more information pertaining to this method.
 
