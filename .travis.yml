@@ -1,0 +1,32 @@
+dist: trusty
+
+sudo: required
+
+language: node_js
+
+node_js:
+  - "10"
+  - "8"
+  - "6"
+
+env:
+  global:
+    - ELASTICSEARCH_VERSION=6.4.0
+    - QUIET=true
+
+before_install:
+  - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
+  - tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
+  - ./elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*' &> /dev/null &
+  - ./scripts/wait-cluster.sh
+
+install:
+  - npm install
+
+script:
+  - npm run lint && npm run test:unit && npm run test:integration
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
