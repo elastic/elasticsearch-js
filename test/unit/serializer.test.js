@@ -30,6 +30,22 @@ test('ndserialize', t => {
   )
 })
 
+test('ndserialize (strings)', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = [
+    JSON.stringify({ hello: 'world' }),
+    JSON.stringify({ winter: 'is coming' }),
+    JSON.stringify({ you_know: 'for search' })
+  ]
+  t.strictEqual(
+    s.ndserialize(obj),
+    obj[0] + '\n' +
+    obj[1] + '\n' +
+    obj[2] + '\n'
+  )
+})
+
 test('qserialize', t => {
   t.plan(1)
   const s = new Serializer()

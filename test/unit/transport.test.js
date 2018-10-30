@@ -43,7 +43,7 @@ test('Basic', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -88,7 +88,7 @@ test('Send POST', t => {
       method: 'POST',
       path: '/hello',
       body: { hello: 'world' }
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -145,7 +145,7 @@ test('Send POST (ndjson)', t => {
       method: 'POST',
       path: '/hello',
       bulkBody
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -178,7 +178,7 @@ test('Not JSON payload from server', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.strictEqual(body, 'hello!')
     })
@@ -204,7 +204,7 @@ test('NoLivingConnectionsError', t => {
   transport.request({
     method: 'GET',
     path: '/hello'
-  }, (err, body) => {
+  }, (err, { body }) => {
     t.ok(err instanceof NoLivingConnectionsError)
   })
 })
@@ -232,7 +232,7 @@ test('SerializationError', t => {
     method: 'POST',
     path: '/hello',
     body
-  }, (err, body) => {
+  }, (err, { body }) => {
     t.ok(err instanceof SerializationError)
   })
 })
@@ -263,7 +263,7 @@ test('DeserializationError', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof DeserializationError)
     })
   })
@@ -308,7 +308,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof TimeoutError)
     })
   })
@@ -347,7 +347,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof ConnectionError)
     })
   })
@@ -397,7 +397,7 @@ test('Retry mechanism', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -441,7 +441,7 @@ test('Should call markAlive with a successful response', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -484,7 +484,7 @@ test('Should call resurrect on every request', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -560,9 +560,9 @@ test('ResponseError', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
-      t.deepEqual(err.response, { status: 500 })
+      t.deepEqual(err.body, { status: 500 })
       t.strictEqual(err.statusCode, 500)
     })
   })
@@ -596,8 +596,8 @@ test('Override requestTimeout', t => {
     transport.request({
       method: 'GET',
       path: '/hello',
-      timeout: 2000
-    }, (err, body) => {
+      requestTimeout: 2000
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -708,7 +708,7 @@ test('sniff', t => {
       transport.request({
         method: 'GET',
         path: '/'
-      }, (err, body) => {
+      }, (err, { body }) => {
         t.ok(err instanceof TimeoutError)
       })
     })
@@ -846,10 +846,10 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
         transport.request({
           method: 'GET',
           path: '/hello'
-        }, (err, body) => {
+        }, (err, { body }) => {
           t.ok(err instanceof ResponseError)
           t.match(err, {
-            response: { hello: 'world' },
+            body: { hello: 'world' },
             headers: { 'content-type': 'application/json;utf=8' },
             statusCode: statusCode
           })
@@ -903,7 +903,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
         transport.request({
           method: 'GET',
           path: '/hello'
-        }, (err, body) => {
+        }, (err, { body }) => {
           t.error(err)
           t.deepEqual(body, { hello: 'world' })
         })
@@ -942,7 +942,7 @@ test('Ignore status code', t => {
       method: 'GET',
       path: '/hello',
       ignore: [404]
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
     })
@@ -950,7 +950,7 @@ test('Ignore status code', t => {
     transport.request({
       method: 'GET',
       path: '/hello'
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
     })
 
@@ -958,7 +958,7 @@ test('Ignore status code', t => {
       method: 'GET',
       path: '/hello',
       ignore: [403, 405]
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
     })
   })
@@ -995,8 +995,290 @@ test('Should serialize the querystring', t => {
         hello: 'world',
         you_know: 'for search'
       }
-    }, (err, body) => {
+    }, (err, { body }) => {
       t.error(err)
     })
   })
+})
+
+test('timeout option', t => {
+  function handler (req, res) {
+    setTimeout(() => {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }, 1000)
+  }
+
+  t.test('as number', t => {
+    t.test('global', t => {
+      t.plan(1)
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new ConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection({
+          host: new URL(`http://localhost:${port}`),
+          id: 'node1'
+        })
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 0,
+          requestTimeout: 500,
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello'
+        }, (err, { body }) => {
+          t.ok(err instanceof TimeoutError)
+        })
+      })
+    })
+
+    t.test('custom', t => {
+      t.plan(1)
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new ConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection({
+          host: new URL(`http://localhost:${port}`),
+          id: 'node1'
+        })
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 0,
+          requestTimeout: 30000,
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello',
+          requestTimeout: 500
+        }, (err, { body }) => {
+          t.ok(err instanceof TimeoutError)
+        })
+      })
+    })
+
+    t.end()
+  })
+
+  t.test('as string', t => {
+    t.test('global', t => {
+      t.plan(1)
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new ConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection({
+          host: new URL(`http://localhost:${port}`),
+          id: 'node1'
+        })
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 0,
+          requestTimeout: '0.5s',
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello'
+        }, (err, { body }) => {
+          t.ok(err instanceof TimeoutError)
+        })
+      })
+    })
+
+    t.test('custom', t => {
+      t.plan(1)
+
+      buildServer(handler, ({ port }, server) => {
+        const pool = new ConnectionPool({
+          selector: new RoundRobinSelector()
+        })
+        pool.addConnection({
+          host: new URL(`http://localhost:${port}`),
+          id: 'node1'
+        })
+
+        const transport = new Transport({
+          emit: () => {},
+          connectionPool: pool,
+          serializer: new Serializer(),
+          maxRetries: 0,
+          requestTimeout: '30s',
+          sniffInterval: false,
+          sniffOnStart: false
+        })
+
+        transport.request({
+          method: 'GET',
+          path: '/hello',
+          requestTimeout: '0.5s'
+        }, (err, { body }) => {
+          t.ok(err instanceof TimeoutError)
+        })
+      })
+    })
+
+    t.end()
+  })
+
+  t.end()
+})
+
+test('Should cast to boolean HEAD request', t => {
+  t.test('2xx response', t => {
+    t.plan(2)
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end('')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'HEAD',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.error(err)
+        t.strictEqual(body, true)
+      })
+    })
+  })
+
+  t.test('404 response', t => {
+    t.plan(2)
+    function handler (req, res) {
+      res.statusCode = 404
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end('')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'HEAD',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.error(err)
+        t.strictEqual(body, false)
+      })
+    })
+  })
+
+  t.test('4xx response', t => {
+    t.plan(1)
+    function handler (req, res) {
+      res.statusCode = 400
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'HEAD',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.ok(err instanceof ResponseError)
+      })
+    })
+  })
+
+  t.test('5xx response', t => {
+    t.plan(1)
+    function handler (req, res) {
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({
+        selector: new RoundRobinSelector()
+      })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'HEAD',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.ok(err instanceof ResponseError)
+      })
+    })
+  })
+
+  t.end()
 })
