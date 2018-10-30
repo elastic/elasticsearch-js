@@ -9,7 +9,7 @@ const selectors = require('./lib/Selectors')
 const symbols = require('./lib/symbols')
 const { ConfigurationError } = require('./lib/errors')
 
-// const buildApi = require('../monorepo/packages/es-api-6')
+const buildApi = require('./api')
 
 const {
   kTransport,
@@ -85,14 +85,14 @@ class Client extends EventEmitter {
 
     this.request = this[kTransport].request.bind(this[kTransport])
 
-    // const apis = buildApi({
-    //   makeRequest: this[kTransport].request.bind(this[kTransport])
-    // })
+    const apis = buildApi({
+      makeRequest: this[kTransport].request.bind(this[kTransport]),
+      ConfigurationError
+    })
 
-    // Object.keys(apis).forEach(api => {
-    //   this[api] = apis[api]
-    // })
-
+    Object.keys(apis).forEach(api => {
+      this[api] = apis[api]
+    })
   }
 }
 
