@@ -7,7 +7,7 @@ const ConnectionPool = require('./lib/ConnectionPool')
 const Serializer = require('./lib/Serializer')
 const selectors = require('./lib/Selectors')
 const symbols = require('./lib/symbols')
-const { BadConfigurationError } = require('./lib/errors')
+const { ConfigurationError } = require('./lib/errors')
 
 // const buildApi = require('../monorepo/packages/es-api-6')
 
@@ -22,7 +22,7 @@ class Client extends EventEmitter {
   constructor (opts = {}) {
     super()
     if (!opts.host) {
-      throw new BadConfigurationError('Missing host option')
+      throw new ConfigurationError('Missing host option')
     }
 
     if (opts.log === true) {
