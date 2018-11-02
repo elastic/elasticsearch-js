@@ -254,11 +254,11 @@ function generate (spec, common) {
     if (dynamicParts.length) {
       return `
         path: ${dynamicParts}
-          ? '/' + parts.filter(Boolean).join('/')
+          ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
           : '${path}',
       `.trim()
     } else {
-      return `path: '/' + parts.filter(Boolean).join('/'),`.trim()
+      return `path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),`.trim()
     }
   }
 
