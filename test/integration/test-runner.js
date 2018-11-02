@@ -6,12 +6,12 @@ const workq = require('workq')
 const { ConfigurationError } = require('../../lib/errors')
 
 const supportedFeatures = [
-  // 'gtelte',
-  // 'regex',
-  // 'benchmark',
-  // 'stash_in_path',
-  // 'groovy_scripting',
-  // 'headers'
+  'gtelte',
+  'regex',
+  'benchmark',
+  'stash_in_path',
+  'groovy_scripting',
+  'headers'
 ]
 
 function TestRunner (opts) {
