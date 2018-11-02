@@ -90,7 +90,7 @@ function buildClusterStats (opts) {
     const request = {
       method,
       path: (params['node_id'] || params['nodeId']) != null
-        ? '/' + parts.filter(Boolean).join('/')
+        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
         : '/_cluster/stats',
       querystring,
       body: null,

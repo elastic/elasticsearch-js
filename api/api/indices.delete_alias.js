@@ -111,7 +111,7 @@ function buildIndicesDeleteAlias (opts) {
     const request = {
       method,
       path: params['index'] != null && params['name'] != null
-        ? '/' + parts.filter(Boolean).join('/')
+        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
         : '/{index}/_alias/{name}',
       querystring,
       body: '',

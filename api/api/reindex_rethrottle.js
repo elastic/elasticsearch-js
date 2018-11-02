@@ -99,7 +99,7 @@ function buildReindexRethrottle (opts) {
     const request = {
       method,
       path: (params['task_id'] || params['taskId']) != null
-        ? '/' + parts.filter(Boolean).join('/')
+        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
         : '/_reindex/{task_id}/_rethrottle',
       querystring,
       body: '',
