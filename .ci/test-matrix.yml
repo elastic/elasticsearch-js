@@ -1,0 +1,10 @@
+---
+ELASTICSEARCH_VERSION:
+- 6.4.2
+
+NODE_JS_VERSION:
+- 10
+- 8
+- 6
+
+exclude: ~
