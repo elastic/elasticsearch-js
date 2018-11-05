@@ -2,7 +2,7 @@
 
 function buildTasksGet (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [tasks.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
@@ -28,13 +28,13 @@ function buildTasksGet (opts) {
     if (params['task_id'] == null && params['taskId'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: task_id or taskId'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -82,7 +82,7 @@ function buildTasksGet (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

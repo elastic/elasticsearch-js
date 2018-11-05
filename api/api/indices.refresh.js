@@ -2,7 +2,7 @@
 
 function buildIndicesRefresh (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [indices.refresh](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html) request
    *
@@ -29,7 +29,7 @@ function buildIndicesRefresh (opts) {
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -79,7 +79,7 @@ function buildIndicesRefresh (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

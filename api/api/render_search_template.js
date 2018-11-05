@@ -2,7 +2,7 @@
 
 function buildRenderSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
    *
@@ -63,7 +63,7 @@ function buildRenderSearchTemplate (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

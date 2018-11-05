@@ -2,7 +2,7 @@
 
 function buildIndicesPutMapping (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [indices.put_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
    *
@@ -34,13 +34,13 @@ function buildIndicesPutMapping (opts) {
     if (params['type'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: type'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -96,7 +96,7 @@ function buildIndicesPutMapping (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

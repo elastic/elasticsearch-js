@@ -2,7 +2,7 @@
 
 function buildIndicesRollover (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
    *
@@ -32,7 +32,7 @@ function buildIndicesRollover (opts) {
     if (params['alias'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: alias'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -40,7 +40,7 @@ function buildIndicesRollover (opts) {
     if ((params['new_index'] != null || params['newIndex'] != null) && (params['alias'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: alias'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -92,7 +92,7 @@ function buildIndicesRollover (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

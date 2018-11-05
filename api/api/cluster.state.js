@@ -2,7 +2,7 @@
 
 function buildClusterState (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [cluster.state](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html) request
    *
@@ -33,7 +33,7 @@ function buildClusterState (opts) {
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -41,7 +41,7 @@ function buildClusterState (opts) {
     if (params['index'] != null && (params['metric'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: metric'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -97,7 +97,7 @@ function buildClusterState (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

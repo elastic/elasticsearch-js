@@ -2,7 +2,7 @@
 
 function buildSnapshotCreate (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [snapshot.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -30,13 +30,13 @@ function buildSnapshotCreate (opts) {
     if (params['repository'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: repository'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params['snapshot'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: snapshot'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -44,7 +44,7 @@ function buildSnapshotCreate (opts) {
     if (params['snapshot'] != null && (params['repository'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: repository'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -92,7 +92,7 @@ function buildSnapshotCreate (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
