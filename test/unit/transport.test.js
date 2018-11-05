@@ -15,7 +15,6 @@ const {
 const ConnectionPool = require('../../lib/ConnectionPool')
 const Serializer = require('../../lib/Serializer')
 const Transport = require('../../lib/Transport')
-const { RoundRobinSelector } = require('../../lib/Selectors')
 
 test('Basic', t => {
   t.plan(2)
@@ -25,9 +24,7 @@ test('Basic', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -69,9 +66,7 @@ test('Send POST', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -126,9 +121,7 @@ test('Send POST (ndjson)', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -160,9 +153,7 @@ test('Not JSON payload from server', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -187,9 +178,7 @@ test('Not JSON payload from server', t => {
 
 test('NoLivingConnectionsError', t => {
   t.plan(1)
-  const pool = new ConnectionPool({
-    selector: new RoundRobinSelector()
-  })
+  const pool = new ConnectionPool()
 
   const transport = new Transport({
     emit: () => {},
@@ -211,9 +200,7 @@ test('NoLivingConnectionsError', t => {
 
 test('SerializationError', t => {
   t.plan(1)
-  const pool = new ConnectionPool({
-    selector: new RoundRobinSelector()
-  })
+  const pool = new ConnectionPool()
   pool.addConnection('http://localhost:9200')
 
   const transport = new Transport({
@@ -245,9 +232,7 @@ test('DeserializationError', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -287,9 +272,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new CustomConnectionPool()
     pool.addConnection({
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -326,9 +309,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
 
   buildServer(() => {}, ({ port }, server) => {
     server.close()
-    const pool = new CustomConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new CustomConnectionPool()
     pool.addConnection({
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -370,9 +351,7 @@ test('Retry mechanism', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection([{
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -420,9 +399,7 @@ test('Should call markAlive with a successful response', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new CustomConnectionPool()
     pool.addConnection({
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -463,9 +440,7 @@ test('Should call resurrect on every request', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new CustomConnectionPool()
     pool.addConnection({
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -502,9 +477,7 @@ test('Should return a request aborter utility', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection({
       host: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -542,9 +515,7 @@ test('ResponseError', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -578,9 +549,7 @@ test('Override requestTimeout', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -635,9 +604,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new CustomConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       // eslint-disable-next-line
@@ -688,9 +655,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new CustomConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
       pool.addConnection(`http://localhost:${port}/other`)
 
@@ -742,9 +707,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new CustomConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -783,9 +746,7 @@ test('sniff', t => {
 
     buildServer(() => {}, ({ port }, server) => {
       server.close()
-      const pool = new CustomConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new CustomConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -828,9 +789,7 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
       }
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new CustomConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new CustomConnectionPool()
         pool.addConnection(`http://localhost:${port}`)
 
         const transport = new Transport({
@@ -885,9 +844,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
       }
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new CustomConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new CustomConnectionPool()
         pool.addConnection(`http://localhost:${port}`)
 
         const transport = new Transport({
@@ -923,9 +880,7 @@ test('Ignore status code', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -973,9 +928,7 @@ test('Should serialize the querystring', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool({
-      selector: new RoundRobinSelector()
-    })
+    const pool = new ConnectionPool()
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -1014,9 +967,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new ConnectionPool()
         pool.addConnection({
           host: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1045,9 +996,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new ConnectionPool()
         pool.addConnection({
           host: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1081,9 +1030,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new ConnectionPool()
         pool.addConnection({
           host: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1112,9 +1059,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool({
-          selector: new RoundRobinSelector()
-        })
+        const pool = new ConnectionPool()
         pool.addConnection({
           host: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1155,9 +1100,7 @@ test('Should cast to boolean HEAD request', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new ConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1189,9 +1132,7 @@ test('Should cast to boolean HEAD request', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new ConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1223,9 +1164,7 @@ test('Should cast to boolean HEAD request', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new ConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1256,9 +1195,7 @@ test('Should cast to boolean HEAD request', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool({
-        selector: new RoundRobinSelector()
-      })
+      const pool = new ConnectionPool()
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1276,6 +1213,147 @@ test('Should cast to boolean HEAD request', t => {
         path: '/hello'
       }, (err, { body }) => {
         t.ok(err instanceof ResponseError)
+      })
+    })
+  })
+
+  t.end()
+})
+
+test('Suggest compression', t => {
+  t.plan(2)
+  function handler (req, res) {
+    t.match(req.headers, {
+      'accept-encoding': 'gzip,deflate'
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool()
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false,
+      suggestCompression: true
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+    })
+  })
+})
+
+test('Warning header', t => {
+  t.test('Single warning', t => {
+    t.plan(3)
+
+    const warn = '112 - "cache down" "Wed, 21 Oct 2015 07:28:00 GMT"'
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.setHeader('Warning', warn)
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool()
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { warnings }) => {
+        t.error(err)
+        t.deepEqual(warnings, [warn])
+        warnings.forEach(w => t.type(w, 'string'))
+      })
+    })
+  })
+
+  t.test('Multiple warnings', t => {
+    t.plan(4)
+
+    const warn1 = '112 - "cache down" "Wed, 21 Oct 2015 07:28:00 GMT"'
+    const warn2 = '199 agent "Error message" "2015-01-01"'
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.setHeader('Warning', warn1 + ',' + warn2)
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool()
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { warnings }) => {
+        t.error(err)
+        t.deepEqual(warnings, [warn1, warn2])
+        warnings.forEach(w => t.type(w, 'string'))
+      })
+    })
+  })
+
+  t.test('No warnings', t => {
+    t.plan(2)
+
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool()
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { warnings }) => {
+        t.error(err)
+        t.strictEqual(warnings, null)
       })
     })
   })

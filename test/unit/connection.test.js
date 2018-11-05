@@ -1,8 +1,12 @@
 'use strict'
 
 const { test } = require('tap')
+const { createGzip, createDeflate } = require('zlib')
+const { URL } = require('url')
+const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
+const { TimeoutError } = require('../../lib/errors')
 
 test('Basic (http)', t => {
   t.plan(4)
@@ -17,10 +21,7 @@ test('Basic (http)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: {
-        href: `http://localhost:${port}`,
-        protocol: 'http:'
-      }
+      host: new URL(`http://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -59,10 +60,7 @@ test('Basic (https)', t => {
 
   buildServer(handler, { secure: true }, ({ port }, server) => {
     const connection = new Connection({
-      host: {
-        href: `https://localhost:${port}`,
-        protocol: 'https:'
-      }
+      host: new URL(`https://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -101,10 +99,7 @@ test('Basic (https with ssl agent)', t => {
 
   buildServer(handler, { secure: true }, ({ port, key, cert }, server) => {
     const connection = new Connection({
-      host: {
-        href: `https://localhost:${port}`,
-        protocol: 'https:'
-      },
+      host: new URL(`https://localhost:${port}`),
       ssl: { key, cert }
     })
     connection.request({
@@ -144,10 +139,7 @@ test('Disable keep alive', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: {
-        href: `http://localhost:${port}`,
-        protocol: 'http:'
-      },
+      host: new URL(`http://localhost:${port}`),
       agent: { keepAlive: false }
     })
     connection.request({
@@ -178,17 +170,14 @@ test('Timeout support', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: {
-        href: `http://localhost:${port}`,
-        protocol: 'http:'
-      }
+      host: new URL(`http://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
       method: 'GET',
       timeout: 500
     }, (err, res) => {
-      t.ok(err.message, 'Request timed out')
+      t.ok(err instanceof TimeoutError)
     })
   })
 })
@@ -204,10 +193,7 @@ test('querystring', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: {
-          href: `http://localhost:${port}`,
-          protocol: 'http:'
-        }
+        host: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -229,10 +215,7 @@ test('querystring', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: {
-          href: `http://localhost:${port}`,
-          protocol: 'http:'
-        }
+        host: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -245,4 +228,149 @@ test('querystring', t => {
   })
 
   t.end()
+})
+
+test('Body request', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    var payload = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { payload += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.strictEqual(payload, 'hello')
+      res.end('ok')
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      host: new URL(`http://localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'POST',
+      body: 'hello'
+    }, (err, res) => {
+      t.error(err)
+    })
+  })
+})
+
+test('Should handle compression', t => {
+  t.test('gzip', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      res.writeHead(200, {
+        'Content-Type': 'application/json;utf=8',
+        'Content-Encoding': 'gzip'
+      })
+      intoStream(JSON.stringify({ hello: 'world' }))
+        .pipe(createGzip())
+        .pipe(res)
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const connection = new Connection({
+        host: new URL(`http://localhost:${port}`)
+      })
+      connection.request({
+        path: '/hello',
+        method: 'GET'
+      }, (err, res) => {
+        t.error(err)
+
+        t.match(res.headers, {
+          'content-type': 'application/json;utf=8',
+          'content-encoding': 'gzip'
+        })
+
+        var payload = ''
+        res.setEncoding('utf8')
+        res.on('data', chunk => { payload += chunk })
+        res.on('error', err => t.fail(err))
+        res.on('end', () => {
+          t.deepEqual(JSON.parse(payload), { hello: 'world' })
+        })
+      })
+    })
+  })
+
+  t.test('deflate', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      res.writeHead(200, {
+        'Content-Type': 'application/json;utf=8',
+        'Content-Encoding': 'deflate'
+      })
+      intoStream(JSON.stringify({ hello: 'world' }))
+        .pipe(createDeflate())
+        .pipe(res)
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const connection = new Connection({
+        host: new URL(`http://localhost:${port}`)
+      })
+      connection.request({
+        path: '/hello',
+        method: 'GET'
+      }, (err, res) => {
+        t.error(err)
+
+        t.match(res.headers, {
+          'content-type': 'application/json;utf=8',
+          'content-encoding': 'deflate'
+        })
+
+        var payload = ''
+        res.setEncoding('utf8')
+        res.on('data', chunk => { payload += chunk })
+        res.on('error', err => t.fail(err))
+        res.on('end', () => {
+          t.deepEqual(JSON.parse(payload), { hello: 'world' })
+        })
+      })
+    })
+  })
+
+  t.end()
+})
+
+test('Should not close a connection if there are open requests', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    setTimeout(() => res.end('ok'), 1000)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      host: new URL(`http://localhost:${port}`)
+    })
+
+    setTimeout(() => {
+      t.strictEqual(connection._openRequests, 1)
+      connection.close()
+    }, 500)
+
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.error(err)
+      t.strictEqual(connection._openRequests, 0)
+
+      var payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.strictEqual(payload, 'ok')
+      })
+    })
+  })
 })
