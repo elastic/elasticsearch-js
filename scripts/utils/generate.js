@@ -116,7 +116,7 @@ function generate (spec, common) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(\`Headers should be an object, instead got: \${typeof params.headers}\`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -148,7 +148,7 @@ function generate (spec, common) {
 
   function build${name[0].toUpperCase() + name.slice(1)} (opts) {
     // eslint-disable-next-line no-unused-vars
-    const { makeRequest, ConfigurationError } = opts
+    const { makeRequest, ConfigurationError, result } = opts
     ${generateDocumentation(spec[api], api)}
     return ${code}
   }
@@ -181,7 +181,7 @@ function generate (spec, common) {
           if (params['${param}'] == null) {
             return callback(
               new ConfigurationError('Missing required parameter: ${param}'),
-              { body: null, headers: null, statusCode: null }
+              result
             )
           }
         `
@@ -191,7 +191,7 @@ function generate (spec, common) {
           if (params['${param}'] == null && params['${camelCased}'] == null) {
             return callback(
               new ConfigurationError('Missing required parameter: ${param} or ${camelCased}'),
-              { body: null, headers: null, statusCode: null }
+              result
             )
           }
         `
@@ -204,7 +204,7 @@ function generate (spec, common) {
         if (params.body != null) {
           return callback(
             new ConfigurationError('This API does not require a body'),
-            { body: null, headers: null, statusCode: null }
+            result
           )
         }
       `
@@ -416,7 +416,7 @@ function genUrlValidation (paths, api) {
     code += `)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: ${params.join(', ')}'),
-        { body: null, headers: null, statusCode: null }
+        result
       )`
   })
 

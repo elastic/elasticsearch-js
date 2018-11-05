@@ -50,6 +50,7 @@ function genFactory (folder) {
   function ESAPI (opts) {
     assert(opts.makeRequest, 'Missing makeRequest function')
     assert(opts.ConfigurationError, 'Missing ConfigurationError class')
+    assert(opts.result, 'Missing default result object')
 
     const apis = ${apisStr}
 
