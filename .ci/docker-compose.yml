@@ -4,13 +4,13 @@ services:
     image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
     build:
       context: ..
-      dockerfile: ./Dockerfile
+      dockerfile: .ci/Dockerfile
       args:
           NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
     volumes:
-      - .:/usr/src/app
+      - ..:/usr/src/app
       - esvol:/tmp
     networks:
       - esnet
