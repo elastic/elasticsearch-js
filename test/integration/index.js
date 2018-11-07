@@ -238,7 +238,7 @@ if (require.main === module) {
     string: ['host', 'version'],
     boolean: ['bailout'],
     default: {
-      host: 'http://localhost:9200',
+      host: process.env.TEST_ES_SERVER || 'http://localhost:9200',
       version: '6.4',
       bailout: false
     }

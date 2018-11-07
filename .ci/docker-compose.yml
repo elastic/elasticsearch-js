@@ -11,6 +11,9 @@ services:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
     volumes:
       - .:/usr/src/app
+      # This will mount the node_modules directory
+      # to the host machine using the buildtime directory.
+      - /usr/src/app/node_modules
       - esvol:/tmp
     networks:
       - esnet
