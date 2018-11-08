@@ -7,6 +7,7 @@ const Git = require('simple-git')
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const apiFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'api')
+const xPackFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'api')
 
 function cloneAndCheckout (opts, callback) {
   const { log, tag } = opts
@@ -51,7 +52,7 @@ function cloneAndCheckout (opts, callback) {
           }
           return pull(checkout)
         }
-        callback(null, apiFolder)
+        callback(null, { apiFolder, xPackFolder })
       })
     }
 

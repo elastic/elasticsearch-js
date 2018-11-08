@@ -5,7 +5,6 @@ const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const ConnectionPool = require('./lib/ConnectionPool')
 const Serializer = require('./lib/Serializer')
-const selectors = require('./lib/Selectors')
 const symbols = require('./lib/symbols')
 const { ConfigurationError } = require('./lib/errors')
 
@@ -14,8 +13,7 @@ const buildApi = require('./api')
 const {
   kTransport,
   kConnectionPool,
-  kSerializer,
-  kSelector
+  kSerializer
 } = symbols
 
 class Client extends EventEmitter {
@@ -37,13 +35,11 @@ class Client extends EventEmitter {
     // the "unhandled error event" error.
     this.on('error', () => {})
 
-    const Selector = selectors.RoundRobinSelector
     const options = Object.assign({}, {
       Connection,
       ConnectionPool,
       Transport,
       Serializer,
-      Selector,
       maxRetries: 3,
       requestTimeout: 30000,
       pingTimeout: 3000,
@@ -53,19 +49,24 @@ class Client extends EventEmitter {
       sniffOnConnectionFault: false,
       resurrectStrategy: 'ping',
       randomizeHost: true,
+      suggestCompression: false,
       ssl: null,
-      agent: null
+      agent: null,
+      nodeFilter: null,
+      nodeWeighter: null,
+      nodeSelector: 'round-robin'
     }, opts)
 
-    this[kSelector] = new options.Selector()
     this[kSerializer] = new options.Serializer()
     this[kConnectionPool] = new options.ConnectionPool({
       pingTimeout: opts.pingTimeout,
       resurrectStrategy: opts.resurrectStrategy,
       randomizeHost: opts.randomizeHost,
-      selector: this[kSelector],
       ssl: options.ssl,
-      agent: null
+      agent: null,
+      nodeFilter: opts.nodeFilter,
+      nodeWeighter: opts.nodeWeighter,
+      nodeSelector: opts.nodeSelector
     })
 
     // Add the connections before initialize the Transport
@@ -80,13 +81,15 @@ class Client extends EventEmitter {
       sniffInterval: options.sniffInterval,
       sniffOnStart: options.sniffOnStart,
       sniffOnConnectionFault: options.sniffOnConnectionFault,
-      sniffEndpoint: options.sniffEndpoint
+      sniffEndpoint: options.sniffEndpoint,
+      suggestCompression: options.suggestCompression
     })
 
     this.request = this[kTransport].request.bind(this[kTransport])
 
     const apis = buildApi({
       makeRequest: this[kTransport].request.bind(this[kTransport]),
+      result: { body: null, statusCode: null, headers: null, warnings: null },
       ConfigurationError
     })
 
@@ -96,11 +99,16 @@ class Client extends EventEmitter {
   }
 }
 
+Client.events = {
+  RESPONSE: 'response',
+  REQUEST: 'request',
+  ERROR: 'error'
+}
+
 module.exports = {
   Client,
   Transport,
   ConnectionPool,
   Serializer,
-  selectors,
   symbols
 }

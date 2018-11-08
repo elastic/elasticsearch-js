@@ -2,7 +2,7 @@
 
 function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError } = opts
+  const { makeRequest, ConfigurationError, result } = opts
   /**
    * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
@@ -37,25 +37,25 @@ function buildCreate (opts) {
     if (params['id'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: id'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params['type'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: type'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -63,12 +63,12 @@ function buildCreate (opts) {
     if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: type, index'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     } else if (params['type'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -128,7 +128,7 @@ function buildCreate (opts) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 

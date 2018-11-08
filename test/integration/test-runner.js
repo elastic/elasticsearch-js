@@ -246,14 +246,48 @@ TestRunner.prototype.set = function (key, name) {
 
 /**
  * Runs a client command
- * TODO: handle `action.warning`, `action.catch`...
  * @param {object} the action to perform
  * @param {Queue}
  */
 TestRunner.prototype.do = function (action, done) {
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
-  api(cmd.params, (err, { body }) => {
+  api(cmd.params, (err, { body, warnings }) => {
+    if (action.warnings && warnings === null) {
+      this.tap.fail('We should get a warning header', action.warnings)
+    } else if (!action.warnings && warnings !== null) {
+      // if there is only the 'default shard will change'
+      // warning we skip the check, because the yaml
+      // spec may not be updated
+      let hasDefaultShardsWarning = false
+      warnings.forEach(h => {
+        if (/default\snumber\sof\sshards/g.test(h)) {
+          hasDefaultShardsWarning = true
+        }
+      })
+
+      if (hasDefaultShardsWarning === true && warnings.length > 1) {
+        this.tap.fail('We are not expecting warnings', warnings)
+      }
+    } else if (action.warnings && warnings !== null) {
+      // if the yaml warnings do not contain the
+      // 'default shard will change' warning
+      // we do not check it presence in the warnings array
+      // because the yaml spec may not be updated
+      let hasDefaultShardsWarning = false
+      action.warnings.forEach(h => {
+        if (/default\snumber\sof\sshards/g.test(h)) {
+          hasDefaultShardsWarning = true
+        }
+      })
+
+      if (hasDefaultShardsWarning === false) {
+        warnings = warnings.filter(h => !h.test(/default\snumber\sof\sshards/g))
+      }
+
+      this.tap.deepEqual(warnings, action.warnings)
+    }
+
     if (action.catch) {
       this.tap.true(
         parseDoError(err, action.catch),
@@ -267,10 +301,6 @@ TestRunner.prototype.do = function (action, done) {
     } else {
       this.tap.error(err, `should not error: ${cmd.method}`, action)
       this.response = body
-    }
-
-    if (action.warning) {
-      this.tap.todo('Handle warnings')
     }
 
     done()

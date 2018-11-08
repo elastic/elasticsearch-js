@@ -116,7 +116,7 @@ function generate (spec, common) {
     if (params.headers != null && typeof params.headers !== 'object') {
       return callback(
         new ConfigurationError(\`Headers should be an object, instead got: \${typeof params.headers}\`),
-        { body: null, headers: null, statusCode: null }
+        result
       )
     }
 
@@ -148,7 +148,7 @@ function generate (spec, common) {
 
   function build${name[0].toUpperCase() + name.slice(1)} (opts) {
     // eslint-disable-next-line no-unused-vars
-    const { makeRequest, ConfigurationError } = opts
+    const { makeRequest, ConfigurationError, result } = opts
     ${generateDocumentation(spec[api], api)}
     return ${code}
   }
@@ -181,7 +181,7 @@ function generate (spec, common) {
           if (params['${param}'] == null) {
             return callback(
               new ConfigurationError('Missing required parameter: ${param}'),
-              { body: null, headers: null, statusCode: null }
+              result
             )
           }
         `
@@ -191,7 +191,7 @@ function generate (spec, common) {
           if (params['${param}'] == null && params['${camelCased}'] == null) {
             return callback(
               new ConfigurationError('Missing required parameter: ${param} or ${camelCased}'),
-              { body: null, headers: null, statusCode: null }
+              result
             )
           }
         `
@@ -204,7 +204,7 @@ function generate (spec, common) {
         if (params.body != null) {
           return callback(
             new ConfigurationError('This API does not require a body'),
-            { body: null, headers: null, statusCode: null }
+            result
           )
         }
       `
@@ -410,13 +410,13 @@ function genUrlValidation (paths, api) {
       if (chunks[i] === camelCased) {
         code += `params['${chunks[i]}'] == null${i === len - 1 ? '' : ' || '}`
       } else {
-        code += `(params['${chunks[i]}'] == null || params['${camelCased}')${i === len - 1 ? '' : ' || '}`
+        code += `(params['${chunks[i]}'] == null || params['${camelCased}'])${i === len - 1 ? '' : ' || '}`
       }
     }
     code += `)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: ${params.join(', ')}'),
-        { body: null, headers: null, statusCode: null }
+        result
       )`
   })
 
@@ -442,16 +442,19 @@ function generateDocumentation (api, op) {
   doc += `     * Perform a [${op}](${api.documentation}) request\n     *\n`
   Object.keys(parts).forEach(part => {
     const obj = parts[part]
-    doc += `     * @param {${obj.type}} ${part} - ${obj.description.replace(/\u00A0/g, ' ')}\n`
+    const description = obj.description || ''
+    doc += `     * @param {${obj.type}} ${part} - ${description.replace(/\u00A0/g, ' ')}\n`
   })
 
   Object.keys(params).forEach(param => {
     const obj = params[param]
-    doc += `     * @param {${obj.type}} ${param} - ${obj.description.replace(/\u00A0/g, ' ')}\n`
+    const description = obj.description || ''
+    doc += `     * @param {${obj.type}} ${param} - ${description.replace(/\u00A0/g, ' ')}\n`
   })
 
   if (body) {
-    doc += `     * @param {${body.type || 'object'}} body - ${body.description.replace(/\u00A0/g, ' ')}\n`
+    const description = body.description || ''
+    doc += `     * @param {${body.type || 'object'}} body - ${description.replace(/\u00A0/g, ' ')}\n`
   }
 
   doc += '     */'
