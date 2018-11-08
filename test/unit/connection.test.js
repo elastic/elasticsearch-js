@@ -374,3 +374,48 @@ test('Should not close a connection if there are open requests', t => {
     })
   })
 })
+
+test('Url with auth', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      authorization: 'Basic Zm9vOmJhcg=='
+    })
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      host: new URL(`http://foo:bar@localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.error(err)
+    })
+  })
+})
+
+test('Url with querystring', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    t.strictEqual(req.url, '/hello?foo=bar&baz=faz')
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      host: new URL(`http://localhost:${port}?foo=bar`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'GET',
+      querystring: 'baz=faz'
+    }, (err, res) => {
+      t.error(err)
+    })
+  })
+})

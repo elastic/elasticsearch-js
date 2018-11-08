@@ -575,20 +575,12 @@ test('Override requestTimeout', t => {
 
 test('sniff', t => {
   t.test('sniffOnStart', t => {
-    t.plan(4)
+    t.plan(3)
 
     class CustomConnectionPool extends ConnectionPool {
-      empty () {
+      update () {
         t.ok('called')
         return this
-      }
-
-      addConnection (hosts) {
-        // the first `addConnection` call should work
-        if (typeof hosts === 'string') {
-          return super.addConnection(hosts)
-        }
-        t.true(Array.isArray(hosts))
       }
 
       nodesToHost (nodes) {
@@ -622,21 +614,12 @@ test('sniff', t => {
   })
 
   t.test('sniffOnConnectionFault', t => {
-    t.plan(4)
+    t.plan(3)
 
     class CustomConnectionPool extends ConnectionPool {
-      empty () {
+      update () {
         t.ok('called')
         return this
-      }
-
-      addConnection (hosts) {
-        // the first `addConnection` call should work
-        if (typeof hosts === 'string') {
-          return super.addConnection(hosts)
-        }
-
-        t.true(Array.isArray(hosts))
       }
 
       nodesToHost (nodes) {
@@ -683,15 +666,8 @@ test('sniff', t => {
     t.plan(9)
 
     class CustomConnectionPool extends ConnectionPool {
-      empty () {
+      update () {
         return this
-      }
-
-      addConnection (hosts) {
-        // the first `addConnection` call should work
-        if (typeof hosts === 'string') {
-          return super.addConnection(hosts)
-        }
       }
 
       nodesToHost (nodes) {
@@ -1359,4 +1335,47 @@ test('Warning header', t => {
   })
 
   t.end()
+})
+
+test('asHttpResponse enabled', t => {
+  t.plan(3)
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool()
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello',
+      asHttpResponse: true
+    }, (err, response) => {
+      t.error(err)
+      t.match(response.headers, {
+        connection: 'keep-alive',
+        'content-type': 'application/json;utf=8'
+      })
+
+      var payload = ''
+      response.setEncoding('utf8')
+      response.on('data', chunk => { payload += chunk })
+      response.on('error', err => t.fail(err))
+      response.on('end', () => {
+        t.deepEqual(JSON.parse(payload), { hello: 'world' })
+      })
+    })
+  })
 })

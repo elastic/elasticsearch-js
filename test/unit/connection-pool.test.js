@@ -12,7 +12,7 @@ test('API', t => {
     const href = 'http://localhost:9200/'
     pool.addConnection(href)
     t.ok(pool.connections.get(href) instanceof Connection)
-    t.deepEqual(pool.alive, [href])
+    t.strictEqual(pool.connections.get(href).status, Connection.statuses.ALIVE)
     t.deepEqual(pool.dead, [])
     t.end()
   })
@@ -38,7 +38,6 @@ test('API', t => {
     connection = pool.connections.get(href)
     t.strictEqual(connection.deadCount, 1)
     t.true(connection.resurrectTimeout > 0)
-    t.deepEqual(pool.alive, [])
     t.deepEqual(pool.dead, [href])
     t.end()
   })
@@ -66,7 +65,7 @@ test('API', t => {
     connection = pool.connections.get(href)
     t.strictEqual(connection.deadCount, 0)
     t.strictEqual(connection.resurrectTimeout, 0)
-    t.deepEqual(pool.alive, [href])
+    t.strictEqual(connection.status, Connection.statuses.ALIVE)
     t.deepEqual(pool.dead, [])
     t.end()
   })
@@ -91,7 +90,7 @@ test('API', t => {
             connection = pool.connections.get(connection.id)
             t.strictEqual(connection.deadCount, 0)
             t.strictEqual(connection.resurrectTimeout, 0)
-            t.deepEqual(pool.alive, [href])
+            t.strictEqual(connection.status, Connection.statuses.ALIVE)
             t.deepEqual(pool.dead, [])
             t.end()
           })
@@ -113,7 +112,7 @@ test('API', t => {
             connection = pool.connections.get(connection.id)
             t.strictEqual(connection.deadCount, 2)
             t.true(connection.resurrectTimeout > 0)
-            t.deepEqual(pool.alive, [])
+            t.strictEqual(connection.status, Connection.statuses.DEAD)
             t.deepEqual(pool.dead, [href])
             t.end()
           })
@@ -135,7 +134,7 @@ test('API', t => {
         connection = pool.connections.get(connection.id)
         t.strictEqual(connection.deadCount, 1)
         t.true(connection.resurrectTimeout > 0)
-        t.deepEqual(pool.alive, [href])
+        t.strictEqual(connection.status, Connection.statuses.ALIVE)
         t.deepEqual(pool.dead, [])
         t.end()
       })
@@ -154,7 +153,7 @@ test('API', t => {
         connection = pool.connections.get(href)
         t.strictEqual(connection.deadCount, 1)
         t.true(connection.resurrectTimeout > 0)
-        t.deepEqual(pool.alive, [])
+        t.strictEqual(connection.status, Connection.statuses.DEAD)
         t.deepEqual(pool.dead, [href])
         t.end()
       })
@@ -183,31 +182,8 @@ test('API', t => {
       t.end()
     })
 
-    t.test('weighter option', t => {
-      const pool = new ConnectionPool()
-      const href1 = 'http://localhost:9200/'
-      const href2 = 'http://localhost:9200/other'
-      pool.addConnection([href1, href2])
-
-      const weighter = node => node.id === href1
-      t.strictEqual(pool.getConnection({ weighter }).id, href2)
-      t.end()
-    })
-
-    t.test('filter should be run before the weighter', t => {
-      const pool = new ConnectionPool()
-      const href1 = 'http://localhost:9200/'
-      const href2 = 'http://localhost:9200/other'
-      pool.addConnection([href1, href2])
-
-      const filter = node => node.id === href1
-      const weighter = node => node.id !== href2
-      t.strictEqual(pool.getConnection({ weighter, filter }).id, href1)
-      t.end()
-    })
-
     t.test('filter and weighter should get Connection objects', t => {
-      t.plan(3)
+      t.plan(2)
       const pool = new ConnectionPool()
       const href1 = 'http://localhost:9200/'
       const href2 = 'http://localhost:9200/other'
@@ -217,12 +193,11 @@ test('API', t => {
         t.ok(node instanceof Connection)
         return true
       }
-      const weighter = node => t.ok(node instanceof Connection)
-      pool.getConnection({ weighter, filter })
+      pool.getConnection({ filter })
     })
 
-    t.test('filter and weighter should get alive connections', t => {
-      t.plan(3)
+    t.test('filter should get alive connections', t => {
+      t.plan(2)
       const pool = new ConnectionPool()
       const href1 = 'http://localhost:9200/'
       const href2 = 'http://localhost:9200/other'
@@ -234,11 +209,10 @@ test('API', t => {
         t.strictEqual(node.status, Connection.statuses.ALIVE)
         return true
       }
-      const weighter = node => t.strictEqual(node.status, Connection.statuses.ALIVE)
-      pool.getConnection({ weighter, filter })
+      pool.getConnection({ filter })
     })
 
-    t.test('filter and weighter as ConnectionPool option', t => {
+    t.test('filter as ConnectionPool option', t => {
       t.plan(3)
 
       const href1 = 'http://localhost:9200/'
@@ -246,11 +220,7 @@ test('API', t => {
       const pool = new ConnectionPool({
         nodeFilter: node => {
           t.ok('called')
-          return node.id === href1
-        },
-        nodeWeighter: node => {
-          t.ok('called')
-          return node.id !== href2
+          return true
         }
       })
       pool.addConnection([href1, href2])
@@ -276,7 +246,6 @@ test('API', t => {
     pool.addConnection('http://localhost:9201/')
     pool.empty()
     t.strictEqual(pool.connections.size, 0)
-    t.deepEqual(pool.alive, [])
     t.deepEqual(pool.dead, [])
     t.end()
   })
@@ -325,6 +294,147 @@ test('API', t => {
         ingest: true
       }
     }])
+    t.end()
+  })
+
+  t.test('update', t => {
+    t.test('Should not update existing connections', t => {
+      t.plan(2)
+      class CustomConnectionPool extends ConnectionPool {
+        markAlive () {
+          t.fail('Should not be called')
+        }
+      }
+      const pool = new CustomConnectionPool()
+      pool.addConnection([{
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      }, {
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      }])
+
+      pool.update([{
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: null
+      }, {
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: null
+      }])
+
+      t.ok(pool.connections.get('a1').roles !== null)
+      t.ok(pool.connections.get('a2').roles !== null)
+    })
+
+    t.test('Should not update existing connections (mark alive)', t => {
+      t.plan(4)
+      class CustomConnectionPool extends ConnectionPool {
+        markAlive (connection) {
+          t.ok('called')
+          super.markAlive(connection)
+        }
+      }
+      const pool = new CustomConnectionPool()
+      const conn1 = pool.addConnection({
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      })
+
+      const conn2 = pool.addConnection({
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      })
+
+      pool.markDead(conn1)
+      pool.markDead(conn2)
+
+      pool.update([{
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: null
+      }, {
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: null
+      }])
+
+      t.ok(pool.connections.get('a1').roles !== null)
+      t.ok(pool.connections.get('a2').roles !== null)
+    })
+
+    t.test('Add a new connection', t => {
+      t.plan(2)
+      const pool = new ConnectionPool()
+      pool.addConnection({
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      })
+
+      pool.update([{
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: null
+      }, {
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: null
+      }])
+
+      t.ok(pool.connections.get('a1').roles !== null)
+      t.true(pool.connections.has('a2'))
+    })
+
+    t.test('Remove old connections', t => {
+      t.plan(3)
+      const pool = new ConnectionPool()
+      pool.addConnection({
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: null
+      })
+
+      pool.update([{
+        host: new URL('http://127.0.0.1:9200'),
+        id: 'a2',
+        roles: null
+      }, {
+        host: new URL('http://127.0.0.1:9201'),
+        id: 'a3',
+        roles: null
+      }])
+
+      t.false(pool.connections.has('a1'))
+      t.true(pool.connections.has('a2'))
+      t.true(pool.connections.has('a3'))
+    })
+
     t.end()
   })
 
