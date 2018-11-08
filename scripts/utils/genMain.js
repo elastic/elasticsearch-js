@@ -2,37 +2,33 @@
 
 const { readdirSync } = require('fs')
 const dedent = require('dedent')
+const deepmerge = require('deepmerge')
 
 function genFactory (folder) {
-  const apiToCamel = {}
   // get all the API files
-  const apis = readdirSync(folder)
+  const apiFiles = readdirSync(folder)
+  const apis = apiFiles
     .map(file => {
-      const chunks = file.split('.')
-      // if the api has not a namespace
-      if (chunks.length === 2) {
-        return { name: chunks[0], group: null, file }
-      } else {
-        const [group, name] = chunks
-        return { name, group, file }
-      }
+      const name = format(file.slice(0, -3))
+      return file
+        .slice(0, -3) // remove `.js` extension
+        .split('.')
+        .reverse()
+        .reduce((acc, val) => {
+          const obj = {
+            [val]: acc === null
+              ? `${name}(opts)`
+              : acc
+          }
+          if (isSnakeCased(val)) {
+            obj[camelify(val)] = acc === null
+              ? `${name}(opts)`
+              : acc
+          }
+          return obj
+        }, null)
     })
-    .reduce((acc, obj) => {
-      const { group, name, file } = obj
-      // create a namespace if present
-      if (group) {
-        acc[group] = acc[group] || {}
-        acc[group][name] = `require('./api/${file}')(opts)`
-      } else {
-        acc[name] = `require('./api/${file}')(opts)`
-      }
-      // save the snake_cased APIs for later use
-      if (isSnakeCased(name)) {
-        apiToCamel[group || '__root'] = apiToCamel[group || '__root'] || []
-        apiToCamel[group || '__root'].push(name)
-      }
-      return acc
-    }, {})
+    .reduce((acc, val) => deepmerge(acc, val), {})
 
   // serialize the API object
   const apisStr = JSON.stringify(apis, null, 2)
@@ -47,6 +43,8 @@ function genFactory (folder) {
 
   const assert = require('assert')
 
+  ${generateApiRequire(apiFiles)}
+
   function ESAPI (opts) {
     assert(opts.makeRequest, 'Missing makeRequest function')
     assert(opts.ConfigurationError, 'Missing ConfigurationError class')
@@ -54,7 +52,6 @@ function genFactory (folder) {
 
     const apis = ${apisStr}
 
-    ${generateDefinedProperties(apiToCamel).join('\n\n    ')}
 
     return apis
   }
@@ -66,38 +63,34 @@ function genFactory (folder) {
   return fn + '\n'
 }
 
-// generates an array of Object.defineProperties
-// to allow the use of camelCase APIs
-// instead of snake_cased
-function generateDefinedProperties (apiToCamel) {
-  const arr = []
-  for (const api in apiToCamel) {
-    const obj = api === '__root'
-      ? 'apis'
-      : `apis.${api}`
-    const code = `
-    Object.defineProperties(${obj}, {
-      ${apiToCamel[api].map(createGetter).join(',\n      ')}
+function generateApiRequire (apiFiles) {
+  return apiFiles
+    .map(file => {
+      const name = format(file.slice(0, -3))
+      return `const ${name} = require('./api/${file}')`
     })
-    `.trim()
-    arr.push(code)
-  }
-
-  return arr
-
-  function createGetter (api) {
-    return `
-      ${camelify(api)}: {
-        get: function () { return this.${api} },
-        enumerable: true
-      }
-    `.trim()
-  }
+    .join('\n')
 }
 
 // from snake_case to camelCase
 function camelify (str) {
   return str.replace(/_([a-z])/g, k => k[1].toUpperCase())
+}
+
+// from 'hello.world to helloWorld
+function undot (str) {
+  return str.replace(/\.([a-z])/g, k => k[1].toUpperCase())
+}
+
+function safeWords (str) {
+  if (str === 'delete') {
+    return '_delete'
+  }
+  return str
+}
+
+function format (str) {
+  return safeWords(undot(camelify(str)))
 }
 
 function isSnakeCased (str) {

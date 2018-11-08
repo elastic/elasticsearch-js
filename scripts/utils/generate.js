@@ -410,7 +410,7 @@ function genUrlValidation (paths, api) {
       if (chunks[i] === camelCased) {
         code += `params['${chunks[i]}'] == null${i === len - 1 ? '' : ' || '}`
       } else {
-        code += `(params['${chunks[i]}'] == null || params['${camelCased}')${i === len - 1 ? '' : ' || '}`
+        code += `(params['${chunks[i]}'] == null || params['${camelCased}'])${i === len - 1 ? '' : ' || '}`
       }
     }
     code += `)) {
@@ -442,16 +442,19 @@ function generateDocumentation (api, op) {
   doc += `     * Perform a [${op}](${api.documentation}) request\n     *\n`
   Object.keys(parts).forEach(part => {
     const obj = parts[part]
-    doc += `     * @param {${obj.type}} ${part} - ${obj.description.replace(/\u00A0/g, ' ')}\n`
+    const description = obj.description || ''
+    doc += `     * @param {${obj.type}} ${part} - ${description.replace(/\u00A0/g, ' ')}\n`
   })
 
   Object.keys(params).forEach(param => {
     const obj = params[param]
-    doc += `     * @param {${obj.type}} ${param} - ${obj.description.replace(/\u00A0/g, ' ')}\n`
+    const description = obj.description || ''
+    doc += `     * @param {${obj.type}} ${param} - ${description.replace(/\u00A0/g, ' ')}\n`
   })
 
   if (body) {
-    doc += `     * @param {${body.type || 'object'}} body - ${body.description.replace(/\u00A0/g, ' ')}\n`
+    const description = body.description || ''
+    doc += `     * @param {${body.type || 'object'}} body - ${description.replace(/\u00A0/g, ' ')}\n`
   }
 
   doc += '     */'

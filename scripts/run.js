@@ -26,13 +26,15 @@ function start (opts) {
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
 
-  cloneAndCheckout({ log, tag: opts.tag }, (err, apiFolder) => {
+  cloneAndCheckout({ log, tag: opts.tag }, (err, { apiFolder, xPackFolder }) => {
     if (err) {
       log.fail(err.message)
       return
     }
-    const files = readdirSync(apiFolder)
-    files.forEach(generateApiFile(apiFolder, log))
+
+    readdirSync(apiFolder).forEach(generateApiFile(apiFolder, log))
+    readdirSync(xPackFolder).forEach(generateApiFile(xPackFolder, log))
+
     writeFileSync(
       mainOutputFile,
       genFactory(apiOutputFolder),

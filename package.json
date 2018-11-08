@@ -19,7 +19,7 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
-    "elasticsearch": "docker run --rm -e \"node.attr.testattr=test\" -e \"path.repo=/tmp\" -e \"repositories.url.allowed_urls=http://snapshot.*\" -p 9200:9200 docker.elastic.co/elasticsearch/elasticsearch:6.4.0"
+    "elasticsearch": "./scripts/es-docker.sh"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "dedent": "^0.7.0",
+    "deepmerge": "^2.2.1",
     "into-stream": "^4.0.0",
     "js-yaml": "^3.12.0",
     "minimist": "^1.2.0",
