@@ -2,7 +2,8 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, kConnectionPool } = require('../../index')
+const { Client, symbols } = require('../../index')
+const { kConnectionPool } = symbols
 
 test('Configure host', t => {
   t.test('Single string', t => {
