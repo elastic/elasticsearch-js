@@ -274,7 +274,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
   buildServer(handler, ({ port }, server) => {
     const pool = new CustomConnectionPool()
     pool.addConnection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     })
 
@@ -311,7 +311,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
     server.close()
     const pool = new CustomConnectionPool()
     pool.addConnection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     })
 
@@ -353,13 +353,13 @@ test('Retry mechanism', t => {
   buildServer(handler, ({ port }, server) => {
     const pool = new ConnectionPool()
     pool.addConnection([{
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     }, {
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node2'
     }, {
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node3'
     }])
 
@@ -401,7 +401,7 @@ test('Should call markAlive with a successful response', t => {
   buildServer(handler, ({ port }, server) => {
     const pool = new CustomConnectionPool()
     pool.addConnection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     })
 
@@ -442,7 +442,7 @@ test('Should call resurrect on every request', t => {
   buildServer(handler, ({ port }, server) => {
     const pool = new CustomConnectionPool()
     pool.addConnection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     })
 
@@ -479,7 +479,7 @@ test('Should return a request aborter utility', t => {
   buildServer(handler, ({ port }, server) => {
     const pool = new ConnectionPool()
     pool.addConnection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       id: 'node1'
     })
 
@@ -945,7 +945,7 @@ test('timeout option', t => {
       buildServer(handler, ({ port }, server) => {
         const pool = new ConnectionPool()
         pool.addConnection({
-          host: new URL(`http://localhost:${port}`),
+          url: new URL(`http://localhost:${port}`),
           id: 'node1'
         })
 
@@ -974,7 +974,7 @@ test('timeout option', t => {
       buildServer(handler, ({ port }, server) => {
         const pool = new ConnectionPool()
         pool.addConnection({
-          host: new URL(`http://localhost:${port}`),
+          url: new URL(`http://localhost:${port}`),
           id: 'node1'
         })
 
@@ -1008,7 +1008,7 @@ test('timeout option', t => {
       buildServer(handler, ({ port }, server) => {
         const pool = new ConnectionPool()
         pool.addConnection({
-          host: new URL(`http://localhost:${port}`),
+          url: new URL(`http://localhost:${port}`),
           id: 'node1'
         })
 
@@ -1037,7 +1037,7 @@ test('timeout option', t => {
       buildServer(handler, ({ port }, server) => {
         const pool = new ConnectionPool()
         pool.addConnection({
-          host: new URL(`http://localhost:${port}`),
+          url: new URL(`http://localhost:${port}`),
           id: 'node1'
         })
 

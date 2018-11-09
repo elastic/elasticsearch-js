@@ -255,7 +255,7 @@ test('API', t => {
     const url = 'http://localhost:9200'
     t.deepEqual(
       pool.urlToHost(url),
-      { host: new URL(url) }
+      { url: new URL(url) }
     )
     t.end()
   })
@@ -278,7 +278,7 @@ test('API', t => {
     }
 
     t.deepEqual(pool.nodesToHost(nodes), [{
-      host: new URL('http://127.0.0.1:9200'),
+      url: new URL('http://127.0.0.1:9200'),
       id: 'a1',
       roles: {
         master: true,
@@ -286,7 +286,7 @@ test('API', t => {
         ingest: true
       }
     }, {
-      host: new URL('http://127.0.0.1:9201'),
+      url: new URL('http://127.0.0.1:9201'),
       id: 'a2',
       roles: {
         master: true,
@@ -307,7 +307,7 @@ test('API', t => {
       }
       const pool = new CustomConnectionPool()
       pool.addConnection([{
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: {
           master: true,
@@ -315,7 +315,7 @@ test('API', t => {
           ingest: true
         }
       }, {
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a2',
         roles: {
           master: true,
@@ -325,11 +325,11 @@ test('API', t => {
       }])
 
       pool.update([{
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: null
       }, {
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a2',
         roles: null
       }])
@@ -348,7 +348,7 @@ test('API', t => {
       }
       const pool = new CustomConnectionPool()
       const conn1 = pool.addConnection({
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: {
           master: true,
@@ -358,7 +358,7 @@ test('API', t => {
       })
 
       const conn2 = pool.addConnection({
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a2',
         roles: {
           master: true,
@@ -371,11 +371,11 @@ test('API', t => {
       pool.markDead(conn2)
 
       pool.update([{
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: null
       }, {
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a2',
         roles: null
       }])
@@ -388,7 +388,7 @@ test('API', t => {
       t.plan(2)
       const pool = new ConnectionPool()
       pool.addConnection({
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: {
           master: true,
@@ -398,11 +398,11 @@ test('API', t => {
       })
 
       pool.update([{
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: null
       }, {
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a2',
         roles: null
       }])
@@ -415,17 +415,17 @@ test('API', t => {
       t.plan(3)
       const pool = new ConnectionPool()
       pool.addConnection({
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: null
       })
 
       pool.update([{
-        host: new URL('http://127.0.0.1:9200'),
+        url: new URL('http://127.0.0.1:9200'),
         id: 'a2',
         roles: null
       }, {
-        host: new URL('http://127.0.0.1:9201'),
+        url: new URL('http://127.0.0.1:9201'),
         id: 'a3',
         roles: null
       }])

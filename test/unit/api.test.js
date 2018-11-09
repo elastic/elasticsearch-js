@@ -14,15 +14,13 @@ test('Basic (callback)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     client.search({
       index: 'test',
       type: 'doc',
-      query: {
-        match: { foo: 'bar' }
-      }
+      q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
@@ -40,16 +38,14 @@ test('Basic (promises)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     client
       .search({
         index: 'test',
         type: 'doc',
-        query: {
-          match: { foo: 'bar' }
-        }
+        q: 'foo:bar'
       })
       .then(({ body }) => t.deepEqual(body, { hello: 'world' }))
       .catch(t.fail)
@@ -67,15 +63,13 @@ test('Error (callback)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     client.search({
       index: 'test',
       type: 'doc',
-      query: {
-        match: { foo: 'bar' }
-      }
+      q: 'foo:bar'
     }, (err, { body }) => {
       t.ok(err)
     })
@@ -93,16 +87,14 @@ test('Error (promises)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     client
       .search({
         index: 'test',
         type: 'doc',
-        query: {
-          match: { foo: 'bar' }
-        }
+        q: 'foo:bar'
       })
       .then(t.fail)
       .catch(err => t.ok(err))
@@ -119,15 +111,13 @@ test('Abort method (callback)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     const request = client.search({
       index: 'test',
       type: 'doc',
-      query: {
-        match: { foo: 'bar' }
-      }
+      q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
@@ -147,15 +137,13 @@ test('Abort is not supported in promises', t => {
 
   buildServer(handler, ({ port }, server) => {
     const client = new Client({
-      host: `http://localhost:${port}`
+      node: `http://localhost:${port}`
     })
 
     const request = client.search({
       index: 'test',
       type: 'doc',
-      query: {
-        match: { foo: 'bar' }
-      }
+      q: 'foo:bar'
     })
 
     request

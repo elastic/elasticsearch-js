@@ -22,10 +22,10 @@ function Runner (opts) {
   }
   opts = opts || {}
 
-  assert(opts.host, 'Missing host')
+  assert(opts.node, 'Missing base node')
   this.bailout = opts.bailout
   this.client = new elasticsearch.Client({
-    host: opts.host
+    node: opts.node
   })
   this.log = ora('Loading yaml suite').start()
 }
@@ -234,11 +234,11 @@ Runner.prototype.createFolder = function (name) {
 
 if (require.main === module) {
   const opts = minimist(process.argv.slice(2), {
-    string: ['host', 'version'],
+    string: ['node', 'version'],
     boolean: ['bailout'],
     default: {
-      // host: 'http://elastic:passw0rd@localhost:9200',
-      host: 'http://localhost:9200',
+      // node: 'http://elastic:passw0rd@localhost:9200',
+      node: 'http://localhost:9200',
       version: '6.4',
       bailout: false
     }
