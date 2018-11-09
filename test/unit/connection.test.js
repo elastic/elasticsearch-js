@@ -21,7 +21,7 @@ test('Basic (http)', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}`)
+      url: new URL(`http://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -60,7 +60,7 @@ test('Basic (https)', t => {
 
   buildServer(handler, { secure: true }, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`https://localhost:${port}`)
+      url: new URL(`https://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -99,7 +99,7 @@ test('Basic (https with ssl agent)', t => {
 
   buildServer(handler, { secure: true }, ({ port, key, cert }, server) => {
     const connection = new Connection({
-      host: new URL(`https://localhost:${port}`),
+      url: new URL(`https://localhost:${port}`),
       ssl: { key, cert }
     })
     connection.request({
@@ -139,7 +139,7 @@ test('Disable keep alive', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}`),
+      url: new URL(`http://localhost:${port}`),
       agent: { keepAlive: false }
     })
     connection.request({
@@ -170,7 +170,7 @@ test('Timeout support', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}`)
+      url: new URL(`http://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -193,7 +193,7 @@ test('querystring', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: new URL(`http://localhost:${port}`)
+        url: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -215,7 +215,7 @@ test('querystring', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: new URL(`http://localhost:${port}`)
+        url: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -246,7 +246,7 @@ test('Body request', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}`)
+      url: new URL(`http://localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -274,7 +274,7 @@ test('Should handle compression', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: new URL(`http://localhost:${port}`)
+        url: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -313,7 +313,7 @@ test('Should handle compression', t => {
 
     buildServer(handler, ({ port }, server) => {
       const connection = new Connection({
-        host: new URL(`http://localhost:${port}`)
+        url: new URL(`http://localhost:${port}`)
       })
       connection.request({
         path: '/hello',
@@ -349,7 +349,7 @@ test('Should not close a connection if there are open requests', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}`)
+      url: new URL(`http://localhost:${port}`)
     })
 
     setTimeout(() => {
@@ -387,7 +387,7 @@ test('Url with auth', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://foo:bar@localhost:${port}`)
+      url: new URL(`http://foo:bar@localhost:${port}`)
     })
     connection.request({
       path: '/hello',
@@ -408,7 +408,7 @@ test('Url with querystring', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      host: new URL(`http://localhost:${port}?foo=bar`)
+      url: new URL(`http://localhost:${port}?foo=bar`)
     })
     connection.request({
       path: '/hello',
@@ -416,6 +416,36 @@ test('Url with querystring', t => {
       querystring: 'baz=faz'
     }, (err, res) => {
       t.error(err)
+    })
+  })
+})
+
+test('Custom headers for connection', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      'x-custom-test': 'true',
+      'x-foo': 'bar'
+    })
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`),
+      headers: { 'x-foo': 'bar' }
+    })
+    connection.request({
+      path: '/hello',
+      method: 'GET',
+      headers: {
+        'X-Custom-Test': true
+      }
+    }, (err, res) => {
+      t.error(err)
+      // should not update the default
+      t.deepEqual(connection.headers, { 'x-foo': 'bar' })
     })
   })
 })
