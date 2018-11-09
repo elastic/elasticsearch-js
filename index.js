@@ -19,8 +19,8 @@ const {
 class Client extends EventEmitter {
   constructor (opts = {}) {
     super()
-    if (!opts.host) {
-      throw new ConfigurationError('Missing host option')
+    if (!opts.node && !opts.nodes) {
+      throw new ConfigurationError('Missing node(s) option')
     }
 
     if (opts.log === true) {
@@ -70,7 +70,7 @@ class Client extends EventEmitter {
     })
 
     // Add the connections before initialize the Transport
-    this[kConnectionPool].addConnection(options.host)
+    this[kConnectionPool].addConnection(options.node || options.nodes)
 
     this[kTransport] = new options.Transport({
       emit: this.emit.bind(this),
@@ -110,5 +110,5 @@ module.exports = {
   Transport,
   ConnectionPool,
   Serializer,
-  symbols
+  ...symbols
 }
