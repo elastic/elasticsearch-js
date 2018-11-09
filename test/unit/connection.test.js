@@ -42,6 +42,7 @@ test('Basic (http)', t => {
       res.on('error', err => t.fail(err))
       res.on('end', () => {
         t.strictEqual(payload, 'ok')
+        server.stop()
       })
     })
   })
@@ -81,6 +82,7 @@ test('Basic (https)', t => {
       res.on('error', err => t.fail(err))
       res.on('end', () => {
         t.strictEqual(payload, 'ok')
+        server.stop()
       })
     })
   })
@@ -121,6 +123,7 @@ test('Basic (https with ssl agent)', t => {
       res.on('error', err => t.fail(err))
       res.on('end', () => {
         t.strictEqual(payload, 'ok')
+        server.stop()
       })
     })
   })
@@ -154,6 +157,7 @@ test('Disable keep alive', t => {
       t.match(res.headers, {
         connection: 'close'
       })
+      server.stop()
     })
   })
 })
@@ -178,6 +182,7 @@ test('Timeout support', t => {
       timeout: 500
     }, (err, res) => {
       t.ok(err instanceof TimeoutError)
+      server.stop()
     })
   })
 })
@@ -201,6 +206,7 @@ test('querystring', t => {
         querystring: 'hello=world&you_know=for%20search'
       }, (err, res) => {
         t.error(err)
+        server.stop()
       })
     })
   })
@@ -223,6 +229,7 @@ test('querystring', t => {
         querystring: null
       }, (err, res) => {
         t.error(err)
+        server.stop()
       })
     })
   })
@@ -254,6 +261,7 @@ test('Body request', t => {
       body: 'hello'
     }, (err, res) => {
       t.error(err)
+      server.stop()
     })
   })
 })
@@ -293,6 +301,7 @@ test('Should handle compression', t => {
         res.on('error', err => t.fail(err))
         res.on('end', () => {
           t.deepEqual(JSON.parse(payload), { hello: 'world' })
+          server.stop()
         })
       })
     })
@@ -332,6 +341,7 @@ test('Should handle compression', t => {
         res.on('error', err => t.fail(err))
         res.on('end', () => {
           t.deepEqual(JSON.parse(payload), { hello: 'world' })
+          server.stop()
         })
       })
     })
@@ -370,6 +380,7 @@ test('Should not close a connection if there are open requests', t => {
       res.on('error', err => t.fail(err))
       res.on('end', () => {
         t.strictEqual(payload, 'ok')
+        server.stop()
       })
     })
   })
@@ -394,6 +405,7 @@ test('Url with auth', t => {
       method: 'GET'
     }, (err, res) => {
       t.error(err)
+      server.stop()
     })
   })
 })
@@ -416,6 +428,7 @@ test('Url with querystring', t => {
       querystring: 'baz=faz'
     }, (err, res) => {
       t.error(err)
+      server.stop()
     })
   })
 })
@@ -446,6 +459,7 @@ test('Custom headers for connection', t => {
       t.error(err)
       // should not update the default
       t.deepEqual(connection.headers, { 'x-foo': 'bar' })
+      server.stop()
     })
   })
 })

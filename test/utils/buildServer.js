@@ -1,5 +1,7 @@
 'use strict'
 
+const stoppable = require('stoppable')
+
 // allow self signed certificates for testing purposes
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 
@@ -20,12 +22,11 @@ function buildServer (handler, opts, cb) {
   }
 
   const server = opts.secure
-    ? https.createServer(secureOpts)
-    : http.createServer()
+    ? stoppable(https.createServer(secureOpts))
+    : stoppable(http.createServer())
 
   server.on('request', handler)
   server.listen(0, () => {
-    server.unref()
     const port = server.address().port
     cb(Object.assign({}, secureOpts, { port }), server)
   })

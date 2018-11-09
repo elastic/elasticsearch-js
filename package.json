@@ -42,6 +42,7 @@
     "simple-git": "^1.105.0",
     "sinon": "^6.1.5",
     "standard": "^12.0.0",
+    "stoppable": "^1.0.7",
     "string-to-stream": "^1.1.1",
     "tap": "^12.0.1",
     "workq": "^2.1.0"

@@ -24,6 +24,7 @@ test('Basic (callback)', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -47,7 +48,10 @@ test('Basic (promises)', t => {
         type: 'doc',
         q: 'foo:bar'
       })
-      .then(({ body }) => t.deepEqual(body, { hello: 'world' }))
+      .then(({ body }) => {
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
       .catch(t.fail)
   })
 })
@@ -72,6 +76,7 @@ test('Error (callback)', t => {
       q: 'foo:bar'
     }, (err, { body }) => {
       t.ok(err)
+      server.stop()
     })
   })
 })
@@ -97,7 +102,10 @@ test('Error (promises)', t => {
         q: 'foo:bar'
       })
       .then(t.fail)
-      .catch(err => t.ok(err))
+      .catch(err => {
+        t.ok(err)
+        server.stop()
+      })
   })
 })
 
@@ -121,6 +129,7 @@ test('Abort method (callback)', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
 
     t.type(request.abort, 'function')
@@ -147,7 +156,10 @@ test('Abort is not supported in promises', t => {
     })
 
     request
-      .then(({ body }) => t.deepEqual(body, { hello: 'world' }))
+      .then(({ body }) => {
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
       .catch(t.fail)
 
     t.type(request.abort, 'undefined')

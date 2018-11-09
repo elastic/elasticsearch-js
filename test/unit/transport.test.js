@@ -43,6 +43,7 @@ test('Basic', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -86,6 +87,7 @@ test('Send POST', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -141,6 +143,7 @@ test('Send POST (ndjson)', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -172,6 +175,7 @@ test('Not JSON payload from server', t => {
     }, (err, { body }) => {
       t.error(err)
       t.strictEqual(body, 'hello!')
+      server.stop()
     })
   })
 })
@@ -250,6 +254,7 @@ test('DeserializationError', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.ok(err instanceof DeserializationError)
+      server.stop()
     })
   })
 })
@@ -293,6 +298,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.ok(err instanceof TimeoutError)
+      server.stop()
     })
   })
 })
@@ -330,6 +336,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.ok(err instanceof ConnectionError)
+      server.stop()
     })
   })
 })
@@ -379,6 +386,7 @@ test('Retry mechanism', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -421,6 +429,7 @@ test('Should call markAlive with a successful response', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -462,6 +471,7 @@ test('Should call resurrect on every request', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -501,6 +511,7 @@ test('Should return a request aborter utility', t => {
     })
 
     request.abort()
+    server.stop()
     t.pass('ok')
   })
 })
@@ -535,6 +546,7 @@ test('ResponseError', t => {
       t.ok(err instanceof ResponseError)
       t.deepEqual(err.body, { status: 500 })
       t.strictEqual(err.statusCode, 500)
+      server.stop()
     })
   })
 })
@@ -569,6 +581,7 @@ test('Override requestTimeout', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
     })
   })
 })
@@ -610,6 +623,8 @@ test('sniff', t => {
         sniffOnStart: true,
         sniffEndpoint: '/sniff'
       })
+
+      setTimeout(() => server.stop(), 100)
     })
   })
 
@@ -659,6 +674,8 @@ test('sniff', t => {
       }, (err, { body }) => {
         t.ok(err instanceof TimeoutError)
       })
+
+      setTimeout(() => server.stop(), 1100)
     })
   })
 
@@ -708,6 +725,10 @@ test('sniff', t => {
       setTimeout(() => {
         transport.request(params, t.error)
       }, 300)
+
+      setTimeout(() => {
+        server.stop()
+      }, 400)
     })
   })
 
@@ -737,6 +758,7 @@ test('sniff', t => {
 
       transport.sniff((err, hosts) => {
         t.ok(err instanceof ConnectionError)
+        server.stop()
       })
     })
   })
@@ -788,6 +810,7 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
             headers: { 'content-type': 'application/json;utf=8' },
             statusCode: statusCode
           })
+          server.stop()
         })
       })
     })
@@ -839,6 +862,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
         }, (err, { body }) => {
           t.error(err)
           t.deepEqual(body, { hello: 'world' })
+          server.stop()
         })
       })
     })
@@ -892,6 +916,8 @@ test('Ignore status code', t => {
     }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
     })
+
+    setTimeout(() => server.stop(), 100)
   })
 })
 
@@ -926,6 +952,7 @@ test('Should serialize the querystring', t => {
       }
     }, (err, { body }) => {
       t.error(err)
+      server.stop()
     })
   })
 })
@@ -964,6 +991,7 @@ test('timeout option', t => {
           path: '/hello'
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
+          server.stop()
         })
       })
     })
@@ -994,6 +1022,7 @@ test('timeout option', t => {
           requestTimeout: 500
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
+          server.stop()
         })
       })
     })
@@ -1027,6 +1056,7 @@ test('timeout option', t => {
           path: '/hello'
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
+          server.stop()
         })
       })
     })
@@ -1057,6 +1087,7 @@ test('timeout option', t => {
           requestTimeout: '0.5s'
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
+          server.stop()
         })
       })
     })
@@ -1095,6 +1126,7 @@ test('Should cast to boolean HEAD request', t => {
       }, (err, { body }) => {
         t.error(err)
         t.strictEqual(body, true)
+        server.stop()
       })
     })
   })
@@ -1127,6 +1159,7 @@ test('Should cast to boolean HEAD request', t => {
       }, (err, { body }) => {
         t.error(err)
         t.strictEqual(body, false)
+        server.stop()
       })
     })
   })
@@ -1158,6 +1191,7 @@ test('Should cast to boolean HEAD request', t => {
         path: '/hello'
       }, (err, { body }) => {
         t.ok(err instanceof ResponseError)
+        server.stop()
       })
     })
   })
@@ -1189,6 +1223,7 @@ test('Should cast to boolean HEAD request', t => {
         path: '/hello'
       }, (err, { body }) => {
         t.ok(err instanceof ResponseError)
+        server.stop()
       })
     })
   })
@@ -1226,6 +1261,7 @@ test('Suggest compression', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
+      server.stop()
     })
   })
 })
@@ -1262,6 +1298,7 @@ test('Warning header', t => {
         t.error(err)
         t.deepEqual(warnings, [warn])
         warnings.forEach(w => t.type(w, 'string'))
+        server.stop()
       })
     })
   })
@@ -1298,6 +1335,7 @@ test('Warning header', t => {
         t.error(err)
         t.deepEqual(warnings, [warn1, warn2])
         warnings.forEach(w => t.type(w, 'string'))
+        server.stop()
       })
     })
   })
@@ -1330,6 +1368,7 @@ test('Warning header', t => {
       }, (err, { warnings }) => {
         t.error(err)
         t.strictEqual(warnings, null)
+        server.stop()
       })
     })
   })
@@ -1375,6 +1414,7 @@ test('asHttpResponse enabled', t => {
       response.on('error', err => t.fail(err))
       response.on('end', () => {
         t.deepEqual(JSON.parse(payload), { hello: 'world' })
+        server.stop()
       })
     })
   })
