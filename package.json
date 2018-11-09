@@ -19,7 +19,8 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
-    "elasticsearch": "./scripts/es-docker.sh"
+    "elasticsearch": "./scripts/es-docker.sh",
+    "ci": "./scripts/wait-cluster.sh && npm test && npm run test:integration"
   },
   "author": {
     "name": "Tomas Della Vedova",

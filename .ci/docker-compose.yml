@@ -1,0 +1,38 @@
+version: '3.2'
+services:
+  client:
+    image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
+    build:
+      context: ..
+      dockerfile: .ci/Dockerfile
+      args:
+          NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
+    environment:
+      - "TEST_ES_SERVER=http://elasticsearch:9200"
+    volumes:
+      - ..:/usr/src/app
+      # This will mount the node_modules directory
+      # to the host machine using the buildtime directory.
+      - /usr/src/app/node_modules
+      - esvol:/tmp
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.4.0}
+    volumes:
+      - esvol:/tmp
+    networks:
+      - esnet
+    environment:
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
+      - bootstrap.memory_lock=false
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "http.max_content_length=5mb"
+networks:
+  esnet:
+volumes:
+  esvol:

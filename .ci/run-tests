@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#
+# Runs the client tests via Docker with the expectation that the required
+# environment variables have already been exported before running this script.
+#
+# The required environment variables include:
+#
+#   - $ELASTICSEARCH_VERSION
+#   - $NODE_JS_VERSION
+#
+
+ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client

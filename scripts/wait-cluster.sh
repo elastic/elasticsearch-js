@@ -1,8 +1,10 @@
 #!/bin/bash
 
+TEST_ES_SERVER=${TEST_ES_SERVER:-"http://localhost:9200"}
+
 attempt_counter=0
 max_attempts=5
-url='http://localhost:9200/_cluster/health?wait_for_status=green&timeout=50s'
+url="${TEST_ES_SERVER}/_cluster/health?wait_for_status=green&timeout=50s"
 
 echo "Waiting for Elasticsearch..."
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' --max-time 55 "$url")" != "200" ]]; do
