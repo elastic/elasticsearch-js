@@ -238,7 +238,7 @@ if (require.main === module) {
     boolean: ['bailout'],
     default: {
       // node: 'http://elastic:passw0rd@localhost:9200',
-      node: 'http://localhost:9200',
+      node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
       version: '6.4',
       bailout: false
     }
