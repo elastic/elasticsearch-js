@@ -10,7 +10,9 @@
     "kibana",
     "mapping",
     "REST",
-    "search"
+    "search",
+    "client",
+    "index"
   ],
   "scripts": {
     "test": "npm run lint && npm run test:unit",
@@ -37,14 +39,11 @@
     "js-yaml": "^3.12.0",
     "minimist": "^1.2.0",
     "ora": "^3.0.0",
-    "readable-stream": "^3.0.1",
     "rimraf": "^2.6.2",
     "semver": "^5.6.0",
     "simple-git": "^1.105.0",
-    "sinon": "^6.1.5",
     "standard": "^12.0.0",
     "stoppable": "^1.0.7",
-    "string-to-stream": "^1.1.1",
     "tap": "^12.0.1",
     "workq": "^2.1.0"
   },
