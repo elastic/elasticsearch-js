@@ -276,6 +276,31 @@ var client = new elasticsearch.Client({
 
 
 
+`serializer`[[config-serializer]]:: `Serializer` -- Override the way that the client serializes the JSON payload sent to elasticsearch. This can be useful if you're using a third party library that needs to convert to "plain" JS objects, such as with https://github.com/elastic/elasticsearch-js/blob/master/src/lib/serializers/angular.js[angular.js]. Another helpful use case is in an advanced scenario where your application assembles queries dynamically. Using a stable stringify in that case ensures property order to prevent cache misses (as outlined in https://github.com/elastic/elasticsearch-js/issues/695[GH Issue 695]).
+
+Default::: see https://github.com/elastic/elasticsearch-js/blob/master/src/lib/serializers/json.js[json.js]
+
+To Use Stable Stringification:::
++
+[source,js]
+-----
+import DefaultJsonSerializer from 'elasticsearch/src/lib/serializers/json';
+import jsonStableStringify from 'json-stable-stringify';
+
+class CustomSerializer extends DefaultJsonSerializer {
+  serialize(val, replacer, space) {
+    return jsonStableStringify(val, { replacer, space })
+  }
+}
+
+CustomSerializer.prototype.serialize.contentType = 'application/json';
+
+const client = new elasticsearch.Client({
+  serializer: CustomSerializer
+})
+-----
+
+
 
 === Examples
 
