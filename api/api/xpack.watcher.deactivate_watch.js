@@ -87,9 +87,7 @@ function buildXpackWatcherDeactivateWatch (opts) {
       body: '',
       headers: params.headers || null,
       ignore,
-      requestTimeout: params.requestTimeout || null,
-      agent: null,
-      url: ''
+      requestTimeout: params.requestTimeout || null
     }
 
     return makeRequest(request, callback)

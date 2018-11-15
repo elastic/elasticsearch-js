@@ -109,9 +109,7 @@ function buildCatRecovery (opts) {
       body: null,
       headers: params.headers || null,
       ignore,
-      requestTimeout: params.requestTimeout || null,
-      agent: null,
-      url: ''
+      requestTimeout: params.requestTimeout || null
     }
 
     return makeRequest(request, callback)
