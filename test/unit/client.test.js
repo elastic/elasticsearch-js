@@ -79,7 +79,7 @@ test('Configure host', t => {
     })
     const pool = client[kConnectionPool]
     t.match(pool.connections.get('node'), {
-      url: new URL('http://user@passwordlocalhost:9200'),
+      url: new URL('http://localhost:9200'),
       id: 'node',
       ssl: 'ssl',
       deadCount: 0,
@@ -114,7 +114,7 @@ test('Configure host', t => {
     })
     const pool = client[kConnectionPool]
     t.match(pool.connections.get('node1'), {
-      url: new URL('http://user@passwordlocalhost:9200'),
+      url: new URL('http://localhost:9200'),
       id: 'node1',
       ssl: 'ssl',
       deadCount: 0,
@@ -125,7 +125,7 @@ test('Configure host', t => {
       }
     })
     t.match(pool.connections.get('node2'), {
-      url: new URL('http://user@passwordlocalhost:9200'),
+      url: new URL('http://localhost:9200'),
       id: 'node2',
       ssl: 'ssl',
       deadCount: 0,
@@ -148,7 +148,7 @@ test('Configure host', t => {
     })
     const pool = client[kConnectionPool]
     t.match(pool.connections.get('node'), {
-      url: new URL('http://user@passwordlocalhost:9200'),
+      url: new URL('http://localhost:9200'),
       headers: { 'x-foo': 'bar' }
     })
     t.end()

@@ -463,3 +463,34 @@ test('Custom headers for connection', t => {
     })
   })
 })
+
+// TODO: add a check that the response is not decompressed
+test('asStream set to true', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'GET',
+      asStream: true
+    }, (err, res) => {
+      t.error(err)
+
+      var payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.strictEqual(payload, 'ok')
+        server.stop()
+      })
+    })
+  })
+})

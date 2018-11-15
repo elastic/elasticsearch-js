@@ -1376,7 +1376,7 @@ test('Warning header', t => {
   t.end()
 })
 
-test('asHttpResponse enabled', t => {
+test('asStream set to true', t => {
   t.plan(3)
   function handler (req, res) {
     res.setHeader('Content-Type', 'application/json;utf=8')
@@ -1400,19 +1400,19 @@ test('asHttpResponse enabled', t => {
     transport.request({
       method: 'GET',
       path: '/hello',
-      asHttpResponse: true
-    }, (err, response) => {
+      asStream: true
+    }, (err, { body, headers }) => {
       t.error(err)
-      t.match(response.headers, {
+      t.match(headers, {
         connection: 'keep-alive',
         'content-type': 'application/json;utf=8'
       })
 
       var payload = ''
-      response.setEncoding('utf8')
-      response.on('data', chunk => { payload += chunk })
-      response.on('error', err => t.fail(err))
-      response.on('end', () => {
+      body.setEncoding('utf8')
+      body.on('data', chunk => { payload += chunk })
+      body.on('error', err => t.fail(err))
+      body.on('end', () => {
         t.deepEqual(JSON.parse(payload), { hello: 'world' })
         server.stop()
       })
