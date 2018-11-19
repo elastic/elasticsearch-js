@@ -2,7 +2,10 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { buildServer } = require('../utils')
+const {
+  buildServer,
+  connection: { MockConnection, MockConnectionTimeout, MockConnectionError }
+} = require('../utils')
 const {
   NoLivingConnectionsError,
   SerializationError,
@@ -13,6 +16,7 @@ const {
 } = require('../../lib/errors')
 
 const ConnectionPool = require('../../lib/ConnectionPool')
+const Connection = require('../../lib/Connection')
 const Serializer = require('../../lib/Serializer')
 const Transport = require('../../lib/Transport')
 
@@ -24,7 +28,7 @@ test('Basic', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -67,7 +71,7 @@ test('Send POST', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -123,7 +127,7 @@ test('Send POST (ndjson)', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -156,7 +160,7 @@ test('Not JSON payload from server', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -182,7 +186,7 @@ test('Not JSON payload from server', t => {
 
 test('NoLivingConnectionsError', t => {
   t.plan(1)
-  const pool = new ConnectionPool()
+  const pool = new ConnectionPool({ Connection })
 
   const transport = new Transport({
     emit: () => {},
@@ -204,7 +208,7 @@ test('NoLivingConnectionsError', t => {
 
 test('SerializationError', t => {
   t.plan(1)
-  const pool = new ConnectionPool()
+  const pool = new ConnectionPool({ Connection })
   pool.addConnection('http://localhost:9200')
 
   const transport = new Transport({
@@ -236,7 +240,7 @@ test('DeserializationError', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -269,37 +273,27 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
     }
   }
 
-  function handler (req, res) {
-    setTimeout(() => {
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }, 1000)
-  }
+  const pool = new CustomConnectionPool({ Connection: MockConnectionTimeout })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
+  })
 
-  buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool()
-    pool.addConnection({
-      url: new URL(`http://localhost:${port}`),
-      id: 'node1'
-    })
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 0,
+    requestTimeout: 500,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
 
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 0,
-      requestTimeout: 500,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
-
-    transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (err, { body }) => {
-      t.ok(err instanceof TimeoutError)
-      server.stop()
-    })
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.ok(err instanceof TimeoutError)
   })
 })
 
@@ -313,31 +307,27 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
     }
   }
 
-  buildServer(() => {}, ({ port }, server) => {
-    server.close()
-    const pool = new CustomConnectionPool()
-    pool.addConnection({
-      url: new URL(`http://localhost:${port}`),
-      id: 'node1'
-    })
+  const pool = new CustomConnectionPool({ Connection: MockConnectionError })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
+  })
 
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 0,
-      requestTimeout: 30000,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 0,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
 
-    transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (err, { body }) => {
-      t.ok(err instanceof ConnectionError)
-      server.stop()
-    })
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.ok(err instanceof ConnectionError)
   })
 })
 
@@ -358,7 +348,7 @@ test('Retry mechanism', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection([{
       url: new URL(`http://localhost:${port}`),
       id: 'node1'
@@ -401,36 +391,28 @@ test('Should call markAlive with a successful response', t => {
     }
   }
 
-  function handler (req, res) {
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
-  }
+  const pool = new CustomConnectionPool({ Connection: MockConnection })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
+  })
 
-  buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool()
-    pool.addConnection({
-      url: new URL(`http://localhost:${port}`),
-      id: 'node1'
-    })
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
 
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 3,
-      requestTimeout: 30000,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
-
-    transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (err, { body }) => {
-      t.error(err)
-      t.deepEqual(body, { hello: 'world' })
-      server.stop()
-    })
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.error(err)
+    t.deepEqual(body, { hello: 'world' })
   })
 })
 
@@ -443,77 +425,59 @@ test('Should call resurrect on every request', t => {
     }
   }
 
-  function handler (req, res) {
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
-  }
+  const pool = new CustomConnectionPool({ Connection: MockConnection })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
+  })
 
-  buildServer(handler, ({ port }, server) => {
-    const pool = new CustomConnectionPool()
-    pool.addConnection({
-      url: new URL(`http://localhost:${port}`),
-      id: 'node1'
-    })
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
 
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 3,
-      requestTimeout: 30000,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
-
-    transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (err, { body }) => {
-      t.error(err)
-      t.deepEqual(body, { hello: 'world' })
-      server.stop()
-    })
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.error(err)
+    t.deepEqual(body, { hello: 'world' })
   })
 })
 
 test('Should return a request aborter utility', t => {
   t.plan(1)
 
-  function handler (req, res) {
-    setTimeout(() => {
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }, 1000)
-  }
-
-  buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
-    pool.addConnection({
-      url: new URL(`http://localhost:${port}`),
-      id: 'node1'
-    })
-
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 3,
-      requestTimeout: 30000,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
-
-    const request = transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (_err, body) => {
-      t.fail('Should not be called')
-    })
-
-    request.abort()
-    server.stop()
-    t.pass('ok')
+  const pool = new ConnectionPool({ Connection, MockConnection })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
   })
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const request = transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (_err, body) => {
+    t.fail('Should not be called')
+  })
+
+  request.abort()
+  t.pass('ok')
 })
 
 test('ResponseError', t => {
@@ -526,7 +490,7 @@ test('ResponseError', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -561,7 +525,7 @@ test('Override requestTimeout', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -609,7 +573,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool()
+      const pool = new CustomConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
 
       // eslint-disable-next-line
@@ -653,7 +617,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool()
+      const pool = new CustomConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
       pool.addConnection(`http://localhost:${port}/other`)
 
@@ -700,7 +664,7 @@ test('sniff', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool()
+      const pool = new CustomConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -741,25 +705,21 @@ test('sniff', t => {
       }
     }
 
-    buildServer(() => {}, ({ port }, server) => {
-      server.close()
-      const pool = new CustomConnectionPool()
-      pool.addConnection(`http://localhost:${port}`)
+    const pool = new CustomConnectionPool({ Connection: MockConnectionError })
+    pool.addConnection('http://localhost:9200')
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 0,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffEndpoint: '/sniff'
-      })
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 0,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffEndpoint: '/sniff'
+    })
 
-      transport.sniff((err, hosts) => {
-        t.ok(err instanceof ConnectionError)
-        server.stop()
-      })
+    transport.sniff((err, hosts) => {
+      t.ok(err instanceof ConnectionError)
     })
   })
 
@@ -773,11 +733,6 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
   function runTest (statusCode) {
     t.test(statusCode, t => {
       t.plan(3)
-      function handler (req, res) {
-        res.statusCode = statusCode
-        res.setHeader('Content-Type', 'application/json;utf=8')
-        res.end(JSON.stringify({ hello: 'world' }))
-      }
 
       class CustomConnectionPool extends ConnectionPool {
         markDead (connection) {
@@ -786,31 +741,28 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
         }
       }
 
-      buildServer(handler, ({ port }, server) => {
-        const pool = new CustomConnectionPool()
-        pool.addConnection(`http://localhost:${port}`)
+      const pool = new CustomConnectionPool({ Connection: MockConnection })
+      pool.addConnection('http://localhost:9200')
 
-        const transport = new Transport({
-          emit: () => {},
-          connectionPool: pool,
-          serializer: new Serializer(),
-          maxRetries: 0,
-          requestTimeout: 30000,
-          sniffInterval: false,
-          sniffOnStart: false
-        })
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 0,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
 
-        transport.request({
-          method: 'GET',
-          path: '/hello'
-        }, (err, { body }) => {
-          t.ok(err instanceof ResponseError)
-          t.match(err, {
-            body: { hello: 'world' },
-            headers: { 'content-type': 'application/json;utf=8' },
-            statusCode: statusCode
-          })
-          server.stop()
+      transport.request({
+        method: 'GET',
+        path: `/${statusCode}`
+      }, (err, { body }) => {
+        t.ok(err instanceof ResponseError)
+        t.match(err, {
+          body: { hello: 'world' },
+          headers: { 'content-type': 'application/json;utf=8' },
+          statusCode: statusCode
         })
       })
     })
@@ -843,7 +795,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
       }
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new CustomConnectionPool()
+        const pool = new CustomConnectionPool({ Connection })
         pool.addConnection(`http://localhost:${port}`)
 
         const transport = new Transport({
@@ -873,51 +825,42 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
 
 test('Ignore status code', t => {
   t.plan(4)
-  function handler (req, res) {
-    res.statusCode = 404
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
-  }
 
-  buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
-    pool.addConnection(`http://localhost:${port}`)
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
 
-    const transport = new Transport({
-      emit: () => {},
-      connectionPool: pool,
-      serializer: new Serializer(),
-      maxRetries: 3,
-      requestTimeout: 30000,
-      sniffInterval: false,
-      sniffOnStart: false
-    })
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
 
-    transport.request({
-      method: 'GET',
-      path: '/hello',
-      ignore: [404]
-    }, (err, { body }) => {
-      t.error(err)
-      t.deepEqual(body, { hello: 'world' })
-    })
+  transport.request({
+    method: 'GET',
+    path: '/404',
+    ignore: [404]
+  }, (err, { body }) => {
+    t.error(err)
+    t.deepEqual(body, { hello: 'world' })
+  })
 
-    transport.request({
-      method: 'GET',
-      path: '/hello'
-    }, (err, { body }) => {
-      t.ok(err instanceof ResponseError)
-    })
+  transport.request({
+    method: 'GET',
+    path: '/404'
+  }, (err, { body }) => {
+    t.ok(err instanceof ResponseError)
+  })
 
-    transport.request({
-      method: 'GET',
-      path: '/hello',
-      ignore: [403, 405]
-    }, (err, { body }) => {
-      t.ok(err instanceof ResponseError)
-    })
-
-    setTimeout(() => server.stop(), 100)
+  transport.request({
+    method: 'GET',
+    path: '/404',
+    ignore: [403, 405]
+  }, (err, { body }) => {
+    t.ok(err instanceof ResponseError)
   })
 })
 
@@ -930,7 +873,7 @@ test('Should serialize the querystring', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -970,7 +913,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool()
+        const pool = new ConnectionPool({ Connection })
         pool.addConnection({
           url: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1000,7 +943,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool()
+        const pool = new ConnectionPool({ Connection })
         pool.addConnection({
           url: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1035,7 +978,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool()
+        const pool = new ConnectionPool({ Connection })
         pool.addConnection({
           url: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1065,7 +1008,7 @@ test('timeout option', t => {
       t.plan(1)
 
       buildServer(handler, ({ port }, server) => {
-        const pool = new ConnectionPool()
+        const pool = new ConnectionPool({ Connection })
         pool.addConnection({
           url: new URL(`http://localhost:${port}`),
           id: 'node1'
@@ -1100,131 +1043,101 @@ test('timeout option', t => {
 
 test('Should cast to boolean HEAD request', t => {
   t.test('2xx response', t => {
-    t.plan(2)
-    function handler (req, res) {
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end('')
-    }
+    t.plan(3)
+    const pool = new ConnectionPool({ Connection: MockConnection })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
-      pool.addConnection(`http://localhost:${port}`)
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffOnStart: false
-      })
-
-      transport.request({
-        method: 'HEAD',
-        path: '/hello'
-      }, (err, { body }) => {
-        t.error(err)
-        t.strictEqual(body, true)
-        server.stop()
-      })
+    transport.request({
+      method: 'HEAD',
+      path: '/200'
+    }, (err, { body, statusCode }) => {
+      t.error(err)
+      t.strictEqual(statusCode, 200)
+      t.strictEqual(body, true)
     })
   })
 
   t.test('404 response', t => {
-    t.plan(2)
-    function handler (req, res) {
-      res.statusCode = 404
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end('')
-    }
+    t.plan(3)
+    const pool = new ConnectionPool({ Connection: MockConnection })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
-      pool.addConnection(`http://localhost:${port}`)
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffOnStart: false
-      })
-
-      transport.request({
-        method: 'HEAD',
-        path: '/hello'
-      }, (err, { body }) => {
-        t.error(err)
-        t.strictEqual(body, false)
-        server.stop()
-      })
+    transport.request({
+      method: 'HEAD',
+      path: '/404'
+    }, (err, { body, statusCode }) => {
+      t.error(err)
+      t.strictEqual(statusCode, 404)
+      t.strictEqual(body, false)
     })
   })
 
   t.test('4xx response', t => {
-    t.plan(1)
-    function handler (req, res) {
-      res.statusCode = 400
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+    t.plan(2)
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
-      pool.addConnection(`http://localhost:${port}`)
+    const pool = new ConnectionPool({ Connection: MockConnection })
+    pool.addConnection('http://localhost:9200')
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffOnStart: false
-      })
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
 
-      transport.request({
-        method: 'HEAD',
-        path: '/hello'
-      }, (err, { body }) => {
-        t.ok(err instanceof ResponseError)
-        server.stop()
-      })
+    transport.request({
+      method: 'HEAD',
+      path: '/400'
+    }, (err, { body, statusCode }) => {
+      t.ok(err instanceof ResponseError)
+      t.strictEqual(statusCode, 400)
     })
   })
 
   t.test('5xx response', t => {
-    t.plan(1)
-    function handler (req, res) {
-      res.statusCode = 500
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+    t.plan(2)
+    const pool = new ConnectionPool({ Connection: MockConnection })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
-      pool.addConnection(`http://localhost:${port}`)
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffOnStart: false
-      })
-
-      transport.request({
-        method: 'HEAD',
-        path: '/hello'
-      }, (err, { body }) => {
-        t.ok(err instanceof ResponseError)
-        server.stop()
-      })
+    transport.request({
+      method: 'HEAD',
+      path: '/500'
+    }, (err, { body, statusCode }) => {
+      t.ok(err instanceof ResponseError)
+      t.strictEqual(statusCode, 500)
     })
   })
 
@@ -1242,7 +1155,7 @@ test('Suggest compression', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({
@@ -1278,7 +1191,7 @@ test('Warning header', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
+      const pool = new ConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1315,7 +1228,7 @@ test('Warning header', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
+      const pool = new ConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1349,7 +1262,7 @@ test('Warning header', t => {
     }
 
     buildServer(handler, ({ port }, server) => {
-      const pool = new ConnectionPool()
+      const pool = new ConnectionPool({ Connection })
       pool.addConnection(`http://localhost:${port}`)
 
       const transport = new Transport({
@@ -1384,7 +1297,7 @@ test('asStream set to true', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const pool = new ConnectionPool()
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection(`http://localhost:${port}`)
 
     const transport = new Transport({

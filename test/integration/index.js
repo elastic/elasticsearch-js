@@ -8,7 +8,7 @@ const Git = require('simple-git')
 const ora = require('ora')
 const minimist = require('minimist')
 const tap = require('tap')
-const elasticsearch = require('../../index')
+const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
@@ -24,9 +24,7 @@ function Runner (opts) {
 
   assert(opts.node, 'Missing base node')
   this.bailout = opts.bailout
-  this.client = new elasticsearch.Client({
-    node: opts.node
-  })
+  this.client = new Client({ node: opts.node })
   this.log = ora('Loading yaml suite').start()
 }
 
@@ -239,7 +237,7 @@ if (require.main === module) {
     default: {
       // node: 'http://elastic:passw0rd@localhost:9200',
       node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
-      version: '6.4',
+      version: '6.5',
       bailout: false
     }
   })
