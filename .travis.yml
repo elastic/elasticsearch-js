@@ -11,7 +11,7 @@ node_js:
 
 env:
   global:
-    - ELASTICSEARCH_VERSION=6.4.0
+    - ELASTICSEARCH_VERSION=6.5.0
     - QUIET=true
 
 before_install:
