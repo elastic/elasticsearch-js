@@ -1,15 +1,15 @@
 'use strict'
 
-function buildXpackSecurityDisableUser (opts) {
+function buildCcrFollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.disable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html) request
+   * Perform a [ccr.follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html) request
    *
-   * @param {string} username - The username of the user to disable
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+   * @param {string} index - The name of the follower index
+   * @param {object} body - The name of the leader index and other optional ccr related parameters
    */
-  return function xpackSecurityDisableUser (params, callback) {
+  return function ccrFollow (params, callback) {
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
@@ -17,16 +17,22 @@ function buildXpackSecurityDisableUser (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityDisableUser(params, (err, body) => {
+        ccrFollow(params, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
+    if (params['index'] == null) {
       return callback(
-        new ConfigurationError('This API does not require a body'),
+        new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['body'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: body'),
         result
       )
     }
@@ -35,10 +41,10 @@ function buildXpackSecurityDisableUser (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'refresh'
+
     ]
     const acceptedQuerystringCamelCased = [
-      'refresh'
+
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -73,12 +79,12 @@ function buildXpackSecurityDisableUser (opts) {
     }
 
     // build request object
-    const parts = ['_xpack', 'security', 'user', params['username'], '_disable']
+    const parts = [params['index'], '_ccr', 'follow']
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
-      body: '',
+      body: params.body || '',
       headers: params.headers || null,
       ignore,
       requestTimeout: params.requestTimeout || null
@@ -88,4 +94,4 @@ function buildXpackSecurityDisableUser (opts) {
   }
 }
 
-module.exports = buildXpackSecurityDisableUser
+module.exports = buildCcrFollow

@@ -1,15 +1,15 @@
 'use strict'
 
-function buildXpackSecurityDisableUser (opts) {
+function buildDeleteByQueryRethrottle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.disable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html) request
+   * Perform a [delete_by_query_rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html) request
    *
-   * @param {string} username - The username of the user to disable
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+   * @param {string} task_id - The task id to rethrottle
+   * @param {number} requests_per_second - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
    */
-  return function xpackSecurityDisableUser (params, callback) {
+  return function deleteByQueryRethrottle (params, callback) {
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
@@ -17,13 +17,25 @@ function buildXpackSecurityDisableUser (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityDisableUser(params, (err, body) => {
+        deleteByQueryRethrottle(params, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
+    if (params['task_id'] == null && params['taskId'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: task_id or taskId'),
+        result
+      )
+    }
+    if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -35,10 +47,20 @@ function buildXpackSecurityDisableUser (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'refresh'
+      'requests_per_second',
+      'pretty',
+      'human',
+      'error_trace',
+      'source',
+      'filter_path'
     ]
     const acceptedQuerystringCamelCased = [
-      'refresh'
+      'requestsPerSecond',
+      'pretty',
+      'human',
+      'errorTrace',
+      'source',
+      'filterPath'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -56,7 +78,7 @@ function buildXpackSecurityDisableUser (opts) {
     // configure http method
     var method = params.method
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     // validate headers object
@@ -73,7 +95,7 @@ function buildXpackSecurityDisableUser (opts) {
     }
 
     // build request object
-    const parts = ['_xpack', 'security', 'user', params['username'], '_disable']
+    const parts = ['_delete_by_query', params['task_id'] || params['taskId'], '_rethrottle']
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
@@ -88,4 +110,4 @@ function buildXpackSecurityDisableUser (opts) {
   }
 }
 
-module.exports = buildXpackSecurityDisableUser
+module.exports = buildDeleteByQueryRethrottle

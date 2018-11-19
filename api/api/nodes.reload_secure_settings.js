@@ -1,15 +1,15 @@
 'use strict'
 
-function buildXpackSecurityDisableUser (opts) {
+function buildNodesReloadSecureSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.disable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html) request
+   * Perform a [nodes.reload_secure_settings](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/secure-settings.html#reloadable-secure-settings) request
    *
-   * @param {string} username - The username of the user to disable
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+   * @param {list} node_id - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
+   * @param {time} timeout - Explicit operation timeout
    */
-  return function xpackSecurityDisableUser (params, callback) {
+  return function nodesReloadSecureSettings (params, callback) {
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
@@ -17,7 +17,7 @@ function buildXpackSecurityDisableUser (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityDisableUser(params, (err, body) => {
+        nodesReloadSecureSettings(params, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -35,10 +35,20 @@ function buildXpackSecurityDisableUser (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'refresh'
+      'timeout',
+      'pretty',
+      'human',
+      'error_trace',
+      'source',
+      'filter_path'
     ]
     const acceptedQuerystringCamelCased = [
-      'refresh'
+      'timeout',
+      'pretty',
+      'human',
+      'errorTrace',
+      'source',
+      'filterPath'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -56,7 +66,7 @@ function buildXpackSecurityDisableUser (opts) {
     // configure http method
     var method = params.method
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     // validate headers object
@@ -73,7 +83,7 @@ function buildXpackSecurityDisableUser (opts) {
     }
 
     // build request object
-    const parts = ['_xpack', 'security', 'user', params['username'], '_disable']
+    const parts = ['_nodes', params['node_id'] || params['nodeId'], 'reload_secure_settings']
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
@@ -88,4 +98,4 @@ function buildXpackSecurityDisableUser (opts) {
   }
 }
 
-module.exports = buildXpackSecurityDisableUser
+module.exports = buildNodesReloadSecureSettings

@@ -4,7 +4,7 @@ function buildXpackSecurityPutUser (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.put_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-users.html#security-api-put-user) request
+   * Perform a [xpack.security.put_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html) request
    *
    * @param {string} username - The username of the User
    * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.

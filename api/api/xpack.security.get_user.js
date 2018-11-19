@@ -4,7 +4,7 @@ function buildXpackSecurityGetUser (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.get_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-users.html#security-api-get-user) request
+   * Perform a [xpack.security.get_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html) request
    *
    * @param {list} username - A comma-separated list of usernames
    */

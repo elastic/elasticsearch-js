@@ -4,7 +4,7 @@ function buildXpackSecurityHasPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.has_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-privileges.html) request
+   * Perform a [xpack.security.has_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html) request
    *
    * @param {string} user - Username
    * @param {object} body - The privileges to test

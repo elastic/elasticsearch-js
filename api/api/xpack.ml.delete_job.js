@@ -8,6 +8,7 @@ function buildXpackMlDeleteJob (opts) {
    *
    * @param {string} job_id - The ID of the job to delete
    * @param {boolean} force - True if the job should be forcefully deleted
+   * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    */
   return function xpackMlDeleteJob (params, callback) {
     if (typeof params === 'function' || params == null) {
@@ -41,10 +42,12 @@ function buildXpackMlDeleteJob (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'force'
+      'force',
+      'wait_for_completion'
     ]
     const acceptedQuerystringCamelCased = [
-      'force'
+      'force',
+      'waitForCompletion'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

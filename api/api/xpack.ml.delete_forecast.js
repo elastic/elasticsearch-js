@@ -1,15 +1,17 @@
 'use strict'
 
-function buildXpackSecurityDisableUser (opts) {
+function buildXpackMlDeleteForecast (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.disable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html) request
+   * Perform a [xpack.ml.delete_forecast](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html) request
    *
-   * @param {string} username - The username of the user to disable
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+   * @param {string} job_id - The ID of the job from which to delete forecasts
+   * @param {string} forecast_id - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
+   * @param {boolean} allow_no_forecasts - Whether to ignore if `_all` matches no forecasts
+   * @param {time} timeout - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
    */
-  return function xpackSecurityDisableUser (params, callback) {
+  return function xpackMlDeleteForecast (params, callback) {
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
@@ -17,16 +19,30 @@ function buildXpackSecurityDisableUser (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityDisableUser(params, (err, body) => {
+        xpackMlDeleteForecast(params, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
+    if (params['job_id'] == null && params['jobId'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: job_id or jobId'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
+        result
+      )
+    }
+
+    // check required url components
+    if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null || params['jobId']))) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: job_id'),
         result
       )
     }
@@ -35,10 +51,12 @@ function buildXpackSecurityDisableUser (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'refresh'
+      'allow_no_forecasts',
+      'timeout'
     ]
     const acceptedQuerystringCamelCased = [
-      'refresh'
+      'allowNoForecasts',
+      'timeout'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -56,7 +74,7 @@ function buildXpackSecurityDisableUser (opts) {
     // configure http method
     var method = params.method
     if (method == null) {
-      method = 'PUT'
+      method = 'DELETE'
     }
 
     // validate headers object
@@ -73,7 +91,7 @@ function buildXpackSecurityDisableUser (opts) {
     }
 
     // build request object
-    const parts = ['_xpack', 'security', 'user', params['username'], '_disable']
+    const parts = ['_xpack', 'ml', 'anomaly_detectors', params['job_id'] || params['jobId'], '_forecast', params['forecast_id'] || params['forecastId']]
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
@@ -88,4 +106,4 @@ function buildXpackSecurityDisableUser (opts) {
   }
 }
 
-module.exports = buildXpackSecurityDisableUser
+module.exports = buildXpackMlDeleteForecast

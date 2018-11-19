@@ -4,7 +4,7 @@ function buildXpackSecurityDeleteUser (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.delete_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-users.html#security-api-delete-user) request
+   * Perform a [xpack.security.delete_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html) request
    *
    * @param {string} username - username
    * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.

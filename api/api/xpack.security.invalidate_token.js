@@ -4,7 +4,7 @@ function buildXpackSecurityInvalidateToken (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.invalidate_token](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-tokens.html#security-api-invalidate-token) request
+   * Perform a [xpack.security.invalidate_token](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html) request
    *
    * @param {object} body - The token to invalidate
    */

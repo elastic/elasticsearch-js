@@ -4,7 +4,7 @@ function buildXpackSecurityGetRoleMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.get_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-role-mapping.html#security-api-get-role-mapping) request
+   * Perform a [xpack.security.get_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html) request
    *
    * @param {string} name - Role-Mapping name
    */

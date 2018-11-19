@@ -4,7 +4,7 @@ function buildXpackSecurityDeleteRoleMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.delete_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-role-mapping.html#security-api-delete-role-mapping) request
+   * Perform a [xpack.security.delete_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html) request
    *
    * @param {string} name - Role-mapping name
    * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.

@@ -23,6 +23,15 @@ const catSnapshots = require('./api/cat.snapshots.js')
 const catTasks = require('./api/cat.tasks.js')
 const catTemplates = require('./api/cat.templates.js')
 const catThreadPool = require('./api/cat.thread_pool.js')
+const ccrDeleteAutoFollowPattern = require('./api/ccr.delete_auto_follow_pattern.js')
+const ccrFollow = require('./api/ccr.follow.js')
+const ccrFollowStats = require('./api/ccr.follow_stats.js')
+const ccrGetAutoFollowPattern = require('./api/ccr.get_auto_follow_pattern.js')
+const ccrPauseFollow = require('./api/ccr.pause_follow.js')
+const ccrPutAutoFollowPattern = require('./api/ccr.put_auto_follow_pattern.js')
+const ccrResumeFollow = require('./api/ccr.resume_follow.js')
+const ccrStats = require('./api/ccr.stats.js')
+const ccrUnfollow = require('./api/ccr.unfollow.js')
 const clearScroll = require('./api/clear_scroll.js')
 const clusterAllocationExplain = require('./api/cluster.allocation_explain.js')
 const clusterGetSettings = require('./api/cluster.get_settings.js')
@@ -37,6 +46,7 @@ const count = require('./api/count.js')
 const create = require('./api/create.js')
 const _delete = require('./api/delete.js')
 const deleteByQuery = require('./api/delete_by_query.js')
+const deleteByQueryRethrottle = require('./api/delete_by_query_rethrottle.js')
 const deleteScript = require('./api/delete_script.js')
 const exists = require('./api/exists.js')
 const existsSource = require('./api/exists_source.js')
@@ -95,6 +105,7 @@ const msearchTemplate = require('./api/msearch_template.js')
 const mtermvectors = require('./api/mtermvectors.js')
 const nodesHotThreads = require('./api/nodes.hot_threads.js')
 const nodesInfo = require('./api/nodes.info.js')
+const nodesReloadSecureSettings = require('./api/nodes.reload_secure_settings.js')
 const nodesStats = require('./api/nodes.stats.js')
 const nodesUsage = require('./api/nodes.usage.js')
 const ping = require('./api/ping.js')
@@ -123,6 +134,7 @@ const tasksList = require('./api/tasks.list.js')
 const termvectors = require('./api/termvectors.js')
 const update = require('./api/update.js')
 const updateByQuery = require('./api/update_by_query.js')
+const updateByQueryRethrottle = require('./api/update_by_query_rethrottle.js')
 const xpackGraphExplore = require('./api/xpack.graph.explore.js')
 const xpackInfo = require('./api/xpack.info.js')
 const xpackLicenseDelete = require('./api/xpack.license.delete.js')
@@ -142,8 +154,10 @@ const xpackMlDeleteCalendarJob = require('./api/xpack.ml.delete_calendar_job.js'
 const xpackMlDeleteDatafeed = require('./api/xpack.ml.delete_datafeed.js')
 const xpackMlDeleteExpiredData = require('./api/xpack.ml.delete_expired_data.js')
 const xpackMlDeleteFilter = require('./api/xpack.ml.delete_filter.js')
+const xpackMlDeleteForecast = require('./api/xpack.ml.delete_forecast.js')
 const xpackMlDeleteJob = require('./api/xpack.ml.delete_job.js')
 const xpackMlDeleteModelSnapshot = require('./api/xpack.ml.delete_model_snapshot.js')
+const xpackMlFindFileStructure = require('./api/xpack.ml.find_file_structure.js')
 const xpackMlFlushJob = require('./api/xpack.ml.flush_job.js')
 const xpackMlForecast = require('./api/xpack.ml.forecast.js')
 const xpackMlGetBuckets = require('./api/xpack.ml.get_buckets.js')
@@ -202,6 +216,7 @@ const xpackSecurityGetRole = require('./api/xpack.security.get_role.js')
 const xpackSecurityGetRoleMapping = require('./api/xpack.security.get_role_mapping.js')
 const xpackSecurityGetToken = require('./api/xpack.security.get_token.js')
 const xpackSecurityGetUser = require('./api/xpack.security.get_user.js')
+const xpackSecurityGetUserPrivileges = require('./api/xpack.security.get_user_privileges.js')
 const xpackSecurityHasPrivileges = require('./api/xpack.security.has_privileges.js')
 const xpackSecurityInvalidateToken = require('./api/xpack.security.invalidate_token.js')
 const xpackSecurityPutPrivileges = require('./api/xpack.security.put_privileges.js')
@@ -256,6 +271,23 @@ function ESAPI (opts) {
       thread_pool: catThreadPool(opts),
       threadPool: catThreadPool(opts)
     },
+    ccr: {
+      delete_auto_follow_pattern: ccrDeleteAutoFollowPattern(opts),
+      deleteAutoFollowPattern: ccrDeleteAutoFollowPattern(opts),
+      follow: ccrFollow(opts),
+      follow_stats: ccrFollowStats(opts),
+      followStats: ccrFollowStats(opts),
+      get_auto_follow_pattern: ccrGetAutoFollowPattern(opts),
+      getAutoFollowPattern: ccrGetAutoFollowPattern(opts),
+      pause_follow: ccrPauseFollow(opts),
+      pauseFollow: ccrPauseFollow(opts),
+      put_auto_follow_pattern: ccrPutAutoFollowPattern(opts),
+      putAutoFollowPattern: ccrPutAutoFollowPattern(opts),
+      resume_follow: ccrResumeFollow(opts),
+      resumeFollow: ccrResumeFollow(opts),
+      stats: ccrStats(opts),
+      unfollow: ccrUnfollow(opts)
+    },
     clear_scroll: clearScroll(opts),
     clearScroll: clearScroll(opts),
     cluster: {
@@ -279,6 +311,8 @@ function ESAPI (opts) {
     delete: _delete(opts),
     delete_by_query: deleteByQuery(opts),
     deleteByQuery: deleteByQuery(opts),
+    delete_by_query_rethrottle: deleteByQueryRethrottle(opts),
+    deleteByQueryRethrottle: deleteByQueryRethrottle(opts),
     delete_script: deleteScript(opts),
     deleteScript: deleteScript(opts),
     exists: exists(opts),
@@ -373,6 +407,8 @@ function ESAPI (opts) {
       hot_threads: nodesHotThreads(opts),
       hotThreads: nodesHotThreads(opts),
       info: nodesInfo(opts),
+      reload_secure_settings: nodesReloadSecureSettings(opts),
+      reloadSecureSettings: nodesReloadSecureSettings(opts),
       stats: nodesStats(opts),
       usage: nodesUsage(opts)
     },
@@ -418,6 +454,8 @@ function ESAPI (opts) {
     update: update(opts),
     update_by_query: updateByQuery(opts),
     updateByQuery: updateByQuery(opts),
+    update_by_query_rethrottle: updateByQueryRethrottle(opts),
+    updateByQueryRethrottle: updateByQueryRethrottle(opts),
     xpack: {
       graph: {
         explore: xpackGraphExplore(opts)
@@ -457,10 +495,14 @@ function ESAPI (opts) {
         deleteExpiredData: xpackMlDeleteExpiredData(opts),
         delete_filter: xpackMlDeleteFilter(opts),
         deleteFilter: xpackMlDeleteFilter(opts),
+        delete_forecast: xpackMlDeleteForecast(opts),
+        deleteForecast: xpackMlDeleteForecast(opts),
         delete_job: xpackMlDeleteJob(opts),
         deleteJob: xpackMlDeleteJob(opts),
         delete_model_snapshot: xpackMlDeleteModelSnapshot(opts),
         deleteModelSnapshot: xpackMlDeleteModelSnapshot(opts),
+        find_file_structure: xpackMlFindFileStructure(opts),
+        findFileStructure: xpackMlFindFileStructure(opts),
         flush_job: xpackMlFlushJob(opts),
         flushJob: xpackMlFlushJob(opts),
         forecast: xpackMlForecast(opts),
@@ -578,6 +620,8 @@ function ESAPI (opts) {
         getToken: xpackSecurityGetToken(opts),
         get_user: xpackSecurityGetUser(opts),
         getUser: xpackSecurityGetUser(opts),
+        get_user_privileges: xpackSecurityGetUserPrivileges(opts),
+        getUserPrivileges: xpackSecurityGetUserPrivileges(opts),
         has_privileges: xpackSecurityHasPrivileges(opts),
         hasPrivileges: xpackSecurityHasPrivileges(opts),
         invalidate_token: xpackSecurityInvalidateToken(opts),

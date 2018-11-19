@@ -95,12 +95,10 @@ function buildReindexRethrottle (opts) {
     }
 
     // build request object
-    const parts = ['_delete_by_query', params['task_id'] || params['taskId'], '_rethrottle']
+    const parts = ['_reindex', params['task_id'] || params['taskId'], '_rethrottle']
     const request = {
       method,
-      path: (params['task_id'] || params['taskId']) != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/_reindex/{task_id}/_rethrottle',
+      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
       headers: params.headers || null,

@@ -4,7 +4,7 @@ function buildXpackSecurityGetToken (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [xpack.security.get_token](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-tokens.html#security-api-get-token) request
+   * Perform a [xpack.security.get_token](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html) request
    *
    * @param {object} body - The token request to get
    */
