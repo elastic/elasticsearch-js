@@ -47,7 +47,7 @@ function cloneAndCheckout (opts, callback) {
       git.checkout(tag, err => {
         if (err) {
           if (retry++ > 0) {
-            callback(new Error(`Cannot checkout tag '${tag}'`))
+            callback(new Error(`Cannot checkout tag '${tag}'`), { apiFolder, xPackFolder })
             return
           }
           return pull(checkout)
@@ -60,7 +60,7 @@ function cloneAndCheckout (opts, callback) {
       log.text = 'Pulling elasticsearch repository...'
       git.pull(err => {
         if (err) {
-          callback(err)
+          callback(err, { apiFolder, xPackFolder })
           return
         }
         cb()
@@ -71,7 +71,7 @@ function cloneAndCheckout (opts, callback) {
       log.text = 'Cloning elasticsearch repository...'
       git.clone(esRepo, esFolder, err => {
         if (err) {
-          callback(err)
+          callback(err, { apiFolder, xPackFolder })
           return
         }
         cb()
