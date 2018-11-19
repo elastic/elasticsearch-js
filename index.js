@@ -59,14 +59,15 @@ class Client extends EventEmitter {
 
     this[kSerializer] = new options.Serializer()
     this[kConnectionPool] = new options.ConnectionPool({
-      pingTimeout: opts.pingTimeout,
-      resurrectStrategy: opts.resurrectStrategy,
-      randomizeHost: opts.randomizeHost,
+      pingTimeout: options.pingTimeout,
+      resurrectStrategy: options.resurrectStrategy,
+      randomizeHost: options.randomizeHost,
       ssl: options.ssl,
-      agent: null,
-      nodeFilter: opts.nodeFilter,
-      nodeWeighter: opts.nodeWeighter,
-      nodeSelector: opts.nodeSelector
+      agent: options.agent,
+      nodeFilter: options.nodeFilter,
+      nodeWeighter: options.nodeWeighter,
+      nodeSelector: options.nodeSelector,
+      Connection: options.Connection
     })
 
     // Add the connections before initialize the Transport
@@ -99,7 +100,7 @@ class Client extends EventEmitter {
   }
 }
 
-Client.events = {
+const events = {
   RESPONSE: 'response',
   REQUEST: 'request',
   ERROR: 'error'
@@ -109,6 +110,8 @@ module.exports = {
   Client,
   Transport,
   ConnectionPool,
+  Connection,
   Serializer,
-  symbols
+  symbols,
+  events
 }
