@@ -266,6 +266,64 @@ test('Body request', t => {
   })
 })
 
+test('Send body as buffer', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    var payload = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { payload += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.strictEqual(payload, 'hello')
+      res.end('ok')
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'POST',
+      body: Buffer.from('hello')
+    }, (err, res) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
+
+test('Send body as stream', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    var payload = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { payload += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.strictEqual(payload, 'hello')
+      res.end('ok')
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'POST',
+      body: intoStream('hello')
+    }, (err, res) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
+
 test('Should handle compression', t => {
   t.test('gzip', t => {
     t.plan(3)
@@ -493,4 +551,12 @@ test('asStream set to true', t => {
       })
     })
   })
+})
+
+test('Connection id should not contain credentials', t => {
+  const connection = new Connection({
+    url: new URL('http://user:password@localhost:9200')
+  })
+  t.strictEqual(connection.id, 'http://localhost:9200/')
+  t.end()
 })

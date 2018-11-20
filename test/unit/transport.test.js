@@ -2,6 +2,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
+const intoStream = require('into-stream')
 const {
   buildServer,
   connection: { MockConnection, MockConnectionTimeout, MockConnectionError }
@@ -144,6 +145,92 @@ test('Send POST (ndjson)', t => {
       method: 'POST',
       path: '/hello',
       bulkBody
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Send stream', t => {
+  t.plan(4)
+  function handler (req, res) {
+    t.match(req.headers, {
+      'content-type': 'application/json'
+    })
+    var json = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { json += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.deepEqual(JSON.parse(json), { hello: 'world' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      body: intoStream(JSON.stringify({ hello: 'world' }))
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Send stream (bulkBody)', t => {
+  t.plan(4)
+  function handler (req, res) {
+    t.match(req.headers, {
+      'content-type': 'application/x-ndjson'
+    })
+    var json = ''
+    req.setEncoding('utf8')
+    req.on('data', chunk => { json += chunk })
+    req.on('error', err => t.fail(err))
+    req.on('end', () => {
+      t.deepEqual(JSON.parse(json), { hello: 'world' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      bulkBody: intoStream(JSON.stringify({ hello: 'world' }))
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
