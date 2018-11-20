@@ -51,7 +51,8 @@
     "debug": "^4.1.0",
     "decompress-response": "^3.3.0",
     "ms": "^2.1.1",
-    "once": "^1.4.0"
+    "once": "^1.4.0",
+    "pump": "^3.0.0"
   },
   "license": "Apache-2.0",
   "repository": {
