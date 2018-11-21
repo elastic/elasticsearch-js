@@ -9,7 +9,7 @@ function genFactory (folder) {
   const apiFiles = readdirSync(folder)
   const apis = apiFiles
     .map(file => {
-      const name = format(file.slice(0, -3))
+      // const name = format(file.slice(0, -3))
       return file
         .slice(0, -3) // remove `.js` extension
         .split('.')
@@ -17,12 +17,12 @@ function genFactory (folder) {
         .reduce((acc, val) => {
           const obj = {
             [val]: acc === null
-              ? `${name}(opts)`
+              ? `lazyLoad('./api/${file}', opts)` // `${name}(opts)`
               : acc
           }
           if (isSnakeCased(val)) {
             obj[camelify(val)] = acc === null
-              ? `${name}(opts)`
+              ? `lazyLoad('./api/${file}', opts)` // `${name}(opts)`
               : acc
           }
           return obj
@@ -43,8 +43,6 @@ function genFactory (folder) {
 
   const assert = require('assert')
 
-  ${generateApiRequire(apiFiles)}
-
   function ESAPI (opts) {
     assert(opts.makeRequest, 'Missing makeRequest function')
     assert(opts.ConfigurationError, 'Missing ConfigurationError class')
@@ -56,6 +54,23 @@ function genFactory (folder) {
     return apis
   }
 
+  // It's unlikely that a user needs all of our APIs,
+  // and since require is a sync operation that takes time
+  // (given the amount of APIs we have), let's lazy load them,
+  // so a given API file will be required only
+  // if the user actually needs that API.
+  // The following implementation takes advantage
+  // of js closures to have a simple cache with the least overhead.
+  function lazyLoad (file, opts) {
+    var fn = null
+    return function _lazyLoad (params, callback) {
+      if (fn === null) {
+        fn = require(file)(opts)
+      }
+      return fn(params, callback)
+    }
+  }
+
   module.exports = ESAPI
   `
 
@@ -63,34 +78,9 @@ function genFactory (folder) {
   return fn + '\n'
 }
 
-function generateApiRequire (apiFiles) {
-  return apiFiles
-    .map(file => {
-      const name = format(file.slice(0, -3))
-      return `const ${name} = require('./api/${file}')`
-    })
-    .join('\n')
-}
-
 // from snake_case to camelCase
 function camelify (str) {
   return str.replace(/_([a-z])/g, k => k[1].toUpperCase())
-}
-
-// from 'hello.world to helloWorld
-function undot (str) {
-  return str.replace(/\.([a-z])/g, k => k[1].toUpperCase())
-}
-
-function safeWords (str) {
-  if (str === 'delete') {
-    return '_delete'
-  }
-  return str
-}
-
-function format (str) {
-  return safeWords(undot(camelify(str)))
 }
 
 function isSnakeCased (str) {
