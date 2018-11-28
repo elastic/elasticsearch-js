@@ -7,6 +7,28 @@ const deepmerge = require('deepmerge')
 function genFactory (folder) {
   // get all the API files
   const apiFiles = readdirSync(folder)
+  const types = apiFiles
+    .map(file => {
+      return file
+        .slice(0, -3) // remove `.js` extension
+        .split('.')
+        .reverse()
+        .reduce((acc, val) => {
+          const obj = {
+            [val]: acc === null
+              ? 'apiMethod'
+              : acc
+          }
+          if (isSnakeCased(val)) {
+            obj[camelify(val)] = acc === null
+              ? 'apiMethod'
+              : acc
+          }
+          return obj
+        }, null)
+    })
+    .reduce((acc, val) => deepmerge(acc, val), {})
+
   const apis = apiFiles
     .map(file => {
       // const name = format(file.slice(0, -3))
@@ -37,6 +59,14 @@ function genFactory (folder) {
     .join('\n    ')
     // remove useless quotes
     .replace(/"/g, '')
+
+  // serialize the type object
+  const typesStr = Object.keys(types)
+    .map(key => `${key}: ${JSON.stringify(types[key], null, 2)}`)
+    .join('\n')
+    // remove useless quotes and commas
+    .replace(/"/g, '')
+    .replace(/,/g, '')
 
   const fn = dedent`
   'use strict'
@@ -75,7 +105,7 @@ function genFactory (folder) {
   `
 
   // new line at the end of file
-  return fn + '\n'
+  return { fn: fn + '\n', types: typesStr }
 }
 
 // from snake_case to camelCase

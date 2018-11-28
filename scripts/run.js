@@ -22,6 +22,7 @@ function start (opts) {
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
+  const typesOutputFile = join(packageFolder, 'generated.d.ts')
 
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
@@ -35,9 +36,15 @@ function start (opts) {
     readdirSync(apiFolder).forEach(generateApiFile(apiFolder, log))
     readdirSync(xPackFolder).forEach(generateApiFile(xPackFolder, log))
 
+    const { fn: factory, types } = genFactory(apiOutputFolder)
     writeFileSync(
       mainOutputFile,
-      genFactory(apiOutputFolder),
+      factory,
+      { encoding: 'utf8' }
+    )
+    writeFileSync(
+      typesOutputFile,
+      types,
       { encoding: 'utf8' }
     )
     lintFiles(log)
@@ -69,6 +76,7 @@ function start (opts) {
         return log.fail(err.message)
       }
       log.succeed('Done!')
+      console.log('Remember to copy the generated types into the index.d.ts file')
     })
   }
 }
