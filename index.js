@@ -5,16 +5,9 @@ const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const ConnectionPool = require('./lib/ConnectionPool')
 const Serializer = require('./lib/Serializer')
-const symbols = require('./lib/symbols')
 const { ConfigurationError } = require('./lib/errors')
 
 const buildApi = require('./api')
-
-const {
-  kTransport,
-  kConnectionPool,
-  kSerializer
-} = symbols
 
 class Client extends EventEmitter {
   constructor (opts = {}) {
@@ -57,8 +50,8 @@ class Client extends EventEmitter {
       nodeSelector: 'round-robin'
     }, opts)
 
-    this[kSerializer] = new options.Serializer()
-    this[kConnectionPool] = new options.ConnectionPool({
+    this.serializer = new options.Serializer()
+    this.connectionPool = new options.ConnectionPool({
       pingTimeout: options.pingTimeout,
       resurrectStrategy: options.resurrectStrategy,
       randomizeHost: options.randomizeHost,
@@ -71,12 +64,12 @@ class Client extends EventEmitter {
     })
 
     // Add the connections before initialize the Transport
-    this[kConnectionPool].addConnection(options.node || options.nodes)
+    this.connectionPool.addConnection(options.node || options.nodes)
 
-    this[kTransport] = new options.Transport({
+    this.transport = new options.Transport({
       emit: this.emit.bind(this),
-      connectionPool: this[kConnectionPool],
-      serializer: this[kSerializer],
+      connectionPool: this.connectionPool,
+      serializer: this.serializer,
       maxRetries: options.maxRetries,
       requestTimeout: options.requestTimeout,
       sniffInterval: options.sniffInterval,
@@ -86,10 +79,8 @@ class Client extends EventEmitter {
       suggestCompression: options.suggestCompression
     })
 
-    this.request = this[kTransport].request.bind(this[kTransport])
-
     const apis = buildApi({
-      makeRequest: this[kTransport].request.bind(this[kTransport]),
+      makeRequest: this.transport.request.bind(this.transport),
       result: { body: null, statusCode: null, headers: null, warnings: null },
       ConfigurationError
     })
@@ -112,6 +103,5 @@ module.exports = {
   ConnectionPool,
   Connection,
   Serializer,
-  symbols,
   events
 }
