@@ -46,3 +46,5 @@ package-lock.json
 
 # elasticsearch repo or binary files
 elasticsearch*
+
+api/generated.d.ts
