@@ -470,4 +470,4 @@ declare const events: {
     ERROR: string;
 };
 
-export { Client, Transport, ConnectionPool, Connection, Serializer, events };
+export { Client, Transport, ConnectionPool, Connection, Serializer, events, ApiResponse };
