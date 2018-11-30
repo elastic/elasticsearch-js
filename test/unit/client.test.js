@@ -2,15 +2,14 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, symbols } = require('../../index')
-const { kConnectionPool } = symbols
+const { Client } = require('../../index')
 
 test('Configure host', t => {
   t.test('Single string', t => {
     const client = new Client({
       node: 'http://localhost:9200'
     })
-    const pool = client[kConnectionPool]
+    const pool = client.connectionPool
     t.match(pool.connections.get('http://localhost:9200/'), {
       url: new URL('http://localhost:9200'),
       id: 'http://localhost:9200/',
@@ -32,7 +31,7 @@ test('Configure host', t => {
     const client = new Client({
       nodes: ['http://localhost:9200', 'http://localhost:9201']
     })
-    const pool = client[kConnectionPool]
+    const pool = client.connectionPool
     t.match(pool.connections.get('http://localhost:9200/'), {
       url: new URL('http://localhost:9200'),
       id: 'http://localhost:9200/',
@@ -77,7 +76,7 @@ test('Configure host', t => {
         ssl: 'ssl'
       }
     })
-    const pool = client[kConnectionPool]
+    const pool = client.connectionPool
     t.match(pool.connections.get('node'), {
       url: new URL('http://localhost:9200'),
       id: 'node',
@@ -112,7 +111,7 @@ test('Configure host', t => {
         ssl: 'ssl'
       }]
     })
-    const pool = client[kConnectionPool]
+    const pool = client.connectionPool
     t.match(pool.connections.get('node1'), {
       url: new URL('http://localhost:9200'),
       id: 'node1',
@@ -146,7 +145,7 @@ test('Configure host', t => {
         id: 'node'
       }
     })
-    const pool = client[kConnectionPool]
+    const pool = client.connectionPool
     t.match(pool.connections.get('node'), {
       url: new URL('http://localhost:9200'),
       headers: { 'x-foo': 'bar' }

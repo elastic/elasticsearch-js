@@ -15,9 +15,10 @@
     "index"
   ],
   "scripts": {
-    "test": "npm run lint && npm run test:unit",
+    "test": "npm run lint && npm run test:unit && npm run test:types",
     "test:unit": "tap test/unit/*.test.js -J -T",
     "test:integration": "tap test/integration/index.js -T --harmony",
+    "test:types": "tsc --project ./test/types/tsconfig.json",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
@@ -33,6 +34,7 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
+    "@types/node": "^10.12.10",
     "dedent": "^0.7.0",
     "deepmerge": "^2.2.1",
     "into-stream": "^4.0.0",
@@ -45,6 +47,7 @@
     "standard": "^12.0.0",
     "stoppable": "^1.0.7",
     "tap": "^12.0.1",
+    "typescript": "^3.1.6",
     "workq": "^2.1.0"
   },
   "dependencies": {
