@@ -5,7 +5,8 @@ const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const ConnectionPool = require('./lib/ConnectionPool')
 const Serializer = require('./lib/Serializer')
-const { ConfigurationError } = require('./lib/errors')
+const errors = require('./lib/errors')
+const { ConfigurationError } = errors
 
 const buildApi = require('./api')
 
@@ -94,7 +95,8 @@ class Client extends EventEmitter {
 const events = {
   RESPONSE: 'response',
   REQUEST: 'request',
-  ERROR: 'error'
+  ERROR: 'error',
+  SNIFF: 'sniff'
 }
 
 module.exports = {
@@ -103,5 +105,6 @@ module.exports = {
   ConnectionPool,
   Connection,
   Serializer,
-  events
+  events,
+  errors
 }

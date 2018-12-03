@@ -468,6 +468,7 @@ declare const events: {
     RESPONSE: string;
     REQUEST: string;
     ERROR: string;
+    SNIFF: string;
 };
 
 export { Client, Transport, ConnectionPool, Connection, Serializer, events, ApiResponse };
