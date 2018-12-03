@@ -74,6 +74,20 @@ test('qserialize (array)', t => {
   )
 })
 
+test('qserialize (string)', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = {
+    hello: 'world',
+    you_know: 'for search'
+  }
+
+  t.strictEqual(
+    s.qserialize(stringify(obj)),
+    stringify(obj)
+  )
+})
+
 test('SerializationError', t => {
   t.plan(1)
   const s = new Serializer()

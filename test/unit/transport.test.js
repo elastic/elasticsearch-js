@@ -468,6 +468,57 @@ test('Retry mechanism', t => {
   })
 })
 
+test('Custom retry mechanism', t => {
+  t.plan(2)
+
+  var count = 0
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    if (count > 0) {
+      res.end(JSON.stringify({ hello: 'world' }))
+    } else {
+      setTimeout(() => {
+        res.end(JSON.stringify({ hello: 'world' }))
+      }, 1000)
+    }
+    count++
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 0,
+      requestTimeout: 250,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello',
+      maxRetries: 1
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
 test('Should call markAlive with a successful response', t => {
   t.plan(3)
 
@@ -565,6 +616,55 @@ test('Should return a request aborter utility', t => {
 
   request.abort()
   t.pass('ok')
+})
+
+test('Retry mechanism and abort', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    setTimeout(() => {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }, 1000)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    var count = 0
+    const transport = new Transport({
+      emit: event => {
+        if (event === 'request' && count++ > 0) {
+          request.abort()
+          server.stop()
+          t.pass('ok')
+        }
+      },
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 2,
+      requestTimeout: 100,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    const request = transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (e, { body }) => {
+      t.fail('Should not be called')
+    })
+  })
 })
 
 test('ResponseError', t => {
