@@ -2,11 +2,10 @@
 
 import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
-import Transport from './lib/Transport';
+import Transport, { ApiResponse, EventMeta, SniffMeta } from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
 import ConnectionPool, { nodeSelectorFn, nodeFilterFn } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
-import { ApiResponse } from './lib/Transport';
 
 declare type anyObject = {
     [key: string]: any;
@@ -471,4 +470,14 @@ declare const events: {
     SNIFF: string;
 };
 
-export { Client, Transport, ConnectionPool, Connection, Serializer, events, ApiResponse };
+export {
+  Client,
+  Transport,
+  ConnectionPool,
+  Connection,
+  Serializer,
+  events,
+  ApiResponse,
+  EventMeta,
+  SniffMeta
+};
