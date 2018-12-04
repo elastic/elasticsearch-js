@@ -1,8 +1,19 @@
 'use strict'
 
-import { Client, ApiResponse } from '../../index'
+import {
+  Client,
+  ApiResponse,
+  EventMeta,
+  SniffMeta,
+  events
+} from '../../index'
 
 const client = new Client({ node: 'http://localhost:9200' })
+
+client.on(events.REQUEST, (meta: EventMeta) => {})
+client.on(events.RESPONSE, (meta: EventMeta) => {})
+client.on(events.ERROR, (err: Error, meta: EventMeta) => {})
+client.on(events.SNIFF, (err: Error, meta: SniffMeta) => {})
 
 // Callbacks
 client.info((err: Error | null, result: ApiResponse) => {})

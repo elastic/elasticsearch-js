@@ -3,16 +3,21 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const { buildCluster } = require('../utils')
-const { Client, Connection, events, errors } = require('../../index')
+const { Client, Connection, Transport, events, errors } = require('../../index')
 
 test('Should update the connection pool', t => {
-  t.plan(8)
+  t.plan(10)
 
   buildCluster(({ nodes, shutdown }) => {
     const client = new Client({
       node: nodes[Object.keys(nodes)[0]].url
     })
     t.strictEqual(client.connectionPool.connections.size, 1)
+
+    client.on(events.SNIFF, (err, { reason }) => {
+      t.error(err)
+      t.strictEqual(reason, Transport.sniffReasons.DEFAULT)
+    })
 
     // run the sniffer
     client.transport.sniff((err, hosts) => {
@@ -42,7 +47,7 @@ test('Should update the connection pool', t => {
 })
 
 test('Sniff interval', t => {
-  t.plan(8)
+  t.plan(10)
 
   buildCluster(({ nodes, shutdown, kill }) => {
     const client = new Client({
@@ -51,12 +56,13 @@ test('Sniff interval', t => {
     })
 
     // this event will be triggered by api calls
-    client.on(events.SNIFF, (err, hosts) => {
+    client.on(events.SNIFF, (err, { hosts, reason }) => {
       t.error(err)
       t.strictEqual(
         client.connectionPool.connections.size,
         hosts.length
       )
+      t.strictEqual(reason, Transport.sniffReasons.SNIFF_INTERVAL)
     })
 
     t.strictEqual(client.connectionPool.connections.size, 1)
@@ -106,7 +112,7 @@ test('Should not close living connections', t => {
 })
 
 test('Sniff on connection fault', t => {
-  t.plan(4)
+  t.plan(5)
 
   buildCluster(({ nodes, shutdown }) => {
     const client = new Client({
@@ -121,12 +127,13 @@ test('Sniff on connection fault', t => {
     t.strictEqual(client.connectionPool.connections.size, 2)
 
     // this event will be triggered by the connection fault
-    client.on(events.SNIFF, (err, hosts) => {
+    client.on(events.SNIFF, (err, { hosts, reason }) => {
       t.error(err)
       t.strictEqual(
         client.connectionPool.connections.size,
         hosts.length
       )
+      t.strictEqual(reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
       shutdown()
     })
 
