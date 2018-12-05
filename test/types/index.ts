@@ -10,10 +10,9 @@ import {
 
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on(events.REQUEST, (meta: EventMeta) => {})
-client.on(events.RESPONSE, (meta: EventMeta) => {})
-client.on(events.ERROR, (err: Error, meta: EventMeta) => {})
-client.on(events.SNIFF, (err: Error, meta: SniffMeta) => {})
+client.on(events.REQUEST, (err: Error | null, meta: EventMeta) => {})
+client.on(events.RESPONSE, (err: Error | null, meta: EventMeta) => {})
+client.on(events.SNIFF, (err: Error | null, meta: SniffMeta) => {})
 
 // Callbacks
 client.info((err: Error | null, result: ApiResponse) => {})
