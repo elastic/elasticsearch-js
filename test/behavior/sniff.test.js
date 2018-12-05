@@ -5,6 +5,16 @@ const { URL } = require('url')
 const { buildCluster } = require('../utils')
 const { Client, Connection, Transport, events, errors } = require('../../index')
 
+/**
+ * The aim of this test is to verify how the sniffer behaves
+ * in a multi node situation.
+ * The `buildCluster` utility can boot an arbitrary number
+ * of nodes, that you can kill or spawn at your will.
+ * The sniffer component can be tested with its callback
+ * or by using the `sniff` event (to handle automatically
+ * triggered sniff).
+ */
+
 test('Should update the connection pool', t => {
   t.plan(10)
 
@@ -41,8 +51,8 @@ test('Should update the connection pool', t => {
       }
 
       t.strictEqual(client.connectionPool.connections.size, 4)
-      shutdown()
     })
+    t.teardown(shutdown)
   })
 })
 
@@ -76,8 +86,9 @@ test('Sniff interval', t => {
 
     setTimeout(() => {
       t.strictEqual(client.connectionPool.connections.size, 3)
-      shutdown()
     }, 200)
+
+    t.teardown(shutdown)
   })
 })
 
@@ -106,8 +117,9 @@ test('Should not close living connections', t => {
         client.connectionPool.connections.size,
         hosts.length
       )
-      shutdown()
     })
+
+    t.teardown(shutdown)
   })
 })
 
@@ -134,11 +146,12 @@ test('Sniff on connection fault', t => {
         hosts.length
       )
       t.strictEqual(reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
-      shutdown()
     })
 
     client.info((err, result) => {
       t.ok(err instanceof errors.ConnectionError)
     })
+
+    t.teardown(shutdown)
   })
 })
