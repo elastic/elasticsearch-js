@@ -92,6 +92,29 @@ test('Sniff interval', t => {
   })
 })
 
+test('Sniff on start', t => {
+  t.plan(4)
+
+  buildCluster(({ nodes, shutdown, kill }) => {
+    const client = new Client({
+      node: nodes[Object.keys(nodes)[0]].url,
+      sniffOnStart: true
+    })
+
+    client.on(events.SNIFF, (err, { hosts, reason }) => {
+      t.error(err)
+      t.strictEqual(
+        client.connectionPool.connections.size,
+        hosts.length
+      )
+      t.strictEqual(reason, Transport.sniffReasons.SNIFF_ON_START)
+    })
+
+    t.strictEqual(client.connectionPool.connections.size, 1)
+    t.teardown(shutdown)
+  })
+})
+
 test('Should not close living connections', t => {
   t.plan(3)
 
@@ -126,18 +149,29 @@ test('Should not close living connections', t => {
 test('Sniff on connection fault', t => {
   t.plan(5)
 
-  buildCluster(({ nodes, shutdown }) => {
+  buildCluster(({ nodes, shutdown, kill }) => {
+    class MyConnection extends Connection {
+      request (params, callback) {
+        if (this.id === 'http://localhost:9200/') {
+          callback(new Error('kaboom'), null)
+          return {}
+        } else {
+          return super.request(params, callback)
+        }
+      }
+    }
+
     const client = new Client({
       nodes: [
-        // TODO: this url may cause a flaky test
         'http://localhost:9200',
         nodes[Object.keys(nodes)[0]].url
       ],
       maxRetries: 0,
-      sniffOnConnectionFault: true
+      sniffOnConnectionFault: true,
+      Connection: MyConnection
     })
-    t.strictEqual(client.connectionPool.connections.size, 2)
 
+    t.strictEqual(client.connectionPool.connections.size, 2)
     // this event will be triggered by the connection fault
     client.on(events.SNIFF, (err, { hosts, reason }) => {
       t.error(err)
