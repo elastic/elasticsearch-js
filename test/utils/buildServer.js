@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('elasticsearch-test')
 const stoppable = require('stoppable')
 
 // allow self signed certificates for testing purposes
@@ -15,7 +16,10 @@ const secureOpts = {
   cert: readFileSync(join(__dirname, '..', 'fixtures', 'https.cert'), 'utf8')
 }
 
+var id = 0
 function buildServer (handler, opts, cb) {
+  const serverId = id++
+  debug(`Booting server '${serverId}'`)
   if (cb == null) {
     cb = opts
     opts = {}
@@ -32,6 +36,7 @@ function buildServer (handler, opts, cb) {
   })
   server.listen(0, () => {
     const port = server.address().port
+    debug(`Server '${serverId}' booted on port ${port}`)
     cb(Object.assign({}, secureOpts, { port }), server)
   })
 }
