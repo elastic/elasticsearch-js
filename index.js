@@ -23,12 +23,6 @@ class Client extends EventEmitter {
       this.on('error', console.log)
     }
 
-    // The logging is exposed via events, which the user can
-    // listen to and log the message its preferred way
-    // we add a fake listener to the error event to avoid
-    // the "unhandled error event" error.
-    this.on('error', () => {})
-
     const options = Object.assign({}, {
       Connection,
       ConnectionPool,
@@ -95,7 +89,6 @@ class Client extends EventEmitter {
 const events = {
   RESPONSE: 'response',
   REQUEST: 'request',
-  ERROR: 'error',
   SNIFF: 'sniff'
 }
 

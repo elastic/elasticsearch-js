@@ -40,10 +40,10 @@ export interface SniffMeta {
 
 export default class Transport {
   static sniffReasons: {
-      SNIFF_ON_START: string;
-      SNIFF_INTERVAL: string;
-      SNIFF_ON_CONNECTION_FAULT: string;
-      DEFAULT: string;
+    SNIFF_ON_START: string;
+    SNIFF_INTERVAL: string;
+    SNIFF_ON_CONNECTION_FAULT: string;
+    DEFAULT: string;
   };
   emit: emitFn & noopFn;
   connectionPool: ConnectionPool;

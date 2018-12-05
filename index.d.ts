@@ -8,7 +8,7 @@ import ConnectionPool, { nodeSelectorFn, nodeFilterFn } from './lib/ConnectionPo
 import Serializer from './lib/Serializer';
 
 declare type anyObject = {
-    [key: string]: any;
+  [key: string]: any;
 };
 declare type callbackFn = (err: Error | null, result: ApiResponse) => void;
 declare type apiMethod = (params?: anyObject | callbackFn, callback?: callbackFn) => any;
@@ -464,10 +464,9 @@ declare class Client extends EventEmitter {
 }
 
 declare const events: {
-    RESPONSE: string;
-    REQUEST: string;
-    ERROR: string;
-    SNIFF: string;
+  RESPONSE: string;
+  REQUEST: string;
+  SNIFF: string;
 };
 
 export {
