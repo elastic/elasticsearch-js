@@ -1,6 +1,6 @@
 version: '3.2'
 services:
-  client:
+  client-oss:
     image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
     build:
       context: ..
@@ -8,7 +8,7 @@ services:
       args:
           NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
     environment:
-      - "TEST_ES_SERVER=http://elasticsearch:9200"
+      - "TEST_ES_SERVER=http://elasticsearch-oss:9200"
     volumes:
       - ..:/usr/src/app
       # This will mount the node_modules directory
@@ -18,8 +18,32 @@ services:
     networks:
       - esnet
     depends_on:
-      - elasticsearch
-  elasticsearch:
+      - elasticsearch-oss
+
+  client-commercial:
+    image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
+    build:
+      context: ..
+      dockerfile: .ci/Dockerfile
+      args:
+          NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
+    environment:
+      - "TEST_ES_SERVER=http://elastic:secret@elasticsearch-commercial:9201"
+      - "ELASTIC_PASSWORD=secret"
+    volumes:
+      - ..:/usr/src/app
+      # This will mount the node_modules directory
+      # to the host machine using the buildtime directory.
+      - /usr/src/app/node_modules
+      - esvol:/tmp
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch-commercial
+    # we don't need to run unit test again
+    command: ['npm', 'run', 'test:integration']
+
+  elasticsearch-oss:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
     volumes:
       - esvol:/tmp
@@ -27,11 +51,34 @@ services:
       - esnet
     environment:
       - path.repo=/tmp
-      - "repositories.url.allowed_urls=http://*"
+      - 'repositories.url.allowed_urls=http://*'
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
-      - "http.max_content_length=5mb"
+      - 'discovery.zen.ping.unicast.hosts=elasticsearch'
+      - 'http.max_content_length=5mb'
+      - http.port=9200
+
+  elasticsearch-commercial:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
+    volumes:
+      - esvol:/tmp
+    networks:
+      - esnet
+    environment:
+      - path.repo=/tmp
+      - 'repositories.url.allowed_urls=http://*'
+      - node.attr.testattr=test
+      - bootstrap.memory_lock=false
+      - 'discovery.zen.ping.unicast.hosts=elasticsearch'
+      - 'http.max_content_length=5mb'
+      - http.port=9201
+      - ELASTIC_PASSWORD=secret
+      - 'xpack.security.enabled=true'
+      - 'xpack.watcher.enabled=false'
+      - 'xpack.monitoring.enabled=false'
+      - 'xpack.ml.enabled=false'
+      - 'xpack.license.self_generated.type=trial'
+
 networks:
   esnet:
 volumes:
