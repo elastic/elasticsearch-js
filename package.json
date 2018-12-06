@@ -3,7 +3,7 @@
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "keywords": [
     "elasticsearch",
     "elastic",
