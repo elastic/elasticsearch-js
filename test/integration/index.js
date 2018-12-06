@@ -24,8 +24,8 @@ function Runner (opts) {
   assert(opts.node, 'Missing base node')
   this.client = new Client({ node: opts.node })
   this.log = ora('Loading yaml suite').start()
-  this.isCommercial = opts.isCommercial
-  this.commercialBlackList = {
+  this.isPlatinum = opts.isPlatinum
+  this.platinumBlackList = {
     // file path: test name
     'cat.aliases/10_basic.yml': 'Empty cluster',
     'index/10_with_id.yml': 'Index with ID',
@@ -58,7 +58,7 @@ Runner.prototype.start = function () {
 
     // Set the repository to the given sha and run the test suite
     this.withSHA(sha, () => {
-      this.log.succeed(`Testing ${this.isCommercial ? 'commercial' : 'oss'} api...`)
+      this.log.succeed(`Testing ${this.isPlatinum ? 'platinum' : 'oss'} api...`)
       runTest.call(this, version)
     })
   })
@@ -66,7 +66,7 @@ Runner.prototype.start = function () {
   function runTest (version) {
     const files = []
       .concat(getAllFiles(yamlFolder))
-      .concat(this.isCommercial ? getAllFiles(xPackYamlFolder) : [])
+      .concat(this.isPlatinum ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
 
     files.forEach(runTestFile.bind(this))
@@ -96,14 +96,14 @@ Runner.prototype.start = function () {
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
-          // should skip the test inside `commercialBlackList`
-          // if we are testing the commercial apis
-          if (this.isCommercial) {
-            const list = Object.keys(this.commercialBlackList)
+          // should skip the test inside `platinumBlackList`
+          // if we are testing the platinum apis
+          if (this.isPlatinum) {
+            const list = Object.keys(this.platinumBlackList)
             for (var i = 0; i < list.length; i++) {
-              if (file.endsWith(list[i]) && name === this.commercialBlackList[list[i]]) {
+              if (file.endsWith(list[i]) && name === this.platinumBlackList[list[i]]) {
                 const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-                tap.skip(`Skipping test ${testName} because is blacklisted in the commercial test`)
+                tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
                 return
               }
             }
@@ -245,7 +245,7 @@ if (require.main === module) {
   const runner = Runner({
     version: process.env.ELASTICSEARCH_VERSION || '6.5',
     node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
-    isCommercial: !!process.env.ELASTIC_PASSWORD
+    isPlatinum: !!process.env.ELASTIC_PASSWORD
   })
   runner.start()
 }

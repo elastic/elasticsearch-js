@@ -20,7 +20,7 @@ services:
     depends_on:
       - elasticsearch-oss
 
-  client-commercial:
+  client-platinum:
     image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
     build:
       context: ..
@@ -28,7 +28,7 @@ services:
       args:
           NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
     environment:
-      - "TEST_ES_SERVER=http://elastic:secret@elasticsearch-commercial:9201"
+      - "TEST_ES_SERVER=http://elastic:secret@elasticsearch-platinum:9201"
       - "ELASTIC_PASSWORD=secret"
     volumes:
       - ..:/usr/src/app
@@ -39,7 +39,7 @@ services:
     networks:
       - esnet
     depends_on:
-      - elasticsearch-commercial
+      - elasticsearch-platinum
     # we don't need to run unit test again
     command: ['npm', 'run', 'test:integration']
 
@@ -58,7 +58,7 @@ services:
       - 'http.max_content_length=5mb'
       - http.port=9200
 
-  elasticsearch-commercial:
+  elasticsearch-platinum:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
     volumes:
       - esvol:/tmp
