@@ -5,20 +5,20 @@ const workq = require('workq')
 const buildServer = require('./buildServer')
 
 var id = 0
-function buildCluster (opts, callback) {
+function buildCluster (options, callback) {
   const clusterId = id++
   debug(`Booting cluster '${clusterId}'`)
-  if (typeof opts === 'function') {
-    callback = opts
-    opts = {}
+  if (typeof options === 'function') {
+    callback = options
+    options = {}
   }
 
   const q = workq()
   const nodes = {}
   const sniffResult = { nodes: {} }
 
-  opts.numberOfNodes = opts.numberOfNodes || 4
-  for (var i = 0; i < opts.numberOfNodes; i++) {
+  options.numberOfNodes = options.numberOfNodes || 4
+  for (var i = 0; i < options.numberOfNodes; i++) {
     q.add(bootNode, { id: `node${i}` })
   }
 
@@ -32,7 +32,7 @@ function buildCluster (opts, callback) {
       }
     }
 
-    buildServer(handler, ({ port }, server) => {
+    buildServer(options.handler || handler, ({ port }, server) => {
       nodes[opts.id] = {
         url: `http://localhost:${port}`,
         server
@@ -77,7 +77,7 @@ function buildCluster (opts, callback) {
   }
 
   q.drain(done => {
-    debug(`Cluster '${clusterId}' booted with ${opts.numberOfNodes} nodes`)
+    debug(`Cluster '${clusterId}' booted with ${options.numberOfNodes} nodes`)
     callback(cluster)
     done()
   })

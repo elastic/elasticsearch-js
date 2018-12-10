@@ -5,6 +5,7 @@ import {
   ApiResponse,
   EventMeta,
   SniffMeta,
+  ResurrectMeta,
   events
 } from '../../index'
 
@@ -13,6 +14,7 @@ const client = new Client({ node: 'http://localhost:9200' })
 client.on(events.REQUEST, (err: Error | null, meta: EventMeta) => {})
 client.on(events.RESPONSE, (err: Error | null, meta: EventMeta) => {})
 client.on(events.SNIFF, (err: Error | null, meta: SniffMeta) => {})
+client.on(events.RESURRECT, (err: Error | null, meta: ResurrectMeta) => {})
 
 // Callbacks
 client.info((err: Error | null, result: ApiResponse) => {})

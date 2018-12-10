@@ -2,7 +2,8 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client } = require('../../index')
+const { Client, ConnectionPool } = require('../../index')
+const { buildServer } = require('../utils')
 
 test('Configure host', t => {
   t.test('Single string', t => {
@@ -164,4 +165,65 @@ test('Configure host', t => {
   })
 
   t.end()
+})
+
+test('Node with auth data in the url', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      authorization: 'Basic Zm9vOmJhcg=='
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://foo:bar@localhost:${port}`
+    })
+
+    client.info((err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Client close', t => {
+  t.plan(2)
+
+  class MyConnectionPool extends ConnectionPool {
+    empty () {
+      t.ok('called')
+      super.empty()
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    ConnectionPool: MyConnectionPool
+  })
+
+  client.close(() => t.pass('Closed'))
+})
+
+test('Client close (promise)', t => {
+  t.plan(2)
+
+  class MyConnectionPool extends ConnectionPool {
+    empty () {
+      t.ok('called')
+      super.empty()
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    ConnectionPool: MyConnectionPool
+  })
+
+  client.close()
+    .then(() => t.pass('Closed'))
 })
