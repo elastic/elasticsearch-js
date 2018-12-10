@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
 import Transport, { ApiResponse, EventMeta, SniffMeta } from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
-import ConnectionPool, { nodeSelectorFn, nodeFilterFn } from './lib/ConnectionPool';
+import ConnectionPool, { nodeSelectorFn, nodeFilterFn, ResurrectMeta } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 
 declare type anyObject = {
@@ -461,12 +461,14 @@ declare class Client extends EventEmitter {
     }
   }
   constructor(opts?: ClientOptions);
+  close(callback?: Function): Promise<void> | void;
 }
 
 declare const events: {
   RESPONSE: string;
   REQUEST: string;
   SNIFF: string;
+  RESURRECT: string;
 };
 
 export {
@@ -478,5 +480,6 @@ export {
   events,
   ApiResponse,
   EventMeta,
-  SniffMeta
+  SniffMeta,
+  ResurrectMeta
 };

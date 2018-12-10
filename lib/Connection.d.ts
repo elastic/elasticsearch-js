@@ -46,7 +46,7 @@ export default class Connection {
   _status: string;
   _agent: http.Agent;
   constructor(opts?: ConnectionOptions);
-  request(params: any, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest;
+  request(params: http.ClientRequestArgs, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest;
   close(): Connection;
   setRole(role: string, enabled: boolean): Connection;
   status: string;
