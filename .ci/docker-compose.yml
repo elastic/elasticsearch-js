@@ -40,8 +40,6 @@ services:
       - esnet-platinum
     depends_on:
       - elasticsearch-platinum
-    # we don't need to run unit test again
-    command: ['npm', 'run', 'test:integration']
 
   elasticsearch-oss:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION:-6.5.0}
