@@ -16,7 +16,7 @@ services:
       - /usr/src/app/node_modules
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     depends_on:
       - elasticsearch-oss
 
@@ -37,7 +37,7 @@ services:
       - /usr/src/app/node_modules
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-platinum
     depends_on:
       - elasticsearch-platinum
     # we don't need to run unit test again
@@ -48,7 +48,7 @@ services:
     volumes:
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     environment:
       - path.repo=/tmp
       - 'repositories.url.allowed_urls=http://*'
@@ -62,7 +62,7 @@ services:
     volumes:
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-platinum
     environment:
       - path.repo=/tmp
       - 'repositories.url.allowed_urls=http://*'
@@ -78,6 +78,7 @@ services:
       - 'xpack.license.self_generated.type=trial'
 
 networks:
-  esnet:
+  esnet-oss:
+  esnet-platinum:
 volumes:
   esvol:
