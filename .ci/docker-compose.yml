@@ -56,7 +56,6 @@ services:
       - bootstrap.memory_lock=false
       - 'discovery.zen.ping.unicast.hosts=elasticsearch'
       - 'http.max_content_length=5mb'
-      - http.port=9200
 
   elasticsearch-platinum:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
@@ -71,7 +70,6 @@ services:
       - bootstrap.memory_lock=false
       - 'discovery.zen.ping.unicast.hosts=elasticsearch'
       - 'http.max_content_length=5mb'
-      - http.port=9201
       - ELASTIC_PASSWORD=secret
       - 'xpack.security.enabled=true'
       - 'xpack.watcher.enabled=false'
