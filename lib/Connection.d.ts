@@ -14,6 +14,10 @@ interface ConnectionOptions {
   roles?: any;
 }
 
+interface RequestOptions extends http.ClientRequestArgs {
+  asStream?: boolean;
+}
+
 export interface AgentOptions {
   keepAlive: boolean;
   keepAliveMsecs: number;
@@ -46,7 +50,7 @@ export default class Connection {
   _status: string;
   _agent: http.Agent;
   constructor(opts?: ConnectionOptions);
-  request(params: http.ClientRequestArgs, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest;
+  request(params: RequestOptions, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest;
   close(): Connection;
   setRole(role: string, enabled: boolean): Connection;
   status: string;

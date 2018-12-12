@@ -38,6 +38,13 @@ export interface SniffMeta {
   reason: string;
 }
 
+export interface RequestOptions {
+  ignore?: number | number[];
+  requestTimeout?: number | string;
+  maxRetries?: number;
+  asStream?: boolean;
+}
+
 export default class Transport {
   static sniffReasons: {
     SNIFF_ON_START: string;
@@ -58,7 +65,7 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: any, callback: (err: Error | null, result: ApiResponse) => void): any;
+  request(params: any, options: RequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
   getConnection(): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }
