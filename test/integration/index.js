@@ -46,7 +46,7 @@ Runner.prototype.start = function () {
   client.info((err, { body }) => {
     if (err) {
       this.log.fail(err.message)
-      return
+      process.exit(1)
     }
     const { number: version, build_hash: sha } = body.version
 

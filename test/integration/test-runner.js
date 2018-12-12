@@ -252,7 +252,8 @@ TestRunner.prototype.set = function (key, name) {
 TestRunner.prototype.do = function (action, done) {
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
-  api(cmd.params, (err, { body, warnings }) => {
+  const options = { ignore: cmd.params.ignore }
+  api(cmd.params, options, (err, { body, warnings }) => {
     if (action.warnings && warnings === null) {
       this.tap.fail('We should get a warning header', action.warnings)
     } else if (!action.warnings && warnings !== null) {

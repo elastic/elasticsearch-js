@@ -26,6 +26,18 @@ client.index({
   body: { hello: 'world' }
 }, (err: Error | null, result: ApiResponse) => {})
 
+// request options
+client.index({
+  index: 'test',
+  type: 'test',
+  id: 'test',
+  body: { hello: 'world' }
+}, {
+  maxRetries: 2,
+  ignore: [404],
+  requestTimeout: 2000
+}, (err: Error | null, result: ApiResponse) => {})
+
 // Promises
 client.info()
   .then((result: ApiResponse) => {})
@@ -36,6 +48,20 @@ client.index({
   type: 'test',
   id: 'test',
   body: { hello: 'world' }
+})
+  .then((result: ApiResponse) => {})
+  .catch((err: Error) => {})
+
+// request options
+client.index({
+  index: 'test',
+  type: 'test',
+  id: 'test',
+  body: { hello: 'world' }
+}, {
+  maxRetries: 2,
+  ignore: [404],
+  requestTimeout: 2000
 })
   .then((result: ApiResponse) => {})
   .catch((err: Error) => {})

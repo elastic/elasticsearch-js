@@ -509,7 +509,8 @@ test('Custom retry mechanism', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       maxRetries: 1
     }, (err, { body }) => {
       t.error(err)
@@ -727,7 +728,8 @@ test('Override requestTimeout', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       requestTimeout: 2000
     }, (err, { body }) => {
       t.error(err)
@@ -1028,7 +1030,8 @@ test('Ignore status code', t => {
 
   transport.request({
     method: 'GET',
-    path: '/404',
+    path: '/404'
+  }, {
     ignore: [404]
   }, (err, { body }) => {
     t.error(err)
@@ -1044,7 +1047,8 @@ test('Ignore status code', t => {
 
   transport.request({
     method: 'GET',
-    path: '/404',
+    path: '/404'
+  }, {
     ignore: [403, 405]
   }, (err, { body }) => {
     t.ok(err instanceof ResponseError)
@@ -1148,7 +1152,8 @@ test('timeout option', t => {
 
         transport.request({
           method: 'GET',
-          path: '/hello',
+          path: '/hello'
+        }, {
           requestTimeout: 500
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
@@ -1213,7 +1218,8 @@ test('timeout option', t => {
 
         transport.request({
           method: 'GET',
-          path: '/hello',
+          path: '/hello'
+        }, {
           requestTimeout: '0.5s'
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
@@ -1499,7 +1505,8 @@ test('asStream set to true', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       asStream: true
     }, (err, { body, headers }) => {
       t.error(err)
