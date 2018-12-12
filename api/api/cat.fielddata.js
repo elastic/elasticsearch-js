@@ -17,15 +17,21 @@ function buildCatFielddata (opts) {
    * @param {boolean} v - Verbose mode. Display column headers
    * @param {list} fields - A comma-separated list of fields to return in the output
    */
-  return function catFielddata (params, callback) {
+  return function catFielddata (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catFielddata(params, (err, body) => {
+        catFielddata(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -101,7 +107,7 @@ function buildCatFielddata (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -113,12 +119,17 @@ function buildCatFielddata (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

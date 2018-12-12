@@ -15,15 +15,21 @@ function buildMsearch (opts) {
    * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
-  return function msearch (params, callback) {
+  return function msearch (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        msearch(params, (err, body) => {
+        msearch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -99,7 +105,7 @@ function buildMsearch (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -111,12 +117,17 @@ function buildMsearch (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       bulkBody: params.body,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

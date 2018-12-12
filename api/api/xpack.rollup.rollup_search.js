@@ -10,15 +10,21 @@ function buildXpackRollupRollupSearch (opts) {
    * @param {string} type - The doc type inside the index
    * @param {object} body - The search request body
    */
-  return function xpackRollupRollupSearch (params, callback) {
+  return function xpackRollupRollupSearch (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupRollupSearch(params, (err, body) => {
+        xpackRollupRollupSearch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -82,7 +88,7 @@ function buildXpackRollupRollupSearch (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -96,12 +102,17 @@ function buildXpackRollupRollupSearch (opts) {
         : '/{index}/_rollup_search',
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

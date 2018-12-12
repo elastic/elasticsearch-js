@@ -9,15 +9,21 @@ function buildGetScript (opts) {
    * @param {string} id - Script ID
    * @param {time} master_timeout - Specify timeout for connection to master
    */
-  return function getScript (params, callback) {
+  return function getScript (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        getScript(params, (err, body) => {
+        getScript(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -83,7 +89,7 @@ function buildGetScript (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -95,12 +101,17 @@ function buildGetScript (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

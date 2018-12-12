@@ -12,15 +12,21 @@ function buildSnapshotGet (opts) {
    * @param {boolean} ignore_unavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
    * @param {boolean} verbose - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
    */
-  return function snapshotGet (params, callback) {
+  return function snapshotGet (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        snapshotGet(params, (err, body) => {
+        snapshotGet(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -104,7 +110,7 @@ function buildSnapshotGet (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -116,12 +122,17 @@ function buildSnapshotGet (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

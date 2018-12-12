@@ -14,15 +14,21 @@ function buildIndicesSplit (opts) {
    * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the shrunken index before the operation returns.
    * @param {object} body - The configuration for the target index (`settings` and `aliases`)
    */
-  return function indicesSplit (params, callback) {
+  return function indicesSplit (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesSplit(params, (err, body) => {
+        indicesSplit(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -102,7 +108,7 @@ function buildIndicesSplit (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -114,12 +120,17 @@ function buildIndicesSplit (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

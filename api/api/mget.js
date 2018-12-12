@@ -18,15 +18,21 @@ function buildMget (opts) {
    * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {object} body - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
    */
-  return function mget (params, callback) {
+  return function mget (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        mget(params, (err, body) => {
+        mget(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -108,7 +114,7 @@ function buildMget (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -120,12 +126,17 @@ function buildMget (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

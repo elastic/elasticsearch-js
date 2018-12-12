@@ -10,15 +10,21 @@ function buildClusterAllocationExplain (opts) {
    * @param {boolean} include_disk_info - Return information about disk usage and shard sizes (default: false)
    * @param {object} body - The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
    */
-  return function clusterAllocationExplain (params, callback) {
+  return function clusterAllocationExplain (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        clusterAllocationExplain(params, (err, body) => {
+        clusterAllocationExplain(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -72,7 +78,7 @@ function buildClusterAllocationExplain (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -84,12 +90,17 @@ function buildClusterAllocationExplain (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

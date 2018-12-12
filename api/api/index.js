@@ -20,15 +20,21 @@ function buildIndex (opts) {
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The document
    */
-  return function index (params, callback) {
+  return function index (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        index(params, (err, body) => {
+        index(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -129,7 +135,7 @@ function buildIndex (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -141,12 +147,17 @@ function buildIndex (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

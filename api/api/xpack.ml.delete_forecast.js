@@ -11,15 +11,21 @@ function buildXpackMlDeleteForecast (opts) {
    * @param {boolean} allow_no_forecasts - Whether to ignore if `_all` matches no forecasts
    * @param {time} timeout - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
    */
-  return function xpackMlDeleteForecast (params, callback) {
+  return function xpackMlDeleteForecast (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlDeleteForecast(params, (err, body) => {
+        xpackMlDeleteForecast(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -85,7 +91,7 @@ function buildXpackMlDeleteForecast (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -97,12 +103,17 @@ function buildXpackMlDeleteForecast (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

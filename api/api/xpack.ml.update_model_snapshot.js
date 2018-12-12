@@ -10,15 +10,21 @@ function buildXpackMlUpdateModelSnapshot (opts) {
    * @param {string} snapshot_id - The ID of the snapshot to update
    * @param {object} body - The model snapshot properties to update
    */
-  return function xpackMlUpdateModelSnapshot (params, callback) {
+  return function xpackMlUpdateModelSnapshot (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlUpdateModelSnapshot(params, (err, body) => {
+        xpackMlUpdateModelSnapshot(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -88,7 +94,7 @@ function buildXpackMlUpdateModelSnapshot (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -100,12 +106,17 @@ function buildXpackMlUpdateModelSnapshot (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

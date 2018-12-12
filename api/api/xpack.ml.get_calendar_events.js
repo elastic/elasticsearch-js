@@ -13,15 +13,21 @@ function buildXpackMlGetCalendarEvents (opts) {
    * @param {int} from - Skips a number of events
    * @param {int} size - Specifies a max number of events to get
    */
-  return function xpackMlGetCalendarEvents (params, callback) {
+  return function xpackMlGetCalendarEvents (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlGetCalendarEvents(params, (err, body) => {
+        xpackMlGetCalendarEvents(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -85,7 +91,7 @@ function buildXpackMlGetCalendarEvents (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -97,12 +103,17 @@ function buildXpackMlGetCalendarEvents (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

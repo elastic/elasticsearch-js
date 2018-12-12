@@ -11,15 +11,21 @@ function buildClusterPutSettings (opts) {
    * @param {time} timeout - Explicit operation timeout
    * @param {object} body - The settings to be updated. Can be either `transient` or `persistent` (survives cluster restart).
    */
-  return function clusterPutSettings (params, callback) {
+  return function clusterPutSettings (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        clusterPutSettings(params, (err, body) => {
+        clusterPutSettings(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -83,7 +89,7 @@ function buildClusterPutSettings (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -95,12 +101,17 @@ function buildClusterPutSettings (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

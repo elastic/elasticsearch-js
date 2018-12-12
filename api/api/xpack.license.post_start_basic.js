@@ -8,15 +8,21 @@ function buildXpackLicensePostStartBasic (opts) {
    *
    * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
    */
-  return function xpackLicensePostStartBasic (params, callback) {
+  return function xpackLicensePostStartBasic (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackLicensePostStartBasic(params, (err, body) => {
+        xpackLicensePostStartBasic(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -66,7 +72,7 @@ function buildXpackLicensePostStartBasic (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -78,12 +84,17 @@ function buildXpackLicensePostStartBasic (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

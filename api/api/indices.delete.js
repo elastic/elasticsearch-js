@@ -13,15 +13,21 @@ function buildIndicesDelete (opts) {
    * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
    * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
    */
-  return function indicesDelete (params, callback) {
+  return function indicesDelete (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesDelete(params, (err, body) => {
+        indicesDelete(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -95,7 +101,7 @@ function buildIndicesDelete (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -107,12 +113,17 @@ function buildIndicesDelete (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

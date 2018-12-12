@@ -17,15 +17,21 @@ function buildDelete (opts) {
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
-  return function _delete (params, callback) {
+  return function _delete (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        _delete(params, (err, body) => {
+        _delete(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -128,7 +134,7 @@ function buildDelete (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -140,12 +146,17 @@ function buildDelete (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

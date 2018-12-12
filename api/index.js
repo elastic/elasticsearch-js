@@ -442,11 +442,11 @@ function ESAPI (opts) {
 // of js closures to have a simple cache with the least overhead.
 function lazyLoad (file, opts) {
   var fn = null
-  return function _lazyLoad (params, callback) {
+  return function _lazyLoad (params, options, callback) {
     if (fn === null) {
       fn = require(file)(opts)
     }
-    return fn(params, callback)
+    return fn(params, options, callback)
   }
 }
 

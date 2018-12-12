@@ -9,15 +9,21 @@ function buildCcrPutAutoFollowPattern (opts) {
    * @param {string} name - The name of the auto follow pattern.
    * @param {object} body - The specification of the auto follow pattern
    */
-  return function ccrPutAutoFollowPattern (params, callback) {
+  return function ccrPutAutoFollowPattern (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        ccrPutAutoFollowPattern(params, (err, body) => {
+        ccrPutAutoFollowPattern(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,7 +79,7 @@ function buildCcrPutAutoFollowPattern (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -85,12 +91,17 @@ function buildCcrPutAutoFollowPattern (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

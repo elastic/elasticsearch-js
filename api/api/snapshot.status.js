@@ -11,15 +11,21 @@ function buildSnapshotStatus (opts) {
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} ignore_unavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
    */
-  return function snapshotStatus (params, callback) {
+  return function snapshotStatus (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        snapshotStatus(params, (err, body) => {
+        snapshotStatus(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -89,7 +95,7 @@ function buildSnapshotStatus (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -101,12 +107,17 @@ function buildSnapshotStatus (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

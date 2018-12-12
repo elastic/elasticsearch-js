@@ -9,15 +9,21 @@ function buildCatHelp (opts) {
    * @param {boolean} help - Return help information
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    */
-  return function catHelp (params, callback) {
+  return function catHelp (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catHelp(params, (err, body) => {
+        catHelp(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -79,7 +85,7 @@ function buildCatHelp (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -91,12 +97,17 @@ function buildCatHelp (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

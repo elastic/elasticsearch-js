@@ -16,15 +16,21 @@ function buildXpackMlGetModelSnapshots (opts) {
    * @param {boolean} desc - True if the results should be sorted in descending order
    * @param {object} body - Model snapshot selection criteria
    */
-  return function xpackMlGetModelSnapshots (params, callback) {
+  return function xpackMlGetModelSnapshots (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlGetModelSnapshots(params, (err, body) => {
+        xpackMlGetModelSnapshots(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -92,7 +98,7 @@ function buildXpackMlGetModelSnapshots (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -104,12 +110,17 @@ function buildXpackMlGetModelSnapshots (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

@@ -12,15 +12,21 @@ function buildXpackMlStartDatafeed (opts) {
    * @param {time} timeout - Controls the time to wait until a datafeed has started. Default to 20 seconds
    * @param {object} body - The start datafeed parameters
    */
-  return function xpackMlStartDatafeed (params, callback) {
+  return function xpackMlStartDatafeed (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlStartDatafeed(params, (err, body) => {
+        xpackMlStartDatafeed(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -74,7 +80,7 @@ function buildXpackMlStartDatafeed (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -86,12 +92,17 @@ function buildXpackMlStartDatafeed (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

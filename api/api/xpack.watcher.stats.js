@@ -10,15 +10,21 @@ function buildXpackWatcherStats (opts) {
    * @param {enum} metric - Controls what additional stat metrics should be include in the response
    * @param {boolean} emit_stacktraces - Emits stack traces of currently running watches
    */
-  return function xpackWatcherStats (params, callback) {
+  return function xpackWatcherStats (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherStats(params, (err, body) => {
+        xpackWatcherStats(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -70,7 +76,7 @@ function buildXpackWatcherStats (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -82,12 +88,17 @@ function buildXpackWatcherStats (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

@@ -13,15 +13,21 @@ function buildIndicesCreate (opts) {
    * @param {boolean} update_all_types - Whether to update the mapping for all fields with the same name across all types or not
    * @param {object} body - The configuration for the index (`settings` and `mappings`)
    */
-  return function indicesCreate (params, callback) {
+  return function indicesCreate (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesCreate(params, (err, body) => {
+        indicesCreate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -87,7 +93,7 @@ function buildIndicesCreate (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -99,12 +105,17 @@ function buildIndicesCreate (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

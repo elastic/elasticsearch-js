@@ -17,15 +17,21 @@ function buildXpackMlGetRecords (opts) {
    * @param {boolean} desc - Set the sort direction
    * @param {object} body - Record selection criteria
    */
-  return function xpackMlGetRecords (params, callback) {
+  return function xpackMlGetRecords (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlGetRecords(params, (err, body) => {
+        xpackMlGetRecords(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -89,7 +95,7 @@ function buildXpackMlGetRecords (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -101,12 +107,17 @@ function buildXpackMlGetRecords (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

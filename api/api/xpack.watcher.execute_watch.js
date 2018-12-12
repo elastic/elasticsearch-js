@@ -10,15 +10,21 @@ function buildXpackWatcherExecuteWatch (opts) {
    * @param {boolean} debug - indicates whether the watch should execute in debug mode
    * @param {object} body - Execution control
    */
-  return function xpackWatcherExecuteWatch (params, callback) {
+  return function xpackWatcherExecuteWatch (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherExecuteWatch(params, (err, body) => {
+        xpackWatcherExecuteWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -60,7 +66,7 @@ function buildXpackWatcherExecuteWatch (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -72,12 +78,17 @@ function buildXpackWatcherExecuteWatch (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

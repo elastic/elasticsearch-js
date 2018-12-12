@@ -22,15 +22,21 @@ function buildIndicesValidateQuery (opts) {
    * @param {boolean} all_shards - Execute validation on all shards instead of one random shard per index
    * @param {object} body - The query definition specified with the Query DSL
    */
-  return function indicesValidateQuery (params, callback) {
+  return function indicesValidateQuery (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesValidateQuery(params, (err, body) => {
+        indicesValidateQuery(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -112,7 +118,7 @@ function buildIndicesValidateQuery (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -124,12 +130,17 @@ function buildIndicesValidateQuery (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

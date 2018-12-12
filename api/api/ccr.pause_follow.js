@@ -8,15 +8,21 @@ function buildCcrPauseFollow (opts) {
    *
    * @param {string} index - The name of the follower index that should pause following its leader index.
    */
-  return function ccrPauseFollow (params, callback) {
+  return function ccrPauseFollow (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        ccrPauseFollow(params, (err, body) => {
+        ccrPauseFollow(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -66,7 +72,7 @@ function buildCcrPauseFollow (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -78,12 +84,17 @@ function buildCcrPauseFollow (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

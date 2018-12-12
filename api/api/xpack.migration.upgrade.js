@@ -9,15 +9,21 @@ function buildXpackMigrationUpgrade (opts) {
    * @param {string} index - The name of the index
    * @param {boolean} wait_for_completion - Should the request block until the upgrade operation is completed
    */
-  return function xpackMigrationUpgrade (params, callback) {
+  return function xpackMigrationUpgrade (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMigrationUpgrade(params, (err, body) => {
+        xpackMigrationUpgrade(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -67,7 +73,7 @@ function buildXpackMigrationUpgrade (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -79,12 +85,17 @@ function buildXpackMigrationUpgrade (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

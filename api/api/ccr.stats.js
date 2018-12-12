@@ -7,15 +7,21 @@ function buildCcrStats (opts) {
    * Perform a [ccr.stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html) request
    *
    */
-  return function ccrStats (params, callback) {
+  return function ccrStats (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        ccrStats(params, (err, body) => {
+        ccrStats(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -57,7 +63,7 @@ function buildCcrStats (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -69,12 +75,17 @@ function buildCcrStats (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

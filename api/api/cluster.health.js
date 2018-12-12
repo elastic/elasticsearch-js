@@ -18,15 +18,21 @@ function buildClusterHealth (opts) {
    * @param {boolean} wait_for_no_initializing_shards - Whether to wait until there are no initializing shards in the cluster
    * @param {enum} wait_for_status - Wait until cluster is in a specific state
    */
-  return function clusterHealth (params, callback) {
+  return function clusterHealth (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        clusterHealth(params, (err, body) => {
+        clusterHealth(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -104,7 +110,7 @@ function buildClusterHealth (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -116,12 +122,17 @@ function buildClusterHealth (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

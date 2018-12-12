@@ -11,15 +11,21 @@ function buildXpackMlRevertModelSnapshot (opts) {
    * @param {boolean} delete_intervening_results - Should we reset the results back to the time of the snapshot?
    * @param {object} body - Reversion options
    */
-  return function xpackMlRevertModelSnapshot (params, callback) {
+  return function xpackMlRevertModelSnapshot (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlRevertModelSnapshot(params, (err, body) => {
+        xpackMlRevertModelSnapshot(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -83,7 +89,7 @@ function buildXpackMlRevertModelSnapshot (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -95,12 +101,17 @@ function buildXpackMlRevertModelSnapshot (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

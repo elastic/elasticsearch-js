@@ -9,15 +9,21 @@ function buildXpackSecurityPutPrivileges (opts) {
    * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
    * @param {object} body - The privilege(s) to add
    */
-  return function xpackSecurityPutPrivileges (params, callback) {
+  return function xpackSecurityPutPrivileges (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityPutPrivileges(params, (err, body) => {
+        xpackSecurityPutPrivileges(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -67,7 +73,7 @@ function buildXpackSecurityPutPrivileges (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -79,12 +85,17 @@ function buildXpackSecurityPutPrivileges (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

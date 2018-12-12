@@ -10,15 +10,21 @@ function buildSnapshotGetRepository (opts) {
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
-  return function snapshotGetRepository (params, callback) {
+  return function snapshotGetRepository (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        snapshotGetRepository(params, (err, body) => {
+        snapshotGetRepository(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -80,7 +86,7 @@ function buildSnapshotGetRepository (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -92,12 +98,17 @@ function buildSnapshotGetRepository (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

@@ -11,15 +11,21 @@ function buildXpackMlStopDatafeed (opts) {
    * @param {boolean} force - True if the datafeed should be forcefully stopped.
    * @param {time} timeout - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
    */
-  return function xpackMlStopDatafeed (params, callback) {
+  return function xpackMlStopDatafeed (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlStopDatafeed(params, (err, body) => {
+        xpackMlStopDatafeed(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,7 +79,7 @@ function buildXpackMlStopDatafeed (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -85,12 +91,17 @@ function buildXpackMlStopDatafeed (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

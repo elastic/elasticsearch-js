@@ -7,15 +7,21 @@ function buildIngestProcessorGrok (opts) {
    * Perform a [ingest.processor_grok](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
    *
    */
-  return function ingestProcessorGrok (params, callback) {
+  return function ingestProcessorGrok (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        ingestProcessorGrok(params, (err, body) => {
+        ingestProcessorGrok(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,7 +79,7 @@ function buildIngestProcessorGrok (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -85,12 +91,17 @@ function buildIngestProcessorGrok (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

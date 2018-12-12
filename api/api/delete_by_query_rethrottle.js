@@ -9,15 +9,21 @@ function buildDeleteByQueryRethrottle (opts) {
    * @param {string} task_id - The task id to rethrottle
    * @param {number} requests_per_second - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
    */
-  return function deleteByQueryRethrottle (params, callback) {
+  return function deleteByQueryRethrottle (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        deleteByQueryRethrottle(params, (err, body) => {
+        deleteByQueryRethrottle(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -89,7 +95,7 @@ function buildDeleteByQueryRethrottle (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -101,12 +107,17 @@ function buildDeleteByQueryRethrottle (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

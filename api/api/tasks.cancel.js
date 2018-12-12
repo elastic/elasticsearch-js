@@ -11,15 +11,21 @@ function buildTasksCancel (opts) {
    * @param {list} actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
    * @param {string} parent_task_id - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
    */
-  return function tasksCancel (params, callback) {
+  return function tasksCancel (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        tasksCancel(params, (err, body) => {
+        tasksCancel(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -83,7 +89,7 @@ function buildTasksCancel (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -95,12 +101,17 @@ function buildTasksCancel (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

@@ -13,15 +13,21 @@ function buildIndicesExistsAlias (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
-  return function indicesExistsAlias (params, callback) {
+  return function indicesExistsAlias (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesExistsAlias(params, (err, body) => {
+        indicesExistsAlias(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -93,7 +99,7 @@ function buildIndicesExistsAlias (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -105,12 +111,17 @@ function buildIndicesExistsAlias (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

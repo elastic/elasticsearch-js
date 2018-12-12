@@ -13,15 +13,21 @@ function buildMsearchTemplate (opts) {
    * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
-  return function msearchTemplate (params, callback) {
+  return function msearchTemplate (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        msearchTemplate(params, (err, body) => {
+        msearchTemplate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -93,7 +99,7 @@ function buildMsearchTemplate (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -105,12 +111,17 @@ function buildMsearchTemplate (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       bulkBody: params.body,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

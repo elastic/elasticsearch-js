@@ -16,15 +16,21 @@ function buildIndicesPutMapping (opts) {
    * @param {boolean} update_all_types - Whether to update the mapping for all fields with the same name across all types or not
    * @param {object} body - The mapping definition
    */
-  return function indicesPutMapping (params, callback) {
+  return function indicesPutMapping (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesPutMapping(params, (err, body) => {
+        indicesPutMapping(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -100,7 +106,7 @@ function buildIndicesPutMapping (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -112,12 +118,17 @@ function buildIndicesPutMapping (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

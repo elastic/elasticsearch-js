@@ -10,15 +10,21 @@ function buildSnapshotDelete (opts) {
    * @param {string} snapshot - A snapshot name
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    */
-  return function snapshotDelete (params, callback) {
+  return function snapshotDelete (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        snapshotDelete(params, (err, body) => {
+        snapshotDelete(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -98,7 +104,7 @@ function buildSnapshotDelete (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -110,12 +116,17 @@ function buildSnapshotDelete (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

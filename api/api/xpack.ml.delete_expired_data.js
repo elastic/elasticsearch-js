@@ -7,15 +7,21 @@ function buildXpackMlDeleteExpiredData (opts) {
    * Perform a [xpack.ml.delete_expired_data](undefined) request
    *
    */
-  return function xpackMlDeleteExpiredData (params, callback) {
+  return function xpackMlDeleteExpiredData (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlDeleteExpiredData(params, (err, body) => {
+        xpackMlDeleteExpiredData(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -65,7 +71,7 @@ function buildXpackMlDeleteExpiredData (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -77,12 +83,17 @@ function buildXpackMlDeleteExpiredData (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

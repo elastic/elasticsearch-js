@@ -11,15 +11,21 @@ function buildScroll (opts) {
    * @param {string} scroll_id - The scroll ID for scrolled search
    * @param {object} body - The scroll ID if not passed by URL or query parameter.
    */
-  return function scroll (params, callback) {
+  return function scroll (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        scroll(params, (err, body) => {
+        scroll(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,7 +79,7 @@ function buildScroll (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -85,12 +91,17 @@ function buildScroll (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

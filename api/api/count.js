@@ -23,15 +23,21 @@ function buildCount (opts) {
    * @param {number} terminate_after - The maximum count for each shard, upon reaching which the query execution will terminate early
    * @param {object} body - A query to restrict the results specified with the Query DSL (optional)
    */
-  return function count (params, callback) {
+  return function count (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        count(params, (err, body) => {
+        count(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -115,7 +121,7 @@ function buildCount (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -127,12 +133,17 @@ function buildCount (opts) {
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
       querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      headers: params.headers || null
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 
