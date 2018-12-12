@@ -53,6 +53,62 @@ test('Basic', t => {
   })
 })
 
+test('Basic (promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    })
+    .then(({ body }) => {
+      t.deepEqual(body, { hello: 'world' })
+    })
+    .catch(t.fail)
+})
+
+test('Basic (options + promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    }, {
+      requestTimeout: 1000
+    })
+    .then(({ body }) => {
+      t.deepEqual(body, { hello: 'world' })
+    })
+    .catch(t.fail)
+})
+
 test('Send POST', t => {
   t.plan(4)
   function handler (req, res) {
