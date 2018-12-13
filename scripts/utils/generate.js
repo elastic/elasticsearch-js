@@ -136,16 +136,16 @@ function generate (spec, common) {
     const request = {
       method,
       ${buildPath(api)}
-      querystring,
       ${genBody(api, methods, spec[api].body)}
-      headers: params.headers || null
+      querystring
     }
 
     const requestOptions = {
       ignore,
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
-      asStream: options.asStream || false
+      asStream: options.asStream || false,
+      headers: options.headers || null
     }
 
     return makeRequest(request, requestOptions, callback)
