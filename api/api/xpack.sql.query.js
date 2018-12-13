@@ -9,15 +9,21 @@ function buildXpackSqlQuery (opts) {
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
    * @param {object} body - Use the `query` element to start a query. Use the `cursor` element to continue a query.
    */
-  return function xpackSqlQuery (params, callback) {
+  return function xpackSqlQuery (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSqlQuery(params, (err, body) => {
+        xpackSqlQuery(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -67,7 +73,7 @@ function buildXpackSqlQuery (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -77,14 +83,19 @@ function buildXpackSqlQuery (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

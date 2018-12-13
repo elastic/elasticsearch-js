@@ -10,15 +10,21 @@ function buildXpackWatcherAckWatch (opts) {
    * @param {list} action_id - A comma-separated list of the action ids to be acked
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    */
-  return function xpackWatcherAckWatch (params, callback) {
+  return function xpackWatcherAckWatch (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherAckWatch(params, (err, body) => {
+        xpackWatcherAckWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -82,7 +88,7 @@ function buildXpackWatcherAckWatch (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -92,14 +98,19 @@ function buildXpackWatcherAckWatch (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

@@ -12,15 +12,21 @@ function buildIndicesPutAlias (opts) {
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {object} body - The settings for the alias, such as `routing` or `filter`
    */
-  return function indicesPutAlias (params, callback) {
+  return function indicesPutAlias (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesPutAlias(params, (err, body) => {
+        indicesPutAlias(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -96,7 +102,7 @@ function buildIndicesPutAlias (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -108,14 +114,19 @@ function buildIndicesPutAlias (opts) {
       path: params['index'] != null && params['name'] != null
         ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
         : '/{index}/_alias/{name}',
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

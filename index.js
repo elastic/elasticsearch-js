@@ -55,7 +55,8 @@ class Client extends EventEmitter {
       nodeFilter: options.nodeFilter,
       nodeWeighter: options.nodeWeighter,
       nodeSelector: options.nodeSelector,
-      Connection: options.Connection
+      Connection: options.Connection,
+      emit: this.emit.bind(this)
     })
 
     // Add the connections before initialize the Transport
@@ -84,12 +85,23 @@ class Client extends EventEmitter {
       this[api] = apis[api]
     })
   }
+
+  close (callback) {
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        this.close(resolve)
+      })
+    }
+    this.connectionPool.empty()
+    callback()
+  }
 }
 
 const events = {
   RESPONSE: 'response',
   REQUEST: 'request',
-  SNIFF: 'sniff'
+  SNIFF: 'sniff',
+  RESURRECT: 'resurrect'
 }
 
 module.exports = {

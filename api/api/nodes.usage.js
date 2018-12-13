@@ -10,15 +10,21 @@ function buildNodesUsage (opts) {
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {time} timeout - Explicit operation timeout
    */
-  return function nodesUsage (params, callback) {
+  return function nodesUsage (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        nodesUsage(params, (err, body) => {
+        nodesUsage(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -78,7 +84,7 @@ function buildNodesUsage (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -88,14 +94,19 @@ function buildNodesUsage (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

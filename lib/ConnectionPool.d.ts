@@ -27,6 +27,12 @@ export interface getConnectionOptions {
   selector?: nodeSelectorFn;
 }
 
+export interface ResurrectMeta {
+  strategy: string;
+  isAlive: boolean;
+  connection: Connection;
+}
+
 export default class ConnectionPool {
   static resurrectStrategies: {
     none: number;

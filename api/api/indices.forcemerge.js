@@ -14,15 +14,21 @@ function buildIndicesForcemerge (opts) {
    * @param {number} max_num_segments - The number of segments the index should be merged into (default: dynamic)
    * @param {boolean} only_expunge_deletes - Specify whether the operation should only expunge deleted documents
    */
-  return function indicesForcemerge (params, callback) {
+  return function indicesForcemerge (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesForcemerge(params, (err, body) => {
+        indicesForcemerge(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -92,7 +98,7 @@ function buildIndicesForcemerge (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -102,14 +108,19 @@ function buildIndicesForcemerge (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

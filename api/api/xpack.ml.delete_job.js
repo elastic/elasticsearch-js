@@ -10,15 +10,21 @@ function buildXpackMlDeleteJob (opts) {
    * @param {boolean} force - True if the job should be forcefully deleted
    * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    */
-  return function xpackMlDeleteJob (params, callback) {
+  return function xpackMlDeleteJob (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlDeleteJob(params, (err, body) => {
+        xpackMlDeleteJob(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -76,7 +82,7 @@ function buildXpackMlDeleteJob (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -86,14 +92,19 @@ function buildXpackMlDeleteJob (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

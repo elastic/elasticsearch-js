@@ -7,15 +7,21 @@ function buildClusterRemoteInfo (opts) {
    * Perform a [cluster.remote_info](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html) request
    *
    */
-  return function clusterRemoteInfo (params, callback) {
+  return function clusterRemoteInfo (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        clusterRemoteInfo(params, (err, body) => {
+        clusterRemoteInfo(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,7 +79,7 @@ function buildClusterRemoteInfo (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -83,14 +89,19 @@ function buildClusterRemoteInfo (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

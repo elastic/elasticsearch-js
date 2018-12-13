@@ -53,6 +53,62 @@ test('Basic', t => {
   })
 })
 
+test('Basic (promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    })
+    .then(({ body }) => {
+      t.deepEqual(body, { hello: 'world' })
+    })
+    .catch(t.fail)
+})
+
+test('Basic (options + promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    }, {
+      requestTimeout: 1000
+    })
+    .then(({ body }) => {
+      t.deepEqual(body, { hello: 'world' })
+    })
+    .catch(t.fail)
+})
+
 test('Send POST', t => {
   t.plan(4)
   function handler (req, res) {
@@ -509,7 +565,8 @@ test('Custom retry mechanism', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       maxRetries: 1
     }, (err, { body }) => {
       t.error(err)
@@ -727,7 +784,8 @@ test('Override requestTimeout', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       requestTimeout: 2000
     }, (err, { body }) => {
       t.error(err)
@@ -1028,7 +1086,8 @@ test('Ignore status code', t => {
 
   transport.request({
     method: 'GET',
-    path: '/404',
+    path: '/404'
+  }, {
     ignore: [404]
   }, (err, { body }) => {
     t.error(err)
@@ -1044,7 +1103,8 @@ test('Ignore status code', t => {
 
   transport.request({
     method: 'GET',
-    path: '/404',
+    path: '/404'
+  }, {
     ignore: [403, 405]
   }, (err, { body }) => {
     t.ok(err instanceof ResponseError)
@@ -1148,7 +1208,8 @@ test('timeout option', t => {
 
         transport.request({
           method: 'GET',
-          path: '/hello',
+          path: '/hello'
+        }, {
           requestTimeout: 500
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
@@ -1213,7 +1274,8 @@ test('timeout option', t => {
 
         transport.request({
           method: 'GET',
-          path: '/hello',
+          path: '/hello'
+        }, {
           requestTimeout: '0.5s'
         }, (err, { body }) => {
           t.ok(err instanceof TimeoutError)
@@ -1499,7 +1561,8 @@ test('asStream set to true', t => {
 
     transport.request({
       method: 'GET',
-      path: '/hello',
+      path: '/hello'
+    }, {
       asStream: true
     }, (err, { body, headers }) => {
       t.error(err)

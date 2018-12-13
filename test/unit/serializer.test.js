@@ -88,6 +88,21 @@ test('qserialize (string)', t => {
   )
 })
 
+test('qserialize (key with undefined value)', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = {
+    hello: 'world',
+    key: undefined,
+    foo: 'bar'
+  }
+
+  t.strictEqual(
+    s.qserialize(obj),
+    'hello=world&foo=bar'
+  )
+})
+
 test('SerializationError', t => {
   t.plan(1)
   const s = new Serializer()

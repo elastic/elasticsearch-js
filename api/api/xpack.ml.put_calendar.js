@@ -9,15 +9,21 @@ function buildXpackMlPutCalendar (opts) {
    * @param {string} calendar_id - The ID of the calendar to create
    * @param {object} body - The calendar details
    */
-  return function xpackMlPutCalendar (params, callback) {
+  return function xpackMlPutCalendar (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlPutCalendar(params, (err, body) => {
+        xpackMlPutCalendar(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -67,7 +73,7 @@ function buildXpackMlPutCalendar (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -77,14 +83,19 @@ function buildXpackMlPutCalendar (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

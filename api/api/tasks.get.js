@@ -10,15 +10,21 @@ function buildTasksGet (opts) {
    * @param {boolean} wait_for_completion - Wait for the matching tasks to complete (default: false)
    * @param {time} timeout - Explicit operation timeout
    */
-  return function tasksGet (params, callback) {
+  return function tasksGet (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        tasksGet(params, (err, body) => {
+        tasksGet(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -86,7 +92,7 @@ function buildTasksGet (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -96,14 +102,19 @@ function buildTasksGet (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

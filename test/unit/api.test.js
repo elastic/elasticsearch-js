@@ -165,3 +165,59 @@ test('Abort is not supported in promises', t => {
     t.type(request.abort, 'undefined')
   })
 })
+
+test('Basic (options and callback)', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    client.search({
+      index: 'test',
+      type: 'doc',
+      q: 'foo:bar'
+    }, {
+      requestTimeout: 10000
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Basic (options and promises)', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    client
+      .search({
+        index: 'test',
+        type: 'doc',
+        q: 'foo:bar'
+      }, {
+        requestTimeout: 10000
+      })
+      .then(({ body }) => {
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+      .catch(t.fail)
+  })
+})

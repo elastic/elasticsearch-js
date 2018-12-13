@@ -17,15 +17,21 @@ function buildXpackMlGetInfluencers (opts) {
    * @param {boolean} desc - whether the results should be sorted in decending order
    * @param {object} body - Influencer selection criteria
    */
-  return function xpackMlGetInfluencers (params, callback) {
+  return function xpackMlGetInfluencers (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlGetInfluencers(params, (err, body) => {
+        xpackMlGetInfluencers(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -89,7 +95,7 @@ function buildXpackMlGetInfluencers (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -99,14 +105,19 @@ function buildXpackMlGetInfluencers (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

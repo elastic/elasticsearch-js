@@ -8,15 +8,21 @@ function buildXpackSecurityGetUser (opts) {
    *
    * @param {list} username - A comma-separated list of usernames
    */
-  return function xpackSecurityGetUser (params, callback) {
+  return function xpackSecurityGetUser (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSecurityGetUser(params, (err, body) => {
+        xpackSecurityGetUser(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -66,7 +72,7 @@ function buildXpackSecurityGetUser (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -76,14 +82,19 @@ function buildXpackSecurityGetUser (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: null,
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

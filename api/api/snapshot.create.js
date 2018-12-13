@@ -12,15 +12,21 @@ function buildSnapshotCreate (opts) {
    * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    * @param {object} body - The snapshot definition
    */
-  return function snapshotCreate (params, callback) {
+  return function snapshotCreate (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        snapshotCreate(params, (err, body) => {
+        snapshotCreate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -96,7 +102,7 @@ function buildSnapshotCreate (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -106,14 +112,19 @@ function buildSnapshotCreate (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 

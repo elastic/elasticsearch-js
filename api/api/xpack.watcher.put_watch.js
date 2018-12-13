@@ -12,15 +12,21 @@ function buildXpackWatcherPutWatch (opts) {
    * @param {number} version - Explicit version number for concurrency control
    * @param {object} body - The watch
    */
-  return function xpackWatcherPutWatch (params, callback) {
+  return function xpackWatcherPutWatch (params, options, callback) {
+    options = options || {}
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     if (typeof params === 'function' || params == null) {
       callback = params
       params = {}
+      options = {}
     }
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherPutWatch(params, (err, body) => {
+        xpackWatcherPutWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -74,7 +80,7 @@ function buildXpackWatcherPutWatch (opts) {
       )
     }
 
-    var ignore = params.ignore || null
+    var ignore = options.ignore || null
     if (typeof ignore === 'number') {
       ignore = [ignore]
     }
@@ -84,14 +90,19 @@ function buildXpackWatcherPutWatch (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: params.body || '',
-      headers: params.headers || null,
-      ignore,
-      requestTimeout: params.requestTimeout || null
+      querystring
     }
 
-    return makeRequest(request, callback)
+    const requestOptions = {
+      ignore,
+      requestTimeout: options.requestTimeout || null,
+      maxRetries: options.maxRetries || null,
+      asStream: options.asStream || false,
+      headers: options.headers || null
+    }
+
+    return makeRequest(request, requestOptions, callback)
   }
 }
 
