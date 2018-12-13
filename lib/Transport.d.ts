@@ -38,11 +38,16 @@ export interface SniffMeta {
   reason: string;
 }
 
+declare type anyObject = {
+  [key: string]: any;
+};
+
 export interface RequestOptions {
   ignore?: number | number[];
   requestTimeout?: number | string;
   maxRetries?: number;
   asStream?: boolean;
+  headers?: anyObject;
 }
 
 export default class Transport {
