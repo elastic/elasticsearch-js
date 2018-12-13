@@ -90,16 +90,16 @@ function buildXpackMlGetCategories (opts) {
       path: (params['job_id'] || params['jobId']) != null
         ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
         : '/_xpack/ml/anomaly_detectors/{job_id}/results/categories/{category_id}',
-      querystring,
       body: params.body || '',
-      headers: params.headers || null
+      querystring
     }
 
     const requestOptions = {
       ignore,
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
-      asStream: options.asStream || false
+      asStream: options.asStream || false,
+      headers: options.headers || null
     }
 
     return makeRequest(request, requestOptions, callback)

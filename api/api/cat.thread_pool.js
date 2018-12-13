@@ -114,16 +114,16 @@ function buildCatThreadPool (opts) {
     const request = {
       method,
       path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      querystring,
       body: null,
-      headers: params.headers || null
+      querystring
     }
 
     const requestOptions = {
       ignore,
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
-      asStream: options.asStream || false
+      asStream: options.asStream || false,
+      headers: options.headers || null
     }
 
     return makeRequest(request, requestOptions, callback)
