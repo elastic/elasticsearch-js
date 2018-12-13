@@ -191,6 +191,71 @@ test('Node with auth data in the url', t => {
   })
 })
 
+test('Custom authentication per request', t => {
+  t.plan(6)
+
+  var first = true
+  function handler (req, res) {
+    t.match(req.headers, {
+      authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://foo:bar@localhost:${port}`
+    })
+
+    client.info({}, {
+      headers: {
+        authorization: 'hello'
+      }
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      first = false
+
+      client.info((err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+})
+
+test('Custom headers per request', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      'x-foo': 'bar',
+      'x-baz': 'faz'
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://foo:bar@localhost:${port}`
+    })
+
+    client.info({}, {
+      headers: {
+        'x-foo': 'bar',
+        'x-baz': 'faz'
+      }
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
 test('Client close', t => {
   t.plan(2)
 
