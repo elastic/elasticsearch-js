@@ -6,7 +6,7 @@ const { URL } = require('url')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
-const { TimeoutError } = require('../../lib/errors')
+const { TimeoutError, ConfigurationError } = require('../../lib/errors')
 
 test('Basic (http)', t => {
   t.plan(4)
@@ -558,5 +558,18 @@ test('Connection id should not contain credentials', t => {
     url: new URL('http://user:password@localhost:9200')
   })
   t.strictEqual(connection.id, 'http://localhost:9200/')
+  t.end()
+})
+
+test('Should throw if the protocol is not http or https', t => {
+  try {
+    new Connection({ // eslint-disable-line
+      url: new URL('nope://nope')
+    })
+    t.fail('Should throw')
+  } catch (err) {
+    t.ok(err instanceof ConfigurationError)
+    t.is(err.message, 'Invalid protocol: \'nope:\'')
+  }
   t.end()
 })
