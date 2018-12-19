@@ -1,6 +1,7 @@
 'use strict'
 
 const { EventEmitter } = require('events')
+const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const ConnectionPool = require('./lib/ConnectionPool')
@@ -92,8 +93,8 @@ class Client extends EventEmitter {
         this.close(resolve)
       })
     }
-    this.connectionPool.empty()
-    callback()
+    debug('Closing the client')
+    this.connectionPool.empty(callback)
   }
 }
 
