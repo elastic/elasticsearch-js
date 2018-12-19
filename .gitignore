@@ -48,3 +48,5 @@ package-lock.json
 elasticsearch*
 
 api/generated.d.ts
+
+test/benchmarks/macro/fixtures/*
