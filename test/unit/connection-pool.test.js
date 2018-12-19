@@ -240,10 +240,11 @@ test('API', t => {
     const pool = new ConnectionPool({ Connection })
     pool.addConnection('http://localhost:9200/')
     pool.addConnection('http://localhost:9201/')
-    pool.empty()
-    t.strictEqual(pool.connections.size, 0)
-    t.deepEqual(pool.dead, [])
-    t.end()
+    pool.empty(() => {
+      t.strictEqual(pool.connections.size, 0)
+      t.deepEqual(pool.dead, [])
+      t.end()
+    })
   })
 
   t.test('urlToHost', t => {

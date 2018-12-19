@@ -260,9 +260,9 @@ test('Client close', t => {
   t.plan(2)
 
   class MyConnectionPool extends ConnectionPool {
-    empty () {
+    empty (callback) {
       t.ok('called')
-      super.empty()
+      super.empty(callback)
     }
   }
 
@@ -278,9 +278,9 @@ test('Client close (promise)', t => {
   t.plan(2)
 
   class MyConnectionPool extends ConnectionPool {
-    empty () {
+    empty (callback) {
       t.ok('called')
-      super.empty()
+      super.empty(callback)
     }
   }
 
