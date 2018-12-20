@@ -12,6 +12,8 @@ function buildBenchmark () {
   const stats = {}
   var beforeEach = null
   var afterEach = null
+  var setup = null
+  var teardown = null
 
   function setBeforeEach (fn) {
     beforeEach = fn
@@ -19,6 +21,25 @@ function buildBenchmark () {
 
   function setAfterEach (fn) {
     afterEach = fn
+  }
+
+  function setSetup (fn) {
+    setup = fn
+  }
+
+  function setTeardown (fn) {
+    teardown = fn
+  }
+
+  function runSetup (q, done) {
+    if (setup !== null) {
+      setup(() => {
+        setup = null
+        done()
+      })
+    } else {
+      done()
+    }
   }
 
   function benchmark (title, opts, fn) {
@@ -29,8 +50,9 @@ function buildBenchmark () {
 
     stats[title] = []
     var { measure, warmup } = opts
-    const b = new B()
+    const b = new B({ iterations: opts.iterations })
 
+    q.add(runSetup)
     q.add(runBenchmark)
     q.add(elaborateStats)
 
@@ -87,27 +109,36 @@ function buildBenchmark () {
     }
 
     // task that elaborate the collected stats
-    function elaborateStats (q, done) {
-      const times = stats[title].map(s => s.seconds)
+    async function elaborateStats (q) {
+      const { body } = await b.client.nodes.stats({ metric: 'http,jvm,os' })
+      const esStats = body.nodes[Object.keys(body.nodes)[0]]
+      const times = stats[title].map(s => s.milliseconds / b.iterations)
       b.comment(dedent`
-        mean: ${ss.mean(times)}
-        median: ${ss.median(times)}
-        min: ${ss.min(times)}
-        max: ${ss.max(times)}
+        mean: ${ss.mean(times)} ms
+        median: ${ss.median(times)} ms
+        min: ${ss.min(times)} ms
+        max: ${ss.max(times)} ms
         standard deviation: ${ss.standardDeviation(times)}
+        http total connections: ${esStats.http.total_opened}
+        jvm heap used: ${esStats.jvm.mem.heap_used_percent}%
       `)
-      done()
     }
   }
 
   q.drain(done => {
-    done()
+    if (teardown) {
+      teardown(done)
+    } else {
+      done()
+    }
   })
 
   return {
     bench: dezalgo(benchmark),
     beforeEach: setBeforeEach,
-    afterEach: setAfterEach
+    afterEach: setAfterEach,
+    setup: setSetup,
+    teardown: setTeardown
   }
 }
 
@@ -116,6 +147,7 @@ class B extends EventEmitter {
     super()
     this.begin = 0
     this.time = 0
+    this.iterations = opts.iterations || 1
     this.client = null
   }
 
