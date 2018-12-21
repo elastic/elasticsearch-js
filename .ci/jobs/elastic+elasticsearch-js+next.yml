@@ -1,0 +1,11 @@
+---
+- job:
+    name: elastic+elasticsearch-js+next
+    display-name: 'elastic / elasticsearch-js # next'
+    description: Testing the elasticsearch-js next branch.
+    parameters:
+    - string:
+        name: branch_specifier
+        default: refs/heads/next
+        description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
+          &lt;commitId&gt;, etc.)
