@@ -110,18 +110,28 @@ function buildBenchmark () {
 
     // task that elaborate the collected stats
     async function elaborateStats (q) {
-      const { body } = await b.client.nodes.stats({ metric: 'http,jvm,os' })
-      const esStats = body.nodes[Object.keys(body.nodes)[0]]
       const times = stats[title].map(s => s.milliseconds / b.iterations)
-      b.comment(dedent`
-        mean: ${ss.mean(times)} ms
-        median: ${ss.median(times)} ms
-        min: ${ss.min(times)} ms
-        max: ${ss.max(times)} ms
-        standard deviation: ${ss.standardDeviation(times)}
-        http total connections: ${esStats.http.total_opened}
-        jvm heap used: ${esStats.jvm.mem.heap_used_percent}%
-      `)
+      if (b.client) {
+        const { body } = await b.client.nodes.stats({ metric: 'http,jvm,os' })
+        const esStats = body.nodes[Object.keys(body.nodes)[0]]
+        b.comment(dedent`
+          mean: ${ss.mean(times)} ms
+          median: ${ss.median(times)} ms
+          min: ${ss.min(times)} ms
+          max: ${ss.max(times)} ms
+          standard deviation: ${ss.standardDeviation(times)}
+          http total connections: ${esStats.http.total_opened}
+          jvm heap used: ${esStats.jvm.mem.heap_used_percent}%
+        `)
+      } else {
+        b.comment(dedent`
+          mean: ${ss.mean(times)} ms
+          median: ${ss.median(times)} ms
+          min: ${ss.min(times)} ms
+          max: ${ss.max(times)} ms
+          standard deviation: ${ss.standardDeviation(times)}
+        `)
+      }
     }
   }
 

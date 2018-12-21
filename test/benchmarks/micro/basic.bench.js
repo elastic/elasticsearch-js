@@ -1,20 +1,20 @@
 'use strict'
 
-const bench = require('./suite')({
-  repetitions: { warmup: 2, measure: 5 }
-})
+const { bench } = require('../suite')()
 const { Client } = require('../../../index')
 const { connection } = require('../../utils')
 
-bench('Initialization', async b => {
+bench('Initialization', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
   b.start()
-  const client = new Client({ // eslint-disable-line
-    node: 'http://localhost:9200'
-  })
+  for (var i = 0; i < b.iterations; i++) {
+    const client = new Client({ // eslint-disable-line
+      node: 'http://localhost:9200'
+    })
+  }
   b.end()
 })
 
-bench('Call api with lazy loading', async b => {
+bench('Call api with lazy loading', { warmup: 5, measure: 10 }, async b => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: connection.MockConnection
@@ -25,7 +25,7 @@ bench('Call api with lazy loading', async b => {
   b.end()
 })
 
-bench('Call api without lazy loading', async b => {
+bench('Call api without lazy loading', { warmup: 5, measure: 10 }, async b => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: connection.MockConnection
@@ -37,7 +37,7 @@ bench('Call api without lazy loading', async b => {
   b.end()
 })
 
-bench('Basic get', async b => {
+bench('Basic get', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: connection.MockConnection
@@ -50,15 +50,17 @@ bench('Basic get', async b => {
     q: 'foo:bar'
   })
   b.start()
-  await client.search({
-    index: 'test',
-    type: 'doc',
-    q: 'foo:bar'
-  })
+  for (var i = 0; i < b.iterations; i++) {
+    await client.search({
+      index: 'test',
+      type: 'doc',
+      q: 'foo:bar'
+    })
+  }
   b.end()
 })
 
-bench('Basic post', async b => {
+bench('Basic post', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: connection.MockConnection
@@ -75,14 +77,16 @@ bench('Basic post', async b => {
     }
   })
   b.start()
-  await client.search({
-    index: 'test',
-    type: 'doc',
-    body: {
-      query: {
-        match: { foo: 'bar' }
+  for (var i = 0; i < b.iterations; i++) {
+    await client.search({
+      index: 'test',
+      type: 'doc',
+      body: {
+        query: {
+          match: { foo: 'bar' }
+        }
       }
-    }
-  })
+    })
+  }
   b.end()
 })

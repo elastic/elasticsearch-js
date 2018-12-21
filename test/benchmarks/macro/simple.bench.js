@@ -1,7 +1,7 @@
 'use strict'
 
 const { Client } = require('../../../index')
-const { bench, beforeEach, afterEach } = require('./suite')()
+const { bench, beforeEach, afterEach } = require('../suite')()
 
 const node = process.env.ES_HOST || 'http://localhost:9200'
 
