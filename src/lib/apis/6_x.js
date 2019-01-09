@@ -24,8 +24,8 @@ api._namespaces = ['cat', 'cluster', 'indices', 'ingest', 'nodes', 'snapshot', '
  * @param {<<api-param-type-string,`String`>>} params.type - Default document type for items which don't provide one
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
  * @param {<<api-param-type-string,`String`>>} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {<<api-param-type-string,`String`>>} params.index - Default index for items which don't provide one
  */
@@ -59,13 +59,13 @@ api.bulk = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     pipeline: {
       type: 'string'
@@ -1511,6 +1511,8 @@ api.cluster.prototype.reroute = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-boolean,`Boolean`>>} params.flatSettings - Return settings in flat format (default: false)
+ * @param {<<api-param-type-number,`Number`>>} params.waitForMetadataVersion - Wait for the metadata version to be equal or greater than the specified metadata version
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.waitForTimeout - The maximum time to wait for wait_for_metadata_version before timing out
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -1529,6 +1531,14 @@ api.cluster.prototype.state = ca({
     flatSettings: {
       type: 'boolean',
       name: 'flat_settings'
+    },
+    waitForMetadataVersion: {
+      type: 'number',
+      name: 'wait_for_metadata_version'
+    },
+    waitForTimeout: {
+      type: 'time',
+      name: 'wait_for_timeout'
     },
     ignoreUnavailable: {
       type: 'boolean',
@@ -1634,6 +1644,7 @@ api.cluster.prototype.stats = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreThrottled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-number,`Number`>>} params.minScore - Include only documents with a specific `_score` value in the result
@@ -1654,6 +1665,10 @@ api.count = ca({
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
+    },
+    ignoreThrottled: {
+      type: 'boolean',
+      name: 'ignore_throttled'
     },
     allowNoIndices: {
       type: 'boolean',
@@ -1821,6 +1836,8 @@ api.create = ca({
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-number,`Number`>>} params.ifSeqNo - only perform the delete operation if the last operation that has changed the document has the specified sequence number
+ * @param {<<api-param-type-number,`Number`>>} params.ifPrimaryTerm - only perform the delete operation if the last operation that has changed the document has the specified primary term
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -1850,6 +1867,14 @@ api['delete'] = ca({
     },
     timeout: {
       type: 'time'
+    },
+    ifSeqNo: {
+      type: 'number',
+      name: 'if_seq_no'
+    },
+    ifPrimaryTerm: {
+      type: 'number',
+      name: 'if_primary_term'
     },
     version: {
       type: 'number'
@@ -1905,8 +1930,8 @@ api['delete'] = ca({
  * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
@@ -2008,13 +2033,13 @@ api.deleteByQuery = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     terminateAfter: {
       type: 'number',
@@ -2151,8 +2176,8 @@ api.deleteScript = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -2183,13 +2208,13 @@ api.exists = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     version: {
       type: 'number'
@@ -2232,8 +2257,8 @@ api.exists = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -2260,13 +2285,13 @@ api.existsSource = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     version: {
       type: 'number'
@@ -2314,8 +2339,8 @@ api.existsSource = ca({
  * @param {<<api-param-type-string,`String`>>} params.q - Query in the Lucene query string syntax
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
  * @param {<<api-param-type-string,`String`>>} params.index - The name of the index
  * @param {<<api-param-type-string,`String`>>} params.type - The type of the document
@@ -2363,13 +2388,13 @@ api.explain = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     }
   },
   url: {
@@ -2451,6 +2476,8 @@ api.fieldCaps = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
@@ -2482,6 +2509,14 @@ api.get = ca({
     },
     _source: {
       type: 'list'
+    },
+    _sourceExcludes: {
+      type: 'list',
+      name: '_source_excludes'
+    },
+    _sourceIncludes: {
+      type: 'list',
+      name: '_source_includes'
     },
     _sourceExclude: {
       type: 'list',
@@ -2555,8 +2590,8 @@ api.getScript = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -2583,13 +2618,13 @@ api.getSource = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     version: {
       type: 'number'
@@ -2633,6 +2668,8 @@ api.getSource = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
+ * @param {<<api-param-type-number,`Number`>>} params.ifSeqNo - only perform the index operation if the last operation that has changed the document has the specified sequence number
+ * @param {<<api-param-type-number,`Number`>>} params.ifPrimaryTerm - only perform the index operation if the last operation that has changed the document has the specified primary term
  * @param {<<api-param-type-string,`String`>>} params.pipeline - The pipeline id to preprocess incoming documents with
  * @param {<<api-param-type-string,`String`>>} params.id - Document ID
  * @param {<<api-param-type-string,`String`>>} params.index - The name of the index
@@ -2683,6 +2720,14 @@ api.index = ca({
         'force'
       ],
       name: 'version_type'
+    },
+    ifSeqNo: {
+      type: 'number',
+      name: 'if_seq_no'
+    },
+    ifPrimaryTerm: {
+      type: 'number',
+      name: 'if_primary_term'
     },
     pipeline: {
       type: 'string'
@@ -2880,6 +2925,7 @@ api.indices.prototype.close = ca({
  * Perform a [indices.create](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-create-index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeTypeName - Whether a type should be expected in the body of the mappings.
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Set the number of active shards to wait for before the operation returns.
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
@@ -2888,6 +2934,10 @@ api.indices.prototype.close = ca({
  */
 api.indices.prototype.create = ca({
   params: {
+    includeTypeName: {
+      type: 'boolean',
+      name: 'include_type_name'
+    },
     waitForActiveShards: {
       type: 'string',
       name: 'wait_for_active_shards'
@@ -3618,6 +3668,7 @@ api.indices.prototype.getFieldMapping = ca({
  * Perform a [indices.getMapping](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-get-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeTypeName - Whether to add the type name to the response.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3628,6 +3679,10 @@ api.indices.prototype.getFieldMapping = ca({
  */
 api.indices.prototype.getMapping = ca({
   params: {
+    includeTypeName: {
+      type: 'boolean',
+      name: 'include_type_name'
+    },
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
@@ -3955,6 +4010,7 @@ api.indices.prototype.putAlias = ca({
  * Perform a [indices.putMapping](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/indices-put-mapping.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeTypeName - Whether a type should be expected in the body of the mappings.
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3966,6 +4022,10 @@ api.indices.prototype.putAlias = ca({
  */
 api.indices.prototype.putMapping = ca({
   params: {
+    includeTypeName: {
+      type: 'boolean',
+      name: 'include_type_name'
+    },
     timeout: {
       type: 'time'
     },
@@ -4014,6 +4074,14 @@ api.indices.prototype.putMapping = ca({
       req: {
         type: {
           type: 'string'
+        }
+      }
+    },
+    {
+      fmt: '/<%=index%>/_mapping',
+      req: {
+        index: {
+          type: 'list'
         }
       }
     }
@@ -4916,8 +4984,8 @@ api.ingest.prototype.simulate = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-string,`String`>>} params.index - The name of the index
  * @param {<<api-param-type-string,`String`>>} params.type - The type of the document
  */
@@ -4942,13 +5010,13 @@ api.mget = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     }
   },
   urls: [
@@ -4988,6 +5056,7 @@ api.mget = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
  * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default grows with the number of nodes in the cluster but is at most 256.] - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -5020,6 +5089,11 @@ api.msearch = ca({
       type: 'number',
       'default': 'The default grows with the number of nodes in the cluster but is at most 256.',
       name: 'max_concurrent_shard_requests'
+    },
+    restTotalHitsAsInt: {
+      type: 'boolean',
+      'default': false,
+      name: 'rest_total_hits_as_int'
     }
   },
   urls: [
@@ -5058,6 +5132,7 @@ api.msearch = ca({
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to use as default
  */
@@ -5080,6 +5155,11 @@ api.msearchTemplate = ca({
     maxConcurrentSearches: {
       type: 'number',
       name: 'max_concurrent_searches'
+    },
+    restTotalHitsAsInt: {
+      type: 'boolean',
+      'default': false,
+      name: 'rest_total_hits_as_int'
     }
   },
   urls: [
@@ -5862,6 +5942,7 @@ api.scriptsPainlessExecute = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {<<api-param-type-string,`String`>>} params.scrollId - The scroll ID
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
  */
 api.scroll = ca({
   params: {
@@ -5871,6 +5952,11 @@ api.scroll = ca({
     scrollId: {
       type: 'string',
       name: 'scroll_id'
+    },
+    restTotalHitsAsInt: {
+      type: 'boolean',
+      'default': false,
+      name: 'rest_total_hits_as_int'
     }
   },
   urls: [
@@ -5906,6 +5992,7 @@ api.scroll = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.docvalueFields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
  * @param {<<api-param-type-number,`Number`>>} params.from - Starting offset (default: 0)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreThrottled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
@@ -5917,8 +6004,8 @@ api.scroll = ca({
  * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {<<api-param-type-string,`String`>>} params.suggestField - Specify which field to use for suggestions
@@ -5935,6 +6022,7 @@ api.scroll = ca({
  * @param {<<api-param-type-number,`Number`>>} [params.batchedReduceSize=512] - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
  * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default grows with the number of nodes in the cluster but is at most 256.] - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
  * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -5976,6 +6064,10 @@ api.search = ca({
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
+    },
+    ignoreThrottled: {
+      type: 'boolean',
+      name: 'ignore_throttled'
     },
     allowNoIndices: {
       type: 'boolean',
@@ -6024,13 +6116,13 @@ api.search = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     terminateAfter: {
       type: 'number',
@@ -6102,6 +6194,11 @@ api.search = ca({
       type: 'number',
       'default': 128,
       name: 'pre_filter_shard_size'
+    },
+    restTotalHitsAsInt: {
+      type: 'boolean',
+      'default': false,
+      name: 'rest_total_hits_as_int'
     }
   },
   urls: [
@@ -6195,6 +6292,7 @@ api.searchShards = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreThrottled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
@@ -6204,6 +6302,7 @@ api.searchShards = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.explain - Specify whether to return detailed information about score computation as part of a hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.profile - Specify whether to profile the query execution
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.type - A comma-separated list of document types to search; leave empty to perform the operation on all types
  */
@@ -6212,6 +6311,10 @@ api.searchTemplate = ca({
     ignoreUnavailable: {
       type: 'boolean',
       name: 'ignore_unavailable'
+    },
+    ignoreThrottled: {
+      type: 'boolean',
+      name: 'ignore_throttled'
     },
     allowNoIndices: {
       type: 'boolean',
@@ -6256,6 +6359,11 @@ api.searchTemplate = ca({
     typedKeys: {
       type: 'boolean',
       name: 'typed_keys'
+    },
+    restTotalHitsAsInt: {
+      type: 'boolean',
+      'default': false,
+      name: 'rest_total_hits_as_int'
     }
   },
   urls: [
@@ -6833,8 +6941,8 @@ api.termvectors = ca({
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.fields - A comma-separated list of fields to return in the response
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-string,`String`>>} params.lang - The script language (default: painless)
  * @param {<<api-param-type-string,`String`>>} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -6859,13 +6967,13 @@ api.update = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     lang: {
       type: 'string'
@@ -6946,8 +7054,8 @@ api.update = ca({
  * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
+ * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.terminateAfter - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.stats - Specific 'tag' of the request for logging and statistical purposes
  * @param {<<api-param-type-boolean,`Boolean`>>} params.version - Specify whether to return document version as part of a hit
@@ -7053,13 +7161,13 @@ api.updateByQuery = ca({
     _source: {
       type: 'list'
     },
-    _sourceExclude: {
+    _sourceExcludes: {
       type: 'list',
-      name: '_source_exclude'
+      name: '_source_excludes'
     },
-    _sourceInclude: {
+    _sourceIncludes: {
       type: 'list',
-      name: '_source_include'
+      name: '_source_includes'
     },
     terminateAfter: {
       type: 'number',
