@@ -1,7 +1,7 @@
 'use strict'
 
 const { Client } = require('../../../index')
-const { bench, beforeEach, afterEach } = require('../suite')()
+const { bench, beforeEach, afterEach } = require('../suite')({ report: 'http://localhost:9200' })
 
 const node = process.env.ES_HOST || 'http://localhost:9200'
 
@@ -19,7 +19,12 @@ afterEach(async b => {
   await b.client.indices.delete({ index: 'test-*' })
 })
 
-bench('Ping', { warmup: 3, measure: 5, iterations: 100 }, async b => {
+bench('Ping', {
+  warmup: 3,
+  measure: 5,
+  iterations: 100,
+  action: 'ping'
+}, async b => {
   b.start()
   for (var i = 0; i < b.iterations; i++) {
     await b.client.ping()
@@ -27,7 +32,12 @@ bench('Ping', { warmup: 3, measure: 5, iterations: 100 }, async b => {
   b.end()
 })
 
-bench('Create index', { warmup: 3, measure: 5, iterations: 10 }, async b => {
+bench('Create index', {
+  warmup: 3,
+  measure: 5,
+  iterations: 10,
+  action: 'indices.create'
+}, async b => {
   b.start()
   for (var i = 0; i < b.iterations; i++) {
     await b.client.indices.create({ index: `test-create-${i}` })
@@ -35,7 +45,13 @@ bench('Create index', { warmup: 3, measure: 5, iterations: 10 }, async b => {
   b.end()
 })
 
-bench('Index small document', { warmup: 3, measure: 5, iterations: 100 }, async b => {
+bench('Index small document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 100,
+  dataset: 'small_document.json',
+  action: 'create'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -52,7 +68,13 @@ bench('Index small document', { warmup: 3, measure: 5, iterations: 100 }, async 
   b.end()
 })
 
-bench('Index large document', { warmup: 3, measure: 5, iterations: 100 }, async b => {
+bench('Index large document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 100,
+  dataset: 'large_document.json',
+  action: 'create'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -69,7 +91,13 @@ bench('Index large document', { warmup: 3, measure: 5, iterations: 100 }, async 
   b.end()
 })
 
-bench('Get small document', { warmup: 3, measure: 5, iterations: 1000 }, async b => {
+bench('Get small document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 1000,
+  dataset: 'small_document.json',
+  action: 'get'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -92,7 +120,13 @@ bench('Get small document', { warmup: 3, measure: 5, iterations: 1000 }, async b
   b.end()
 })
 
-bench('Get large document', { warmup: 3, measure: 5, iterations: 1000 }, async b => {
+bench('Get large document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 1000,
+  dataset: 'large_document.json',
+  action: 'get'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -115,7 +149,13 @@ bench('Get large document', { warmup: 3, measure: 5, iterations: 1000 }, async b
   b.end()
 })
 
-bench('Search small document', { warmup: 3, measure: 5, iterations: 1000 }, async b => {
+bench('Search small document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 1000,
+  dataset: 'small_document.json',
+  action: 'search'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -143,7 +183,13 @@ bench('Search small document', { warmup: 3, measure: 5, iterations: 1000 }, asyn
   b.end()
 })
 
-bench('Search large document', { warmup: 3, measure: 5, iterations: 1000 }, async b => {
+bench('Search large document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 1000,
+  dataset: 'large_document.json',
+  action: 'search'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
@@ -171,7 +217,13 @@ bench('Search large document', { warmup: 3, measure: 5, iterations: 1000 }, asyn
   b.end()
 })
 
-bench('Update small document', { warmup: 3, measure: 5, iterations: 100 }, async b => {
+bench('Update small document', {
+  warmup: 3,
+  measure: 5,
+  iterations: 100,
+  dataset: 'small_document.json',
+  action: 'update'
+}, async b => {
   const now = Date.now() + ''
   const index = `test-${now}`
   await b.client.indices.create({ index })
