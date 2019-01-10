@@ -1,15 +1,20 @@
 'use strict'
 
+const { Client } = require('../../index')
+const clientVersion = require('../../package.json').version
 const { EventEmitter } = require('events')
+const os = require('os')
 const dezalgo = require('dezalgo')
 const convertHrtime = require('convert-hrtime')
+const Git = require('simple-git')
 const workq = require('workq')
 const dedent = require('dedent')
 const ss = require('simple-statistics')
 
-function buildBenchmark () {
+function buildBenchmark (options = {}) {
   const q = workq()
   const stats = {}
+  const reports = []
   var beforeEach = null
   var afterEach = null
   var setup = null
@@ -111,6 +116,25 @@ function buildBenchmark () {
     // task that elaborate the collected stats
     async function elaborateStats (q) {
       const times = stats[title].map(s => s.milliseconds / b.iterations)
+      reports.push({
+        description: opts.title,
+        action: opts.action,
+        category: opts.category || 'simple',
+        dataset: opts.dataset,
+        stats: {
+          mean: ss.mean(times),
+          median: ss.median(times),
+          min: ss.min(times),
+          max: ss.max(times),
+          standard_deviation: ss.standardDeviation(times)
+        },
+        repetitions: {
+          measured: opts.measure,
+          warmup: opts.warmup,
+          iterations: opts.iterations
+        }
+      })
+
       if (b.client) {
         const { body } = await b.client.nodes.stats({ metric: 'http,jvm,os' })
         const esStats = body.nodes[Object.keys(body.nodes)[0]]
@@ -141,7 +165,62 @@ function buildBenchmark () {
     } else {
       done()
     }
+    if (options.report) {
+      sendReport()
+    }
   })
+
+  async function sendReport () {
+    const client = new Client({ node: options.report })
+    const git = Git(__dirname)
+    const commit = await git.log(['-1'])
+    const branch = await git.revparse(['--abbrev-ref', 'HEAD'])
+    const { body: esInfo } = await client.info()
+    const { body: esNodes } = await client.nodes.stats({ metric: 'os' })
+
+    const results = reports.map(report => {
+      return {
+        '@timestamp': new Date(),
+        event: {
+          description: report.title,
+          category: report.category,
+          action: report.action,
+          duration: 0,
+          statistics: report.stats,
+          repetitions: report.repetitions,
+          dataset: report.dataset,
+          dataset_details: {
+            size: 'Integer[Size of the dataset]',
+            num_documents: 'Integer[Number of documents in the dataset]'
+          }
+        },
+        agent: {
+          version: clientVersion,
+          name: '@elastic/elasticsearch-js',
+          git: {
+            branch,
+            sha: commit.latest.hash,
+            commit_message: commit.latest.message,
+            repository: 'elasticsearch-js'
+          },
+          language: {
+            version: process.version
+          },
+          os: {
+            platform: `${os.platform()} ${os.release()}`,
+            type: os.type(),
+            architecture: os.arch()
+          }
+        },
+        server: {
+          version: esInfo.version.number,
+          nodes_info: esNodes
+        }
+      }
+    })
+
+    return results
+  }
 
   return {
     bench: dezalgo(benchmark),
