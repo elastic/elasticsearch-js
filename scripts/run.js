@@ -7,7 +7,7 @@ const semver = require('semver')
 const ora = require('ora')
 const rimraf = require('rimraf')
 const standard = require('standard')
-const { generate, cloneAndCheckout, genFactory } = require('./utils')
+const { generate, cloneAndCheckout, genFactory, generateRequestTypes } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
   string: ['tag']
@@ -23,6 +23,8 @@ function start (opts) {
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const typesOutputFile = join(packageFolder, 'generated.d.ts')
+  const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
+  const allSpec = []
 
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
@@ -35,6 +37,12 @@ function start (opts) {
 
     readdirSync(apiFolder).forEach(generateApiFile(apiFolder, log))
     readdirSync(xPackFolder).forEach(generateApiFile(xPackFolder, log))
+
+    writeFileSync(
+      requestParamsOutputFile,
+      generateRequestTypes(allSpec),
+      { encoding: 'utf8' }
+    )
 
     const { fn: factory, types } = genFactory(apiOutputFolder)
     writeFileSync(
@@ -61,6 +69,7 @@ function start (opts) {
       log.text = `Processing ${file}`
 
       const spec = require(join(apiFolder, file))
+      allSpec.push(spec)
       const code = generate(spec, common)
       const filePath = join(apiOutputFolder, `${file.slice(0, file.lastIndexOf('.'))}.js`)
 

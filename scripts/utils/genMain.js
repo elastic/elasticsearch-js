@@ -9,6 +9,11 @@ function genFactory (folder) {
   const apiFiles = readdirSync(folder)
   const types = apiFiles
     .map(file => {
+      const name = file
+        .slice(0, -3)
+        .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+        .replace(/_([a-z])/g, k => k[1].toUpperCase())
+
       return file
         .slice(0, -3) // remove `.js` extension
         .split('.')
@@ -16,12 +21,12 @@ function genFactory (folder) {
         .reduce((acc, val) => {
           const obj = {
             [val]: acc === null
-              ? 'ApiMethod'
+              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
               : acc
           }
           if (isSnakeCased(val)) {
             obj[camelify(val)] = acc === null
-              ? 'ApiMethod'
+              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
               : acc
           }
           return obj
