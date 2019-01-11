@@ -487,5 +487,6 @@ export {
   ApiResponse,
   EventMeta,
   SniffMeta,
-  ResurrectMeta
+  ResurrectMeta,
+  RequestParams
 };
