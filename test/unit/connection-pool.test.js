@@ -30,6 +30,22 @@ test('API', t => {
     t.end()
   })
 
+  t.test('addConnection (should store the auth data)', t => {
+    const pool = new ConnectionPool({ Connection })
+    const href = 'http://localhost:9200/'
+    pool.addConnection('http://foo:bar@localhost:9200')
+
+    t.ok(pool.connections.get(href) instanceof Connection)
+    t.strictEqual(pool.connections.get(href).status, Connection.statuses.ALIVE)
+    t.deepEqual(pool.dead, [])
+    t.deepEqual(pool._auth, { username: 'foo', password: 'bar' })
+
+    pool.addConnection('http://localhost:9201')
+    t.strictEqual(pool.connections.get('http://localhost:9201/').url.username, 'foo')
+    t.strictEqual(pool.connections.get('http://localhost:9201/').url.password, 'bar')
+    t.end()
+  })
+
   t.test('markDead', t => {
     const pool = new ConnectionPool({ Connection })
     const href = 'http://localhost:9200/'
@@ -379,6 +395,40 @@ test('API', t => {
 
       t.ok(pool.connections.get('a1').roles !== null)
       t.ok(pool.connections.get('a2').roles !== null)
+    })
+
+    t.test('Should not update existing connections (same url, different id)', t => {
+      t.plan(2)
+      class CustomConnectionPool extends ConnectionPool {
+        markAlive () {
+          t.fail('Should not be called')
+        }
+      }
+      const pool = new CustomConnectionPool({ Connection })
+      pool.addConnection([{
+        url: new URL('http://127.0.0.1:9200'),
+        id: 'http://127.0.0.1:9200/',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true
+        }
+      }])
+
+      pool.update([{
+        url: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: true
+      }])
+
+      // roles will never be updated, we only use it to do
+      // a dummy check to see if the connection has been updated
+      t.deepEqual(pool.connections.get('a1').roles, {
+        master: true,
+        data: true,
+        ingest: true
+      })
+      t.strictEqual(pool.connections.get('http://127.0.0.1:9200/'), undefined)
     })
 
     t.test('Add a new connection', t => {

@@ -37,17 +37,30 @@ test('Should update the connection pool', t => {
       const ids = Object.keys(nodes)
       for (var i = 0; i < hosts.length; i++) {
         const id = ids[i]
-        t.deepEqual(hosts[i], {
-          url: new URL(nodes[id].url),
-          id: id,
-          roles: {
-            master: true,
-            data: true,
-            ingest: true
-          },
-          ssl: null,
-          agent: null
-        })
+        // the first node will be an update of the existing one
+        if (id === 'node0') {
+          t.deepEqual(hosts[i], {
+            url: new URL(nodes[id].url),
+            id: id,
+            roles: {
+              master: true,
+              data: true,
+              ingest: true
+            }
+          })
+        } else {
+          t.deepEqual(hosts[i], {
+            url: new URL(nodes[id].url),
+            id: id,
+            roles: {
+              master: true,
+              data: true,
+              ingest: true
+            },
+            ssl: null,
+            agent: null
+          })
+        }
       }
 
       t.strictEqual(client.connectionPool.connections.size, 4)
