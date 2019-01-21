@@ -45,7 +45,8 @@ test('Should update the connection pool', t => {
             roles: {
               master: true,
               data: true,
-              ingest: true
+              ingest: true,
+              ml: false
             }
           })
         } else {
@@ -55,7 +56,8 @@ test('Should update the connection pool', t => {
             roles: {
               master: true,
               data: true,
-              ingest: true
+              ingest: true,
+              ml: false
             },
             ssl: null,
             agent: null

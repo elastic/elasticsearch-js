@@ -21,8 +21,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
     t.end()
@@ -43,8 +42,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
     t.match(pool.connections.get('http://localhost:9201/'), {
@@ -57,8 +55,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
 
@@ -72,7 +69,8 @@ test('Configure host', t => {
         id: 'node',
         roles: {
           master: true,
-          data: false
+          data: false,
+          ingest: false
         },
         ssl: 'ssl'
       }
@@ -83,12 +81,16 @@ test('Configure host', t => {
       id: 'node',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: true,
-        data: false
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node').roles, {
+      master: true,
+      data: false,
+      ingest: false,
+      ml: false
+    })
+
     t.end()
   })
 
@@ -99,7 +101,8 @@ test('Configure host', t => {
         id: 'node1',
         roles: {
           master: true,
-          data: false
+          data: false,
+          ingest: false
         },
         ssl: 'ssl'
       }, {
@@ -107,7 +110,8 @@ test('Configure host', t => {
         id: 'node2',
         roles: {
           master: false,
-          data: true
+          data: true,
+          ingest: false
         },
         ssl: 'ssl'
       }]
@@ -118,23 +122,31 @@ test('Configure host', t => {
       id: 'node1',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: true,
-        data: false
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node1').roles, {
+      master: true,
+      data: false,
+      ingest: false,
+      ml: false
+    })
+
     t.match(pool.connections.get('node2'), {
       url: new URL('http://localhost:9200'),
       id: 'node2',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: false,
-        data: true
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node2').roles, {
+      master: false,
+      data: true,
+      ingest: false,
+      ml: false
+    })
+
     t.end()
   })
 

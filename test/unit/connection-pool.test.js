@@ -296,7 +296,8 @@ test('API', t => {
       roles: {
         master: true,
         data: true,
-        ingest: true
+        ingest: true,
+        ml: false
       }
     }, {
       url: new URL('http://127.0.0.1:9201'),
@@ -304,7 +305,8 @@ test('API', t => {
       roles: {
         master: true,
         data: true,
-        ingest: true
+        ingest: true,
+        ml: false
       }
     }])
     t.end()
@@ -426,7 +428,8 @@ test('API', t => {
       t.deepEqual(pool.connections.get('a1').roles, {
         master: true,
         data: true,
-        ingest: true
+        ingest: true,
+        ml: false
       })
       t.strictEqual(pool.connections.get('http://127.0.0.1:9200/'), undefined)
     })
