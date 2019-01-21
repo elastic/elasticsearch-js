@@ -34,8 +34,7 @@ export default class Connection {
     MASTER: string;
     DATA: string;
     INGEST: string;
-    COORDINATING: string;
-    MACHINE_LEARNING: string;
+    ML: string;
   };
   url: URL;
   ssl: SecureContextOptions | null;
