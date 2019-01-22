@@ -6,7 +6,7 @@ const { EventEmitter } = require('events')
 const os = require('os')
 const dezalgo = require('dezalgo')
 const convertHrtime = require('convert-hrtime')
-const Git = require('simple-git')
+const Git = require('simple-git/promise')
 const workq = require('workq')
 const dedent = require('dedent')
 const ss = require('simple-statistics')
@@ -117,10 +117,10 @@ function buildBenchmark (options = {}) {
     async function elaborateStats (q) {
       const times = stats[title].map(s => s.milliseconds / b.iterations)
       reports.push({
-        description: opts.title,
+        description: title,
         action: opts.action,
         category: opts.category || 'simple',
-        dataset: opts.dataset,
+        dataset: opts.dataset || null,
         stats: {
           mean: ss.mean(times),
           median: ss.median(times),
@@ -182,23 +182,23 @@ function buildBenchmark (options = {}) {
       return {
         '@timestamp': new Date(),
         event: {
-          description: report.title,
+          description: report.description,
           category: report.category,
           action: report.action,
           duration: 0,
           statistics: report.stats,
           repetitions: report.repetitions,
-          dataset: report.dataset,
+          dataset: (report.dataset && report.dataset.name) || null,
           dataset_details: {
-            size: 'Integer[Size of the dataset]',
-            num_documents: 'Integer[Number of documents in the dataset]'
+            size: (report.dataset && report.dataset.size) || 0,
+            num_documents: (report.dataset && report.dataset.num_documents) || 0
           }
         },
         agent: {
           version: clientVersion,
           name: '@elastic/elasticsearch-js',
           git: {
-            branch,
+            branch: branch.slice(0, -1),
             sha: commit.latest.hash,
             commit_message: commit.latest.message,
             repository: 'elasticsearch-js'
@@ -219,7 +219,13 @@ function buildBenchmark (options = {}) {
       }
     })
 
-    return results
+    for (var i = 0; i < results.length; i++) {
+      await client.index({
+        index: 'benchmarking_results',
+        type: '_doc',
+        body: results[i]
+      })
+    }
   }
 
   return {

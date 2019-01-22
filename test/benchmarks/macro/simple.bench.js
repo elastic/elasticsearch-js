@@ -1,12 +1,24 @@
 'use strict'
 
 const { Client } = require('../../../index')
-const { bench, beforeEach, afterEach } = require('../suite')({ report: 'http://localhost:9200' })
+const { statSync } = require('fs')
+const { join } = require('path')
+const { bench, beforeEach, afterEach } = require('../suite')({ report: process.env.BENCH_REPORT })
 
 const node = process.env.ES_HOST || 'http://localhost:9200'
 
 const smallDocument = require('./fixtures/small_document.json')
+const smallDocumentInfo = {
+  name: 'small_document.json',
+  size: statSync(join(__dirname, 'fixtures', 'small_document.json')).size,
+  num_documents: 1
+}
 const largeDocument = require('./fixtures/large_document.json')
+const largeDocumentInfo = {
+  name: 'large_document.json',
+  size: statSync(join(__dirname, 'fixtures', 'large_document.json')).size,
+  num_documents: 1
+}
 
 const client = new Client({ node })
 
@@ -49,7 +61,7 @@ bench('Index small document', {
   warmup: 3,
   measure: 5,
   iterations: 100,
-  dataset: 'small_document.json',
+  dataset: smallDocumentInfo,
   action: 'create'
 }, async b => {
   const now = Date.now() + ''
@@ -72,7 +84,7 @@ bench('Index large document', {
   warmup: 3,
   measure: 5,
   iterations: 100,
-  dataset: 'large_document.json',
+  dataset: largeDocumentInfo,
   action: 'create'
 }, async b => {
   const now = Date.now() + ''
@@ -95,7 +107,7 @@ bench('Get small document', {
   warmup: 3,
   measure: 5,
   iterations: 1000,
-  dataset: 'small_document.json',
+  dataset: smallDocumentInfo,
   action: 'get'
 }, async b => {
   const now = Date.now() + ''
@@ -124,7 +136,7 @@ bench('Get large document', {
   warmup: 3,
   measure: 5,
   iterations: 1000,
-  dataset: 'large_document.json',
+  dataset: largeDocumentInfo,
   action: 'get'
 }, async b => {
   const now = Date.now() + ''
@@ -153,7 +165,7 @@ bench('Search small document', {
   warmup: 3,
   measure: 5,
   iterations: 1000,
-  dataset: 'small_document.json',
+  dataset: smallDocumentInfo,
   action: 'search'
 }, async b => {
   const now = Date.now() + ''
@@ -187,7 +199,7 @@ bench('Search large document', {
   warmup: 3,
   measure: 5,
   iterations: 1000,
-  dataset: 'large_document.json',
+  dataset: largeDocumentInfo,
   action: 'search'
 }, async b => {
   const now = Date.now() + ''
@@ -221,7 +233,7 @@ bench('Update small document', {
   warmup: 3,
   measure: 5,
   iterations: 100,
-  dataset: 'small_document.json',
+  dataset: smallDocumentInfo,
   action: 'update'
 }, async b => {
   const now = Date.now() + ''
