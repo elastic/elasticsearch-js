@@ -5,6 +5,7 @@ exec docker run \
   -e "node.attr.testattr=test" \
   -e "path.repo=/tmp" \
   -e "repositories.url.allowed_urls=http://snapshot.*" \
+  --name elastic \
   -p 9200:9200 \
   docker.elastic.co/elasticsearch/elasticsearch:6.5.0
 
