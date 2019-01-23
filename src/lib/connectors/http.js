@@ -19,6 +19,7 @@ var qs = require('querystring');
 var AgentKeepAlive = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 var zlib = require('zlib');
+var INVALID_PATH_REGEX = /[^\u0021-\u00ff]/
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -165,6 +166,11 @@ HttpConnector.prototype.request = function (params, cb) {
       cb(err, response, status, headers);
     }
   }, this);
+
+  if (INVALID_PATH_REGEX.test(reqParams.path) === true) {
+    cb(new TypeError('ERR_UNESCAPED_CHARACTERS: ' + reqParams.path))
+    return function () {}
+  }
 
   request = this.hand.request(reqParams, function (_incoming) {
     incoming = _incoming;
