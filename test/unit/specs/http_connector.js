@@ -232,14 +232,12 @@ describe('Http Connector', function () {
     });
 
     it('calls back with error when http.request throws an error', function (done) {
-      var con = new HttpConnection(new Host('http://google.com'));
+      var con = new HttpConnection(new Host('http://google.com/thisisinvalid\uffe2'));
 
       stub(con.log, 'error');
 
-      http.request.func = function () { throw new Error('actual error') };
-
       con.request({}, function (err) {
-        expect(err.message).to.eql('actual error');
+        expect(err.message).to.eql('ERR_UNESCAPED_CHARACTERS: /thisisinvalid\uffe2');
         done();
       });
     });
