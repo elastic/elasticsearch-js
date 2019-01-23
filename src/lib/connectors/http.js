@@ -19,6 +19,7 @@ var qs = require('querystring');
 var AgentKeepAlive = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 var zlib = require('zlib');
+var INVALID_PATH_REGEX = /[^\u0021-\u00ff]/
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -166,32 +167,30 @@ HttpConnector.prototype.request = function (params, cb) {
     }
   }, this);
 
-  try {
-    request = this.hand.request(reqParams, function (_incoming) {
-      incoming = _incoming;
-      status = incoming.statusCode;
-      headers = incoming.headers;
-      response = '';
-
-      var encoding = (headers['content-encoding'] || '').toLowerCase();
-      if (encoding === 'gzip' || encoding === 'deflate') {
-        incoming = incoming.pipe(zlib.createUnzip());
-      }
-
-      incoming.setEncoding('utf8');
-      incoming.on('data', function (d) {
-        response += d;
-      });
-
-      incoming.on('error', cleanUp);
-      incoming.on('end', cleanUp);
-    });
-  } catch (error) {
-    // in node 10 http.request() throws an error if the path includes multi-byte
-    // characters, which we need to make sure is forwarded to the callback
-    cleanUp(error);
-    return;
+  if (INVALID_PATH_REGEX.test(reqParams.path) === true) {
+    cb(new TypeError('ERR_UNESCAPED_CHARACTERS: ' + reqParams.path))
+    return function () {}
   }
+
+  request = this.hand.request(reqParams, function (_incoming) {
+    incoming = _incoming;
+    status = incoming.statusCode;
+    headers = incoming.headers;
+    response = '';
+
+    var encoding = (headers['content-encoding'] || '').toLowerCase();
+    if (encoding === 'gzip' || encoding === 'deflate') {
+      incoming = incoming.pipe(zlib.createUnzip());
+    }
+
+    incoming.setEncoding('utf8');
+    incoming.on('data', function (d) {
+      response += d;
+    });
+
+    incoming.on('error', cleanUp);
+    incoming.on('end', cleanUp);
+  });
 
   request.on('error', cleanUp);
 
