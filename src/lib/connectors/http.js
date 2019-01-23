@@ -166,25 +166,32 @@ HttpConnector.prototype.request = function (params, cb) {
     }
   }, this);
 
-  request = this.hand.request(reqParams, function (_incoming) {
-    incoming = _incoming;
-    status = incoming.statusCode;
-    headers = incoming.headers;
-    response = '';
+  try {
+    request = this.hand.request(reqParams, function (_incoming) {
+      incoming = _incoming;
+      status = incoming.statusCode;
+      headers = incoming.headers;
+      response = '';
 
-    var encoding = (headers['content-encoding'] || '').toLowerCase();
-    if (encoding === 'gzip' || encoding === 'deflate') {
-      incoming = incoming.pipe(zlib.createUnzip());
-    }
+      var encoding = (headers['content-encoding'] || '').toLowerCase();
+      if (encoding === 'gzip' || encoding === 'deflate') {
+        incoming = incoming.pipe(zlib.createUnzip());
+      }
 
-    incoming.setEncoding('utf8');
-    incoming.on('data', function (d) {
-      response += d;
+      incoming.setEncoding('utf8');
+      incoming.on('data', function (d) {
+        response += d;
+      });
+
+      incoming.on('error', cleanUp);
+      incoming.on('end', cleanUp);
     });
-
-    incoming.on('error', cleanUp);
-    incoming.on('end', cleanUp);
-  });
+  } catch (error) {
+    // in node 10 http.request() throws an error if the path includes multi-byte
+    // characters, which we need to make sure is forwarded to the callback
+    cleanUp(error);
+    return;
+  }
 
   request.on('error', cleanUp);
 

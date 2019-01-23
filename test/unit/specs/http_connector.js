@@ -230,6 +230,19 @@ describe('Http Connector', function () {
         done();
       });
     });
+
+    it('calls back with error when http.request throws an error', function (done) {
+      var con = new HttpConnection(new Host('http://google.com'));
+
+      stub(con.log, 'error');
+
+      http.request.func = function () { throw new Error('actual error') };
+
+      con.request({}, function (err) {
+        expect(err.message).to.eql('actual error');
+        done();
+      });
+    });
   });
 
   describe('#request with incomming message error', function () {
