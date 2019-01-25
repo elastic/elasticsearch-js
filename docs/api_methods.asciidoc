@@ -1862,6 +1862,29 @@ const response = await client.update({
 })
 ---------
 
+.Increment a document counter by parameter or initialize it, when the document does not exist
+[source,js]
+---------
+const response = await client.update({
+  index: 'myindex',
+  type: 'mytype',
+  id: '777',
+  body: {
+    script: {
+      source: 'ctx._source.counter += params.inc;',
+      lang: 'painless',
+      params: {
+        inc: 10
+      }
+    },
+    upsert: { 
+      counter: 1
+    }
+  }
+})
+
+---------
+
 .Delete a document if it's tagged “to-delete”
 [source,js]
 ---------
