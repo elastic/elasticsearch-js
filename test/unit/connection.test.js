@@ -573,3 +573,21 @@ test('Should throw if the protocol is not http or https', t => {
   }
   t.end()
 })
+
+// https://github.com/nodejs/node/commit/b961d9fd83
+test('Should disallow two-byte characters in URL path', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('http://localhost:9200')
+  })
+  connection.request({
+    path: '/thisisinvalid' + encodeURIComponent('\uffe2'),
+    method: 'GET'
+  }, (err, res) => {
+    t.strictEqual(
+      err.message,
+      'ERR_UNESCAPED_CHARACTERS: /thisisinvalid\uffe2'
+    )
+  })
+})
