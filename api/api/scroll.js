@@ -9,6 +9,7 @@ function buildScroll (opts) {
    * @param {string} scroll_id - The scroll ID
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
    * @param {string} scroll_id - The scroll ID for scrolled search
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The scroll ID if not passed by URL or query parameter.
    */
   return function scroll (params, options, callback) {
@@ -37,6 +38,7 @@ function buildScroll (opts) {
     const acceptedQuerystring = [
       'scroll',
       'scroll_id',
+      'rest_total_hits_as_int',
       'pretty',
       'human',
       'error_trace',
@@ -46,6 +48,7 @@ function buildScroll (opts) {
     const acceptedQuerystringCamelCased = [
       'scroll',
       'scrollId',
+      'restTotalHitsAsInt',
       'pretty',
       'human',
       'errorTrace',
@@ -84,11 +87,18 @@ function buildScroll (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['scroll_id'] || params['scrollId']) != null) {
+      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(params['scroll_id'] || params['scrollId'])
+    } else {
+      path = '/' + '_search' + '/' + 'scroll'
+    }
+
     // build request object
-    const parts = ['_search', 'scroll', params['scroll_id'] || params['scrollId']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

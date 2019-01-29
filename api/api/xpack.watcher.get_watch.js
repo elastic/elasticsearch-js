@@ -83,11 +83,14 @@ function buildXpackWatcherGetWatch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(params['id'])
+
     // build request object
-    const parts = ['_xpack', 'watcher', 'watch', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

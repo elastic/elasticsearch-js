@@ -91,11 +91,14 @@ function buildIndicesUpdateAliases (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_aliases'
+
     // build request object
-    const parts = ['_aliases']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

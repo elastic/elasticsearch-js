@@ -106,11 +106,18 @@ function buildCatCount (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_cat' + '/' + 'count' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_cat' + '/' + 'count'
+    }
+
     // build request object
-    const parts = ['_cat', 'count', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

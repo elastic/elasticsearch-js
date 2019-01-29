@@ -109,11 +109,18 @@ function buildCatAllocation (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_cat' + '/' + 'allocation' + '/' + encodeURIComponent(params['node_id'] || params['nodeId'])
+    } else {
+      path = '/' + '_cat' + '/' + 'allocation'
+    }
+
     // build request object
-    const parts = ['_cat', 'allocation', params['node_id'] || params['nodeId']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

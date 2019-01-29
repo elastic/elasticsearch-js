@@ -106,11 +106,18 @@ function buildCatRecovery (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_cat' + '/' + 'recovery' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_cat' + '/' + 'recovery'
+    }
+
     // build request object
-    const parts = ['_cat', 'recovery', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

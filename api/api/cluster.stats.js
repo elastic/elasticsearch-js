@@ -91,13 +91,18 @@ function buildClusterStats (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_cluster' + '/' + 'stats' + '/' + 'nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId'])
+    } else {
+      path = '/' + '_cluster' + '/' + 'stats'
+    }
+
     // build request object
-    const parts = ['_cluster', 'stats', 'nodes', params['node_id'] || params['nodeId']]
     const request = {
       method,
-      path: (params['node_id'] || params['nodeId']) != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/_cluster/stats',
+      path,
       body: null,
       querystring
     }

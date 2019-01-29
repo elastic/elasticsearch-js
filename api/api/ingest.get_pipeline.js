@@ -88,11 +88,18 @@ function buildIngestGetPipeline (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null) {
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(params['id'])
+    } else {
+      path = '/' + '_ingest' + '/' + 'pipeline'
+    }
+
     // build request object
-    const parts = ['_ingest', 'pipeline', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

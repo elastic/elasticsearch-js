@@ -7,6 +7,8 @@ function buildXpackRollupStopJob (opts) {
    * Perform a [xpack.rollup.stop_job]() request
    *
    * @param {string} id - The ID of the job to stop
+   * @param {boolean} wait_for_completion - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
+   * @param {time} timeout - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
    */
   return function xpackRollupStopJob (params, options, callback) {
     options = options || {}
@@ -40,10 +42,12 @@ function buildXpackRollupStopJob (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-
+      'wait_for_completion',
+      'timeout'
     ]
     const acceptedQuerystringCamelCased = [
-
+      'waitForCompletion',
+      'timeout'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -77,11 +81,14 @@ function buildXpackRollupStopJob (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(params['id']) + '/' + '_stop'
+
     // build request object
-    const parts = ['_xpack', 'rollup', 'job', params['id'], '_stop']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

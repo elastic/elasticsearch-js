@@ -111,11 +111,26 @@ function buildNodesStats (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['node_id'] || params['nodeId']) != null && (params['metric']) != null && (params['index_metric'] || params['indexMetric']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats' + '/' + encodeURIComponent(params['metric']) + '/' + encodeURIComponent(params['index_metric'] || params['indexMetric'])
+    } else if ((params['node_id'] || params['nodeId']) != null && (params['metric']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats' + '/' + encodeURIComponent(params['metric'])
+    } else if ((params['metric']) != null && (params['index_metric'] || params['indexMetric']) != null) {
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(params['metric']) + '/' + encodeURIComponent(params['index_metric'] || params['indexMetric'])
+    } else if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats'
+    } else if ((params['metric']) != null) {
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(params['metric'])
+    } else {
+      path = '/' + '_nodes' + '/' + 'stats'
+    }
+
     // build request object
-    const parts = ['_nodes', params['node_id'] || params['nodeId'], 'stats', params['metric'], params['index_metric'] || params['indexMetric']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

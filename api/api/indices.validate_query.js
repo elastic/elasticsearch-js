@@ -123,11 +123,20 @@ function buildIndicesValidateQuery (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_validate' + '/' + 'query'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_validate' + '/' + 'query'
+    } else {
+      path = '/' + '_validate' + '/' + 'query'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_validate', 'query']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

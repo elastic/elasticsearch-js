@@ -13,6 +13,7 @@ function buildMsearch (opts) {
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
    * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
   return function msearch (params, options, callback) {
@@ -60,6 +61,7 @@ function buildMsearch (opts) {
       'typed_keys',
       'pre_filter_shard_size',
       'max_concurrent_shard_requests',
+      'rest_total_hits_as_int',
       'pretty',
       'human',
       'error_trace',
@@ -72,6 +74,7 @@ function buildMsearch (opts) {
       'typedKeys',
       'preFilterShardSize',
       'maxConcurrentShardRequests',
+      'restTotalHitsAsInt',
       'pretty',
       'human',
       'errorTrace',
@@ -110,11 +113,20 @@ function buildMsearch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_msearch'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_msearch'
+    } else {
+      path = '/' + '_msearch'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_msearch']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       bulkBody: params.body,
       querystring
     }

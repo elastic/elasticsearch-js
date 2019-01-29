@@ -20,7 +20,7 @@ services:
     depends_on:
       - elasticsearch
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-alpha2}
     volumes:
       - esvol:/tmp
     networks:
@@ -30,7 +30,8 @@ services:
       - "repositories.url.allowed_urls=http://*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+        # - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "discovery.type=single-node"
       - "http.max_content_length=5mb"
 networks:
   esnet:

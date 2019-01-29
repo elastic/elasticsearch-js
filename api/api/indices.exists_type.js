@@ -118,11 +118,14 @@ function buildIndicesExistsType (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_mapping' + '/' + encodeURIComponent(params['type'])
+
     // build request object
-    const parts = [params['index'], '_mapping', params['type']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

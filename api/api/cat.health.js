@@ -108,11 +108,14 @@ function buildCatHealth (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'health'
+
     // build request object
-    const parts = ['_cat', 'health']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

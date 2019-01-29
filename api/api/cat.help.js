@@ -90,11 +90,14 @@ function buildCatHelp (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat'
+
     // build request object
-    const parts = ['_cat']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

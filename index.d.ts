@@ -128,6 +128,25 @@ declare class Client extends EventEmitter {
   getScript: ApiMethod<RequestParams.GetScript>
   get_source: ApiMethod<RequestParams.GetSource>
   getSource: ApiMethod<RequestParams.GetSource>
+  ilm: {
+    delete_lifecycle: ApiMethod<RequestParams.IlmDeleteLifecycle>
+    deleteLifecycle: ApiMethod<RequestParams.IlmDeleteLifecycle>
+    explain_lifecycle: ApiMethod<RequestParams.IlmExplainLifecycle>
+    explainLifecycle: ApiMethod<RequestParams.IlmExplainLifecycle>
+    get_lifecycle: ApiMethod<RequestParams.IlmGetLifecycle>
+    getLifecycle: ApiMethod<RequestParams.IlmGetLifecycle>
+    get_status: ApiMethod<RequestParams.IlmGetStatus>
+    getStatus: ApiMethod<RequestParams.IlmGetStatus>
+    move_to_step: ApiMethod<RequestParams.IlmMoveToStep>
+    moveToStep: ApiMethod<RequestParams.IlmMoveToStep>
+    put_lifecycle: ApiMethod<RequestParams.IlmPutLifecycle>
+    putLifecycle: ApiMethod<RequestParams.IlmPutLifecycle>
+    remove_policy: ApiMethod<RequestParams.IlmRemovePolicy>
+    removePolicy: ApiMethod<RequestParams.IlmRemovePolicy>
+    retry: ApiMethod<RequestParams.IlmRetry>
+    start: ApiMethod<RequestParams.IlmStart>
+    stop: ApiMethod<RequestParams.IlmStop>
+  }
   index: ApiMethod<RequestParams.Index>
   indices: {
     analyze: ApiMethod<RequestParams.IndicesAnalyze>
@@ -151,6 +170,7 @@ declare class Client extends EventEmitter {
     flush_synced: ApiMethod<RequestParams.IndicesFlushSynced>
     flushSynced: ApiMethod<RequestParams.IndicesFlushSynced>
     forcemerge: ApiMethod<RequestParams.IndicesForcemerge>
+    freeze: ApiMethod<RequestParams.IndicesFreeze>
     get: ApiMethod<RequestParams.IndicesGet>
     get_alias: ApiMethod<RequestParams.IndicesGetAlias>
     getAlias: ApiMethod<RequestParams.IndicesGetAlias>
@@ -182,6 +202,7 @@ declare class Client extends EventEmitter {
     shrink: ApiMethod<RequestParams.IndicesShrink>
     split: ApiMethod<RequestParams.IndicesSplit>
     stats: ApiMethod<RequestParams.IndicesStats>
+    unfreeze: ApiMethod<RequestParams.IndicesUnfreeze>
     update_aliases: ApiMethod<RequestParams.IndicesUpdateAliases>
     updateAliases: ApiMethod<RequestParams.IndicesUpdateAliases>
     upgrade: ApiMethod<RequestParams.IndicesUpgrade>
@@ -201,6 +222,98 @@ declare class Client extends EventEmitter {
     simulate: ApiMethod<RequestParams.IngestSimulate>
   }
   mget: ApiMethod<RequestParams.Mget>
+  ml: {
+    close_job: ApiMethod<RequestParams.MlCloseJob>
+    closeJob: ApiMethod<RequestParams.MlCloseJob>
+    delete_calendar: ApiMethod<RequestParams.MlDeleteCalendar>
+    deleteCalendar: ApiMethod<RequestParams.MlDeleteCalendar>
+    delete_calendar_event: ApiMethod<RequestParams.MlDeleteCalendarEvent>
+    deleteCalendarEvent: ApiMethod<RequestParams.MlDeleteCalendarEvent>
+    delete_calendar_job: ApiMethod<RequestParams.MlDeleteCalendarJob>
+    deleteCalendarJob: ApiMethod<RequestParams.MlDeleteCalendarJob>
+    delete_datafeed: ApiMethod<RequestParams.MlDeleteDatafeed>
+    deleteDatafeed: ApiMethod<RequestParams.MlDeleteDatafeed>
+    delete_expired_data: ApiMethod<RequestParams.MlDeleteExpiredData>
+    deleteExpiredData: ApiMethod<RequestParams.MlDeleteExpiredData>
+    delete_filter: ApiMethod<RequestParams.MlDeleteFilter>
+    deleteFilter: ApiMethod<RequestParams.MlDeleteFilter>
+    delete_forecast: ApiMethod<RequestParams.MlDeleteForecast>
+    deleteForecast: ApiMethod<RequestParams.MlDeleteForecast>
+    delete_job: ApiMethod<RequestParams.MlDeleteJob>
+    deleteJob: ApiMethod<RequestParams.MlDeleteJob>
+    delete_model_snapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
+    deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
+    find_file_structure: ApiMethod<RequestParams.MlFindFileStructure>
+    findFileStructure: ApiMethod<RequestParams.MlFindFileStructure>
+    flush_job: ApiMethod<RequestParams.MlFlushJob>
+    flushJob: ApiMethod<RequestParams.MlFlushJob>
+    forecast: ApiMethod<RequestParams.MlForecast>
+    get_buckets: ApiMethod<RequestParams.MlGetBuckets>
+    getBuckets: ApiMethod<RequestParams.MlGetBuckets>
+    get_calendar_events: ApiMethod<RequestParams.MlGetCalendarEvents>
+    getCalendarEvents: ApiMethod<RequestParams.MlGetCalendarEvents>
+    get_calendars: ApiMethod<RequestParams.MlGetCalendars>
+    getCalendars: ApiMethod<RequestParams.MlGetCalendars>
+    get_categories: ApiMethod<RequestParams.MlGetCategories>
+    getCategories: ApiMethod<RequestParams.MlGetCategories>
+    get_datafeed_stats: ApiMethod<RequestParams.MlGetDatafeedStats>
+    getDatafeedStats: ApiMethod<RequestParams.MlGetDatafeedStats>
+    get_datafeeds: ApiMethod<RequestParams.MlGetDatafeeds>
+    getDatafeeds: ApiMethod<RequestParams.MlGetDatafeeds>
+    get_filters: ApiMethod<RequestParams.MlGetFilters>
+    getFilters: ApiMethod<RequestParams.MlGetFilters>
+    get_influencers: ApiMethod<RequestParams.MlGetInfluencers>
+    getInfluencers: ApiMethod<RequestParams.MlGetInfluencers>
+    get_job_stats: ApiMethod<RequestParams.MlGetJobStats>
+    getJobStats: ApiMethod<RequestParams.MlGetJobStats>
+    get_jobs: ApiMethod<RequestParams.MlGetJobs>
+    getJobs: ApiMethod<RequestParams.MlGetJobs>
+    get_model_snapshots: ApiMethod<RequestParams.MlGetModelSnapshots>
+    getModelSnapshots: ApiMethod<RequestParams.MlGetModelSnapshots>
+    get_overall_buckets: ApiMethod<RequestParams.MlGetOverallBuckets>
+    getOverallBuckets: ApiMethod<RequestParams.MlGetOverallBuckets>
+    get_records: ApiMethod<RequestParams.MlGetRecords>
+    getRecords: ApiMethod<RequestParams.MlGetRecords>
+    info: ApiMethod<RequestParams.MlInfo>
+    open_job: ApiMethod<RequestParams.MlOpenJob>
+    openJob: ApiMethod<RequestParams.MlOpenJob>
+    post_calendar_events: ApiMethod<RequestParams.MlPostCalendarEvents>
+    postCalendarEvents: ApiMethod<RequestParams.MlPostCalendarEvents>
+    post_data: ApiMethod<RequestParams.MlPostData>
+    postData: ApiMethod<RequestParams.MlPostData>
+    preview_datafeed: ApiMethod<RequestParams.MlPreviewDatafeed>
+    previewDatafeed: ApiMethod<RequestParams.MlPreviewDatafeed>
+    put_calendar: ApiMethod<RequestParams.MlPutCalendar>
+    putCalendar: ApiMethod<RequestParams.MlPutCalendar>
+    put_calendar_job: ApiMethod<RequestParams.MlPutCalendarJob>
+    putCalendarJob: ApiMethod<RequestParams.MlPutCalendarJob>
+    put_datafeed: ApiMethod<RequestParams.MlPutDatafeed>
+    putDatafeed: ApiMethod<RequestParams.MlPutDatafeed>
+    put_filter: ApiMethod<RequestParams.MlPutFilter>
+    putFilter: ApiMethod<RequestParams.MlPutFilter>
+    put_job: ApiMethod<RequestParams.MlPutJob>
+    putJob: ApiMethod<RequestParams.MlPutJob>
+    revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
+    revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
+    start_datafeed: ApiMethod<RequestParams.MlStartDatafeed>
+    startDatafeed: ApiMethod<RequestParams.MlStartDatafeed>
+    stop_datafeed: ApiMethod<RequestParams.MlStopDatafeed>
+    stopDatafeed: ApiMethod<RequestParams.MlStopDatafeed>
+    update_datafeed: ApiMethod<RequestParams.MlUpdateDatafeed>
+    updateDatafeed: ApiMethod<RequestParams.MlUpdateDatafeed>
+    update_filter: ApiMethod<RequestParams.MlUpdateFilter>
+    updateFilter: ApiMethod<RequestParams.MlUpdateFilter>
+    update_job: ApiMethod<RequestParams.MlUpdateJob>
+    updateJob: ApiMethod<RequestParams.MlUpdateJob>
+    update_model_snapshot: ApiMethod<RequestParams.MlUpdateModelSnapshot>
+    updateModelSnapshot: ApiMethod<RequestParams.MlUpdateModelSnapshot>
+    validate: ApiMethod<RequestParams.MlValidate>
+    validate_detector: ApiMethod<RequestParams.MlValidateDetector>
+    validateDetector: ApiMethod<RequestParams.MlValidateDetector>
+  }
+  monitoring: {
+    bulk: ApiMethod<RequestParams.MonitoringBulk>
+  }
   msearch: ApiMethod<RequestParams.Msearch>
   msearch_template: ApiMethod<RequestParams.MsearchTemplate>
   msearchTemplate: ApiMethod<RequestParams.MsearchTemplate>
@@ -232,6 +345,51 @@ declare class Client extends EventEmitter {
   searchShards: ApiMethod<RequestParams.SearchShards>
   search_template: ApiMethod<RequestParams.SearchTemplate>
   searchTemplate: ApiMethod<RequestParams.SearchTemplate>
+  security: {
+    authenticate: ApiMethod<RequestParams.SecurityAuthenticate>
+    change_password: ApiMethod<RequestParams.SecurityChangePassword>
+    changePassword: ApiMethod<RequestParams.SecurityChangePassword>
+    clear_cached_realms: ApiMethod<RequestParams.SecurityClearCachedRealms>
+    clearCachedRealms: ApiMethod<RequestParams.SecurityClearCachedRealms>
+    clear_cached_roles: ApiMethod<RequestParams.SecurityClearCachedRoles>
+    clearCachedRoles: ApiMethod<RequestParams.SecurityClearCachedRoles>
+    delete_privileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
+    deletePrivileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
+    delete_role: ApiMethod<RequestParams.SecurityDeleteRole>
+    deleteRole: ApiMethod<RequestParams.SecurityDeleteRole>
+    delete_role_mapping: ApiMethod<RequestParams.SecurityDeleteRoleMapping>
+    deleteRoleMapping: ApiMethod<RequestParams.SecurityDeleteRoleMapping>
+    delete_user: ApiMethod<RequestParams.SecurityDeleteUser>
+    deleteUser: ApiMethod<RequestParams.SecurityDeleteUser>
+    disable_user: ApiMethod<RequestParams.SecurityDisableUser>
+    disableUser: ApiMethod<RequestParams.SecurityDisableUser>
+    enable_user: ApiMethod<RequestParams.SecurityEnableUser>
+    enableUser: ApiMethod<RequestParams.SecurityEnableUser>
+    get_privileges: ApiMethod<RequestParams.SecurityGetPrivileges>
+    getPrivileges: ApiMethod<RequestParams.SecurityGetPrivileges>
+    get_role: ApiMethod<RequestParams.SecurityGetRole>
+    getRole: ApiMethod<RequestParams.SecurityGetRole>
+    get_role_mapping: ApiMethod<RequestParams.SecurityGetRoleMapping>
+    getRoleMapping: ApiMethod<RequestParams.SecurityGetRoleMapping>
+    get_token: ApiMethod<RequestParams.SecurityGetToken>
+    getToken: ApiMethod<RequestParams.SecurityGetToken>
+    get_user: ApiMethod<RequestParams.SecurityGetUser>
+    getUser: ApiMethod<RequestParams.SecurityGetUser>
+    get_user_privileges: ApiMethod<RequestParams.SecurityGetUserPrivileges>
+    getUserPrivileges: ApiMethod<RequestParams.SecurityGetUserPrivileges>
+    has_privileges: ApiMethod<RequestParams.SecurityHasPrivileges>
+    hasPrivileges: ApiMethod<RequestParams.SecurityHasPrivileges>
+    invalidate_token: ApiMethod<RequestParams.SecurityInvalidateToken>
+    invalidateToken: ApiMethod<RequestParams.SecurityInvalidateToken>
+    put_privileges: ApiMethod<RequestParams.SecurityPutPrivileges>
+    putPrivileges: ApiMethod<RequestParams.SecurityPutPrivileges>
+    put_role: ApiMethod<RequestParams.SecurityPutRole>
+    putRole: ApiMethod<RequestParams.SecurityPutRole>
+    put_role_mapping: ApiMethod<RequestParams.SecurityPutRoleMapping>
+    putRoleMapping: ApiMethod<RequestParams.SecurityPutRoleMapping>
+    put_user: ApiMethod<RequestParams.SecurityPutUser>
+    putUser: ApiMethod<RequestParams.SecurityPutUser>
+  }
   snapshot: {
     create: ApiMethod<RequestParams.SnapshotCreate>
     create_repository: ApiMethod<RequestParams.SnapshotCreateRepository>
@@ -246,6 +404,9 @@ declare class Client extends EventEmitter {
     status: ApiMethod<RequestParams.SnapshotStatus>
     verify_repository: ApiMethod<RequestParams.SnapshotVerifyRepository>
     verifyRepository: ApiMethod<RequestParams.SnapshotVerifyRepository>
+  }
+  ssl: {
+    certificates: ApiMethod<RequestParams.SslCertificates>
   }
   tasks: {
     cancel: ApiMethod<RequestParams.TasksCancel>
@@ -282,98 +443,6 @@ declare class Client extends EventEmitter {
       getAssistance: ApiMethod<RequestParams.XpackMigrationGetAssistance>
       upgrade: ApiMethod<RequestParams.XpackMigrationUpgrade>
     }
-    ml: {
-      close_job: ApiMethod<RequestParams.XpackMlCloseJob>
-      closeJob: ApiMethod<RequestParams.XpackMlCloseJob>
-      delete_calendar: ApiMethod<RequestParams.XpackMlDeleteCalendar>
-      deleteCalendar: ApiMethod<RequestParams.XpackMlDeleteCalendar>
-      delete_calendar_event: ApiMethod<RequestParams.XpackMlDeleteCalendarEvent>
-      deleteCalendarEvent: ApiMethod<RequestParams.XpackMlDeleteCalendarEvent>
-      delete_calendar_job: ApiMethod<RequestParams.XpackMlDeleteCalendarJob>
-      deleteCalendarJob: ApiMethod<RequestParams.XpackMlDeleteCalendarJob>
-      delete_datafeed: ApiMethod<RequestParams.XpackMlDeleteDatafeed>
-      deleteDatafeed: ApiMethod<RequestParams.XpackMlDeleteDatafeed>
-      delete_expired_data: ApiMethod<RequestParams.XpackMlDeleteExpiredData>
-      deleteExpiredData: ApiMethod<RequestParams.XpackMlDeleteExpiredData>
-      delete_filter: ApiMethod<RequestParams.XpackMlDeleteFilter>
-      deleteFilter: ApiMethod<RequestParams.XpackMlDeleteFilter>
-      delete_forecast: ApiMethod<RequestParams.XpackMlDeleteForecast>
-      deleteForecast: ApiMethod<RequestParams.XpackMlDeleteForecast>
-      delete_job: ApiMethod<RequestParams.XpackMlDeleteJob>
-      deleteJob: ApiMethod<RequestParams.XpackMlDeleteJob>
-      delete_model_snapshot: ApiMethod<RequestParams.XpackMlDeleteModelSnapshot>
-      deleteModelSnapshot: ApiMethod<RequestParams.XpackMlDeleteModelSnapshot>
-      find_file_structure: ApiMethod<RequestParams.XpackMlFindFileStructure>
-      findFileStructure: ApiMethod<RequestParams.XpackMlFindFileStructure>
-      flush_job: ApiMethod<RequestParams.XpackMlFlushJob>
-      flushJob: ApiMethod<RequestParams.XpackMlFlushJob>
-      forecast: ApiMethod<RequestParams.XpackMlForecast>
-      get_buckets: ApiMethod<RequestParams.XpackMlGetBuckets>
-      getBuckets: ApiMethod<RequestParams.XpackMlGetBuckets>
-      get_calendar_events: ApiMethod<RequestParams.XpackMlGetCalendarEvents>
-      getCalendarEvents: ApiMethod<RequestParams.XpackMlGetCalendarEvents>
-      get_calendars: ApiMethod<RequestParams.XpackMlGetCalendars>
-      getCalendars: ApiMethod<RequestParams.XpackMlGetCalendars>
-      get_categories: ApiMethod<RequestParams.XpackMlGetCategories>
-      getCategories: ApiMethod<RequestParams.XpackMlGetCategories>
-      get_datafeed_stats: ApiMethod<RequestParams.XpackMlGetDatafeedStats>
-      getDatafeedStats: ApiMethod<RequestParams.XpackMlGetDatafeedStats>
-      get_datafeeds: ApiMethod<RequestParams.XpackMlGetDatafeeds>
-      getDatafeeds: ApiMethod<RequestParams.XpackMlGetDatafeeds>
-      get_filters: ApiMethod<RequestParams.XpackMlGetFilters>
-      getFilters: ApiMethod<RequestParams.XpackMlGetFilters>
-      get_influencers: ApiMethod<RequestParams.XpackMlGetInfluencers>
-      getInfluencers: ApiMethod<RequestParams.XpackMlGetInfluencers>
-      get_job_stats: ApiMethod<RequestParams.XpackMlGetJobStats>
-      getJobStats: ApiMethod<RequestParams.XpackMlGetJobStats>
-      get_jobs: ApiMethod<RequestParams.XpackMlGetJobs>
-      getJobs: ApiMethod<RequestParams.XpackMlGetJobs>
-      get_model_snapshots: ApiMethod<RequestParams.XpackMlGetModelSnapshots>
-      getModelSnapshots: ApiMethod<RequestParams.XpackMlGetModelSnapshots>
-      get_overall_buckets: ApiMethod<RequestParams.XpackMlGetOverallBuckets>
-      getOverallBuckets: ApiMethod<RequestParams.XpackMlGetOverallBuckets>
-      get_records: ApiMethod<RequestParams.XpackMlGetRecords>
-      getRecords: ApiMethod<RequestParams.XpackMlGetRecords>
-      info: ApiMethod<RequestParams.XpackMlInfo>
-      open_job: ApiMethod<RequestParams.XpackMlOpenJob>
-      openJob: ApiMethod<RequestParams.XpackMlOpenJob>
-      post_calendar_events: ApiMethod<RequestParams.XpackMlPostCalendarEvents>
-      postCalendarEvents: ApiMethod<RequestParams.XpackMlPostCalendarEvents>
-      post_data: ApiMethod<RequestParams.XpackMlPostData>
-      postData: ApiMethod<RequestParams.XpackMlPostData>
-      preview_datafeed: ApiMethod<RequestParams.XpackMlPreviewDatafeed>
-      previewDatafeed: ApiMethod<RequestParams.XpackMlPreviewDatafeed>
-      put_calendar: ApiMethod<RequestParams.XpackMlPutCalendar>
-      putCalendar: ApiMethod<RequestParams.XpackMlPutCalendar>
-      put_calendar_job: ApiMethod<RequestParams.XpackMlPutCalendarJob>
-      putCalendarJob: ApiMethod<RequestParams.XpackMlPutCalendarJob>
-      put_datafeed: ApiMethod<RequestParams.XpackMlPutDatafeed>
-      putDatafeed: ApiMethod<RequestParams.XpackMlPutDatafeed>
-      put_filter: ApiMethod<RequestParams.XpackMlPutFilter>
-      putFilter: ApiMethod<RequestParams.XpackMlPutFilter>
-      put_job: ApiMethod<RequestParams.XpackMlPutJob>
-      putJob: ApiMethod<RequestParams.XpackMlPutJob>
-      revert_model_snapshot: ApiMethod<RequestParams.XpackMlRevertModelSnapshot>
-      revertModelSnapshot: ApiMethod<RequestParams.XpackMlRevertModelSnapshot>
-      start_datafeed: ApiMethod<RequestParams.XpackMlStartDatafeed>
-      startDatafeed: ApiMethod<RequestParams.XpackMlStartDatafeed>
-      stop_datafeed: ApiMethod<RequestParams.XpackMlStopDatafeed>
-      stopDatafeed: ApiMethod<RequestParams.XpackMlStopDatafeed>
-      update_datafeed: ApiMethod<RequestParams.XpackMlUpdateDatafeed>
-      updateDatafeed: ApiMethod<RequestParams.XpackMlUpdateDatafeed>
-      update_filter: ApiMethod<RequestParams.XpackMlUpdateFilter>
-      updateFilter: ApiMethod<RequestParams.XpackMlUpdateFilter>
-      update_job: ApiMethod<RequestParams.XpackMlUpdateJob>
-      updateJob: ApiMethod<RequestParams.XpackMlUpdateJob>
-      update_model_snapshot: ApiMethod<RequestParams.XpackMlUpdateModelSnapshot>
-      updateModelSnapshot: ApiMethod<RequestParams.XpackMlUpdateModelSnapshot>
-      validate: ApiMethod<RequestParams.XpackMlValidate>
-      validate_detector: ApiMethod<RequestParams.XpackMlValidateDetector>
-      validateDetector: ApiMethod<RequestParams.XpackMlValidateDetector>
-    }
-    monitoring: {
-      bulk: ApiMethod<RequestParams.XpackMonitoringBulk>
-    }
     rollup: {
       delete_job: ApiMethod<RequestParams.XpackRollupDeleteJob>
       deleteJob: ApiMethod<RequestParams.XpackRollupDeleteJob>
@@ -392,59 +461,11 @@ declare class Client extends EventEmitter {
       stop_job: ApiMethod<RequestParams.XpackRollupStopJob>
       stopJob: ApiMethod<RequestParams.XpackRollupStopJob>
     }
-    security: {
-      authenticate: ApiMethod<RequestParams.XpackSecurityAuthenticate>
-      change_password: ApiMethod<RequestParams.XpackSecurityChangePassword>
-      changePassword: ApiMethod<RequestParams.XpackSecurityChangePassword>
-      clear_cached_realms: ApiMethod<RequestParams.XpackSecurityClearCachedRealms>
-      clearCachedRealms: ApiMethod<RequestParams.XpackSecurityClearCachedRealms>
-      clear_cached_roles: ApiMethod<RequestParams.XpackSecurityClearCachedRoles>
-      clearCachedRoles: ApiMethod<RequestParams.XpackSecurityClearCachedRoles>
-      delete_privileges: ApiMethod<RequestParams.XpackSecurityDeletePrivileges>
-      deletePrivileges: ApiMethod<RequestParams.XpackSecurityDeletePrivileges>
-      delete_role: ApiMethod<RequestParams.XpackSecurityDeleteRole>
-      deleteRole: ApiMethod<RequestParams.XpackSecurityDeleteRole>
-      delete_role_mapping: ApiMethod<RequestParams.XpackSecurityDeleteRoleMapping>
-      deleteRoleMapping: ApiMethod<RequestParams.XpackSecurityDeleteRoleMapping>
-      delete_user: ApiMethod<RequestParams.XpackSecurityDeleteUser>
-      deleteUser: ApiMethod<RequestParams.XpackSecurityDeleteUser>
-      disable_user: ApiMethod<RequestParams.XpackSecurityDisableUser>
-      disableUser: ApiMethod<RequestParams.XpackSecurityDisableUser>
-      enable_user: ApiMethod<RequestParams.XpackSecurityEnableUser>
-      enableUser: ApiMethod<RequestParams.XpackSecurityEnableUser>
-      get_privileges: ApiMethod<RequestParams.XpackSecurityGetPrivileges>
-      getPrivileges: ApiMethod<RequestParams.XpackSecurityGetPrivileges>
-      get_role: ApiMethod<RequestParams.XpackSecurityGetRole>
-      getRole: ApiMethod<RequestParams.XpackSecurityGetRole>
-      get_role_mapping: ApiMethod<RequestParams.XpackSecurityGetRoleMapping>
-      getRoleMapping: ApiMethod<RequestParams.XpackSecurityGetRoleMapping>
-      get_token: ApiMethod<RequestParams.XpackSecurityGetToken>
-      getToken: ApiMethod<RequestParams.XpackSecurityGetToken>
-      get_user: ApiMethod<RequestParams.XpackSecurityGetUser>
-      getUser: ApiMethod<RequestParams.XpackSecurityGetUser>
-      get_user_privileges: ApiMethod<RequestParams.XpackSecurityGetUserPrivileges>
-      getUserPrivileges: ApiMethod<RequestParams.XpackSecurityGetUserPrivileges>
-      has_privileges: ApiMethod<RequestParams.XpackSecurityHasPrivileges>
-      hasPrivileges: ApiMethod<RequestParams.XpackSecurityHasPrivileges>
-      invalidate_token: ApiMethod<RequestParams.XpackSecurityInvalidateToken>
-      invalidateToken: ApiMethod<RequestParams.XpackSecurityInvalidateToken>
-      put_privileges: ApiMethod<RequestParams.XpackSecurityPutPrivileges>
-      putPrivileges: ApiMethod<RequestParams.XpackSecurityPutPrivileges>
-      put_role: ApiMethod<RequestParams.XpackSecurityPutRole>
-      putRole: ApiMethod<RequestParams.XpackSecurityPutRole>
-      put_role_mapping: ApiMethod<RequestParams.XpackSecurityPutRoleMapping>
-      putRoleMapping: ApiMethod<RequestParams.XpackSecurityPutRoleMapping>
-      put_user: ApiMethod<RequestParams.XpackSecurityPutUser>
-      putUser: ApiMethod<RequestParams.XpackSecurityPutUser>
-    }
     sql: {
       clear_cursor: ApiMethod<RequestParams.XpackSqlClearCursor>
       clearCursor: ApiMethod<RequestParams.XpackSqlClearCursor>
       query: ApiMethod<RequestParams.XpackSqlQuery>
       translate: ApiMethod<RequestParams.XpackSqlTranslate>
-    }
-    ssl: {
-      certificates: ApiMethod<RequestParams.XpackSslCertificates>
     }
     usage: ApiMethod<RequestParams.XpackUsage>
     watcher: {
@@ -462,7 +483,6 @@ declare class Client extends EventEmitter {
       getWatch: ApiMethod<RequestParams.XpackWatcherGetWatch>
       put_watch: ApiMethod<RequestParams.XpackWatcherPutWatch>
       putWatch: ApiMethod<RequestParams.XpackWatcherPutWatch>
-      restart: ApiMethod<RequestParams.XpackWatcherRestart>
       start: ApiMethod<RequestParams.XpackWatcherStart>
       stats: ApiMethod<RequestParams.XpackWatcherStats>
       stop: ApiMethod<RequestParams.XpackWatcherStop>

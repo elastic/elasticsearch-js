@@ -95,11 +95,14 @@ function buildClusterReroute (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cluster' + '/' + 'reroute'
+
     // build request object
-    const parts = ['_cluster', 'reroute']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

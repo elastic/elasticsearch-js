@@ -115,11 +115,18 @@ function buildClusterHealth (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_cluster' + '/' + 'health'
+    }
+
     // build request object
-    const parts = ['_cluster', 'health', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

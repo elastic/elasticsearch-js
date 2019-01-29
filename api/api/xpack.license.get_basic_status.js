@@ -76,11 +76,14 @@ function buildXpackLicenseGetBasicStatus (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_license' + '/' + 'basic_status'
+
     // build request object
-    const parts = ['_xpack', 'license', 'basic_status']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

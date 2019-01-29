@@ -94,11 +94,18 @@ function buildIndicesRefresh (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_refresh'
+    } else {
+      path = '/' + '_refresh'
+    }
+
     // build request object
-    const parts = [params['index'], '_refresh']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

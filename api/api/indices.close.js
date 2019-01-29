@@ -106,11 +106,14 @@ function buildIndicesClose (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_close'
+
     // build request object
-    const parts = [params['index'], '_close']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

@@ -106,11 +106,18 @@ function buildCatSnapshots (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['repository']) != null) {
+      path = '/' + '_cat' + '/' + 'snapshots' + '/' + encodeURIComponent(params['repository'])
+    } else {
+      path = '/' + '_cat' + '/' + 'snapshots'
+    }
+
     // build request object
-    const parts = ['_cat', 'snapshots', params['repository']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

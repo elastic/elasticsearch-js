@@ -582,7 +582,7 @@ test('Should disallow two-byte characters in URL path', t => {
     url: new URL('http://localhost:9200')
   })
   connection.request({
-    path: '/thisisinvalid' + encodeURIComponent('\uffe2'),
+    path: '/thisisinvalid\uffe2',
     method: 'GET'
   }, (err, res) => {
     t.strictEqual(

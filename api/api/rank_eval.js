@@ -95,11 +95,18 @@ function buildRankEval (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_rank_eval'
+    } else {
+      path = '/' + '_rank_eval'
+    }
+
     // build request object
-    const parts = [params['index'], '_rank_eval']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

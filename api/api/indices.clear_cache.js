@@ -7,7 +7,6 @@ function buildIndicesClearCache (opts) {
    * Perform a [indices.clear_cache](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html) request
    *
    * @param {list} index - A comma-separated list of index name to limit the operation
-   * @param {boolean} field_data - Clear field data. This is deprecated. Prefer `fielddata`.
    * @param {boolean} fielddata - Clear field data
    * @param {list} fields - A comma-separated list of fields to clear when using the `fielddata` parameter (default: all)
    * @param {boolean} query - Clear query caches
@@ -15,7 +14,6 @@ function buildIndicesClearCache (opts) {
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {list} index - A comma-separated list of index name to limit the operation
-   * @param {boolean} request_cache - Clear request cache
    * @param {boolean} request - Clear request cache
    */
   return function indicesClearCache (params, options, callback) {
@@ -50,7 +48,6 @@ function buildIndicesClearCache (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'field_data',
       'fielddata',
       'fields',
       'query',
@@ -58,7 +55,6 @@ function buildIndicesClearCache (opts) {
       'allow_no_indices',
       'expand_wildcards',
       'index',
-      'request_cache',
       'request',
       'pretty',
       'human',
@@ -67,7 +63,6 @@ function buildIndicesClearCache (opts) {
       'filter_path'
     ]
     const acceptedQuerystringCamelCased = [
-      'fieldData',
       'fielddata',
       'fields',
       'query',
@@ -75,7 +70,6 @@ function buildIndicesClearCache (opts) {
       'allowNoIndices',
       'expandWildcards',
       'index',
-      'requestCache',
       'request',
       'pretty',
       'human',
@@ -99,7 +93,7 @@ function buildIndicesClearCache (opts) {
     // configure http method
     var method = params.method
     if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
+      method = 'POST'
     }
 
     // validate headers object
@@ -115,11 +109,18 @@ function buildIndicesClearCache (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_cache' + '/' + 'clear'
+    } else {
+      path = '/' + '_cache' + '/' + 'clear'
+    }
+
     // build request object
-    const parts = [params['index'], '_cache', 'clear']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

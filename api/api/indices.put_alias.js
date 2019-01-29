@@ -107,13 +107,18 @@ function buildIndicesPutAlias (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['name']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_alias' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_aliases' + '/' + encodeURIComponent(params['name'])
+    }
+
     // build request object
-    const parts = [params['index'], '_aliases', params['name']]
     const request = {
       method,
-      path: params['index'] != null && params['name'] != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/{index}/_alias/{name}',
+      path,
       body: params.body || '',
       querystring
     }

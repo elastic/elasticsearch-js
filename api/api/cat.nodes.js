@@ -108,11 +108,14 @@ function buildCatNodes (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'nodes'
+
     // build request object
-    const parts = ['_cat', 'nodes']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

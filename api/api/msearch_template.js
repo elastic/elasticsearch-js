@@ -11,6 +11,7 @@ function buildMsearchTemplate (opts) {
    * @param {enum} search_type - Search operation type
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
   return function msearchTemplate (params, options, callback) {
@@ -56,6 +57,7 @@ function buildMsearchTemplate (opts) {
       'search_type',
       'typed_keys',
       'max_concurrent_searches',
+      'rest_total_hits_as_int',
       'pretty',
       'human',
       'error_trace',
@@ -66,6 +68,7 @@ function buildMsearchTemplate (opts) {
       'searchType',
       'typedKeys',
       'maxConcurrentSearches',
+      'restTotalHitsAsInt',
       'pretty',
       'human',
       'errorTrace',
@@ -104,11 +107,20 @@ function buildMsearchTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_msearch' + '/' + 'template'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_msearch' + '/' + 'template'
+    } else {
+      path = '/' + '_msearch' + '/' + 'template'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_msearch', 'template']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       bulkBody: params.body,
       querystring
     }

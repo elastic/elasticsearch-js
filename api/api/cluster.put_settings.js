@@ -94,11 +94,14 @@ function buildClusterPutSettings (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cluster' + '/' + 'settings'
+
     // build request object
-    const parts = ['_cluster', 'settings']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

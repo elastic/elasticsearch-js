@@ -115,11 +115,14 @@ function buildSnapshotGet (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(params['repository']) + '/' + encodeURIComponent(params['snapshot'])
+
     // build request object
-    const parts = ['_snapshot', params['repository'], params['snapshot']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

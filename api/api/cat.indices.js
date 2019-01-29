@@ -115,11 +115,18 @@ function buildCatIndices (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_cat' + '/' + 'indices'
+    }
+
     // build request object
-    const parts = ['_cat', 'indices', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

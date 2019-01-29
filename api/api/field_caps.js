@@ -11,7 +11,6 @@ function buildFieldCaps (opts) {
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {object} body - Field json objects containing an array of field names
    */
   return function fieldCaps (params, options, callback) {
     options = options || {}
@@ -31,6 +30,14 @@ function buildFieldCaps (opts) {
           err ? reject(err) : resolve(body)
         })
       })
+    }
+
+    // check required parameters
+    if (params.body != null) {
+      return callback(
+        new ConfigurationError('This API does not require a body'),
+        result
+      )
     }
 
     // build querystring object
@@ -90,12 +97,19 @@ function buildFieldCaps (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_field_caps'
+    } else {
+      path = '/' + '_field_caps'
+    }
+
     // build request object
-    const parts = [params['index'], '_field_caps']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      body: params.body || '',
+      path,
+      body: '',
       querystring
     }
 

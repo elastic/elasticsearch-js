@@ -105,11 +105,14 @@ function buildCatNodeattrs (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'nodeattrs'
+
     // build request object
-    const parts = ['_cat', 'nodeattrs']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

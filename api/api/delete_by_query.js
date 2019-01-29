@@ -27,8 +27,8 @@ function buildDeleteByQuery (opts) {
    * @param {number} size - Number of hits to return (default: 10)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
    * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
    * @param {boolean} version - Specify whether to return document version as part of a hit
@@ -107,8 +107,8 @@ function buildDeleteByQuery (opts) {
       'size',
       'sort',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'terminate_after',
       'stats',
       'version',
@@ -146,8 +146,8 @@ function buildDeleteByQuery (opts) {
       'size',
       'sort',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'terminateAfter',
       'stats',
       'version',
@@ -197,11 +197,18 @@ function buildDeleteByQuery (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_delete_by_query'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_delete_by_query'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_delete_by_query']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

@@ -71,11 +71,18 @@ function buildXpackWatcherExecuteWatch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null) {
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(params['id']) + '/' + '_execute'
+    } else {
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
+    }
+
     // build request object
-    const parts = ['_xpack', 'watcher', 'watch', params['id'], '_execute']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

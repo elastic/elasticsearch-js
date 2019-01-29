@@ -105,11 +105,14 @@ function buildTasksList (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_tasks'
+
     // build request object
-    const parts = ['_tasks']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

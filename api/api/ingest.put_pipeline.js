@@ -98,11 +98,14 @@ function buildIngestPutPipeline (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(params['id'])
+
     // build request object
-    const parts = ['_ingest', 'pipeline', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

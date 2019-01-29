@@ -108,11 +108,22 @@ function buildIndicesGetFieldMapping (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['fields']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mapping' + '/' + encodeURIComponent(params['type']) + '/' + 'field' + '/' + encodeURIComponent(params['fields'])
+    } else if ((params['index']) != null && (params['fields']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(params['fields'])
+    } else if ((params['type']) != null && (params['fields']) != null) {
+      path = '/' + '_mapping' + '/' + encodeURIComponent(params['type']) + '/' + 'field' + '/' + encodeURIComponent(params['fields'])
+    } else {
+      path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(params['fields'])
+    }
+
     // build request object
-    const parts = [params['index'], '_mapping', params['type'], 'field', params['fields']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

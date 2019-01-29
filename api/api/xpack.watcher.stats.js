@@ -81,11 +81,18 @@ function buildXpackWatcherStats (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['metric']) != null) {
+      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(params['metric'])
+    } else {
+      path = '/' + '_watcher' + '/' + 'stats'
+    }
+
     // build request object
-    const parts = ['_xpack', 'watcher', 'stats', params['metric']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

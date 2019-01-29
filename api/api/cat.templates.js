@@ -106,11 +106,18 @@ function buildCatTemplates (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['name']) != null) {
+      path = '/' + '_cat' + '/' + 'templates' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_cat' + '/' + 'templates'
+    }
+
     // build request object
-    const parts = ['_cat', 'templates', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

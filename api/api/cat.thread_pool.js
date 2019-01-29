@@ -109,11 +109,18 @@ function buildCatThreadPool (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['thread_pool_patterns'] || params['threadPoolPatterns']) != null) {
+      path = '/' + '_cat' + '/' + 'thread_pool' + '/' + encodeURIComponent(params['thread_pool_patterns'] || params['threadPoolPatterns'])
+    } else {
+      path = '/' + '_cat' + '/' + 'thread_pool'
+    }
+
     // build request object
-    const parts = ['_cat', 'thread_pool', params['thread_pool_patterns'] || params['threadPoolPatterns']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

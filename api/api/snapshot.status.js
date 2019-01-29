@@ -100,11 +100,20 @@ function buildSnapshotStatus (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['repository']) != null && (params['snapshot']) != null) {
+      path = '/' + '_snapshot' + '/' + encodeURIComponent(params['repository']) + '/' + encodeURIComponent(params['snapshot']) + '/' + '_status'
+    } else if ((params['repository']) != null) {
+      path = '/' + '_snapshot' + '/' + encodeURIComponent(params['repository']) + '/' + '_status'
+    } else {
+      path = '/' + '_snapshot' + '/' + '_status'
+    }
+
     // build request object
-    const parts = ['_snapshot', params['repository'], params['snapshot'], '_status']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

@@ -69,11 +69,18 @@ function buildCcrGetAutoFollowPattern (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['name']) != null) {
+      path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_ccr' + '/' + 'auto_follow'
+    }
+
     // build request object
-    const parts = ['_ccr', 'auto_follow', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

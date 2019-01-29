@@ -81,11 +81,18 @@ function buildIndicesAnalyze (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_analyze'
+    } else {
+      path = '/' + '_analyze'
+    }
+
     // build request object
-    const parts = [params['index'], '_analyze']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

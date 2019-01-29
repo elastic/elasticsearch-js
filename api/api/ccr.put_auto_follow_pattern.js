@@ -84,11 +84,14 @@ function buildCcrPutAutoFollowPattern (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(params['name'])
+
     // build request object
-    const parts = ['_ccr', 'auto_follow', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

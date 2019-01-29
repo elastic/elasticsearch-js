@@ -103,11 +103,18 @@ function buildSearchShards (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_search_shards'
+    } else {
+      path = '/' + '_search_shards'
+    }
+
     // build request object
-    const parts = [params['index'], '_search_shards']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

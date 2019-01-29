@@ -7,8 +7,11 @@ const allowedMethods = {
 }
 
 // list of apis that does not need any kind of validation
-// because of how the url is built
+// because of how the url is built or the `type` handling in ES7
 const noPathValidation = [
+  'exists',
+  'explain',
+  'get',
   'indices.get_alias',
   'indices.exists_alias',
   'indices.get_field_mapping',
@@ -19,7 +22,9 @@ const noPathValidation = [
   'nodes.info',
   'nodes.stats',
   'nodes.usage',
-  'tasks.cancel'
+  'tasks.cancel',
+  'termvectors',
+  'update'
 ]
 
 // apis that uses bulkBody property
@@ -36,7 +41,7 @@ function generate (spec, common) {
     .replace(/_([a-z])/g, k => k[1].toUpperCase())
 
   const methods = spec[api].methods
-  const { path, paths, parts, params } = spec[api].url
+  const { paths, parts, params } = spec[api].url
   const acceptedQuerystring = []
   const required = []
 
@@ -131,11 +136,14 @@ function generate (spec, common) {
       ignore = [ignore]
     }
 
+
+    var path = ''
+    ${buildPath(api)}
+
     // build request object
-    const parts = ${getUrlParts()}
     const request = {
       method,
-      ${buildPath(api)}
+      path,
       ${genBody(api, methods, spec[api].body)}
       querystring
     }
@@ -241,91 +249,76 @@ function generate (spec, common) {
   }
 
   function buildPath () {
-    // if the default path is static, we should add a dynamic check
-    // to figure out which path to use, see cluster.stats
-    // otherwise we can skip that check
-    const p1 = paths
-      .reduce((a, b) => a.split('/').length > b.split('/').length ? a : b)
-      .split('/')
-      .filter(chunk => !chunk.startsWith('{'))
-      .join('/')
-
-    const p2 = path
-      .split('/')
-      .filter(chunk => !chunk.startsWith('{'))
-      .join('/')
-
-    if (p1 === p2 || !needsPathValidation(api)) {
-      return `path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),`.trim()
+    const toCamelCase = str => {
+      return str[0] === '_'
+        ? '_' + str.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+        : str.replace(/_([a-z])/g, k => k[1].toUpperCase())
     }
 
-    const dynamicParts = checkDynamicParts()
-    if (dynamicParts.length) {
-      return `
-        path: ${dynamicParts}
-          ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-          : '${path}',
-      `.trim()
-    } else {
-      return `path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),`.trim()
+    const genAccessKey = str => {
+      const camelStr = toCamelCase(str)
+      return camelStr === str
+        ? `params['${str}']`
+        : `params['${str}'] || params['${camelStr}']`
     }
-  }
 
-  function checkDynamicParts () {
-    const chunks = paths
-      .reduce((a, b) => a.split('/').length > b.split('/').length ? a : b)
-      .split('/')
-      .filter(Boolean)
+    const genCheck = path => {
+      return path
+        .split('/')
+        .filter(Boolean)
+        .map(p => p.startsWith('{') ? `(${genAccessKey(p.slice(1, -1))}) != null` : false)
+        .filter(Boolean)
+        .join(' && ')
+    }
 
-    var str = ''
-    chunks.forEach((chunk, index) => {
-      if (chunk.startsWith('{') && chunk.endsWith('}')) {
-        chunk = chunk.slice(1, -1)
-        // url parts can be declared in camelCase fashion
-        var camelCased = chunk[0] === '_'
-          ? '_' + chunk.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
-          : chunk.replace(/_([a-z])/g, k => k[1].toUpperCase())
+    const genPath = path => {
+      path = path
+        .split('/')
+        .filter(Boolean)
+        .map(p => p.startsWith('{') ? `encodeURIComponent(${genAccessKey(p.slice(1, -1))})` : `'${p}'`)
+        .join(' + \'/\' + ')
+      return path.length > 0 ? ('\'/\' + ' + path) : '\'/\''
+    }
 
-        if (chunk === camelCased) {
-          str += `params['${chunk}'] != null && `
-        } else {
-          str += `(params['${chunk}'] || params['${camelCased}']) != null && `
+    var code = ''
+    var hasStaticPath = false
+    var singlePathComponent = false
+    paths
+      .filter(path => {
+        if (path.indexOf('{') > -1) return true
+        if (hasStaticPath === false) {
+          hasStaticPath = true
+          return true
         }
-      }
-    })
-
-    // removes last ' && '
-    return str.slice(0, -4)
-  }
-
-  function getUrlParts () {
-    const chunks = paths
-      .reduce((a, b) => a.split('/').length > b.split('/').length ? a : b)
-      .split('/')
-      .filter(Boolean)
-    var str = '['
-    chunks.forEach((chunk, index) => {
-      if (chunk.startsWith('{') && chunk.endsWith('}')) {
-        chunk = chunk.slice(1, -1)
-        // url parts can be declared in camelCase fashion
-        var camelCased = chunk[0] === '_'
-          ? '_' + chunk.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
-          : chunk.replace(/_([a-z])/g, k => k[1].toUpperCase())
-
-        if (chunk === camelCased) {
-          str += `params['${chunk}']`
+        return false
+      })
+      .sort((a, b) => (b.split('{').length + b.split('/').length) - (a.split('{').length + a.split('/').length))
+      .forEach((path, index, arr) => {
+        if (arr.length === 1) {
+          singlePathComponent = true
+          code += `
+            path = ${genPath(path)}
+          `
+        } else if (index === 0) {
+          code += `
+            if (${genCheck(path)}) {
+              path = ${genPath(path)}
+          `
+        } else if (index === arr.length - 1) {
+          code += `
+            } else {
+              path = ${genPath(path)}
+          `
         } else {
-          str += `params['${chunk}'] || params['${camelCased}']`
+          code += `
+            } else if (${genCheck(path)}) {
+              path = ${genPath(path)}
+          `
         }
-      } else {
-        str += `'${chunk}'`
-      }
-      if (index !== chunks.length - 1) {
-        str += ', '
-      }
-    })
-    str += ']'
-    return str
+      })
+
+    code += singlePathComponent ? '' : '}'
+    return code
   }
 }
 

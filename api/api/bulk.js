@@ -13,10 +13,9 @@ function buildBulk (opts) {
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
    * @param {string} type - Default document type for items which don't provide one
-   * @param {list} fields - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
    * @param {list} _source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
-   * @param {list} _source_exclude - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
-   * @param {list} _source_include - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
+   * @param {list} _source_excludes - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
+   * @param {list} _source_includes - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The operation definition and data (action-data pairs), separated by newlines
    */
@@ -65,10 +64,9 @@ function buildBulk (opts) {
       'routing',
       'timeout',
       'type',
-      'fields',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'pipeline',
       'pretty',
       'human',
@@ -82,10 +80,9 @@ function buildBulk (opts) {
       'routing',
       'timeout',
       'type',
-      'fields',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'pipeline',
       'pretty',
       'human',
@@ -125,11 +122,20 @@ function buildBulk (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_bulk'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_bulk'
+    } else {
+      path = '/' + '_bulk'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_bulk']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       bulkBody: params.body,
       querystring
     }

@@ -126,11 +126,20 @@ function buildMtermvectors (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_mtermvectors'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mtermvectors'
+    } else {
+      path = '/' + '_mtermvectors'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_mtermvectors']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

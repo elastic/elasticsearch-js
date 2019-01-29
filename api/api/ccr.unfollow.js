@@ -77,11 +77,14 @@ function buildCcrUnfollow (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_ccr' + '/' + 'unfollow'
+
     // build request object
-    const parts = [params['index'], '_ccr', 'unfollow']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

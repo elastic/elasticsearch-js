@@ -84,11 +84,14 @@ function buildPing (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/'
+
     // build request object
-    const parts = []
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

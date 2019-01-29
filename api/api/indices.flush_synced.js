@@ -94,11 +94,18 @@ function buildIndicesFlushSynced (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_flush' + '/' + 'synced'
+    } else {
+      path = '/' + '_flush' + '/' + 'synced'
+    }
+
     // build request object
-    const parts = [params['index'], '_flush', 'synced']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

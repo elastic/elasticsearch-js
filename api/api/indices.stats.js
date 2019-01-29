@@ -107,11 +107,22 @@ function buildIndicesStats (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['metric']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_stats' + '/' + encodeURIComponent(params['metric'])
+    } else if ((params['metric']) != null) {
+      path = '/' + '_stats' + '/' + encodeURIComponent(params['metric'])
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_stats'
+    } else {
+      path = '/' + '_stats'
+    }
+
     // build request object
-    const parts = [params['index'], '_stats', params['metric']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

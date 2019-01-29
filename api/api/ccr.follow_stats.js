@@ -69,11 +69,14 @@ function buildCcrFollowStats (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_ccr' + '/' + 'stats'
+
     // build request object
-    const parts = [params['index'], '_ccr', 'stats']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

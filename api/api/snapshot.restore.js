@@ -107,11 +107,14 @@ function buildSnapshotRestore (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(params['repository']) + '/' + encodeURIComponent(params['snapshot']) + '/' + '_restore'
+
     // build request object
-    const parts = ['_snapshot', params['repository'], params['snapshot'], '_restore']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

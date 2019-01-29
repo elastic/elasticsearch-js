@@ -78,11 +78,18 @@ function buildRenderSearchTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null) {
+      path = '/' + '_render' + '/' + 'template' + '/' + encodeURIComponent(params['id'])
+    } else {
+      path = '/' + '_render' + '/' + 'template'
+    }
+
     // build request object
-    const parts = ['_render', 'template', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

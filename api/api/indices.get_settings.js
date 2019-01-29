@@ -107,11 +107,22 @@ function buildIndicesGetSettings (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['name']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_settings' + '/' + encodeURIComponent(params['name'])
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_settings'
+    } else if ((params['name']) != null) {
+      path = '/' + '_settings' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_settings'
+    }
+
     // build request object
-    const parts = [params['index'], '_settings', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

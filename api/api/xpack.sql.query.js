@@ -78,11 +78,14 @@ function buildXpackSqlQuery (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_sql'
+
     // build request object
-    const parts = ['_xpack', 'sql']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

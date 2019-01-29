@@ -107,11 +107,18 @@ function buildIndicesRollover (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['alias']) != null && (params['new_index'] || params['newIndex']) != null) {
+      path = '/' + encodeURIComponent(params['alias']) + '/' + '_rollover' + '/' + encodeURIComponent(params['new_index'] || params['newIndex'])
+    } else {
+      path = '/' + encodeURIComponent(params['alias']) + '/' + '_rollover'
+    }
+
     // build request object
-    const parts = [params['alias'], '_rollover', params['new_index'] || params['newIndex']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

@@ -11,6 +11,8 @@ function buildClusterState (opts) {
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
+   * @param {number} wait_for_metadata_version - Wait for the metadata version to be equal or greater than the specified metadata version
+   * @param {time} wait_for_timeout - The maximum time to wait for wait_for_metadata_version before timing out
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -58,6 +60,8 @@ function buildClusterState (opts) {
       'local',
       'master_timeout',
       'flat_settings',
+      'wait_for_metadata_version',
+      'wait_for_timeout',
       'ignore_unavailable',
       'allow_no_indices',
       'expand_wildcards',
@@ -71,6 +75,8 @@ function buildClusterState (opts) {
       'local',
       'masterTimeout',
       'flatSettings',
+      'waitForMetadataVersion',
+      'waitForTimeout',
       'ignoreUnavailable',
       'allowNoIndices',
       'expandWildcards',
@@ -112,11 +118,20 @@ function buildClusterState (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['metric']) != null && (params['index']) != null) {
+      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(params['metric']) + '/' + encodeURIComponent(params['index'])
+    } else if ((params['metric']) != null) {
+      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(params['metric'])
+    } else {
+      path = '/' + '_cluster' + '/' + 'state'
+    }
+
     // build request object
-    const parts = ['_cluster', 'state', params['metric'], params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

@@ -100,11 +100,14 @@ function buildUpdateByQueryRethrottle (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_update_by_query' + '/' + encodeURIComponent(params['task_id'] || params['taskId']) + '/' + '_rethrottle'
+
     // build request object
-    const parts = ['_update_by_query', params['task_id'] || params['taskId'], '_rethrottle']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }
