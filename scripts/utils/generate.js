@@ -106,7 +106,7 @@ function generate (spec, common) {
       ${genAcceptedQuerystringCamelCased()}
     ]
     const queryBlacklist = [
-      ${genQueryBlacklist()}
+      ${genQueryBlacklist().join(',\n')}
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -258,7 +258,7 @@ function generate (spec, common) {
   }
 
   function genQueryBlacklist () {
-    const blacklist = [`'method'`, `'body'`]
+    const blacklist = [`'method'`, `'body'`, `'ignore'`, `'maxRetries'`, `'headers'`, `'requestTimeout'`, `'asStream'`]
     if (typeof parts === 'object' && parts !== null) {
       Object.keys(parts).forEach(p => blacklist.push(`'${p}'`))
     }
