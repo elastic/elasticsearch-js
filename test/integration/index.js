@@ -15,6 +15,14 @@ const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 // const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+const customSkips = [
+  // skipping because we are booting ES with `discovery.type=single-node`
+  // and this test will fail because of this configuration
+  'nodes.stats/30_discovery.yml',
+  // the expected error is returning a 503,
+  // which triggers a retry and the node to be marked as dead
+  'search.aggregation/240_max_buckets.yml'
+]
 
 function Runner (opts) {
   if (!(this instanceof Runner)) {
@@ -35,11 +43,14 @@ Runner.prototype.start = function () {
   const parse = this.parse.bind(this)
   const client = this.client
 
-  // client.on('response', (request, response) => {
-  //   console.log('\n\n')
-  //   console.log('REQUEST', request)
-  //   console.log('\n')
-  //   console.log('RESPONSE', response)
+  // client.on('response', (err, meta) => {
+  //   console.log('Request', meta.request)
+  //   if (err) {
+  //     console.log('Error', err)
+  //   } else {
+  //     console.log('Response', JSON.stringify(meta.response, null, 2))
+  //   }
+  //   console.log()
   // })
 
   // Get the build hash of Elasticsearch
@@ -72,6 +83,9 @@ Runner.prototype.start = function () {
 
     files.forEach(runTestFile.bind(this))
     function runTestFile (file) {
+      for (var i = 0; i < customSkips.length; i++) {
+        if (file.endsWith(customSkips[i])) return
+      }
       // create a subtest for the specific folder
       tap.test(file.slice(file.indexOf(`${sep}elasticsearch${sep}`)), { jobs: 1 }, tap1 => {
         // read the yaml file
@@ -237,7 +251,7 @@ if (require.main === module) {
     default: {
       // node: 'http://elastic:passw0rd@localhost:9200',
       node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
-      version: '6.5',
+      version: '7.0',
       bailout: false
     }
   })
