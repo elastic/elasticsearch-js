@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlDeleteFilter (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,6 +11,15 @@ function buildMlDeleteFilter (opts) {
    *
    * @param {string} filter_id - The ID of the filter to delete
    */
+
+  const acceptedQuerystring = [
+
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function mlDeleteFilter (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,56 +54,20 @@ function buildMlDeleteFilter (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'filterId',
-      'filter_id'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, filterId, filter_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'filterId', 'filter_id'])
+
+    if (method == null) {
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -101,7 +77,7 @@ function buildMlDeleteFilter (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(params['filter_id'] || params['filterId'])
+    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
 
     // build request object
     const request = {
@@ -121,6 +97,22 @@ function buildMlDeleteFilter (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

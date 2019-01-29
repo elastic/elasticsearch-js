@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlGetJobStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -9,6 +12,15 @@ function buildMlGetJobStats (opts) {
    * @param {string} job_id - The ID of the jobs stats to fetch
    * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
    */
+
+  const acceptedQuerystring = [
+    'allow_no_jobs'
+  ]
+
+  const snakeCase = {
+    allowNoJobs: 'allow_no_jobs'
+  }
+
   return function mlGetJobStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,56 +49,20 @@ function buildMlGetJobStats (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'allow_no_jobs'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'allowNoJobs'
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'jobId',
-      'job_id'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, jobId, job_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -96,8 +72,8 @@ function buildMlGetJobStats (opts) {
 
     var path = ''
 
-    if ((params['job_id'] || params['jobId']) != null) {
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + '_stats'
+    if ((job_id || jobId) != null) {
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_stats'
     } else {
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_stats'
     }
@@ -120,6 +96,22 @@ function buildMlGetJobStats (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

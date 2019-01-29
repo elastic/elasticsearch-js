@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlFindFileStructure (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -21,6 +24,34 @@ function buildMlFindFileStructure (opts) {
    * @param {boolean} explain - Whether to include a commentary on how the structure was derived
    * @param {object} body - The contents of the file to be analyzed
    */
+
+  const acceptedQuerystring = [
+    'lines_to_sample',
+    'timeout',
+    'charset',
+    'format',
+    'has_header_row',
+    'column_names',
+    'delimiter',
+    'quote',
+    'should_trim_fields',
+    'grok_pattern',
+    'timestamp_field',
+    'timestamp_format',
+    'explain'
+  ]
+
+  const snakeCase = {
+    linesToSample: 'lines_to_sample',
+    hasHeaderRow: 'has_header_row',
+    columnNames: 'column_names',
+    shouldTrimFields: 'should_trim_fields',
+    grokPattern: 'grok_pattern',
+    timestampField: 'timestamp_field',
+    timestampFormat: 'timestamp_format'
+
+  }
+
   return function mlFindFileStructure (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -49,78 +80,20 @@ function buildMlFindFileStructure (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'lines_to_sample',
-      'timeout',
-      'charset',
-      'format',
-      'has_header_row',
-      'column_names',
-      'delimiter',
-      'quote',
-      'should_trim_fields',
-      'grok_pattern',
-      'timestamp_field',
-      'timestamp_format',
-      'explain'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'linesToSample',
-      'timeout',
-      'charset',
-      'format',
-      'hasHeaderRow',
-      'columnNames',
-      'delimiter',
-      'quote',
-      'shouldTrimFields',
-      'grokPattern',
-      'timestampField',
-      'timestampFormat',
-      'explain'
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -136,7 +109,7 @@ function buildMlFindFileStructure (opts) {
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -150,6 +123,22 @@ function buildMlFindFileStructure (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

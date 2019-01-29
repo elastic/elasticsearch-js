@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildFieldCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -12,6 +15,27 @@ function buildFieldCaps (opts) {
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    */
+
+  const acceptedQuerystring = [
+    'fields',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'expand_wildcards',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function fieldCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -40,71 +64,20 @@ function buildFieldCaps (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'fields',
-      'ignore_unavailable',
-      'allow_no_indices',
-      'expand_wildcards',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'fields',
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'expandWildcards',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'index'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -114,8 +87,8 @@ function buildFieldCaps (opts) {
 
     var path = ''
 
-    if ((params['index']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_field_caps'
+    if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_field_caps'
     } else {
       path = '/' + '_field_caps'
     }
@@ -138,6 +111,22 @@ function buildFieldCaps (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

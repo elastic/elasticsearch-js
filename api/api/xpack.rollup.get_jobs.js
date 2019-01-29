@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildXpackRollupGetJobs (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,6 +11,15 @@ function buildXpackRollupGetJobs (opts) {
    *
    * @param {string} id - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
    */
+
+  const acceptedQuerystring = [
+
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function xpackRollupGetJobs (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -28,55 +40,20 @@ function buildXpackRollupGetJobs (opts) {
       })
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'id'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -86,8 +63,8 @@ function buildXpackRollupGetJobs (opts) {
 
     var path = ''
 
-    if ((params['id']) != null) {
-      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(params['id'])
+    if ((id) != null) {
+      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
     } else {
       path = '/' + '_rollup' + '/' + 'job'
     }
@@ -110,6 +87,22 @@ function buildXpackRollupGetJobs (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

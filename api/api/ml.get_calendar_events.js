@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlGetCalendarEvents (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -13,6 +16,20 @@ function buildMlGetCalendarEvents (opts) {
    * @param {int} from - Skips a number of events
    * @param {int} size - Specifies a max number of events to get
    */
+
+  const acceptedQuerystring = [
+    'job_id',
+    'start',
+    'end',
+    'from',
+    'size'
+  ]
+
+  const snakeCase = {
+    jobId: 'job_id'
+
+  }
+
   return function mlGetCalendarEvents (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -47,64 +64,20 @@ function buildMlGetCalendarEvents (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'job_id',
-      'start',
-      'end',
-      'from',
-      'size'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'jobId',
-      'start',
-      'end',
-      'from',
-      'size'
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'calendarId',
-      'calendar_id'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, calendarId, calendar_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'calendarId', 'calendar_id'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -114,7 +87,7 @@ function buildMlGetCalendarEvents (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(params['calendar_id'] || params['calendarId']) + '/' + 'events'
+    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
 
     // build request object
     const request = {
@@ -134,6 +107,22 @@ function buildMlGetCalendarEvents (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

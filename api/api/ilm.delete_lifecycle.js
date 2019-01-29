@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildIlmDeleteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,6 +11,15 @@ function buildIlmDeleteLifecycle (opts) {
    *
    * @param {string} policy - The name of the index lifecycle policy
    */
+
+  const acceptedQuerystring = [
+
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function ilmDeleteLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,55 +48,20 @@ function buildIlmDeleteLifecycle (opts) {
       )
     }
 
-    var warnings = null
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-    const queryBlacklist = [
-      'method',
-      'body',
-      'ignore',
-      'maxRetries',
-      'headers',
-      'requestTimeout',
-      'asStream',
-      'policy'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-      if (camelIndex !== -1) {
-        querystring[acceptedQuerystring[camelIndex]] = params[key]
-      } else {
-        if (acceptedQuerystring.indexOf(key) !== -1) {
-          querystring[key] = params[key]
-        } else if (queryBlacklist.indexOf(key) === -1) {
-          warnings = warnings || []
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          querystring[key] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, policy } = params
+    var querystring = semicopy(params, ['method', 'body', 'policy'])
+
+    if (method == null) {
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -94,7 +71,7 @@ function buildIlmDeleteLifecycle (opts) {
 
     var path = ''
 
-    path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(params['policy'])
+    path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
     // build request object
     const request = {
@@ -114,6 +91,22 @@ function buildIlmDeleteLifecycle (opts) {
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 
