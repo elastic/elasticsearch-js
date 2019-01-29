@@ -77,11 +77,14 @@ function buildScriptsPainlessExecute (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_scripts' + '/' + 'painless' + '/' + '_execute'
+
     // build request object
-    const parts = ['_scripts', 'painless', '_execute']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

@@ -105,11 +105,14 @@ function buildCatRepositories (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'repositories'
+
     // build request object
-    const parts = ['_cat', 'repositories']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

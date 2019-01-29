@@ -9,6 +9,7 @@ function buildSearchTemplate (opts) {
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+   * @param {boolean} ignore_throttled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
@@ -18,6 +19,7 @@ function buildSearchTemplate (opts) {
    * @param {boolean} explain - Specify whether to return detailed information about score computation as part of a hit
    * @param {boolean} profile - Specify whether to profile the query execution
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search definition template and its params
    */
   return function searchTemplate (params, options, callback) {
@@ -61,6 +63,7 @@ function buildSearchTemplate (opts) {
     const keys = Object.keys(params)
     const acceptedQuerystring = [
       'ignore_unavailable',
+      'ignore_throttled',
       'allow_no_indices',
       'expand_wildcards',
       'preference',
@@ -70,6 +73,7 @@ function buildSearchTemplate (opts) {
       'explain',
       'profile',
       'typed_keys',
+      'rest_total_hits_as_int',
       'pretty',
       'human',
       'error_trace',
@@ -78,6 +82,7 @@ function buildSearchTemplate (opts) {
     ]
     const acceptedQuerystringCamelCased = [
       'ignoreUnavailable',
+      'ignoreThrottled',
       'allowNoIndices',
       'expandWildcards',
       'preference',
@@ -87,6 +92,7 @@ function buildSearchTemplate (opts) {
       'explain',
       'profile',
       'typedKeys',
+      'restTotalHitsAsInt',
       'pretty',
       'human',
       'errorTrace',
@@ -125,11 +131,20 @@ function buildSearchTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_search' + '/' + 'template'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_search' + '/' + 'template'
+    } else {
+      path = '/' + '_search' + '/' + 'template'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_search', 'template']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

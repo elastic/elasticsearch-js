@@ -8,6 +8,8 @@ function buildXpackRollupRollupSearch (opts) {
    *
    * @param {string} index - The index or index-pattern (containing rollup or regular data) that should be searched
    * @param {string} type - The doc type inside the index
+   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search request body
    */
   return function xpackRollupRollupSearch (params, options, callback) {
@@ -56,10 +58,12 @@ function buildXpackRollupRollupSearch (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-
+      'typed_keys',
+      'rest_total_hits_as_int'
     ]
     const acceptedQuerystringCamelCased = [
-
+      'typedKeys',
+      'restTotalHitsAsInt'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -93,13 +97,18 @@ function buildXpackRollupRollupSearch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_rollup_search'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_rollup_search'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_rollup_search']
     const request = {
       method,
-      path: params['index'] != null && params['type'] != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/{index}/_rollup_search',
+      path,
       body: params.body || '',
       querystring
     }

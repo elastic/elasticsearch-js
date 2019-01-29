@@ -8,6 +8,7 @@ function buildIndicesGetMapping (opts) {
    *
    * @param {list} index - A comma-separated list of index names
    * @param {list} type - A comma-separated list of document types
+   * @param {string} include_type_name - Whether to add the type name to the response
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -46,6 +47,7 @@ function buildIndicesGetMapping (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
+      'include_type_name',
       'ignore_unavailable',
       'allow_no_indices',
       'expand_wildcards',
@@ -58,6 +60,7 @@ function buildIndicesGetMapping (opts) {
       'filter_path'
     ]
     const acceptedQuerystringCamelCased = [
+      'includeTypeName',
       'ignoreUnavailable',
       'allowNoIndices',
       'expandWildcards',
@@ -101,11 +104,22 @@ function buildIndicesGetMapping (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mapping' + '/' + encodeURIComponent(params['type'])
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mapping'
+    } else if ((params['type']) != null) {
+      path = '/' + '_mapping' + '/' + encodeURIComponent(params['type'])
+    } else {
+      path = '/' + '_mapping'
+    }
+
     // build request object
-    const parts = [params['index'], '_mapping', params['type']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

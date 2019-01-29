@@ -77,11 +77,14 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_rollup' + '/' + 'data'
+
     // build request object
-    const parts = [params['index'], '_xpack', 'rollup', 'data']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

@@ -77,11 +77,18 @@ function buildXpackMigrationDeprecations (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_migration' + '/' + 'deprecations'
+    } else {
+      path = '/' + '_migration' + '/' + 'deprecations'
+    }
+
     // build request object
-    const parts = [params['index'], '_xpack', 'migration', 'deprecations']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

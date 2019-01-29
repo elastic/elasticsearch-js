@@ -97,11 +97,14 @@ function buildTasksGet (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_tasks' + '/' + encodeURIComponent(params['task_id'] || params['taskId'])
+
     // build request object
-    const parts = ['_tasks', params['task_id'] || params['taskId']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

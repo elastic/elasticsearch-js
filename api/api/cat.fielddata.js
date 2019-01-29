@@ -112,11 +112,18 @@ function buildCatFielddata (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['fields']) != null) {
+      path = '/' + '_cat' + '/' + 'fielddata' + '/' + encodeURIComponent(params['fields'])
+    } else {
+      path = '/' + '_cat' + '/' + 'fielddata'
+    }
+
     // build request object
-    const parts = ['_cat', 'fielddata', params['fields']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

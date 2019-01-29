@@ -97,11 +97,18 @@ function buildIndicesShardStores (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_shard_stores'
+    } else {
+      path = '/' + '_shard_stores'
+    }
+
     // build request object
-    const parts = [params['index'], '_shard_stores']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

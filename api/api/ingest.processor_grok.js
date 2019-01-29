@@ -84,11 +84,14 @@ function buildIngestProcessorGrok (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_ingest' + '/' + 'processor' + '/' + 'grok'
+
     // build request object
-    const parts = ['_ingest', 'processor', 'grok']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

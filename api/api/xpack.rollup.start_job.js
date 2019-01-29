@@ -77,11 +77,14 @@ function buildXpackRollupStartJob (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(params['id']) + '/' + '_start'
+
     // build request object
-    const parts = ['_xpack', 'rollup', 'job', params['id'], '_start']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

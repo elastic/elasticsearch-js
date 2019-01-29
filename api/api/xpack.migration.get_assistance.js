@@ -76,11 +76,18 @@ function buildXpackMigrationGetAssistance (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_migration' + '/' + 'assistance' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_migration' + '/' + 'assistance'
+    }
+
     // build request object
-    const parts = ['_xpack', 'migration', 'assistance', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

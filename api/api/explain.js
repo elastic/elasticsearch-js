@@ -20,8 +20,8 @@ function buildExplain (opts) {
    * @param {string} q - Query in the Lucene query string syntax
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {object} body - The query definition using the Query DSL
    */
   return function explain (params, options, callback) {
@@ -57,25 +57,6 @@ function buildExplain (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
-
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
-    }
 
     // build querystring object
     const querystring = {}
@@ -92,8 +73,8 @@ function buildExplain (opts) {
       'q',
       'routing',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'pretty',
       'human',
       'error_trace',
@@ -112,8 +93,8 @@ function buildExplain (opts) {
       'q',
       'routing',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'pretty',
       'human',
       'errorTrace',
@@ -152,11 +133,18 @@ function buildExplain (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id']) + '/' + '_explain'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_explain' + '/' + encodeURIComponent(params['id'])
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id'], '_explain']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

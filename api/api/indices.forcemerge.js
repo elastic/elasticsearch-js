@@ -103,11 +103,18 @@ function buildIndicesForcemerge (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_forcemerge'
+    } else {
+      path = '/' + '_forcemerge'
+    }
+
     // build request object
-    const parts = [params['index'], '_forcemerge']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

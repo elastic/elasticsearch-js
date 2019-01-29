@@ -69,11 +69,18 @@ function buildXpackRollupGetJobs (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null) {
+      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(params['id'])
+    } else {
+      path = '/' + '_rollup' + '/' + 'job'
+    }
+
     // build request object
-    const parts = ['_xpack', 'rollup', 'job']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

@@ -100,11 +100,14 @@ function buildIndicesExistsTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_template' + '/' + encodeURIComponent(params['name'])
+
     // build request object
-    const parts = ['_template', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

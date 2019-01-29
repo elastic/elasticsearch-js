@@ -10,10 +10,9 @@ function buildUpdate (opts) {
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document
    * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {list} fields - A comma-separated list of fields to return in the response
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {string} lang - The script language (default: painless)
    * @param {string} parent - ID of the parent document. Is is only used for routing and when for the upsert request
    * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -57,28 +56,9 @@ function buildUpdate (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
-        result
-      )
-    }
-
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -88,10 +68,9 @@ function buildUpdate (opts) {
     const keys = Object.keys(params)
     const acceptedQuerystring = [
       'wait_for_active_shards',
-      'fields',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'lang',
       'parent',
       'refresh',
@@ -108,10 +87,9 @@ function buildUpdate (opts) {
     ]
     const acceptedQuerystringCamelCased = [
       'waitForActiveShards',
-      'fields',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'lang',
       'parent',
       'refresh',
@@ -158,11 +136,18 @@ function buildUpdate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id']) + '/' + '_update'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_update' + '/' + encodeURIComponent(params['id'])
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id'], '_update']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

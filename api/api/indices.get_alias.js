@@ -98,11 +98,22 @@ function buildIndicesGetAlias (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['name']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_alias' + '/' + encodeURIComponent(params['name'])
+    } else if ((params['name']) != null) {
+      path = '/' + '_alias' + '/' + encodeURIComponent(params['name'])
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_alias'
+    } else {
+      path = '/' + '_alias'
+    }
+
     // build request object
-    const parts = [params['index'], '_alias', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

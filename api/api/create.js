@@ -143,11 +143,14 @@ function buildCreate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id']) + '/' + '_create'
+
     // build request object
-    const parts = [params['index'], params['type'], params['id'], '_create']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

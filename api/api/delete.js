@@ -50,12 +50,6 @@ function buildDelete (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -64,12 +58,7 @@ function buildDelete (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
         result
@@ -139,11 +128,18 @@ function buildDelete (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id'])
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_doc' + '/' + encodeURIComponent(params['id'])
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

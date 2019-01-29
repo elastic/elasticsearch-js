@@ -76,11 +76,14 @@ function buildXpackLicenseGetTrialStatus (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_license' + '/' + 'trial_status'
+
     // build request object
-    const parts = ['_xpack', 'license', 'trial_status']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

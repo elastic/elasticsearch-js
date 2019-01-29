@@ -104,11 +104,18 @@ function buildIndicesExistsAlias (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['name']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_alias' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_alias' + '/' + encodeURIComponent(params['name'])
+    }
+
     // build request object
-    const parts = [params['index'], '_alias', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

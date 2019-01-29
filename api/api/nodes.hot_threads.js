@@ -103,13 +103,24 @@ function buildNodesHotThreads (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'hotthreads'
+    } else if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'hot_threads'
+    } else if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'hotthreads'
+    } else if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'hot_threads'
+    } else {
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + 'hotthreads'
+    }
+
     // build request object
-    const parts = ['_cluster', 'nodes', params['node_id'] || params['nodeId'], 'hot_threads']
     const request = {
       method,
-      path: (params['node_id'] || params['nodeId']) != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/_nodes/hot_threads',
+      path,
       body: null,
       querystring
     }

@@ -97,11 +97,18 @@ function buildIndicesSegments (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_segments'
+    } else {
+      path = '/' + '_segments'
+    }
+
     // build request object
-    const parts = [params['index'], '_segments']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

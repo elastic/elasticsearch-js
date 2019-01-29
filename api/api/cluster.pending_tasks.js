@@ -90,11 +90,14 @@ function buildClusterPendingTasks (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cluster' + '/' + 'pending_tasks'
+
     // build request object
-    const parts = ['_cluster', 'pending_tasks']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

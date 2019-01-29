@@ -94,11 +94,18 @@ function buildIndicesGetTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['name']) != null) {
+      path = '/' + '_template' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_template'
+    }
+
     // build request object
-    const parts = ['_template', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

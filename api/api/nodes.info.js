@@ -92,11 +92,22 @@ function buildNodesInfo (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['node_id'] || params['nodeId']) != null && (params['metric']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + encodeURIComponent(params['metric'])
+    } else if ((params['node_id'] || params['nodeId']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId'])
+    } else if ((params['metric']) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(params['metric'])
+    } else {
+      path = '/' + '_nodes'
+    }
+
     // build request object
-    const parts = ['_nodes', params['node_id'] || params['nodeId'], params['metric']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

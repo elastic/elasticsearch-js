@@ -78,11 +78,18 @@ function buildClearScroll (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['scroll_id'] || params['scrollId']) != null) {
+      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(params['scroll_id'] || params['scrollId'])
+    } else {
+      path = '/' + '_search' + '/' + 'scroll'
+    }
+
     // build request object
-    const parts = ['_search', 'scroll', params['scroll_id'] || params['scrollId']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

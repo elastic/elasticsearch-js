@@ -14,8 +14,8 @@ function buildMget (opts) {
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {object} body - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
    */
   return function mget (params, options, callback) {
@@ -64,8 +64,8 @@ function buildMget (opts) {
       'refresh',
       'routing',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'pretty',
       'human',
       'error_trace',
@@ -79,8 +79,8 @@ function buildMget (opts) {
       'refresh',
       'routing',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'pretty',
       'human',
       'errorTrace',
@@ -119,11 +119,20 @@ function buildMget (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_mget'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_mget'
+    } else {
+      path = '/' + '_mget'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_mget']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

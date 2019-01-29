@@ -113,11 +113,14 @@ function buildIndicesSplit (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(params['index']) + '/' + '_split' + '/' + encodeURIComponent(params['target'])
+
     // build request object
-    const parts = [params['index'], '_split', params['target']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

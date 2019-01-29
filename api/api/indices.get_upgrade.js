@@ -94,11 +94,18 @@ function buildIndicesGetUpgrade (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_upgrade'
+    } else {
+      path = '/' + '_upgrade'
+    }
+
     // build request object
-    const parts = [params['index'], '_upgrade']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

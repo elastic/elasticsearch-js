@@ -103,11 +103,18 @@ function buildCatSegments (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + '_cat' + '/' + 'segments' + '/' + encodeURIComponent(params['index'])
+    } else {
+      path = '/' + '_cat' + '/' + 'segments'
+    }
+
     // build request object
-    const parts = ['_cat', 'segments', params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

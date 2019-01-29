@@ -16,8 +16,8 @@ function buildExists (opts) {
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
@@ -54,28 +54,9 @@ function buildExists (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
-        result
-      )
-    }
-
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -91,8 +72,8 @@ function buildExists (opts) {
       'refresh',
       'routing',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'version',
       'version_type',
       'pretty',
@@ -109,8 +90,8 @@ function buildExists (opts) {
       'refresh',
       'routing',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'version',
       'versionType',
       'pretty',
@@ -151,11 +132,18 @@ function buildExists (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id'])
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_doc' + '/' + encodeURIComponent(params['id'])
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

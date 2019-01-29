@@ -77,11 +77,14 @@ function buildXpackInfo (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_xpack'
+
     // build request object
-    const parts = ['_xpack']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

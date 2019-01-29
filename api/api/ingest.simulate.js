@@ -89,11 +89,18 @@ function buildIngestSimulate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null) {
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(params['id']) + '/' + '_simulate'
+    } else {
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + '_simulate'
+    }
+
     // build request object
-    const parts = ['_ingest', 'pipeline', params['id'], '_simulate']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

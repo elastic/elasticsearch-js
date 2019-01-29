@@ -106,11 +106,18 @@ function buildCatAliases (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['name']) != null) {
+      path = '/' + '_cat' + '/' + 'aliases' + '/' + encodeURIComponent(params['name'])
+    } else {
+      path = '/' + '_cat' + '/' + 'aliases'
+    }
+
     // build request object
-    const parts = ['_cat', 'aliases', params['name']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

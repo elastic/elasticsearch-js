@@ -110,11 +110,18 @@ function buildPutScript (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['id']) != null && (params['context']) != null) {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(params['id']) + '/' + encodeURIComponent(params['context'])
+    } else {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(params['id'])
+    }
+
     // build request object
-    const parts = ['_scripts', params['id'], params['context']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

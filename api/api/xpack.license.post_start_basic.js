@@ -77,11 +77,14 @@ function buildXpackLicensePostStartBasic (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_license' + '/' + 'start_basic'
+
     // build request object
-    const parts = ['_xpack', 'license', 'start_basic']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

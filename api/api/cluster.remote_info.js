@@ -84,11 +84,14 @@ function buildClusterRemoteInfo (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_remote' + '/' + 'info'
+
     // build request object
-    const parts = ['_remote', 'info']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

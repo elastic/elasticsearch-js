@@ -83,11 +83,18 @@ function buildXpackGraphExplore (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_graph' + '/' + 'explore'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_graph' + '/' + 'explore'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_xpack', 'graph', '_explore']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

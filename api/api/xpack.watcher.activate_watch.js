@@ -7,7 +7,6 @@ function buildXpackWatcherActivateWatch (opts) {
    * Perform a [xpack.watcher.activate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html) request
    *
    * @param {string} watch_id - Watch ID
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
    */
   return function xpackWatcherActivateWatch (params, options, callback) {
     options = options || {}
@@ -47,10 +46,10 @@ function buildXpackWatcherActivateWatch (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'master_timeout'
+
     ]
     const acceptedQuerystringCamelCased = [
-      'masterTimeout'
+
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
@@ -84,11 +83,14 @@ function buildXpackWatcherActivateWatch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(params['watch_id'] || params['watchId']) + '/' + '_activate'
+
     // build request object
-    const parts = ['_xpack', 'watcher', 'watch', params['watch_id'] || params['watchId'], '_activate']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

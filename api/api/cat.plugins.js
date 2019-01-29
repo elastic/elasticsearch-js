@@ -105,11 +105,14 @@ function buildCatPlugins (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'plugins'
+
     // build request object
-    const parts = ['_cat', 'plugins']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

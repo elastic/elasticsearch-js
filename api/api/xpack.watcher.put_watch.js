@@ -7,7 +7,6 @@ function buildXpackWatcherPutWatch (opts) {
    * Perform a [xpack.watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
    *
    * @param {string} id - Watch ID
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} active - Specify whether the watch is in/active by default
    * @param {number} version - Explicit version number for concurrency control
    * @param {object} body - The watch
@@ -44,12 +43,10 @@ function buildXpackWatcherPutWatch (opts) {
     const querystring = {}
     const keys = Object.keys(params)
     const acceptedQuerystring = [
-      'master_timeout',
       'active',
       'version'
     ]
     const acceptedQuerystringCamelCased = [
-      'masterTimeout',
       'active',
       'version'
     ]
@@ -85,11 +82,14 @@ function buildXpackWatcherPutWatch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(params['id'])
+
     // build request object
-    const parts = ['_xpack', 'watcher', 'watch', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

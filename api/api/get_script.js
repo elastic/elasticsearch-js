@@ -94,11 +94,14 @@ function buildGetScript (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_scripts' + '/' + encodeURIComponent(params['id'])
+
     // build request object
-    const parts = ['_scripts', params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

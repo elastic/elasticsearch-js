@@ -107,11 +107,18 @@ function buildIndicesPutSettings (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_settings'
+    } else {
+      path = '/' + '_settings'
+    }
+
     // build request object
-    const parts = [params['index'], '_settings']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

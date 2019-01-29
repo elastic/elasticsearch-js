@@ -94,11 +94,18 @@ function buildTasksCancel (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['task_id'] || params['taskId']) != null) {
+      path = '/' + '_tasks' + '/' + encodeURIComponent(params['task_id'] || params['taskId']) + '/' + '_cancel'
+    } else {
+      path = '/' + '_tasks' + '/' + '_cancel'
+    }
+
     // build request object
-    const parts = ['_tasks', params['task_id'] || params['taskId'], '_cancel']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: '',
       querystring
     }

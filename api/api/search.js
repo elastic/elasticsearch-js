@@ -17,6 +17,7 @@ function buildSearch (opts) {
    * @param {list} docvalue_fields - A comma-separated list of fields to return as the docvalue representation of a field for each hit
    * @param {number} from - Starting offset (default: 0)
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+   * @param {boolean} ignore_throttled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
@@ -28,8 +29,8 @@ function buildSearch (opts) {
    * @param {number} size - Number of hits to return (default: 10)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
    * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
    * @param {string} suggest_field - Specify which field to use for suggestions
@@ -44,8 +45,9 @@ function buildSearch (opts) {
    * @param {boolean} version - Specify whether to return document version as part of a hit
    * @param {boolean} request_cache - Specify if request cache should be used for this request or not, defaults to index level setting
    * @param {number} batched_reduce_size - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
-   * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+   * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
    * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search definition using the Query DSL
    */
   return function search (params, options, callback) {
@@ -89,6 +91,7 @@ function buildSearch (opts) {
       'docvalue_fields',
       'from',
       'ignore_unavailable',
+      'ignore_throttled',
       'allow_no_indices',
       'expand_wildcards',
       'lenient',
@@ -100,8 +103,8 @@ function buildSearch (opts) {
       'size',
       'sort',
       '_source',
-      '_source_exclude',
-      '_source_include',
+      '_source_excludes',
+      '_source_includes',
       'terminate_after',
       'stats',
       'suggest_field',
@@ -118,6 +121,7 @@ function buildSearch (opts) {
       'batched_reduce_size',
       'max_concurrent_shard_requests',
       'pre_filter_shard_size',
+      'rest_total_hits_as_int',
       'pretty',
       'human',
       'error_trace',
@@ -134,6 +138,7 @@ function buildSearch (opts) {
       'docvalueFields',
       'from',
       'ignoreUnavailable',
+      'ignoreThrottled',
       'allowNoIndices',
       'expandWildcards',
       'lenient',
@@ -145,8 +150,8 @@ function buildSearch (opts) {
       'size',
       'sort',
       '_source',
-      '_sourceExclude',
-      '_sourceInclude',
+      '_sourceExcludes',
+      '_sourceIncludes',
       'terminateAfter',
       'stats',
       'suggestField',
@@ -163,6 +168,7 @@ function buildSearch (opts) {
       'batchedReduceSize',
       'maxConcurrentShardRequests',
       'preFilterShardSize',
+      'restTotalHitsAsInt',
       'pretty',
       'human',
       'errorTrace',
@@ -201,11 +207,20 @@ function buildSearch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_search'
+    } else if ((params['index']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_search'
+    } else {
+      path = '/' + '_search'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_search']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }

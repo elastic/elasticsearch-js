@@ -111,11 +111,14 @@ function buildCatTasks (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + '_cat' + '/' + 'tasks'
+
     // build request object
-    const parts = ['_cat', 'tasks']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }

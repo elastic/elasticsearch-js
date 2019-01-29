@@ -50,25 +50,6 @@ function buildTermvectors (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
-
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
-    }
 
     // build querystring object
     const querystring = {}
@@ -143,11 +124,22 @@ function buildTermvectors (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id']) + '/' + '_termvectors'
+    } else if ((params['index']) != null && (params['id']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_termvectors' + '/' + encodeURIComponent(params['id'])
+    } else if ((params['index']) != null && (params['type']) != null) {
+      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_termvectors'
+    } else {
+      path = '/' + encodeURIComponent(params['index']) + '/' + '_termvectors'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id'], '_termvectors']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: params.body || '',
       querystring
     }
