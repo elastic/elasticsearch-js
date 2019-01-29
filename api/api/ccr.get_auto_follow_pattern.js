@@ -28,6 +28,7 @@ function buildCcrGetAutoFollowPattern (opts) {
       })
     }
 
+    var warnings = null
     // build querystring object
     const querystring = {}
     const keys = Object.keys(params)
@@ -37,15 +38,22 @@ function buildCcrGetAutoFollowPattern (opts) {
     const acceptedQuerystringCamelCased = [
 
     ]
+    const queryBlacklist = [
+      'method', 'body', 'name'
+    ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
       var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
+      var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
+      if (camelIndex !== -1) {
+        querystring[acceptedQuerystring[camelIndex]] = params[key]
       } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
+        if (acceptedQuerystring.indexOf(key) !== -1) {
+          querystring[key] = params[key]
+        } else if (queryBlacklist.indexOf(key) === -1) {
+          warnings = warnings || []
+          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          querystring[key] = params[key]
         }
       }
     }
@@ -90,7 +98,8 @@ function buildCcrGetAutoFollowPattern (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
