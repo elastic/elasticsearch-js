@@ -64,6 +64,7 @@ function buildScroll (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'scrollId',
       'scroll_id'
     ]
 

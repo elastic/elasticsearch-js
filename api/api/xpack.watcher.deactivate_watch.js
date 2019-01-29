@@ -60,6 +60,7 @@ function buildXpackWatcherDeactivateWatch (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'watchId',
       'watch_id'
     ]
 

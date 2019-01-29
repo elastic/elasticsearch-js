@@ -86,6 +86,7 @@ function buildCatThreadPool (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'threadPoolPatterns',
       'thread_pool_patterns'
     ]
 

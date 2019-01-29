@@ -75,7 +75,9 @@ function buildMlDeleteCalendarJob (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'calendarId',
       'calendar_id',
+      'jobId',
       'job_id'
     ]
 

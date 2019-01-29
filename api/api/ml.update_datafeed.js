@@ -61,6 +61,7 @@ function buildMlUpdateDatafeed (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'datafeedId',
       'datafeed_id'
     ]
 

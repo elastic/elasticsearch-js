@@ -77,6 +77,7 @@ function buildDeleteByQueryRethrottle (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'taskId',
       'task_id'
     ]
 

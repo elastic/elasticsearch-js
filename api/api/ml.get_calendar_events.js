@@ -73,6 +73,7 @@ function buildMlGetCalendarEvents (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'calendarId',
       'calendar_id'
     ]
 

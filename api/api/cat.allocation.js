@@ -86,6 +86,7 @@ function buildCatAllocation (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'nodeId',
       'node_id'
     ]
 

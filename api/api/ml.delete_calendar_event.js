@@ -75,7 +75,9 @@ function buildMlDeleteCalendarEvent (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'calendarId',
       'calendar_id',
+      'eventId',
       'event_id'
     ]
 

@@ -68,6 +68,7 @@ function buildMlFlushJob (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id'
     ]
 

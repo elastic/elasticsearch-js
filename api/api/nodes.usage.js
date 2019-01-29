@@ -67,6 +67,7 @@ function buildNodesUsage (opts) {
       'requestTimeout',
       'asStream',
       'metric',
+      'nodeId',
       'node_id'
     ]
 

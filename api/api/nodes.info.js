@@ -69,6 +69,7 @@ function buildNodesInfo (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'nodeId',
       'node_id',
       'metric'
     ]

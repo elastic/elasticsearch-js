@@ -61,6 +61,7 @@ function buildMlPostCalendarEvents (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'calendarId',
       'calendar_id'
     ]
 

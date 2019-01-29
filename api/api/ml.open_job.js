@@ -62,7 +62,9 @@ function buildMlOpenJob (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id',
+      'ignoreDowntime',
       'ignore_downtime',
       'timeout'
     ]

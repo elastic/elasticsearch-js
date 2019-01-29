@@ -60,6 +60,7 @@ function buildMlDeleteCalendar (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'calendarId',
       'calendar_id'
     ]
 

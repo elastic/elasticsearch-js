@@ -61,6 +61,7 @@ function buildMlUpdateFilter (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'filterId',
       'filter_id'
     ]
 

@@ -60,6 +60,7 @@ function buildMlDeleteFilter (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'filterId',
       'filter_id'
     ]
 

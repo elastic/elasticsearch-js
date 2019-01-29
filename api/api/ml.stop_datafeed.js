@@ -61,6 +61,7 @@ function buildMlStopDatafeed (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'datafeedId',
       'datafeed_id'
     ]
 

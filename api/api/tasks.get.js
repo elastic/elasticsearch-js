@@ -74,6 +74,7 @@ function buildTasksGet (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'taskId',
       'task_id'
     ]
 

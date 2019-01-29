@@ -61,6 +61,7 @@ function buildMlPutFilter (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'filterId',
       'filter_id'
     ]
 

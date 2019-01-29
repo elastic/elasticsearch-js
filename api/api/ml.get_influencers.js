@@ -77,6 +77,7 @@ function buildMlGetInfluencers (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id'
     ]
 

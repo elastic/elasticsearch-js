@@ -71,7 +71,9 @@ function buildMlRevertModelSnapshot (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id',
+      'snapshotId',
       'snapshot_id'
     ]
 

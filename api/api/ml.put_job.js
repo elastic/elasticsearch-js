@@ -61,6 +61,7 @@ function buildMlPutJob (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id'
     ]
 

@@ -64,6 +64,7 @@ function buildMlDeleteJob (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id'
     ]
 

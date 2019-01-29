@@ -71,6 +71,7 @@ function buildTasksCancel (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'taskId',
       'task_id'
     ]
 

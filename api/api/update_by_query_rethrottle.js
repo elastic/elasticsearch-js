@@ -77,6 +77,7 @@ function buildUpdateByQueryRethrottle (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'taskId',
       'task_id'
     ]
 

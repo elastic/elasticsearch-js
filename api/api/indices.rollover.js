@@ -85,6 +85,7 @@ function buildIndicesRollover (opts) {
       'requestTimeout',
       'asStream',
       'alias',
+      'newIndex',
       'new_index'
     ]
 

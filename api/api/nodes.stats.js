@@ -89,7 +89,9 @@ function buildNodesStats (opts) {
       'requestTimeout',
       'asStream',
       'metric',
+      'indexMetric',
       'index_metric',
+      'nodeId',
       'node_id'
     ]
 

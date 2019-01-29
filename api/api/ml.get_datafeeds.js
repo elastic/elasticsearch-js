@@ -55,6 +55,7 @@ function buildMlGetDatafeeds (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'datafeedId',
       'datafeed_id'
     ]
 

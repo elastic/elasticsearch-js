@@ -60,7 +60,9 @@ function buildMlGetCategories (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id',
+      'categoryId',
       'category_id'
     ]
 

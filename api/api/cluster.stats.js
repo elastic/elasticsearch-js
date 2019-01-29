@@ -68,6 +68,7 @@ function buildClusterStats (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'nodeId',
       'node_id'
     ]
 

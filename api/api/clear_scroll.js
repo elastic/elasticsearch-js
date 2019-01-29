@@ -55,6 +55,7 @@ function buildClearScroll (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'scrollId',
       'scroll_id'
     ]
 

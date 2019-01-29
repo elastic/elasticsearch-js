@@ -58,6 +58,7 @@ function buildMlGetFilters (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'filterId',
       'filter_id'
     ]
 

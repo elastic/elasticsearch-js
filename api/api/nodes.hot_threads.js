@@ -80,6 +80,7 @@ function buildNodesHotThreads (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'nodeId',
       'node_id'
     ]
 

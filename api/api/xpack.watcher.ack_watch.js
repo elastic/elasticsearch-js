@@ -69,7 +69,9 @@ function buildXpackWatcherAckWatch (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'watchId',
       'watch_id',
+      'actionId',
       'action_id'
     ]
 

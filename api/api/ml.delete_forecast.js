@@ -73,7 +73,9 @@ function buildMlDeleteForecast (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'jobId',
       'job_id',
+      'forecastId',
       'forecast_id'
     ]
 

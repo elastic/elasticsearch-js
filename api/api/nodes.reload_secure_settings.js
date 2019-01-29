@@ -65,6 +65,7 @@ function buildNodesReloadSecureSettings (opts) {
       'headers',
       'requestTimeout',
       'asStream',
+      'nodeId',
       'node_id'
     ]
 
