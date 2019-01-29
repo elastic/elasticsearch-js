@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlDeleteForecast (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -11,6 +14,17 @@ function buildMlDeleteForecast (opts) {
    * @param {boolean} allow_no_forecasts - Whether to ignore if `_all` matches no forecasts
    * @param {time} timeout - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
    */
+
+  const acceptedQuerystring = [
+    'allow_no_forecasts',
+    'timeout'
+  ]
+
+  const snakeCase = {
+    allowNoForecasts: 'allow_no_forecasts'
+
+  }
+
   return function mlDeleteForecast (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,42 +67,20 @@ function buildMlDeleteForecast (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'allow_no_forecasts',
-      'timeout'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'allowNoForecasts',
-      'timeout'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, jobId, job_id, forecastId, forecast_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id', 'forecastId', 'forecast_id'])
+
+    if (method == null) {
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -98,10 +90,10 @@ function buildMlDeleteForecast (opts) {
 
     var path = ''
 
-    if ((params['job_id'] || params['jobId']) != null && (params['forecast_id'] || params['forecastId']) != null) {
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + '_forecast' + '/' + encodeURIComponent(params['forecast_id'] || params['forecastId'])
+    if ((job_id || jobId) != null && (forecast_id || forecastId) != null) {
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/' + encodeURIComponent(forecast_id || forecastId)
     } else {
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + '_forecast'
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
     }
 
     // build request object
@@ -117,10 +109,27 @@ function buildMlDeleteForecast (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

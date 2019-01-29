@@ -221,3 +221,31 @@ test('Basic (options and promises)', t => {
       .catch(t.fail)
   })
 })
+
+test('Pass unknown parameters as query parameters (and get a warning)', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    t.strictEqual(req.url, '/test/doc/_search?q=foo%3Abar&winter=is%20coming')
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    client.search({
+      index: 'test',
+      type: 'doc',
+      q: 'foo:bar',
+      winter: 'is coming'
+    }, (err, { body, warnings }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      t.deepEqual(warnings, ['Client - Unknown parameter: "winter", sending it as query parameter'])
+      server.stop()
+    })
+  })
+})

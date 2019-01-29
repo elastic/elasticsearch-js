@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -24,6 +27,38 @@ function buildExplain (opts) {
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {object} body - The query definition using the Query DSL
    */
+
+  const acceptedQuerystring = [
+    'analyze_wildcard',
+    'analyzer',
+    'default_operator',
+    'df',
+    'stored_fields',
+    'lenient',
+    'parent',
+    'preference',
+    'q',
+    'routing',
+    '_source',
+    '_source_excludes',
+    '_source_includes',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    analyzeWildcard: 'analyze_wildcard',
+    defaultOperator: 'default_operator',
+    storedFields: 'stored_fields',
+    _sourceExcludes: '_source_excludes',
+    _sourceIncludes: '_source_includes',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function explain (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,74 +93,20 @@ function buildExplain (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'analyze_wildcard',
-      'analyzer',
-      'default_operator',
-      'df',
-      'stored_fields',
-      'lenient',
-      'parent',
-      'preference',
-      'q',
-      'routing',
-      '_source',
-      '_source_excludes',
-      '_source_includes',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'analyzeWildcard',
-      'analyzer',
-      'defaultOperator',
-      'df',
-      'storedFields',
-      'lenient',
-      'parent',
-      'preference',
-      'q',
-      'routing',
-      '_source',
-      '_sourceExcludes',
-      '_sourceIncludes',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, id, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -135,17 +116,17 @@ function buildExplain (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id']) + '/' + '_explain'
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_explain'
     } else {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_explain' + '/' + encodeURIComponent(params['id'])
+      path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id)
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -154,10 +135,27 @@ function buildExplain (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

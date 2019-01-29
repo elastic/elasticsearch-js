@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildXpackLicenseGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,6 +11,15 @@ function buildXpackLicenseGet (opts) {
    *
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
+
+  const acceptedQuerystring = [
+    'local'
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function xpackLicenseGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,40 +48,20 @@ function buildXpackLicenseGet (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'local'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'local'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -94,10 +86,27 @@ function buildXpackLicenseGet (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

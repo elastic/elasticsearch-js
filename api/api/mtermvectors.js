@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMtermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -23,6 +26,36 @@ function buildMtermvectors (opts) {
    * @param {enum} version_type - Specific version type
    * @param {object} body - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
    */
+
+  const acceptedQuerystring = [
+    'ids',
+    'term_statistics',
+    'field_statistics',
+    'fields',
+    'offsets',
+    'positions',
+    'payloads',
+    'preference',
+    'routing',
+    'parent',
+    'realtime',
+    'version',
+    'version_type',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    termStatistics: 'term_statistics',
+    fieldStatistics: 'field_statistics',
+    versionType: 'version_type',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function mtermvectors (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,74 +84,20 @@ function buildMtermvectors (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'ids',
-      'term_statistics',
-      'field_statistics',
-      'fields',
-      'offsets',
-      'positions',
-      'payloads',
-      'preference',
-      'routing',
-      'parent',
-      'realtime',
-      'version',
-      'version_type',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'ids',
-      'termStatistics',
-      'fieldStatistics',
-      'fields',
-      'offsets',
-      'positions',
-      'payloads',
-      'preference',
-      'routing',
-      'parent',
-      'realtime',
-      'version',
-      'versionType',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -128,10 +107,10 @@ function buildMtermvectors (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['type']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_mtermvectors'
-    } else if ((params['index']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_mtermvectors'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mtermvectors'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
     } else {
       path = '/' + '_mtermvectors'
     }
@@ -140,7 +119,7 @@ function buildMtermvectors (opts) {
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -149,10 +128,27 @@ function buildMtermvectors (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

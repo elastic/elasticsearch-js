@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildUpdateByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -44,6 +47,70 @@ function buildUpdateByQuery (opts) {
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL
    */
+
+  const acceptedQuerystring = [
+    'analyzer',
+    'analyze_wildcard',
+    'default_operator',
+    'df',
+    'from',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'conflicts',
+    'expand_wildcards',
+    'lenient',
+    'pipeline',
+    'preference',
+    'q',
+    'routing',
+    'scroll',
+    'search_type',
+    'search_timeout',
+    'size',
+    'sort',
+    '_source',
+    '_source_excludes',
+    '_source_includes',
+    'terminate_after',
+    'stats',
+    'version',
+    'version_type',
+    'request_cache',
+    'refresh',
+    'timeout',
+    'wait_for_active_shards',
+    'scroll_size',
+    'wait_for_completion',
+    'requests_per_second',
+    'slices',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    analyzeWildcard: 'analyze_wildcard',
+    defaultOperator: 'default_operator',
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    searchType: 'search_type',
+    searchTimeout: 'search_timeout',
+    _sourceExcludes: '_source_excludes',
+    _sourceIncludes: '_source_includes',
+    terminateAfter: 'terminate_after',
+    versionType: 'version_type',
+    requestCache: 'request_cache',
+    waitForActiveShards: 'wait_for_active_shards',
+    scrollSize: 'scroll_size',
+    waitForCompletion: 'wait_for_completion',
+    requestsPerSecond: 'requests_per_second',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function updateByQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,116 +147,20 @@ function buildUpdateByQuery (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'analyzer',
-      'analyze_wildcard',
-      'default_operator',
-      'df',
-      'from',
-      'ignore_unavailable',
-      'allow_no_indices',
-      'conflicts',
-      'expand_wildcards',
-      'lenient',
-      'pipeline',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'search_type',
-      'search_timeout',
-      'size',
-      'sort',
-      '_source',
-      '_source_excludes',
-      '_source_includes',
-      'terminate_after',
-      'stats',
-      'version',
-      'version_type',
-      'request_cache',
-      'refresh',
-      'timeout',
-      'wait_for_active_shards',
-      'scroll_size',
-      'wait_for_completion',
-      'requests_per_second',
-      'slices',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'analyzer',
-      'analyzeWildcard',
-      'defaultOperator',
-      'df',
-      'from',
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'conflicts',
-      'expandWildcards',
-      'lenient',
-      'pipeline',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'searchType',
-      'searchTimeout',
-      'size',
-      'sort',
-      '_source',
-      '_sourceExcludes',
-      '_sourceIncludes',
-      'terminateAfter',
-      'stats',
-      'version',
-      'versionType',
-      'requestCache',
-      'refresh',
-      'timeout',
-      'waitForActiveShards',
-      'scrollSize',
-      'waitForCompletion',
-      'requestsPerSecond',
-      'slices',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -199,17 +170,17 @@ function buildUpdateByQuery (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['type']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_update_by_query'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_update_by_query'
     } else {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_update_by_query'
+      path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -218,10 +189,27 @@ function buildUpdateByQuery (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

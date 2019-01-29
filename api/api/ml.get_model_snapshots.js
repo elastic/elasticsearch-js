@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlGetModelSnapshots (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -16,6 +19,20 @@ function buildMlGetModelSnapshots (opts) {
    * @param {boolean} desc - True if the results should be sorted in descending order
    * @param {object} body - Model snapshot selection criteria
    */
+
+  const acceptedQuerystring = [
+    'from',
+    'size',
+    'start',
+    'end',
+    'sort',
+    'desc'
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function mlGetModelSnapshots (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,50 +69,20 @@ function buildMlGetModelSnapshots (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'from',
-      'size',
-      'start',
-      'end',
-      'sort',
-      'desc'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'from',
-      'size',
-      'start',
-      'end',
-      'sort',
-      'desc'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, jobId, job_id, snapshotId, snapshot_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id', 'snapshotId', 'snapshot_id'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -105,17 +92,17 @@ function buildMlGetModelSnapshots (opts) {
 
     var path = ''
 
-    if ((params['job_id'] || params['jobId']) != null && (params['snapshot_id'] || params['snapshotId']) != null) {
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + 'model_snapshots' + '/' + encodeURIComponent(params['snapshot_id'] || params['snapshotId'])
+    if ((job_id || jobId) != null && (snapshot_id || snapshotId) != null) {
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
     } else {
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + 'model_snapshots'
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -124,10 +111,27 @@ function buildMlGetModelSnapshots (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

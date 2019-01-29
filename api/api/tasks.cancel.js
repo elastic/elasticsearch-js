@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildTasksCancel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -11,6 +14,24 @@ function buildTasksCancel (opts) {
    * @param {list} actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
    * @param {string} parent_task_id - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
    */
+
+  const acceptedQuerystring = [
+    'nodes',
+    'actions',
+    'parent_task_id',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    parentTaskId: 'parent_task_id',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function tasksCancel (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -39,54 +60,20 @@ function buildTasksCancel (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'nodes',
-      'actions',
-      'parent_task_id',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'nodes',
-      'actions',
-      'parentTaskId',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, taskId, task_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'taskId', 'task_id'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -96,8 +83,8 @@ function buildTasksCancel (opts) {
 
     var path = ''
 
-    if ((params['task_id'] || params['taskId']) != null) {
-      path = '/' + '_tasks' + '/' + encodeURIComponent(params['task_id'] || params['taskId']) + '/' + '_cancel'
+    if ((task_id || taskId) != null) {
+      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
     } else {
       path = '/' + '_tasks' + '/' + '_cancel'
     }
@@ -115,10 +102,27 @@ function buildTasksCancel (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

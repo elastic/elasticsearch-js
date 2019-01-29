@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildTasksList (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -14,6 +17,30 @@ function buildTasksList (opts) {
    * @param {enum} group_by - Group tasks by nodes or parent/child relationships
    * @param {time} timeout - Explicit operation timeout
    */
+
+  const acceptedQuerystring = [
+    'nodes',
+    'actions',
+    'detailed',
+    'parent_task_id',
+    'wait_for_completion',
+    'group_by',
+    'timeout',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    parentTaskId: 'parent_task_id',
+    waitForCompletion: 'wait_for_completion',
+    groupBy: 'group_by',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function tasksList (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,62 +69,20 @@ function buildTasksList (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'nodes',
-      'actions',
-      'detailed',
-      'parent_task_id',
-      'wait_for_completion',
-      'group_by',
-      'timeout',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'nodes',
-      'actions',
-      'detailed',
-      'parentTaskId',
-      'waitForCompletion',
-      'groupBy',
-      'timeout',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -122,10 +107,27 @@ function buildTasksList (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

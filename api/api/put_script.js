@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -13,6 +16,24 @@ function buildPutScript (opts) {
    * @param {string} context - Context name to compile script against
    * @param {object} body - The document
    */
+
+  const acceptedQuerystring = [
+    'timeout',
+    'master_timeout',
+    'context',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    masterTimeout: 'master_timeout',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function putScript (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -55,54 +76,20 @@ function buildPutScript (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'timeout',
-      'master_timeout',
-      'context',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'timeout',
-      'masterTimeout',
-      'context',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'PUT'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, id, context } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'context'])
+
+    if (method == null) {
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -112,17 +99,17 @@ function buildPutScript (opts) {
 
     var path = ''
 
-    if ((params['id']) != null && (params['context']) != null) {
-      path = '/' + '_scripts' + '/' + encodeURIComponent(params['id']) + '/' + encodeURIComponent(params['context'])
+    if ((id) != null && (context) != null) {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context)
     } else {
-      path = '/' + '_scripts' + '/' + encodeURIComponent(params['id'])
+      path = '/' + '_scripts' + '/' + encodeURIComponent(id)
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -131,10 +118,27 @@ function buildPutScript (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

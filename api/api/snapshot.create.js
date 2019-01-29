@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildSnapshotCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -12,6 +15,24 @@ function buildSnapshotCreate (opts) {
    * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    * @param {object} body - The snapshot definition
    */
+
+  const acceptedQuerystring = [
+    'master_timeout',
+    'wait_for_completion',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    masterTimeout: 'master_timeout',
+    waitForCompletion: 'wait_for_completion',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function snapshotCreate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,52 +75,20 @@ function buildSnapshotCreate (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'master_timeout',
-      'wait_for_completion',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'masterTimeout',
-      'waitForCompletion',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'PUT'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, repository, snapshot } = params
+    var querystring = semicopy(params, ['method', 'body', 'repository', 'snapshot'])
+
+    if (method == null) {
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -109,13 +98,13 @@ function buildSnapshotCreate (opts) {
 
     var path = ''
 
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(params['repository']) + '/' + encodeURIComponent(params['snapshot'])
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -124,10 +113,27 @@ function buildSnapshotCreate (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

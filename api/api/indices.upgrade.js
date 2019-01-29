@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildIndicesUpgrade (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -13,6 +16,30 @@ function buildIndicesUpgrade (opts) {
    * @param {boolean} wait_for_completion - Specify whether the request should block until the all segments are upgraded (default: false)
    * @param {boolean} only_ancient_segments - If true, only ancient (an older Lucene major release) segments will be upgraded
    */
+
+  const acceptedQuerystring = [
+    'allow_no_indices',
+    'expand_wildcards',
+    'ignore_unavailable',
+    'wait_for_completion',
+    'only_ancient_segments',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    ignoreUnavailable: 'ignore_unavailable',
+    waitForCompletion: 'wait_for_completion',
+    onlyAncientSegments: 'only_ancient_segments',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function indicesUpgrade (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,58 +68,20 @@ function buildIndicesUpgrade (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'allow_no_indices',
-      'expand_wildcards',
-      'ignore_unavailable',
-      'wait_for_completion',
-      'only_ancient_segments',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'allowNoIndices',
-      'expandWildcards',
-      'ignoreUnavailable',
-      'waitForCompletion',
-      'onlyAncientSegments',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -102,8 +91,8 @@ function buildIndicesUpgrade (opts) {
 
     var path = ''
 
-    if ((params['index']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_upgrade'
+    if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
     } else {
       path = '/' + '_upgrade'
     }
@@ -121,10 +110,27 @@ function buildIndicesUpgrade (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

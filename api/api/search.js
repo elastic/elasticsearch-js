@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -50,6 +53,85 @@ function buildSearch (opts) {
    * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search definition using the Query DSL
    */
+
+  const acceptedQuerystring = [
+    'analyzer',
+    'analyze_wildcard',
+    'default_operator',
+    'df',
+    'explain',
+    'stored_fields',
+    'docvalue_fields',
+    'from',
+    'ignore_unavailable',
+    'ignore_throttled',
+    'allow_no_indices',
+    'expand_wildcards',
+    'lenient',
+    'preference',
+    'q',
+    'routing',
+    'scroll',
+    'search_type',
+    'size',
+    'sort',
+    '_source',
+    '_source_excludes',
+    '_source_includes',
+    'terminate_after',
+    'stats',
+    'suggest_field',
+    'suggest_mode',
+    'suggest_size',
+    'suggest_text',
+    'timeout',
+    'track_scores',
+    'track_total_hits',
+    'allow_partial_search_results',
+    'typed_keys',
+    'version',
+    'request_cache',
+    'batched_reduce_size',
+    'max_concurrent_shard_requests',
+    'pre_filter_shard_size',
+    'rest_total_hits_as_int',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    analyzeWildcard: 'analyze_wildcard',
+    defaultOperator: 'default_operator',
+    storedFields: 'stored_fields',
+    docvalueFields: 'docvalue_fields',
+    ignoreUnavailable: 'ignore_unavailable',
+    ignoreThrottled: 'ignore_throttled',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    searchType: 'search_type',
+    _sourceExcludes: '_source_excludes',
+    _sourceIncludes: '_source_includes',
+    terminateAfter: 'terminate_after',
+    suggestField: 'suggest_field',
+    suggestMode: 'suggest_mode',
+    suggestSize: 'suggest_size',
+    suggestText: 'suggest_text',
+    trackScores: 'track_scores',
+    trackTotalHits: 'track_total_hits',
+    allowPartialSearchResults: 'allow_partial_search_results',
+    typedKeys: 'typed_keys',
+    requestCache: 'request_cache',
+    batchedReduceSize: 'batched_reduce_size',
+    maxConcurrentShardRequests: 'max_concurrent_shard_requests',
+    preFilterShardSize: 'pre_filter_shard_size',
+    restTotalHitsAsInt: 'rest_total_hits_as_int',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function search (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -78,128 +160,20 @@ function buildSearch (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'analyzer',
-      'analyze_wildcard',
-      'default_operator',
-      'df',
-      'explain',
-      'stored_fields',
-      'docvalue_fields',
-      'from',
-      'ignore_unavailable',
-      'ignore_throttled',
-      'allow_no_indices',
-      'expand_wildcards',
-      'lenient',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'search_type',
-      'size',
-      'sort',
-      '_source',
-      '_source_excludes',
-      '_source_includes',
-      'terminate_after',
-      'stats',
-      'suggest_field',
-      'suggest_mode',
-      'suggest_size',
-      'suggest_text',
-      'timeout',
-      'track_scores',
-      'track_total_hits',
-      'allow_partial_search_results',
-      'typed_keys',
-      'version',
-      'request_cache',
-      'batched_reduce_size',
-      'max_concurrent_shard_requests',
-      'pre_filter_shard_size',
-      'rest_total_hits_as_int',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'analyzer',
-      'analyzeWildcard',
-      'defaultOperator',
-      'df',
-      'explain',
-      'storedFields',
-      'docvalueFields',
-      'from',
-      'ignoreUnavailable',
-      'ignoreThrottled',
-      'allowNoIndices',
-      'expandWildcards',
-      'lenient',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'searchType',
-      'size',
-      'sort',
-      '_source',
-      '_sourceExcludes',
-      '_sourceIncludes',
-      'terminateAfter',
-      'stats',
-      'suggestField',
-      'suggestMode',
-      'suggestSize',
-      'suggestText',
-      'timeout',
-      'trackScores',
-      'trackTotalHits',
-      'allowPartialSearchResults',
-      'typedKeys',
-      'version',
-      'requestCache',
-      'batchedReduceSize',
-      'maxConcurrentShardRequests',
-      'preFilterShardSize',
-      'restTotalHitsAsInt',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -209,10 +183,10 @@ function buildSearch (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['type']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + '_search'
-    } else if ((params['index']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_search'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_search'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_search'
     } else {
       path = '/' + '_search'
     }
@@ -221,7 +195,7 @@ function buildSearch (opts) {
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -230,10 +204,27 @@ function buildSearch (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

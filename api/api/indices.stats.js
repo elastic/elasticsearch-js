@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildIndicesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -16,6 +19,30 @@ function buildIndicesStats (opts) {
    * @param {list} types - A comma-separated list of document types for the `indexing` index metric
    * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
    */
+
+  const acceptedQuerystring = [
+    'completion_fields',
+    'fielddata_fields',
+    'fields',
+    'groups',
+    'level',
+    'types',
+    'include_segment_file_sizes',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    completionFields: 'completion_fields',
+    fielddataFields: 'fielddata_fields',
+    includeSegmentFileSizes: 'include_segment_file_sizes',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function indicesStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,62 +71,20 @@ function buildIndicesStats (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'completion_fields',
-      'fielddata_fields',
-      'fields',
-      'groups',
-      'level',
-      'types',
-      'include_segment_file_sizes',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'completionFields',
-      'fielddataFields',
-      'fields',
-      'groups',
-      'level',
-      'types',
-      'includeSegmentFileSizes',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, metric } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'metric'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -109,12 +94,12 @@ function buildIndicesStats (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['metric']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_stats' + '/' + encodeURIComponent(params['metric'])
-    } else if ((params['metric']) != null) {
-      path = '/' + '_stats' + '/' + encodeURIComponent(params['metric'])
-    } else if ((params['index']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_stats'
+    if ((index) != null && (metric) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/' + encodeURIComponent(metric)
+    } else if ((metric) != null) {
+      path = '/' + '_stats' + '/' + encodeURIComponent(metric)
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_stats'
     } else {
       path = '/' + '_stats'
     }
@@ -132,10 +117,27 @@ function buildIndicesStats (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

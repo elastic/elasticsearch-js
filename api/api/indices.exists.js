@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildIndicesExists (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -14,6 +17,31 @@ function buildIndicesExists (opts) {
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
    * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
    */
+
+  const acceptedQuerystring = [
+    'local',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'expand_wildcards',
+    'flat_settings',
+    'include_defaults',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    flatSettings: 'flat_settings',
+    includeDefaults: 'include_defaults',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function indicesExists (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -48,60 +76,20 @@ function buildIndicesExists (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'local',
-      'ignore_unavailable',
-      'allow_no_indices',
-      'expand_wildcards',
-      'flat_settings',
-      'include_defaults',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'local',
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'expandWildcards',
-      'flatSettings',
-      'includeDefaults',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
+
+    if (method == null) {
+      method = 'HEAD'
     }
 
     var ignore = options.ignore || null
@@ -111,7 +99,7 @@ function buildIndicesExists (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(params['index'])
+    path = '/' + encodeURIComponent(index)
 
     // build request object
     const request = {
@@ -126,10 +114,27 @@ function buildIndicesExists (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

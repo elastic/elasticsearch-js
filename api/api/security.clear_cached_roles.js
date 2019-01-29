@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildSecurityClearCachedRoles (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,6 +11,15 @@ function buildSecurityClearCachedRoles (opts) {
    *
    * @param {list} name - Role name
    */
+
+  const acceptedQuerystring = [
+
+  ]
+
+  const snakeCase = {
+
+  }
+
   return function securityClearCachedRoles (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,40 +54,20 @@ function buildSecurityClearCachedRoles (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, name } = params
+    var querystring = semicopy(params, ['method', 'body', 'name'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -85,7 +77,7 @@ function buildSecurityClearCachedRoles (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(params['name']) + '/' + '_clear_cache'
+    path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/' + '_clear_cache'
 
     // build request object
     const request = {
@@ -100,10 +92,27 @@ function buildSecurityClearCachedRoles (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

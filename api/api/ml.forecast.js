@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlForecast (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -10,6 +13,16 @@ function buildMlForecast (opts) {
    * @param {time} duration - The duration of the forecast
    * @param {time} expires_in - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
    */
+
+  const acceptedQuerystring = [
+    'duration',
+    'expires_in'
+  ]
+
+  const snakeCase = {
+    expiresIn: 'expires_in'
+  }
+
   return function mlForecast (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,42 +57,20 @@ function buildMlForecast (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'duration',
-      'expires_in'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'duration',
-      'expiresIn'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, jobId, job_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -89,7 +80,7 @@ function buildMlForecast (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + '_forecast'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
 
     // build request object
     const request = {
@@ -104,10 +95,27 @@ function buildMlForecast (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMlGetOverallBuckets (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -16,6 +19,25 @@ function buildMlGetOverallBuckets (opts) {
    * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
    * @param {object} body - Overall bucket selection details if not provided in URI
    */
+
+  const acceptedQuerystring = [
+    'top_n',
+    'bucket_span',
+    'overall_score',
+    'exclude_interim',
+    'start',
+    'end',
+    'allow_no_jobs'
+  ]
+
+  const snakeCase = {
+    topN: 'top_n',
+    bucketSpan: 'bucket_span',
+    overallScore: 'overall_score',
+    excludeInterim: 'exclude_interim',
+    allowNoJobs: 'allow_no_jobs'
+  }
+
   return function mlGetOverallBuckets (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,52 +66,20 @@ function buildMlGetOverallBuckets (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'top_n',
-      'bucket_span',
-      'overall_score',
-      'exclude_interim',
-      'start',
-      'end',
-      'allow_no_jobs'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'topN',
-      'bucketSpan',
-      'overallScore',
-      'excludeInterim',
-      'start',
-      'end',
-      'allowNoJobs'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, jobId, job_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -99,13 +89,13 @@ function buildMlGetOverallBuckets (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(params['job_id'] || params['jobId']) + '/' + 'results' + '/' + 'overall_buckets'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'overall_buckets'
 
     // build request object
     const request = {
       method,
       path,
-      body: params.body || '',
+      body: body || '',
       querystring
     }
 
@@ -114,10 +104,27 @@ function buildMlGetOverallBuckets (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildNodesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -18,6 +21,31 @@ function buildNodesStats (opts) {
    * @param {time} timeout - Explicit operation timeout
    * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
    */
+
+  const acceptedQuerystring = [
+    'completion_fields',
+    'fielddata_fields',
+    'fields',
+    'groups',
+    'level',
+    'types',
+    'timeout',
+    'include_segment_file_sizes',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    completionFields: 'completion_fields',
+    fielddataFields: 'fielddata_fields',
+    includeSegmentFileSizes: 'include_segment_file_sizes',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function nodesStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,64 +74,20 @@ function buildNodesStats (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'completion_fields',
-      'fielddata_fields',
-      'fields',
-      'groups',
-      'level',
-      'types',
-      'timeout',
-      'include_segment_file_sizes',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'completionFields',
-      'fielddataFields',
-      'fields',
-      'groups',
-      'level',
-      'types',
-      'timeout',
-      'includeSegmentFileSizes',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, metric, indexMetric, index_metric, nodeId, node_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'metric', 'indexMetric', 'index_metric', 'nodeId', 'node_id'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -113,16 +97,16 @@ function buildNodesStats (opts) {
 
     var path = ''
 
-    if ((params['node_id'] || params['nodeId']) != null && (params['metric']) != null && (params['index_metric'] || params['indexMetric']) != null) {
-      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats' + '/' + encodeURIComponent(params['metric']) + '/' + encodeURIComponent(params['index_metric'] || params['indexMetric'])
-    } else if ((params['node_id'] || params['nodeId']) != null && (params['metric']) != null) {
-      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats' + '/' + encodeURIComponent(params['metric'])
-    } else if ((params['metric']) != null && (params['index_metric'] || params['indexMetric']) != null) {
-      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(params['metric']) + '/' + encodeURIComponent(params['index_metric'] || params['indexMetric'])
-    } else if ((params['node_id'] || params['nodeId']) != null) {
-      path = '/' + '_nodes' + '/' + encodeURIComponent(params['node_id'] || params['nodeId']) + '/' + 'stats'
-    } else if ((params['metric']) != null) {
-      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(params['metric'])
+    if ((node_id || nodeId) != null && (metric) != null && (index_metric || indexMetric) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
+    } else if ((node_id || nodeId) != null && (metric) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric)
+    } else if ((metric) != null && (index_metric || indexMetric) != null) {
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
+    } else if ((node_id || nodeId) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats'
+    } else if ((metric) != null) {
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric)
     } else {
       path = '/' + '_nodes' + '/' + 'stats'
     }
@@ -140,10 +124,27 @@ function buildNodesStats (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

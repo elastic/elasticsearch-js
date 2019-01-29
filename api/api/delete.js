@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -17,6 +20,29 @@ function buildDelete (opts) {
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
+
+  const acceptedQuerystring = [
+    'wait_for_active_shards',
+    'parent',
+    'refresh',
+    'routing',
+    'timeout',
+    'version',
+    'version_type',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    waitForActiveShards: 'wait_for_active_shards',
+    versionType: 'version_type',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function _delete (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -65,62 +91,20 @@ function buildDelete (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'wait_for_active_shards',
-      'parent',
-      'refresh',
-      'routing',
-      'timeout',
-      'version',
-      'version_type',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'waitForActiveShards',
-      'parent',
-      'refresh',
-      'routing',
-      'timeout',
-      'version',
-      'versionType',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, id, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'index', 'type'])
+
+    if (method == null) {
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -130,10 +114,10 @@ function buildDelete (opts) {
 
     var path = ''
 
-    if ((params['index']) != null && (params['type']) != null && (params['id']) != null) {
-      path = '/' + encodeURIComponent(params['index']) + '/' + encodeURIComponent(params['type']) + '/' + encodeURIComponent(params['id'])
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else {
-      path = '/' + encodeURIComponent(params['index']) + '/' + '_doc' + '/' + encodeURIComponent(params['id'])
+      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     }
 
     // build request object
@@ -149,10 +133,27 @@ function buildDelete (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 
