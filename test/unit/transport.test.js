@@ -1535,6 +1535,45 @@ test('Warning header', t => {
     })
   })
 
+  t.test('Multiple warnings and external warning', t => {
+    t.plan(5)
+
+    const warn1 = '112 - "cache down" "Wed, 21 Oct 2015 07:28:00 GMT"'
+    const warn2 = '199 agent "Error message" "2015-01-01"'
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.setHeader('Warning', warn1 + ',' + warn2)
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        warnings: ['winter is coming']
+      }, (err, { warnings }) => {
+        t.error(err)
+        t.deepEqual(warnings, ['winter is coming', warn1, warn2])
+        warnings.forEach(w => t.type(w, 'string'))
+        server.stop()
+      })
+    })
+  })
+
   t.end()
 })
 
