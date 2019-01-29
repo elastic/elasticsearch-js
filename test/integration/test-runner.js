@@ -40,14 +40,14 @@ TestRunner.prototype.cleanup = function (q, done) {
   this.stash = new Map()
 
   q.add((q, done) => {
-    this.client.indices.delete({ index: '*', ignore: 404 }, err => {
+    this.client.indices.delete({ index: '*' }, { ignore: 404 }, err => {
       this.tap.error(err, 'should not error: indices.delete')
       done()
     })
   })
 
   q.add((q, done) => {
-    this.client.indices.deleteTemplate({ name: '*', ignore: 404 }, err => {
+    this.client.indices.deleteTemplate({ name: '*' }, { ignore: 404 }, err => {
       this.tap.error(err, 'should not error: indices.deleteTemplate')
       done()
     })
@@ -253,6 +253,7 @@ TestRunner.prototype.do = function (action, done) {
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
   const options = { ignore: cmd.params.ignore, headers: action.headers }
+  if (cmd.params.ignore) delete cmd.params.ignore
   api(cmd.params, options, (err, { body, warnings }) => {
     if (action.warnings && warnings === null) {
       this.tap.fail('We should get a warning header', action.warnings)
