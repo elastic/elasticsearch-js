@@ -258,9 +258,19 @@ function generate (spec, common) {
   }
 
   function genQueryBlacklist () {
+    const toCamelCase = str => {
+      return str[0] === '_'
+        ? '_' + str.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+        : str.replace(/_([a-z])/g, k => k[1].toUpperCase())
+    }
+
     const blacklist = [`'method'`, `'body'`, `'ignore'`, `'maxRetries'`, `'headers'`, `'requestTimeout'`, `'asStream'`]
     if (typeof parts === 'object' && parts !== null) {
-      Object.keys(parts).forEach(p => blacklist.push(`'${p}'`))
+      Object.keys(parts).forEach(p => {
+        const camelStr = toCamelCase(p)
+        if (camelStr !== p) blacklist.push(`'${camelStr}'`)
+        blacklist.push(`'${p}'`)
+      })
     }
     return blacklist
   }
