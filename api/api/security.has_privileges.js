@@ -48,7 +48,14 @@ function buildSecurityHasPrivileges (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'user'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'user'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

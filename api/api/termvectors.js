@@ -94,7 +94,16 @@ function buildTermvectors (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'type', 'id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'type',
+      'id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

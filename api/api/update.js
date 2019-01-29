@@ -106,7 +106,16 @@ function buildUpdate (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'id', 'index', 'type'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'id',
+      'index',
+      'type'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

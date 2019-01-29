@@ -67,7 +67,15 @@ function buildXpackRollupRollupSearch (opts) {
       'restTotalHitsAsInt'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'type'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'type'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

@@ -54,7 +54,14 @@ function buildMlDeleteDatafeed (opts) {
       'force'
     ]
     const queryBlacklist = [
-      'method', 'body', 'datafeed_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'datafeed_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

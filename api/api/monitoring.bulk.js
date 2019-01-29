@@ -55,7 +55,14 @@ function buildMonitoringBulk (opts) {
       'interval'
     ]
     const queryBlacklist = [
-      'method', 'body', 'type'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'type'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

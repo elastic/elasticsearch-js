@@ -51,7 +51,14 @@ function buildMlGetCalendars (opts) {
       'size'
     ]
     const queryBlacklist = [
-      'method', 'body', 'calendar_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'calendar_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

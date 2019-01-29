@@ -82,7 +82,14 @@ function buildCatFielddata (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'fields'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'fields'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

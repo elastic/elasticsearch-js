@@ -68,7 +68,15 @@ function buildMlPutCalendarJob (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'calendar_id', 'job_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'calendar_id',
+      'job_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

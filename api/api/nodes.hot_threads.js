@@ -73,7 +73,14 @@ function buildNodesHotThreads (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'node_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'node_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

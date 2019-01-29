@@ -54,7 +54,14 @@ function buildSecurityClearCachedRealms (opts) {
       'usernames'
     ]
     const queryBlacklist = [
-      'method', 'body', 'realms'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'realms'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

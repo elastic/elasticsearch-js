@@ -57,7 +57,14 @@ function buildScroll (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'scroll_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'scroll_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

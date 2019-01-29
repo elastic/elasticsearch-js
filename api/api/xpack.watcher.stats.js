@@ -51,7 +51,14 @@ function buildXpackWatcherStats (opts) {
       'emitStacktraces'
     ]
     const queryBlacklist = [
-      'method', 'body', 'metric'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'metric'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

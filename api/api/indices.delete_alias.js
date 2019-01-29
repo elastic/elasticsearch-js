@@ -82,7 +82,15 @@ function buildIndicesDeleteAlias (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'name'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'name'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

@@ -69,7 +69,15 @@ function buildSecurityDeletePrivileges (opts) {
       'refresh'
     ]
     const queryBlacklist = [
-      'method', 'body', 'application', 'name'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'application',
+      'name'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

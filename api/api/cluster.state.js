@@ -88,7 +88,15 @@ function buildClusterState (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'metric'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'metric'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

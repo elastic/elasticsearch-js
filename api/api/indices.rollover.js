@@ -77,7 +77,15 @@ function buildIndicesRollover (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'alias', 'new_index'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'alias',
+      'new_index'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

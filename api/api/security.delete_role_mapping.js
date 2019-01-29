@@ -54,7 +54,14 @@ function buildSecurityDeleteRoleMapping (opts) {
       'refresh'
     ]
     const queryBlacklist = [
-      'method', 'body', 'name'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'name'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

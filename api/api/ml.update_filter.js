@@ -54,7 +54,14 @@ function buildMlUpdateFilter (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'filter_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'filter_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

@@ -61,7 +61,14 @@ function buildSnapshotGetRepository (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'repository'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'repository'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

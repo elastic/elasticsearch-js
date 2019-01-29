@@ -59,7 +59,15 @@ function buildNodesUsage (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'metric', 'node_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'metric',
+      'node_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

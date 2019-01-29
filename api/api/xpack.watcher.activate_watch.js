@@ -53,7 +53,14 @@ function buildXpackWatcherActivateWatch (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'watch_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'watch_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

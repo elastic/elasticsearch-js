@@ -54,7 +54,14 @@ function buildSecurityDeleteUser (opts) {
       'refresh'
     ]
     const queryBlacklist = [
-      'method', 'body', 'username'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'username'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

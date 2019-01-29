@@ -78,7 +78,16 @@ function buildIndicesGetFieldMapping (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'type', 'fields'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'type',
+      'fields'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

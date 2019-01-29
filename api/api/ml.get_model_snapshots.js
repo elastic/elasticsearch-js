@@ -73,7 +73,15 @@ function buildMlGetModelSnapshots (opts) {
       'desc'
     ]
     const queryBlacklist = [
-      'method', 'body', 'job_id', 'snapshot_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'job_id',
+      'snapshot_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

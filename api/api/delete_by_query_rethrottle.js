@@ -70,7 +70,14 @@ function buildDeleteByQueryRethrottle (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'task_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'task_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

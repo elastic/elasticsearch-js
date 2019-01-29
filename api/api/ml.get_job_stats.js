@@ -48,7 +48,14 @@ function buildMlGetJobStats (opts) {
       'allowNoJobs'
     ]
     const queryBlacklist = [
-      'method', 'body', 'job_id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'job_id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

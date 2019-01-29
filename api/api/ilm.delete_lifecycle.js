@@ -47,7 +47,14 @@ function buildIlmDeleteLifecycle (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'policy'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'policy'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

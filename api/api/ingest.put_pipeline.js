@@ -68,7 +68,14 @@ function buildIngestPutPipeline (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'id'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'id'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

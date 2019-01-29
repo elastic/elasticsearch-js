@@ -55,7 +55,16 @@ function buildMlOpenJob (opts) {
 
     ]
     const queryBlacklist = [
-      'method', 'body', 'job_id', 'ignore_downtime', 'timeout'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'job_id',
+      'ignore_downtime',
+      'timeout'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

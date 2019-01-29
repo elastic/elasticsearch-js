@@ -80,7 +80,15 @@ function buildPutScript (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'id', 'context'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'id',
+      'context'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

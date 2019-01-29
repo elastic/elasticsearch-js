@@ -82,7 +82,15 @@ function buildMlGetBuckets (opts) {
       'desc'
     ]
     const queryBlacklist = [
-      'method', 'body', 'job_id', 'timestamp'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'job_id',
+      'timestamp'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

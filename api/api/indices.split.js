@@ -83,7 +83,15 @@ function buildIndicesSplit (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'index', 'target'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'index',
+      'target'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {

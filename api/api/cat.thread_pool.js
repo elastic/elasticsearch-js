@@ -79,7 +79,14 @@ function buildCatThreadPool (opts) {
       'filterPath'
     ]
     const queryBlacklist = [
-      'method', 'body', 'thread_pool_patterns'
+      'method',
+      'body',
+      'ignore',
+      'maxRetries',
+      'headers',
+      'requestTimeout',
+      'asStream',
+      'thread_pool_patterns'
     ]
 
     for (var i = 0, len = keys.length; i < len; i++) {
