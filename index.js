@@ -87,6 +87,37 @@ class Client extends EventEmitter {
     })
   }
 
+  extend (name, fn) {
+    var [namespace, method] = name.split('.')
+    if (method == null) {
+      method = namespace
+      namespace = null
+    }
+
+    if (namespace != null) {
+      if (this[namespace] != null && this[namespace][method] != null) {
+        throw new Error(`The method "${method}" already exists on namespace "${namespace}"`)
+      }
+
+      this[namespace] = this[namespace] || {}
+      this[namespace][method] = fn({
+        makeRequest: this.transport.request.bind(this.transport),
+        result: { body: null, statusCode: null, headers: null, warnings: null },
+        ConfigurationError
+      })
+    } else {
+      if (this[method] != null) {
+        throw new Error(`The method "${method}" already exists`)
+      }
+
+      this[method] = fn({
+        makeRequest: this.transport.request.bind(this.transport),
+        result: { body: null, statusCode: null, headers: null, warnings: null },
+        ConfigurationError
+      })
+    }
+  }
+
   close (callback) {
     if (callback == null) {
       return new Promise((resolve, reject) => {
