@@ -249,3 +249,7 @@ test('Pass unknown parameters as query parameters (and get a warning)', t => {
     })
   })
 })
+
+if (Number(process.version.split('.')[0].slice(1)) >= 8) {
+  require('./api-async')(test)
+}
