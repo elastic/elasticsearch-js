@@ -31,7 +31,8 @@ const noPathValidation = [
 const ndjsonApi = [
   'bulk',
   'msearch',
-  'msearch_template'
+  'msearch_template',
+  'monitoring.bulk'
 ]
 
 function generate (spec, common) {
