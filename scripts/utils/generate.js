@@ -349,10 +349,16 @@ function generate (spec, common) {
 }
 
 function safeWords (str) {
-  if (str === 'delete') {
-    return '_delete'
+  switch (str) {
+    // delete is a reserved word
+    case 'delete':
+      return '_delete'
+    // index is also a parameter
+    case 'index':
+      return '_index'
+    default:
+      return str
   }
-  return str
 }
 
 function generatePickMethod (methods) {
