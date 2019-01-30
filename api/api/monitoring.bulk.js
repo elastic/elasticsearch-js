@@ -89,7 +89,7 @@ function buildMonitoringBulk (opts) {
     const request = {
       method,
       path,
-      body: body || '',
+      bulkBody: body,
       querystring
     }
 
