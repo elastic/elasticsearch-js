@@ -49,7 +49,7 @@ function buildIndex (opts) {
     filterPath: 'filter_path'
   }
 
-  return function index (params, options, callback) {
+  return function _index (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -63,7 +63,7 @@ function buildIndex (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        index(params, options, (err, body) => {
+        _index(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
