@@ -2,7 +2,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool } = require('../../index')
+const { Client, ConnectionPool, Transport } = require('../../index')
 const { buildServer } = require('../utils')
 
 test('Configure host', t => {
@@ -303,4 +303,196 @@ test('Client close (promise)', t => {
 
   client.close()
     .then(() => t.pass('Closed'))
+})
+
+test('Extend client APIs', t => {
+  t.test('Extend a single method', t => {
+    t.plan(5)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Create a namespace and a method', t => {
+    t.plan(5)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('namespace.method', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.namespace.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Create a namespace and multiple methods', t => {
+    t.plan(10)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('namespace.method1', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.extend('namespace.method2', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.namespace.method1(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+
+    client.namespace.method2(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Cannot override an existing method', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('index', () => {})
+      t.fail('Should throw')
+    } catch (err) {
+      t.is(err.message, 'The method "index" already exists')
+    }
+  })
+
+  t.test('Cannot override an existing namespace and method', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('indices.delete', () => {})
+      t.fail('Should throw')
+    } catch (err) {
+      t.is(err.message, 'The method "delete" already exists on namespace "indices"')
+    }
+  })
+
+  t.test('Should call the transport.request method', t => {
+    t.plan(2)
+
+    class MyTransport extends Transport {
+      request (params, options) {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    }
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Transport: MyTransport
+    })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options) => makeRequest(params, options)
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Should support callbacks', t => {
+    t.plan(2)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options, callback) => {
+        callback(null, { hello: 'world' })
+      }
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' },
+      (err, res) => {
+        t.error(err)
+        t.deepEqual(res, { hello: 'world' })
+      }
+    )
+  })
+
+  t.test('Should support promises', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options) => {
+        return new Promise((resolve, reject) => {
+          resolve({ hello: 'world' })
+        })
+      }
+    })
+
+    client
+      .method(
+        { you_know: 'for search' },
+        { winter: 'is coming' }
+      )
+      .then(res => t.deepEqual(res, { hello: 'world' }))
+      .catch(err => t.fail(err))
+  })
+
+  t.end()
 })
