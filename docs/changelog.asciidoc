@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 15.4.0 (Feb 6 2019)
+  * apiVersion `"6.6"` is now the default
+
 === 15.3.1 (Jan 23 2019)
   * Fixed an issue in node 10 where multi-byte characters in the URL would trigger and uncaught error https://github.com/elastic/elasticsearch-js/pull/756[#756]
 
