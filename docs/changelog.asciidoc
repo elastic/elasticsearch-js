@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 15.4.1 (Feb 6 2019)
+  * Drop support for old versions in the 5.x line, only 5.6 is maintained
+
 === 15.4.0 (Feb 6 2019)
   * apiVersion `"6.6"` is now the default
 
