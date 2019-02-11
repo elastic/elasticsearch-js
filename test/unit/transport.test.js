@@ -2,6 +2,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
+const { createGunzip } = require('zlib')
 const intoStream = require('into-stream')
 const {
   buildServer,
@@ -13,7 +14,8 @@ const {
   DeserializationError,
   TimeoutError,
   ResponseError,
-  ConnectionError
+  ConnectionError,
+  ConfigurationError
 } = require('../../lib/errors')
 
 const ConnectionPool = require('../../lib/ConnectionPool')
@@ -571,6 +573,51 @@ test('Custom retry mechanism', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Should not retry on 429', t => {
+  t.plan(3)
+
+  var count = 0
+  function handler (req, res) {
+    t.strictEqual(count++, 0)
+    res.statusCode = 429
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 5,
+      requestTimeout: 250,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, result) => {
+      t.ok(err)
+      t.strictEqual(err.statusCode, 429)
       server.stop()
     })
   })
@@ -1620,4 +1667,122 @@ test('asStream set to true', t => {
       })
     })
   })
+})
+
+test('Compress request', t => {
+  t.test('gzip as request option', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, {
+        compression: 'gzip'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('gzip as transport option', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        compression: 'gzip'
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  test('Should throw on invalid compression value', t => {
+    t.plan(2)
+
+    try {
+      new Transport({ // eslint-disable-line
+        emit: () => {},
+        connectionPool: new ConnectionPool({ Connection }),
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        compression: 'deflate'
+      })
+      t.fail('Should throw')
+    } catch (err) {
+      t.true(err instanceof ConfigurationError)
+      t.is(err.message, 'Invalid compression: \'deflate\'')
+    }
+  })
+
+  t.end()
 })
