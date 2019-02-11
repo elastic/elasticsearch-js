@@ -12,6 +12,7 @@ interface TransportOptions {
   maxRetries: number;
   requestTimeout: number | string;
   suggestCompression: boolean;
+  compression?: 'gzip';
   sniffInterval: number;
   sniffOnConnectionFault: boolean;
   sniffEndpoint: string;
@@ -63,6 +64,7 @@ export default class Transport {
   maxRetries: number;
   requestTimeout: number;
   suggestCompression: boolean;
+  compression: 'gzip' | false;
   sniffInterval: number;
   sniffOnConnectionFault: boolean;
   sniffEndpoint: string;

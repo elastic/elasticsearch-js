@@ -33,9 +33,9 @@ interface ClientOptions {
   sniffOnStart?: boolean;
   sniffEndpoint?: string;
   sniffOnConnectionFault?: boolean;
-  resurrectStrategy?: string;
-  randomizeHost?: boolean;
+  resurrectStrategy?: 'ping' | 'optimistic' | 'none';
   suggestCompression?: boolean;
+  compression?: 'gzip';
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
   nodeFilter?: nodeFilterFn;
@@ -47,6 +47,8 @@ declare class Client extends EventEmitter {
   transport: Transport;
   serializer: Serializer
   constructor(opts?: ClientOptions);
+  // TODO: update fn declaration
+  extends(method: string, fn: any): void;
   close(callback?: Function): Promise<void> | void;
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {

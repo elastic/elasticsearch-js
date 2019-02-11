@@ -15,7 +15,6 @@ interface ConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
   pingTimeout?: number;
-  randomizeHost?: boolean;
   Connection: typeof Connection;
   resurrectStrategy?: string;
   nodeFilter?: nodeFilterFn;
@@ -46,7 +45,6 @@ export default class ConnectionPool {
   resurrectTimeout: number;
   resurrectTimeoutCutoff: number;
   pingTimeout: number;
-  randomizeHost: boolean;
   nodeFilter: nodeFilterFn;
   nodeSelector: nodeSelectorFn;
   Connection: typeof Connection;
