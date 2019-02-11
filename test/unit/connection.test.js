@@ -591,3 +591,63 @@ test('Should disallow two-byte characters in URL path', t => {
     )
   })
 })
+
+test('setRole', t => {
+  t.test('Update the value of a role', t => {
+    t.plan(2)
+
+    const connection = new Connection({
+      url: new URL('http://localhost:9200')
+    })
+
+    t.deepEqual(connection.roles, {
+      master: true,
+      data: true,
+      ingest: true,
+      ml: false
+    })
+
+    connection.setRole('master', false)
+
+    t.deepEqual(connection.roles, {
+      master: false,
+      data: true,
+      ingest: true,
+      ml: false
+    })
+  })
+
+  t.test('Invalid role', t => {
+    t.plan(2)
+
+    const connection = new Connection({
+      url: new URL('http://localhost:9200')
+    })
+
+    try {
+      connection.setRole('car', true)
+      t.fail('Shoud throw')
+    } catch (err) {
+      t.true(err instanceof ConfigurationError)
+      t.is(err.message, 'Unsupported role: \'car\'')
+    }
+  })
+
+  t.test('Invalid value', t => {
+    t.plan(2)
+
+    const connection = new Connection({
+      url: new URL('http://localhost:9200')
+    })
+
+    try {
+      connection.setRole('master', 1)
+      t.fail('Shoud throw')
+    } catch (err) {
+      t.true(err instanceof ConfigurationError)
+      t.is(err.message, 'enabled should be a boolean')
+    }
+  })
+
+  t.end()
+})

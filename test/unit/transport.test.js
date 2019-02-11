@@ -377,6 +377,32 @@ test('SerializationError', t => {
   })
 })
 
+test('SerializationError (bulk)', t => {
+  t.plan(1)
+  const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const bulkBody = { hello: 'world' }
+  bulkBody.o = bulkBody
+  transport.request({
+    method: 'POST',
+    path: '/hello',
+    bulkBody
+  }, (err, { body }) => {
+    t.ok(err instanceof SerializationError)
+  })
+})
+
 test('DeserializationError', t => {
   t.plan(1)
   function handler (req, res) {

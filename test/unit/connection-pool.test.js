@@ -490,3 +490,80 @@ test('API', t => {
 
   t.end()
 })
+
+test('Node selector', t => {
+  t.test('round-robin', t => {
+    t.plan(1)
+    const pool = new ConnectionPool({ Connection, nodeSelector: 'round-robin' })
+    pool.addConnection('http://localhost:9200/')
+    t.true(pool.getConnection() instanceof Connection)
+  })
+
+  t.test('random', t => {
+    t.plan(1)
+    const pool = new ConnectionPool({ Connection, nodeSelector: 'random' })
+    pool.addConnection('http://localhost:9200/')
+    t.true(pool.getConnection() instanceof Connection)
+  })
+
+  t.test('custom function', t => {
+    t.plan(2)
+    const nodeSelector = connections => {
+      t.ok('called')
+      return connections[0]
+    }
+    const pool = new ConnectionPool({ Connection, nodeSelector })
+    pool.addConnection('http://localhost:9200/')
+    t.true(pool.getConnection() instanceof Connection)
+  })
+
+  t.end()
+})
+
+test('Node filter', t => {
+  t.test('default', t => {
+    t.plan(1)
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection({ url: new URL('http://localhost:9200/') })
+    t.true(pool.getConnection() instanceof Connection)
+  })
+
+  t.test('Should filter master only nodes', t => {
+    t.plan(1)
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection({
+      url: new URL('http://localhost:9200/'),
+      roles: {
+        master: true,
+        data: false,
+        ingest: false,
+        ml: false
+      }
+    })
+    t.strictEqual(pool.getConnection(), null)
+  })
+
+  t.test('custom', t => {
+    t.plan(2)
+    const nodeFilter = node => {
+      t.ok('called')
+      return true
+    }
+    const pool = new ConnectionPool({ Connection, nodeFilter })
+    pool.addConnection({ url: new URL('http://localhost:9200/') })
+    t.true(pool.getConnection() instanceof Connection)
+  })
+
+  t.test('custom (filter)', t => {
+    t.plan(2)
+    const nodeFilter = node => {
+      t.ok('called')
+      return false
+    }
+    const pool = new ConnectionPool({ Connection, nodeFilter })
+    pool.addConnection({ url: new URL('http://localhost:9200/') })
+    t.strictEqual(pool.getConnection(), null)
+  })
+
+  t.end()
+})
