@@ -37,8 +37,8 @@ class Client extends EventEmitter {
       sniffEndpoint: '_nodes/_all/http',
       sniffOnConnectionFault: false,
       resurrectStrategy: 'ping',
-      randomizeHost: true,
       suggestCompression: false,
+      compression: false,
       ssl: null,
       agent: null,
       nodeFilter: null,
@@ -50,7 +50,6 @@ class Client extends EventEmitter {
     this.connectionPool = new options.ConnectionPool({
       pingTimeout: options.pingTimeout,
       resurrectStrategy: options.resurrectStrategy,
-      randomizeHost: options.randomizeHost,
       ssl: options.ssl,
       agent: options.agent,
       nodeFilter: options.nodeFilter,
@@ -73,7 +72,8 @@ class Client extends EventEmitter {
       sniffOnStart: options.sniffOnStart,
       sniffOnConnectionFault: options.sniffOnConnectionFault,
       sniffEndpoint: options.sniffEndpoint,
-      suggestCompression: options.suggestCompression
+      suggestCompression: options.suggestCompression,
+      compression: options.compression
     })
 
     const apis = buildApi({
