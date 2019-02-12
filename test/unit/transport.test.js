@@ -1789,7 +1789,54 @@ test('Compress request', t => {
     })
   })
 
-  test('Should throw on invalid compression value', t => {
+  t.test('gzip stream body', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: intoStream(JSON.stringify({ you_know: 'for search' }))
+      }, {
+        compression: 'gzip'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Should throw on invalid compression value', t => {
     t.plan(2)
 
     try {
