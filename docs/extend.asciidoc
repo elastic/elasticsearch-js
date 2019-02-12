@@ -1,0 +1,63 @@
+= Extend the client
+
+Sometimes you need to reuse the same logic, or you want to build a custom API to allow you simplify your code. +
+The easiest way to achieve that is by extending the client.
+
+NOTE: You can't override existing methods.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+client.extend('supersearch', ({ makeRequest, ConfigurationError }) => {
+    return function supersearch (params, options) {
+        const {
+            body,
+            index,
+            method,
+            ...querystring
+        } = params
+
+        // params validation
+        if (body == null) {
+            throw new ConfigurationError('Missing required parameter: body')
+        }
+
+        // build request object
+        const request = {
+            method: method || 'POST',
+            path: `/${encodeURIComponent(index)}/_search_`,
+            body,
+            querystring
+        }
+
+        // build request options object
+        const requestOptions = {
+            ignore: options.ignore || null,
+            requestTimeout: options.requestTimeout || null,
+            maxRetries: options.maxRetries || null,
+            asStream: options.asStream || false,
+            headers: options.headers || null
+        }
+
+        return makeRequest(request, requestOptions)
+    }
+})
+
+client.extend('utility.index', ({ makeRequest }) => {
+    return function _index (params, options) {
+        // your code
+    }
+})
+
+client.extend('utility.delete', ({ makeRequest }) => {
+    return function _delete (params, options) {
+        // your code
+    }
+})
+
+client.supersearch(...)
+client.utility.index(...)
+client.utility.delete(...)
+----
