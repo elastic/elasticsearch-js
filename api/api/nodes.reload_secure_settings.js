@@ -98,6 +98,7 @@ function buildNodesReloadSecureSettings (opts) {
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
       headers: options.headers || null,
+      compression: options.compression || false,
       warnings
     }
 
