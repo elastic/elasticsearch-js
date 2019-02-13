@@ -1,5 +1,6 @@
 version: '3.2'
 services:
+
   client:
     image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
     build:
@@ -16,15 +17,16 @@ services:
       - /usr/src/app/node_modules
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     depends_on:
-      - elasticsearch
-  elasticsearch:
+      - elasticsearch-oss
+
+  elasticsearch-oss:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-alpha2}
     volumes:
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     environment:
       - path.repo=/tmp
       - "repositories.url.allowed_urls=http://*"
@@ -33,7 +35,38 @@ services:
         # - "discovery.zen.ping.unicast.hosts=elasticsearch"
       - "discovery.type=single-node"
       - "http.max_content_length=5mb"
+
+  elasticsearch-platinum:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-alpha2}
+    networks:
+      - esnet-platinum
+    environment:
+      # - path.repo=/tmp
+      # - "repositories.url.allowed_urls=http://*"
+      # - node.attr.testattr=test
+      # - bootstrap.memory_lock=false
+      # - "discovery.type=single-node"
+      # - "http.max_content_length=5mb"
+      - "ELASTIC_PASSWORD=changeme"
+      - "xpack.security.enabled=true"
+      - "xpack.license.self_generated.type=trial"
+      - "xpack.security.http.ssl.enabled=true"
+      - "xpack.security.http.ssl.verification_mode=certificate"
+      - "xpack.security.http.ssl.key=certs/testnode.key"
+      - "xpack.security.http.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.http.ssl.certificate_authorities=certs/ca.crt"
+      - "xpack.security.transport.ssl.enabled=true"
+      - "xpack.security.transport.ssl.key=certs/testnode.key"
+      - "xpack.security.transport.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.transport.ssl.certificate_authorities=certs/ca.crt"
+    volumes:
+      - "./certs/testnode.crt:/usr/local/share/elasticearch/config/certs/testnode.crt"
+      - "./certs/testnode.key:/usr/local/share/elasticearch/config/certs/testnode.key"
+      - "./certs/ca.crt:/usr/local/share/elasticearch/config/certs/ca.crt"
+
 networks:
-  esnet:
+  # we need two networks otherwise the two ES instances will join each other
+  esnet-oss:
+  esnet-platinum:
 volumes:
   esvol:
