@@ -14,13 +14,43 @@ Every breaking change was carefully weighted, and every breaking change has soli
 
 * There is no more an integrated logger. The client now is an event emitter that emits the following events: `request`, `response`, and `error`.
 
-* The code is no longer shipped with all the versions of the API, but only the same major version of the package.
+* The code is no longer shipped with all the versions of the API, but only the same major version of the package, this means that if you are using Elasticsearch `v6`, you will be required to install `@elasticelasticsearc@6`, and so on.
 
 * The internals are completely different, so if you used to tweak a lot with them, you will need to refactor your code, while the surface API should be almost the same.
 
 * No more browser support, for that will be built another module, `@elastic/elasticsearch-browser`. This module is intended for Node.js only.
 
-* The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, and `warnings`, for both callback and promises. With the `asStream` parameter you can get the original HTTP response stream if the case you need to pipe it to another response for a forwarding use case.
+* The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, and `warnings`, for both callback and promises. +
+With the `asStream` parameter you can get the original HTTP response stream if the case you need to pipe it to another response for a forwarding use case.
+[source,js]
+----
+// before
+const body = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, body, statusCode, headers) => {
+  if (err) console.log(err)
+})
+
+// after
+const { body, statusCode, headers, warnings } = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, { body, statusCode, headers, warnings }) => {
+  if (err) console.log(err)
+})
+----
+
 
 * Errors: there is no longer a custom error class for every HTTP status code (such as `BadRequest` or `NotFound`), but there is a single `ResponseError` instead.
 All the error classes have been renamed, and now all are suffixed with `Error` at the end. +
@@ -37,9 +67,97 @@ Errors that has been renamed:
 ** `Serialization` => `SerializationError`
 ** `Serialization` => `DeserializationError`
 
-* You must specify the port number in the configuration
+* You must specify the port number in the configuration. In the previous version you can specifiy the host and port in a variety of ways, with the new client there is only one via the `node` parameter.
 
 * The plugins option has been removed, if you want to extend the client now you should use the client.extend API.
-There is a clear distinction between the API related parameters and the client related configurations, the parameters `ignore`, `headers`, `requestTimeout` and `maxRetries` are no longer part of the API object, and you should specify them in a second option object.
+[source,js]
+----
+// before
+const { Client } = require('elasticsearch')
+const client = new Client({ plugins: [...] })
+
+// after
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ ... })
+client.extend(...)
+----
+
+* There is a clear distinction between the API related parameters and the client related configurations, the parameters `ignore`, `headers`, `requestTimeout` and `maxRetries` are no longer part of the API object, and you should specify them in a second option object.
+[source,js]
+----
+// before
+const body = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' },
+  ignore: [404]
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' },
+  ignore: [404]
+}, (err, body, statusCode, headers) => {
+  if (err) console.log(err)
+})
+
+// after
+const { body, statusCode, headers, warnings } = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  ignore: [404]
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  ignore: [404]
+}, (err, { body, statusCode, headers, warnings }) => {
+  if (err) console.log(err)
+})
+----
 
 * The `transport.request` method will no longer accept the `query` key, but the `querystring` key instead (which can be a string or an object), furthermore, you need to send a bulk-like request, instead of the `body` key, you should use the `bulkBody` key. Also in this method, the client specific parameters should be passed as a second object.
+[source,js]
+----
+// before
+const body = await client.transport.request({
+  method: 'GET',
+  path: '/my-index/_search',
+  body: { foo: 'bar' },
+  query: { bar: 'baz' }
+  ignore: [404]
+})
+
+client.transport.request({
+  method: 'GET',
+  path: '/my-index/_search',
+  body: { foo: 'bar' },
+  query: { bar: 'baz' }
+  ignore: [404]
+}, (err, body, statusCode, headers) => {
+  if (err) console.log(err)
+})
+
+// after
+const { body, statusCode, headers, warnings } = await client.transport.request({
+  method: 'GET',
+  path: '/my-index/_search',
+  body: { foo: 'bar' },
+  querystring: { bar: 'baz' }
+}, {
+  ignore: [404]
+})
+
+client.transport.request({
+  method: 'GET',
+  path: '/my-index/_search',
+  body: { foo: 'bar' },
+  querystring: { bar: 'baz' }
+}, {
+  ignore: [404]
+}, (err, { body, statusCode, headers, warnings }) => {
+  if (err) console.log(err)
+})
+----

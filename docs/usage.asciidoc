@@ -162,7 +162,7 @@ a|Emitted before to send the actual request to Elasticsearch.
 [source,js]
 ----
 client.on('request', (err, meta) => {
-    console.log(err, meta)
+  console.log(err, meta)
 })
 ----
 `meta` is an object that contains the following informations:
@@ -178,7 +178,7 @@ a|Emitted before to send the actual request to Elasticsearch.
 [source,js]
 ----
 client.on('response', (err, meta) => {
-    console.log(err, meta)
+  console.log(err, meta)
 })
 ----
 `meta` is an object that contains the following informations:
@@ -194,7 +194,7 @@ a|Emitted before to send the actual request to Elasticsearch.
 [source,js]
 ----
 client.on('sniff', (err, meta) => {
-    console.log(err, meta)
+  console.log(err, meta)
 })
 ----
 `meta` is an object that contains the following informations:
@@ -207,7 +207,7 @@ a|Emitted before to send the actual request to Elasticsearch.
 [source,js]
 ----
 client.on('resurrect', (err, meta) => {
-    console.log(err, meta)
+  console.log(err, meta)
 })
 ----
 `meta` is an object that contains the following informations:
@@ -227,10 +227,10 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
 client.on('response', (err, meta) => {
-    if (err) {
-        logger.error(err)
-    } else {
-        logger.info(meta)
-    }
+  if (err) {
+    logger.error(err)
+  } else {
+    logger.info(meta)
+  }
 })
 ----

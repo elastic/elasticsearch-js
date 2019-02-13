@@ -7,10 +7,10 @@ The client is designed to be easily configured as you see fit for your needs, fo
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({
-    node: 'http://localhost:9200'
-    maxRetries: 5,
-    requestTimeout: 60000,
-    sniffOnStart: true
+  node: 'http://localhost:9200'
+  maxRetries: 5,
+  requestTimeout: 60000,
+  sniffOnStart: true
 })
 ----
 
@@ -28,17 +28,17 @@ Or it can be an object (or an array of objects) that represents the node
 [source,js]
 ----
 node: {
-    url: new URL('http://localhost:9200'),
-    ssl: 'ssl options',
-    agent: 'http agent options',
-    id: 'custom node id',
-    headers: { 'custom': 'headers' }
-    roles: {
-        master: true,
-        data: true,
-        ingest: true,
-        ml: false
-    }
+  url: new URL('http://localhost:9200'),
+  ssl: 'ssl options',
+  agent: 'http agent options',
+  id: 'custom node id',
+  headers: { 'custom': 'headers' }
+  roles: {
+    master: true,
+    data: true,
+    ingest: true,
+    ml: false
+  }
 }
 ----
 
@@ -138,9 +138,9 @@ This class is responsible to perform the request to Elasticsearch and handling e
 const { Client, Transport } = require('@elastic/elasticsearch')
 
 class MyTransport extends Transport {
-    request (params, options, callback) {
-        // your code
-    }
+  request (params, options, callback) {
+    // your code
+  }
 }
 
 const client = new Client({
@@ -152,10 +152,10 @@ Sometimes you just need to inject a little snippet of your code and then continu
 [source,js]
 ----
 class MyTransport extends Transport {
-    request (params, options, callback) {
-        // your code
-        super.request(params, options, callback)
-    }
+  request (params, options, callback) {
+    // your code
+    super.request(params, options, callback)
+  }
 }
 ----
 
@@ -167,10 +167,10 @@ Moreover, the connection pool will handle the resurrection strategies and the up
 const { Client, ConnectionPool } = require('@elastic/elasticsearch')
 
 class MyConnectionPool extends ConnectionPool {
-    markAlive (connection) {
-        // your code
-        super.markAlive(connection)
-    }
+  markAlive (connection) {
+    // your code
+    super.markAlive(connection)
+  }
 }
 
 const client = new Client({
@@ -185,13 +185,13 @@ This class represents a single Node, it holds every information we have on the n
 const { Client, Connection } = require('@elastic/elasticsearch')
 
 class MyConnection extends Connection {
-    request (params, callback) {
-        // your code
-    }
+  request (params, callback) {
+    // your code
+  }
 }
 
 const client = new Client({
-    Connection: MyConnection
+  Connection: MyConnection
 })
 ----
 
@@ -208,12 +208,12 @@ This class is responsible of the serialization of every request, it offers the f
 const { Client, Serializer } = require('@elastic/elasticsearch')
 
 class MySerializer extends Serializer {
-    serialize (object) {
-        // your code
-    }
+  serialize (object) {
+    // your code
+  }
 }
 
 const client = new Client({
-    Serializer: MySerializer
+  Serializer: MySerializer
 })
 ----
