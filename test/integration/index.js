@@ -6,7 +6,6 @@ const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const Git = require('simple-git')
 const ora = require('ora')
-const minimist = require('minimist')
 const tap = require('tap')
 const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
@@ -14,7 +13,7 @@ const TestRunner = require('./test-runner')
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
-// const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
@@ -23,6 +22,16 @@ const customSkips = [
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml'
 ]
+const platinumBlackList = {
+  // file path: test name
+  'cat.aliases/10_basic.yml': 'Empty cluster',
+  'index/10_with_id.yml': 'Index with ID',
+  'indices.get_alias/10_basic.yml': 'Get alias against closed indices',
+  'indices.get_alias/20_empty.yml': 'Check empty aliases when getting all aliases via /_alias',
+  // TODO: investigate why this is failing
+  'license/20_put_license.yml': '*',
+  'xpack/15_basic.yml': '*'
+}
 
 function Runner (opts) {
   if (!(this instanceof Runner)) {
@@ -39,7 +48,7 @@ function Runner (opts) {
 /**
  * Runs the test suite
  */
-Runner.prototype.start = function () {
+Runner.prototype.start = function (opts) {
   const parse = this.parse.bind(this)
   const client = this.client
 
@@ -63,22 +72,15 @@ Runner.prototype.start = function () {
 
     // Set the repository to the given sha and run the test suite
     this.withSHA(sha, () => {
-      this.log.succeed('Done!')
+      this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
       runTest.call(this, version)
     })
-
-    // client.xpack.license.postStartTrial({ acknowledge: true }, (err, { body }) => {
-    //   if (err) {
-    //     this.log.fail(err.message)
-    //     return
-    //   }
-    // })
   })
 
   function runTest (version) {
     const files = []
       .concat(getAllFiles(yamlFolder))
-      // .concat(getAllFiles(xPackYamlFolder))
+      .concat(opts.isPlatinum ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
 
     files.forEach(runTestFile.bind(this))
@@ -111,6 +113,18 @@ Runner.prototype.start = function () {
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
+          // should skip the test inside `platinumBlackList`
+          // if we are testing the platinum apis
+          if (opts.isPlatinum) {
+            const list = Object.keys(platinumBlackList)
+            for (i = 0; i < list.length; i++) {
+              if (file.endsWith(list[i]) && (name === platinumBlackList[list[i]] || platinumBlackList[list[i]] === '*')) {
+                const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
+                tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
+                return
+              }
+            }
+          }
           // create a subtest for the specific folder + test file + test name
           tap1.test(name, { jobs: 1, bail: this.bailout }, tap2 => {
             const testRunner = TestRunner({ client, version, tap: tap2 })
@@ -245,19 +259,13 @@ Runner.prototype.createFolder = function (name) {
 }
 
 if (require.main === module) {
-  const opts = minimist(process.argv.slice(2), {
-    string: ['node', 'version'],
-    boolean: ['bailout'],
-    default: {
-      // node: 'http://elastic:passw0rd@localhost:9200',
-      node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
-      version: '7.0',
-      bailout: false
-    }
-  })
-
+  const url = process.env.TEST_ES_SERVER || 'http://localhost:9200'
+  const opts = {
+    node: url,
+    isPlatinum: url.indexOf('@') > -1
+  }
   const runner = Runner(opts)
-  runner.start()
+  runner.start(opts)
 }
 
 const getAllFiles = dir =>
