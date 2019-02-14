@@ -1,0 +1,51 @@
+= MSearch
+
+The multi search API allows to execute several search requests within the same API. 
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  await client.bulk({
+    refresh: true,
+    body: [
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Ned Stark',
+        quote: 'Winter is coming.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Daenerys Targaryen',
+        quote: 'I am the blood of the dragon.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Tyrion Lannister',
+        quote: 'A mind needs books like a sword needs a whetstone.'
+      }
+    ]
+  })
+
+  const { body } = await client.msearch({
+    body: [
+      { index: 'game-of-thrones' },
+      { query: { match: { character: 'Daenerys' } } },
+
+      { index: 'game-of-thrones' },
+      { query: { match: { character: 'Tyrion' } } }
+    ]
+  })
+
+  console.log(body.responses)
+}
+
+run().catch(console.log)
+
+----

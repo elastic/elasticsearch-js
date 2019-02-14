@@ -1,0 +1,59 @@
+= Suggest
+
+The suggest feature suggests similar looking terms based on a provided text by using a suggester. _Parts of the suggest feature are still under development._
+
+The suggest request part is defined alongside the query part in a `search` request. +
+If the query part is left out, only suggestions are returned.
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  await client.bulk({
+    refresh: true,
+    body: [
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Ned Stark',
+        quote: 'Winter is coming.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Daenerys Targaryen',
+        quote: 'I am the blood of the dragon.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Tyrion Lannister',
+        quote: 'A mind needs books like a sword needs a whetstone.'
+      }
+    ]
+  })
+
+  const { body } = await client.search({
+    index: 'game-of-thrones',
+    body: {
+      query: {
+        match: { quote: 'witner' }
+      },
+      suggest: {
+        gotsuggest: {
+          text: 'witner',
+          term: { field: 'quote' }
+        }
+      }
+    }
+  })
+
+  console.log(body)
+}
+
+run().catch(console.log)
+
+----
