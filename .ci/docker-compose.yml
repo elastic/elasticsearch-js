@@ -41,12 +41,12 @@ services:
     networks:
       - esnet-platinum
     environment:
-      # - path.repo=/tmp
-      # - "repositories.url.allowed_urls=http://*"
-      # - node.attr.testattr=test
-      # - bootstrap.memory_lock=false
-      # - "discovery.type=single-node"
-      # - "http.max_content_length=5mb"
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
+      - bootstrap.memory_lock=false
+      - "discovery.type=single-node"
+      - "http.max_content_length=5mb"
       - "ELASTIC_PASSWORD=changeme"
       - "xpack.security.enabled=true"
       - "xpack.license.self_generated.type=trial"
@@ -60,9 +60,9 @@ services:
       - "xpack.security.transport.ssl.certificate=certs/testnode.crt"
       - "xpack.security.transport.ssl.certificate_authorities=certs/ca.crt"
     volumes:
-      - "./certs/testnode.crt:/usr/local/share/elasticearch/config/certs/testnode.crt"
-      - "./certs/testnode.key:/usr/local/share/elasticearch/config/certs/testnode.key"
-      - "./certs/ca.crt:/usr/local/share/elasticearch/config/certs/ca.crt"
+      - "./certs/testnode.crt:/usr/share/elasticsearch/config/certs/testnode.crt"
+      - "./certs/testnode.key:/usr/share/elasticsearch/config/certs/testnode.key"
+      - "./certs/ca.crt:/usr/share/elasticsearch/config/certs/ca.crt"
 
 networks:
   # we need two networks otherwise the two ES instances will join each other
