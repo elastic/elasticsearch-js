@@ -20,7 +20,7 @@ services:
     depends_on:
       - elasticsearch
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-alpha2}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
     volumes:
       - esvol:/tmp
     networks:
