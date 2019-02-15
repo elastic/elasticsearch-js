@@ -43,10 +43,10 @@ interface ClientOptions {
 }
 
 declare class Client extends EventEmitter {
+  constructor(opts?: ClientOptions);
   connectionPool: ConnectionPool;
   transport: Transport;
   serializer: Serializer
-  constructor(opts?: ClientOptions);
   // TODO: update fn declaration
   extends(method: string, fn: any): void;
   close(callback?: Function): Promise<void> | void;
@@ -79,6 +79,8 @@ declare class Client extends EventEmitter {
     delete_auto_follow_pattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     deleteAutoFollowPattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     follow: ApiMethod<RequestParams.CcrFollow>
+    follow_info: ApiMethod<RequestParams.CcrFollowInfo>
+    followInfo: ApiMethod<RequestParams.CcrFollowInfo>
     follow_stats: ApiMethod<RequestParams.CcrFollowStats>
     followStats: ApiMethod<RequestParams.CcrFollowStats>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
@@ -297,6 +299,8 @@ declare class Client extends EventEmitter {
     putJob: ApiMethod<RequestParams.MlPutJob>
     revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
+    set_upgrade_mode: ApiMethod<RequestParams.MlSetUpgradeMode>
+    setUpgradeMode: ApiMethod<RequestParams.MlSetUpgradeMode>
     start_datafeed: ApiMethod<RequestParams.MlStartDatafeed>
     startDatafeed: ApiMethod<RequestParams.MlStartDatafeed>
     stop_datafeed: ApiMethod<RequestParams.MlStopDatafeed>
@@ -355,6 +359,8 @@ declare class Client extends EventEmitter {
     clearCachedRealms: ApiMethod<RequestParams.SecurityClearCachedRealms>
     clear_cached_roles: ApiMethod<RequestParams.SecurityClearCachedRoles>
     clearCachedRoles: ApiMethod<RequestParams.SecurityClearCachedRoles>
+    create_api_key: ApiMethod<RequestParams.SecurityCreateApiKey>
+    createApiKey: ApiMethod<RequestParams.SecurityCreateApiKey>
     delete_privileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
     deletePrivileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
     delete_role: ApiMethod<RequestParams.SecurityDeleteRole>
@@ -367,6 +373,8 @@ declare class Client extends EventEmitter {
     disableUser: ApiMethod<RequestParams.SecurityDisableUser>
     enable_user: ApiMethod<RequestParams.SecurityEnableUser>
     enableUser: ApiMethod<RequestParams.SecurityEnableUser>
+    get_api_key: ApiMethod<RequestParams.SecurityGetApiKey>
+    getApiKey: ApiMethod<RequestParams.SecurityGetApiKey>
     get_privileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     getPrivileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     get_role: ApiMethod<RequestParams.SecurityGetRole>
@@ -381,6 +389,8 @@ declare class Client extends EventEmitter {
     getUserPrivileges: ApiMethod<RequestParams.SecurityGetUserPrivileges>
     has_privileges: ApiMethod<RequestParams.SecurityHasPrivileges>
     hasPrivileges: ApiMethod<RequestParams.SecurityHasPrivileges>
+    invalidate_api_key: ApiMethod<RequestParams.SecurityInvalidateApiKey>
+    invalidateApiKey: ApiMethod<RequestParams.SecurityInvalidateApiKey>
     invalidate_token: ApiMethod<RequestParams.SecurityInvalidateToken>
     invalidateToken: ApiMethod<RequestParams.SecurityInvalidateToken>
     put_privileges: ApiMethod<RequestParams.SecurityPutPrivileges>
