@@ -337,7 +337,7 @@ export interface Count extends Generic {
 export interface Create extends Generic {
   id: string;
   index: string;
-  type: string;
+  type?: string;
   wait_for_active_shards?: string;
   parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
@@ -358,6 +358,8 @@ export interface Delete extends Generic {
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
+  if_seq_no?: number;
+  if_primary_term?: number;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
 }
@@ -431,7 +433,7 @@ export interface Exists extends Generic {
 export interface ExistsSource extends Generic {
   id: string;
   index: string;
-  type: string;
+  type?: string;
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -499,7 +501,7 @@ export interface GetScript extends Generic {
 export interface GetSource extends Generic {
   id: string;
   index: string;
-  type: string;
+  type?: string;
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -524,6 +526,8 @@ export interface Index extends Generic {
   timeout?: string;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  if_seq_no?: number;
+  if_primary_term?: number;
   pipeline?: string;
   body: any;
 }
@@ -555,7 +559,7 @@ export interface IndicesClose extends Generic {
 
 export interface IndicesCreate extends Generic {
   index: string;
-  include_type_name?: string;
+  include_type_name?: boolean;
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
@@ -647,6 +651,7 @@ export interface IndicesForcemerge extends Generic {
 
 export interface IndicesGet extends Generic {
   index: string | string[];
+  include_type_name?: boolean;
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -669,6 +674,7 @@ export interface IndicesGetFieldMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
   fields: string | string[];
+  include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -679,7 +685,7 @@ export interface IndicesGetFieldMapping extends Generic {
 export interface IndicesGetMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
-  include_type_name?: string;
+  include_type_name?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -701,6 +707,7 @@ export interface IndicesGetSettings extends Generic {
 
 export interface IndicesGetTemplate extends Generic {
   name?: string | string[];
+  include_type_name?: boolean;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -734,7 +741,7 @@ export interface IndicesPutAlias extends Generic {
 export interface IndicesPutMapping extends Generic {
   index?: string | string[];
   type?: string;
-  include_type_name?: string;
+  include_type_name?: boolean;
   timeout?: string;
   master_timeout?: string;
   ignore_unavailable?: boolean;
@@ -757,6 +764,7 @@ export interface IndicesPutSettings extends Generic {
 
 export interface IndicesPutTemplate extends Generic {
   name: string;
+  include_type_name?: boolean;
   order?: number;
   create?: boolean;
   timeout?: string;
@@ -781,6 +789,7 @@ export interface IndicesRefresh extends Generic {
 export interface IndicesRollover extends Generic {
   alias: string;
   new_index?: string;
+  include_type_name?: boolean;
   timeout?: string;
   dry_run?: boolean;
   master_timeout?: string;
@@ -922,6 +931,7 @@ export interface Msearch extends Generic {
   pre_filter_shard_size?: number;
   max_concurrent_shard_requests?: number;
   rest_total_hits_as_int?: boolean;
+  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -932,6 +942,7 @@ export interface MsearchTemplate extends Generic {
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
+  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -1051,6 +1062,7 @@ export interface Search extends Generic {
   type?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
+  ccs_minimize_roundtrips?: boolean;
   default_operator?: 'AND' | 'OR';
   df?: string;
   explain?: boolean;
@@ -1084,6 +1096,7 @@ export interface Search extends Generic {
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
+  seq_no_primary_term?: boolean;
   request_cache?: boolean;
   batched_reduce_size?: number;
   max_concurrent_shard_requests?: number;
@@ -1117,6 +1130,7 @@ export interface SearchTemplate extends Generic {
   profile?: boolean;
   typed_keys?: boolean;
   rest_total_hits_as_int?: boolean;
+  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -1239,8 +1253,8 @@ export interface Update extends Generic {
   retry_on_conflict?: number;
   routing?: string;
   timeout?: string;
-  version?: number;
-  version_type?: 'internal' | 'force';
+  if_seq_no?: number;
+  if_primary_term?: number;
   body: any;
 }
 
@@ -1295,7 +1309,12 @@ export interface CcrDeleteAutoFollowPattern extends Generic {
 
 export interface CcrFollow extends Generic {
   index: string;
+  wait_for_active_shards?: string;
   body: any;
+}
+
+export interface CcrFollowInfo extends Generic {
+  index?: string | string[];
 }
 
 export interface CcrFollowStats extends Generic {
@@ -1317,7 +1336,7 @@ export interface CcrPutAutoFollowPattern extends Generic {
 
 export interface CcrResumeFollow extends Generic {
   index: string;
-  body: any;
+  body?: any;
 }
 
 export interface CcrStats extends Generic {
@@ -1392,6 +1411,7 @@ export interface MlCloseJob extends Generic {
   allow_no_jobs?: boolean;
   force?: boolean;
   timeout?: string;
+  body?: any;
 }
 
 export interface MlDeleteCalendar extends Generic {
@@ -1642,6 +1662,11 @@ export interface MlRevertModelSnapshot extends Generic {
   body?: any;
 }
 
+export interface MlSetUpgradeMode extends Generic {
+  enabled?: boolean;
+  timeout?: string;
+}
+
 export interface MlStartDatafeed extends Generic {
   datafeed_id: string;
   start?: string;
@@ -1712,6 +1737,11 @@ export interface SecurityClearCachedRoles extends Generic {
   name: string | string[];
 }
 
+export interface SecurityCreateApiKey extends Generic {
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
 export interface SecurityDeletePrivileges extends Generic {
   application: string;
   name: string;
@@ -1743,6 +1773,13 @@ export interface SecurityEnableUser extends Generic {
   refresh?: 'true' | 'false' | 'wait_for';
 }
 
+export interface SecurityGetApiKey extends Generic {
+  id?: string;
+  name?: string;
+  username?: string;
+  realm_name?: string;
+}
+
 export interface SecurityGetPrivileges extends Generic {
   application?: string;
   name?: string;
@@ -1769,6 +1806,10 @@ export interface SecurityGetUserPrivileges extends Generic {
 
 export interface SecurityHasPrivileges extends Generic {
   user?: string;
+  body: any;
+}
+
+export interface SecurityInvalidateApiKey extends Generic {
   body: any;
 }
 
@@ -1944,6 +1985,8 @@ export interface XpackWatcherPutWatch extends Generic {
   id: string;
   active?: boolean;
   version?: number;
+  if_seq_no?: number;
+  if_primary_term?: number;
   body?: any;
 }
 

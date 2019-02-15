@@ -3,31 +3,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlCloseJob (opts) {
+function buildSecurityCreateApiKey (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [ml.close_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html) request
+   * Perform a [security.create_api_key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html) request
    *
-   * @param {string} job_id - The name of the job to close
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {boolean} force - True if the job should be forcefully closed
-   * @param {time} timeout - Controls the time to wait until a job has closed. Default to 30 minutes
-   * @param {object} body - The URL params optionally sent in the body
+   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+   * @param {object} body - The api key request to create an API key
    */
 
   const acceptedQuerystring = [
-    'allow_no_jobs',
-    'force',
-    'timeout'
+    'refresh'
   ]
 
   const snakeCase = {
-    allowNoJobs: 'allow_no_jobs'
 
   }
 
-  return function mlCloseJob (params, options, callback) {
+  return function securityCreateApiKey (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,16 +35,16 @@ function buildMlCloseJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        mlCloseJob(params, options, (err, body) => {
+        securityCreateApiKey(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['job_id'] == null && params['jobId'] == null) {
+    if (params['body'] == null) {
       return callback(
-        new ConfigurationError('Missing required parameter: job_id or jobId'),
+        new ConfigurationError('Missing required parameter: body'),
         result
       )
     }
@@ -64,11 +58,11 @@ function buildMlCloseJob (opts) {
     }
 
     var warnings = null
-    var { method, body, jobId, job_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -78,7 +72,7 @@ function buildMlCloseJob (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
+    path = '/' + '_security' + '/' + 'api_key'
 
     // build request object
     const request = {
@@ -118,4 +112,4 @@ function buildMlCloseJob (opts) {
   }
 }
 
-module.exports = buildMlCloseJob
+module.exports = buildSecurityCreateApiKey

@@ -3,31 +3,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlCloseJob (opts) {
+function buildMlSetUpgradeMode (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [ml.close_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html) request
+   * Perform a [ml.set_upgrade_mode](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html) request
    *
-   * @param {string} job_id - The name of the job to close
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {boolean} force - True if the job should be forcefully closed
-   * @param {time} timeout - Controls the time to wait until a job has closed. Default to 30 minutes
-   * @param {object} body - The URL params optionally sent in the body
+   * @param {boolean} enabled - Whether to enable upgrade_mode ML setting or not. Defaults to false.
+   * @param {time} timeout - Controls the time to wait before action times out. Defaults to 30 seconds
    */
 
   const acceptedQuerystring = [
-    'allow_no_jobs',
-    'force',
+    'enabled',
     'timeout'
   ]
 
   const snakeCase = {
-    allowNoJobs: 'allow_no_jobs'
 
   }
 
-  return function mlCloseJob (params, options, callback) {
+  return function mlSetUpgradeMode (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,16 +36,16 @@ function buildMlCloseJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        mlCloseJob(params, options, (err, body) => {
+        mlSetUpgradeMode(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['job_id'] == null && params['jobId'] == null) {
+    if (params.body != null) {
       return callback(
-        new ConfigurationError('Missing required parameter: job_id or jobId'),
+        new ConfigurationError('This API does not require a body'),
         result
       )
     }
@@ -64,8 +59,8 @@ function buildMlCloseJob (opts) {
     }
 
     var warnings = null
-    var { method, body, jobId, job_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
       method = 'POST'
@@ -78,13 +73,13 @@ function buildMlCloseJob (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
+    path = '/' + '_ml' + '/' + 'set_upgrade_mode'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -118,4 +113,4 @@ function buildMlCloseJob (opts) {
   }
 }
 
-module.exports = buildMlCloseJob
+module.exports = buildMlSetUpgradeMode

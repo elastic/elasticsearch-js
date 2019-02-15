@@ -10,15 +10,16 @@ function buildCcrFollow (opts) {
    * Perform a [ccr.follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html) request
    *
    * @param {string} index - The name of the follower index
+   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
    * @param {object} body - The name of the leader index and other optional ccr related parameters
    */
 
   const acceptedQuerystring = [
-
+    'wait_for_active_shards'
   ]
 
   const snakeCase = {
-
+    waitForActiveShards: 'wait_for_active_shards'
   }
 
   return function ccrFollow (params, options, callback) {

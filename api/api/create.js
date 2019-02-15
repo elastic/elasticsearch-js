@@ -79,12 +79,6 @@ function buildCreate (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
@@ -128,7 +122,11 @@ function buildCreate (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
+    }
 
     // build request object
     const request = {

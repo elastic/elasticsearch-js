@@ -17,6 +17,8 @@ function buildDelete (opts) {
    * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
+   * @param {number} if_seq_no - only perform the delete operation if the last operation that has changed the document has the specified sequence number
+   * @param {number} if_primary_term - only perform the delete operation if the last operation that has changed the document has the specified primary term
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
@@ -27,6 +29,8 @@ function buildDelete (opts) {
     'refresh',
     'routing',
     'timeout',
+    'if_seq_no',
+    'if_primary_term',
     'version',
     'version_type',
     'pretty',
@@ -38,6 +42,8 @@ function buildDelete (opts) {
 
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'

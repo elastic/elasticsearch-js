@@ -11,7 +11,7 @@ function buildGetSource (opts) {
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
-   * @param {string} type - The type of the document; use `_all` to fetch the first document matching the ID across all types
+   * @param {string} type - The type of the document; deprecated and optional starting with 7.0
    * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
@@ -83,12 +83,6 @@ function buildGetSource (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -132,7 +126,11 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
+    }
 
     // build request object
     const request = {
