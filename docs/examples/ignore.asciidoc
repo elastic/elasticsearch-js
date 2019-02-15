@@ -1,6 +1,5 @@
-= MSearch
-
-The multi search API allows to execute several search requests within the same API. 
+== Ignore
+HTTP status codes which should not be considered errors for this request.
 
 [source,js]
 ----
@@ -13,7 +12,9 @@ async function run () {
   await client.bulk({
     refresh: true,
     body: [
+      // operation to perform
       { index: { _index: 'game-of-thrones' } },
+      // the document to index
       {
         character: 'Ned Stark',
         quote: 'Winter is coming.'
@@ -33,17 +34,21 @@ async function run () {
     ]
   })
 
-  const { body } = await client.msearch({
-    body: [
-      { index: 'game-of-thrones' },
-      { query: { match: { character: 'Daenerys' } } },
-
-      { index: 'game-of-thrones' },
-      { query: { match: { character: 'Tyrion' } } }
-    ]
+  // Let's search!
+  const { body } = await client.search({
+    index: 'game-of-thrones',
+    body: {
+      query: {
+        match: {
+          quote: 'fire'
+        }
+      }
+    }
+  }, {
+    ignore: [404]
   })
 
-  console.log(body.responses)
+  console.log(body) // ResponseError
 }
 
 run().catch(console.log)

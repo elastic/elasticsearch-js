@@ -2,7 +2,7 @@
 
 If you were already using the previous version of this client, the one you used to install with `npm install elasticsearch`, you will encounter some breaking changes.
 
-*Don't worry!*
+==== Don't panic!
 
 Every breaking change was carefully weighted, and every breaking change has solid reasons to introduce it, furthermore the new codebase has been rewritten  with modern JavaScript, and has been carefully designed to be easy to maintain.
 

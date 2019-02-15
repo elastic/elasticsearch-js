@@ -1088,6 +1088,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
 |`timeout`
 |`string` - Explicit operation timeout
 
+|`if_seq_no` or `ifSeqNo`
+|`number` - only perform the delete operation if the last operation that has changed the document has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only perform the delete operation if the last operation that has changed the document has the specified primary term
+
 |`version`
 |`number` - Explicit version number for concurrency control
 
@@ -1314,7 +1320,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; use `_all` to fetch the first document matching the ID across all types
+|`string` - The type of the document; deprecated and optional starting with 7.0
 
 |`parent`
 |`string` - The ID of the parent document
@@ -1520,7 +1526,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; use `_all` to fetch the first document matching the ID across all types
+|`string` - The type of the document; deprecated and optional starting with 7.0
 
 |`parent`
 |`string` - The ID of the parent document
@@ -1594,6 +1600,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 
 |`version_type` or `versionType`
 |`'internal', 'external', 'external_gte', 'force'` - Specific version type
+
+|`if_seq_no` or `ifSeqNo`
+|`number` - only perform the index operation if the last operation that has changed the document has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only perform the index operation if the last operation that has changed the document has the specified primary term
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
@@ -1697,7 +1709,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-ind
 |`string` - The name of the index
 
 |`include_type_name` or `includeTypeName`
-|`string` - Whether a type should be expected in the body of the mappings.
+|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for before the operation returns.
@@ -1979,6 +1991,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.
 |`index`
 |`string, string[]` - A comma-separated list of index names
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether to add the type name to the response (default: false)
+
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
@@ -2047,6 +2062,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-
 |`fields`
 |`string, string[]` - A comma-separated list of fields
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
+
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether the default mapping values should be returned as well
 
@@ -2079,7 +2097,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappin
 |`string, string[]` - A comma-separated list of document types
 
 |`include_type_name` or `includeTypeName`
-|`string` - Whether to add the type name to the response
+|`boolean` - Whether to add the type name to the response (default: false)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2145,6 +2163,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 |===
 |`name`
 |`string, string[]` - The comma separated names of the index templates
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -2248,7 +2269,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappin
 |`string` - The name of the document type
 
 |`include_type_name` or `includeTypeName`
-|`string` - Whether a type should be expected in the body of the mappings.
+|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2317,6 +2338,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 |===
 |`name`
 |`string` - The name of the template
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`order`
 |`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -2390,6 +2414,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-i
 
 |`new_index` or `newIndex`
 |`string` - The name of the rollover index
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be included in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2822,6 +2849,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-searc
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+    _Default:_ `true`
+
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
 
@@ -2851,6 +2882,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sear
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+    _Default:_ `true`
 
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
@@ -3224,6 +3259,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
 
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+    _Default:_ `true`
+
 |`default_operator` or `defaultOperator`
 |`'AND', 'OR'` - The default operator for query string query (AND or OR) +
     _Default:_ `OR`
@@ -3326,6 +3365,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 
 |`version`
 |`boolean` - Specify whether to return document version as part of a hit
+
+|`seq_no_primary_term` or `seqNoPrimaryTerm`
+|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
 
 |`request_cache` or `requestCache`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
@@ -3430,6 +3472,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.h
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+    _Default:_ `true`
 
 |`body`
 |`object` - The search definition template and its params
@@ -3802,11 +3848,11 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`version`
-|`number` - Explicit version number for concurrency control
+|`if_seq_no` or `ifSeqNo`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified sequence number
 
-|`version_type` or `versionType`
-|`'internal', 'force'` - Specific version type
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
 
 |`body`
 |`object` - The request definition requires either `script` or partial `doc`
@@ -3976,8 +4022,24 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.h
 |`index`
 |`string` - The name of the follower index
 
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
+    _Default:_ `0`
+
 |`body`
 |`object` - The name of the leader index and other optional ccr related parameters
+
+|===
+=== ccr.followInfo
+[source,js]
+----
+client.ccr.followInfo([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+[cols=2*]
+|===
+|`index`
+|`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
 
 |===
 === ccr.followStats
@@ -4269,6 +4331,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
 
 |`timeout`
 |`string` - Controls the time to wait until a job has closed. Default to 30 minutes
+
+|`body`
+|`object` - The URL params optionally sent in the body
 
 |===
 === ml.deleteCalendar
@@ -5018,6 +5083,21 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapsho
 |`object` - Reversion options
 
 |===
+=== ml.setUpgradeMode
+[source,js]
+----
+client.ml.setUpgradeMode([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+[cols=2*]
+|===
+|`enabled`
+|`boolean` - Whether to enable upgrade_mode ML setting or not. Defaults to false.
+
+|`timeout`
+|`string` - Controls the time to wait before action times out. Defaults to 30 seconds
+
+|===
 === ml.startDatafeed
 [source,js]
 ----
@@ -5228,6 +5308,21 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 |`string, string[]` - Role name
 
 |===
+=== security.createApiKey
+[source,js]
+----
+client.security.createApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+[cols=2*]
+|===
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The api key request to create an API key
+
+|===
 === security.deletePrivileges
 [source,js]
 ----
@@ -5321,6 +5416,27 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 |`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 |===
+=== security.getApiKey
+[source,js]
+----
+client.security.getApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+[cols=2*]
+|===
+|`id`
+|`string` - API key id of the API key to be retrieved
+
+|`name`
+|`string` - API key name of the API key to be retrieved
+
+|`username`
+|`string` - user name of the user who created this API key to be retrieved
+
+|`realm_name` or `realmName`
+|`string` - realm name of the user who created this API key to be retrieved
+
+|===
 === security.getPrivileges
 [source,js]
 ----
@@ -5406,6 +5522,18 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has
 
 |`body`
 |`object` - The privileges to test
+
+|===
+=== security.invalidateApiKey
+[source,js]
+----
+client.security.invalidateApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
+[cols=2*]
+|===
+|`body`
+|`object` - The api key request to invalidate API key(s)
 
 |===
 === security.invalidateToken
@@ -5930,6 +6058,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-w
 
 |`version`
 |`number` - Explicit version number for concurrency control
+
+|`if_seq_no` or `ifSeqNo`
+|`number` - only update the watch if the last operation that has changed the watch has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only update the watch if the last operation that has changed the watch has the specified primary term
 
 |`body`
 |`object` - The watch
