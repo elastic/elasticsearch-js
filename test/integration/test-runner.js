@@ -213,7 +213,7 @@ TestRunner.prototype.fillStashedValues = function (obj) {
   return obj
 
   function getStashedValues (str) {
-    return str
+    const arr = str
       // we split the string on the dots
       // handle the key with a dot inside that is not a part of the path
       .split(/(?<!\\)\./g)
@@ -228,8 +228,11 @@ TestRunner.prototype.fillStashedValues = function (obj) {
         }
         return part
       })
-      // recreate the string value
-      .join('.')
+
+    // recreate the string value only if the array length is higher than one
+    // otherwise return the first element which in some test this could be a number,
+    // and call `.join` will coerce it to a string.
+    return arr.length > 1 ? arr.join('.') : arr[0]
   }
 }
 
@@ -351,7 +354,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
             : delve(this.response, this.fillStashedValues(key)),
           key === '$body'
             ? action.match[key]
-            : this.fillStashedValues(action.match)[key]
+            : this.fillStashedValues(action.match)[key],
+          action.match
         )
         done()
       })
@@ -463,10 +467,10 @@ TestRunner.prototype.is_false = function (val, msg) {
  * @param {any} the second value
  * @returns {TestRunner}
  */
-TestRunner.prototype.match = function (val1, val2) {
+TestRunner.prototype.match = function (val1, val2, action) {
   // both values are objects
   if (typeof val1 === 'object' && typeof val2 === 'object') {
-    this.tap.strictDeepEqual(val1, val2)
+    this.tap.strictDeepEqual(val1, val2, action)
   // the first value is the body as string and the second a pattern string
   } else if (
     typeof val1 === 'string' && typeof val2 === 'string' &&
@@ -482,10 +486,10 @@ TestRunner.prototype.match = function (val1, val2) {
       .replace(/\s/g, '')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}`)
+    this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
   // everything else
   } else {
-    this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}`)
+    this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
   }
   return this
 }
