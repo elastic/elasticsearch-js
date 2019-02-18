@@ -9,9 +9,11 @@ const allowedMethods = {
 // list of apis that does not need any kind of validation
 // because of how the url is built or the `type` handling in ES7
 const noPathValidation = [
+  'create',
   'exists',
   'explain',
   'get',
+  'get_source',
   'indices.get_alias',
   'indices.exists_alias',
   'indices.get_field_mapping',
