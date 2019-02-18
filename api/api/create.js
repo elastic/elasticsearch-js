@@ -86,19 +86,6 @@ function buildCreate (opts) {
       )
     }
 
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
