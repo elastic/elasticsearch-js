@@ -6,8 +6,11 @@ import {
   EventMeta,
   SniffMeta,
   ResurrectMeta,
-  events
+  events,
+  ClientExtendsCallbackOptions
 } from '../../index'
+
+import { TransportRequestParams, TransportRequestOptions } from '../../lib/Transport'
 
 const client = new Client({ node: 'http://localhost:9200' })
 
@@ -65,3 +68,21 @@ client.index({
 })
   .then((result: ApiResponse) => {})
   .catch((err: Error) => {})
+
+// extend client
+client.extend('namespace.method', (options: ClientExtendsCallbackOptions) => {
+  return function (params: any) {
+    const requestParams: TransportRequestParams = {
+      method: 'GET',
+      path: '/',
+      querystring: {}
+    }
+
+    const requestOptions: TransportRequestOptions = {
+      ignore: [404],
+      maxRetries: 5
+    }
+
+    return options.makeRequest(requestParams, requestOptions)
+  }
+})

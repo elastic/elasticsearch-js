@@ -429,6 +429,28 @@ test('Extend client APIs', t => {
     }
   })
 
+  t.test('Can override an existing method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('index', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
+  t.test('Can override an existing namespace and method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('indices.delete', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
   t.test('Should call the transport.request method', t => {
     t.plan(2)
 
