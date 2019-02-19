@@ -99,7 +99,12 @@ class Client extends EventEmitter {
     })
   }
 
-  extend (name, fn) {
+  extend (name, opts, fn) {
+    if (typeof opts === 'function') {
+      fn = opts
+      opts = {}
+    }
+
     var [namespace, method] = name.split('.')
     if (method == null) {
       method = namespace
@@ -107,7 +112,7 @@ class Client extends EventEmitter {
     }
 
     if (namespace != null) {
-      if (this[namespace] != null && this[namespace][method] != null) {
+      if (this[namespace] != null && this[namespace][method] != null && opts.force !== true) {
         throw new Error(`The method "${method}" already exists on namespace "${namespace}"`)
       }
 
@@ -118,7 +123,7 @@ class Client extends EventEmitter {
         ConfigurationError
       })
     } else {
-      if (this[method] != null) {
+      if (this[method] != null && opts.force !== true) {
         throw new Error(`The method "${method}" already exists`)
       }
 
