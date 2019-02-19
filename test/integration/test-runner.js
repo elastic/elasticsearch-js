@@ -53,6 +53,20 @@ TestRunner.prototype.cleanup = function (q, done) {
     })
   })
 
+  q.add((q, done) => {
+    this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 }, err => {
+      this.tap.error(err, 'should not error:snapshot.delete')
+      done()
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 }, err => {
+      this.tap.error(err, 'should not error:snapshot.deleteRepository')
+      done()
+    })
+  })
+
   done()
 }
 

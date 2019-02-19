@@ -47,7 +47,7 @@ test('API', t => {
   })
 
   t.test('markDead', t => {
-    const pool = new ConnectionPool({ Connection })
+    const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
     var connection = pool.addConnection(href)
     pool.markDead(connection)
@@ -73,7 +73,7 @@ test('API', t => {
   })
 
   t.test('markAlive', t => {
-    const pool = new ConnectionPool({ Connection })
+    const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
     var connection = pool.addConnection(href)
     pool.markDead(connection)
@@ -92,7 +92,8 @@ test('API', t => {
         const pool = new ConnectionPool({
           resurrectStrategy: 'ping',
           pingTimeout: 3000,
-          Connection: MockConnection
+          Connection: MockConnection,
+          sniffEnabled: true
         })
         const href = 'http://localhost:9200/'
         var connection = pool.addConnection(href)
@@ -112,7 +113,8 @@ test('API', t => {
         const pool = new ConnectionPool({
           resurrectStrategy: 'ping',
           pingTimeout: 3000,
-          Connection: MockConnectionTimeout
+          Connection: MockConnectionTimeout,
+          sniffEnabled: true
         })
         const href = 'http://localhost:9200/'
         var connection = pool.addConnection(href)
@@ -134,7 +136,8 @@ test('API', t => {
     t.test('optimistic strategy', t => {
       const pool = new ConnectionPool({
         resurrectStrategy: 'optimistic',
-        Connection
+        Connection,
+        sniffEnabled: true
       })
       const href = 'http://localhost:9200/'
       var connection = pool.addConnection(href)
@@ -153,7 +156,8 @@ test('API', t => {
     t.test('none strategy', t => {
       const pool = new ConnectionPool({
         resurrectStrategy: 'none',
-        Connection
+        Connection,
+        sniffEnabled: true
       })
       const href = 'http://localhost:9200/'
       var connection = pool.addConnection(href)
@@ -563,6 +567,30 @@ test('Node filter', t => {
     const pool = new ConnectionPool({ Connection, nodeFilter })
     pool.addConnection({ url: new URL('http://localhost:9200/') })
     t.strictEqual(pool.getConnection(), null)
+  })
+
+  t.end()
+})
+
+test('Single node behavior', t => {
+  t.test('sniffing disabled (markDead and markAlive should be noop)', t => {
+    t.plan(2)
+    const pool = new ConnectionPool({ Connection, sniffEnabled: false })
+    const conn = pool.addConnection('http://localhost:9200/')
+    pool.markDead(conn)
+    t.strictEqual(pool.dead.length, 0)
+    pool.markAlive(conn)
+    t.strictEqual(pool.dead.length, 0)
+  })
+
+  t.test('sniffing enabled (markDead and markAlive should work)', t => {
+    t.plan(2)
+    const pool = new ConnectionPool({ Connection, sniffEnabled: true })
+    const conn = pool.addConnection('http://localhost:9200/')
+    pool.markDead(conn)
+    t.strictEqual(pool.dead.length, 1)
+    pool.markAlive(conn)
+    t.strictEqual(pool.dead.length, 0)
   })
 
   t.end()
