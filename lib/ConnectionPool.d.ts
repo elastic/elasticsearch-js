@@ -42,6 +42,7 @@ export default class ConnectionPool {
   dead: string[];
   _ssl: SecureContextOptions | null;
   _agent: AgentOptions | null;
+  _sniffEnabled: boolean;
   resurrectTimeout: number;
   resurrectTimeoutCutoff: number;
   pingTimeout: number;

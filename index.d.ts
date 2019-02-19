@@ -40,6 +40,11 @@ interface ClientOptions {
   agent?: AgentOptions;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
+  cloud?: {
+    id: string;
+    username: string;
+    password: string;
+  }
 }
 
 declare class Client extends EventEmitter {
