@@ -165,3 +165,123 @@ client.transport.request({
   if (err) console.log(err)
 })
 ----
+
+=== Talk is cheap. Show me the code.
+
+Following you will find a snippet of code with the old client, followed by the same code logic, but with the new client.
+
+[source,js]
+----
+const { Client, errors } = require('elasticsearch')
+const client = new Client({
+  host: 'http://localhost:9200',
+  plugins: [utility]
+})
+
+async function run () {
+  try {
+    const body = await client.search({
+      index: 'game-of-thrones',
+      body: {
+        query: {
+          match: { quote: 'winter' }
+        }
+      }
+      ignore: [404]
+    })
+    console.log(body)
+  } catch (err) {
+    if (err instanceof errors.BadRequest) {
+      console.log('Bad request')
+    } else {
+      console.log(err)
+    }
+  }
+}
+
+function utility (Client, config, components) {
+  const ca = components.clientAction.factory
+  Client.prototype.utility = components.clientAction.namespaceFactory()
+  const utility = Client.prototype.utility.prototype
+
+  utility.index = ca({
+    params: {
+      refresh: {
+        type: 'enum',
+        options: [
+          'true',
+          'false',
+          'wait_for',
+          ''
+        ]
+      },
+    },
+    urls: [
+      {
+        fmt: '/<%=index%>/_doc',
+        req: {
+          index: {
+            type: 'string',
+            required: true
+          }
+        }
+      }
+    ],
+    needBody: true,
+    method: 'POST'
+  })
+})
+----
+
+And now with the new client.
+
+[source,js]
+----
+const { Client, errors } = require('@elastic/elasticsearch')
+// NOTE: `host` has been renamed to `node`,
+//       and `plugins` is no longer supported
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  try {
+    // NOTE: we are using the destructuring assignment
+    const { body } = await client.search({
+      index: 'game-of-thrones',
+      body: {
+        query: {
+          match: { quote: 'winter' }
+        }
+      }
+    // NOTE: `ignore` now is in a separated object
+    }, {
+      ignore: [404]
+    })
+    console.log(body)
+  } catch (err) {
+    // NOTE: we are checking the `statusCode` property
+    if (err.statusCode === 400) {
+      console.log('Bad request')
+    } else {
+      console.log(err)
+    }
+  }
+}
+
+// NOTE: we can still extend the client, but with  a different API.
+//       This new API is a little bit more verbose, since you must write
+//       your own validations, but it's way more flexible.
+client.extend('utility.index', ({ makeRequest, ConfigurationError }) => {
+  return function utilityIndex (params, options) {
+    const { body, index, ...querystring } = params
+    if (body == null) throw new ConfigurationError('Missing body')
+    if (index == null) throw new ConfigurationError('Missing index')
+    const requestParams = {
+      method: 'POST',
+      path: `/${index}/_doc`,
+      body: body,
+      querystring
+    }
+    return makeRequest(requestParams, options)
+  }
+})
+----
