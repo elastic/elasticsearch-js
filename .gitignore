@@ -47,4 +47,6 @@ package-lock.json
 # elasticsearch repo or binary files
 elasticsearch*
 
+# Generated typings, we don't commit them
+# because we should copy them in the main .d.ts file
 api/generated.d.ts
