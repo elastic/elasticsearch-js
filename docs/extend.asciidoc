@@ -3,7 +3,7 @@
 Sometimes you need to reuse the same logic, or you want to build a custom API to allow you simplify your code. +
 The easiest way to achieve that is by extending the client.
 
-NOTE: You can't override existing methods.
+NOTE: If you want to override existing methods, you should specify the `{ force: true }` option.
 
 [source,js]
 ----
@@ -52,6 +52,12 @@ client.extend('utility.index', ({ makeRequest }) => {
 })
 
 client.extend('utility.delete', ({ makeRequest }) => {
+  return function _delete (params, options) {
+    // your code
+  }
+})
+
+client.extend('indices.delete', { force: true }, ({ makeRequest }) => {
   return function _delete (params, options) {
     // your code
   }
