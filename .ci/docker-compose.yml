@@ -1,12 +1,12 @@
 version: '3.2'
 services:
   client:
-    image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-8}
+    image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-10}
     build:
       context: ..
       dockerfile: .ci/Dockerfile
       args:
-          NODE_JS_VERSION: ${NODE_JS_VERSION:-8}
+          NODE_JS_VERSION: ${NODE_JS_VERSION:-10}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
     volumes:
@@ -27,12 +27,11 @@ services:
       - esnet
     environment:
       - path.repo=/tmp
-      - "repositories.url.allowed_urls=http://*"
+      - "repositories.url.allowed_urls=http://snapshot.*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-        # - "discovery.zen.ping.unicast.hosts=elasticsearch"
       - "discovery.type=single-node"
-      - "http.max_content_length=5mb"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 networks:
   esnet:
 volumes:
