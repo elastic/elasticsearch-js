@@ -2,7 +2,7 @@
 
 If you were already using the previous version of this client, the one you used to install with `npm install elasticsearch`, you will encounter some breaking changes.
 
-==== Don't panic!
+=== Don't panic!
 
 Every breaking change was carefully weighted, and every breaking change has solid reasons to introduce it, furthermore the new codebase has been rewritten  with modern JavaScript, and has been carefully designed to be easy to maintain.
 
@@ -22,6 +22,7 @@ Every breaking change was carefully weighted, and every breaking change has soli
 
 * The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, and `warnings`, for both callback and promises. +
 With the `asStream` parameter you can get the original HTTP response stream if the case you need to pipe it to another response for a forwarding use case.
+
 [source,js]
 ----
 // before
@@ -70,6 +71,7 @@ Errors that has been renamed:
 * You must specify the port number in the configuration. In the previous version you can specifiy the host and port in a variety of ways, with the new client there is only one via the `node` parameter.
 
 * The plugins option has been removed, if you want to extend the client now you should use the client.extend API.
+
 [source,js]
 ----
 // before
@@ -83,6 +85,7 @@ client.extend(...)
 ----
 
 * There is a clear distinction between the API related parameters and the client related configurations, the parameters `ignore`, `headers`, `requestTimeout` and `maxRetries` are no longer part of the API object, and you should specify them in a second option object.
+
 [source,js]
 ----
 // before
@@ -119,6 +122,7 @@ client.search({
 ----
 
 * The `transport.request` method will no longer accept the `query` key, but the `querystring` key instead (which can be a string or an object), furthermore, you need to send a bulk-like request, instead of the `body` key, you should use the `bulkBody` key. Also in this method, the client specific parameters should be passed as a second object.
+
 [source,js]
 ----
 // before
