@@ -43,12 +43,22 @@ declare type anyObject = {
   [key: string]: any;
 };
 
-export interface RequestOptions {
-  ignore?: number | number[];
+export interface TransportRequestParams {
+  method: string;
+  path: string;
+  body?: anyObject,
+  bulkBody?: anyObject,
+  querystring: anyObject
+}
+
+export interface TransportRequestOptions {
+  ignore?: [number];
   requestTimeout?: number | string;
   maxRetries?: number;
   asStream?: boolean;
   headers?: anyObject;
+  compression?: string;
+  warnings?: [string];
 }
 
 export default class Transport {
@@ -72,7 +82,7 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: any, options: RequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
+  request(params: TransportRequestParams, options: TransportRequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
   getConnection(): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }

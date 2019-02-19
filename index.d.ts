@@ -2,11 +2,18 @@
 
 import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
-import Transport, { ApiResponse, EventMeta, SniffMeta, RequestOptions } from './lib/Transport';
+import Transport, {
+  ApiResponse,
+  EventMeta,
+  SniffMeta,
+  TransportRequestParams,
+  TransportRequestOptions
+} from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
 import ConnectionPool, { nodeSelectorFn, nodeFilterFn, ResurrectMeta } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
-import * as RequestParams from './api/requestParams'
+import * as RequestParams from './api/requestParams';
+import * as errors from './lib/errors';
 
 declare type anyObject = {
   [key: string]: any;
@@ -16,8 +23,26 @@ declare type callbackFn = (err: Error | null, result: ApiResponse) => void;
 interface ApiMethod<T> {
   (callback?: callbackFn): any;
   (params: T, callback?: callbackFn): any;
-  (params: T, options: RequestOptions, callback?: callbackFn): any;
+  (params: T, options: TransportRequestOptions, callback?: callbackFn): any;
 }
+
+// Extend API
+interface ClientExtendsCallbackOptions {
+  ConfigurationError: errors.ConfigurationError,
+  makeRequest(params: TransportRequestParams, options?: TransportRequestOptions): Promise<void> | void;
+  result: {
+    body: null,
+    statusCode: null,
+    headers: null,
+    warnings: null
+  }
+}
+declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
+interface ClientExtends {
+  (method: string, fn: extendsCallback): void;
+  (method: string, opts: { force: boolean }, fn: extendsCallback): void;
+}
+// /Extend API
 
 interface ClientOptions {
   node?: string | string[];
@@ -51,9 +76,8 @@ declare class Client extends EventEmitter {
   constructor(opts?: ClientOptions);
   connectionPool: ConnectionPool;
   transport: Transport;
-  serializer: Serializer
-  // TODO: update fn declaration
-  extends(method: string, fn: any): void;
+  serializer: Serializer;
+  extend: ClientExtends;
   close(callback?: Function): Promise<void> | void;
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
@@ -525,5 +549,6 @@ export {
   EventMeta,
   SniffMeta,
   ResurrectMeta,
-  RequestParams
+  RequestParams,
+  ClientExtendsCallbackOptions
 };
