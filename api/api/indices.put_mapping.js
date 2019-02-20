@@ -11,7 +11,7 @@ function buildIndicesPutMapping (opts) {
    *
    * @param {list} index - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
    * @param {string} type - The name of the document type
-   * @param {string} include_type_name - Whether a type should be expected in the body of the mappings.
+   * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)

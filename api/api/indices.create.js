@@ -10,7 +10,7 @@ function buildIndicesCreate (opts) {
    * Perform a [indices.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
    *
    * @param {string} index - The name of the index
-   * @param {string} include_type_name - Whether a type should be expected in the body of the mappings.
+   * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.
    * @param {string} wait_for_active_shards - Set the number of active shards to wait for before the operation returns.
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master

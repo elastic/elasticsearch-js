@@ -2,7 +2,7 @@
 
 If you were already using the previous version of this client, the one you used to install with `npm install elasticsearch`, you will encounter some breaking changes.
 
-*Don't worry!*
+=== Don't panic!
 
 Every breaking change was carefully weighted, and every breaking change has solid reasons to introduce it, furthermore the new codebase has been rewritten  with modern JavaScript, and has been carefully designed to be easy to maintain.
 
@@ -22,6 +22,7 @@ Every breaking change was carefully weighted, and every breaking change has soli
 
 * The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, and `warnings`, for both callback and promises. +
 With the `asStream` parameter you can get the original HTTP response stream if the case you need to pipe it to another response for a forwarding use case.
+
 [source,js]
 ----
 // before
@@ -70,6 +71,7 @@ Errors that has been renamed:
 * You must specify the port number in the configuration. In the previous version you can specifiy the host and port in a variety of ways, with the new client there is only one via the `node` parameter.
 
 * The plugins option has been removed, if you want to extend the client now you should use the client.extend API.
+
 [source,js]
 ----
 // before
@@ -83,6 +85,7 @@ client.extend(...)
 ----
 
 * There is a clear distinction between the API related parameters and the client related configurations, the parameters `ignore`, `headers`, `requestTimeout` and `maxRetries` are no longer part of the API object, and you should specify them in a second option object.
+
 [source,js]
 ----
 // before
@@ -119,6 +122,7 @@ client.search({
 ----
 
 * The `transport.request` method will no longer accept the `query` key, but the `querystring` key instead (which can be a string or an object), furthermore, you need to send a bulk-like request, instead of the `body` key, you should use the `bulkBody` key. Also in this method, the client specific parameters should be passed as a second object.
+
 [source,js]
 ----
 // before
@@ -159,5 +163,125 @@ client.transport.request({
   ignore: [404]
 }, (err, { body, statusCode, headers, warnings }) => {
   if (err) console.log(err)
+})
+----
+
+=== Talk is cheap. Show me the code.
+
+Following you will find a snippet of code with the old client, followed by the same code logic, but with the new client.
+
+[source,js]
+----
+const { Client, errors } = require('elasticsearch')
+const client = new Client({
+  host: 'http://localhost:9200',
+  plugins: [utility]
+})
+
+async function run () {
+  try {
+    const body = await client.search({
+      index: 'game-of-thrones',
+      body: {
+        query: {
+          match: { quote: 'winter' }
+        }
+      }
+      ignore: [404]
+    })
+    console.log(body)
+  } catch (err) {
+    if (err instanceof errors.BadRequest) {
+      console.log('Bad request')
+    } else {
+      console.log(err)
+    }
+  }
+}
+
+function utility (Client, config, components) {
+  const ca = components.clientAction.factory
+  Client.prototype.utility = components.clientAction.namespaceFactory()
+  const utility = Client.prototype.utility.prototype
+
+  utility.index = ca({
+    params: {
+      refresh: {
+        type: 'enum',
+        options: [
+          'true',
+          'false',
+          'wait_for',
+          ''
+        ]
+      },
+    },
+    urls: [
+      {
+        fmt: '/<%=index%>/_doc',
+        req: {
+          index: {
+            type: 'string',
+            required: true
+          }
+        }
+      }
+    ],
+    needBody: true,
+    method: 'POST'
+  })
+})
+----
+
+And now with the new client.
+
+[source,js]
+----
+const { Client, errors } = require('@elastic/elasticsearch')
+// NOTE: `host` has been renamed to `node`,
+//       and `plugins` is no longer supported
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  try {
+    // NOTE: we are using the destructuring assignment
+    const { body } = await client.search({
+      index: 'game-of-thrones',
+      body: {
+        query: {
+          match: { quote: 'winter' }
+        }
+      }
+    // NOTE: `ignore` now is in a separated object
+    }, {
+      ignore: [404]
+    })
+    console.log(body)
+  } catch (err) {
+    // NOTE: we are checking the `statusCode` property
+    if (err.statusCode === 400) {
+      console.log('Bad request')
+    } else {
+      console.log(err)
+    }
+  }
+}
+
+// NOTE: we can still extend the client, but with  a different API.
+//       This new API is a little bit more verbose, since you must write
+//       your own validations, but it's way more flexible.
+client.extend('utility.index', ({ makeRequest, ConfigurationError }) => {
+  return function utilityIndex (params, options) {
+    const { body, index, ...querystring } = params
+    if (body == null) throw new ConfigurationError('Missing body')
+    if (index == null) throw new ConfigurationError('Missing index')
+    const requestParams = {
+      method: 'POST',
+      path: `/${index}/_doc`,
+      body: body,
+      querystring
+    }
+    return makeRequest(requestParams, options)
+  }
 })
 ----

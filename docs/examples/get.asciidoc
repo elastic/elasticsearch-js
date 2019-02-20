@@ -1,0 +1,32 @@
+= Get
+
+The get API allows to get a typed JSON document from the index based on its id. +
+The following example gets a JSON document from an index called `game-of-thrones`, under a type called `_doc`, with id valued `'1'`.
+
+[source,js]
+---------
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  await client.index({
+    index: 'game-of-thrones',
+    id: '1',
+    body: {
+      character: 'Ned Stark',
+      quote: 'Winter is coming.'
+    }
+  })
+
+  const { body } = await client.get({
+    index: 'game-of-thrones',
+    id: '1'
+  })
+
+  console.log(body)
+}
+
+run().catch(console.log)
+---------

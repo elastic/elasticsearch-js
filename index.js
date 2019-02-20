@@ -14,6 +14,15 @@ const buildApi = require('./api')
 class Client extends EventEmitter {
   constructor (opts = {}) {
     super()
+    if (opts.cloud) {
+      const { id, username, password } = opts.cloud
+      // the cloud id is `cluster-name:base64encodedurl`
+      // the url is a string divided by two '$', the first is the cloud url
+      // the second the elasticsearch instance, the third the kibana instance
+      const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
+      opts.node = `https://${username}:${password}@${cloudUrls[1]}.${cloudUrls[0]}`
+    }
+
     if (!opts.node && !opts.nodes) {
       throw new ConfigurationError('Missing node(s) option')
     }
@@ -56,7 +65,10 @@ class Client extends EventEmitter {
       nodeWeighter: options.nodeWeighter,
       nodeSelector: options.nodeSelector,
       Connection: options.Connection,
-      emit: this.emit.bind(this)
+      emit: this.emit.bind(this),
+      sniffEnabled: options.sniffInterval !== false ||
+                    options.sniffOnStart !== false ||
+                    options.sniffOnConnectionFault !== false
     })
 
     // Add the connections before initialize the Transport
@@ -87,7 +99,12 @@ class Client extends EventEmitter {
     })
   }
 
-  extend (name, fn) {
+  extend (name, opts, fn) {
+    if (typeof opts === 'function') {
+      fn = opts
+      opts = {}
+    }
+
     var [namespace, method] = name.split('.')
     if (method == null) {
       method = namespace
@@ -95,7 +112,7 @@ class Client extends EventEmitter {
     }
 
     if (namespace != null) {
-      if (this[namespace] != null && this[namespace][method] != null) {
+      if (this[namespace] != null && this[namespace][method] != null && opts.force !== true) {
         throw new Error(`The method "${method}" already exists on namespace "${namespace}"`)
       }
 
@@ -106,7 +123,7 @@ class Client extends EventEmitter {
         ConfigurationError
       })
     } else {
-      if (this[method] != null) {
+      if (this[method] != null && opts.force !== true) {
         throw new Error(`The method "${method}" already exists`)
       }
 

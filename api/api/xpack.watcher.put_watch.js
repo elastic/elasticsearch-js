@@ -12,16 +12,21 @@ function buildXpackWatcherPutWatch (opts) {
    * @param {string} id - Watch ID
    * @param {boolean} active - Specify whether the watch is in/active by default
    * @param {number} version - Explicit version number for concurrency control
+   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
+   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
    * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
     'active',
-    'version'
+    'version',
+    'if_seq_no',
+    'if_primary_term'
   ]
 
   const snakeCase = {
-
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term'
   }
 
   return function xpackWatcherPutWatch (params, options, callback) {

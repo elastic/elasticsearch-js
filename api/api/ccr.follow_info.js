@@ -3,31 +3,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlCloseJob (opts) {
+function buildCcrFollowInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [ml.close_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html) request
+   * Perform a [ccr.follow_info](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html) request
    *
-   * @param {string} job_id - The name of the job to close
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {boolean} force - True if the job should be forcefully closed
-   * @param {time} timeout - Controls the time to wait until a job has closed. Default to 30 minutes
-   * @param {object} body - The URL params optionally sent in the body
+   * @param {list} index - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
    */
 
   const acceptedQuerystring = [
-    'allow_no_jobs',
-    'force',
-    'timeout'
+
   ]
 
   const snakeCase = {
-    allowNoJobs: 'allow_no_jobs'
 
   }
 
-  return function mlCloseJob (params, options, callback) {
+  return function ccrFollowInfo (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,18 +34,10 @@ function buildMlCloseJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        mlCloseJob(params, options, (err, body) => {
+        ccrFollowInfo(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
-    }
-
-    // check required parameters
-    if (params['job_id'] == null && params['jobId'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: job_id or jobId'),
-        result
-      )
     }
 
     // validate headers object
@@ -64,11 +49,11 @@ function buildMlCloseJob (opts) {
     }
 
     var warnings = null
-    var { method, body, jobId, job_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -78,13 +63,13 @@ function buildMlCloseJob (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'info'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -118,4 +103,4 @@ function buildMlCloseJob (opts) {
   }
 }
 
-module.exports = buildMlCloseJob
+module.exports = buildCcrFollowInfo

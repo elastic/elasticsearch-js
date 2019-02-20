@@ -2,11 +2,18 @@
 
 import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
-import Transport, { ApiResponse, EventMeta, SniffMeta, RequestOptions } from './lib/Transport';
+import Transport, {
+  ApiResponse,
+  EventMeta,
+  SniffMeta,
+  TransportRequestParams,
+  TransportRequestOptions
+} from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
 import ConnectionPool, { nodeSelectorFn, nodeFilterFn, ResurrectMeta } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
-import * as RequestParams from './api/requestParams'
+import * as RequestParams from './api/requestParams';
+import * as errors from './lib/errors';
 
 declare type anyObject = {
   [key: string]: any;
@@ -16,8 +23,26 @@ declare type callbackFn = (err: Error | null, result: ApiResponse) => void;
 interface ApiMethod<T> {
   (callback?: callbackFn): any;
   (params: T, callback?: callbackFn): any;
-  (params: T, options: RequestOptions, callback?: callbackFn): any;
+  (params: T, options: TransportRequestOptions, callback?: callbackFn): any;
 }
+
+// Extend API
+interface ClientExtendsCallbackOptions {
+  ConfigurationError: errors.ConfigurationError,
+  makeRequest(params: TransportRequestParams, options?: TransportRequestOptions): Promise<void> | void;
+  result: {
+    body: null,
+    statusCode: null,
+    headers: null,
+    warnings: null
+  }
+}
+declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
+interface ClientExtends {
+  (method: string, fn: extendsCallback): void;
+  (method: string, opts: { force: boolean }, fn: extendsCallback): void;
+}
+// /Extend API
 
 interface ClientOptions {
   node?: string | string[];
@@ -40,15 +65,19 @@ interface ClientOptions {
   agent?: AgentOptions;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
+  cloud?: {
+    id: string;
+    username: string;
+    password: string;
+  }
 }
 
 declare class Client extends EventEmitter {
+  constructor(opts?: ClientOptions);
   connectionPool: ConnectionPool;
   transport: Transport;
-  serializer: Serializer
-  constructor(opts?: ClientOptions);
-  // TODO: update fn declaration
-  extends(method: string, fn: any): void;
+  serializer: Serializer;
+  extend: ClientExtends;
   close(callback?: Function): Promise<void> | void;
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
@@ -79,6 +108,8 @@ declare class Client extends EventEmitter {
     delete_auto_follow_pattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     deleteAutoFollowPattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     follow: ApiMethod<RequestParams.CcrFollow>
+    follow_info: ApiMethod<RequestParams.CcrFollowInfo>
+    followInfo: ApiMethod<RequestParams.CcrFollowInfo>
     follow_stats: ApiMethod<RequestParams.CcrFollowStats>
     followStats: ApiMethod<RequestParams.CcrFollowStats>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
@@ -297,6 +328,8 @@ declare class Client extends EventEmitter {
     putJob: ApiMethod<RequestParams.MlPutJob>
     revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
+    set_upgrade_mode: ApiMethod<RequestParams.MlSetUpgradeMode>
+    setUpgradeMode: ApiMethod<RequestParams.MlSetUpgradeMode>
     start_datafeed: ApiMethod<RequestParams.MlStartDatafeed>
     startDatafeed: ApiMethod<RequestParams.MlStartDatafeed>
     stop_datafeed: ApiMethod<RequestParams.MlStopDatafeed>
@@ -355,6 +388,8 @@ declare class Client extends EventEmitter {
     clearCachedRealms: ApiMethod<RequestParams.SecurityClearCachedRealms>
     clear_cached_roles: ApiMethod<RequestParams.SecurityClearCachedRoles>
     clearCachedRoles: ApiMethod<RequestParams.SecurityClearCachedRoles>
+    create_api_key: ApiMethod<RequestParams.SecurityCreateApiKey>
+    createApiKey: ApiMethod<RequestParams.SecurityCreateApiKey>
     delete_privileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
     deletePrivileges: ApiMethod<RequestParams.SecurityDeletePrivileges>
     delete_role: ApiMethod<RequestParams.SecurityDeleteRole>
@@ -367,6 +402,8 @@ declare class Client extends EventEmitter {
     disableUser: ApiMethod<RequestParams.SecurityDisableUser>
     enable_user: ApiMethod<RequestParams.SecurityEnableUser>
     enableUser: ApiMethod<RequestParams.SecurityEnableUser>
+    get_api_key: ApiMethod<RequestParams.SecurityGetApiKey>
+    getApiKey: ApiMethod<RequestParams.SecurityGetApiKey>
     get_privileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     getPrivileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     get_role: ApiMethod<RequestParams.SecurityGetRole>
@@ -381,6 +418,8 @@ declare class Client extends EventEmitter {
     getUserPrivileges: ApiMethod<RequestParams.SecurityGetUserPrivileges>
     has_privileges: ApiMethod<RequestParams.SecurityHasPrivileges>
     hasPrivileges: ApiMethod<RequestParams.SecurityHasPrivileges>
+    invalidate_api_key: ApiMethod<RequestParams.SecurityInvalidateApiKey>
+    invalidateApiKey: ApiMethod<RequestParams.SecurityInvalidateApiKey>
     invalidate_token: ApiMethod<RequestParams.SecurityInvalidateToken>
     invalidateToken: ApiMethod<RequestParams.SecurityInvalidateToken>
     put_privileges: ApiMethod<RequestParams.SecurityPutPrivileges>
@@ -510,5 +549,6 @@ export {
   EventMeta,
   SniffMeta,
   ResurrectMeta,
-  RequestParams
+  RequestParams,
+  ClientExtendsCallbackOptions
 };

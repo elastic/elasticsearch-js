@@ -48,12 +48,6 @@ function buildCcrResumeFollow (opts) {
         result
       )
     }
-    if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {

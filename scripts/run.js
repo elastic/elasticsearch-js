@@ -7,7 +7,13 @@ const semver = require('semver')
 const ora = require('ora')
 const rimraf = require('rimraf')
 const standard = require('standard')
-const { generate, cloneAndCheckout, genFactory, generateRequestTypes } = require('./utils')
+const {
+  generate,
+  cloneAndCheckout,
+  genFactory,
+  generateRequestTypes,
+  generateDocs
+} = require('./utils')
 
 start(minimist(process.argv.slice(2), {
   string: ['tag']
@@ -23,6 +29,7 @@ function start (opts) {
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const typesOutputFile = join(packageFolder, 'generated.d.ts')
+  const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
   const allSpec = []
 
@@ -35,8 +42,11 @@ function start (opts) {
       return
     }
 
-    readdirSync(apiFolder).forEach(generateApiFile(apiFolder, log))
-    readdirSync(xPackFolder).forEach(generateApiFile(xPackFolder, log))
+    const apiFolderContents = readdirSync(apiFolder)
+    const xPackFolderContents = readdirSync(xPackFolder)
+
+    apiFolderContents.forEach(generateApiFile(apiFolder, log))
+    xPackFolderContents.forEach(generateApiFile(xPackFolder, log))
 
     writeFileSync(
       requestParamsOutputFile,
@@ -55,7 +65,21 @@ function start (opts) {
       types,
       { encoding: 'utf8' }
     )
-    lintFiles(log)
+
+    lintFiles(log, () => {
+      log.text = 'Generating documentation'
+      const allSpec = apiFolderContents.filter(f => f !== '_common.json')
+        .map(f => require(join(apiFolder, f)))
+        .concat(xPackFolderContents.map(f => require(join(xPackFolder, f))))
+      writeFileSync(
+        docOutputFile,
+        generateDocs(require(join(apiFolder, '_common.json')), allSpec),
+        { encoding: 'utf8' }
+      )
+
+      log.succeed('Done!')
+      console.log('Remember to copy the generated types into the index.d.ts file')
+    })
   })
 
   function generateApiFile (apiFolder, log) {
@@ -77,15 +101,14 @@ function start (opts) {
     }
   }
 
-  function lintFiles (log) {
+  function lintFiles (log, cb) {
     log.text = 'Linting...'
     const files = [join(packageFolder, '*.js'), join(apiOutputFolder, '*.js')]
     standard.lintFiles(files, { fix: true }, err => {
       if (err) {
         return log.fail(err.message)
       }
-      log.succeed('Done!')
-      console.log('Remember to copy the generated types into the index.d.ts file')
+      cb()
     })
   }
 }

@@ -34,6 +34,8 @@ The returned value of every API call is formed as follows:
 }
 ----
 
+NOTE: The body will be a boolean value when using `HEAD` APIs.
+
 The above valiue will be returned even if there is an error during the execution of the request, this means that you can safely use the https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[destructuring assignment].
 
 [source,js]

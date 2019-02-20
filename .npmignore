@@ -51,5 +51,16 @@ elasticsearch*
 # because we should copy them in the main .d.ts file
 api/generated.d.ts
 
-# certificates
-.ci/certs
+# Ignore doc folder
+docs
+
+# Ignore test folder
+test
+
+# Ignore scripts folder
+scripts
+
+# ci configuration
+.ci
+.travis.yml
+certs

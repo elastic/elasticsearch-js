@@ -79,28 +79,9 @@ function buildCreate (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
-        result
-      )
-    }
-
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -128,7 +109,11 @@ function buildCreate (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
+    }
 
     // build request object
     const request = {

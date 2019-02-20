@@ -429,6 +429,28 @@ test('Extend client APIs', t => {
     }
   })
 
+  t.test('Can override an existing method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('index', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
+  t.test('Can override an existing namespace and method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('indices.delete', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
   t.test('Should call the transport.request method', t => {
     t.plan(2)
 
@@ -495,4 +517,31 @@ test('Extend client APIs', t => {
   })
 
   t.end()
+})
+
+test('Elastic cloud config', t => {
+  t.plan(1)
+  const client = new Client({
+    cloud: {
+      // 'localhost$abcd$efgh'
+      id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+      username: 'elastic',
+      password: 'changeme'
+    }
+  })
+
+  const pool = client.connectionPool
+  t.match(pool.connections.get('https://abcd.localhost/'), {
+    url: new URL('https://elastic:changeme@abcd.localhost'),
+    id: 'https://abcd.localhost/',
+    ssl: null,
+    deadCount: 0,
+    resurrectTimeout: 0,
+    roles: {
+      master: true,
+      data: true,
+      ingest: true,
+      ml: false
+    }
+  })
 })

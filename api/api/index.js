@@ -20,6 +20,8 @@ function buildIndex (opts) {
    * @param {time} timeout - Explicit operation timeout
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
+   * @param {number} if_seq_no - only perform the index operation if the last operation that has changed the document has the specified sequence number
+   * @param {number} if_primary_term - only perform the index operation if the last operation that has changed the document has the specified primary term
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The document
    */
@@ -33,6 +35,8 @@ function buildIndex (opts) {
     'timeout',
     'version',
     'version_type',
+    'if_seq_no',
+    'if_primary_term',
     'pipeline',
     'pretty',
     'human',
@@ -45,6 +49,8 @@ function buildIndex (opts) {
     waitForActiveShards: 'wait_for_active_shards',
     opType: 'op_type',
     versionType: 'version_type',
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

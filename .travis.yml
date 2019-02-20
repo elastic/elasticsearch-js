@@ -11,12 +11,12 @@ node_js:
 
 env:
   global:
-    - ELASTICSEARCH_VERSION=7.0.0-alpha2
+    - ELASTICSEARCH_VERSION=7.0.0-beta1
     - QUIET=true
 
 before_install:
-  - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
-  - tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz
+  - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz
+  - tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz
   - ./elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*' &> /dev/null &
 
 install:

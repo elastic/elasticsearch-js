@@ -11,7 +11,7 @@ function buildIndicesGetMapping (opts) {
    *
    * @param {list} index - A comma-separated list of index names
    * @param {list} type - A comma-separated list of document types
-   * @param {string} include_type_name - Whether to add the type name to the response
+   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.

@@ -10,6 +10,7 @@ function buildIndicesGet (opts) {
    * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
    *
    * @param {list} index - A comma-separated list of index names
+   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
    * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
@@ -20,6 +21,7 @@ function buildIndicesGet (opts) {
    */
 
   const acceptedQuerystring = [
+    'include_type_name',
     'local',
     'ignore_unavailable',
     'allow_no_indices',
@@ -35,6 +37,7 @@ function buildIndicesGet (opts) {
   ]
 
   const snakeCase = {
+    includeTypeName: 'include_type_name',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
