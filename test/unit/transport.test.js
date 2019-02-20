@@ -1859,3 +1859,122 @@ test('Compress request', t => {
 
   t.end()
 })
+
+test('Headers configuration', t => {
+  t.test('Global option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, { 'x-foo': 'bar' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Global option and custom option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'x-foo': 'bar',
+        'x-baz': 'faz'
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        headers: { 'x-baz': 'faz' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Custom options should override global option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, { 'x-foo': 'faz' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        headers: { 'x-foo': 'faz' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.end()
+})
