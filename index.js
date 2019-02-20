@@ -62,6 +62,7 @@ class Client extends EventEmitter {
 
     this[kInitialOptions] = options
     this[kExtensions] = []
+    this[kEmitter] = opts[kEmitter]
 
     this.serializer = new options.Serializer()
     this.connectionPool = new options.ConnectionPool({
@@ -70,7 +71,7 @@ class Client extends EventEmitter {
       ssl: options.ssl,
       agent: options.agent,
       Connection: options.Connection,
-      emit: opts[kEmitter] || this.emit.bind(this),
+      emit: this[kEmitter] || this.emit.bind(this),
       sniffEnabled: options.sniffInterval !== false ||
                     options.sniffOnStart !== false ||
                     options.sniffOnConnectionFault !== false
@@ -82,7 +83,7 @@ class Client extends EventEmitter {
     }
 
     this.transport = new options.Transport({
-      emit: opts[kEmitter] || this.emit.bind(this),
+      emit: this[kEmitter] || this.emit.bind(this),
       connectionPool: this.connectionPool,
       serializer: this.serializer,
       maxRetries: options.maxRetries,
@@ -153,12 +154,15 @@ class Client extends EventEmitter {
     // Tell to the client that we are creating a child client
     initialOptions[kChild] = true
     // Share the event emitter
-    initialOptions[kEmitter] = this.emit.bind(this)
+    const emitter = this[kEmitter] || this.emit
+    initialOptions[kEmitter] = emitter.bind(this)
 
     const client = new Client(initialOptions)
-    // Reuse the same connections map
+    // Reuse the same connection pool
     client.connectionPool = this.connectionPool
     client.transport.connectionPool = this.connectionPool
+    // Share event listener
+    client.on = this.on.bind(this)
     // Add parent extensions
     this[kExtensions].forEach(({ name, opts, fn }) => {
       client.extend(name, opts, fn)
