@@ -50,6 +50,7 @@ class Client extends EventEmitter {
       compression: false,
       ssl: null,
       agent: null,
+      headers: {},
       nodeFilter: null,
       nodeWeighter: null,
       nodeSelector: 'round-robin'
@@ -85,7 +86,8 @@ class Client extends EventEmitter {
       sniffOnConnectionFault: options.sniffOnConnectionFault,
       sniffEndpoint: options.sniffEndpoint,
       suggestCompression: options.suggestCompression,
-      compression: options.compression
+      compression: options.compression,
+      headers: options.headers
     })
 
     const apis = buildApi({
