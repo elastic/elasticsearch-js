@@ -116,19 +116,60 @@ test('Client extensions', t => {
 })
 
 test('Should share the event emitter', t => {
-  t.plan(2)
+  t.test('One level', t => {
+    t.plan(2)
 
-  const client = new Client({
-    node: 'http://localhost:9200',
-    Connection: MockConnection
-  })
-  const child = client.child()
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    const child = client.child()
 
-  client.on('response', (err, meta) => {
-    t.error(err)
+    client.on('response', (err, meta) => {
+      t.error(err)
+    })
+
+    child.info((err, res) => {
+      t.error(err)
+    })
   })
 
-  child.info((err, res) => {
-    t.error(err)
+  t.test('Two levels', t => {
+    t.plan(2)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    const child = client.child()
+    const grandchild = child.child()
+
+    client.on('response', (err, meta) => {
+      t.error(err)
+    })
+
+    grandchild.info((err, res) => {
+      t.error(err)
+    })
   })
+
+  t.test('Child listener', t => {
+    t.plan(2)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    const child = client.child()
+
+    child.on('response', (err, meta) => {
+      t.error(err)
+    })
+
+    child.info((err, res) => {
+      t.error(err)
+    })
+  })
+
+  t.end()
 })
