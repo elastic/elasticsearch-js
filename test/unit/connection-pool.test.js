@@ -4,6 +4,7 @@ const { test } = require('tap')
 const { URL } = require('url')
 const ConnectionPool = require('../../lib/ConnectionPool')
 const Connection = require('../../lib/Connection')
+const { defaultNodeFilter, roundRobinSelector } = require('../../lib/Transport').internals
 const { connection: { MockConnection, MockConnectionTimeout } } = require('../utils')
 
 test('API', t => {
@@ -225,22 +226,6 @@ test('API', t => {
         return true
       }
       pool.getConnection({ filter })
-    })
-
-    t.test('filter as ConnectionPool option', t => {
-      t.plan(3)
-
-      const href1 = 'http://localhost:9200/'
-      const href2 = 'http://localhost:9200/other'
-      const pool = new ConnectionPool({
-        Connection,
-        nodeFilter: node => {
-          t.ok('called')
-          return true
-        }
-      })
-      pool.addConnection([href1, href2])
-      t.strictEqual(pool.getConnection().id, href1)
     })
 
     t.end()
@@ -498,27 +483,16 @@ test('API', t => {
 test('Node selector', t => {
   t.test('round-robin', t => {
     t.plan(1)
-    const pool = new ConnectionPool({ Connection, nodeSelector: 'round-robin' })
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection('http://localhost:9200/')
-    t.true(pool.getConnection() instanceof Connection)
+    t.true(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
   })
 
   t.test('random', t => {
     t.plan(1)
-    const pool = new ConnectionPool({ Connection, nodeSelector: 'random' })
+    const pool = new ConnectionPool({ Connection })
     pool.addConnection('http://localhost:9200/')
-    t.true(pool.getConnection() instanceof Connection)
-  })
-
-  t.test('custom function', t => {
-    t.plan(2)
-    const nodeSelector = connections => {
-      t.ok('called')
-      return connections[0]
-    }
-    const pool = new ConnectionPool({ Connection, nodeSelector })
-    pool.addConnection('http://localhost:9200/')
-    t.true(pool.getConnection() instanceof Connection)
+    t.true(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
   })
 
   t.end()
@@ -529,7 +503,7 @@ test('Node filter', t => {
     t.plan(1)
     const pool = new ConnectionPool({ Connection })
     pool.addConnection({ url: new URL('http://localhost:9200/') })
-    t.true(pool.getConnection() instanceof Connection)
+    t.true(pool.getConnection({ filter: defaultNodeFilter }) instanceof Connection)
   })
 
   t.test('Should filter master only nodes', t => {
@@ -544,29 +518,7 @@ test('Node filter', t => {
         ml: false
       }
     })
-    t.strictEqual(pool.getConnection(), null)
-  })
-
-  t.test('custom', t => {
-    t.plan(2)
-    const nodeFilter = node => {
-      t.ok('called')
-      return true
-    }
-    const pool = new ConnectionPool({ Connection, nodeFilter })
-    pool.addConnection({ url: new URL('http://localhost:9200/') })
-    t.true(pool.getConnection() instanceof Connection)
-  })
-
-  t.test('custom (filter)', t => {
-    t.plan(2)
-    const nodeFilter = node => {
-      t.ok('called')
-      return false
-    }
-    const pool = new ConnectionPool({ Connection, nodeFilter })
-    pool.addConnection({ url: new URL('http://localhost:9200/') })
-    t.strictEqual(pool.getConnection(), null)
+    t.strictEqual(pool.getConnection({ filter: defaultNodeFilter }), null)
   })
 
   t.end()

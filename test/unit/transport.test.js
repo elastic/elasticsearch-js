@@ -1978,3 +1978,36 @@ test('Headers configuration', t => {
 
   t.end()
 })
+
+test('nodeFilter and nodeSelector', t => {
+  t.plan(4)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false,
+    nodeFilter: () => {
+      t.ok('called')
+      return true
+    },
+    nodeSelector: conns => {
+      t.ok('called')
+      return conns[0]
+    }
+  })
+
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.error(err)
+    t.deepEqual(body, { hello: 'world' })
+  })
+})

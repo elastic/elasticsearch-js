@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { roundRobinSelector, randomSelector } = require('../../lib/ConnectionPool').internals
+const { roundRobinSelector, randomSelector } = require('../../lib/Transport').internals
 
 test('RoundRobinSelector', t => {
   const selector = roundRobinSelector()
