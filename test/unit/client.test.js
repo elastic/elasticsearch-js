@@ -520,28 +520,52 @@ test('Extend client APIs', t => {
 })
 
 test('Elastic cloud config', t => {
-  t.plan(1)
-  const client = new Client({
-    cloud: {
-      // 'localhost$abcd$efgh'
-      id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
-      username: 'elastic',
-      password: 'changeme'
-    }
+  t.test('Basic', t => {
+    t.plan(3)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+        username: 'elastic',
+        password: 'changeme'
+      }
+    })
+
+    const pool = client.connectionPool
+    t.match(pool.connections.get('https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      ssl: null,
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
   })
 
-  const pool = client.connectionPool
-  t.match(pool.connections.get('https://abcd.localhost/'), {
-    url: new URL('https://elastic:changeme@abcd.localhost'),
-    id: 'https://abcd.localhost/',
-    ssl: null,
-    deadCount: 0,
-    resurrectTimeout: 0,
-    roles: {
-      master: true,
-      data: true,
-      ingest: true,
-      ml: false
-    }
+  t.test('Override compression options', t => {
+    t.plan(2)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+        username: 'elastic',
+        password: 'changeme'
+      },
+      compression: false,
+      suggestCompression: false
+    })
+
+    t.strictEqual(client.transport.compression, false)
+    t.strictEqual(client.transport.suggestCompression, false)
   })
+
+  t.end()
 })
