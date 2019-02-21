@@ -153,7 +153,7 @@ test('Should share the event emitter', t => {
     })
   })
 
-  t.test('Child listener', t => {
+  t.test('Child listener - one level', t => {
     t.plan(2)
 
     const client = new Client({
@@ -167,6 +167,25 @@ test('Should share the event emitter', t => {
     })
 
     child.info((err, res) => {
+      t.error(err)
+    })
+  })
+
+  t.test('Child listener - two levels', t => {
+    t.plan(2)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    const child = client.child()
+    const grandchild = child.child()
+
+    child.on('response', (err, meta) => {
+      t.error(err)
+    })
+
+    grandchild.info((err, res) => {
       t.error(err)
     })
   })
