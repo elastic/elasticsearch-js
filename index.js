@@ -12,7 +12,6 @@ const { ConfigurationError } = errors
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
-const kEmitter = Symbol('elasticsearchjs-emitter')
 
 const buildApi = require('./api')
 
@@ -62,7 +61,6 @@ class Client extends EventEmitter {
 
     this[kInitialOptions] = options
     this[kExtensions] = []
-    this[kEmitter] = opts[kEmitter]
 
     this.serializer = new options.Serializer()
     this.connectionPool = new options.ConnectionPool({
@@ -71,7 +69,7 @@ class Client extends EventEmitter {
       ssl: options.ssl,
       agent: options.agent,
       Connection: options.Connection,
-      emit: this[kEmitter] || this.emit.bind(this),
+      emit: this.emit.bind(this),
       sniffEnabled: options.sniffInterval !== false ||
                     options.sniffOnStart !== false ||
                     options.sniffOnConnectionFault !== false
@@ -83,7 +81,7 @@ class Client extends EventEmitter {
     }
 
     this.transport = new options.Transport({
-      emit: this[kEmitter] || this.emit.bind(this),
+      emit: this.emit.bind(this),
       connectionPool: this.connectionPool,
       serializer: this.serializer,
       maxRetries: options.maxRetries,
@@ -153,15 +151,16 @@ class Client extends EventEmitter {
     const initialOptions = Object.assign({}, this[kInitialOptions], opts)
     // Tell to the client that we are creating a child client
     initialOptions[kChild] = true
-    // Share the event emitter
-    const emitter = this[kEmitter] || this.emit
-    initialOptions[kEmitter] = emitter.bind(this)
 
     const client = new Client(initialOptions)
     // Reuse the same connection pool
     client.connectionPool = this.connectionPool
     client.transport.connectionPool = this.connectionPool
     // Share event listener
+    const emitter = this.emit.bind(this)
+    client.emit = emitter
+    client.connectionPool.emit = emitter
+    client.transport.emit = emitter
     client.on = this.on.bind(this)
     // Add parent extensions
     this[kExtensions].forEach(({ name, opts, fn }) => {
