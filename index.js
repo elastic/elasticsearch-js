@@ -25,6 +25,12 @@ class Client extends EventEmitter {
       // the second the elasticsearch instance, the third the kibana instance
       const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
       opts.node = `https://${username}:${password}@${cloudUrls[1]}.${cloudUrls[0]}`
+
+      // Cloud has better performances with compression enabled
+      // see https://github.com/elastic/elasticsearch-py/pull/704.
+      // So unless the user specifies otherwise, we enable compression.
+      if (opts.compression == null) opts.compression = 'gzip'
+      if (opts.suggestCompression == null) opts.suggestCompression = true
     }
 
     if (!opts.node && !opts.nodes) {
