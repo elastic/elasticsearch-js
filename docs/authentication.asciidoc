@@ -48,9 +48,12 @@ const client = new Client({
 == Elastic Cloud
 
 If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers a easy way to connect to it via the `cloud` option. +
-You must pass the cloud id that you can find in the cloud console, then your username and password.
+You must pass the Cloud ID that you can find in the cloud console, then your username and password.
 
-NOTE: Do not enable sniffing when using Elastic Cloud, since the nodes are behind a load balancer, the Cloud will take care of everything.
+NOTE: When connecting to Elastic Cloud, the client will automatically enable both request and response compression by default, since it yields significant throughput improvements. +
+You can still disable the compression with `{ compression: false, suggestCompression: false }`.
+
+IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are behind a load balancer, Elastic Cloud will take care of everything for you.
 
 [source,js]
 ----

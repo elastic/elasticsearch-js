@@ -7,10 +7,12 @@ import Transport, {
   EventMeta,
   SniffMeta,
   TransportRequestParams,
-  TransportRequestOptions
+  TransportRequestOptions,
+  nodeFilterFn,
+  nodeSelectorFn
 } from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
-import ConnectionPool, { nodeSelectorFn, nodeFilterFn, ResurrectMeta } from './lib/ConnectionPool';
+import ConnectionPool, { ResurrectMeta } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
@@ -65,6 +67,7 @@ interface ClientOptions {
   agent?: AgentOptions;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
+  headers?: anyObject;
   cloud?: {
     id: string;
     username: string;
@@ -78,6 +81,7 @@ declare class Client extends EventEmitter {
   transport: Transport;
   serializer: Serializer;
   extend: ClientExtends;
+  child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
