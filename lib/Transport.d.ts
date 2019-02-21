@@ -2,6 +2,14 @@ import ConnectionPool from './ConnectionPool';
 import Connection from './Connection';
 import Serializer from './Serializer';
 
+export interface nodeSelectorFn {
+  (connections: Connection[]): Connection;
+}
+
+export interface nodeFilterFn {
+  (connection: Connection): boolean;
+}
+
 declare type noopFn = (...args: any[]) => void;
 declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
 
@@ -17,6 +25,9 @@ interface TransportOptions {
   sniffOnConnectionFault: boolean;
   sniffEndpoint: string;
   sniffOnStart: boolean;
+  nodeFilter?: nodeFilterFn;
+  nodeSelector?: string | nodeSelectorFn;
+  headers?: anyObject;
 }
 
 export interface ApiResponse {
