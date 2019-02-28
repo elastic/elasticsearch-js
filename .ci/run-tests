@@ -10,4 +10,6 @@
 #   - $NODE_JS_VERSION
 #
 
-ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client
+ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-oss
+
+ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-platinum
