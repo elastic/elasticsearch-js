@@ -31,16 +31,15 @@ class Client extends EventEmitter {
       // So unless the user specifies otherwise, we enable compression.
       if (opts.compression == null) opts.compression = 'gzip'
       if (opts.suggestCompression == null) opts.suggestCompression = true
+      if (opts.ssl == null ||
+         (opts.ssl && opts.ssl.secureProtocol == null)) {
+        opts.ssl = opts.ssl || {}
+        opts.ssl.secureProtocol = 'TLSv1_2_method'
+      }
     }
 
     if (!opts.node && !opts.nodes) {
       throw new ConfigurationError('Missing node(s) option')
-    }
-
-    if (opts.log === true) {
-      this.on('request', console.log)
-      this.on('response', console.log)
-      this.on('error', console.log)
     }
 
     const options = Object.assign({}, {
