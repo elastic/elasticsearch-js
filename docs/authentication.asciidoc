@@ -51,7 +51,8 @@ If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers 
 You must pass the Cloud ID that you can find in the cloud console, then your username and password.
 
 NOTE: When connecting to Elastic Cloud, the client will automatically enable both request and response compression by default, since it yields significant throughput improvements. +
-You can still disable the compression with `{ compression: false, suggestCompression: false }`.
+Moreover, the client will also set the ssl option `secureProtocol` to `TLSv1_2_method` unless specified otherwise.
+You can still override this option by configuring them.
 
 IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are behind a load balancer, Elastic Cloud will take care of everything for you.
 
