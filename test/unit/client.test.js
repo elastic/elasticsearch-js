@@ -521,7 +521,7 @@ test('Extend client APIs', t => {
 
 test('Elastic cloud config', t => {
   t.test('Basic', t => {
-    t.plan(3)
+    t.plan(4)
     const client = new Client({
       cloud: {
         // 'localhost$abcd$efgh'
@@ -535,7 +535,7 @@ test('Elastic cloud config', t => {
     t.match(pool.connections.get('https://abcd.localhost/'), {
       url: new URL('https://elastic:changeme@abcd.localhost'),
       id: 'https://abcd.localhost/',
-      ssl: null,
+      ssl: { secureProtocol: 'TLSv1_2_method' },
       deadCount: 0,
       resurrectTimeout: 0,
       roles: {
@@ -548,10 +548,11 @@ test('Elastic cloud config', t => {
 
     t.strictEqual(client.transport.compression, 'gzip')
     t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
-  t.test('Override compression options', t => {
-    t.plan(2)
+  t.test('Override default options', t => {
+    t.plan(3)
     const client = new Client({
       cloud: {
         // 'localhost$abcd$efgh'
@@ -560,11 +561,15 @@ test('Elastic cloud config', t => {
         password: 'changeme'
       },
       compression: false,
-      suggestCompression: false
+      suggestCompression: false,
+      ssl: {
+        secureProtocol: 'TLSv1_1_method'
+      }
     })
 
     t.strictEqual(client.transport.compression, false)
     t.strictEqual(client.transport.suggestCompression, false)
+    t.deepEqual(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
   })
 
   t.end()
