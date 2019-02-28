@@ -62,7 +62,7 @@ function buildMlDeleteCalendarJob (opts) {
     }
 
     // check required url components
-    if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null || params['calendarId']))) {
+    if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: calendar_id'),
         result

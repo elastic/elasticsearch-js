@@ -80,7 +80,13 @@ function buildSecurityGetPrivileges (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
+    if (application && name) {
+      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
+    } else if (application) {
+      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application)
+    } else {
+      path = '/' + '_security' + '/' + 'privilege'
+    }
 
     // build request object
     const request = {
