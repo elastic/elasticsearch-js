@@ -69,6 +69,22 @@ function Runner (opts) {
   this.log = ora('Loading yaml suite').start()
 }
 
+Runner.prototype.waitCluster = function (callback, times = 0) {
+  this.log.text = 'Waiting for ElasticSearch'
+  this.client.cluster.health(
+    { waitForStatus: 'green', timeout: '50s' },
+    (err, res) => {
+      if (++times < 10) {
+        setTimeout(() => {
+          this.waitCluster(callback, times)
+        }, 5000)
+      } else {
+        callback(err)
+      }
+    }
+  )
+}
+
 /**
  * Runs the test suite
  */
@@ -86,19 +102,24 @@ Runner.prototype.start = function (opts) {
   //   console.log()
   // })
 
-  // Get the build hash of Elasticsearch
-  client.info((err, { body }) => {
+  this.waitCluster(err => {
     if (err) {
-      console.log(err)
       this.log.fail(err.message)
       process.exit(1)
     }
-    const { number: version, build_hash: sha } = body.version
+    // Get the build hash of Elasticsearch
+    client.info((err, { body }) => {
+      if (err) {
+        this.log.fail(err.message)
+        process.exit(1)
+      }
+      const { number: version, build_hash: sha } = body.version
 
-    // Set the repository to the given sha and run the test suite
-    this.withSHA(sha, () => {
-      this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
-      runTest.call(this, version)
+      // Set the repository to the given sha and run the test suite
+      this.withSHA(sha, () => {
+        this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
+        runTest.call(this, version)
+      })
     })
   })
 
@@ -153,7 +174,12 @@ Runner.prototype.start = function (opts) {
           }
           // create a subtest for the specific folder + test file + test name
           tap1.test(name, { jobs: 1, bail: this.bailout }, tap2 => {
-            const testRunner = TestRunner({ client, version, tap: tap2, isPlatinum: opts.isPlatinum })
+            const testRunner = TestRunner({
+              client,
+              version,
+              tap: tap2,
+              isPlatinum: file.includes('x-pack')
+            })
             testRunner.run(setupTest, test[name], teardownTest, () => tap2.end())
           })
         })
