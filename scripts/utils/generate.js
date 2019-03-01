@@ -34,6 +34,7 @@ const ndjsonApi = [
   'bulk',
   'msearch',
   'msearch_template',
+  'ml.find_file_structure',
   'monitoring.bulk'
 ]
 
@@ -448,7 +449,7 @@ function genUrlValidation (paths, api) {
       if (chunks[i] === camelCased) {
         code += `params['${chunks[i]}'] == null${i === len - 1 ? '' : ' || '}`
       } else {
-        code += `(params['${chunks[i]}'] == null || params['${camelCased}'])${i === len - 1 ? '' : ' || '}`
+        code += `(params['${chunks[i]}'] == null && params['${camelCased}'] == null)${i === len - 1 ? '' : ' || '}`
       }
     }
     code += `)) {

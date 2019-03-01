@@ -56,7 +56,7 @@ function buildXpackWatcherAckWatch (opts) {
     }
 
     // check required url components
-    if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null || params['watchId']))) {
+    if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null && params['watchId'] == null))) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: watch_id'),
         result

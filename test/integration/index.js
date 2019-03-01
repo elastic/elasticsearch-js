@@ -6,7 +6,6 @@ const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const Git = require('simple-git')
 const ora = require('ora')
-const minimist = require('minimist')
 const tap = require('tap')
 const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
@@ -14,7 +13,7 @@ const TestRunner = require('./test-runner')
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
-// const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
@@ -23,6 +22,31 @@ const customSkips = [
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml'
 ]
+const platinumBlackList = {
+  // file path: test name
+  'cat.aliases/10_basic.yml': 'Empty cluster',
+  'index/10_with_id.yml': 'Index with ID',
+  'indices.get_alias/10_basic.yml': 'Get alias against closed indices',
+  'indices.get_alias/20_empty.yml': 'Check empty aliases when getting all aliases via /_alias',
+  // https://github.com/elastic/elasticsearch/pull/39400
+  'ml/jobs_crud.yml': 'Test put job with id that is already taken',
+  // TODO: investigate why this is failing
+  'monitoring/bulk/10_basic.yml': '*',
+  'monitoring/bulk/20_privileges.yml': '*',
+  'license/20_put_license.yml': '*',
+  'snapshot/10_basic.yml': '*',
+  // the body is correct, but the regex is failing
+  'sql/sql.yml': 'Getting textual representation',
+  // we are setting two certificates in the docker config
+  'ssl/10_basic.yml': '*',
+  // docker issue?
+  'watcher/execute_watch/60_http_input.yml': '*',
+  // the checks are correct, but for some reason the test is failing on js side
+  // I bet is because the backslashes in the rg
+  'watcher/execute_watch/70_invalid.yml': '*',
+  'watcher/put_watch/10_basic.yml': '*',
+  'xpack/15_basic.yml': '*'
+}
 
 function Runner (opts) {
   if (!(this instanceof Runner)) {
@@ -32,14 +56,39 @@ function Runner (opts) {
 
   assert(opts.node, 'Missing base node')
   this.bailout = opts.bailout
-  this.client = new Client({ node: opts.node })
+  const options = { node: opts.node }
+  if (opts.isPlatinum) {
+    options.ssl = {
+      // NOTE: this path works only if we run
+      // the suite with npm scripts
+      ca: readFileSync('.ci/certs/ca.crt', 'utf8'),
+      rejectUnauthorized: false
+    }
+  }
+  this.client = new Client(options)
   this.log = ora('Loading yaml suite').start()
+}
+
+Runner.prototype.waitCluster = function (callback, times = 0) {
+  this.log.text = 'Waiting for ElasticSearch'
+  this.client.cluster.health(
+    { waitForStatus: 'green', timeout: '50s' },
+    (err, res) => {
+      if (++times < 10) {
+        setTimeout(() => {
+          this.waitCluster(callback, times)
+        }, 5000)
+      } else {
+        callback(err)
+      }
+    }
+  )
 }
 
 /**
  * Runs the test suite
  */
-Runner.prototype.start = function () {
+Runner.prototype.start = function (opts) {
   const parse = this.parse.bind(this)
   const client = this.client
 
@@ -53,36 +102,36 @@ Runner.prototype.start = function () {
   //   console.log()
   // })
 
-  // Get the build hash of Elasticsearch
-  client.info((err, { body }) => {
+  this.waitCluster(err => {
     if (err) {
       this.log.fail(err.message)
       process.exit(1)
     }
-    const { number: version, build_hash: sha } = body.version
+    // Get the build hash of Elasticsearch
+    client.info((err, { body }) => {
+      if (err) {
+        this.log.fail(err.message)
+        process.exit(1)
+      }
+      const { number: version, build_hash: sha } = body.version
 
-    // Set the repository to the given sha and run the test suite
-    this.withSHA(sha, () => {
-      this.log.succeed('Done!')
-      runTest.call(this, version)
+      // Set the repository to the given sha and run the test suite
+      this.withSHA(sha, () => {
+        this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
+        runTest.call(this, version)
+      })
     })
-
-    // client.xpack.license.postStartTrial({ acknowledge: true }, (err, { body }) => {
-    //   if (err) {
-    //     this.log.fail(err.message)
-    //     return
-    //   }
-    // })
   })
 
   function runTest (version) {
     const files = []
       .concat(getAllFiles(yamlFolder))
-      // .concat(getAllFiles(xPackYamlFolder))
+      .concat(opts.isPlatinum ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
 
     files.forEach(runTestFile.bind(this))
     function runTestFile (file) {
+      // if (!file.endsWith('watcher/execute_watch/70_invalid.yml')) return
       for (var i = 0; i < customSkips.length; i++) {
         if (file.endsWith(customSkips[i])) return
       }
@@ -94,7 +143,7 @@ Runner.prototype.start = function () {
         // every document is separated by '---', so we split on the separator
         // and then we remove the empty strings, finally we parse them
         const tests = data
-          .split('---')
+          .split('\n---\n')
           .map(s => s.trim())
           .filter(Boolean)
           .map(parse)
@@ -111,9 +160,26 @@ Runner.prototype.start = function () {
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
+          // should skip the test inside `platinumBlackList`
+          // if we are testing the platinum apis
+          if (opts.isPlatinum) {
+            const list = Object.keys(platinumBlackList)
+            for (i = 0; i < list.length; i++) {
+              if (file.endsWith(list[i]) && (name === platinumBlackList[list[i]] || platinumBlackList[list[i]] === '*')) {
+                const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
+                tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
+                return
+              }
+            }
+          }
           // create a subtest for the specific folder + test file + test name
           tap1.test(name, { jobs: 1, bail: this.bailout }, tap2 => {
-            const testRunner = TestRunner({ client, version, tap: tap2 })
+            const testRunner = TestRunner({
+              client,
+              version,
+              tap: tap2,
+              isPlatinum: file.includes('x-pack')
+            })
             testRunner.run(setupTest, test[name], teardownTest, () => tap2.end())
           })
         })
@@ -245,19 +311,13 @@ Runner.prototype.createFolder = function (name) {
 }
 
 if (require.main === module) {
-  const opts = minimist(process.argv.slice(2), {
-    string: ['node', 'version'],
-    boolean: ['bailout'],
-    default: {
-      // node: 'http://elastic:passw0rd@localhost:9200',
-      node: process.env.TEST_ES_SERVER || 'http://localhost:9200',
-      version: '7.0',
-      bailout: false
-    }
-  })
-
+  const url = process.env.TEST_ES_SERVER || 'http://localhost:9200'
+  const opts = {
+    node: url,
+    isPlatinum: url.indexOf('@') > -1
+  }
   const runner = Runner(opts)
-  runner.start()
+  runner.start(opts)
 }
 
 const getAllFiles = dir =>

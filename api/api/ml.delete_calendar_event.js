@@ -62,7 +62,7 @@ function buildMlDeleteCalendarEvent (opts) {
     }
 
     // check required url components
-    if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null || params['calendarId']))) {
+    if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: calendar_id'),
         result

@@ -60,7 +60,7 @@ function buildMlDeleteForecast (opts) {
     }
 
     // check required url components
-    if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null || params['jobId']))) {
+    if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: job_id'),
         result

@@ -1,6 +1,6 @@
 version: '3.2'
 services:
-  client:
+  client-oss:
     image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-10}
     build:
       context: ..
@@ -8,7 +8,7 @@ services:
       args:
           NODE_JS_VERSION: ${NODE_JS_VERSION:-10}
     environment:
-      - "TEST_ES_SERVER=http://elasticsearch:9200"
+      - "TEST_ES_SERVER=http://elasticsearch-oss:9200"
     volumes:
       - ..:/usr/src/app
       # This will mount the node_modules directory
@@ -16,15 +16,17 @@ services:
       - /usr/src/app/node_modules
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     depends_on:
-      - elasticsearch
-  elasticsearch:
+      - elasticsearch-oss
+
+  elasticsearch-oss:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
+      - elasticsearch
     volumes:
       - esvol:/tmp
     networks:
-      - esnet
+      - esnet-oss
     environment:
       - path.repo=/tmp
       - "repositories.url.allowed_urls=http://snapshot.*"
@@ -32,7 +34,59 @@ services:
       - bootstrap.memory_lock=false
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  client-platinum:
+    image: docker.elastic.co/clients/elasticsearch-js:${NODE_JS_VERSION:-10}
+    build:
+      context: ..
+      dockerfile: .ci/Dockerfile
+      args:
+          NODE_JS_VERSION: ${NODE_JS_VERSION:-10}
+    environment:
+      - "TEST_ES_SERVER=https://elastic:changeme@elasticsearch-platinum:9200"
+    volumes:
+      - ..:/usr/src/app
+      # This will mount the node_modules directory
+      # to the host machine using the buildtime directory.
+      - /usr/src/app/node_modules
+      - esvol:/tmp
+    networks:
+      - esnet-platinum
+    depends_on:
+      - elasticsearch-platinum
+
+  elasticsearch-platinum:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
+    ports:
+      - "9200:9200"
+    networks:
+      - esnet-platinum
+    environment:
+      - "node.attr.testattr=test"
+      - "path.repo=/tmp"
+      - "repositories.url.allowed_urls=http://snapshot.*"
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "ELASTIC_PASSWORD=changeme"
+      - "xpack.security.enabled=true"
+      - "xpack.license.self_generated.type=trial"
+      - "xpack.security.http.ssl.enabled=true"
+      - "xpack.security.http.ssl.verification_mode=certificate"
+      - "xpack.security.http.ssl.key=certs/testnode.key"
+      - "xpack.security.http.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.http.ssl.certificate_authorities=certs/ca.crt"
+      - "xpack.security.transport.ssl.enabled=true"
+      - "xpack.security.transport.ssl.key=certs/testnode.key"
+      - "xpack.security.transport.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.transport.ssl.certificate_authorities=certs/ca.crt"
+    volumes:
+      - "./certs/testnode.crt:/usr/share/elasticsearch/config/certs/testnode.crt"
+      - "./certs/testnode.key:/usr/share/elasticsearch/config/certs/testnode.key"
+      - "./certs/ca.crt:/usr/share/elasticsearch/config/certs/ca.crt"
+
 networks:
-  esnet:
+  # we need two networks otherwise the two ES instances will join each other
+  esnet-oss:
+  esnet-platinum:
 volumes:
   esvol:

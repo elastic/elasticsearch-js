@@ -62,7 +62,7 @@ function buildMlGetModelSnapshots (opts) {
     }
 
     // check required url components
-    if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null || params['jobId']))) {
+    if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: job_id'),
         result
