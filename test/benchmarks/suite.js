@@ -165,13 +165,19 @@ function buildBenchmark (options = {}) {
     } else {
       done()
     }
-    if (options.report) {
+    if (options.report && options.report.url) {
       sendReport()
     }
   })
 
   async function sendReport () {
-    const client = new Client({ node: options.report })
+    const client = new Client({
+      node: {
+        url: new URL(options.report.url),
+        username: options.report.username,
+        password: options.report.password
+      }
+    })
     const git = Git(__dirname)
     const commit = await git.log(['-1'])
     const branch = await git.revparse(['--abbrev-ref', 'HEAD'])

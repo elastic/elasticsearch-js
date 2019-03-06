@@ -3,9 +3,15 @@
 const { Client } = require('../../../index')
 const { statSync } = require('fs')
 const { join } = require('path')
-const { bench, beforeEach, afterEach } = require('../suite')({ report: process.env.BENCH_REPORT })
+const { bench, beforeEach, afterEach } = require('../suite')({
+  report: {
+    url: process.env.ES_RESULT_CLUSTER_URL,
+    username: process.env.ES_RESULT_CLUSTER_USERNAME,
+    password: process.env.ES_RESULT_CLUSTER_PASSWORD
+  }
+})
 
-const node = process.env.ES_HOST || 'http://localhost:9200'
+const node = process.env.ELASTICSEARCH_URL || 'http://localhost:9200'
 
 const smallDocument = require('./fixtures/small_document.json')
 const smallDocumentInfo = {
