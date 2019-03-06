@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildCcrFollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -7,8 +10,18 @@ function buildCcrFollow (opts) {
    * Perform a [ccr.follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html) request
    *
    * @param {string} index - The name of the follower index
+   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
    * @param {object} body - The name of the leader index and other optional ccr related parameters
    */
+
+  const acceptedQuerystring = [
+    'wait_for_active_shards'
+  ]
+
+  const snakeCase = {
+    waitForActiveShards: 'wait_for_active_shards'
+  }
+
   return function ccrFollow (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -43,40 +56,20 @@ function buildCcrFollow (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'PUT'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
+
+    if (method == null) {
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -84,12 +77,15 @@ function buildCcrFollow (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'follow'
+
     // build request object
-    const parts = [params['index'], '_ccr', 'follow']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      body: params.body || '',
+      path,
+      body: body || '',
       querystring
     }
 
@@ -98,10 +94,28 @@ function buildCcrFollow (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

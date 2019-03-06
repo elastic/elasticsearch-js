@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMsearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -11,8 +14,34 @@ function buildMsearchTemplate (opts) {
    * @param {enum} search_type - Search operation type
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
+
+  const acceptedQuerystring = [
+    'search_type',
+    'typed_keys',
+    'max_concurrent_searches',
+    'rest_total_hits_as_int',
+    'ccs_minimize_roundtrips',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    searchType: 'search_type',
+    typedKeys: 'typed_keys',
+    maxConcurrentSearches: 'max_concurrent_searches',
+    restTotalHitsAsInt: 'rest_total_hits_as_int',
+    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function msearchTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -49,54 +78,20 @@ function buildMsearchTemplate (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'search_type',
-      'typed_keys',
-      'max_concurrent_searches',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'searchType',
-      'typedKeys',
-      'maxConcurrentSearches',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -104,12 +99,21 @@ function buildMsearchTemplate (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch' + '/' + 'template'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
+    } else {
+      path = '/' + '_msearch' + '/' + 'template'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_msearch', 'template']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      bulkBody: params.body,
+      path,
+      bulkBody: body,
       querystring
     }
 
@@ -118,10 +122,28 @@ function buildMsearchTemplate (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

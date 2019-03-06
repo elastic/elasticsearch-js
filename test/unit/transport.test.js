@@ -2,6 +2,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
+const { createGunzip } = require('zlib')
 const intoStream = require('into-stream')
 const {
   buildServer,
@@ -13,7 +14,8 @@ const {
   DeserializationError,
   TimeoutError,
   ResponseError,
-  ConnectionError
+  ConnectionError,
+  ConfigurationError
 } = require('../../lib/errors')
 
 const ConnectionPool = require('../../lib/ConnectionPool')
@@ -375,6 +377,32 @@ test('SerializationError', t => {
   })
 })
 
+test('SerializationError (bulk)', t => {
+  t.plan(1)
+  const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const bulkBody = { hello: 'world' }
+  bulkBody.o = bulkBody
+  transport.request({
+    method: 'POST',
+    path: '/hello',
+    bulkBody
+  }, (err, { body }) => {
+    t.ok(err instanceof SerializationError)
+  })
+})
+
 test('DeserializationError', t => {
   t.plan(1)
   function handler (req, res) {
@@ -571,6 +599,51 @@ test('Custom retry mechanism', t => {
     }, (err, { body }) => {
       t.error(err)
       t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Should not retry on 429', t => {
+  t.plan(3)
+
+  var count = 0
+  function handler (req, res) {
+    t.strictEqual(count++, 0)
+    res.statusCode = 429
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 5,
+      requestTimeout: 250,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, result) => {
+      t.ok(err)
+      t.strictEqual(err.statusCode, 429)
       server.stop()
     })
   })
@@ -1535,6 +1608,45 @@ test('Warning header', t => {
     })
   })
 
+  t.test('Multiple warnings and external warning', t => {
+    t.plan(5)
+
+    const warn1 = '112 - "cache down" "Wed, 21 Oct 2015 07:28:00 GMT"'
+    const warn2 = '199 agent "Error message" "2015-01-01"'
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.setHeader('Warning', warn1 + ',' + warn2)
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        warnings: ['winter is coming']
+      }, (err, { warnings }) => {
+        t.error(err)
+        t.deepEqual(warnings, ['winter is coming', warn1, warn2])
+        warnings.forEach(w => t.type(w, 'string'))
+        server.stop()
+      })
+    })
+  })
+
   t.end()
 })
 
@@ -1580,5 +1692,322 @@ test('asStream set to true', t => {
         server.stop()
       })
     })
+  })
+})
+
+test('Compress request', t => {
+  t.test('gzip as request option', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, {
+        compression: 'gzip'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('gzip as transport option', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        compression: 'gzip'
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('gzip stream body', t => {
+    t.plan(4)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          res.end(JSON.stringify({ you_know: 'for search' }))
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: intoStream(JSON.stringify({ you_know: 'for search' }))
+      }, {
+        compression: 'gzip'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Should throw on invalid compression value', t => {
+    t.plan(2)
+
+    try {
+      new Transport({ // eslint-disable-line
+        emit: () => {},
+        connectionPool: new ConnectionPool({ Connection }),
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        compression: 'deflate'
+      })
+      t.fail('Should throw')
+    } catch (err) {
+      t.true(err instanceof ConfigurationError)
+      t.is(err.message, 'Invalid compression: \'deflate\'')
+    }
+  })
+
+  t.end()
+})
+
+test('Headers configuration', t => {
+  t.test('Global option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, { 'x-foo': 'bar' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Global option and custom option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, {
+        'x-foo': 'bar',
+        'x-baz': 'faz'
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        headers: { 'x-baz': 'faz' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Custom options should override global option', t => {
+    t.plan(3)
+    function handler (req, res) {
+      t.match(req.headers, { 'x-foo': 'faz' })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        headers: {
+          'x-foo': 'bar'
+        }
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        headers: { 'x-foo': 'faz' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.end()
+})
+
+test('nodeFilter and nodeSelector', t => {
+  t.plan(4)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false,
+    nodeFilter: () => {
+      t.ok('called')
+      return true
+    },
+    nodeSelector: conns => {
+      t.ok('called')
+      return conns[0]
+    }
+  })
+
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.error(err)
+    t.deepEqual(body, { hello: 'world' })
   })
 })

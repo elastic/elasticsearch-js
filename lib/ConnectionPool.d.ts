@@ -2,24 +2,14 @@
 
 import { SecureContextOptions } from 'tls';
 import Connection, { AgentOptions } from './Connection';
-
-export interface nodeSelectorFn {
-  (connections: Connection[]): Connection;
-}
-
-export interface nodeFilterFn {
-  (connection: Connection): boolean;
-}
+import { nodeFilterFn, nodeSelectorFn } from './Transport';
 
 interface ConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
   pingTimeout?: number;
-  randomizeHost?: boolean;
   Connection: typeof Connection;
   resurrectStrategy?: string;
-  nodeFilter?: nodeFilterFn;
-  nodeSelector?: string | nodeSelectorFn;
 }
 
 export interface getConnectionOptions {
@@ -43,12 +33,10 @@ export default class ConnectionPool {
   dead: string[];
   _ssl: SecureContextOptions | null;
   _agent: AgentOptions | null;
+  _sniffEnabled: boolean;
   resurrectTimeout: number;
   resurrectTimeoutCutoff: number;
   pingTimeout: number;
-  randomizeHost: boolean;
-  nodeFilter: nodeFilterFn;
-  nodeSelector: nodeSelectorFn;
   Connection: typeof Connection;
   resurrectStrategy: number;
   constructor(opts?: ConnectionPoolOptions);

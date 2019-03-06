@@ -1,0 +1,59 @@
+= TypeScript support
+
+The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
+
+While the client offers type definitions for Request parameters, Request bodies and responses are shipped with `any` because there is not an official spec that defines them, so we cannot make guarantees over them (but since they are shipped with `any`, you can easily override them with your own typing definitions).
+
+NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
+
+== How to extend the provided typings?
+Extend the provided typings is very straightforward, you should declare a custom `.d.ts` file and then write inside your type extensions, following there is an example of how do it.
+[source,ts]
+----
+declare module '@elastic/elasticsearch' {
+  export interface ShardsResponse {
+    total: number;
+    successful: number;
+    failed: number;
+    skipped: number;
+  }
+
+   export interface Explanation {
+    value: number;
+    description: string;
+    details: Explanation[];
+  }
+
+   export interface SearchResponse<T> {
+    took: number;
+    timed_out: boolean;
+    _scroll_id?: string;
+    _shards: ShardsResponse;
+    hits: {
+      total: number;
+      max_score: number;
+      hits: Array<{
+        _index: string;
+        _type: string;
+        _id: string;
+        _score: number;
+        _source: T;
+        _version?: number;
+        _explanation?: Explanation;
+        fields?: any;
+        highlight?: any;
+        inner_hits?: any;
+        matched_queries?: string[];
+        sort?: string[];
+      }>;
+    };
+    aggregations?: any;
+  }
+
+   export interface MSearchResponse<T> {
+    responses?: Array<SearchResponse<T>>;
+  }
+}
+
+export {};
+----

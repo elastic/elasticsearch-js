@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildUpdateByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -28,8 +31,8 @@ function buildUpdateByQuery (opts) {
    * @param {number} size - Number of hits to return (default: 10)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
    * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
    * @param {boolean} version - Specify whether to return document version as part of a hit
@@ -44,6 +47,70 @@ function buildUpdateByQuery (opts) {
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL
    */
+
+  const acceptedQuerystring = [
+    'analyzer',
+    'analyze_wildcard',
+    'default_operator',
+    'df',
+    'from',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'conflicts',
+    'expand_wildcards',
+    'lenient',
+    'pipeline',
+    'preference',
+    'q',
+    'routing',
+    'scroll',
+    'search_type',
+    'search_timeout',
+    'size',
+    'sort',
+    '_source',
+    '_source_excludes',
+    '_source_includes',
+    'terminate_after',
+    'stats',
+    'version',
+    'version_type',
+    'request_cache',
+    'refresh',
+    'timeout',
+    'wait_for_active_shards',
+    'scroll_size',
+    'wait_for_completion',
+    'requests_per_second',
+    'slices',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    analyzeWildcard: 'analyze_wildcard',
+    defaultOperator: 'default_operator',
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    searchType: 'search_type',
+    searchTimeout: 'search_timeout',
+    _sourceExcludes: '_source_excludes',
+    _sourceIncludes: '_source_includes',
+    terminateAfter: 'terminate_after',
+    versionType: 'version_type',
+    requestCache: 'request_cache',
+    waitForActiveShards: 'wait_for_active_shards',
+    scrollSize: 'scroll_size',
+    waitForCompletion: 'wait_for_completion',
+    requestsPerSecond: 'requests_per_second',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function updateByQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,116 +147,20 @@ function buildUpdateByQuery (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'analyzer',
-      'analyze_wildcard',
-      'default_operator',
-      'df',
-      'from',
-      'ignore_unavailable',
-      'allow_no_indices',
-      'conflicts',
-      'expand_wildcards',
-      'lenient',
-      'pipeline',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'search_type',
-      'search_timeout',
-      'size',
-      'sort',
-      '_source',
-      '_source_exclude',
-      '_source_include',
-      'terminate_after',
-      'stats',
-      'version',
-      'version_type',
-      'request_cache',
-      'refresh',
-      'timeout',
-      'wait_for_active_shards',
-      'scroll_size',
-      'wait_for_completion',
-      'requests_per_second',
-      'slices',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'analyzer',
-      'analyzeWildcard',
-      'defaultOperator',
-      'df',
-      'from',
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'conflicts',
-      'expandWildcards',
-      'lenient',
-      'pipeline',
-      'preference',
-      'q',
-      'routing',
-      'scroll',
-      'searchType',
-      'searchTimeout',
-      'size',
-      'sort',
-      '_source',
-      '_sourceExclude',
-      '_sourceInclude',
-      'terminateAfter',
-      'stats',
-      'version',
-      'versionType',
-      'requestCache',
-      'refresh',
-      'timeout',
-      'waitForActiveShards',
-      'scrollSize',
-      'waitForCompletion',
-      'requestsPerSecond',
-      'slices',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -197,12 +168,19 @@ function buildUpdateByQuery (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_update_by_query'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_update_by_query']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      body: params.body || '',
+      path,
+      body: body || '',
       querystring
     }
 
@@ -211,10 +189,28 @@ function buildUpdateByQuery (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

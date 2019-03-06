@@ -1,0 +1,96 @@
+== asStream
+
+Instead of getting the parsed body back, you will get the raw Node.js stream of data.
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  await client.bulk({
+    refresh: true,
+    body: [
+      // operation to perform
+      { index: { _index: 'game-of-thrones' } },
+      // the document to index
+      {
+        character: 'Ned Stark',
+        quote: 'Winter is coming.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Daenerys Targaryen',
+        quote: 'I am the blood of the dragon.'
+      },
+
+      { index: { _index: 'game-of-thrones' } },
+      {
+        character: 'Tyrion Lannister',
+        quote: 'A mind needs books like a sword needs a whetstone.'
+      }
+    ]
+  })
+
+  // Let's search!
+  const { body } = await client.search({
+    index: 'game-of-thrones',
+    body: {
+      query: {
+        match: {
+          quote: 'winter'
+        }
+      }
+    }
+  }, {
+    asStream: true
+  })
+
+  // stream async iteration, available in Node.js ≥ 10
+  var payload = ''
+  body.setEncoding('utf8')
+  for await (const chunk of body) {
+    payload += chunk
+  }
+  console.log(JSON.parse(payload))
+
+  // classic stream callback style
+  var payload = ''
+  body.setEncoding('utf8')
+  body.on('data', chunk => { payload += chunk })
+  body.on('error', console.log)
+  body.on('end', () => {
+    console.log(JSON.parse(payload))
+  })
+}
+
+run().catch(console.log)
+----
+
+TIP: This can be useful if you need to pipe the Elasticsearch's response to a proxy, or send it directly to another source.
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+const fastify = require('fastify')()
+
+fastify.post('/search/:index', async (req, reply) => {
+  const { body, statusCode, headers } = await client.search({
+    index: req.params.index,
+    body: req.body
+  }, {
+    asStream: true
+  })
+
+  reply.code(statusCode).headers(headers)
+  return body
+})
+
+fastify.listen(3000)
+----

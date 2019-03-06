@@ -1,0 +1,69 @@
+= Authentication
+
+This document contains code snippets to show you how to connect to various Elasticsearch providers.
+
+== Basic Auth
+
+You can provide your credentials in the node(s) URL.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://username:password@localhost:9200'
+})
+----
+
+Or you can use the full node declaration.
+
+[source,js]
+----
+const { URL } = require('url')
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: {
+    url: new URL('https://username:password@localhost:9200'),
+    id: 'node-1',
+    ...
+  }
+})
+----
+
+== SSL configuration
+
+Without any additional configuration you can specify `https://` node urls, but the certificates used to sign these requests will not verified (`rejectUnauthorized: false`). To turn on certificate verification you must specify an `ssl` object either in the top level config or in each host config object and set `rejectUnauthorized: true`. The ssl config object can contain many of the same configuration options that https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[tls.connect()] accepts.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://username:password@localhost:9200',
+  ssl: {
+    ca: fs.readFileSync('./cacert.pem'),
+    rejectUnauthorized: true
+  }
+})
+----
+
+== Elastic Cloud
+
+If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers a easy way to connect to it via the `cloud` option. +
+You must pass the Cloud ID that you can find in the cloud console, then your username and password.
+
+NOTE: When connecting to Elastic Cloud, the client will automatically enable both request and response compression by default, since it yields significant throughput improvements. +
+Moreover, the client will also set the ssl option `secureProtocol` to `TLSv1_2_method` unless specified otherwise.
+You can still override this option by configuring them.
+
+IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are behind a load balancer, Elastic Cloud will take care of everything for you.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  cloud: {
+    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----

@@ -1,0 +1,23 @@
+= Creating a child client
+
+There are some use cases where you may need multiple instances of the client. You can easily do that by calling `new Client()` as many times as you need, but you will lose all the benefits of using one single client, such as the long living connections and the connection pool handling. +
+To avoid this problem the client offers a `child` API, which returns a new client instance that shares the connection pool with the parent client. +
+
+NOTE: The event emitter is shared between the parent and the child(ren), and if you extend the parent client, the child client will have the same extensions, while if the child client adds an extension, the parent client will not be extended.
+
+You can pass to the `child` every client option you would pass to a normal client, but the connection pool specific options (`ssl`, `agent`, `pingTimeout`, `Connection`, and `resurrectStrategy`).
+
+CAUTION: If you call `close` in any of the parent/child clients, every client will be closed.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+const child = client.child({
+  headers: { 'x-foo': 'bar' },
+  requestTimeout: 1000
+})
+
+client.info(console.log)
+child.info(console.log)
+----

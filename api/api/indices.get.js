@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -7,6 +10,7 @@ function buildIndicesGet (opts) {
    * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
    *
    * @param {list} index - A comma-separated list of index names
+   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
    * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
@@ -15,6 +19,35 @@ function buildIndicesGet (opts) {
    * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
    * @param {time} master_timeout - Specify timeout for connection to master
    */
+
+  const acceptedQuerystring = [
+    'include_type_name',
+    'local',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'expand_wildcards',
+    'flat_settings',
+    'include_defaults',
+    'master_timeout',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    includeTypeName: 'include_type_name',
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    flatSettings: 'flat_settings',
+    includeDefaults: 'include_defaults',
+    masterTimeout: 'master_timeout',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function indicesGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -49,62 +82,20 @@ function buildIndicesGet (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'local',
-      'ignore_unavailable',
-      'allow_no_indices',
-      'expand_wildcards',
-      'flat_settings',
-      'include_defaults',
-      'master_timeout',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'local',
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'expandWildcards',
-      'flatSettings',
-      'includeDefaults',
-      'masterTimeout',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = 'GET'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
+
+    if (method == null) {
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -112,11 +103,14 @@ function buildIndicesGet (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    path = '/' + encodeURIComponent(index)
+
     // build request object
-    const parts = [params['index']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }
@@ -126,10 +120,28 @@ function buildIndicesGet (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

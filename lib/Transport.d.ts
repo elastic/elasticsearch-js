@@ -2,6 +2,14 @@ import ConnectionPool from './ConnectionPool';
 import Connection from './Connection';
 import Serializer from './Serializer';
 
+export interface nodeSelectorFn {
+  (connections: Connection[]): Connection;
+}
+
+export interface nodeFilterFn {
+  (connection: Connection): boolean;
+}
+
 declare type noopFn = (...args: any[]) => void;
 declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
 
@@ -12,10 +20,14 @@ interface TransportOptions {
   maxRetries: number;
   requestTimeout: number | string;
   suggestCompression: boolean;
+  compression?: 'gzip';
   sniffInterval: number;
   sniffOnConnectionFault: boolean;
   sniffEndpoint: string;
   sniffOnStart: boolean;
+  nodeFilter?: nodeFilterFn;
+  nodeSelector?: string | nodeSelectorFn;
+  headers?: anyObject;
 }
 
 export interface ApiResponse {
@@ -42,12 +54,22 @@ declare type anyObject = {
   [key: string]: any;
 };
 
-export interface RequestOptions {
-  ignore?: number | number[];
+export interface TransportRequestParams {
+  method: string;
+  path: string;
+  body?: anyObject,
+  bulkBody?: anyObject,
+  querystring: anyObject
+}
+
+export interface TransportRequestOptions {
+  ignore?: [number];
   requestTimeout?: number | string;
   maxRetries?: number;
   asStream?: boolean;
   headers?: anyObject;
+  compression?: string;
+  warnings?: [string];
 }
 
 export default class Transport {
@@ -63,6 +85,7 @@ export default class Transport {
   maxRetries: number;
   requestTimeout: number;
   suggestCompression: boolean;
+  compression: 'gzip' | false;
   sniffInterval: number;
   sniffOnConnectionFault: boolean;
   sniffEndpoint: string;
@@ -70,7 +93,7 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: any, options: RequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
+  request(params: TransportRequestParams, options: TransportRequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
   getConnection(): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }

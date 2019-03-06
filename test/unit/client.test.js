@@ -2,7 +2,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool } = require('../../index')
+const { Client, ConnectionPool, Transport } = require('../../index')
 const { buildServer } = require('../utils')
 
 test('Configure host', t => {
@@ -21,8 +21,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
     t.end()
@@ -43,8 +42,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
     t.match(pool.connections.get('http://localhost:9201/'), {
@@ -57,8 +55,7 @@ test('Configure host', t => {
         master: true,
         data: true,
         ingest: true,
-        coordinating: true,
-        machine_learning: true
+        ml: false
       }
     })
 
@@ -72,7 +69,8 @@ test('Configure host', t => {
         id: 'node',
         roles: {
           master: true,
-          data: false
+          data: false,
+          ingest: false
         },
         ssl: 'ssl'
       }
@@ -83,12 +81,16 @@ test('Configure host', t => {
       id: 'node',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: true,
-        data: false
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node').roles, {
+      master: true,
+      data: false,
+      ingest: false,
+      ml: false
+    })
+
     t.end()
   })
 
@@ -99,7 +101,8 @@ test('Configure host', t => {
         id: 'node1',
         roles: {
           master: true,
-          data: false
+          data: false,
+          ingest: false
         },
         ssl: 'ssl'
       }, {
@@ -107,7 +110,8 @@ test('Configure host', t => {
         id: 'node2',
         roles: {
           master: false,
-          data: true
+          data: true,
+          ingest: false
         },
         ssl: 'ssl'
       }]
@@ -118,23 +122,31 @@ test('Configure host', t => {
       id: 'node1',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: true,
-        data: false
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node1').roles, {
+      master: true,
+      data: false,
+      ingest: false,
+      ml: false
+    })
+
     t.match(pool.connections.get('node2'), {
       url: new URL('http://localhost:9200'),
       id: 'node2',
       ssl: 'ssl',
       deadCount: 0,
-      resurrectTimeout: 0,
-      roles: {
-        master: false,
-        data: true
-      }
+      resurrectTimeout: 0
     })
+
+    t.deepEqual(pool.connections.get('node2').roles, {
+      master: false,
+      data: true,
+      ingest: false,
+      ml: false
+    })
+
     t.end()
   })
 
@@ -291,4 +303,274 @@ test('Client close (promise)', t => {
 
   client.close()
     .then(() => t.pass('Closed'))
+})
+
+test('Extend client APIs', t => {
+  t.test('Extend a single method', t => {
+    t.plan(5)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Create a namespace and a method', t => {
+    t.plan(5)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('namespace.method', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.namespace.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Create a namespace and multiple methods', t => {
+    t.plan(10)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('namespace.method1', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.extend('namespace.method2', ({ makeRequest, result, ConfigurationError }) => {
+      t.type(makeRequest, 'function')
+      t.true(new ConfigurationError() instanceof Error)
+      t.deepEqual(result, {
+        body: null,
+        statusCode: null,
+        headers: null,
+        warnings: null
+      })
+
+      return (params, options) => {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    })
+
+    client.namespace.method1(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+
+    client.namespace.method2(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Cannot override an existing method', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('index', () => {})
+      t.fail('Should throw')
+    } catch (err) {
+      t.is(err.message, 'The method "index" already exists')
+    }
+  })
+
+  t.test('Cannot override an existing namespace and method', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('indices.delete', () => {})
+      t.fail('Should throw')
+    } catch (err) {
+      t.is(err.message, 'The method "delete" already exists on namespace "indices"')
+    }
+  })
+
+  t.test('Can override an existing method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('index', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
+  t.test('Can override an existing namespace and method with { force: true }', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    try {
+      client.extend('indices.delete', { force: true }, () => t.pass('Called'))
+    } catch (err) {
+      t.fail('Should not throw')
+    }
+  })
+
+  t.test('Should call the transport.request method', t => {
+    t.plan(2)
+
+    class MyTransport extends Transport {
+      request (params, options) {
+        t.deepEqual(params, { you_know: 'for search' })
+        t.deepEqual(options, { winter: 'is coming' })
+      }
+    }
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Transport: MyTransport
+    })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options) => makeRequest(params, options)
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' }
+    )
+  })
+
+  t.test('Should support callbacks', t => {
+    t.plan(2)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options, callback) => {
+        callback(null, { hello: 'world' })
+      }
+    })
+
+    client.method(
+      { you_know: 'for search' },
+      { winter: 'is coming' },
+      (err, res) => {
+        t.error(err)
+        t.deepEqual(res, { hello: 'world' })
+      }
+    )
+  })
+
+  t.test('Should support promises', t => {
+    t.plan(1)
+
+    const client = new Client({ node: 'http://localhost:9200' })
+    client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
+      return (params, options) => {
+        return new Promise((resolve, reject) => {
+          resolve({ hello: 'world' })
+        })
+      }
+    })
+
+    client
+      .method(
+        { you_know: 'for search' },
+        { winter: 'is coming' }
+      )
+      .then(res => t.deepEqual(res, { hello: 'world' }))
+      .catch(err => t.fail(err))
+  })
+
+  t.end()
+})
+
+test('Elastic cloud config', t => {
+  t.test('Basic', t => {
+    t.plan(4)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+        username: 'elastic',
+        password: 'changeme'
+      }
+    })
+
+    const pool = client.connectionPool
+    t.match(pool.connections.get('https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      ssl: { secureProtocol: 'TLSv1_2_method' },
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+  })
+
+  t.test('Override default options', t => {
+    t.plan(3)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+        username: 'elastic',
+        password: 'changeme'
+      },
+      compression: false,
+      suggestCompression: false,
+      ssl: {
+        secureProtocol: 'TLSv1_1_method'
+      }
+    })
+
+    t.strictEqual(client.transport.compression, false)
+    t.strictEqual(client.transport.suggestCompression, false)
+    t.deepEqual(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
+  })
+
+  t.end()
 })

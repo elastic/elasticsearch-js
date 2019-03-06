@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildXpackRollupRollupSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -8,8 +11,21 @@ function buildXpackRollupRollupSearch (opts) {
    *
    * @param {string} index - The index or index-pattern (containing rollup or regular data) that should be searched
    * @param {string} type - The doc type inside the index
+   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search request body
    */
+
+  const acceptedQuerystring = [
+    'typed_keys',
+    'rest_total_hits_as_int'
+  ]
+
+  const snakeCase = {
+    typedKeys: 'typed_keys',
+    restTotalHitsAsInt: 'rest_total_hits_as_int'
+  }
+
   return function xpackRollupRollupSearch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,40 +68,20 @@ function buildXpackRollupRollupSearch (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-
-    ]
-    const acceptedQuerystringCamelCased = [
-
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -93,14 +89,19 @@ function buildXpackRollupRollupSearch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_rollup_search']
     const request = {
       method,
-      path: params['index'] != null && params['type'] != null
-        ? '/' + parts.filter(Boolean).map(encodeURIComponent).join('/')
-        : '/{index}/_rollup_search',
-      body: params.body || '',
+      path,
+      body: body || '',
       querystring
     }
 
@@ -109,10 +110,28 @@ function buildXpackRollupRollupSearch (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

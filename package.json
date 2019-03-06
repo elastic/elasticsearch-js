@@ -2,8 +2,9 @@
   "name": "@elastic/elasticsearch",
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
+  "types": "index.d.ts",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-beta.1",
   "keywords": [
     "elasticsearch",
     "elastic",
@@ -25,7 +26,7 @@
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
     "elasticsearch": "./scripts/es-docker.sh",
-    "ci": "./scripts/wait-cluster.sh && npm test && npm run test:integration"
+    "ci": "npm test && npm run test:integration"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -36,30 +37,30 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
-    "@types/node": "^10.12.15",
+    "@types/node": "^11.10.4",
     "convert-hrtime": "^2.0.0",
-    "dedent": "^0.7.0",
-    "deepmerge": "^3.0.0",
+    "deepmerge": "^3.2.0",
     "dezalgo": "^1.0.3",
-    "into-stream": "^4.0.0",
-    "js-yaml": "^3.12.0",
-    "lolex": "^3.0.0",
+    "js-yaml": "^3.12.2",
+    "lolex": "^3.1.0",
     "minimist": "^1.2.0",
-    "ora": "^3.0.0",
+    "ora": "^3.2.0",
     "pretty-hrtime": "^1.0.3",
-    "rimraf": "^2.6.2",
+    "rimraf": "^2.6.3",
     "semver": "^5.6.0",
     "simple-git": "^1.107.0",
-    "simple-statistics": "^6.1.1",
+    "simple-statistics": "^7.0.2",
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
-    "tap": "^12.1.1",
-    "typescript": "^3.2.2",
+    "tap": "^12.5.3",
+    "typescript": "^3.3.3333",
     "workq": "^2.1.0"
   },
   "dependencies": {
-    "debug": "^4.1.0",
-    "decompress-response": "^3.3.0",
+    "debug": "^4.1.1",
+    "decompress-response": "^4.0.0",
+    "dedent": "^0.7.0",
+    "into-stream": "^4.0.0",
     "ms": "^2.1.1",
     "once": "^1.4.0",
     "pump": "^3.0.0"

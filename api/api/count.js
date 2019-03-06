@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildCount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -9,6 +12,7 @@ function buildCount (opts) {
    * @param {list} index - A comma-separated list of indices to restrict the results
    * @param {list} type - A comma-separated list of types to restrict the results
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+   * @param {boolean} ignore_throttled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {number} min_score - Include only documents with a specific `_score` value in the result
@@ -23,6 +27,42 @@ function buildCount (opts) {
    * @param {number} terminate_after - The maximum count for each shard, upon reaching which the query execution will terminate early
    * @param {object} body - A query to restrict the results specified with the Query DSL (optional)
    */
+
+  const acceptedQuerystring = [
+    'ignore_unavailable',
+    'ignore_throttled',
+    'allow_no_indices',
+    'expand_wildcards',
+    'min_score',
+    'preference',
+    'routing',
+    'q',
+    'analyzer',
+    'analyze_wildcard',
+    'default_operator',
+    'df',
+    'lenient',
+    'terminate_after',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    ignoreUnavailable: 'ignore_unavailable',
+    ignoreThrottled: 'ignore_throttled',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    minScore: 'min_score',
+    analyzeWildcard: 'analyze_wildcard',
+    defaultOperator: 'default_operator',
+    terminateAfter: 'terminate_after',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function count (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,74 +91,20 @@ function buildCount (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'ignore_unavailable',
-      'allow_no_indices',
-      'expand_wildcards',
-      'min_score',
-      'preference',
-      'routing',
-      'q',
-      'analyzer',
-      'analyze_wildcard',
-      'default_operator',
-      'df',
-      'lenient',
-      'terminate_after',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'ignoreUnavailable',
-      'allowNoIndices',
-      'expandWildcards',
-      'minScore',
-      'preference',
-      'routing',
-      'q',
-      'analyzer',
-      'analyzeWildcard',
-      'defaultOperator',
-      'df',
-      'lenient',
-      'terminateAfter',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -126,12 +112,21 @@ function buildCount (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_count'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_count'
+    } else {
+      path = '/' + '_count'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_count']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      body: params.body || '',
+      path,
+      body: body || '',
       querystring
     }
 
@@ -140,10 +135,28 @@ function buildCount (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

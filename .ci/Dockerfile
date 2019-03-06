@@ -1,4 +1,4 @@
-ARG NODE_JS_VERSION=8
+ARG NODE_JS_VERSION=10
 FROM node:${NODE_JS_VERSION}
 
 # Create app directory

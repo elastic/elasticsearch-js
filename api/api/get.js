@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -16,11 +19,46 @@ function buildGet (opts) {
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
+   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
+   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
    * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
+
+  const acceptedQuerystring = [
+    'stored_fields',
+    'parent',
+    'preference',
+    'realtime',
+    'refresh',
+    'routing',
+    '_source',
+    '_source_excludes',
+    '_source_includes',
+    '_source_exclude',
+    '_source_include',
+    'version',
+    'version_type',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    storedFields: 'stored_fields',
+    _sourceExcludes: '_source_excludes',
+    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
+    versionType: 'version_type',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function get (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,12 +92,6 @@ function buildGet (opts) {
         result
       )
     }
-    if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -67,83 +99,20 @@ function buildGet (opts) {
       )
     }
 
-    // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+    // validate headers object
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
-    } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'stored_fields',
-      'parent',
-      'preference',
-      'realtime',
-      'refresh',
-      'routing',
-      '_source',
-      '_source_exclude',
-      '_source_include',
-      'version',
-      'version_type',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'storedFields',
-      'parent',
-      'preference',
-      'realtime',
-      'refresh',
-      'routing',
-      '_source',
-      '_sourceExclude',
-      '_sourceInclude',
-      'version',
-      'versionType',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
+    var warnings = null
+    var { method, body, id, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'index', 'type'])
 
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
     if (method == null) {
       method = 'GET'
-    }
-
-    // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
-        result
-      )
     }
 
     var ignore = options.ignore || null
@@ -151,11 +120,18 @@ function buildGet (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], params['id']]
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
+      path,
       body: null,
       querystring
     }
@@ -165,10 +141,28 @@ function buildGet (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 

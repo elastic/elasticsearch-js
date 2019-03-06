@@ -3,7 +3,10 @@
 const t = require('tap')
 const semver = require('semver')
 const workq = require('workq')
+const helper = require('./helper')
 const { ConfigurationError } = require('../../lib/errors')
+
+const { delve } = helper
 
 const supportedFeatures = [
   'gtelte',
@@ -11,7 +14,9 @@ const supportedFeatures = [
   'benchmark',
   'stash_in_path',
   'groovy_scripting',
-  'headers'
+  'headers',
+  'transform_and_set',
+  'catch_unauthorized'
 ]
 
 function TestRunner (opts) {
@@ -25,6 +30,7 @@ function TestRunner (opts) {
   this.response = null
   this.stash = new Map()
   this.tap = opts.tap || t
+  this.isPlatinum = opts.isPlatinum
   this.q = opts.q || workq()
 }
 
@@ -40,15 +46,163 @@ TestRunner.prototype.cleanup = function (q, done) {
   this.stash = new Map()
 
   q.add((q, done) => {
-    this.client.indices.delete({ index: '*', ignore: 404 }, err => {
+    this.client.indices.delete({ index: '*' }, { ignore: 404 }, err => {
       this.tap.error(err, 'should not error: indices.delete')
       done()
     })
   })
 
   q.add((q, done) => {
-    this.client.indices.deleteTemplate({ name: '*', ignore: 404 }, err => {
+    this.client.indices.deleteTemplate({ name: '*' }, { ignore: 404 }, err => {
       this.tap.error(err, 'should not error: indices.deleteTemplate')
+      done()
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 }, err => {
+      this.tap.error(err, 'should not error: snapshot.delete')
+      done()
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 }, err => {
+      this.tap.error(err, 'should not error: snapshot.deleteRepository')
+      done()
+    })
+  })
+
+  done()
+}
+
+/**
+ * Runs some additional API calls to prepare ES for the Platinum test,
+ * This set of calls should be executed before the final clenup.
+ * @param {queue}
+ * @param {function} done
+ */
+TestRunner.prototype.cleanupPlatinum = function (q, done) {
+  this.tap.comment('Platinum Cleanup')
+
+  q.add((q, done) => {
+    this.client.security.getRole((err, { body }) => {
+      this.tap.error(err, 'should not error: security.getRole')
+      const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
+      helper.runInParallel(
+        this.client, 'security.deleteRole',
+        roles.map(r => ({ name: r, refresh: 'wait_for' }))
+      )
+        .then(() => done())
+        .catch(err => this.tap.error(err, 'should not error: security.deleteRole'))
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.security.getUser((err, { body }) => {
+      this.tap.error(err, 'should not error: security.getUser')
+      const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
+      helper.runInParallel(
+        this.client, 'security.deleteUser',
+        users.map(r => ({ username: r, refresh: 'wait_for' }))
+      )
+        .then(() => done())
+        .catch(err => this.tap.error(err, 'should not error: security.deleteUser'))
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.security.getPrivileges((err, { body }) => {
+      this.tap.error(err, 'should not error: security.getPrivileges')
+      const privileges = []
+      Object.keys(body).forEach(app => {
+        Object.keys(body[app]).forEach(priv => {
+          privileges.push({
+            name: body[app][priv].name,
+            application: body[app][priv].application,
+            refresh: 'wait_for'
+          })
+        })
+      })
+      helper.runInParallel(this.client, 'security.deletePrivileges', privileges)
+        .then(() => done())
+        .catch(err => this.tap.error(err, 'should not error: security.deletePrivileges'))
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.ml.stopDatafeed({ datafeedId: '*', force: true }, err => {
+      this.tap.error(err, 'should not error: ml.stopDatafeed')
+      this.client.ml.getDatafeeds({ datafeedId: '*' }, (err, { body }) => {
+        this.tap.error(err, 'should error: not ml.getDatafeeds')
+        const feeds = body.datafeeds.map(f => f.datafeed_id)
+        helper.runInParallel(
+          this.client, 'ml.deleteDatafeed',
+          feeds.map(f => ({ datafeedId: f }))
+        )
+          .then(() => done())
+          .catch(err => this.tap.error(err, 'should not error: ml.deleteDatafeed'))
+      })
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.ml.closeJob({ jobId: '*', force: true }, err => {
+      this.tap.error(err, 'should not error: ml.closeJob')
+      this.client.ml.getJobs({ jobId: '*' }, (err, { body }) => {
+        this.tap.error(err, 'should not error: ml.getJobs')
+        const jobs = body.jobs.map(j => j.job_id)
+        helper.runInParallel(
+          this.client, 'ml.deleteJob',
+          jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
+        )
+          .then(() => done())
+          .catch(err => this.tap.error(err, 'should not error: ml.deleteJob'))
+      })
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.xpack.rollup.getJobs({ id: '_all' }, (err, { body }) => {
+      this.tap.error(err, 'should not error: rollup.getJobs')
+      const jobs = body.jobs.map(j => j.config.id)
+      helper.runInParallel(
+        this.client, 'xpack.rollup.stopJob',
+        jobs.map(j => ({ id: j, waitForCompletion: true }))
+      )
+        .then(() => helper.runInParallel(
+          this.client, 'xpack.rollup.deleteJob',
+          jobs.map(j => ({ id: j }))
+        ))
+        .then(() => done())
+        .catch(err => this.tap.error(err, 'should not error: rollup.stopJob/deleteJob'))
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.tasks.list((err, { body }) => {
+      this.tap.error(err, 'should not error: tasks.list')
+      const tasks = Object.keys(body.nodes)
+        .reduce((acc, node) => {
+          const { tasks } = body.nodes[node]
+          Object.keys(tasks).forEach(id => {
+            if (tasks[id].cancellable) acc.push(id)
+          })
+          return acc
+        }, [])
+
+      helper.runInParallel(
+        this.client, 'tasks.cancel',
+        tasks.map(id => ({ taskId: id }))
+      )
+        .then(() => done())
+        .catch(err => this.tap.error(err, 'should not error: tasks.cancel'))
+    })
+  })
+
+  q.add((q, done) => {
+    this.client.indices.delete({ index: '.ml-*' }, { ignore: 404 }, err => {
+      this.tap.error(err, 'should not error: indices.delete (ml indices)')
       done()
     })
   })
@@ -63,7 +217,7 @@ TestRunner.prototype.cleanup = function (q, done) {
  *    - the actual test
  *    - teardown
  *    - cleanup
- * Internally uses a queue to guarantee the order of the test sections.
+* Internally uses a queue to guarantee the order of the test sections.
  * @param {object} setup (null if not needed)
  * @param {object} test
  * @oaram {object} teardown (null if not needed)
@@ -76,6 +230,20 @@ TestRunner.prototype.run = function (setup, test, teardown, end) {
   if (skip && this.shouldSkip(skip)) {
     this.skip(skip)
     return end()
+  }
+
+  if (this.isPlatinum) {
+    this.tap.comment('Creating x-pack user')
+    // Some platinum test requires this user
+    this.q.add((q, done) => {
+      this.client.security.putUser({
+        username: 'x_pack_rest_user',
+        body: { password: 'x-pack-test-password', roles: ['superuser'] }
+      }, (err, { body }) => {
+        this.tap.error(err, 'should not error: security.putUser')
+        done()
+      })
+    })
   }
 
   if (setup) {
@@ -91,6 +259,12 @@ TestRunner.prototype.run = function (setup, test, teardown, end) {
   if (teardown) {
     this.q.add((q, done) => {
       this.exec('Teardown', teardown, q, done)
+    })
+  }
+
+  if (this.isPlatinum) {
+    this.q.add((q, done) => {
+      this.cleanupPlatinum(q, done)
     })
   }
 
@@ -197,11 +371,33 @@ TestRunner.prototype.fillStashedValues = function (obj) {
   // iterate every key of the object
   for (const key in obj) {
     const val = obj[key]
+    // if the key value is a string, and the string includes '${'
+    // that we must update the content of '${...}'.
+    // eg: 'Basic ${auth}' we search the stahed value 'auth'
+    // and the resulting value will be 'Basic valueOfAuth'
+    if (typeof val === 'string' && val.includes('${')) {
+      const start = val.indexOf('${')
+      const end = val.indexOf('}', val.indexOf('${'))
+      const stashedKey = val.slice(start + 2, end)
+      const stashed = this.stash.get(stashedKey)
+      obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+      continue
+    }
+    // handle json strings, eg: '{"hello":"$world"}'
+    if (typeof val === 'string' && val.includes('"$')) {
+      const start = val.indexOf('"$')
+      const end = val.indexOf('"', start + 1)
+      const stashedKey = val.slice(start + 2, end)
+      const stashed = '"' + this.stash.get(stashedKey) + '"'
+      obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+      continue
+    }
     // if the key value is a string, and the string includes '$'
     // we run the "update value" code
     if (typeof val === 'string' && val.includes('$')) {
       // update the key value
       obj[key] = getStashedValues.call(this, val)
+      continue
     }
 
     // go deep in the object
@@ -213,7 +409,7 @@ TestRunner.prototype.fillStashedValues = function (obj) {
   return obj
 
   function getStashedValues (str) {
-    return str
+    const arr = str
       // we split the string on the dots
       // handle the key with a dot inside that is not a part of the path
       .split(/(?<!\\)\./g)
@@ -228,8 +424,11 @@ TestRunner.prototype.fillStashedValues = function (obj) {
         }
         return part
       })
-      // recreate the string value
-      .join('.')
+
+    // recreate the string value only if the array length is higher than one
+    // otherwise return the first element which in some test this could be a number,
+    // and call `.join` will coerce it to a string.
+    return arr.length > 1 ? arr.join('.') : arr[0]
   }
 }
 
@@ -245,6 +444,26 @@ TestRunner.prototype.set = function (key, name) {
 }
 
 /**
+ * Applies a given transformation and stashes the result.
+ * @param {string} the name to identify the stashed value
+ * @param {string} the transformation function as string
+ * @returns {TestRunner}
+ */
+TestRunner.prototype.transform_and_set = function (name, transform) {
+  if (/base64EncodeCredentials/.test(transform)) {
+    const [user, password] = transform
+      .slice(transform.indexOf('(') + 1, -1)
+      .replace(/ /g, '')
+      .split(',')
+    const userAndPassword = `${delve(this.response, user)}:${delve(this.response, password)}`
+    this.stash.set(name, Buffer.from(userAndPassword).toString('base64'))
+  } else {
+    throw new Error(`Unknown transform: '${transform}'`)
+  }
+  return this
+}
+
+/**
  * Runs a client command
  * @param {object} the action to perform
  * @param {Queue}
@@ -253,6 +472,7 @@ TestRunner.prototype.do = function (action, done) {
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
   const options = { ignore: cmd.params.ignore, headers: action.headers }
+  if (cmd.params.ignore) delete cmd.params.ignore
   api(cmd.params, options, (err, { body, warnings }) => {
     if (action.warnings && warnings === null) {
       this.tap.fail('We should get a warning header', action.warnings)
@@ -335,7 +555,15 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
     if (action.set) {
       q.add((q, done) => {
         const key = Object.keys(action.set)[0]
-        this.set(key, action.set[key])
+        this.set(this.fillStashedValues(key), action.set[key])
+        done()
+      })
+    }
+
+    if (action.transform_and_set) {
+      q.add((q, done) => {
+        const key = Object.keys(action.transform_and_set)[0]
+        this.transform_and_set(key, action.transform_and_set[key])
         done()
       })
     }
@@ -350,7 +578,8 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
             : delve(this.response, this.fillStashedValues(key)),
           key === '$body'
             ? action.match[key]
-            : this.fillStashedValues(action.match)[key]
+            : this.fillStashedValues(action.match)[key],
+          action.match
         )
         done()
       })
@@ -404,8 +633,12 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
       q.add((q, done) => {
         const key = Object.keys(action.length)[0]
         this.length(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.length)[key]
+          key === '$body' || key === ''
+            ? this.response
+            : delve(this.response, this.fillStashedValues(key)),
+          key === '$body'
+            ? action.length[key]
+            : this.fillStashedValues(action.length)[key]
         )
         done()
       })
@@ -462,10 +695,10 @@ TestRunner.prototype.is_false = function (val, msg) {
  * @param {any} the second value
  * @returns {TestRunner}
  */
-TestRunner.prototype.match = function (val1, val2) {
+TestRunner.prototype.match = function (val1, val2, action) {
   // both values are objects
   if (typeof val1 === 'object' && typeof val2 === 'object') {
-    this.tap.strictDeepEqual(val1, val2)
+    this.tap.strictDeepEqual(val1, val2, action)
   // the first value is the body as string and the second a pattern string
   } else if (
     typeof val1 === 'string' && typeof val2 === 'string' &&
@@ -481,10 +714,10 @@ TestRunner.prototype.match = function (val1, val2) {
       .replace(/\s/g, '')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}`)
+    this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
   // everything else
   } else {
-    this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}`)
+    this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
   }
   return this
 }
@@ -673,20 +906,6 @@ function getSkip (arr) {
     if (arr[i].skip) return arr[i].skip
   }
   return null
-}
-
-// code from https://github.com/developit/dlv
-// needed to support an edge case: `a\.b`
-// where `a.b` is a single field: { 'a.b': true }
-function delve (obj, key, def, p) {
-  p = 0
-  // handle the key with a dot inside that is not a part of the path
-  // and removes the backslashes from the key
-  key = key.split
-    ? key.split(/(?<!\\)\./g).map(k => k.replace(/\\/g, ''))
-    : key.replace(/\\/g, '')
-  while (obj && p < key.length) obj = obj[key[p++]]
-  return (obj === undefined || p < key.length) ? def : obj
 }
 
 // Gets two *maybe* numbers and returns two valida numbers

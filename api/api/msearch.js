@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 */
+
 function buildMsearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
@@ -13,8 +16,38 @@ function buildMsearch (opts) {
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
    * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
+
+  const acceptedQuerystring = [
+    'search_type',
+    'max_concurrent_searches',
+    'typed_keys',
+    'pre_filter_shard_size',
+    'max_concurrent_shard_requests',
+    'rest_total_hits_as_int',
+    'ccs_minimize_roundtrips',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
+  ]
+
+  const snakeCase = {
+    searchType: 'search_type',
+    maxConcurrentSearches: 'max_concurrent_searches',
+    typedKeys: 'typed_keys',
+    preFilterShardSize: 'pre_filter_shard_size',
+    maxConcurrentShardRequests: 'max_concurrent_shard_requests',
+    restTotalHitsAsInt: 'rest_total_hits_as_int',
+    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
+  }
+
   return function msearch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,58 +84,20 @@ function buildMsearch (opts) {
       )
     }
 
-    // build querystring object
-    const querystring = {}
-    const keys = Object.keys(params)
-    const acceptedQuerystring = [
-      'search_type',
-      'max_concurrent_searches',
-      'typed_keys',
-      'pre_filter_shard_size',
-      'max_concurrent_shard_requests',
-      'pretty',
-      'human',
-      'error_trace',
-      'source',
-      'filter_path'
-    ]
-    const acceptedQuerystringCamelCased = [
-      'searchType',
-      'maxConcurrentSearches',
-      'typedKeys',
-      'preFilterShardSize',
-      'maxConcurrentShardRequests',
-      'pretty',
-      'human',
-      'errorTrace',
-      'source',
-      'filterPath'
-    ]
-
-    for (var i = 0, len = keys.length; i < len; i++) {
-      var key = keys[i]
-      if (acceptedQuerystring.indexOf(key) !== -1) {
-        querystring[key] = params[key]
-      } else {
-        var camelIndex = acceptedQuerystringCamelCased.indexOf(key)
-        if (camelIndex !== -1) {
-          querystring[acceptedQuerystring[camelIndex]] = params[key]
-        }
-      }
-    }
-
-    // configure http method
-    var method = params.method
-    if (method == null) {
-      method = params.body == null ? 'GET' : 'POST'
-    }
-
     // validate headers object
-    if (params.headers != null && typeof params.headers !== 'object') {
+    if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof params.headers}`),
+        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
         result
       )
+    }
+
+    var warnings = null
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+
+    if (method == null) {
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -110,12 +105,21 @@ function buildMsearch (opts) {
       ignore = [ignore]
     }
 
+    var path = ''
+
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_msearch'
+    } else {
+      path = '/' + '_msearch'
+    }
+
     // build request object
-    const parts = [params['index'], params['type'], '_msearch']
     const request = {
       method,
-      path: '/' + parts.filter(Boolean).map(encodeURIComponent).join('/'),
-      bulkBody: params.body,
+      path,
+      bulkBody: body,
       querystring
     }
 
@@ -124,10 +128,28 @@ function buildMsearch (opts) {
       requestTimeout: options.requestTimeout || null,
       maxRetries: options.maxRetries || null,
       asStream: options.asStream || false,
-      headers: options.headers || null
+      headers: options.headers || null,
+      compression: options.compression || false,
+      warnings
     }
 
     return makeRequest(request, requestOptions, callback)
+
+    function semicopy (obj, exclude) {
+      var target = {}
+      var keys = Object.keys(obj)
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i]
+        if (exclude.indexOf(key) === -1) {
+          target[snakeCase[key] || key] = obj[key]
+          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+            warnings = warnings || []
+            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+          }
+        }
+      }
+      return target
+    }
   }
 }
 
