@@ -50,6 +50,7 @@
     "semver": "^5.6.0",
     "simple-git": "^1.107.0",
     "simple-statistics": "^7.0.2",
+    "split2": "^3.1.0",
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
     "tap": "^12.5.3",
