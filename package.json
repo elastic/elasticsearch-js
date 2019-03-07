@@ -26,7 +26,8 @@
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
     "elasticsearch": "./scripts/es-docker.sh",
-    "ci": "npm test && npm run test:integration"
+    "ci": "npm run license-checker && npm test && npm run test:integration",
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -40,6 +41,7 @@
     "@types/node": "^10.12.24",
     "deepmerge": "^3.1.0",
     "js-yaml": "^3.12.1",
+    "license-checker": "^25.0.1",
     "lolex": "^3.1.0",
     "minimist": "^1.2.0",
     "nanobench": "github:delvedor/nanobench#repetitions",
