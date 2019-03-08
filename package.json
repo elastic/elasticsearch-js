@@ -19,14 +19,15 @@
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
     "test:unit": "tap test/unit/*.test.js -J -t 300",
     "test:behavior": "tap test/behavior/*.test.js -J -t 300",
-    "test:integration": "tap test/integration/index.js -T --harmony",
+    "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:benchmarks": "nanobench test/benchmarks/*.bench.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
     "elasticsearch": "./scripts/es-docker.sh",
-    "ci": "npm test && npm run test:integration"
+    "ci": "npm run license-checker && npm test && npm run test:integration",
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -40,6 +41,7 @@
     "@types/node": "^10.12.24",
     "deepmerge": "^3.1.0",
     "js-yaml": "^3.12.1",
+    "license-checker": "^25.0.1",
     "lolex": "^3.1.0",
     "minimist": "^1.2.0",
     "nanobench": "github:delvedor/nanobench#repetitions",
@@ -49,7 +51,7 @@
     "simple-git": "^1.107.0",
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
-    "tap": "^12.5.2",
+    "tap": "^12.6.0",
     "typescript": "^3.3.3",
     "workq": "^2.1.0"
   },
