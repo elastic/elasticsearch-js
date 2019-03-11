@@ -156,70 +156,6 @@ const { events } = require('@elastic/elasticsearch')
 console.log(events)
 ----
 
-The client emits the following events:
-[cols=2*]
-|===
-|`request`
-a|Emitted before to send the actual request to Elasticsearch.
-[source,js]
-----
-client.on('request', (err, meta) => {
-  console.log(err, meta)
-})
-----
-`meta` is an object that contains the following informations:
-
-* `connection`: the connection instance
-* `request`: every parameter that will be sent to Elasticsearch
-* `response`: inside this event it will be always `null`.
-* `attempts`: how many times the clients has tried to execute this request
-* `aborted`: boolean check that is true if the request has been aborted.
-
-|`response`
-a|Emitted before to send the actual request to Elasticsearch.
-[source,js]
-----
-client.on('response', (err, meta) => {
-  console.log(err, meta)
-})
-----
-`meta` is an object that contains the following informations:
-
-* `connection`: the connection instance
-* `request`: every parameter that will be sent to Elasticsearch
-* `response`: the Elasticsearch response.
-* `attempts`: how many times the clients has tried to execute this request
-* `aborted`: boolean check that is true if the request has been aborted.
-
-|`sniff`
-a|Emitted before to send the actual request to Elasticsearch.
-[source,js]
-----
-client.on('sniff', (err, meta) => {
-  console.log(err, meta)
-})
-----
-`meta` is an object that contains the following informations:
-
-* `hosts`: the list of nodes obtained from Elasticsearch
-* `reason`: the reason why the sniff was triggered.
-
-|`resurrect`
-a|Emitted before to send the actual request to Elasticsearch.
-[source,js]
-----
-client.on('resurrect', (err, meta) => {
-  console.log(err, meta)
-})
-----
-`meta` is an object that contains the following informations:
-
-* `connection`: the connection the client is trying to revive
-* `strategy`: the strategy the client is using for reviving the connection
-* `isAlive`: boolean value
-
-|===
-
 The event emitter functionality can be useful if you want to log every request, response and error that is happening during the use of the client.
 
 [source,js]
@@ -228,11 +164,84 @@ const logger = require('my-logger')()
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('response', (err, meta) => {
+client.on('response', (err, req) => {
   if (err) {
     logger.error(err)
   } else {
-    logger.info(meta)
+    logger.info(req)
   }
 })
+----
+
+The client emits the following events:
+[cols=2*]
+|===
+|`request`
+a|Emitted before to send the actual request to Elasticsearch.
+[source,js]
+----
+client.on('request', (err, req) => {
+  console.log(err, req)
+})
+----
+
+|`response`
+a|Emitted before to send the actual request to Elasticsearch.
+[source,js]
+----
+client.on('response', (err, req) => {
+  console.log(err, req)
+})
+----
+
+|`sniff`
+a|Emitted before to send the actual request to Elasticsearch.
+[source,js]
+----
+client.on('sniff', (err, req) => {
+  console.log(err, req)
+})
+----
+
+|`resurrect`
+a|Emitted before to send the actual request to Elasticsearch.
+[source,js]
+----
+client.on('resurrect', (err, req) => {
+  console.log(err, req)
+})
+----
+
+|===
+
+The values of `req` in `request`, `response` and `sniff` will be:
+[source,ts]
+----
+  body: any;
+  statusCode: number | null;
+  headers: anyObject | null;
+  warnings: string[] | null;
+  meta: {
+    request: {
+      params: TransportRequestParams;
+      options: TransportRequestOptions;
+    };
+    connection: Connection;
+    attempts: number;
+    aborted: boolean;
+    sniff?: {
+      hosts: any[];
+      reason: string;
+    };
+  };
+----
+
+While the `req` value in `resurrect` will be:
+[source,ts]
+----
+export interface ResurrectEvent {
+  strategy: string;
+  isAlive: boolean;
+  connection: Connection;
+}
 ----
