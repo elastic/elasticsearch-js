@@ -43,9 +43,12 @@ test('Should update the connection pool', t => {
     })
     t.strictEqual(client.connectionPool.connections.size, 1)
 
-    client.on(events.SNIFF, (err, { reason }) => {
+    client.on(events.SNIFF, (err, request) => {
       t.error(err)
-      t.strictEqual(reason, Transport.sniffReasons.DEFAULT)
+      t.strictEqual(
+        request.meta.sniff.reason,
+        Transport.sniffReasons.DEFAULT
+      )
     })
 
     // run the sniffer
@@ -100,8 +103,9 @@ test('Sniff interval', t => {
     })
 
     // this event will be triggered by api calls
-    client.on(events.SNIFF, (err, { hosts, reason }) => {
+    client.on(events.SNIFF, (err, request) => {
       t.error(err)
+      const { hosts, reason } = request.meta.sniff
       t.strictEqual(
         client.connectionPool.connections.size,
         hosts.length
@@ -135,8 +139,9 @@ test('Sniff on start', t => {
       sniffOnStart: true
     })
 
-    client.on(events.SNIFF, (err, { hosts, reason }) => {
+    client.on(events.SNIFF, (err, request) => {
       t.error(err)
+      const { hosts, reason } = request.meta.sniff
       t.strictEqual(
         client.connectionPool.connections.size,
         hosts.length
@@ -207,8 +212,9 @@ test('Sniff on connection fault', t => {
 
     t.strictEqual(client.connectionPool.connections.size, 2)
     // this event will be triggered by the connection fault
-    client.on(events.SNIFF, (err, { hosts, reason }) => {
+    client.on(events.SNIFF, (err, request) => {
       t.error(err)
+      const { hosts, reason } = request.meta.sniff
       t.strictEqual(
         client.connectionPool.connections.size,
         hosts.length

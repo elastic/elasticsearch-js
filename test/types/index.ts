@@ -22,9 +22,8 @@
 import {
   Client,
   ApiResponse,
-  EventMeta,
-  SniffMeta,
-  ResurrectMeta,
+  RequestEvent,
+  ResurrectEvent,
   events,
   ClientExtendsCallbackOptions
 } from '../../index'
@@ -33,10 +32,13 @@ import { TransportRequestParams, TransportRequestOptions } from '../../lib/Trans
 
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on(events.REQUEST, (err: Error | null, meta: EventMeta) => {})
-client.on(events.RESPONSE, (err: Error | null, meta: EventMeta) => {})
-client.on(events.SNIFF, (err: Error | null, meta: SniffMeta) => {})
-client.on(events.RESURRECT, (err: Error | null, meta: ResurrectMeta) => {})
+client.on(events.RESPONSE, (err: Error | null, request: RequestEvent) => {
+  if (err) console.log(err)
+  const { body, statusCode } = request
+  const { params } = request.meta.request
+  console.log(params, body, statusCode)
+})
+client.on(events.RESURRECT, (err: Error | null, meta: ResurrectEvent) => {})
 
 // Callbacks
 client.info((err: Error | null, result: ApiResponse) => {})

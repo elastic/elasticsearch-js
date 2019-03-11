@@ -32,20 +32,41 @@ test('Should emit a request event when a request is performed', t => {
     Connection: MockConnection
   })
 
-  client.on(events.REQUEST, (err, meta) => {
+  client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.match(meta, {
-      connection: {
-        id: 'http://localhost:9200'
-      },
-      request: {
-        method: 'GET',
-        path: '/test/doc/_search',
-        querystring: 'q=foo%3Abar'
-      },
-      response: null,
-      attempts: 0,
-      aborted: false
+    t.match(request, {
+      body: null,
+      statusCode: null,
+      headers: null,
+      warnings: null,
+      meta: {
+        request: {
+          params: {
+            method: 'GET',
+            path: '/test/doc/_search',
+            body: '',
+            querystring: 'q=foo%3Abar',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': '0'
+            }
+          },
+          options: {
+            ignore: null,
+            requestTimeout: null,
+            maxRetries: null,
+            asStream: false,
+            headers: null,
+            compression: false,
+            warnings: null
+          }
+        },
+        connection: {
+          id: 'http://localhost:9200'
+        },
+        attempts: 0,
+        aborted: false
+      }
     })
   })
 
@@ -66,28 +87,44 @@ test('Should emit a response event in case of a successful response', t => {
     Connection: MockConnection
   })
 
-  client.on(events.RESPONSE, (err, meta) => {
+  client.on(events.RESPONSE, (err, request) => {
     t.error(err)
-    t.match(meta, {
-      connection: {
-        id: 'http://localhost:9200'
+    t.match(request, {
+      body: { hello: 'world' },
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/json;utf=8',
+        'connection': 'keep-alive'
       },
-      request: {
-        method: 'GET',
-        path: '/test/doc/_search',
-        querystring: 'q=foo%3Abar'
-      },
-      response: {
-        body: { hello: 'world' },
-        statusCode: 200,
-        headers: {
-          'content-type': 'application/json;utf=8',
-          'connection': 'keep-alive'
+      warnings: null,
+      meta: {
+        request: {
+          params: {
+            method: 'GET',
+            path: '/test/doc/_search',
+            body: '',
+            querystring: 'q=foo%3Abar',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': '0'
+            }
+          },
+          options: {
+            ignore: null,
+            requestTimeout: null,
+            maxRetries: null,
+            asStream: false,
+            headers: null,
+            compression: false,
+            warnings: null
+          }
         },
-        warnings: null
-      },
-      attempts: 0,
-      aborted: false
+        connection: {
+          id: 'http://localhost:9200'
+        },
+        attempts: 0,
+        aborted: false
+      }
     })
   })
 
@@ -109,27 +146,49 @@ test('Should emit a response event with the error set', t => {
     maxRetries: 0
   })
 
-  client.on(events.RESPONSE, (err, meta) => {
+  client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof TimeoutError)
-    t.match(meta, {
-      connection: {
-        id: 'http://localhost:9200'
-      },
-      request: {
-        method: 'GET',
-        path: '/test/doc/_search',
-        querystring: 'q=foo%3Abar'
-      },
-      response: null,
-      attempts: 0,
-      aborted: false
+    t.match(request, {
+      body: null,
+      statusCode: null,
+      headers: null,
+      warnings: null,
+      meta: {
+        request: {
+          params: {
+            method: 'GET',
+            path: '/test/doc/_search',
+            body: '',
+            querystring: 'q=foo%3Abar',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': '0'
+            }
+          },
+          options: {
+            ignore: null,
+            requestTimeout: 500,
+            maxRetries: null,
+            asStream: false,
+            headers: null,
+            compression: false,
+            warnings: null
+          }
+        },
+        connection: {
+          id: 'http://localhost:9200'
+        },
+        attempts: 0,
+        aborted: false
+      }
     })
   })
 
   client.search({
     index: 'test',
     type: 'doc',
-    q: 'foo:bar',
+    q: 'foo:bar'
+  }, {
     requestTimeout: 500
   }, (err, result) => {
     t.ok(err instanceof TimeoutError)
