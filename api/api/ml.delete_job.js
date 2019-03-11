@@ -53,14 +53,6 @@ function buildMlDeleteJob (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlDeleteJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // check required parameters
     if (params['job_id'] == null && params['jobId'] == null) {

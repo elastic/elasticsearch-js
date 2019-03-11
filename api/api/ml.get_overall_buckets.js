@@ -68,14 +68,6 @@ function buildMlGetOverallBuckets (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlGetOverallBuckets(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // check required parameters
     if (params['job_id'] == null && params['jobId'] == null) {

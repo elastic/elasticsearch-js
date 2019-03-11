@@ -50,14 +50,6 @@ function buildMlDeleteFilter (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlDeleteFilter(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // check required parameters
     if (params['filter_id'] == null && params['filterId'] == null) {

@@ -61,14 +61,6 @@ function buildClusterAllocationExplain (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        clusterAllocationExplain(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {

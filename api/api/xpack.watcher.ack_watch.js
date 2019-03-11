@@ -51,14 +51,6 @@ function buildXpackWatcherAckWatch (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackWatcherAckWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // check required parameters
     if (params['watch_id'] == null && params['watchId'] == null) {

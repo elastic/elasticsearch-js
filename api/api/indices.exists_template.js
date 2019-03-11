@@ -63,14 +63,6 @@ function buildIndicesExistsTemplate (opts) {
       params = {}
       options = {}
     }
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        indicesExistsTemplate(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
 
     // check required parameters
     if (params['name'] == null) {
