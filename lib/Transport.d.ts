@@ -49,25 +49,29 @@ interface TransportOptions {
   headers?: anyObject;
 }
 
-export interface ApiResponse {
+export interface RequestEvent {
   body: any;
   statusCode: number | null;
-  headers: any;
-  warnings: any[] | null;
+  headers: anyObject | null;
+  warnings: string[] | null;
+  meta: {
+    request: {
+      params: TransportRequestParams;
+      options: TransportRequestOptions;
+    };
+    connection: Connection;
+    attempts: number;
+    aborted: boolean;
+    sniff?: {
+      hosts: any[];
+      reason: string;
+    };
+  };
 }
 
-export interface EventMeta {
-  connection: Connection;
-  request: any;
-  response: ApiResponse;
-  attempts: number;
-  aborted: boolean;
-}
-
-export interface SniffMeta {
-  hosts: any[];
-  reason: string;
-}
+// ApiResponse and RequestEvent are the same thing
+// we are doing this for have more clear names
+export interface ApiResponse extends RequestEvent {}
 
 declare type anyObject = {
   [key: string]: any;

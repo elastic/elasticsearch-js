@@ -23,15 +23,14 @@ import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
 import Transport, {
   ApiResponse,
-  EventMeta,
-  SniffMeta,
+  RequestEvent,
   TransportRequestParams,
   TransportRequestOptions,
   nodeFilterFn,
   nodeSelectorFn
 } from './lib/Transport';
 import Connection, { AgentOptions } from './lib/Connection';
-import ConnectionPool, { ResurrectMeta } from './lib/ConnectionPool';
+import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
@@ -569,9 +568,8 @@ export {
   Serializer,
   events,
   ApiResponse,
-  EventMeta,
-  SniffMeta,
-  ResurrectMeta,
+  RequestEvent,
+  ResurrectEvent,
   RequestParams,
   ClientExtendsCallbackOptions
 };

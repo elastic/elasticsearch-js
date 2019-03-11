@@ -17,51 +17,58 @@
  * under the License.
  */
 
-export declare class TimeoutError extends Error {
+import { ApiResponse } from './Transport'
+
+export declare class ElasticsearchClientError extends Error {
   name: string;
   message: string;
-  request: any;
-  constructor(message: string, request: any);
 }
 
-export declare class ConnectionError extends Error {
+export declare class TimeoutError extends ElasticsearchClientError {
   name: string;
   message: string;
-  request: any;
-  constructor(message: string, request: any);
+  meta: ApiResponse;
+  constructor(message: string, meta: ApiResponse);
 }
 
-export declare class NoLivingConnectionsError extends Error {
+export declare class ConnectionError extends ElasticsearchClientError {
+  name: string;
+  message: string;
+  meta: ApiResponse;
+  constructor(message: string, meta: ApiResponse);
+}
+
+export declare class NoLivingConnectionsError extends ElasticsearchClientError {
+  name: string;
+  message: string;
+  meta: ApiResponse;
+  constructor(message: string, meta: ApiResponse);
+}
+
+export declare class SerializationError extends ElasticsearchClientError {
   name: string;
   message: string;
   constructor(message: string);
 }
 
-export declare class SerializationError extends Error {
+export declare class DeserializationError extends ElasticsearchClientError {
   name: string;
   message: string;
   constructor(message: string);
 }
 
-export declare class DeserializationError extends Error {
+export declare class ConfigurationError extends ElasticsearchClientError {
   name: string;
   message: string;
   constructor(message: string);
 }
 
-export declare class ConfigurationError extends Error {
+export declare class ResponseError extends ElasticsearchClientError {
   name: string;
   message: string;
-  constructor(message: string);
-}
-
-export declare class ResponseError extends Error {
-  name: string;
-  message: string;
+  meta: ApiResponse;
   body: any;
   statusCode: number;
   headers: any;
-  constructor({ body, statusCode, headers }: {
-    [key: string]: any;
-  });
+  constructor(meta: ApiResponse);
 }

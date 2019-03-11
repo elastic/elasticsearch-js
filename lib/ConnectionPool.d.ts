@@ -36,7 +36,7 @@ export interface getConnectionOptions {
   selector?: nodeSelectorFn;
 }
 
-export interface ResurrectMeta {
+export interface ResurrectEvent {
   strategy: string;
   isAlive: boolean;
   connection: Connection;
