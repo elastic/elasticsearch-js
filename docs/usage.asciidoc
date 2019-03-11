@@ -55,6 +55,55 @@ client.search({
 })
 ----
 
+=== Aborting a request
+
+When using the callback style API, the function will also return an object that allows you to abort the API request.
+
+[source,js]
+----
+// calback API
+const requesty = client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  ignore: [404],
+  maxRetries: 3
+}, (err, { body }) => {
+  if (err) console.log(err)
+})
+
+request.abort()
+----
+
+Aborting a request with the promise style API is not supported, but you can easily achieve that with convenience wrapper.
+
+[source,js]
+----
+function abortableRequest (params, options) {
+  var request = null
+  const promise = new Promise((resolve, reject) => {
+    request = client.search(params, options, (err, result) => {
+      err ? reject(err) : resolve(res)
+    })
+  })
+  return {
+    promise,
+    abort: () => request.abort()
+  }
+}
+
+const request = abortableRequest({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  ignore: [404],
+  maxRetries: 3
+})
+
+request.abort()
+// access the promise with `request.promise.[method]`
+----
+
 === Request specific options
 If needed you can pass request specific options in a second object:
 [source,js]
@@ -79,6 +128,7 @@ client.search({
   if (err) console.log(err)
 })
 ----
+
 The supported request specific options are:
 [cols=2*]
 |===
