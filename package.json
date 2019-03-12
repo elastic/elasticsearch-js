@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^10.12.24",
+    "dedent": "^0.7.0",
     "deepmerge": "^3.1.0",
     "js-yaml": "^3.12.1",
     "license-checker": "^25.0.1",
@@ -58,7 +59,6 @@
   "dependencies": {
     "debug": "^4.1.1",
     "decompress-response": "^4.0.0",
-    "dedent": "^0.7.0",
     "into-stream": "^4.0.0",
     "ms": "^2.1.1",
     "once": "^1.4.0",
