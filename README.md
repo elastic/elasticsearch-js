@@ -12,6 +12,7 @@ The official Node.js client for Elasticsearch.
 - Configurable, automatic discovery of cluster nodes.
 - Persistent, Keep-Alive connections.
 - Load balancing (with pluggable selection strategy) across all available nodes.
+- TypeScript support out of the box.
 
 ## Install
 ```
