@@ -4,7 +4,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "keywords": [
     "elasticsearch",
     "elastic",
@@ -19,14 +19,15 @@
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
     "test:unit": "tap test/unit/*.test.js -J -t 300",
     "test:behavior": "tap test/behavior/*.test.js -J -t 300",
-    "test:integration": "tap test/integration/index.js -T --harmony",
+    "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:benchmarks": "nanobench test/benchmarks/*.bench.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "generate": "node scripts/run.js",
     "elasticsearch": "./scripts/es-docker.sh",
-    "ci": "npm test && npm run test:integration"
+    "ci": "npm run license-checker && npm test && npm run test:integration",
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -37,11 +38,13 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
-    "@types/node": "^11.10.4",
+    "@types/node": "^10.12.24",
     "convert-hrtime": "^2.0.0",
-    "deepmerge": "^3.2.0",
+    "dedent": "^0.7.0",
+    "deepmerge": "^3.1.0",
     "dezalgo": "^1.0.3",
-    "js-yaml": "^3.12.2",
+    "js-yaml": "^3.12.1",
+    "license-checker": "^25.0.1",
     "lolex": "^3.1.0",
     "minimist": "^1.2.0",
     "ora": "^3.2.0",
@@ -53,14 +56,13 @@
     "split2": "^3.1.0",
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
-    "tap": "^12.5.3",
-    "typescript": "^3.3.3333",
+    "tap": "^12.6.0",
+    "typescript": "^3.3.3",
     "workq": "^2.1.0"
   },
   "dependencies": {
     "debug": "^4.1.1",
     "decompress-response": "^4.0.0",
-    "dedent": "^0.7.0",
     "into-stream": "^4.0.0",
     "ms": "^2.1.1",
     "once": "^1.4.0",

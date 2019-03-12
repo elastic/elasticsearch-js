@@ -1,27 +1,26 @@
 = Breaking changes coming from the old client
 
-If you were already using the previous version of this client, the one you used to install with `npm install elasticsearch`, you will encounter some breaking changes.
+If you were already using the previous version of this client --i.e. the one you used to install with `npm install elasticsearch`-- you will encounter some breaking changes.
 
-=== Don't panic!
+=== Don’t panic!
 
-Every breaking change was carefully weighted, and every breaking change has solid reasons to introduce it, furthermore the new codebase has been rewritten  with modern JavaScript, and has been carefully designed to be easy to maintain.
+Every breaking change was carefully weighed, and each is justified. Furthermore, the new codebase has been rewritten with modern JavaScript and has been carefully designed to be easy to maintain.
 
 === Breaking changes
 
 *  Minimum supported version of Node.js is `v6`.
 
-* Everything has been rewritten using ES6 classes to help users extend more easily the defaults.
+* Everything has been rewritten using ES6 classes to help users extend the defaults more easily.
 
-* There is no more an integrated logger. The client now is an event emitter that emits the following events: `request`, `response`, and `error`.
+* There is no longer an integrated logger. The client now is an event emitter that emits the following events: `request`, `response`, and `error`.
 
-* The code is no longer shipped with all the versions of the API, but only the same major version of the package, this means that if you are using Elasticsearch `v6`, you will be required to install `@elasticelasticsearc@6`, and so on.
+* The code is no longer shipped with all the versions of the API, but only that of the package’s major version, This means that if you are using Elasticsearch `v6`, you will be required to install `@elastic/elasticsearch@6`, and so on.
 
-* The internals are completely different, so if you used to tweak a lot with them, you will need to refactor your code, while the surface API should be almost the same.
+* The internals are completely different, so if you used to tweak them a lot, you will need to refactor your code. The public API should be almost the same.
 
-* No more browser support, for that will be built another module, `@elastic/elasticsearch-browser`. This module is intended for Node.js only.
+* No more browser support, for that will be distributed via another module, `@elastic/elasticsearch-browser`. This module is intended for Node.js only.
 
-* The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, and `warnings`, for both callback and promises. +
-With the `asStream` parameter you can get the original HTTP response stream if the case you need to pipe it to another response for a forwarding use case.
+* The returned value of an API call will no longer be the `body`, `statusCode`, and `headers` for callbacks and just the `body` for promises. The new returned value will be a unique object containing the `body`, `statusCode`, `headers`, `warnings`, and `meta`, for both callback and promises.
 
 [source,js]
 ----
@@ -53,14 +52,14 @@ client.search({
 ----
 
 
-* Errors: there is no longer a custom error class for every HTTP status code (such as `BadRequest` or `NotFound`), but there is a single `ResponseError` instead.
-All the error classes have been renamed, and now all are suffixed with `Error` at the end. +
-Errors that have been removed:
-`RequestTypeError`, `Generic`, and all the status code specific errors. +
-Errors that have been added:
-`ConfigurationError` (in case of bad configurations) and `ResponseError`, which contains all the data you may need to handle the specific error, such as `statusCode`, `headers`, `body`, and `message`. +
-All the new error classes also have well-defined types. +
-Errors that has been renamed:
+* Errors: there is no longer a custom error class for every HTTP status code (such as `BadRequest` or `NotFound`). There is instead a single `ResponseError`. Each error class has been renamed, and now each is suffixed with `Error` at the end.
+
+* Errors that have been removed: `RequestTypeError`, `Generic`, and all the status code specific errors (such as `BadRequest` or `NotFound`).
+
+* Errors that have been added: `ConfigurationError` (in case of bad configurations) and `ResponseError`, which contains all the data you may need to handle the specific error, such as `statusCode`, `headers`, `body`, and `message`.
+
+
+* Errors that has been renamed:
 
 ** `RequestTimeout` (408 statusCode) => `TimeoutError`
 ** `ConnectionFault` => `ConnectionError`
@@ -68,9 +67,9 @@ Errors that has been renamed:
 ** `Serialization` => `SerializationError`
 ** `Serialization` => `DeserializationError`
 
-* You must specify the port number in the configuration. In the previous version you can specifiy the host and port in a variety of ways, with the new client there is only one via the `node` parameter.
+* You must specify the port number in the configuration. In the previous version you can specify the host and port in a variety of ways, with the new client there is only one via the `node` parameter.
 
-* The plugins option has been removed, if you want to extend the client now you should use the client.extend API.
+* The `plugins` option has been removed, if you want to extend the client now you should use the `client.extend` API.
 
 [source,js]
 ----

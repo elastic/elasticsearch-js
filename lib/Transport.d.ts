@@ -1,3 +1,22 @@
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 import ConnectionPool from './ConnectionPool';
 import Connection from './Connection';
 import Serializer from './Serializer';
@@ -30,25 +49,29 @@ interface TransportOptions {
   headers?: anyObject;
 }
 
-export interface ApiResponse {
+export interface RequestEvent {
   body: any;
   statusCode: number | null;
-  headers: any;
-  warnings: any[] | null;
+  headers: anyObject | null;
+  warnings: string[] | null;
+  meta: {
+    request: {
+      params: TransportRequestParams;
+      options: TransportRequestOptions;
+    };
+    connection: Connection;
+    attempts: number;
+    aborted: boolean;
+    sniff?: {
+      hosts: any[];
+      reason: string;
+    };
+  };
 }
 
-export interface EventMeta {
-  connection: Connection;
-  request: any;
-  response: ApiResponse;
-  attempts: number;
-  aborted: boolean;
-}
-
-export interface SniffMeta {
-  hosts: any[];
-  reason: string;
-}
+// ApiResponse and RequestEvent are the same thing
+// we are doing this for have more clear names
+export interface ApiResponse extends RequestEvent {}
 
 declare type anyObject = {
   [key: string]: any;
