@@ -54,7 +54,9 @@ const ndjsonApi = [
   'msearch',
   'msearch_template',
   'ml.find_file_structure',
-  'monitoring.bulk'
+  'monitoring.bulk',
+  'xpack.ml.find_file_structure',
+  'xpack.monitoring.bulk'
 ]
 
 function generate (spec, common) {
