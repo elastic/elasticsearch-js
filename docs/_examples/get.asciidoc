@@ -1,9 +1,0 @@
-.Get `/myindex/mytype/1`
-[source,js]
----------
-const response = await client.get({
-  index: 'myindex',
-  type: 'mytype',
-  id: 1
-});
----------

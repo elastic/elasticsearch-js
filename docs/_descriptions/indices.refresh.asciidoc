@@ -1,1 +1,0 @@
-Explicitly refresh one or more index, making all operations performed since the last refresh available for search.

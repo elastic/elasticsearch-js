@@ -1,9 +1,0 @@
-.Check that the document `/myindex/mytype/1` exist
-[source,js]
----------
-const exists = await client.exists({
-  index: 'myindex',
-  type: 'mytype',
-  id: 1
-});
----------

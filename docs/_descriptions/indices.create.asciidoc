@@ -1,1 +1,0 @@
-Create an index in Elasticsearch.

@@ -1,1 +1,0 @@
-Check if a type/types exists in an index/indices.

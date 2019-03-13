@@ -1,1 +1,0 @@
-Retrieve mapping definition of index or index/type.

@@ -1,9 +1,0 @@
-.Delete the document `/myindex/mytype/1`
-[source,js]
----------
-await client.delete({
-  index: 'myindex',
-  type: 'mytype',
-  id: '1'
-});
----------

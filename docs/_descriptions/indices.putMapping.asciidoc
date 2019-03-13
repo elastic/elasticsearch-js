@@ -1,1 +1,0 @@
-Register specific mapping definition for a specific type.

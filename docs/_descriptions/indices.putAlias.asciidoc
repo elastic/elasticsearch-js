@@ -1,1 +1,0 @@
-Create an alias for a specific index/indices.

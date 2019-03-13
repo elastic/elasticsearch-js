@@ -1,1 +1,0 @@
-Clear the scroll request created by specifying the scroll parameter to search.

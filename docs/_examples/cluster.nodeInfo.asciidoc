@@ -1,7 +1,0 @@
-.Return information about JVM
-[source,js]
----------
-const response = await client.cluster.nodeInfo({
-  jvm: true
-});
----------

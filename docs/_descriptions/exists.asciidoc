@@ -1,1 +1,0 @@
-Returns a boolean indicating whether or not a given document exists.

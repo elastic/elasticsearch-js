@@ -1,1 +1,0 @@
-Get the number of documents for the cluster, index, type, or a query.

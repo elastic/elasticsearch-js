@@ -1,3 +1,0 @@
-[[contributing]]
-== Contributing
-Contributions are awesome, but please read https://github.com/elasticsearch/elasticsearch-js/blob/master/CONTRIBUTING.md before submitting a pull request.

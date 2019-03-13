@@ -1,1 +1,0 @@
-Retrieve settings for one or more (or all) indices.

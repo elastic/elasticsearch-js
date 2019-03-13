@@ -1,1 +1,0 @@
-= These files are used to build http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/index.html

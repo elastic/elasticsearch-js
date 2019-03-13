@@ -1,1 +1,0 @@
-Provides details about a specific document's score in relation to a specific query. It will also tell you if the document matches the specified query.

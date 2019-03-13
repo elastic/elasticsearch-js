@@ -1,1 +1,0 @@
-Retrieve a specified alias.

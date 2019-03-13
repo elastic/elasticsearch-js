@@ -1,4 +1,0 @@
-Update parts of a document. The required body parameter can contain one of two things:
-
-  * a partial document, which will be merged with the existing one.
-  * a `script` which will update the document content

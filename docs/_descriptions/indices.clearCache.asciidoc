@@ -1,1 +1,0 @@
-Clear either all caches or specific cached associated with one ore more indices.
