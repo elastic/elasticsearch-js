@@ -9,5 +9,4 @@ exec docker run \
   -p 9200:9200 \
   --network=elastic \
   --name=elasticsearch \
-  docker.elastic.co/elasticsearch/elasticsearch:7.0.0-beta1
-  # docker.elastic.co/elasticsearch/elasticsearch:6.6.0
+  docker.elastic.co/elasticsearch/elasticsearch:5.6.15
