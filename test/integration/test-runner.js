@@ -105,34 +105,34 @@ TestRunner.prototype.cleanupPlatinum = function (q, done) {
   this.tap.comment('Platinum Cleanup')
 
   q.add((q, done) => {
-    this.client.security.getRole((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getRole')
+    this.client.xpack.security.getRole((err, { body }) => {
+      this.tap.error(err, 'should not error: xpack.security.getRole')
       const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
       helper.runInParallel(
-        this.client, 'security.deleteRole',
+        this.client, 'xpack.security.deleteRole',
         roles.map(r => ({ name: r, refresh: 'wait_for' }))
       )
         .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deleteRole'))
+        .catch(err => this.tap.error(err, 'should not error: xpack.security.deleteRole'))
     })
   })
 
   q.add((q, done) => {
-    this.client.security.getUser((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getUser')
+    this.client.xpack.security.getUser((err, { body }) => {
+      this.tap.error(err, 'should not error: xpack.security.getUser')
       const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
       helper.runInParallel(
-        this.client, 'security.deleteUser',
+        this.client, 'xpack.security.deleteUser',
         users.map(r => ({ username: r, refresh: 'wait_for' }))
       )
         .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deleteUser'))
+        .catch(err => this.tap.error(err, 'should not error: xpack.security.deleteUser'))
     })
   })
 
   q.add((q, done) => {
-    this.client.security.getPrivileges((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getPrivileges')
+    this.client.xpack.security.getPrivileges((err, { body }) => {
+      this.tap.error(err, 'should not error: xpack.security.getPrivileges')
       const privileges = []
       Object.keys(body).forEach(app => {
         Object.keys(body[app]).forEach(priv => {
@@ -143,47 +143,47 @@ TestRunner.prototype.cleanupPlatinum = function (q, done) {
           })
         })
       })
-      helper.runInParallel(this.client, 'security.deletePrivileges', privileges)
+      helper.runInParallel(this.client, 'xpack.security.deletePrivileges', privileges)
         .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deletePrivileges'))
+        .catch(err => this.tap.error(err, 'should not error: xpack.security.deletePrivileges'))
     })
   })
 
   q.add((q, done) => {
-    this.client.ml.stopDatafeed({ datafeedId: '*', force: true }, err => {
-      this.tap.error(err, 'should not error: ml.stopDatafeed')
-      this.client.ml.getDatafeeds({ datafeedId: '*' }, (err, { body }) => {
-        this.tap.error(err, 'should error: not ml.getDatafeeds')
+    this.client.xpack.ml.stopDatafeed({ datafeedId: '*', force: true }, err => {
+      this.tap.error(err, 'should not error: xpack.ml.stopDatafeed')
+      this.client.xpack.ml.getDatafeeds({ datafeedId: '*' }, (err, { body }) => {
+        this.tap.error(err, 'should error: not xpack.ml.getDatafeeds')
         const feeds = body.datafeeds.map(f => f.datafeed_id)
         helper.runInParallel(
-          this.client, 'ml.deleteDatafeed',
+          this.client, 'xpack.ml.deleteDatafeed',
           feeds.map(f => ({ datafeedId: f }))
         )
           .then(() => done())
-          .catch(err => this.tap.error(err, 'should not error: ml.deleteDatafeed'))
+          .catch(err => this.tap.error(err, 'should not error: xpack.ml.deleteDatafeed'))
       })
     })
   })
 
   q.add((q, done) => {
-    this.client.ml.closeJob({ jobId: '*', force: true }, err => {
-      this.tap.error(err, 'should not error: ml.closeJob')
-      this.client.ml.getJobs({ jobId: '*' }, (err, { body }) => {
-        this.tap.error(err, 'should not error: ml.getJobs')
+    this.client.xpack.ml.closeJob({ jobId: '*', force: true }, err => {
+      this.tap.error(err, 'should not error: xpack.ml.closeJob')
+      this.client.xpack.ml.getJobs({ jobId: '*' }, (err, { body }) => {
+        this.tap.error(err, 'should not error: xpack.ml.getJobs')
         const jobs = body.jobs.map(j => j.job_id)
         helper.runInParallel(
-          this.client, 'ml.deleteJob',
+          this.client, 'xpack.ml.deleteJob',
           jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
         )
           .then(() => done())
-          .catch(err => this.tap.error(err, 'should not error: ml.deleteJob'))
+          .catch(err => this.tap.error(err, 'should not error: xpack.ml.deleteJob'))
       })
     })
   })
 
   q.add((q, done) => {
     this.client.xpack.rollup.getJobs({ id: '_all' }, (err, { body }) => {
-      this.tap.error(err, 'should not error: rollup.getJobs')
+      this.tap.error(err, 'should not error: xpack.rollup.getJobs')
       const jobs = body.jobs.map(j => j.config.id)
       helper.runInParallel(
         this.client, 'xpack.rollup.stopJob',
@@ -194,7 +194,7 @@ TestRunner.prototype.cleanupPlatinum = function (q, done) {
           jobs.map(j => ({ id: j }))
         ))
         .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: rollup.stopJob/deleteJob'))
+        .catch(err => this.tap.error(err, 'should not error: xpack.rollup.stopJob/deleteJob'))
     })
   })
 
@@ -255,11 +255,11 @@ TestRunner.prototype.run = function (setup, test, teardown, end) {
     this.tap.comment('Creating x-pack user')
     // Some platinum test requires this user
     this.q.add((q, done) => {
-      this.client.security.putUser({
+      this.client.xpack.security.putUser({
         username: 'x_pack_rest_user',
         body: { password: 'x-pack-test-password', roles: ['superuser'] }
       }, (err, { body }) => {
-        this.tap.error(err, 'should not error: security.putUser')
+        this.tap.error(err, 'should not error: xpack.security.putUser')
         done()
       })
     })
@@ -539,7 +539,7 @@ TestRunner.prototype.do = function (action, done) {
         this.response = err.body
       }
     } else {
-      this.tap.error(err, `should not error: ${cmd.method}`, action)
+      this.tap.error(err && err.body ? err.body : err, `should not error: ${cmd.method}`, action)
       this.response = body
     }
 

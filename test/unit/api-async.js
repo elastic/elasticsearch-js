@@ -66,6 +66,7 @@ function runAsyncTest (test) {
       try {
         await client.index({
           index: 'test',
+          type: 'test',
           body: { foo: 'bar' }
         })
         t.pass('ok')
