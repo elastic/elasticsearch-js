@@ -87,6 +87,15 @@ function buildMtermvectors (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        mtermvectors(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required url components
     if (params['type'] != null && (params['index'] == null)) {
       return callback(

@@ -67,6 +67,15 @@ function buildIndicesGetTemplate (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesGetTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(

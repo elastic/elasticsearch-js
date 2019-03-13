@@ -68,6 +68,15 @@ function buildIndicesExistsType (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesExistsType(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(

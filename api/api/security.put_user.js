@@ -53,6 +53,15 @@ function buildSecurityPutUser (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        securityPutUser(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['username'] == null) {
       return callback(
