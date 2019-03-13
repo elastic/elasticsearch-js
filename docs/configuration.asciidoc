@@ -1,0 +1,219 @@
+= Client configuration
+
+The client is designed to be easily configured as you see fit for your needs, following you can see all the possible basic options that you can use to configure it.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  node: 'http://localhost:9200'
+  maxRetries: 5,
+  requestTimeout: 60000,
+  sniffOnStart: true
+})
+----
+
+== Basic options
+[cols=2*]
+|===
+|`node` or `nodes`
+a|The Elasticsearch endpoint to use. +
+It can be a single string or an array of strings:
+[source,js]
+----
+node: 'http://localhost:9200'
+----
+Or it can be an object (or an array of objects) that represents the node
+[source,js]
+----
+node: {
+  url: new URL('http://localhost:9200'),
+  ssl: 'ssl options',
+  agent: 'http agent options',
+  id: 'custom node id',
+  headers: { 'custom': 'headers' }
+  roles: {
+    master: true,
+    data: true,
+    ingest: true,
+    ml: false
+  }
+}
+----
+
+|`maxRetries`
+|`number` - Max number of retries for each request. +
+_Default:_ `3`
+
+|`requestTimeout`
+|`number` - Max request timeout for each request. +
+_Default:_ `30000`
+
+|`pingTimeout`
+|`number` - Max ping request timeout for each request. +
+_Default:_ `3000`
+
+|`sniffInterval`
+|`number, boolean` - Perform a sniff operation every `n` milliseconds. +
+_Default:_ `false`
+
+|`sniffOnStart`
+|`boolean` - Perform a sniff once the client is started. +
+_Default:_ `false`
+
+|`sniffEndpoint`
+|`string` - Max request timeout for each request. +
+_Default:_ `'_nodes/_all/http'`
+
+|`sniffOnConnectionFault`
+|`boolean` - Perform a sniff on connection fault. +
+_Default:_ `false`
+
+|`resurrectStrategy`
+|`string` - Configure the node resurrection strategy. +
+_Options:_ `'ping'`, `'optimistic'`, `'none'` +
+_Default:_ `'ping'`
+
+|`suggestCompression`
+|`boolean` - Adds `accept-encoding` header to every request. +
+_Default:_ `false`
+
+|`compression`
+|`string, boolean` - Enables gzip request body compression. +
+_Options:_ `'gzip'`, `false` +
+_Default:_ `false`
+
+|`ssl`
+|`http.SecureContextOptions` - ssl https://nodejs.org/api/tls.html[configuraton]. +
+_Default:_ `null`
+
+|`agent`
+|`http.AgentOptions` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options]. +
+_Default:_ `null`
+
+|`nodeFilter`
+a|`function` - Filters which node not to use for a request. +
+_Default:_
+[source,js]
+----
+function defaultNodeFilter (node) {
+  // avoid master only nodes
+  if (node.roles.master === true &&
+      node.roles.data === false &&
+      node.roles.ingest === false) {
+    return false
+  }
+  return true
+}
+----
+
+|`nodeSelector`
+a|`function` - custom selection strategy. +
+_Options:_ `'round-robin'`, `'random'`, custom function +
+_Default:_ `'round-robin'` +
+_Custom function example:_
+[source,js]
+----
+function nodeSelector (connections) {
+  const index = calculateIndex()
+  return connections[index]
+}
+----
+|===
+
+== Advanced configuration
+If you need to customize the client behavior heavily, you are in the right place! +
+The client allows you to customize the following internals:
+
+* `Transport` class
+* `ConnectionPool` class
+* `Connection` class
+* `Serializer` class
+
+=== `Transport`
+This class is responsible to perform the request to Elasticsearch and handling errors, it also handle the sniffing.
+[source,js]
+----
+const { Client, Transport } = require('@elastic/elasticsearch')
+
+class MyTransport extends Transport {
+  request (params, options, callback) {
+    // your code
+  }
+}
+
+const client = new Client({
+    Transport: MyTransport
+})
+----
+
+Sometimes you just need to inject a little snippet of your code and then continue to use the usual client code, in such case, you should call `super.method`.
+[source,js]
+----
+class MyTransport extends Transport {
+  request (params, options, callback) {
+    // your code
+    super.request(params, options, callback)
+  }
+}
+----
+
+=== `ConnectionPool`
+This class is responsible for keeping in memory all the Elasticsearch Connection that we are using, there is a single Connection for every node. +
+Moreover, the connection pool will handle the resurrection strategies and the updates of the pool.
+[source,js]
+----
+const { Client, ConnectionPool } = require('@elastic/elasticsearch')
+
+class MyConnectionPool extends ConnectionPool {
+  markAlive (connection) {
+    // your code
+    super.markAlive(connection)
+  }
+}
+
+const client = new Client({
+    ConnectionPool: MyConnectionPool
+})
+----
+
+=== `Connection`
+This class represents a single Node, it holds every information we have on the node, such as roles, id, URL, custom headers and so on. The actual HTTP request is performed here, this means that if you want to swap the default HTTP client (Node.js core), you should override this class `request` method.
+[source,js]
+----
+const { Client, Connection } = require('@elastic/elasticsearch')
+
+class MyConnection extends Connection {
+  request (params, callback) {
+    // your code
+  }
+}
+
+const client = new Client({
+  Connection: MyConnection
+})
+----
+
+=== `Serializer`
+This class is responsible of the serialization of every request, it offers the following methods:
+
+* `serialize(object: any): string;`, serializes request objects
+* `deserialize(json: string): any;`, deserializes response strings
+* `ndserialize(array: any[]): string;`, serializes bulk request objects
+* `qserialize(object: any): string;`, serializes request query parameters
+
+[source,js]
+----
+const { Client, Serializer } = require('@elastic/elasticsearch')
+
+class MySerializer extends Serializer {
+  serialize (object) {
+    // your code
+  }
+}
+
+const client = new Client({
+  Serializer: MySerializer
+})
+----
