@@ -52,6 +52,15 @@ function buildMlDeleteCalendarJob (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        mlDeleteCalendarJob(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['calendar_id'] == null && params['calendarId'] == null) {
       return callback(
