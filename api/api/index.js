@@ -86,10 +86,25 @@ function buildIndex (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        _index(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -101,7 +116,12 @@ function buildIndex (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: type, index'),
+        result
+      )
+    } else if (params['type'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
         result
@@ -133,12 +153,8 @@ function buildIndex (opts) {
 
     if ((index) != null && (type) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     }
 
     // build request object

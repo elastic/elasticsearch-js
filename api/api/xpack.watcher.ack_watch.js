@@ -30,14 +30,15 @@ function buildXpackWatcherAckWatch (opts) {
    *
    * @param {string} watch_id - Watch ID
    * @param {list} action_id - A comma-separated list of the action ids to be acked
+   * @param {time} master_timeout - Explicit operation timeout for connection to master node
    */
 
   const acceptedQuerystring = [
-
+    'master_timeout'
   ]
 
   const snakeCase = {
-
+    masterTimeout: 'master_timeout'
   }
 
   return function xpackWatcherAckWatch (params, options, callback) {
@@ -50,6 +51,15 @@ function buildXpackWatcherAckWatch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackWatcherAckWatch(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
@@ -98,9 +108,9 @@ function buildXpackWatcherAckWatch (opts) {
     var path = ''
 
     if ((watch_id || watchId) != null && (action_id || actionId) != null) {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
+      path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
     } else {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack'
+      path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack'
     }
 
     // build request object

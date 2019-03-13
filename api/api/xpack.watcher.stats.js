@@ -54,6 +54,15 @@ function buildXpackWatcherStats (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackWatcherStats(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(
@@ -86,9 +95,9 @@ function buildXpackWatcherStats (opts) {
     var path = ''
 
     if ((metric) != null) {
-      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
+      path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
     } else {
-      path = '/' + '_watcher' + '/' + 'stats'
+      path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'stats'
     }
 
     // build request object

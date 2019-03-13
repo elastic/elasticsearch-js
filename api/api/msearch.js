@@ -35,8 +35,7 @@ function buildMsearch (opts) {
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
    * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
+   * @param {boolean} rest_total_hits_as_int - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
 
@@ -47,7 +46,6 @@ function buildMsearch (opts) {
     'pre_filter_shard_size',
     'max_concurrent_shard_requests',
     'rest_total_hits_as_int',
-    'ccs_minimize_roundtrips',
     'pretty',
     'human',
     'error_trace',
@@ -62,7 +60,6 @@ function buildMsearch (opts) {
     preFilterShardSize: 'pre_filter_shard_size',
     maxConcurrentShardRequests: 'max_concurrent_shard_requests',
     restTotalHitsAsInt: 'rest_total_hits_as_int',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -77,6 +74,15 @@ function buildMsearch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        msearch(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

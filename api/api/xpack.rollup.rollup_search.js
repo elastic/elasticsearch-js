@@ -31,18 +31,15 @@ function buildXpackRollupRollupSearch (opts) {
    * @param {string} index - The index or index-pattern (containing rollup or regular data) that should be searched
    * @param {string} type - The doc type inside the index
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search request body
    */
 
   const acceptedQuerystring = [
-    'typed_keys',
-    'rest_total_hits_as_int'
+    'typed_keys'
   ]
 
   const snakeCase = {
-    typedKeys: 'typed_keys',
-    restTotalHitsAsInt: 'rest_total_hits_as_int'
+    typedKeys: 'typed_keys'
   }
 
   return function xpackRollupRollupSearch (params, options, callback) {
@@ -55,6 +52,15 @@ function buildXpackRollupRollupSearch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackRollupRollupSearch(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

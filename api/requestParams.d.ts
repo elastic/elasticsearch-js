@@ -34,6 +34,7 @@ export interface Bulk extends Generic {
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
+  fields?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
@@ -356,7 +357,7 @@ export interface Count extends Generic {
 export interface Create extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   wait_for_active_shards?: string;
   parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
@@ -371,7 +372,7 @@ export interface Create extends Generic {
 export interface Delete extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   wait_for_active_shards?: string;
   parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
@@ -435,7 +436,7 @@ export interface DeleteScript extends Generic {
 export interface Exists extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   stored_fields?: string | string[];
   parent?: string;
   preference?: string;
@@ -452,7 +453,7 @@ export interface Exists extends Generic {
 export interface ExistsSource extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -468,7 +469,7 @@ export interface ExistsSource extends Generic {
 export interface Explain extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   analyze_wildcard?: boolean;
   analyzer?: string;
   default_operator?: 'AND' | 'OR';
@@ -491,12 +492,13 @@ export interface FieldCaps extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  body?: any;
 }
 
 export interface Get extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   stored_fields?: string | string[];
   parent?: string;
   preference?: string;
@@ -520,7 +522,7 @@ export interface GetScript extends Generic {
 export interface GetSource extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -536,7 +538,7 @@ export interface GetSource extends Generic {
 export interface Index extends Generic {
   id?: string;
   index: string;
-  type?: string;
+  type: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
   parent?: string;
@@ -558,12 +560,14 @@ export interface IndicesAnalyze extends Generic {
 
 export interface IndicesClearCache extends Generic {
   index?: string | string[];
+  field_data?: boolean;
   fielddata?: boolean;
   fields?: string | string[];
   query?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  request_cache?: boolean;
   request?: boolean;
 }
 
@@ -578,10 +582,10 @@ export interface IndicesClose extends Generic {
 
 export interface IndicesCreate extends Generic {
   index: string;
-  include_type_name?: boolean;
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
+  update_all_types?: boolean;
   body?: any;
 }
 
@@ -670,7 +674,6 @@ export interface IndicesForcemerge extends Generic {
 
 export interface IndicesGet extends Generic {
   index: string | string[];
-  include_type_name?: boolean;
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -693,7 +696,6 @@ export interface IndicesGetFieldMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
   fields: string | string[];
-  include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -704,7 +706,6 @@ export interface IndicesGetFieldMapping extends Generic {
 export interface IndicesGetMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
-  include_type_name?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -726,7 +727,6 @@ export interface IndicesGetSettings extends Generic {
 
 export interface IndicesGetTemplate extends Generic {
   name?: string | string[];
-  include_type_name?: boolean;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -759,13 +759,13 @@ export interface IndicesPutAlias extends Generic {
 
 export interface IndicesPutMapping extends Generic {
   index?: string | string[];
-  type?: string;
-  include_type_name?: boolean;
+  type: string;
   timeout?: string;
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  update_all_types?: boolean;
   body: any;
 }
 
@@ -783,7 +783,6 @@ export interface IndicesPutSettings extends Generic {
 
 export interface IndicesPutTemplate extends Generic {
   name: string;
-  include_type_name?: boolean;
   order?: number;
   create?: boolean;
   timeout?: string;
@@ -808,7 +807,6 @@ export interface IndicesRefresh extends Generic {
 export interface IndicesRollover extends Generic {
   alias: string;
   new_index?: string;
-  include_type_name?: boolean;
   timeout?: string;
   dry_run?: boolean;
   master_timeout?: string;
@@ -950,7 +948,6 @@ export interface Msearch extends Generic {
   pre_filter_shard_size?: number;
   max_concurrent_shard_requests?: number;
   rest_total_hits_as_int?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -961,7 +958,6 @@ export interface MsearchTemplate extends Generic {
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -1081,7 +1077,6 @@ export interface Search extends Generic {
   type?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   default_operator?: 'AND' | 'OR';
   df?: string;
   explain?: boolean;
@@ -1115,7 +1110,6 @@ export interface Search extends Generic {
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
-  seq_no_primary_term?: boolean;
   request_cache?: boolean;
   batched_reduce_size?: number;
   max_concurrent_shard_requests?: number;
@@ -1149,7 +1143,6 @@ export interface SearchTemplate extends Generic {
   profile?: boolean;
   typed_keys?: boolean;
   rest_total_hits_as_int?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   body: any;
 }
 
@@ -1241,7 +1234,7 @@ export interface TasksList extends Generic {
 
 export interface Termvectors extends Generic {
   index: string;
-  type?: string;
+  type: string;
   id?: string;
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1261,8 +1254,9 @@ export interface Termvectors extends Generic {
 export interface Update extends Generic {
   id: string;
   index: string;
-  type?: string;
+  type: string;
   wait_for_active_shards?: string;
+  fields?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
@@ -1272,8 +1266,8 @@ export interface Update extends Generic {
   retry_on_conflict?: number;
   routing?: string;
   timeout?: string;
-  if_seq_no?: number;
-  if_primary_term?: number;
+  version?: number;
+  version_type?: 'internal' | 'force';
   body: any;
 }
 
@@ -1328,12 +1322,7 @@ export interface CcrDeleteAutoFollowPattern extends Generic {
 
 export interface CcrFollow extends Generic {
   index: string;
-  wait_for_active_shards?: string;
   body: any;
-}
-
-export interface CcrFollowInfo extends Generic {
-  index?: string | string[];
 }
 
 export interface CcrFollowStats extends Generic {
@@ -1425,443 +1414,6 @@ export interface IndicesUnfreeze extends Generic {
   wait_for_active_shards?: string;
 }
 
-export interface MlCloseJob extends Generic {
-  job_id: string;
-  allow_no_jobs?: boolean;
-  force?: boolean;
-  timeout?: string;
-  body?: any;
-}
-
-export interface MlDeleteCalendar extends Generic {
-  calendar_id: string;
-}
-
-export interface MlDeleteCalendarEvent extends Generic {
-  calendar_id: string;
-  event_id: string;
-}
-
-export interface MlDeleteCalendarJob extends Generic {
-  calendar_id: string;
-  job_id: string;
-}
-
-export interface MlDeleteDatafeed extends Generic {
-  datafeed_id: string;
-  force?: boolean;
-}
-
-export interface MlDeleteExpiredData extends Generic {
-}
-
-export interface MlDeleteFilter extends Generic {
-  filter_id: string;
-}
-
-export interface MlDeleteForecast extends Generic {
-  job_id: string;
-  forecast_id?: string;
-  allow_no_forecasts?: boolean;
-  timeout?: string;
-}
-
-export interface MlDeleteJob extends Generic {
-  job_id: string;
-  force?: boolean;
-  wait_for_completion?: boolean;
-}
-
-export interface MlDeleteModelSnapshot extends Generic {
-  job_id: string;
-  snapshot_id: string;
-}
-
-export interface MlFindFileStructure extends Generic {
-  lines_to_sample?: number;
-  timeout?: string;
-  charset?: string;
-  format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
-  has_header_row?: boolean;
-  column_names?: string | string[];
-  delimiter?: string;
-  quote?: string;
-  should_trim_fields?: boolean;
-  grok_pattern?: string;
-  timestamp_field?: string;
-  timestamp_format?: string;
-  explain?: boolean;
-  body: any;
-}
-
-export interface MlFlushJob extends Generic {
-  job_id: string;
-  calc_interim?: boolean;
-  start?: string;
-  end?: string;
-  advance_time?: string;
-  skip_time?: string;
-  body?: any;
-}
-
-export interface MlForecast extends Generic {
-  job_id: string;
-  duration?: string;
-  expires_in?: string;
-}
-
-export interface MlGetBuckets extends Generic {
-  job_id: string;
-  timestamp?: string;
-  expand?: boolean;
-  exclude_interim?: boolean;
-  from?: number;
-  size?: number;
-  start?: string;
-  end?: string;
-  anomaly_score?: number;
-  sort?: string;
-  desc?: boolean;
-  body?: any;
-}
-
-export interface MlGetCalendarEvents extends Generic {
-  calendar_id: string;
-  job_id?: string;
-  start?: string;
-  end?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface MlGetCalendars extends Generic {
-  calendar_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface MlGetCategories extends Generic {
-  job_id: string;
-  category_id?: number;
-  from?: number;
-  size?: number;
-  body?: any;
-}
-
-export interface MlGetDatafeedStats extends Generic {
-  datafeed_id?: string;
-  allow_no_datafeeds?: boolean;
-}
-
-export interface MlGetDatafeeds extends Generic {
-  datafeed_id?: string;
-  allow_no_datafeeds?: boolean;
-}
-
-export interface MlGetFilters extends Generic {
-  filter_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface MlGetInfluencers extends Generic {
-  job_id: string;
-  exclude_interim?: boolean;
-  from?: number;
-  size?: number;
-  start?: string;
-  end?: string;
-  influencer_score?: number;
-  sort?: string;
-  desc?: boolean;
-  body?: any;
-}
-
-export interface MlGetJobStats extends Generic {
-  job_id?: string;
-  allow_no_jobs?: boolean;
-}
-
-export interface MlGetJobs extends Generic {
-  job_id?: string;
-  allow_no_jobs?: boolean;
-}
-
-export interface MlGetModelSnapshots extends Generic {
-  job_id: string;
-  snapshot_id?: string;
-  from?: number;
-  size?: number;
-  start?: string;
-  end?: string;
-  sort?: string;
-  desc?: boolean;
-  body?: any;
-}
-
-export interface MlGetOverallBuckets extends Generic {
-  job_id: string;
-  top_n?: number;
-  bucket_span?: string;
-  overall_score?: number;
-  exclude_interim?: boolean;
-  start?: string;
-  end?: string;
-  allow_no_jobs?: boolean;
-  body?: any;
-}
-
-export interface MlGetRecords extends Generic {
-  job_id: string;
-  exclude_interim?: boolean;
-  from?: number;
-  size?: number;
-  start?: string;
-  end?: string;
-  record_score?: number;
-  sort?: string;
-  desc?: boolean;
-  body?: any;
-}
-
-export interface MlInfo extends Generic {
-}
-
-export interface MlOpenJob extends Generic {
-  job_id: string;
-  ignore_downtime?: boolean;
-  timeout?: string;
-}
-
-export interface MlPostCalendarEvents extends Generic {
-  calendar_id: string;
-  body: any;
-}
-
-export interface MlPostData extends Generic {
-  job_id: string;
-  reset_start?: string;
-  reset_end?: string;
-  body: any;
-}
-
-export interface MlPreviewDatafeed extends Generic {
-  datafeed_id: string;
-}
-
-export interface MlPutCalendar extends Generic {
-  calendar_id: string;
-  body?: any;
-}
-
-export interface MlPutCalendarJob extends Generic {
-  calendar_id: string;
-  job_id: string;
-}
-
-export interface MlPutDatafeed extends Generic {
-  datafeed_id: string;
-  body: any;
-}
-
-export interface MlPutFilter extends Generic {
-  filter_id: string;
-  body: any;
-}
-
-export interface MlPutJob extends Generic {
-  job_id: string;
-  body: any;
-}
-
-export interface MlRevertModelSnapshot extends Generic {
-  job_id: string;
-  snapshot_id: string;
-  delete_intervening_results?: boolean;
-  body?: any;
-}
-
-export interface MlSetUpgradeMode extends Generic {
-  enabled?: boolean;
-  timeout?: string;
-}
-
-export interface MlStartDatafeed extends Generic {
-  datafeed_id: string;
-  start?: string;
-  end?: string;
-  timeout?: string;
-  body?: any;
-}
-
-export interface MlStopDatafeed extends Generic {
-  datafeed_id: string;
-  allow_no_datafeeds?: boolean;
-  force?: boolean;
-  timeout?: string;
-}
-
-export interface MlUpdateDatafeed extends Generic {
-  datafeed_id: string;
-  body: any;
-}
-
-export interface MlUpdateFilter extends Generic {
-  filter_id: string;
-  body: any;
-}
-
-export interface MlUpdateJob extends Generic {
-  job_id: string;
-  body: any;
-}
-
-export interface MlUpdateModelSnapshot extends Generic {
-  job_id: string;
-  snapshot_id: string;
-  body: any;
-}
-
-export interface MlValidate extends Generic {
-  body: any;
-}
-
-export interface MlValidateDetector extends Generic {
-  body: any;
-}
-
-export interface MonitoringBulk extends Generic {
-  type?: string;
-  system_id?: string;
-  system_api_version?: string;
-  interval?: string;
-  body: any;
-}
-
-export interface SecurityAuthenticate extends Generic {
-}
-
-export interface SecurityChangePassword extends Generic {
-  username?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SecurityClearCachedRealms extends Generic {
-  realms: string | string[];
-  usernames?: string | string[];
-}
-
-export interface SecurityClearCachedRoles extends Generic {
-  name: string | string[];
-}
-
-export interface SecurityCreateApiKey extends Generic {
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SecurityDeletePrivileges extends Generic {
-  application: string;
-  name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityDeleteRole extends Generic {
-  name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityDeleteRoleMapping extends Generic {
-  name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityDeleteUser extends Generic {
-  username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityDisableUser extends Generic {
-  username?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityEnableUser extends Generic {
-  username?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-}
-
-export interface SecurityGetApiKey extends Generic {
-  id?: string;
-  name?: string;
-  username?: string;
-  realm_name?: string;
-}
-
-export interface SecurityGetPrivileges extends Generic {
-  application?: string;
-  name?: string;
-}
-
-export interface SecurityGetRole extends Generic {
-  name?: string;
-}
-
-export interface SecurityGetRoleMapping extends Generic {
-  name?: string;
-}
-
-export interface SecurityGetToken extends Generic {
-  body: any;
-}
-
-export interface SecurityGetUser extends Generic {
-  username?: string | string[];
-}
-
-export interface SecurityGetUserPrivileges extends Generic {
-}
-
-export interface SecurityHasPrivileges extends Generic {
-  user?: string;
-  body: any;
-}
-
-export interface SecurityInvalidateApiKey extends Generic {
-  body: any;
-}
-
-export interface SecurityInvalidateToken extends Generic {
-  body: any;
-}
-
-export interface SecurityPutPrivileges extends Generic {
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SecurityPutRole extends Generic {
-  name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SecurityPutRoleMapping extends Generic {
-  name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SecurityPutUser extends Generic {
-  username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
-}
-
-export interface SslCertificates extends Generic {
-}
-
 export interface XpackGraphExplore extends Generic {
   index?: string | string[];
   type?: string | string[];
@@ -1917,6 +1469,313 @@ export interface XpackMigrationUpgrade extends Generic {
   wait_for_completion?: boolean;
 }
 
+export interface XpackMlCloseJob extends Generic {
+  job_id: string;
+  allow_no_jobs?: boolean;
+  force?: boolean;
+  timeout?: string;
+}
+
+export interface XpackMlDeleteCalendar extends Generic {
+  calendar_id: string;
+}
+
+export interface XpackMlDeleteCalendarEvent extends Generic {
+  calendar_id: string;
+  event_id: string;
+}
+
+export interface XpackMlDeleteCalendarJob extends Generic {
+  calendar_id: string;
+  job_id: string;
+}
+
+export interface XpackMlDeleteDatafeed extends Generic {
+  datafeed_id: string;
+  force?: boolean;
+}
+
+export interface XpackMlDeleteExpiredData extends Generic {
+}
+
+export interface XpackMlDeleteFilter extends Generic {
+  filter_id: string;
+}
+
+export interface XpackMlDeleteForecast extends Generic {
+  job_id: string;
+  forecast_id?: string;
+  allow_no_forecasts?: boolean;
+  timeout?: string;
+}
+
+export interface XpackMlDeleteJob extends Generic {
+  job_id: string;
+  force?: boolean;
+  wait_for_completion?: boolean;
+}
+
+export interface XpackMlDeleteModelSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+}
+
+export interface XpackMlFindFileStructure extends Generic {
+  lines_to_sample?: number;
+  timeout?: string;
+  charset?: string;
+  format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
+  has_header_row?: boolean;
+  column_names?: string | string[];
+  delimiter?: string;
+  quote?: string;
+  should_trim_fields?: boolean;
+  grok_pattern?: string;
+  timestamp_field?: string;
+  timestamp_format?: string;
+  explain?: boolean;
+  body: any;
+}
+
+export interface XpackMlFlushJob extends Generic {
+  job_id: string;
+  calc_interim?: boolean;
+  start?: string;
+  end?: string;
+  advance_time?: string;
+  skip_time?: string;
+  body?: any;
+}
+
+export interface XpackMlForecast extends Generic {
+  job_id: string;
+  duration?: string;
+  expires_in?: string;
+}
+
+export interface XpackMlGetBuckets extends Generic {
+  job_id: string;
+  timestamp?: string;
+  expand?: boolean;
+  exclude_interim?: boolean;
+  from?: number;
+  size?: number;
+  start?: string;
+  end?: string;
+  anomaly_score?: number;
+  sort?: string;
+  desc?: boolean;
+  body?: any;
+}
+
+export interface XpackMlGetCalendarEvents extends Generic {
+  calendar_id: string;
+  job_id?: string;
+  start?: string;
+  end?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface XpackMlGetCalendars extends Generic {
+  calendar_id?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface XpackMlGetCategories extends Generic {
+  job_id: string;
+  category_id?: number;
+  from?: number;
+  size?: number;
+  body?: any;
+}
+
+export interface XpackMlGetDatafeedStats extends Generic {
+  datafeed_id?: string;
+  allow_no_datafeeds?: boolean;
+}
+
+export interface XpackMlGetDatafeeds extends Generic {
+  datafeed_id?: string;
+  allow_no_datafeeds?: boolean;
+}
+
+export interface XpackMlGetFilters extends Generic {
+  filter_id?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface XpackMlGetInfluencers extends Generic {
+  job_id: string;
+  exclude_interim?: boolean;
+  from?: number;
+  size?: number;
+  start?: string;
+  end?: string;
+  influencer_score?: number;
+  sort?: string;
+  desc?: boolean;
+  body?: any;
+}
+
+export interface XpackMlGetJobStats extends Generic {
+  job_id?: string;
+  allow_no_jobs?: boolean;
+}
+
+export interface XpackMlGetJobs extends Generic {
+  job_id?: string;
+  allow_no_jobs?: boolean;
+}
+
+export interface XpackMlGetModelSnapshots extends Generic {
+  job_id: string;
+  snapshot_id?: string;
+  from?: number;
+  size?: number;
+  start?: string;
+  end?: string;
+  sort?: string;
+  desc?: boolean;
+  body?: any;
+}
+
+export interface XpackMlGetOverallBuckets extends Generic {
+  job_id: string;
+  top_n?: number;
+  bucket_span?: string;
+  overall_score?: number;
+  exclude_interim?: boolean;
+  start?: string;
+  end?: string;
+  allow_no_jobs?: boolean;
+  body?: any;
+}
+
+export interface XpackMlGetRecords extends Generic {
+  job_id: string;
+  exclude_interim?: boolean;
+  from?: number;
+  size?: number;
+  start?: string;
+  end?: string;
+  record_score?: number;
+  sort?: string;
+  desc?: boolean;
+  body?: any;
+}
+
+export interface XpackMlInfo extends Generic {
+}
+
+export interface XpackMlOpenJob extends Generic {
+  job_id: string;
+  ignore_downtime?: boolean;
+  timeout?: string;
+}
+
+export interface XpackMlPostCalendarEvents extends Generic {
+  calendar_id: string;
+  body: any;
+}
+
+export interface XpackMlPostData extends Generic {
+  job_id: string;
+  reset_start?: string;
+  reset_end?: string;
+  body: any;
+}
+
+export interface XpackMlPreviewDatafeed extends Generic {
+  datafeed_id: string;
+}
+
+export interface XpackMlPutCalendar extends Generic {
+  calendar_id: string;
+  body?: any;
+}
+
+export interface XpackMlPutCalendarJob extends Generic {
+  calendar_id: string;
+  job_id: string;
+}
+
+export interface XpackMlPutDatafeed extends Generic {
+  datafeed_id: string;
+  body: any;
+}
+
+export interface XpackMlPutFilter extends Generic {
+  filter_id: string;
+  body: any;
+}
+
+export interface XpackMlPutJob extends Generic {
+  job_id: string;
+  body: any;
+}
+
+export interface XpackMlRevertModelSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  delete_intervening_results?: boolean;
+  body?: any;
+}
+
+export interface XpackMlStartDatafeed extends Generic {
+  datafeed_id: string;
+  start?: string;
+  end?: string;
+  timeout?: string;
+  body?: any;
+}
+
+export interface XpackMlStopDatafeed extends Generic {
+  datafeed_id: string;
+  allow_no_datafeeds?: boolean;
+  force?: boolean;
+  timeout?: string;
+}
+
+export interface XpackMlUpdateDatafeed extends Generic {
+  datafeed_id: string;
+  body: any;
+}
+
+export interface XpackMlUpdateFilter extends Generic {
+  filter_id: string;
+  body: any;
+}
+
+export interface XpackMlUpdateJob extends Generic {
+  job_id: string;
+  body: any;
+}
+
+export interface XpackMlUpdateModelSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  body: any;
+}
+
+export interface XpackMlValidate extends Generic {
+  body: any;
+}
+
+export interface XpackMlValidateDetector extends Generic {
+  body: any;
+}
+
+export interface XpackMonitoringBulk extends Generic {
+  type?: string;
+  system_id?: string;
+  system_api_version?: string;
+  interval?: string;
+  body: any;
+}
+
 export interface XpackRollupDeleteJob extends Generic {
   id: string;
 }
@@ -1942,7 +1801,6 @@ export interface XpackRollupRollupSearch extends Generic {
   index: string;
   type?: string;
   typed_keys?: boolean;
-  rest_total_hits_as_int?: boolean;
   body: any;
 }
 
@@ -1954,6 +1812,111 @@ export interface XpackRollupStopJob extends Generic {
   id: string;
   wait_for_completion?: boolean;
   timeout?: string;
+}
+
+export interface XpackSecurityAuthenticate extends Generic {
+}
+
+export interface XpackSecurityChangePassword extends Generic {
+  username?: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
+export interface XpackSecurityClearCachedRealms extends Generic {
+  realms: string | string[];
+  usernames?: string | string[];
+}
+
+export interface XpackSecurityClearCachedRoles extends Generic {
+  name: string | string[];
+}
+
+export interface XpackSecurityDeletePrivileges extends Generic {
+  application: string;
+  name: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityDeleteRole extends Generic {
+  name: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityDeleteRoleMapping extends Generic {
+  name: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityDeleteUser extends Generic {
+  username: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityDisableUser extends Generic {
+  username?: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityEnableUser extends Generic {
+  username?: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+}
+
+export interface XpackSecurityGetPrivileges extends Generic {
+  application?: string;
+  name?: string;
+}
+
+export interface XpackSecurityGetRole extends Generic {
+  name?: string;
+}
+
+export interface XpackSecurityGetRoleMapping extends Generic {
+  name?: string;
+}
+
+export interface XpackSecurityGetToken extends Generic {
+  body: any;
+}
+
+export interface XpackSecurityGetUser extends Generic {
+  username?: string | string[];
+}
+
+export interface XpackSecurityGetUserPrivileges extends Generic {
+}
+
+export interface XpackSecurityHasPrivileges extends Generic {
+  user?: string;
+  body: any;
+}
+
+export interface XpackSecurityInvalidateToken extends Generic {
+  body: any;
+}
+
+export interface XpackSecurityPutPrivileges extends Generic {
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
+export interface XpackSecurityPutRole extends Generic {
+  name: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
+export interface XpackSecurityPutRoleMapping extends Generic {
+  name: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
+export interface XpackSecurityPutUser extends Generic {
+  username: string;
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
 }
 
 export interface XpackSqlClearCursor extends Generic {
@@ -1969,6 +1932,9 @@ export interface XpackSqlTranslate extends Generic {
   body: any;
 }
 
+export interface XpackSslCertificates extends Generic {
+}
+
 export interface XpackUsage extends Generic {
   master_timeout?: string;
 }
@@ -1976,18 +1942,22 @@ export interface XpackUsage extends Generic {
 export interface XpackWatcherAckWatch extends Generic {
   watch_id: string;
   action_id?: string | string[];
+  master_timeout?: string;
 }
 
 export interface XpackWatcherActivateWatch extends Generic {
   watch_id: string;
+  master_timeout?: string;
 }
 
 export interface XpackWatcherDeactivateWatch extends Generic {
   watch_id: string;
+  master_timeout?: string;
 }
 
 export interface XpackWatcherDeleteWatch extends Generic {
   id: string;
+  master_timeout?: string;
 }
 
 export interface XpackWatcherExecuteWatch extends Generic {
@@ -2002,11 +1972,13 @@ export interface XpackWatcherGetWatch extends Generic {
 
 export interface XpackWatcherPutWatch extends Generic {
   id: string;
+  master_timeout?: string;
   active?: boolean;
   version?: number;
-  if_seq_no?: number;
-  if_primary_term?: number;
   body?: any;
+}
+
+export interface XpackWatcherRestart extends Generic {
 }
 
 export interface XpackWatcherStart extends Generic {

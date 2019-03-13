@@ -31,7 +31,7 @@ function buildScroll (opts) {
    * @param {string} scroll_id - The scroll ID
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
    * @param {string} scroll_id - The scroll ID for scrolled search
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+   * @param {boolean} rest_total_hits_as_int - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
    * @param {object} body - The scroll ID if not passed by URL or query parameter.
    */
 
@@ -63,6 +63,15 @@ function buildScroll (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        scroll(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

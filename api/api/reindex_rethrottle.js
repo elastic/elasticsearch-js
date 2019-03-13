@@ -59,6 +59,15 @@ function buildReindexRethrottle (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        reindexRethrottle(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['task_id'] == null && params['taskId'] == null) {
       return callback(

@@ -35,6 +35,7 @@ function buildBulk (opts) {
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
    * @param {string} type - Default document type for items which don't provide one
+   * @param {list} fields - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
    * @param {list} _source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
    * @param {list} _source_excludes - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
    * @param {list} _source_includes - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
@@ -48,6 +49,7 @@ function buildBulk (opts) {
     'routing',
     'timeout',
     'type',
+    'fields',
     '_source',
     '_source_excludes',
     '_source_includes',
@@ -77,6 +79,15 @@ function buildBulk (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        bulk(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

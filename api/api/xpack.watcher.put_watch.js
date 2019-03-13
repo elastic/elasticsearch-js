@@ -29,23 +29,21 @@ function buildXpackWatcherPutWatch (opts) {
    * Perform a [xpack.watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
    *
    * @param {string} id - Watch ID
+   * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} active - Specify whether the watch is in/active by default
    * @param {number} version - Explicit version number for concurrency control
-   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
-   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
    * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
+    'master_timeout',
     'active',
-    'version',
-    'if_seq_no',
-    'if_primary_term'
+    'version'
   ]
 
   const snakeCase = {
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term'
+    masterTimeout: 'master_timeout'
+
   }
 
   return function xpackWatcherPutWatch (params, options, callback) {
@@ -58,6 +56,15 @@ function buildXpackWatcherPutWatch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackWatcherPutWatch(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
@@ -91,7 +98,7 @@ function buildXpackWatcherPutWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

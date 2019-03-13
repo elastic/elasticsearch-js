@@ -51,6 +51,15 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackRollupGetRollupIndexCaps(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(
@@ -82,7 +91,7 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
+    path = '/' + encodeURIComponent(index) + '/' + '_xpack' + '/' + 'rollup' + '/' + 'data'
 
     // build request object
     const request = {

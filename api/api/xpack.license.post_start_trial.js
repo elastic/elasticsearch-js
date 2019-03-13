@@ -53,6 +53,15 @@ function buildXpackLicensePostStartTrial (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackLicensePostStartTrial(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(
@@ -84,7 +93,7 @@ function buildXpackLicensePostStartTrial (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'start_trial'
+    path = '/' + '_xpack' + '/' + 'license' + '/' + 'start_trial'
 
     // build request object
     const request = {

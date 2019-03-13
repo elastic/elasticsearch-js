@@ -51,6 +51,15 @@ function buildXpackRollupGetJobs (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackRollupGetJobs(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
@@ -75,9 +84,9 @@ function buildXpackRollupGetJobs (opts) {
     var path = ''
 
     if ((id) != null) {
-      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+      path = '/' + '_xpack' + '/' + 'rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
     } else {
-      path = '/' + '_rollup' + '/' + 'job'
+      path = '/' + '_xpack' + '/' + 'rollup' + '/' + 'job'
     }
 
     // build request object

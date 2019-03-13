@@ -26,7 +26,7 @@ function buildNodesReloadSecureSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [nodes.reload_secure_settings](https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings) request
+   * Perform a [nodes.reload_secure_settings](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/secure-settings.html#reloadable-secure-settings) request
    *
    * @param {list} node_id - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
    * @param {time} timeout - Explicit operation timeout
@@ -56,6 +56,15 @@ function buildNodesReloadSecureSettings (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        nodesReloadSecureSettings(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -50,6 +50,15 @@ function buildXpackLicenseGetBasicStatus (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackLicenseGetBasicStatus(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(
@@ -81,7 +90,7 @@ function buildXpackLicenseGetBasicStatus (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'basic_status'
+    path = '/' + '_xpack' + '/' + 'license' + '/' + 'basic_status'
 
     // build request object
     const request = {

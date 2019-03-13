@@ -51,6 +51,15 @@ function buildXpackMigrationDeprecations (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackMigrationDeprecations(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(
@@ -83,9 +92,9 @@ function buildXpackMigrationDeprecations (opts) {
     var path = ''
 
     if ((index) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'
+      path = '/' + encodeURIComponent(index) + '/' + '_xpack' + '/' + 'migration' + '/' + 'deprecations'
     } else {
-      path = '/' + '_migration' + '/' + 'deprecations'
+      path = '/' + '_xpack' + '/' + 'migration' + '/' + 'deprecations'
     }
 
     // build request object

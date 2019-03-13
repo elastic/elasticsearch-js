@@ -80,6 +80,15 @@ function buildDelete (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        _delete(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -93,6 +102,12 @@ function buildDelete (opts) {
         result
       )
     }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -101,7 +116,12 @@ function buildDelete (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: type, index'),
+        result
+      )
+    } else if (params['type'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
         result
@@ -131,11 +151,7 @@ function buildDelete (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

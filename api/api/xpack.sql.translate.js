@@ -51,6 +51,15 @@ function buildXpackSqlTranslate (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackSqlTranslate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['body'] == null) {
       return callback(
@@ -82,7 +91,7 @@ function buildXpackSqlTranslate (opts) {
 
     var path = ''
 
-    path = '/' + '_sql' + '/' + 'translate'
+    path = '/' + '_xpack' + '/' + 'sql' + '/' + 'translate'
 
     // build request object
     const request = {

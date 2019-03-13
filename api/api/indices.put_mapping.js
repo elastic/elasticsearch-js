@@ -30,22 +30,22 @@ function buildIndicesPutMapping (opts) {
    *
    * @param {list} index - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
    * @param {string} type - The name of the document type
-   * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {boolean} update_all_types - Whether to update the mapping for all fields with the same name across all types or not
    * @param {object} body - The mapping definition
    */
 
   const acceptedQuerystring = [
-    'include_type_name',
     'timeout',
     'master_timeout',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'update_all_types',
     'pretty',
     'human',
     'error_trace',
@@ -54,11 +54,11 @@ function buildIndicesPutMapping (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    updateAllTypes: 'update_all_types',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -75,7 +75,22 @@ function buildIndicesPutMapping (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesPutMapping(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
+        result
+      )
+    }
     if (params['body'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: body'),
@@ -116,12 +131,8 @@ function buildIndicesPutMapping (opts) {
       path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
     } else if ((type) != null) {
       path = '/' + '_mapping' + '/' + encodeURIComponent(type)
-    } else if ((type) != null) {
-      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
-    } else if ((index) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_mappings'
     } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
     }
 
     // build request object

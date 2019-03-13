@@ -52,6 +52,15 @@ function buildXpackMigrationUpgrade (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackMigrationUpgrade(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(
@@ -83,7 +92,7 @@ function buildXpackMigrationUpgrade (opts) {
 
     var path = ''
 
-    path = '/' + '_migration' + '/' + 'upgrade' + '/' + encodeURIComponent(index)
+    path = '/' + '_xpack' + '/' + 'migration' + '/' + 'upgrade' + '/' + encodeURIComponent(index)
 
     // build request object
     const request = {

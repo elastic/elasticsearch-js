@@ -29,14 +29,15 @@ function buildXpackWatcherDeleteWatch (opts) {
    * Perform a [xpack.watcher.delete_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html) request
    *
    * @param {string} id - Watch ID
+   * @param {time} master_timeout - Explicit operation timeout for connection to master node
    */
 
   const acceptedQuerystring = [
-
+    'master_timeout'
   ]
 
   const snakeCase = {
-
+    masterTimeout: 'master_timeout'
   }
 
   return function xpackWatcherDeleteWatch (params, options, callback) {
@@ -49,6 +50,15 @@ function buildXpackWatcherDeleteWatch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackWatcherDeleteWatch(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
@@ -88,7 +98,7 @@ function buildXpackWatcherDeleteWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_xpack' + '/' + 'watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

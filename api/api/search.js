@@ -32,7 +32,6 @@ function buildSearch (opts) {
    * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {string} analyzer - The analyzer to use for the query string
    * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
-   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {enum} default_operator - The default operator for query string query (AND or OR)
    * @param {string} df - The field to use as default where no field prefix is given in the query string
    * @param {boolean} explain - Specify whether to return detailed information about score computation as part of a hit
@@ -66,19 +65,17 @@ function buildSearch (opts) {
    * @param {boolean} allow_partial_search_results - Indicate if an error should be returned if there is a partial search failure or timeout
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {boolean} version - Specify whether to return document version as part of a hit
-   * @param {boolean} seq_no_primary_term - Specify whether to return sequence number and primary term of the last modification of each hit
    * @param {boolean} request_cache - Specify if request cache should be used for this request or not, defaults to index level setting
    * @param {number} batched_reduce_size - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
-   * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+   * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
    * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+   * @param {boolean} rest_total_hits_as_int - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
    * @param {object} body - The search definition using the Query DSL
    */
 
   const acceptedQuerystring = [
     'analyzer',
     'analyze_wildcard',
-    'ccs_minimize_roundtrips',
     'default_operator',
     'df',
     'explain',
@@ -112,7 +109,6 @@ function buildSearch (opts) {
     'allow_partial_search_results',
     'typed_keys',
     'version',
-    'seq_no_primary_term',
     'request_cache',
     'batched_reduce_size',
     'max_concurrent_shard_requests',
@@ -127,7 +123,6 @@ function buildSearch (opts) {
 
   const snakeCase = {
     analyzeWildcard: 'analyze_wildcard',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     defaultOperator: 'default_operator',
     storedFields: 'stored_fields',
     docvalueFields: 'docvalue_fields',
@@ -147,7 +142,6 @@ function buildSearch (opts) {
     trackTotalHits: 'track_total_hits',
     allowPartialSearchResults: 'allow_partial_search_results',
     typedKeys: 'typed_keys',
-    seqNoPrimaryTerm: 'seq_no_primary_term',
     requestCache: 'request_cache',
     batchedReduceSize: 'batched_reduce_size',
     maxConcurrentShardRequests: 'max_concurrent_shard_requests',
@@ -167,6 +161,15 @@ function buildSearch (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        search(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required url components

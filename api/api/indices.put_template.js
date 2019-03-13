@@ -29,7 +29,6 @@ function buildIndicesPutTemplate (opts) {
    * Perform a [indices.put_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
    *
    * @param {string} name - The name of the template
-   * @param {boolean} include_type_name - Whether a type should be returned in the body of the mappings.
    * @param {number} order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
    * @param {boolean} create - Whether the index template should only be added if new or can also replace an existing one
    * @param {time} timeout - Explicit operation timeout
@@ -39,7 +38,6 @@ function buildIndicesPutTemplate (opts) {
    */
 
   const acceptedQuerystring = [
-    'include_type_name',
     'order',
     'create',
     'timeout',
@@ -53,7 +51,6 @@ function buildIndicesPutTemplate (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
     flatSettings: 'flat_settings',
     errorTrace: 'error_trace',
@@ -70,6 +67,15 @@ function buildIndicesPutTemplate (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesPutTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

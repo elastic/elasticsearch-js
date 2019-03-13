@@ -29,6 +29,7 @@ function buildIndicesClearCache (opts) {
    * Perform a [indices.clear_cache](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html) request
    *
    * @param {list} index - A comma-separated list of index name to limit the operation
+   * @param {boolean} field_data - Clear field data. This is deprecated. Prefer `fielddata`.
    * @param {boolean} fielddata - Clear field data
    * @param {list} fields - A comma-separated list of fields to clear when using the `fielddata` parameter (default: all)
    * @param {boolean} query - Clear query caches
@@ -36,10 +37,12 @@ function buildIndicesClearCache (opts) {
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {list} index - A comma-separated list of index name to limit the operation
+   * @param {boolean} request_cache - Clear request cache
    * @param {boolean} request - Clear request cache
    */
 
   const acceptedQuerystring = [
+    'field_data',
     'fielddata',
     'fields',
     'query',
@@ -47,6 +50,7 @@ function buildIndicesClearCache (opts) {
     'allow_no_indices',
     'expand_wildcards',
     'index',
+    'request_cache',
     'request',
     'pretty',
     'human',
@@ -56,9 +60,11 @@ function buildIndicesClearCache (opts) {
   ]
 
   const snakeCase = {
+    fieldData: 'field_data',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    requestCache: 'request_cache',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -73,6 +79,15 @@ function buildIndicesClearCache (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesClearCache(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
@@ -96,7 +111,7 @@ function buildIndicesClearCache (opts) {
     var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = 'POST'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null

@@ -58,6 +58,15 @@ function buildXpackMigrationGetAssistance (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        xpackMigrationGetAssistance(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
@@ -82,9 +91,9 @@ function buildXpackMigrationGetAssistance (opts) {
     var path = ''
 
     if ((index) != null) {
-      path = '/' + '_migration' + '/' + 'assistance' + '/' + encodeURIComponent(index)
+      path = '/' + '_xpack' + '/' + 'migration' + '/' + 'assistance' + '/' + encodeURIComponent(index)
     } else {
-      path = '/' + '_migration' + '/' + 'assistance'
+      path = '/' + '_xpack' + '/' + 'migration' + '/' + 'assistance'
     }
 
     // build request object

@@ -33,8 +33,7 @@ function buildMsearchTemplate (opts) {
    * @param {enum} search_type - Search operation type
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
    * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
+   * @param {boolean} rest_total_hits_as_int - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
 
@@ -43,7 +42,6 @@ function buildMsearchTemplate (opts) {
     'typed_keys',
     'max_concurrent_searches',
     'rest_total_hits_as_int',
-    'ccs_minimize_roundtrips',
     'pretty',
     'human',
     'error_trace',
@@ -56,7 +54,6 @@ function buildMsearchTemplate (opts) {
     typedKeys: 'typed_keys',
     maxConcurrentSearches: 'max_concurrent_searches',
     restTotalHitsAsInt: 'rest_total_hits_as_int',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -71,6 +68,15 @@ function buildMsearchTemplate (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        msearchTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
