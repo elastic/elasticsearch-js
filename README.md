@@ -18,11 +18,22 @@ The official Node.js client for Elasticsearch.
 ```
 npm install @elastic/elasticsearch
 ```
-By default the latest version of the module will be installed, which is the same version of the current release of Elasticsearch.<br/>
-If you need to work with older versions of Elasticsearch, you should install the same version of the client as well.<br/>
-For example, if you are using Elasticsearch `v6.5.4`, you will need the client `v6`, and you can easily do that with `npm install @elastic/elasticsearch@6`.
+
+### Compatibility
+The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
+```
+# Elasticsearch 7.x
+@elastic/elasticsearch@7
+
+# Elasticsearch 6.x
+@elastic/elasticsearch@6
+
+# Elasticsearch 5.x
+@elastic/elasticsearch@5
+```
 
 ## Usage
+You can find the full documentation in the [docs](https://github.com/elastic/elasticsearch-js/tree/master/docs) folder.
 ```js
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
@@ -48,6 +59,7 @@ The returned value of **every** API call is formed as follows:
   statusCode: number
   headers: object
   warnings: [string]
+  meta: object
 }
 ```
 ### Client options
