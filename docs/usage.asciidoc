@@ -159,6 +159,10 @@ _Default:_ `false`
 |`headers`
 |`object` - Custom headers for the request. +
 _Default:_ `null`
+
+|`querystring`
+|`object` - Custom querystring for the request. +
+_Default:_ `null`
 |===
 
 === Error handling
