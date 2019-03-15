@@ -22,7 +22,7 @@
     "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:benchmarks": "nanobench test/benchmarks/*.bench.js",
-    "test:coverage": "tap test/unit/*.test.js -J -t 300 --cov --coverage-report=text-lcov && codecov",
+    "test:coverage": "nyc npm run test:unit && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "ci": "npm run license-checker && npm test && npm run test:integration && npm run test:coverage",
