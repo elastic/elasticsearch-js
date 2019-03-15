@@ -22,11 +22,10 @@
     "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:benchmarks": "nanobench test/benchmarks/*.bench.js",
+    "test:coverage": "tap test/unit/*.test.js -J -t 300 --cov --coverage-report=text-lcov && codecov",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "generate": "node scripts/run.js",
-    "elasticsearch": "./scripts/es-docker.sh",
-    "ci": "npm run license-checker && npm test && npm run test:integration",
+    "ci": "npm run license-checker && npm test && npm run test:integration && npm run test:coverage",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
   },
   "author": {
@@ -39,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^10.12.24",
+    "codecov": "^3.2.0",
     "convert-hrtime": "^2.0.0",
     "dedent": "^0.7.0",
     "deepmerge": "^3.1.0",
