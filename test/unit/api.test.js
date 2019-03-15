@@ -269,6 +269,32 @@ test('Pass unknown parameters as query parameters (and get a warning)', t => {
   })
 })
 
+test('If the API uses the same key for both url and query parameter, the url should win', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    t.strictEqual(req.url, '/index/type/_bulk')
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    // bulk has two `type` parameters
+    client.bulk({
+      index: 'index',
+      type: 'type',
+      body: []
+    }, (err, { body, warnings }) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
+
 if (Number(process.version.split('.')[0].slice(1)) >= 8) {
   require('./api-async')(test)
 }

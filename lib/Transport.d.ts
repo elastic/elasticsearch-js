@@ -80,9 +80,9 @@ declare type anyObject = {
 export interface TransportRequestParams {
   method: string;
   path: string;
-  body?: anyObject,
-  bulkBody?: anyObject,
-  querystring: anyObject
+  body?: anyObject;
+  bulkBody?: anyObject;
+  querystring?: anyObject;
 }
 
 export interface TransportRequestOptions {
@@ -91,6 +91,7 @@ export interface TransportRequestOptions {
   maxRetries?: number;
   asStream?: boolean;
   headers?: anyObject;
+  querystring?: anyObject;
   compression?: string;
   warnings?: [string];
 }
