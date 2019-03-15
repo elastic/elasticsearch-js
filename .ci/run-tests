@@ -10,6 +10,12 @@
 #   - $NODE_JS_VERSION
 #
 
+set +x
+export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
+export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-js/codecov)
+unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
+set -x
+
 ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-oss
 
 ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-platinum

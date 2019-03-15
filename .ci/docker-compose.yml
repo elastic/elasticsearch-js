@@ -7,6 +7,7 @@ services:
       dockerfile: .ci/Dockerfile
       args:
           NODE_JS_VERSION: ${NODE_JS_VERSION:-10}
+          CODECOV_TOKEN: ${CODECOV_TOKEN}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch-oss:9200"
     volumes:
@@ -54,6 +55,8 @@ services:
       - esnet-platinum
     depends_on:
       - elasticsearch-platinum
+    # there is not need to run again also the unit test
+    command: ["npm", "run", "test:integration"]
 
   elasticsearch-platinum:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
