@@ -33,6 +33,7 @@ function buildReindex (opts) {
    * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
    * @param {boolean} wait_for_completion - Should the request should block until the reindex is complete.
    * @param {number} requests_per_second - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+   * @param {time} scroll - Control how long to keep the search context alive
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL and the prototype for the index request.
    */
@@ -43,6 +44,7 @@ function buildReindex (opts) {
     'wait_for_active_shards',
     'wait_for_completion',
     'requests_per_second',
+    'scroll',
     'slices',
     'pretty',
     'human',

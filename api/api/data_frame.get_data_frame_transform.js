@@ -22,53 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildDataFrameGetDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
+   * Perform a [data_frame.get_data_frame_transform](TODO) request
    *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {enum} health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
-   * @param {boolean} help - Return help information
-   * @param {boolean} pri - Set to true to return stats only for primary shards
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
+   * @param {string} transform_id - The id of the transforms to get, '_all' or '*' implies get all transforms
    */
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
-    'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'v',
-    'include_unloaded_segments',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
-  return function catIndices (params, options, callback) {
+  return function dataFrameGetDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -83,7 +54,7 @@ function buildCatIndices (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catIndices(params, options, (err, body) => {
+        dataFrameGetDataFrameTransform(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -106,8 +77,8 @@ function buildCatIndices (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, transformId, transform_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'transformId', 'transform_id'])
 
     if (method == null) {
       method = 'GET'
@@ -120,11 +91,7 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
-    } else {
-      path = '/' + '_cat' + '/' + 'indices'
-    }
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
@@ -165,4 +132,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildDataFrameGetDataFrameTransform

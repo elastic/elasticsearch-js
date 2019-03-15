@@ -62,6 +62,12 @@ function buildSecurityDisableUser (opts) {
     }
 
     // check required parameters
+    if (params['username'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: username'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),

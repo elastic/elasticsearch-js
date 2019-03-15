@@ -31,6 +31,7 @@ function buildMlGetCalendars (opts) {
    * @param {string} calendar_id - The ID of the calendar to fetch
    * @param {int} from - skips a number of calendars
    * @param {int} size - specifies a max number of calendars to get
+   * @param {object} body - The from and size parameters optionally sent in the body
    */
 
   const acceptedQuerystring = [
@@ -61,14 +62,6 @@ function buildMlGetCalendars (opts) {
           err ? reject(err) : resolve(body)
         })
       })
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
     }
 
     // validate headers object
@@ -104,7 +97,7 @@ function buildMlGetCalendars (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -22,53 +22,33 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildWatcherPutWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
+   * Perform a [watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
    *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {enum} health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
-   * @param {boolean} help - Return help information
-   * @param {boolean} pri - Set to true to return stats only for primary shards
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
+   * @param {string} id - Watch ID
+   * @param {boolean} active - Specify whether the watch is in/active by default
+   * @param {number} version - Explicit version number for concurrency control
+   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
+   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
+   * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
-    'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'v',
-    'include_unloaded_segments',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'active',
+    'version',
+    'if_seq_no',
+    'if_primary_term'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term'
   }
 
-  return function catIndices (params, options, callback) {
+  return function watcherPutWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -83,16 +63,16 @@ function buildCatIndices (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catIndices(params, options, (err, body) => {
+        watcherPutWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
+    if (params['id'] == null) {
       return callback(
-        new ConfigurationError('This API does not require a body'),
+        new ConfigurationError('Missing required parameter: id'),
         result
       )
     }
@@ -106,11 +86,11 @@ function buildCatIndices (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'GET'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -120,17 +100,13 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
-    } else {
-      path = '/' + '_cat' + '/' + 'indices'
-    }
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -165,4 +141,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildWatcherPutWatch

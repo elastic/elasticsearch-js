@@ -22,53 +22,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildGraphExplore (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
+   * Perform a [graph.explore](https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html) request
    *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {enum} health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
-   * @param {boolean} help - Return help information
-   * @param {boolean} pri - Set to true to return stats only for primary shards
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
+   * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
+   * @param {string} routing - Specific routing value
+   * @param {time} timeout - Explicit operation timeout
+   * @param {object} body - Graph Query DSL
    */
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
-    'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'v',
-    'include_unloaded_segments',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'routing',
+    'timeout'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
-  return function catIndices (params, options, callback) {
+  return function graphExplore (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -83,16 +59,16 @@ function buildCatIndices (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catIndices(params, options, (err, body) => {
+        graphExplore(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
-    // check required parameters
-    if (params.body != null) {
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
       return callback(
-        new ConfigurationError('This API does not require a body'),
+        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -106,11 +82,11 @@ function buildCatIndices (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
 
     if (method == null) {
-      method = 'GET'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -120,17 +96,17 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_graph' + '/' + 'explore'
     } else {
-      path = '/' + '_cat' + '/' + 'indices'
+      path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -165,4 +141,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildGraphExplore

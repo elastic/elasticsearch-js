@@ -34,6 +34,7 @@ function buildIndicesClose (opts) {
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
    */
 
   const acceptedQuerystring = [
@@ -42,6 +43,7 @@ function buildIndicesClose (opts) {
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'wait_for_active_shards',
     'pretty',
     'human',
     'error_trace',
@@ -54,6 +56,7 @@ function buildIndicesClose (opts) {
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    waitForActiveShards: 'wait_for_active_shards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

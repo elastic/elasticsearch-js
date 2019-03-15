@@ -60,6 +60,14 @@ function buildCcrFollowStats (opts) {
       })
     }
 
+    // check required parameters
+    if (params['index'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       return callback(

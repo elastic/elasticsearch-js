@@ -22,53 +22,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildMigrationGetAssistance (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
+   * Perform a [migration.get_assistance](https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html) request
    *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {enum} health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
-   * @param {boolean} help - Return help information
-   * @param {boolean} pri - Set to true to return stats only for primary shards
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
+   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    */
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
-    'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'v',
-    'include_unloaded_segments',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'allow_no_indices',
+    'expand_wildcards',
+    'ignore_unavailable'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    ignoreUnavailable: 'ignore_unavailable'
   }
 
-  return function catIndices (params, options, callback) {
+  return function migrationGetAssistance (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -83,18 +61,10 @@ function buildCatIndices (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catIndices(params, options, (err, body) => {
+        migrationGetAssistance(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
     }
 
     // validate headers object
@@ -121,9 +91,9 @@ function buildCatIndices (opts) {
     var path = ''
 
     if ((index) != null) {
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
+      path = '/' + '_migration' + '/' + 'assistance' + '/' + encodeURIComponent(index)
     } else {
-      path = '/' + '_cat' + '/' + 'indices'
+      path = '/' + '_migration' + '/' + 'assistance'
     }
 
     // build request object
@@ -165,4 +135,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildMigrationGetAssistance

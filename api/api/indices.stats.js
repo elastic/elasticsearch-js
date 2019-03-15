@@ -37,6 +37,7 @@ function buildIndicesStats (opts) {
    * @param {enum} level - Return stats aggregated at cluster, index or shard level
    * @param {list} types - A comma-separated list of document types for the `indexing` index metric
    * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
    */
 
   const acceptedQuerystring = [
@@ -47,6 +48,7 @@ function buildIndicesStats (opts) {
     'level',
     'types',
     'include_segment_file_sizes',
+    'include_unloaded_segments',
     'pretty',
     'human',
     'error_trace',
@@ -58,6 +60,7 @@ function buildIndicesStats (opts) {
     completionFields: 'completion_fields',
     fielddataFields: 'fielddata_fields',
     includeSegmentFileSizes: 'include_segment_file_sizes',
+    includeUnloadedSegments: 'include_unloaded_segments',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
