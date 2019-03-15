@@ -128,7 +128,9 @@ The supported *request specific options* are:
   requestTimeout: number, // client default
   maxRetries: number, // default `5`
   asStream: boolean, // default `false`
-  headers: object // default `null`
+  compression: string, // default `false`
+  headers: object, // default `null`
+  querystring: object // default `null`
 }
 ```
 

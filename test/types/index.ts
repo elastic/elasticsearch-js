@@ -59,7 +59,11 @@ client.index({
 }, {
   maxRetries: 2,
   ignore: [404],
-  requestTimeout: 2000
+  requestTimeout: 2000,
+  headers: { foo: 'bar' },
+  querystring: { baz: 'faz' },
+  compression: 'gzip',
+  asStream: false
 }, (err: Error | null, result: ApiResponse) => {})
 
 // Promises
