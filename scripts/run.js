@@ -35,12 +35,12 @@ const {
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['tag']
+  string: ['tag', 'branch']
 }))
 
 function start (opts) {
   const log = ora('Loading Elasticsearch Repository').start()
-  if (semver.valid(opts.tag) === null) {
+  if (opts.branch == null && semver.valid(opts.tag) === null) {
     log.fail(`Missing or invalid tag: ${opts.tag}`)
     return
   }
@@ -55,7 +55,7 @@ function start (opts) {
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
 
-  cloneAndCheckout({ log, tag: opts.tag }, (err, { apiFolder, xPackFolder }) => {
+  cloneAndCheckout({ log, tag: opts.tag, branch: opts.branch }, (err, { apiFolder, xPackFolder }) => {
     if (err) {
       log.fail(err.message)
       return
