@@ -2030,3 +2030,80 @@ test('nodeFilter and nodeSelector', t => {
     t.deepEqual(body, { hello: 'world' })
   })
 })
+
+test('Should accept custom querystring in the optons object', t => {
+  t.test('Options object', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.url, '/hello?foo=bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, {
+        querystring: { foo: 'bar' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Options object and params', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.url, '/hello?baz=faz&foo=bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello',
+        querystring: { baz: 'faz' }
+      }, {
+        querystring: { foo: 'bar' }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.end()
+})
