@@ -93,7 +93,7 @@ Runner.prototype.waitCluster = function (callback, times = 0) {
   this.client.cluster.health(
     { waitForStatus: 'green', timeout: '50s' },
     (err, res) => {
-      if (++times < 10) {
+      if (err && ++times < 10) {
         setTimeout(() => {
           this.waitCluster(callback, times)
         }, 5000)
@@ -150,7 +150,6 @@ Runner.prototype.start = function (opts) {
 
     files.forEach(runTestFile.bind(this))
     function runTestFile (file) {
-      // if (!file.endsWith('watcher/execute_watch/70_invalid.yml')) return
       for (var i = 0; i < customSkips.length; i++) {
         if (file.endsWith(customSkips[i])) return
       }

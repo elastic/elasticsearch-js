@@ -182,15 +182,15 @@ TestRunner.prototype.cleanupPlatinum = function (q, done) {
   })
 
   q.add((q, done) => {
-    this.client.xpack.rollup.getJobs({ id: '_all' }, (err, { body }) => {
+    this.client.rollup.getJobs({ id: '_all' }, (err, { body }) => {
       this.tap.error(err, 'should not error: rollup.getJobs')
       const jobs = body.jobs.map(j => j.config.id)
       helper.runInParallel(
-        this.client, 'xpack.rollup.stopJob',
+        this.client, 'rollup.stopJob',
         jobs.map(j => ({ id: j, waitForCompletion: true }))
       )
         .then(() => helper.runInParallel(
-          this.client, 'xpack.rollup.deleteJob',
+          this.client, 'rollup.deleteJob',
           jobs.map(j => ({ id: j }))
         ))
         .then(() => done())
