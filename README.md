@@ -4,6 +4,13 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/job/elastic+elasticsearch-js+master/badge/icon)](https://clients-ci.elastic.co/job/elastic+elasticsearch-js+master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
+---
+
+**Note:** In the past months we have worked on the new Elasticsearch Node.js client, we will announce it soon!
+If you want you can already try it by following the instructions below, while if you're going to use the legacy one or report an issue, please check out [elastic/elasticsearch-js-legacy](https://github.com/elastic/elasticsearch-js-legacy).
+
+---
+
 The official Node.js client for Elasticsearch.
 
 ## Features
@@ -20,6 +27,13 @@ npm install @elastic/elasticsearch
 ```
 
 ### Compatibility
+
+---
+
+**Warning:** currently on npm you will only find a beta release that works with Elasticsearch 7, we will add the support for Elasticsearch 5, 6, and 7 once we release the final version of this library.
+
+---
+
 The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
 ```
 # Elasticsearch 7.x
