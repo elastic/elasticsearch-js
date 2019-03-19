@@ -19,7 +19,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.h
 |`string` - The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
 
 |`filter_path` or `filterPath`
-|`list` - A comma-separated list of filters used to reduce the response.
+|`list` - A comma-separated list of filters used to reduce the respone.
 
 |===
 === bulk
@@ -27,7 +27,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.h
 ----
 client.bulk([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html
 [cols=2*]
 |===
 |`index`
@@ -51,13 +51,16 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
 |`type`
 |`string` - Default document type for items which don't provide one
 
+|`fields`
+|`string, string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
+
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
 
 |`pipeline`
@@ -72,7 +75,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
 ----
 client.cat.aliases([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-alias.html
 [cols=2*]
 |===
 |`name`
@@ -105,7 +108,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html
 ----
 client.cat.allocation([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-allocation.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -141,7 +144,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.htm
 ----
 client.cat.count([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-count.html
 [cols=2*]
 |===
 |`index`
@@ -174,7 +177,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html
 ----
 client.cat.fielddata([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-fielddata.html
 [cols=2*]
 |===
 |`fields`
@@ -213,7 +216,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
 ----
 client.cat.health([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-health.html
 [cols=2*]
 |===
 |`format`
@@ -247,7 +250,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
 ----
 client.cat.help([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat.html
 [cols=2*]
 |===
 |`help`
@@ -262,7 +265,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
 ----
 client.cat.indices([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-indices.html
 [cols=2*]
 |===
 |`index`
@@ -304,7 +307,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
 ----
 client.cat.master([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-master.html
 [cols=2*]
 |===
 |`format`
@@ -334,7 +337,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html
 ----
 client.cat.nodeattrs([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodeattrs.html
 [cols=2*]
 |===
 |`format`
@@ -364,7 +367,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
 ----
 client.cat.nodes([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodes.html
 [cols=2*]
 |===
 |`format`
@@ -397,7 +400,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
 ----
 client.cat.pendingTasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-pending-tasks.html
 [cols=2*]
 |===
 |`format`
@@ -427,7 +430,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.
 ----
 client.cat.plugins([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-plugins.html
 [cols=2*]
 |===
 |`format`
@@ -457,7 +460,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
 ----
 client.cat.recovery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-recovery.html
 [cols=2*]
 |===
 |`index`
@@ -490,7 +493,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
 ----
 client.cat.repositories([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.html
 [cols=2*]
 |===
 |`format`
@@ -520,7 +523,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.h
 ----
 client.cat.segments([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-segments.html
 [cols=2*]
 |===
 |`index`
@@ -550,7 +553,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
 ----
 client.cat.shards([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-shards.html
 [cols=2*]
 |===
 |`index`
@@ -586,7 +589,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html
 ----
 client.cat.snapshots([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -619,7 +622,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html
 ----
 client.cat.tasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 [cols=2*]
 |===
 |`format`
@@ -633,6 +636,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 
 |`detailed`
 |`boolean` - Return detailed task information (default: false)
+
+|`parent_node` or `parentNode`
+|`string` - Return tasks with specified parent node.
 
 |`parent_task` or `parentTask`
 |`number` - Return tasks with specified parent task id. Set to -1 to return all.
@@ -655,7 +661,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.cat.templates([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-templates.html
 [cols=2*]
 |===
 |`name`
@@ -688,7 +694,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
 ----
 client.cat.threadPool([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-thread-pool.html
 [cols=2*]
 |===
 |`thread_pool_patterns` or `threadPoolPatterns`
@@ -724,7 +730,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.ht
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -739,7 +745,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scr
 ----
 client.cluster.allocationExplain([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-explain.html
 [cols=2*]
 |===
 |`include_yes_decisions` or `includeYesDecisions`
@@ -757,7 +763,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation
 ----
 client.cluster.getSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -778,7 +784,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-set
 ----
 client.cluster.health([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-health.html
 [cols=2*]
 |===
 |`index`
@@ -809,9 +815,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.htm
 |`wait_for_no_relocating_shards` or `waitForNoRelocatingShards`
 |`boolean` - Whether to wait until there are no relocating shards in the cluster
 
-|`wait_for_no_initializing_shards` or `waitForNoInitializingShards`
-|`boolean` - Whether to wait until there are no initializing shards in the cluster
-
 |`wait_for_status` or `waitForStatus`
 |`'green', 'yellow', 'red'` - Wait until cluster is in a specific state
 
@@ -821,7 +824,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.htm
 ----
 client.cluster.pendingTasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-pending.html
 [cols=2*]
 |===
 |`local`
@@ -836,7 +839,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.ht
 ----
 client.cluster.putSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -857,7 +860,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-set
 ----
 client.cluster.remoteInfo([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-remote-info.html
 [cols=2*]
 |===
 |===
@@ -866,7 +869,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-inf
 ----
 client.cluster.reroute([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html
 [cols=2*]
 |===
 |`dry_run` or `dryRun`
@@ -896,7 +899,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.ht
 ----
 client.cluster.state([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-state.html
 [cols=2*]
 |===
 |`index`
@@ -914,12 +917,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
 
-|`wait_for_metadata_version` or `waitForMetadataVersion`
-|`number` - Wait for the metadata version to be equal or greater than the specified metadata version
-
-|`wait_for_timeout` or `waitForTimeout`
-|`string` - The maximum time to wait for wait_for_metadata_version before timing out
-
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
 
@@ -936,7 +933,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html
 ----
 client.cluster.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -954,7 +951,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
 ----
 client.count([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-count.html
 [cols=2*]
 |===
 |`index`
@@ -965,9 +962,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
 
 |`allow_no_indices` or `allowNoIndices`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -1011,12 +1005,61 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
 |`object` - A query to restrict the results specified with the Query DSL (optional)
 
 |===
+=== countPercolate
+[source,js]
+----
+client.countPercolate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
+[cols=2*]
+|===
+|`index`
+|`string` - The index of the document being count percolated.
+
+|`type`
+|`string` - The type of the document being count percolated.
+
+|`id`
+|`string` - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
+
+|`routing`
+|`string, string[]` - A comma-separated list of specific routing values
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+    _Default:_ `open`
+
+|`percolate_index` or `percolateIndex`
+|`string` - The index to count percolate the document into. Defaults to index.
+
+|`percolate_type` or `percolateType`
+|`string` - The type to count percolate document into. Defaults to type.
+
+|`version`
+|`number` - Explicit version number for concurrency control
+
+|`version_type` or `versionType`
+|`'internal', 'external', 'external_gte', 'force'` - Specific version type
+
+|`body`
+|`object` - The count percolator request definition using the percolate DSL
+
+|===
 === create
 [source,js]
 ----
 client.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html
 [cols=2*]
 |===
 |`id`
@@ -1043,6 +1086,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 |`timeout`
 |`string` - Explicit operation timeout
 
+|`timestamp`
+|`string` - Explicit timestamp for the document
+
+|`ttl`
+|`string` - Expiration time for the document
+
 |`version`
 |`number` - Explicit version number for concurrency control
 
@@ -1061,7 +1110,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 ----
 client.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html
 [cols=2*]
 |===
 |`id`
@@ -1088,12 +1137,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`if_seq_no` or `ifSeqNo`
-|`number` - only perform the delete operation if the last operation that has changed the document has the specified sequence number
-
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only perform the delete operation if the last operation that has changed the document has the specified primary term
-
 |`version`
 |`number` - Explicit version number for concurrency control
 
@@ -1106,7 +1149,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
 ----
 client.deleteByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete-by-query.html
 [cols=2*]
 |===
 |`index`
@@ -1138,7 +1181,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`conflicts`
-|`'abort', 'proceed'` - What to do when the delete by query hits version conflicts? +
+|`'abort', 'proceed'` - What to do when the delete-by-query hits version conflicts? +
     _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
@@ -1175,10 +1218,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
@@ -1204,10 +1247,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the delete by query
+|`number` - Size on the scroll request powering the update_by_query
 
 |`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request should block until the delete by query is complete. +
+|`boolean` - Should the request should block until the delete-by-query is complete. +
     _Default:_ `true`
 
 |`requests_per_second` or `requestsPerSecond`
@@ -1221,31 +1264,19 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 |`object` - The search definition using the Query DSL
 
 |===
-=== deleteByQueryRethrottle
-[source,js]
-----
-client.deleteByQueryRethrottle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
 === deleteScript
 [source,js]
 ----
 client.deleteScript([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
 [cols=2*]
 |===
 |`id`
 |`string` - Script ID
+
+|`lang`
+|`string` - Script language
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -1254,12 +1285,24 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.
 |`string` - Specify timeout for connection to master
 
 |===
+=== deleteTemplate
+[source,js]
+----
+client.deleteTemplate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+[cols=2*]
+|===
+|`id`
+|`string` - Template ID
+
+|===
 === exists
 [source,js]
 ----
 client.exists([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1292,10 +1335,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`version`
@@ -1320,7 +1363,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; deprecated and optional starting with 7.0
+|`string` - The type of the document; use `_all` to fetch the first document matching the ID across all types
 
 |`parent`
 |`string` - The ID of the parent document
@@ -1340,10 +1383,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`version`
@@ -1358,7 +1401,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.explain([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-explain.html
 [cols=2*]
 |===
 |`id`
@@ -1404,10 +1447,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.htm
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`body`
@@ -1419,7 +1462,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.htm
 ----
 client.fieldCaps([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-caps.html
 [cols=2*]
 |===
 |`index`
@@ -1438,13 +1481,48 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
+|`body`
+|`object` - Field json objects containing an array of field names
+
+|===
+=== fieldStats
+[source,js]
+----
+client.fieldStats([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-stats.html
+[cols=2*]
+|===
+|`index`
+|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+|`fields`
+|`string, string[]` - A comma-separated list of fields for to get field statistics for (min value, max value, and more)
+
+|`level`
+|`'indices', 'cluster'` - Defines if field stats should be returned on a per index level or on a cluster wide level +
+    _Default:_ `cluster`
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+    _Default:_ `open`
+
+|`body`
+|`object` - Field json objects containing the name and optionally a range to filter out indices result, that have results outside the defined bounds
+
 |===
 === get
 [source,js]
 ----
 client.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1477,12 +1555,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string, string[]` - A list of fields to extract and return from the _source field
-
 |`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
@@ -1501,14 +1573,14 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.getScript([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
 [cols=2*]
 |===
 |`id`
 |`string` - Script ID
 
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
+|`lang`
+|`string` - Script language
 
 |===
 === getSource
@@ -1516,7 +1588,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.
 ----
 client.getSource([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1526,7 +1598,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; deprecated and optional starting with 7.0
+|`string` - The type of the document; use `_all` to fetch the first document matching the ID across all types
 
 |`parent`
 |`string` - The ID of the parent document
@@ -1546,10 +1618,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`version`
@@ -1559,12 +1631,24 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 |`'internal', 'external', 'external_gte', 'force'` - Specific version type
 
 |===
+=== getTemplate
+[source,js]
+----
+client.getTemplate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+[cols=2*]
+|===
+|`id`
+|`string` - Template ID
+
+|===
 === index
 [source,js]
 ----
 client.index([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html
 [cols=2*]
 |===
 |`id`
@@ -1595,17 +1679,17 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 |`timeout`
 |`string` - Explicit operation timeout
 
+|`timestamp`
+|`string` - Explicit timestamp for the document
+
+|`ttl`
+|`string` - Expiration time for the document
+
 |`version`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
 |`'internal', 'external', 'external_gte', 'force'` - Specific version type
-
-|`if_seq_no` or `ifSeqNo`
-|`number` - only perform the index operation if the last operation that has changed the document has the specified sequence number
-
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only perform the index operation if the last operation that has changed the document has the specified primary term
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
@@ -1619,17 +1703,48 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 ----
 client.indices.analyze([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-analyze.html
 [cols=2*]
 |===
 |`index`
 |`string` - The name of the index to scope the operation
 
+|`analyzer`
+|`string` - The name of the analyzer to use
+
+|`char_filter` or `charFilter`
+|`string, string[]` - A comma-separated list of character filters to use for the analysis
+
+|`field`
+|`string` - Use the analyzer configured for this field (instead of passing the analyzer name)
+
+|`filter`
+|`string, string[]` - A comma-separated list of filters to use for the analysis
+
 |`index`
 |`string` - The name of the index to scope the operation
 
+|`prefer_local` or `preferLocal`
+|`boolean` - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+
+|`text`
+|`string, string[]` - The text on which the analysis should be performed (when request body is not used)
+
+|`tokenizer`
+|`string` - The name of the tokenizer to use for the analysis
+
+|`explain`
+|`boolean` - With `true`, outputs more advanced details. (default: false)
+
+|`attributes`
+|`string, string[]` - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
+
+|`format`
+|`'detailed', 'text'` - Format of the output +
+    _Default:_ `detailed`
+
 |`body`
-|`object` - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
+|`object` - The text on which the analysis should be performed
 
 |===
 === indices.clearCache
@@ -1637,17 +1752,20 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.ht
 ----
 client.indices.clearCache([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-clearcache.html
 [cols=2*]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index name to limit the operation
 
+|`field_data` or `fieldData`
+|`boolean` - Clear field data
+
 |`fielddata`
 |`boolean` - Clear field data
 
 |`fields`
-|`string, string[]` - A comma-separated list of fields to clear when using the `fielddata` parameter (default: all)
+|`string, string[]` - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
 
 |`query`
 |`boolean` - Clear query caches
@@ -1665,6 +1783,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache
 |`index`
 |`string, string[]` - A comma-separated list of index name to limit the operation
 
+|`recycler`
+|`boolean` - Clear the recycler cache
+
+|`request_cache` or `requestCache`
+|`boolean` - Clear request cache
+
 |`request`
 |`boolean` - Clear request cache
 
@@ -1674,7 +1798,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache
 ----
 client.indices.close([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html
 [cols=2*]
 |===
 |`index`
@@ -1702,14 +1826,11 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close
 ----
 client.indices.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-create-index.html
 [cols=2*]
 |===
 |`index`
 |`string` - The name of the index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for before the operation returns.
@@ -1720,6 +1841,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-ind
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
 
+|`update_all_types` or `updateAllTypes`
+|`boolean` - Whether to update the mapping for all fields with the same name across all types or not
+
 |`body`
 |`object` - The configuration for the index (`settings` and `mappings`)
 
@@ -1729,7 +1853,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-ind
 ----
 client.indices.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index.html
 [cols=2*]
 |===
 |`index`
@@ -1741,23 +1865,13 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-ind
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
 
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Ignore unavailable indexes (default: false)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
-    _Default:_ `open`
-
 |===
 === indices.deleteAlias
 [source,js]
 ----
 client.indices.deleteAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -1778,7 +1892,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.deleteTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -1796,7 +1910,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.exists([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html
 [cols=2*]
 |===
 |`index`
@@ -1827,7 +1941,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.htm
 ----
 client.indices.existsAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -1855,7 +1969,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.existsTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -1876,7 +1990,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.existsType([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-types-exists.html
 [cols=2*]
 |===
 |`index`
@@ -1904,7 +2018,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exis
 ----
 client.indices.flush([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-flush.html
 [cols=2*]
 |===
 |`index`
@@ -1932,7 +2046,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-synced-flush.html
 [cols=2*]
 |===
 |`index`
@@ -1954,7 +2068,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flu
 ----
 client.indices.forcemerge([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-forcemerge.html
 [cols=2*]
 |===
 |`index`
@@ -1979,20 +2093,26 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge
 |`only_expunge_deletes` or `onlyExpungeDeletes`
 |`boolean` - Specify whether the operation should only expunge deleted documents
 
+|`operation_threading` or `operationThreading`
+|`undefined` - TODO: ?
+
+|`wait_for_merge` or `waitForMerge`
+|`boolean` - Specify whether the request should block until the merge process is finished (default: true)
+
 |===
 === indices.get
 [source,js]
 ----
 client.indices.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-index.html
 [cols=2*]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names
 
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether to add the type name to the response (default: false)
+|`feature`
+|`string, string[]` - A comma-separated list of features
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2013,16 +2133,13 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether to return all default setting for each of the indices.
 
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
 |===
 === indices.getAlias
 [source,js]
 ----
 client.indices.getAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -2050,7 +2167,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.getFieldMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-field-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2061,9 +2178,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-
 
 |`fields`
 |`string, string[]` - A comma-separated list of fields
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether the default mapping values should be returned as well
@@ -2087,7 +2201,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-
 ----
 client.indices.getMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2095,9 +2209,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappin
 
 |`type`
 |`string, string[]` - A comma-separated list of document types
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether to add the type name to the response (default: false)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2109,9 +2220,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappin
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
@@ -2121,7 +2229,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappin
 ----
 client.indices.getSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-settings.html
 [cols=2*]
 |===
 |`index`
@@ -2129,9 +2237,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settin
 
 |`name`
 |`string, string[]` - The name of the settings that should be included
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2158,14 +2263,11 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settin
 ----
 client.indices.getTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
 [cols=2*]
 |===
 |`name`
 |`string, string[]` - The comma separated names of the index templates
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -2182,7 +2284,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.getUpgrade([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html
 [cols=2*]
 |===
 |`index`
@@ -2204,7 +2306,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.ht
 ----
 client.indices.open([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html
 [cols=2*]
 |===
 |`index`
@@ -2226,16 +2328,13 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `closed`
 
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
 |===
 === indices.putAlias
 [source,js]
 ----
 client.indices.putAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -2259,7 +2358,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.putMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-put-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2267,9 +2366,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappin
 
 |`type`
 |`string` - The name of the document type
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2287,6 +2383,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappin
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
+|`update_all_types` or `updateAllTypes`
+|`boolean` - Whether to update the mapping for all fields with the same name across all types or not
+
 |`body`
 |`object` - The mapping definition
 
@@ -2296,7 +2395,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappin
 ----
 client.indices.putSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-update-settings.html
 [cols=2*]
 |===
 |`index`
@@ -2304,9 +2403,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-set
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
-
-|`timeout`
-|`string` - Explicit operation timeout
 
 |`preserve_existing` or `preserveExisting`
 |`boolean` - Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
@@ -2333,14 +2429,11 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-set
 ----
 client.indices.putTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
 [cols=2*]
 |===
 |`name`
 |`string` - The name of the template
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`order`
 |`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -2366,7 +2459,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.recovery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-recovery.html
 [cols=2*]
 |===
 |`index`
@@ -2384,7 +2477,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.h
 ----
 client.indices.refresh([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-refresh.html
 [cols=2*]
 |===
 |`index`
@@ -2406,7 +2499,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.ht
 ----
 client.indices.rollover([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-index.html
 [cols=2*]
 |===
 |`alias`
@@ -2414,9 +2507,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-i
 
 |`new_index` or `newIndex`
 |`string` - The name of the rollover index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be included in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2439,7 +2529,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-i
 ----
 client.indices.segments([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-segments.html
 [cols=2*]
 |===
 |`index`
@@ -2455,6 +2545,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.h
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
+|`operation_threading` or `operationThreading`
+|`undefined` - TODO: ?
+
 |`verbose`
 |`boolean` - Includes detailed memory usage by Lucene.
 
@@ -2464,7 +2557,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.h
 ----
 client.indices.shardStores([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shards-stores.html
 [cols=2*]
 |===
 |`index`
@@ -2483,13 +2576,16 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-sto
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
+|`operation_threading` or `operationThreading`
+|`undefined` - TODO: ?
+
 |===
 === indices.shrink
 [source,js]
 ----
 client.indices.shrink([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index.html
 [cols=2*]
 |===
 |`index`
@@ -2497,39 +2593,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-ind
 
 |`target`
 |`string` - The name of the target index to shrink into
-
-|`copy_settings` or `copySettings`
-|`boolean` - whether or not to copy settings from the source index (defaults to false)
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Set the number of active shards to wait for on the shrunken index before the operation returns.
-
-|`body`
-|`object` - The configuration for the target index (`settings` and `aliases`)
-
-|===
-=== indices.split
-[source,js]
-----
-client.indices.split([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the source index to split
-
-|`target`
-|`string` - The name of the target index to split into
-
-|`copy_settings` or `copySettings`
-|`boolean` - whether or not to copy settings from the source index (defaults to false)
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2549,7 +2612,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-inde
 ----
 client.indices.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-stats.html
 [cols=2*]
 |===
 |`index`
@@ -2586,7 +2649,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
 ----
 client.indices.updateAliases([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 [cols=2*]
 |===
 |`timeout`
@@ -2604,7 +2667,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.upgrade([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html
 [cols=2*]
 |===
 |`index`
@@ -2632,7 +2695,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.ht
 ----
 client.indices.validateQuery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-validate.html
 [cols=2*]
 |===
 |`index`
@@ -2653,6 +2716,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.ht
 |`expand_wildcards` or `expandWildcards`
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
+
+|`operation_threading` or `operationThreading`
+|`undefined` - TODO: ?
 
 |`q`
 |`string` - Query in the Lucene query string syntax
@@ -2688,7 +2754,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.ht
 ----
 client.info([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/
+https://www.elastic.co/guide/
 [cols=2*]
 |===
 |===
@@ -2697,7 +2763,7 @@ http://www.elastic.co/guide/
 ----
 client.ingest.deletePipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2715,7 +2781,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.getPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2739,7 +2805,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.putPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2760,7 +2826,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.simulate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2778,7 +2844,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.mget([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-get.html
 [cols=2*]
 |===
 |`index`
@@ -2805,14 +2871,42 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.htm
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`body`
 |`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
+
+|===
+=== mpercolate
+[source,js]
+----
+client.mpercolate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
+[cols=2*]
+|===
+|`index`
+|`string` - The index of the document being count percolated to use as default
+
+|`type`
+|`string` - The type of the document being percolated to use as default.
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+    _Default:_ `open`
+
+|`body`
+|`object` - The percolate request definitions (header & body pair), separated by newlines
 
 |===
 === msearch
@@ -2820,7 +2914,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.htm
 ----
 client.msearch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html
 [cols=2*]
 |===
 |`index`
@@ -2842,17 +2936,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-searc
 |`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
     _Default:_ `128`
 
-|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-    _Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-    _Default:_ `true`
-
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
 
@@ -2862,7 +2945,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-searc
 ----
 client.msearchTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
 [cols=2*]
 |===
 |`index`
@@ -2880,13 +2963,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sear
 |`max_concurrent_searches` or `maxConcurrentSearches`
 |`number` - Controls the maximum number of concurrent searches the multi search api will execute
 
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-    _Default:_ `true`
-
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
 
@@ -2896,7 +2972,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sear
 ----
 client.mtermvectors([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-termvectors.html
 [cols=2*]
 |===
 |`index`
@@ -2957,7 +3033,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvec
 ----
 client.nodes.hotThreads([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-hot-threads.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -2987,7 +3063,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-
 ----
 client.nodes.info([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-info.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3003,27 +3079,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info
 |`string` - Explicit operation timeout
 
 |===
-=== nodes.reloadSecureSettings
-[source,js]
-----
-client.nodes.reloadSecureSettings([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string, string[]` - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
 === nodes.stats
 [source,js]
 ----
 client.nodes.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-stats.html
 [cols=2*]
 |===
 |`metric`
@@ -3061,70 +3122,28 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stat
 |`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
 
 |===
-=== nodes.usage
+=== percolate
 [source,js]
 ----
-client.nodes.usage([params] [, options] [, callback])
+client.percolate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html
-[cols=2*]
-|===
-|`metric`
-|`string, string[]` - Limit the information returned to the specified metrics
-
-|`node_id` or `nodeId`
-|`string, string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-=== ping
-[source,js]
-----
-client.ping([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/
-[cols=2*]
-|===
-|===
-=== putScript
-[source,js]
-----
-client.putScript([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
-[cols=2*]
-|===
-|`id`
-|`string` - Script ID
-
-|`context`
-|`string` - Script context
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`context`
-|`string` - Context name to compile script against
-
-|`body`
-|`object` - The document
-
-|===
-=== rankEval
-[source,js]
-----
-client.rankEval([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+|`string` - The index of the document being percolated.
+
+|`type`
+|`string` - The type of the document being percolated.
+
+|`id`
+|`string` - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
+
+|`routing`
+|`string, string[]` - A comma-separated list of specific routing values
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3136,8 +3155,77 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
     _Default:_ `open`
 
+|`percolate_index` or `percolateIndex`
+|`string` - The index to percolate the document into. Defaults to index.
+
+|`percolate_type` or `percolateType`
+|`string` - The type to percolate document into. Defaults to type.
+
+|`percolate_routing` or `percolateRouting`
+|`string` - The routing value to use when percolating the existing document.
+
+|`percolate_preference` or `percolatePreference`
+|`string` - Which shard to prefer when executing the percolate request.
+
+|`percolate_format` or `percolateFormat`
+|`'ids'` - Return an array of matching query IDs instead of objects
+
+|`version`
+|`number` - Explicit version number for concurrency control
+
+|`version_type` or `versionType`
+|`'internal', 'external', 'external_gte', 'force'` - Specific version type
+
 |`body`
-|`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
+|`object` - The percolator request definition using the percolate DSL
+
+|===
+=== ping
+[source,js]
+----
+client.ping([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/
+[cols=2*]
+|===
+|===
+=== putScript
+[source,js]
+----
+client.putScript([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
+[cols=2*]
+|===
+|`id`
+|`string` - Script ID
+
+|`lang`
+|`string` - Script language
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - The document
+
+|===
+=== putTemplate
+[source,js]
+----
+client.putTemplate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+[cols=2*]
+|===
+|`id`
+|`string` - Template ID
+
+|`body`
+|`object` - The document
 
 |===
 === reindex
@@ -3145,7 +3233,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.
 ----
 client.reindex([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html
 [cols=2*]
 |===
 |`refresh`
@@ -3178,7 +3266,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 ----
 client.reindexRethrottle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3193,7 +3281,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 ----
 client.renderSearchTemplate([params] [, options] [, callback])
 ----
-http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
+http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html
 [cols=2*]
 |===
 |`id`
@@ -3203,24 +3291,12 @@ http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-temp
 |`object` - The search definition template and its params
 
 |===
-=== scriptsPainlessExecute
-[source,js]
-----
-client.scriptsPainlessExecute([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
-[cols=2*]
-|===
-|`body`
-|`object` - The script to execute
-
-|===
 === scroll
 [source,js]
 ----
 client.scroll([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -3232,9 +3308,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scr
 |`scroll_id` or `scrollId`
 |`string` - The scroll ID for scrolled search
 
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
 |`body`
 |`object` - The scroll ID if not passed by URL or query parameter.
 
@@ -3244,7 +3317,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scr
 ----
 client.search([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-search.html
 [cols=2*]
 |===
 |`index`
@@ -3258,10 +3331,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-    _Default:_ `true`
 
 |`default_operator` or `defaultOperator`
 |`'AND', 'OR'` - The default operator for query string query (AND or OR) +
@@ -3279,14 +3348,14 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 |`docvalue_fields` or `docvalueFields`
 |`string, string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
 
+|`fielddata_fields` or `fielddataFields`
+|`string, string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+
 |`from`
 |`number` - Starting offset (default: 0)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
 
 |`allow_no_indices` or `allowNoIndices`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -3322,10 +3391,10 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
@@ -3353,21 +3422,11 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 |`track_scores` or `trackScores`
 |`boolean` - Whether to calculate and return scores even if they are not used for sorting
 
-|`track_total_hits` or `trackTotalHits`
-|`boolean` - Indicate if the number of documents that match the query should be tracked
-
-|`allow_partial_search_results` or `allowPartialSearchResults`
-|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
-    _Default:_ `true`
-
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
 |`version`
 |`boolean` - Specify whether to return document version as part of a hit
-
-|`seq_no_primary_term` or `seqNoPrimaryTerm`
-|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
 
 |`request_cache` or `requestCache`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
@@ -3377,15 +3436,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
     _Default:_ `512`
 
 |`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-    _Default:_ `The default is 5.`
+|`number` - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+    _Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
 
 |`pre_filter_shard_size` or `preFilterShardSize`
 |`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
     _Default:_ `128`
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 
 |`body`
 |`object` - The search definition using the Query DSL
@@ -3396,11 +3452,14 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 ----
 client.searchShards([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html
 [cols=2*]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -3427,7 +3486,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html
 ----
 client.searchTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
 [cols=2*]
 |===
 |`index`
@@ -3438,9 +3497,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.h
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
 
 |`allow_no_indices` or `allowNoIndices`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -3470,13 +3526,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.h
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-    _Default:_ `true`
-
 |`body`
 |`object` - The search definition template and its params
 
@@ -3486,7 +3535,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.h
 ----
 client.snapshot.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3510,7 +3559,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.createRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3534,7 +3583,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3552,7 +3601,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.deleteRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3570,7 +3619,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3594,7 +3643,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.getRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3612,7 +3661,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.restore([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3636,7 +3685,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.status([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3657,7 +3706,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.verifyRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3670,12 +3719,43 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 |`string` - Explicit operation timeout
 
 |===
+=== suggest
+[source,js]
+----
+client.suggest([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-suggesters.html
+[cols=2*]
+|===
+|`index`
+|`string, string[]` - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+    _Default:_ `open`
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`routing`
+|`string` - Specific routing value
+
+|`body`
+|`object` - The request definition
+
+|===
 === tasks.cancel
 [source,js]
 ----
 client.tasks.cancel([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3687,6 +3767,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 |`actions`
 |`string, string[]` - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
 
+|`parent_node` or `parentNode`
+|`string` - Cancel tasks with specified parent node.
+
 |`parent_task_id` or `parentTaskId`
 |`string` - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
 
@@ -3696,7 +3779,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.tasks.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3705,16 +3788,13 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Wait for the matching tasks to complete (default: false)
 
-|`timeout`
-|`string` - Explicit operation timeout
-
 |===
 === tasks.list
 [source,js]
 ----
 client.tasks.list([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 [cols=2*]
 |===
 |`nodes`
@@ -3726,6 +3806,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 |`detailed`
 |`boolean` - Return detailed task information (default: false)
 
+|`parent_node` or `parentNode`
+|`string` - Return tasks with specified parent node.
+
 |`parent_task_id` or `parentTaskId`
 |`string` - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
 
@@ -3733,11 +3816,8 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 |`boolean` - Wait for the matching tasks to complete (default: false)
 
 |`group_by` or `groupBy`
-|`'nodes', 'parents', 'none'` - Group tasks by nodes or parent/child relationships +
+|`'nodes', 'parents'` - Group tasks by nodes or parent/child relationships +
     _Default:_ `nodes`
-
-|`timeout`
-|`string` - Explicit operation timeout
 
 |===
 === termvectors
@@ -3745,7 +3825,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.termvectors([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-termvectors.html
 [cols=2*]
 |===
 |`index`
@@ -3806,7 +3886,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.h
 ----
 client.update([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html
 [cols=2*]
 |===
 |`id`
@@ -3821,13 +3901,16 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
+|`fields`
+|`string, string[]` - A comma-separated list of fields to return in the response
+
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`lang`
@@ -3848,14 +3931,20 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`if_seq_no` or `ifSeqNo`
-|`number` - only perform the update operation if the last operation that has changed the document has the specified sequence number
+|`timestamp`
+|`string` - Explicit timestamp for the document
 
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
+|`ttl`
+|`string` - Expiration time for the document
+
+|`version`
+|`number` - Explicit version number for concurrency control
+
+|`version_type` or `versionType`
+|`'internal', 'force'` - Specific version type
 
 |`body`
-|`object` - The request definition requires either `script` or partial `doc`
+|`object` - The request definition using either `script` or partial `doc`
 
 |===
 === updateByQuery
@@ -3863,7 +3952,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 ----
 client.updateByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html
 [cols=2*]
 |===
 |`index`
@@ -3935,10 +4024,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-qu
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or a list of fields to return
 
-|`_source_excludes` or `_sourceExcludes`
+|`_source_exclude` or `_sourceExclude`
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
@@ -3967,7 +4056,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-qu
 |`string` - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the update by query
+|`number` - Size on the scroll request powering the update_by_query
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request should block until the update by query operation is complete. +
@@ -3983,2125 +4072,4 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-qu
 |`body`
 |`object` - The search definition using the Query DSL
 
-|===
-=== updateByQueryRethrottle
-[source,js]
-----
-client.updateByQueryRethrottle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
-=== ccr.deleteAutoFollowPattern
-[source,js]
-----
-client.ccr.deleteAutoFollowPattern([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-follow-pattern.html
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-=== ccr.follow
-[source,js]
-----
-client.ccr.follow([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
-    _Default:_ `0`
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-=== ccr.followInfo
-[source,js]
-----
-client.ccr.followInfo([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-=== ccr.followStats
-[source,js]
-----
-client.ccr.followStats([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-=== ccr.getAutoFollowPattern
-[source,js]
-----
-client.ccr.getAutoFollowPattern([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-=== ccr.pauseFollow
-[source,js]
-----
-client.ccr.pauseFollow([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should pause following its leader index.
-
-|===
-=== ccr.putAutoFollowPattern
-[source,js]
-----
-client.ccr.putAutoFollowPattern([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-auto-follow-pattern.html
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|`body`
-|`object` - The specification of the auto follow pattern
-
-|===
-=== ccr.resumeFollow
-[source,js]
-----
-client.ccr.resumeFollow([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follow index to resume following.
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-=== ccr.stats
-[source,js]
-----
-client.ccr.stats([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
-[cols=2*]
-|===
-|===
-=== ccr.unfollow
-[source,js]
-----
-client.ccr.unfollow([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should be turned into a regular index.
-
-|===
-=== ilm.deleteLifecycle
-[source,js]
-----
-client.ilm.deleteLifecycle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-=== ilm.explainLifecycle
-[source,js]
-----
-client.ilm.explainLifecycle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to explain
-
-|`human`
-|`boolean` - Return data such as dates in a human readable format +
-    _Default:_ `false`
-
-|===
-=== ilm.getLifecycle
-[source,js]
-----
-client.ilm.getLifecycle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-=== ilm.getStatus
-[source,js]
-----
-client.ilm.getStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
-[cols=2*]
-|===
-|===
-=== ilm.moveToStep
-[source,js]
-----
-client.ilm.moveToStep([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index whose lifecycle step is to change
-
-|`body`
-|`object` - The new lifecycle step to move to
-
-|===
-=== ilm.putLifecycle
-[source,js]
-----
-client.ilm.putLifecycle([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|`body`
-|`object` - The lifecycle policy definition to register
-
-|===
-=== ilm.removePolicy
-[source,js]
-----
-client.ilm.removePolicy([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to remove policy on
-
-|===
-=== ilm.retry
-[source,js]
-----
-client.ilm.retry([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the indices (comma-separated) whose failed lifecycle step is to be retry
-
-|===
-=== ilm.start
-[source,js]
-----
-client.ilm.start([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
-[cols=2*]
-|===
-|===
-=== ilm.stop
-[source,js]
-----
-client.ilm.stop([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
-[cols=2*]
-|===
-|===
-=== indices.freeze
-[source,js]
-----
-client.indices.freeze([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to freeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-=== indices.unfreeze
-[source,js]
-----
-client.indices.unfreeze([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to unfreeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-=== ml.closeJob
-[source,js]
-----
-client.ml.closeJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to close
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`force`
-|`boolean` - True if the job should be forcefully closed
-
-|`timeout`
-|`string` - Controls the time to wait until a job has closed. Default to 30 minutes
-
-|`body`
-|`object` - The URL params optionally sent in the body
-
-|===
-=== ml.deleteCalendar
-[source,js]
-----
-client.ml.deleteCalendar([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to delete
-
-|===
-=== ml.deleteCalendarEvent
-[source,js]
-----
-client.ml.deleteCalendarEvent([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`event_id` or `eventId`
-|`string` - The ID of the event to remove from the calendar
-
-|===
-=== ml.deleteCalendarJob
-[source,js]
-----
-client.ml.deleteCalendarJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to remove from the calendar
-
-|===
-=== ml.deleteDatafeed
-[source,js]
-----
-client.ml.deleteDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to delete
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully deleted
-
-|===
-=== ml.deleteExpiredData
-[source,js]
-----
-client.ml.deleteExpiredData([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|===
-=== ml.deleteFilter
-[source,js]
-----
-client.ml.deleteFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to delete
-
-|===
-=== ml.deleteForecast
-[source,js]
-----
-client.ml.deleteForecast([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job from which to delete forecasts
-
-|`forecast_id` or `forecastId`
-|`string` - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
-
-|`allow_no_forecasts` or `allowNoForecasts`
-|`boolean` - Whether to ignore if `_all` matches no forecasts
-
-|`timeout`
-|`string` - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
-
-|===
-=== ml.deleteJob
-[source,js]
-----
-client.ml.deleteJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to delete
-
-|`force`
-|`boolean` - True if the job should be forcefully deleted
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should this request wait until the operation has completed before returning +
-    _Default:_ `true`
-
-|===
-=== ml.deleteModelSnapshot
-[source,js]
-----
-client.ml.deleteModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to delete
-
-|===
-=== ml.findFileStructure
-[source,js]
-----
-client.ml.findFileStructure([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-file-structure.html
-[cols=2*]
-|===
-|`lines_to_sample` or `linesToSample`
-|`number` - How many lines of the file should be included in the analysis +
-    _Default:_ `1000`
-
-|`timeout`
-|`string` - Timeout after which the analysis will be aborted +
-    _Default:_ `25s`
-
-|`charset`
-|`string` - Optional parameter to specify the character set of the file
-
-|`format`
-|`'ndjson', 'xml', 'delimited', 'semi_structured_text'` - Optional parameter to specify the high level file format
-
-|`has_header_row` or `hasHeaderRow`
-|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
-
-|`column_names` or `columnNames`
-|`string, string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
-
-|`delimiter`
-|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
-
-|`quote`
-|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
-
-|`should_trim_fields` or `shouldTrimFields`
-|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
-
-|`grok_pattern` or `grokPattern`
-|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
-
-|`timestamp_field` or `timestampField`
-|`string` - Optional parameter to specify the timestamp field in the file
-
-|`timestamp_format` or `timestampFormat`
-|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
-
-|`explain`
-|`boolean` - Whether to include a commentary on how the structure was derived
-
-|`body`
-|`object` - The contents of the file to be analyzed
-
-|===
-=== ml.flushJob
-[source,js]
-----
-client.ml.flushJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to flush
-
-|`calc_interim` or `calcInterim`
-|`boolean` - Calculates interim results for the most recent bucket or all buckets within the latency period
-
-|`start`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`end`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`advance_time` or `advanceTime`
-|`string` - Advances time to the given value generating results and updating the model for the advanced interval
-
-|`skip_time` or `skipTime`
-|`string` - Skips time to the given value without generating results or updating the model for the skipped interval
-
-|`body`
-|`object` - Flush parameters
-
-|===
-=== ml.forecast
-[source,js]
-----
-client.ml.forecast([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to forecast for
-
-|`duration`
-|`string` - The duration of the forecast
-
-|`expires_in` or `expiresIn`
-|`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-
-|===
-=== ml.getBuckets
-[source,js]
-----
-client.ml.getBuckets([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - ID of the job to get bucket results from
-
-|`timestamp`
-|`string` - The timestamp of the desired single bucket result
-
-|`expand`
-|`boolean` - Include anomaly records
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of buckets
-
-|`size`
-|`number` - specifies a max number of buckets to get
-
-|`start`
-|`string` - Start time filter for buckets
-
-|`end`
-|`string` - End time filter for buckets
-
-|`anomaly_score` or `anomalyScore`
-|`number` - Filter for the most anomalous buckets
-
-|`sort`
-|`string` - Sort buckets by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Bucket selection details if not provided in URI
-
-|===
-=== ml.getCalendarEvents
-[source,js]
-----
-client.ml.getCalendarEvents([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar containing the events
-
-|`job_id` or `jobId`
-|`string` - Get events for the job. When this option is used calendar_id must be '_all'
-
-|`start`
-|`string` - Get events after this time
-
-|`end`
-|`string` - Get events before this time
-
-|`from`
-|`number` - Skips a number of events
-
-|`size`
-|`number` - Specifies a max number of events to get
-
-|===
-=== ml.getCalendars
-[source,js]
-----
-client.ml.getCalendars([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to fetch
-
-|`from`
-|`number` - skips a number of calendars
-
-|`size`
-|`number` - specifies a max number of calendars to get
-
-|===
-=== ml.getCategories
-[source,js]
-----
-client.ml.getCategories([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job
-
-|`category_id` or `categoryId`
-|`number` - The identifier of the category definition of interest
-
-|`from`
-|`number` - skips a number of categories
-
-|`size`
-|`number` - specifies a max number of categories to get
-
-|`body`
-|`object` - Category selection details if not provided in URI
-
-|===
-=== ml.getDatafeedStats
-[source,js]
-----
-client.ml.getDatafeedStats([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds stats to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-=== ml.getDatafeeds
-[source,js]
-----
-client.ml.getDatafeeds([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-=== ml.getFilters
-[source,js]
-----
-client.ml.getFilters([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to fetch
-
-|`from`
-|`number` - skips a number of filters
-
-|`size`
-|`number` - specifies a max number of filters to get
-
-|===
-=== ml.getInfluencers
-[source,js]
-----
-client.ml.getInfluencers([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of influencers
-
-|`size`
-|`number` - specifies a max number of influencers to get
-
-|`start`
-|`string` - start timestamp for the requested influencers
-
-|`end`
-|`string` - end timestamp for the requested influencers
-
-|`influencer_score` or `influencerScore`
-|`number` - influencer score threshold for the requested influencers
-
-|`sort`
-|`string` - sort field for the requested influencers
-
-|`desc`
-|`boolean` - whether the results should be sorted in decending order
-
-|`body`
-|`object` - Influencer selection criteria
-
-|===
-=== ml.getJobStats
-[source,js]
-----
-client.ml.getJobStats([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs stats to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-=== ml.getJobs
-[source,js]
-----
-client.ml.getJobs([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-=== ml.getModelSnapshots
-[source,js]
-----
-client.ml.getModelSnapshots([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to fetch
-
-|`from`
-|`number` - Skips a number of documents
-
-|`size`
-|`number` - The default number of documents returned in queries as a string.
-
-|`start`
-|`string` - The filter 'start' query parameter
-
-|`end`
-|`string` - The filter 'end' query parameter
-
-|`sort`
-|`string` - Name of the field to sort on
-
-|`desc`
-|`boolean` - True if the results should be sorted in descending order
-
-|`body`
-|`object` - Model snapshot selection criteria
-
-|===
-=== ml.getOverallBuckets
-[source,js]
-----
-client.ml.getOverallBuckets([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The job IDs for which to calculate overall bucket results
-
-|`top_n` or `topN`
-|`number` - The number of top job bucket scores to be used in the overall_score calculation
-
-|`bucket_span` or `bucketSpan`
-|`string` - The span of the overall buckets. Defaults to the longest job bucket_span
-
-|`overall_score` or `overallScore`
-|`number` - Returns overall buckets with overall scores higher than this value
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - If true overall buckets that include interim buckets will be excluded
-
-|`start`
-|`string` - Returns overall buckets with timestamps after this time
-
-|`end`
-|`string` - Returns overall buckets with timestamps earlier than this time
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`body`
-|`object` - Overall bucket selection details if not provided in URI
-
-|===
-=== ml.getRecords
-[source,js]
-----
-client.ml.getRecords([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of records
-
-|`size`
-|`number` - specifies a max number of records to get
-
-|`start`
-|`string` - Start time filter for records
-
-|`end`
-|`string` - End time filter for records
-
-|`record_score` or `recordScore`
-|`number` - undefined
-
-|`sort`
-|`string` - Sort records by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Record selection criteria
-
-|===
-=== ml.info
-[source,js]
-----
-client.ml.info([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|===
-=== ml.openJob
-[source,js]
-----
-client.ml.openJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to open
-
-|`ignore_downtime` or `ignoreDowntime`
-|`boolean` - Controls if gaps in data are treated as anomalous or as a maintenance window after a job re-start
-
-|`timeout`
-|`string` - Controls the time to wait until a job has opened. Default to 30 minutes
-
-|===
-=== ml.postCalendarEvents
-[source,js]
-----
-client.ml.postCalendarEvents([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`body`
-|`object` - A list of events
-
-|===
-=== ml.postData
-[source,js]
-----
-client.ml.postData([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job receiving the data
-
-|`reset_start` or `resetStart`
-|`string` - Optional parameter to specify the start of the bucket resetting range
-
-|`reset_end` or `resetEnd`
-|`string` - Optional parameter to specify the end of the bucket resetting range
-
-|`body`
-|`object` - The data to process
-
-|===
-=== ml.previewDatafeed
-[source,js]
-----
-client.ml.previewDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to preview
-
-|===
-=== ml.putCalendar
-[source,js]
-----
-client.ml.putCalendar([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to create
-
-|`body`
-|`object` - The calendar details
-
-|===
-=== ml.putCalendarJob
-[source,js]
-----
-client.ml.putCalendarJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to add to the calendar
-
-|===
-=== ml.putDatafeed
-[source,js]
-----
-client.ml.putDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to create
-
-|`body`
-|`object` - The datafeed config
-
-|===
-=== ml.putFilter
-[source,js]
-----
-client.ml.putFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to create
-
-|`body`
-|`object` - The filter details
-
-|===
-=== ml.putJob
-[source,js]
-----
-client.ml.putJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job
-
-|===
-=== ml.revertModelSnapshot
-[source,js]
-----
-client.ml.revertModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to revert to
-
-|`delete_intervening_results` or `deleteInterveningResults`
-|`boolean` - Should we reset the results back to the time of the snapshot?
-
-|`body`
-|`object` - Reversion options
-
-|===
-=== ml.setUpgradeMode
-[source,js]
-----
-client.ml.setUpgradeMode([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
-[cols=2*]
-|===
-|`enabled`
-|`boolean` - Whether to enable upgrade_mode ML setting or not. Defaults to false.
-
-|`timeout`
-|`string` - Controls the time to wait before action times out. Defaults to 30 seconds
-
-|===
-=== ml.startDatafeed
-[source,js]
-----
-client.ml.startDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to start
-
-|`start`
-|`string` - The start time from where the datafeed should begin
-
-|`end`
-|`string` - The end time when the datafeed should stop. When not set, the datafeed continues in real time
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has started. Default to 20 seconds
-
-|`body`
-|`object` - The start datafeed parameters
-
-|===
-=== ml.stopDatafeed
-[source,js]
-----
-client.ml.stopDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to stop
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully stopped.
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
-
-|===
-=== ml.updateDatafeed
-[source,js]
-----
-client.ml.updateDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to update
-
-|`body`
-|`object` - The datafeed update settings
-
-|===
-=== ml.updateFilter
-[source,js]
-----
-client.ml.updateFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to update
-
-|`body`
-|`object` - The filter update
-
-|===
-=== ml.updateJob
-[source,js]
-----
-client.ml.updateJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job update settings
-
-|===
-=== ml.updateModelSnapshot
-[source,js]
-----
-client.ml.updateModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to update
-
-|`body`
-|`object` - The model snapshot properties to update
-
-|===
-=== ml.validate
-[source,js]
-----
-client.ml.validate([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`body`
-|`object` - The job config
-
-|===
-=== ml.validateDetector
-[source,js]
-----
-client.ml.validateDetector([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`body`
-|`object` - The detector
-
-|===
-=== monitoring.bulk
-[source,js]
-----
-client.monitoring.bulk([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
-[cols=2*]
-|===
-|`type`
-|`string` - Default document type for items which don't provide one
-
-|`system_id` or `systemId`
-|`string` - Identifier of the monitored system
-
-|`system_api_version` or `systemApiVersion`
-|`string` - API Version of the monitored system
-
-|`interval`
-|`string` - Collection interval (e.g., '10s' or '10000ms') of the payload
-
-|`body`
-|`object` - The operation definition and data (action-data pairs), separated by newlines
-
-|===
-=== security.authenticate
-[source,js]
-----
-client.security.authenticate([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
-[cols=2*]
-|===
-|===
-=== security.changePassword
-[source,js]
-----
-client.security.changePassword([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to change the password for
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - the new password for the user
-
-|===
-=== security.clearCachedRealms
-[source,js]
-----
-client.security.clearCachedRealms([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
-[cols=2*]
-|===
-|`realms`
-|`string, string[]` - Comma-separated list of realms to clear
-
-|`usernames`
-|`string, string[]` - Comma-separated list of usernames to clear from the cache
-
-|===
-=== security.clearCachedRoles
-[source,js]
-----
-client.security.clearCachedRoles([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
-[cols=2*]
-|===
-|`name`
-|`string, string[]` - Role name
-
-|===
-=== security.createApiKey
-[source,js]
-----
-client.security.createApiKey([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
-[cols=2*]
-|===
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The api key request to create an API key
-
-|===
-=== security.deletePrivileges
-[source,js]
-----
-client.security.deletePrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.deleteRole
-[source,js]
-----
-client.security.deleteRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.deleteRoleMapping
-[source,js]
-----
-client.security.deleteRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.deleteUser
-[source,js]
-----
-client.security.deleteUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - username
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.disableUser
-[source,js]
-----
-client.security.disableUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to disable
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.enableUser
-[source,js]
-----
-client.security.enableUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to enable
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-=== security.getApiKey
-[source,js]
-----
-client.security.getApiKey([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
-[cols=2*]
-|===
-|`id`
-|`string` - API key id of the API key to be retrieved
-
-|`name`
-|`string` - API key name of the API key to be retrieved
-
-|`username`
-|`string` - user name of the user who created this API key to be retrieved
-
-|`realm_name` or `realmName`
-|`string` - realm name of the user who created this API key to be retrieved
-
-|===
-=== security.getPrivileges
-[source,js]
-----
-client.security.getPrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|===
-=== security.getRole
-[source,js]
-----
-client.security.getRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|===
-=== security.getRoleMapping
-[source,js]
-----
-client.security.getRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-Mapping name
-
-|===
-=== security.getToken
-[source,js]
-----
-client.security.getToken([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
-[cols=2*]
-|===
-|`body`
-|`object` - The token request to get
-
-|===
-=== security.getUser
-[source,js]
-----
-client.security.getUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
-[cols=2*]
-|===
-|`username`
-|`string, string[]` - A comma-separated list of usernames
-
-|===
-=== security.getUserPrivileges
-[source,js]
-----
-client.security.getUserPrivileges([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
-[cols=2*]
-|===
-|===
-=== security.hasPrivileges
-[source,js]
-----
-client.security.hasPrivileges([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
-[cols=2*]
-|===
-|`user`
-|`string` - Username
-
-|`body`
-|`object` - The privileges to test
-
-|===
-=== security.invalidateApiKey
-[source,js]
-----
-client.security.invalidateApiKey([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
-[cols=2*]
-|===
-|`body`
-|`object` - The api key request to invalidate API key(s)
-
-|===
-=== security.invalidateToken
-[source,js]
-----
-client.security.invalidateToken([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
-[cols=2*]
-|===
-|`body`
-|`object` - The token to invalidate
-
-|===
-=== security.putPrivileges
-[source,js]
-----
-client.security.putPrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The privilege(s) to add
-
-|===
-=== security.putRole
-[source,js]
-----
-client.security.putRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role to add
-
-|===
-=== security.putRoleMapping
-[source,js]
-----
-client.security.putRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role to add
-
-|===
-=== security.putUser
-[source,js]
-----
-client.security.putUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the User
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The user to add
-
-|===
-=== ssl.certificates
-[source,js]
-----
-client.ssl.certificates([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
-[cols=2*]
-|===
-|===
-=== xpack.graph.explore
-[source,js]
-----
-client.xpack.graph.explore([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-=== xpack.info
-[source,js]
-----
-client.xpack.info([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
-[cols=2*]
-|===
-|`categories`
-|`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-=== xpack.license.delete
-[source,js]
-----
-client.xpack.license.delete([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.get
-[source,js]
-----
-client.xpack.license.get([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-=== xpack.license.getBasicStatus
-[source,js]
-----
-client.xpack.license.getBasicStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.getTrialStatus
-[source,js]
-----
-client.xpack.license.getTrialStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.post
-[source,js]
-----
-client.xpack.license.post([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|`body`
-|`object` - licenses to be installed
-
-|===
-=== xpack.license.postStartBasic
-[source,js]
-----
-client.xpack.license.postStartBasic([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-=== xpack.license.postStartTrial
-[source,js]
-----
-client.xpack.license.postStartTrial([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`type`
-|`string` - The type of trial license to generate (default: "trial")
-
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-=== xpack.migration.deprecations
-[source,js]
-----
-client.xpack.migration.deprecations([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
-[cols=2*]
-|===
-|`index`
-|`string` - Index pattern
-
-|===
-=== xpack.migration.getAssistance
-[source,js]
-----
-client.xpack.migration.getAssistance([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `open`
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|===
-=== xpack.migration.upgrade
-[source,js]
-----
-client.xpack.migration.upgrade([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request block until the upgrade operation is completed +
-    _Default:_ `true`
-
-|===
-=== xpack.rollup.deleteJob
-[source,js]
-----
-client.xpack.rollup.deleteJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to delete
-
-|===
-=== xpack.rollup.getJobs
-[source,js]
-----
-client.xpack.rollup.getJobs([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
-
-|===
-=== xpack.rollup.getRollupCaps
-[source,js]
-----
-client.xpack.rollup.getRollupCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the index to check rollup capabilities on, or left blank for all jobs
-
-|===
-=== xpack.rollup.getRollupIndexCaps
-[source,js]
-----
-client.xpack.rollup.getRollupIndexCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The rollup index or index pattern to obtain rollup capabilities from.
-
-|===
-=== xpack.rollup.putJob
-[source,js]
-----
-client.xpack.rollup.putJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job configuration
-
-|===
-=== xpack.rollup.rollupSearch
-[source,js]
-----
-client.xpack.rollup.rollupSearch([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The index or index-pattern (containing rollup or regular data) that should be searched
-
-|`type`
-|`string` - The doc type inside the index
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`body`
-|`object` - The search request body
-
-|===
-=== xpack.rollup.startJob
-[source,js]
-----
-client.xpack.rollup.startJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to start
-
-|===
-=== xpack.rollup.stopJob
-[source,js]
-----
-client.xpack.rollup.stopJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-
-|`timeout`
-|`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-
-|===
-=== xpack.sql.clearCursor
-[source,js]
-----
-client.xpack.sql.clearCursor([params] [, options] [, callback])
-----
-Clear SQL cursor
-[cols=2*]
-|===
-|`body`
-|`object` - Specify the cursor value in the `cursor` element to clean the cursor.
-
-|===
-=== xpack.sql.query
-[source,js]
-----
-client.xpack.sql.query([params] [, options] [, callback])
-----
-Execute SQL
-[cols=2*]
-|===
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`body`
-|`object` - Use the `query` element to start a query. Use the `cursor` element to continue a query.
-
-|===
-=== xpack.sql.translate
-[source,js]
-----
-client.xpack.sql.translate([params] [, options] [, callback])
-----
-Translate SQL into Elasticsearch queries
-[cols=2*]
-|===
-|`body`
-|`object` - Specify the query in the `query` element.
-
-|===
-=== xpack.usage
-[source,js]
-----
-client.xpack.usage([params] [, options] [, callback])
-----
-Retrieve information about xpack features usage
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for watch write operation
-
-|===
-=== xpack.watcher.ackWatch
-[source,js]
-----
-client.xpack.watcher.ackWatch([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|`action_id` or `actionId`
-|`string, string[]` - A comma-separated list of the action ids to be acked
-
-|===
-=== xpack.watcher.activateWatch
-[source,js]
-----
-client.xpack.watcher.activateWatch([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|===
-=== xpack.watcher.deactivateWatch
-[source,js]
-----
-client.xpack.watcher.deactivateWatch([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|===
-=== xpack.watcher.deleteWatch
-[source,js]
-----
-client.xpack.watcher.deleteWatch([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|===
-=== xpack.watcher.executeWatch
-[source,js]
-----
-client.xpack.watcher.executeWatch([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|`debug`
-|`boolean` - indicates whether the watch should execute in debug mode
-
-|`body`
-|`object` - Execution control
-
-|===
-=== xpack.watcher.getWatch
-[source,js]
-----
-client.xpack.watcher.getWatch([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|===
-=== xpack.watcher.putWatch
-[source,js]
-----
-client.xpack.watcher.putWatch([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|`active`
-|`boolean` - Specify whether the watch is in/active by default
-
-|`version`
-|`number` - Explicit version number for concurrency control
-
-|`if_seq_no` or `ifSeqNo`
-|`number` - only update the watch if the last operation that has changed the watch has the specified sequence number
-
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only update the watch if the last operation that has changed the watch has the specified primary term
-
-|`body`
-|`object` - The watch
-
-|===
-=== xpack.watcher.start
-[source,js]
-----
-client.xpack.watcher.start([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
-[cols=2*]
-|===
-|===
-=== xpack.watcher.stats
-[source,js]
-----
-client.xpack.watcher.stats([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
-[cols=2*]
-|===
-|`metric`
-|`'_all', 'queued_watches', 'current_watches', 'pending_watches'` - Controls what additional stat metrics should be include in the response
-
-|`metric`
-|`'_all', 'queued_watches', 'current_watches', 'pending_watches'` - Controls what additional stat metrics should be include in the response
-
-|`emit_stacktraces` or `emitStacktraces`
-|`boolean` - Emits stack traces of currently running watches
-
-|===
-=== xpack.watcher.stop
-[source,js]
-----
-client.xpack.watcher.stop([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
-[cols=2*]
-|===
 |===
