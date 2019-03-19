@@ -35,14 +35,39 @@ const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', '
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
   // fails with ES5 with x-pack enabled
+  'cat.allocation/10_basic.yaml',
+  'cat.indices/10_basic.yaml',
   'cat.shards/10_basic.yaml',
   // fails with ES5,`repository` is a required field
   'cat.snapshots/10_basic.yaml',
   // fails with ES5 with x-pack enabled
   'cat.templates/10_basic.yaml',
-  'get_source/55_parent_with_routing.yaml',
-  'search/10_source_filtering.yaml',
+  'cluster.health/20_request_timeout.yaml',
+  'delete/11_shard_header.yaml',
+  'delete/45_parent_with_routing.yaml',
   'delete/50_refresh.yaml',
+  'exists/40_routing.yaml',
+  'exists/55_parent_with_routing.yaml',
+  'get/55_parent_with_routing.yaml',
+  'get_source/55_parent_with_routing.yaml',
+  'indices.get_mapping/50_wildcard_expansion.yaml',
+  'indices.flush/10_basic.yaml',
+  'indices.open/10_basic.yaml',
+  'indices.open/20_multiple_indices.yaml',
+  'indices.stats/10_index.yaml',
+  'indices.shard_stores/10_basic.yaml',
+  'indices.segments/10_basic.yaml',
+  'mget/40_routing.yaml',
+  'mlt/20_docs.yaml',
+  'search/10_source_filtering.yaml',
+  'search/140_pre_filter_search_shards.yml',
+  'search.aggregation/10_histogram.yaml',
+  'search.aggregation/20_terms.yaml',
+  'search.aggregation/40_range.yaml',
+  'search.aggregation/50_filter.yaml',
+  'search.highlight/30_fvh.yml',
+  'update/11_shard_header.yaml',
+  'update/55_parent_with_routing.yaml',
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml',
