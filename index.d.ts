@@ -468,6 +468,8 @@ declare class Client extends EventEmitter {
     stop_job: ApiMethod<RequestParams.RollupStopJob>
     stopJob: ApiMethod<RequestParams.RollupStopJob>
   }
+  scripts_painless_context: ApiMethod<RequestParams.ScriptsPainlessContext>
+  scriptsPainlessContext: ApiMethod<RequestParams.ScriptsPainlessContext>
   scripts_painless_execute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scriptsPainlessExecute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scroll: ApiMethod<RequestParams.Scroll>

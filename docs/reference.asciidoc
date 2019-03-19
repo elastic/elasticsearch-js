@@ -3214,6 +3214,18 @@ http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-temp
 |`object` - The search definition template and its params
 
 |===
+=== scriptsPainlessContext
+[source,js]
+----
+client.scriptsPainlessContext([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`context`
+|`string` - Select a specific context to retrieve API information about
+
+|===
 === scriptsPainlessExecute
 [source,js]
 ----

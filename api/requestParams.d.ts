@@ -1068,6 +1068,10 @@ export interface RenderSearchTemplate extends Generic {
   body?: any;
 }
 
+export interface ScriptsPainlessContext extends Generic {
+  context?: string;
+}
+
 export interface ScriptsPainlessExecute extends Generic {
   body?: any;
 }

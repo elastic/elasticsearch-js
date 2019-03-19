@@ -53,27 +53,6 @@ function ESAPI (opts) {
       threadPool: lazyLoad('cat.thread_pool', opts)
     },
     ccr: {
-<<<<<<< HEAD
-      delete_auto_follow_pattern: lazyLoad('./api/ccr.delete_auto_follow_pattern.js', opts),
-      deleteAutoFollowPattern: lazyLoad('./api/ccr.delete_auto_follow_pattern.js', opts),
-      follow: lazyLoad('./api/ccr.follow.js', opts),
-      follow_info: lazyLoad('./api/ccr.follow_info.js', opts),
-      followInfo: lazyLoad('./api/ccr.follow_info.js', opts),
-      follow_stats: lazyLoad('./api/ccr.follow_stats.js', opts),
-      followStats: lazyLoad('./api/ccr.follow_stats.js', opts),
-      forget_follower: lazyLoad('./api/ccr.forget_follower.js', opts),
-      forgetFollower: lazyLoad('./api/ccr.forget_follower.js', opts),
-      get_auto_follow_pattern: lazyLoad('./api/ccr.get_auto_follow_pattern.js', opts),
-      getAutoFollowPattern: lazyLoad('./api/ccr.get_auto_follow_pattern.js', opts),
-      pause_follow: lazyLoad('./api/ccr.pause_follow.js', opts),
-      pauseFollow: lazyLoad('./api/ccr.pause_follow.js', opts),
-      put_auto_follow_pattern: lazyLoad('./api/ccr.put_auto_follow_pattern.js', opts),
-      putAutoFollowPattern: lazyLoad('./api/ccr.put_auto_follow_pattern.js', opts),
-      resume_follow: lazyLoad('./api/ccr.resume_follow.js', opts),
-      resumeFollow: lazyLoad('./api/ccr.resume_follow.js', opts),
-      stats: lazyLoad('./api/ccr.stats.js', opts),
-      unfollow: lazyLoad('./api/ccr.unfollow.js', opts)
-=======
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
       deleteAutoFollowPattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
       follow: lazyLoad('ccr.follow', opts),
@@ -81,6 +60,8 @@ function ESAPI (opts) {
       followInfo: lazyLoad('ccr.follow_info', opts),
       follow_stats: lazyLoad('ccr.follow_stats', opts),
       followStats: lazyLoad('ccr.follow_stats', opts),
+      forget_follower: lazyLoad('ccr.forget_follower', opts),
+      forgetFollower: lazyLoad('ccr.forget_follower', opts),
       get_auto_follow_pattern: lazyLoad('ccr.get_auto_follow_pattern', opts),
       getAutoFollowPattern: lazyLoad('ccr.get_auto_follow_pattern', opts),
       pause_follow: lazyLoad('ccr.pause_follow', opts),
@@ -91,7 +72,6 @@ function ESAPI (opts) {
       resumeFollow: lazyLoad('ccr.resume_follow', opts),
       stats: lazyLoad('ccr.stats', opts),
       unfollow: lazyLoad('ccr.unfollow', opts)
->>>>>>> master
     },
     clear_scroll: lazyLoad('clear_scroll', opts),
     clearScroll: lazyLoad('clear_scroll', opts),
@@ -111,65 +91,40 @@ function ESAPI (opts) {
       state: lazyLoad('cluster.state', opts),
       stats: lazyLoad('cluster.stats', opts)
     },
-<<<<<<< HEAD
-    count: lazyLoad('./api/count.js', opts),
-    create: lazyLoad('./api/create.js', opts),
-    data_frame: {
-      delete_data_frame_transform: lazyLoad('./api/data_frame.delete_data_frame_transform.js', opts),
-      deleteDataFrameTransform: lazyLoad('./api/data_frame.delete_data_frame_transform.js', opts),
-      get_data_frame_transform: lazyLoad('./api/data_frame.get_data_frame_transform.js', opts),
-      getDataFrameTransform: lazyLoad('./api/data_frame.get_data_frame_transform.js', opts),
-      get_data_frame_transform_stats: lazyLoad('./api/data_frame.get_data_frame_transform_stats.js', opts),
-      getDataFrameTransformStats: lazyLoad('./api/data_frame.get_data_frame_transform_stats.js', opts),
-      preview_data_frame_transform: lazyLoad('./api/data_frame.preview_data_frame_transform.js', opts),
-      previewDataFrameTransform: lazyLoad('./api/data_frame.preview_data_frame_transform.js', opts),
-      put_data_frame_transform: lazyLoad('./api/data_frame.put_data_frame_transform.js', opts),
-      putDataFrameTransform: lazyLoad('./api/data_frame.put_data_frame_transform.js', opts),
-      start_data_frame_transform: lazyLoad('./api/data_frame.start_data_frame_transform.js', opts),
-      startDataFrameTransform: lazyLoad('./api/data_frame.start_data_frame_transform.js', opts),
-      stop_data_frame_transform: lazyLoad('./api/data_frame.stop_data_frame_transform.js', opts),
-      stopDataFrameTransform: lazyLoad('./api/data_frame.stop_data_frame_transform.js', opts)
-    },
-    dataFrame: {
-      delete_data_frame_transform: lazyLoad('./api/data_frame.delete_data_frame_transform.js', opts),
-      deleteDataFrameTransform: lazyLoad('./api/data_frame.delete_data_frame_transform.js', opts),
-      get_data_frame_transform: lazyLoad('./api/data_frame.get_data_frame_transform.js', opts),
-      getDataFrameTransform: lazyLoad('./api/data_frame.get_data_frame_transform.js', opts),
-      get_data_frame_transform_stats: lazyLoad('./api/data_frame.get_data_frame_transform_stats.js', opts),
-      getDataFrameTransformStats: lazyLoad('./api/data_frame.get_data_frame_transform_stats.js', opts),
-      preview_data_frame_transform: lazyLoad('./api/data_frame.preview_data_frame_transform.js', opts),
-      previewDataFrameTransform: lazyLoad('./api/data_frame.preview_data_frame_transform.js', opts),
-      put_data_frame_transform: lazyLoad('./api/data_frame.put_data_frame_transform.js', opts),
-      putDataFrameTransform: lazyLoad('./api/data_frame.put_data_frame_transform.js', opts),
-      start_data_frame_transform: lazyLoad('./api/data_frame.start_data_frame_transform.js', opts),
-      startDataFrameTransform: lazyLoad('./api/data_frame.start_data_frame_transform.js', opts),
-      stop_data_frame_transform: lazyLoad('./api/data_frame.stop_data_frame_transform.js', opts),
-      stopDataFrameTransform: lazyLoad('./api/data_frame.stop_data_frame_transform.js', opts)
-    },
-    delete: lazyLoad('./api/delete.js', opts),
-    delete_by_query: lazyLoad('./api/delete_by_query.js', opts),
-    deleteByQuery: lazyLoad('./api/delete_by_query.js', opts),
-    delete_by_query_rethrottle: lazyLoad('./api/delete_by_query_rethrottle.js', opts),
-    deleteByQueryRethrottle: lazyLoad('./api/delete_by_query_rethrottle.js', opts),
-    delete_script: lazyLoad('./api/delete_script.js', opts),
-    deleteScript: lazyLoad('./api/delete_script.js', opts),
-    exists: lazyLoad('./api/exists.js', opts),
-    exists_source: lazyLoad('./api/exists_source.js', opts),
-    existsSource: lazyLoad('./api/exists_source.js', opts),
-    explain: lazyLoad('./api/explain.js', opts),
-    field_caps: lazyLoad('./api/field_caps.js', opts),
-    fieldCaps: lazyLoad('./api/field_caps.js', opts),
-    get: lazyLoad('./api/get.js', opts),
-    get_script: lazyLoad('./api/get_script.js', opts),
-    getScript: lazyLoad('./api/get_script.js', opts),
-    get_source: lazyLoad('./api/get_source.js', opts),
-    getSource: lazyLoad('./api/get_source.js', opts),
-    graph: {
-      explore: lazyLoad('./api/graph.explore.js', opts)
-    },
-=======
     count: lazyLoad('count', opts),
     create: lazyLoad('create', opts),
+    data_frame: {
+      delete_data_frame_transform: lazyLoad('data_frame.delete_data_frame_transform', opts),
+      deleteDataFrameTransform: lazyLoad('data_frame.delete_data_frame_transform', opts),
+      get_data_frame_transform: lazyLoad('data_frame.get_data_frame_transform', opts),
+      getDataFrameTransform: lazyLoad('data_frame.get_data_frame_transform', opts),
+      get_data_frame_transform_stats: lazyLoad('data_frame.get_data_frame_transform_stats', opts),
+      getDataFrameTransformStats: lazyLoad('data_frame.get_data_frame_transform_stats', opts),
+      preview_data_frame_transform: lazyLoad('data_frame.preview_data_frame_transform', opts),
+      previewDataFrameTransform: lazyLoad('data_frame.preview_data_frame_transform', opts),
+      put_data_frame_transform: lazyLoad('data_frame.put_data_frame_transform', opts),
+      putDataFrameTransform: lazyLoad('data_frame.put_data_frame_transform', opts),
+      start_data_frame_transform: lazyLoad('data_frame.start_data_frame_transform', opts),
+      startDataFrameTransform: lazyLoad('data_frame.start_data_frame_transform', opts),
+      stop_data_frame_transform: lazyLoad('data_frame.stop_data_frame_transform', opts),
+      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts)
+    },
+    dataFrame: {
+      delete_data_frame_transform: lazyLoad('data_frame.delete_data_frame_transform', opts),
+      deleteDataFrameTransform: lazyLoad('data_frame.delete_data_frame_transform', opts),
+      get_data_frame_transform: lazyLoad('data_frame.get_data_frame_transform', opts),
+      getDataFrameTransform: lazyLoad('data_frame.get_data_frame_transform', opts),
+      get_data_frame_transform_stats: lazyLoad('data_frame.get_data_frame_transform_stats', opts),
+      getDataFrameTransformStats: lazyLoad('data_frame.get_data_frame_transform_stats', opts),
+      preview_data_frame_transform: lazyLoad('data_frame.preview_data_frame_transform', opts),
+      previewDataFrameTransform: lazyLoad('data_frame.preview_data_frame_transform', opts),
+      put_data_frame_transform: lazyLoad('data_frame.put_data_frame_transform', opts),
+      putDataFrameTransform: lazyLoad('data_frame.put_data_frame_transform', opts),
+      start_data_frame_transform: lazyLoad('data_frame.start_data_frame_transform', opts),
+      startDataFrameTransform: lazyLoad('data_frame.start_data_frame_transform', opts),
+      stop_data_frame_transform: lazyLoad('data_frame.stop_data_frame_transform', opts),
+      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts)
+    },
     delete: lazyLoad('delete', opts),
     delete_by_query: lazyLoad('delete_by_query', opts),
     deleteByQuery: lazyLoad('delete_by_query', opts),
@@ -188,7 +143,9 @@ function ESAPI (opts) {
     getScript: lazyLoad('get_script', opts),
     get_source: lazyLoad('get_source', opts),
     getSource: lazyLoad('get_source', opts),
->>>>>>> master
+    graph: {
+      explore: lazyLoad('graph.explore', opts)
+    },
     ilm: {
       delete_lifecycle: lazyLoad('ilm.delete_lifecycle', opts),
       deleteLifecycle: lazyLoad('ilm.delete_lifecycle', opts),
@@ -282,30 +239,26 @@ function ESAPI (opts) {
       putPipeline: lazyLoad('ingest.put_pipeline', opts),
       simulate: lazyLoad('ingest.simulate', opts)
     },
-<<<<<<< HEAD
     license: {
-      delete: lazyLoad('./api/license.delete.js', opts),
-      get: lazyLoad('./api/license.get.js', opts),
-      get_basic_status: lazyLoad('./api/license.get_basic_status.js', opts),
-      getBasicStatus: lazyLoad('./api/license.get_basic_status.js', opts),
-      get_trial_status: lazyLoad('./api/license.get_trial_status.js', opts),
-      getTrialStatus: lazyLoad('./api/license.get_trial_status.js', opts),
-      post: lazyLoad('./api/license.post.js', opts),
-      post_start_basic: lazyLoad('./api/license.post_start_basic.js', opts),
-      postStartBasic: lazyLoad('./api/license.post_start_basic.js', opts),
-      post_start_trial: lazyLoad('./api/license.post_start_trial.js', opts),
-      postStartTrial: lazyLoad('./api/license.post_start_trial.js', opts)
+      delete: lazyLoad('license.delete', opts),
+      get: lazyLoad('license.get', opts),
+      get_basic_status: lazyLoad('license.get_basic_status', opts),
+      getBasicStatus: lazyLoad('license.get_basic_status', opts),
+      get_trial_status: lazyLoad('license.get_trial_status', opts),
+      getTrialStatus: lazyLoad('license.get_trial_status', opts),
+      post: lazyLoad('license.post', opts),
+      post_start_basic: lazyLoad('license.post_start_basic', opts),
+      postStartBasic: lazyLoad('license.post_start_basic', opts),
+      post_start_trial: lazyLoad('license.post_start_trial', opts),
+      postStartTrial: lazyLoad('license.post_start_trial', opts)
     },
-    mget: lazyLoad('./api/mget.js', opts),
-    migration: {
-      deprecations: lazyLoad('./api/migration.deprecations.js', opts),
-      get_assistance: lazyLoad('./api/migration.get_assistance.js', opts),
-      getAssistance: lazyLoad('./api/migration.get_assistance.js', opts),
-      upgrade: lazyLoad('./api/migration.upgrade.js', opts)
-    },
-=======
     mget: lazyLoad('mget', opts),
->>>>>>> master
+    migration: {
+      deprecations: lazyLoad('migration.deprecations', opts),
+      get_assistance: lazyLoad('migration.get_assistance', opts),
+      getAssistance: lazyLoad('migration.get_assistance', opts),
+      upgrade: lazyLoad('migration.upgrade', opts)
+    },
     ml: {
       close_job: lazyLoad('ml.close_job', opts),
       closeJob: lazyLoad('ml.close_job', opts),
@@ -413,44 +366,6 @@ function ESAPI (opts) {
       stats: lazyLoad('nodes.stats', opts),
       usage: lazyLoad('nodes.usage', opts)
     },
-<<<<<<< HEAD
-    ping: lazyLoad('./api/ping.js', opts),
-    put_script: lazyLoad('./api/put_script.js', opts),
-    putScript: lazyLoad('./api/put_script.js', opts),
-    rank_eval: lazyLoad('./api/rank_eval.js', opts),
-    rankEval: lazyLoad('./api/rank_eval.js', opts),
-    reindex: lazyLoad('./api/reindex.js', opts),
-    reindex_rethrottle: lazyLoad('./api/reindex_rethrottle.js', opts),
-    reindexRethrottle: lazyLoad('./api/reindex_rethrottle.js', opts),
-    render_search_template: lazyLoad('./api/render_search_template.js', opts),
-    renderSearchTemplate: lazyLoad('./api/render_search_template.js', opts),
-    rollup: {
-      delete_job: lazyLoad('./api/rollup.delete_job.js', opts),
-      deleteJob: lazyLoad('./api/rollup.delete_job.js', opts),
-      get_jobs: lazyLoad('./api/rollup.get_jobs.js', opts),
-      getJobs: lazyLoad('./api/rollup.get_jobs.js', opts),
-      get_rollup_caps: lazyLoad('./api/rollup.get_rollup_caps.js', opts),
-      getRollupCaps: lazyLoad('./api/rollup.get_rollup_caps.js', opts),
-      get_rollup_index_caps: lazyLoad('./api/rollup.get_rollup_index_caps.js', opts),
-      getRollupIndexCaps: lazyLoad('./api/rollup.get_rollup_index_caps.js', opts),
-      put_job: lazyLoad('./api/rollup.put_job.js', opts),
-      putJob: lazyLoad('./api/rollup.put_job.js', opts),
-      rollup_search: lazyLoad('./api/rollup.rollup_search.js', opts),
-      rollupSearch: lazyLoad('./api/rollup.rollup_search.js', opts),
-      start_job: lazyLoad('./api/rollup.start_job.js', opts),
-      startJob: lazyLoad('./api/rollup.start_job.js', opts),
-      stop_job: lazyLoad('./api/rollup.stop_job.js', opts),
-      stopJob: lazyLoad('./api/rollup.stop_job.js', opts)
-    },
-    scripts_painless_execute: lazyLoad('./api/scripts_painless_execute.js', opts),
-    scriptsPainlessExecute: lazyLoad('./api/scripts_painless_execute.js', opts),
-    scroll: lazyLoad('./api/scroll.js', opts),
-    search: lazyLoad('./api/search.js', opts),
-    search_shards: lazyLoad('./api/search_shards.js', opts),
-    searchShards: lazyLoad('./api/search_shards.js', opts),
-    search_template: lazyLoad('./api/search_template.js', opts),
-    searchTemplate: lazyLoad('./api/search_template.js', opts),
-=======
     ping: lazyLoad('ping', opts),
     put_script: lazyLoad('put_script', opts),
     putScript: lazyLoad('put_script', opts),
@@ -461,6 +376,26 @@ function ESAPI (opts) {
     reindexRethrottle: lazyLoad('reindex_rethrottle', opts),
     render_search_template: lazyLoad('render_search_template', opts),
     renderSearchTemplate: lazyLoad('render_search_template', opts),
+    rollup: {
+      delete_job: lazyLoad('rollup.delete_job', opts),
+      deleteJob: lazyLoad('rollup.delete_job', opts),
+      get_jobs: lazyLoad('rollup.get_jobs', opts),
+      getJobs: lazyLoad('rollup.get_jobs', opts),
+      get_rollup_caps: lazyLoad('rollup.get_rollup_caps', opts),
+      getRollupCaps: lazyLoad('rollup.get_rollup_caps', opts),
+      get_rollup_index_caps: lazyLoad('rollup.get_rollup_index_caps', opts),
+      getRollupIndexCaps: lazyLoad('rollup.get_rollup_index_caps', opts),
+      put_job: lazyLoad('rollup.put_job', opts),
+      putJob: lazyLoad('rollup.put_job', opts),
+      rollup_search: lazyLoad('rollup.rollup_search', opts),
+      rollupSearch: lazyLoad('rollup.rollup_search', opts),
+      start_job: lazyLoad('rollup.start_job', opts),
+      startJob: lazyLoad('rollup.start_job', opts),
+      stop_job: lazyLoad('rollup.stop_job', opts),
+      stopJob: lazyLoad('rollup.stop_job', opts)
+    },
+    scripts_painless_context: lazyLoad('scripts_painless_context', opts),
+    scriptsPainlessContext: lazyLoad('scripts_painless_context', opts),
     scripts_painless_execute: lazyLoad('scripts_painless_execute', opts),
     scriptsPainlessExecute: lazyLoad('scripts_painless_execute', opts),
     scroll: lazyLoad('scroll', opts),
@@ -469,7 +404,6 @@ function ESAPI (opts) {
     searchShards: lazyLoad('search_shards', opts),
     search_template: lazyLoad('search_template', opts),
     searchTemplate: lazyLoad('search_template', opts),
->>>>>>> master
     security: {
       authenticate: lazyLoad('security.authenticate', opts),
       change_password: lazyLoad('security.change_password', opts),
@@ -537,10 +471,10 @@ function ESAPI (opts) {
       verifyRepository: lazyLoad('snapshot.verify_repository', opts)
     },
     sql: {
-      clear_cursor: lazyLoad('./api/sql.clear_cursor.js', opts),
-      clearCursor: lazyLoad('./api/sql.clear_cursor.js', opts),
-      query: lazyLoad('./api/sql.query.js', opts),
-      translate: lazyLoad('./api/sql.translate.js', opts)
+      clear_cursor: lazyLoad('sql.clear_cursor', opts),
+      clearCursor: lazyLoad('sql.clear_cursor', opts),
+      query: lazyLoad('sql.query', opts),
+      translate: lazyLoad('sql.translate', opts)
     },
     ssl: {
       certificates: lazyLoad('ssl.certificates', opts)
@@ -550,111 +484,34 @@ function ESAPI (opts) {
       get: lazyLoad('tasks.get', opts),
       list: lazyLoad('tasks.list', opts)
     },
-<<<<<<< HEAD
-    termvectors: lazyLoad('./api/termvectors.js', opts),
-    update: lazyLoad('./api/update.js', opts),
-    update_by_query: lazyLoad('./api/update_by_query.js', opts),
-    updateByQuery: lazyLoad('./api/update_by_query.js', opts),
-    update_by_query_rethrottle: lazyLoad('./api/update_by_query_rethrottle.js', opts),
-    updateByQueryRethrottle: lazyLoad('./api/update_by_query_rethrottle.js', opts),
-    watcher: {
-      ack_watch: lazyLoad('./api/watcher.ack_watch.js', opts),
-      ackWatch: lazyLoad('./api/watcher.ack_watch.js', opts),
-      activate_watch: lazyLoad('./api/watcher.activate_watch.js', opts),
-      activateWatch: lazyLoad('./api/watcher.activate_watch.js', opts),
-      deactivate_watch: lazyLoad('./api/watcher.deactivate_watch.js', opts),
-      deactivateWatch: lazyLoad('./api/watcher.deactivate_watch.js', opts),
-      delete_watch: lazyLoad('./api/watcher.delete_watch.js', opts),
-      deleteWatch: lazyLoad('./api/watcher.delete_watch.js', opts),
-      execute_watch: lazyLoad('./api/watcher.execute_watch.js', opts),
-      executeWatch: lazyLoad('./api/watcher.execute_watch.js', opts),
-      get_watch: lazyLoad('./api/watcher.get_watch.js', opts),
-      getWatch: lazyLoad('./api/watcher.get_watch.js', opts),
-      put_watch: lazyLoad('./api/watcher.put_watch.js', opts),
-      putWatch: lazyLoad('./api/watcher.put_watch.js', opts),
-      start: lazyLoad('./api/watcher.start.js', opts),
-      stats: lazyLoad('./api/watcher.stats.js', opts),
-      stop: lazyLoad('./api/watcher.stop.js', opts)
-    },
-    xpack: {
-      info: lazyLoad('./api/xpack.info.js', opts),
-      usage: lazyLoad('./api/xpack.usage.js', opts)
-=======
     termvectors: lazyLoad('termvectors', opts),
     update: lazyLoad('update', opts),
     update_by_query: lazyLoad('update_by_query', opts),
     updateByQuery: lazyLoad('update_by_query', opts),
     update_by_query_rethrottle: lazyLoad('update_by_query_rethrottle', opts),
     updateByQueryRethrottle: lazyLoad('update_by_query_rethrottle', opts),
+    watcher: {
+      ack_watch: lazyLoad('watcher.ack_watch', opts),
+      ackWatch: lazyLoad('watcher.ack_watch', opts),
+      activate_watch: lazyLoad('watcher.activate_watch', opts),
+      activateWatch: lazyLoad('watcher.activate_watch', opts),
+      deactivate_watch: lazyLoad('watcher.deactivate_watch', opts),
+      deactivateWatch: lazyLoad('watcher.deactivate_watch', opts),
+      delete_watch: lazyLoad('watcher.delete_watch', opts),
+      deleteWatch: lazyLoad('watcher.delete_watch', opts),
+      execute_watch: lazyLoad('watcher.execute_watch', opts),
+      executeWatch: lazyLoad('watcher.execute_watch', opts),
+      get_watch: lazyLoad('watcher.get_watch', opts),
+      getWatch: lazyLoad('watcher.get_watch', opts),
+      put_watch: lazyLoad('watcher.put_watch', opts),
+      putWatch: lazyLoad('watcher.put_watch', opts),
+      start: lazyLoad('watcher.start', opts),
+      stats: lazyLoad('watcher.stats', opts),
+      stop: lazyLoad('watcher.stop', opts)
+    },
     xpack: {
-      graph: {
-        explore: lazyLoad('xpack.graph.explore', opts)
-      },
       info: lazyLoad('xpack.info', opts),
-      license: {
-        delete: lazyLoad('xpack.license.delete', opts),
-        get: lazyLoad('xpack.license.get', opts),
-        get_basic_status: lazyLoad('xpack.license.get_basic_status', opts),
-        getBasicStatus: lazyLoad('xpack.license.get_basic_status', opts),
-        get_trial_status: lazyLoad('xpack.license.get_trial_status', opts),
-        getTrialStatus: lazyLoad('xpack.license.get_trial_status', opts),
-        post: lazyLoad('xpack.license.post', opts),
-        post_start_basic: lazyLoad('xpack.license.post_start_basic', opts),
-        postStartBasic: lazyLoad('xpack.license.post_start_basic', opts),
-        post_start_trial: lazyLoad('xpack.license.post_start_trial', opts),
-        postStartTrial: lazyLoad('xpack.license.post_start_trial', opts)
-      },
-      migration: {
-        deprecations: lazyLoad('xpack.migration.deprecations', opts),
-        get_assistance: lazyLoad('xpack.migration.get_assistance', opts),
-        getAssistance: lazyLoad('xpack.migration.get_assistance', opts),
-        upgrade: lazyLoad('xpack.migration.upgrade', opts)
-      },
-      rollup: {
-        delete_job: lazyLoad('xpack.rollup.delete_job', opts),
-        deleteJob: lazyLoad('xpack.rollup.delete_job', opts),
-        get_jobs: lazyLoad('xpack.rollup.get_jobs', opts),
-        getJobs: lazyLoad('xpack.rollup.get_jobs', opts),
-        get_rollup_caps: lazyLoad('xpack.rollup.get_rollup_caps', opts),
-        getRollupCaps: lazyLoad('xpack.rollup.get_rollup_caps', opts),
-        get_rollup_index_caps: lazyLoad('xpack.rollup.get_rollup_index_caps', opts),
-        getRollupIndexCaps: lazyLoad('xpack.rollup.get_rollup_index_caps', opts),
-        put_job: lazyLoad('xpack.rollup.put_job', opts),
-        putJob: lazyLoad('xpack.rollup.put_job', opts),
-        rollup_search: lazyLoad('xpack.rollup.rollup_search', opts),
-        rollupSearch: lazyLoad('xpack.rollup.rollup_search', opts),
-        start_job: lazyLoad('xpack.rollup.start_job', opts),
-        startJob: lazyLoad('xpack.rollup.start_job', opts),
-        stop_job: lazyLoad('xpack.rollup.stop_job', opts),
-        stopJob: lazyLoad('xpack.rollup.stop_job', opts)
-      },
-      sql: {
-        clear_cursor: lazyLoad('xpack.sql.clear_cursor', opts),
-        clearCursor: lazyLoad('xpack.sql.clear_cursor', opts),
-        query: lazyLoad('xpack.sql.query', opts),
-        translate: lazyLoad('xpack.sql.translate', opts)
-      },
-      usage: lazyLoad('xpack.usage', opts),
-      watcher: {
-        ack_watch: lazyLoad('xpack.watcher.ack_watch', opts),
-        ackWatch: lazyLoad('xpack.watcher.ack_watch', opts),
-        activate_watch: lazyLoad('xpack.watcher.activate_watch', opts),
-        activateWatch: lazyLoad('xpack.watcher.activate_watch', opts),
-        deactivate_watch: lazyLoad('xpack.watcher.deactivate_watch', opts),
-        deactivateWatch: lazyLoad('xpack.watcher.deactivate_watch', opts),
-        delete_watch: lazyLoad('xpack.watcher.delete_watch', opts),
-        deleteWatch: lazyLoad('xpack.watcher.delete_watch', opts),
-        execute_watch: lazyLoad('xpack.watcher.execute_watch', opts),
-        executeWatch: lazyLoad('xpack.watcher.execute_watch', opts),
-        get_watch: lazyLoad('xpack.watcher.get_watch', opts),
-        getWatch: lazyLoad('xpack.watcher.get_watch', opts),
-        put_watch: lazyLoad('xpack.watcher.put_watch', opts),
-        putWatch: lazyLoad('xpack.watcher.put_watch', opts),
-        start: lazyLoad('xpack.watcher.start', opts),
-        stats: lazyLoad('xpack.watcher.stats', opts),
-        stop: lazyLoad('xpack.watcher.stop', opts)
-      }
->>>>>>> master
+      usage: lazyLoad('xpack.usage', opts)
     }
   }
 
