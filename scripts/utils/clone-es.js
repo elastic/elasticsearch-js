@@ -57,11 +57,13 @@ function cloneAndCheckout (opts, callback) {
 
     if (fresh) {
       clone(checkout)
+    } else if (opts.branch) {
+      checkout(true)
     } else {
       checkout()
     }
 
-    function checkout () {
+    function checkout (alsoPull = false) {
       if (branch) {
         log.text = `Checking out branch '${branch}'`
       } else {
@@ -73,6 +75,9 @@ function cloneAndCheckout (opts, callback) {
             callback(new Error(`Cannot checkout tag '${tag}'`), { apiFolder, xPackFolder })
             return
           }
+          return pull(checkout)
+        }
+        if (alsoPull) {
           return pull(checkout)
         }
         callback(null, { apiFolder, xPackFolder })
