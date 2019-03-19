@@ -23,7 +23,6 @@ services:
 
   elasticsearch-oss:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
-      - elasticsearch
     volumes:
       - esvol:/tmp
     networks:
