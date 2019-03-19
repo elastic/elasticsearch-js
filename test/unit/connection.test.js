@@ -20,6 +20,7 @@
 'use strict'
 
 const { test } = require('tap')
+const { inspect } = require('util')
 const { createGzip, createDeflate } = require('zlib')
 const { URL } = require('url')
 const intoStream = require('into-stream')
@@ -669,4 +670,37 @@ test('setRole', t => {
   })
 
   t.end()
+})
+
+test('Util.inspect Connection class should hide agent and ssl', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('http://localhost:9200'),
+    id: 'node-id',
+    headers: { foo: 'bar' }
+  })
+
+  t.strictEqual(inspect(connection), `{ url:
+   URL {
+     href: 'http://localhost:9200/',
+     origin: 'http://localhost:9200',
+     protocol: 'http:',
+     username: '',
+     password: '',
+     host: 'localhost:9200',
+     hostname: 'localhost',
+     port: '9200',
+     pathname: '/',
+     search: '',
+     searchParams: URLSearchParams {},
+     hash: '' },
+  id: 'node-id',
+  headers: { foo: 'bar' },
+  deadCount: 0,
+  resurrectTimeout: 0,
+  _openRequests: 0,
+  status: 'alive',
+  roles: { master: true, data: true, ingest: true, ml: false } }`
+  )
 })
