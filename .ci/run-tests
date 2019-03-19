@@ -17,5 +17,3 @@ unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
 
 ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-oss
-
-ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-platinum
