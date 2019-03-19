@@ -20,6 +20,7 @@
 /// <reference types="node" />
 
 import { URL } from 'url';
+import { inspect, InspectOptions } from 'util';
 import * as http from 'http';
 import { SecureContextOptions } from 'tls';
 
@@ -73,6 +74,7 @@ export default class Connection {
   setRole(role: string, enabled: boolean): Connection;
   status: string;
   buildRequestObject(params: any): http.ClientRequestArgs;
+  [inspect.custom](object: any, options: InspectOptions): string;
 }
 
 export {};
