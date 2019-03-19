@@ -9,3 +9,5 @@
         default: refs/heads/7.x
         description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
           &lt;commitId&gt;, etc.)
+    triggers:
+    - timed: '@weekly'
