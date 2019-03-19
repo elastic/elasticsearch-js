@@ -17,6 +17,8 @@
  * under the License.
  */
 
+/* eslint-disable no-template-curly-in-string  */
+
 'use strict'
 
 const { readdirSync } = require('fs')
@@ -63,12 +65,12 @@ function genFactory (folder) {
         .reduce((acc, val) => {
           const obj = {
             [val]: acc === null
-              ? `lazyLoad('./api/${file}', opts)` // `${name}(opts)`
+              ? `lazyLoad('${file.slice(0, -3)}', opts)` // `${name}(opts)`
               : acc
           }
           if (isSnakeCased(val)) {
             obj[camelify(val)] = acc === null
-              ? `lazyLoad('./api/${file}', opts)` // `${name}(opts)`
+              ? `lazyLoad('${file.slice(0, -3)}', opts)` // `${name}(opts)`
               : acc
           }
           return obj
@@ -138,7 +140,7 @@ function genFactory (folder) {
     var fn = null
     return function _lazyLoad (params, options, callback) {
       if (fn === null) {
-        fn = require(file)(opts)
+        fn = require(${'`./api/${file}.js`'})(opts)
       }
       return fn(params, options, callback)
     }
