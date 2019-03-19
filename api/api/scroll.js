@@ -26,19 +26,17 @@ function buildScroll (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
+   * Perform a [scroll](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html) request
    *
    * @param {string} scroll_id - The scroll ID
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
    * @param {string} scroll_id - The scroll ID for scrolled search
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The scroll ID if not passed by URL or query parameter.
    */
 
   const acceptedQuerystring = [
     'scroll',
     'scroll_id',
-    'rest_total_hits_as_int',
     'pretty',
     'human',
     'error_trace',
@@ -48,7 +46,6 @@ function buildScroll (opts) {
 
   const snakeCase = {
     scrollId: 'scroll_id',
-    restTotalHitsAsInt: 'rest_total_hits_as_int',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -63,6 +60,15 @@ function buildScroll (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        scroll(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

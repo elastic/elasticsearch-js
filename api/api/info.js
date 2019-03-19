@@ -26,7 +26,7 @@ function buildInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [info](http://www.elastic.co/guide/) request
+   * Perform a [info](https://www.elastic.co/guide/) request
    *
    */
 
@@ -53,6 +53,15 @@ function buildInfo (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        info(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

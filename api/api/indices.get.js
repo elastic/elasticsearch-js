@@ -26,28 +26,25 @@ function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
+   * Perform a [indices.get](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-index.html) request
    *
    * @param {list} index - A comma-separated list of index names
-   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
+   * @param {list} feature - A comma-separated list of features
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
    * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
    * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
    * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
-   * @param {time} master_timeout - Specify timeout for connection to master
    */
 
   const acceptedQuerystring = [
-    'include_type_name',
     'local',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
     'flat_settings',
     'include_defaults',
-    'master_timeout',
     'pretty',
     'human',
     'error_trace',
@@ -56,13 +53,11 @@ function buildIndicesGet (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
     flatSettings: 'flat_settings',
     includeDefaults: 'include_defaults',
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -79,6 +74,15 @@ function buildIndicesGet (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesGet(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(
@@ -93,6 +97,14 @@ function buildIndicesGet (opts) {
       )
     }
 
+    // check required url components
+    if (params['feature'] != null && (params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: index'),
+        result
+      )
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       return callback(
@@ -102,8 +114,8 @@ function buildIndicesGet (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, index, feature } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'feature'])
 
     if (method == null) {
       method = 'GET'
@@ -116,7 +128,11 @@ function buildIndicesGet (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index)
+    if ((index) != null && (feature) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(feature)
+    } else {
+      path = '/' + encodeURIComponent(index)
+    }
 
     // build request object
     const request = {

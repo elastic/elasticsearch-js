@@ -26,7 +26,7 @@ function buildIndicesDeleteAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.delete_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
+   * Perform a [indices.delete_alias](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html) request
    *
    * @param {list} index - A comma-separated list of index names (supports wildcards); use `_all` for all indices
    * @param {list} name - A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
@@ -60,6 +60,15 @@ function buildIndicesDeleteAlias (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesDeleteAlias(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

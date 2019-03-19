@@ -26,7 +26,7 @@ function buildClusterReroute (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.reroute](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html) request
+   * Perform a [cluster.reroute](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html) request
    *
    * @param {boolean} dry_run - Simulate the operation only and return the resulting state
    * @param {boolean} explain - Return an explanation of why the commands can or cannot be executed
@@ -69,6 +69,15 @@ function buildClusterReroute (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterReroute(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

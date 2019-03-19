@@ -26,9 +26,10 @@ function buildSearchShards (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [search_shards](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html) request
+   * Perform a [search_shards](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {string} routing - Specific routing value
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
@@ -71,10 +72,27 @@ function buildSearchShards (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        searchShards(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
+        result
+      )
+    }
+
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -88,8 +106,8 @@ function buildSearchShards (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
 
     if (method == null) {
       method = body == null ? 'GET' : 'POST'
@@ -102,7 +120,9 @@ function buildSearchShards (opts) {
 
     var path = ''
 
-    if ((index) != null) {
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_search_shards'
+    } else if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_search_shards'
     } else {
       path = '/' + '_search_shards'

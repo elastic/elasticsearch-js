@@ -26,12 +26,11 @@ function buildSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [search_template](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
+   * Perform a [search_template](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} ignore_throttled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
@@ -41,14 +40,11 @@ function buildSearchTemplate (opts) {
    * @param {boolean} explain - Specify whether to return detailed information about score computation as part of a hit
    * @param {boolean} profile - Specify whether to profile the query execution
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The search definition template and its params
    */
 
   const acceptedQuerystring = [
     'ignore_unavailable',
-    'ignore_throttled',
     'allow_no_indices',
     'expand_wildcards',
     'preference',
@@ -58,8 +54,6 @@ function buildSearchTemplate (opts) {
     'explain',
     'profile',
     'typed_keys',
-    'rest_total_hits_as_int',
-    'ccs_minimize_roundtrips',
     'pretty',
     'human',
     'error_trace',
@@ -69,13 +63,10 @@ function buildSearchTemplate (opts) {
 
   const snakeCase = {
     ignoreUnavailable: 'ignore_unavailable',
-    ignoreThrottled: 'ignore_throttled',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
     searchType: 'search_type',
     typedKeys: 'typed_keys',
-    restTotalHitsAsInt: 'rest_total_hits_as_int',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -92,12 +83,13 @@ function buildSearchTemplate (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        searchTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required url components

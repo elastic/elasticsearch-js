@@ -26,7 +26,7 @@ function buildIndicesForcemerge (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.forcemerge](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html) request
+   * Perform a [indices.forcemerge](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-forcemerge.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {boolean} flush - Specify whether the index should be flushed after performing the operation (default: true)
@@ -35,6 +35,8 @@ function buildIndicesForcemerge (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {number} max_num_segments - The number of segments the index should be merged into (default: dynamic)
    * @param {boolean} only_expunge_deletes - Specify whether the operation should only expunge deleted documents
+   * @param {undefined} operation_threading - TODO: ?
+   * @param {boolean} wait_for_merge - Specify whether the request should block until the merge process is finished (default: true)
    */
 
   const acceptedQuerystring = [
@@ -44,6 +46,8 @@ function buildIndicesForcemerge (opts) {
     'expand_wildcards',
     'max_num_segments',
     'only_expunge_deletes',
+    'operation_threading',
+    'wait_for_merge',
     'pretty',
     'human',
     'error_trace',
@@ -57,6 +61,8 @@ function buildIndicesForcemerge (opts) {
     expandWildcards: 'expand_wildcards',
     maxNumSegments: 'max_num_segments',
     onlyExpungeDeletes: 'only_expunge_deletes',
+    operationThreading: 'operation_threading',
+    waitForMerge: 'wait_for_merge',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -71,6 +77,15 @@ function buildIndicesForcemerge (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesForcemerge(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

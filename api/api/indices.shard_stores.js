@@ -26,13 +26,14 @@ function buildIndicesShardStores (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.shard_stores](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html) request
+   * Perform a [indices.shard_stores](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shards-stores.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} status - A comma-separated list of statuses used to filter on shards to get store information for
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {undefined} operation_threading - TODO: ?
    */
 
   const acceptedQuerystring = [
@@ -40,6 +41,7 @@ function buildIndicesShardStores (opts) {
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'operation_threading',
     'pretty',
     'human',
     'error_trace',
@@ -51,6 +53,7 @@ function buildIndicesShardStores (opts) {
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    operationThreading: 'operation_threading',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -65,6 +68,15 @@ function buildIndicesShardStores (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesShardStores(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

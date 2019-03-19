@@ -26,7 +26,7 @@ function buildDeleteByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html) request
+   * Perform a [delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete-by-query.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -37,7 +37,7 @@ function buildDeleteByQuery (opts) {
    * @param {number} from - Starting offset (default: 0)
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} conflicts - What to do when the delete by query hits version conflicts?
+   * @param {enum} conflicts - What to do when the delete-by-query hits version conflicts?
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
@@ -49,8 +49,8 @@ function buildDeleteByQuery (opts) {
    * @param {number} size - Number of hits to return (default: 10)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
+   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
+   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
    * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
    * @param {boolean} version - Specify whether to return document version as part of a hit
@@ -58,8 +58,8 @@ function buildDeleteByQuery (opts) {
    * @param {boolean} refresh - Should the effected indexes be refreshed?
    * @param {time} timeout - Time each individual bulk request should wait for shards that are unavailable.
    * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {number} scroll_size - Size on the scroll request powering the delete by query
-   * @param {boolean} wait_for_completion - Should the request should block until the delete by query is complete.
+   * @param {number} scroll_size - Size on the scroll request powering the update_by_query
+   * @param {boolean} wait_for_completion - Should the request should block until the delete-by-query is complete.
    * @param {number} requests_per_second - The throttle for this request in sub-requests per second. -1 means no throttle.
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL
@@ -85,8 +85,8 @@ function buildDeleteByQuery (opts) {
     'size',
     'sort',
     '_source',
-    '_source_excludes',
-    '_source_includes',
+    '_source_exclude',
+    '_source_include',
     'terminate_after',
     'stats',
     'version',
@@ -113,8 +113,8 @@ function buildDeleteByQuery (opts) {
     expandWildcards: 'expand_wildcards',
     searchType: 'search_type',
     searchTimeout: 'search_timeout',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
     terminateAfter: 'terminate_after',
     requestCache: 'request_cache',
     waitForActiveShards: 'wait_for_active_shards',
@@ -135,6 +135,15 @@ function buildDeleteByQuery (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        deleteByQuery(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

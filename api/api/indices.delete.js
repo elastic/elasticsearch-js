@@ -26,22 +26,16 @@ function buildIndicesDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
+   * Perform a [indices.delete](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index.html) request
    *
    * @param {list} index - A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
    */
 
   const acceptedQuerystring = [
     'timeout',
     'master_timeout',
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -51,9 +45,6 @@ function buildIndicesDelete (opts) {
 
   const snakeCase = {
     masterTimeout: 'master_timeout',
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -68,6 +59,15 @@ function buildIndicesDelete (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesDelete(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

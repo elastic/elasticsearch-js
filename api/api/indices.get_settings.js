@@ -26,11 +26,10 @@ function buildIndicesGetSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.get_settings](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html) request
+   * Perform a [indices.get_settings](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-settings.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} name - The name of the settings that should be included
-   * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -40,7 +39,6 @@ function buildIndicesGetSettings (opts) {
    */
 
   const acceptedQuerystring = [
-    'master_timeout',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
@@ -55,7 +53,6 @@ function buildIndicesGetSettings (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
@@ -75,6 +72,15 @@ function buildIndicesGetSettings (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesGetSettings(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

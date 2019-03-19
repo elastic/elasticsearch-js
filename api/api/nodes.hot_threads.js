@@ -26,7 +26,7 @@ function buildNodesHotThreads (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [nodes.hot_threads](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html) request
+   * Perform a [nodes.hot_threads](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-hot-threads.html) request
    *
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {time} interval - The interval for the second sampling of threads
@@ -67,6 +67,15 @@ function buildNodesHotThreads (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        nodesHotThreads(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

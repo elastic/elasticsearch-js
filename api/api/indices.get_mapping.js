@@ -26,24 +26,20 @@ function buildIndicesGetMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.get_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html) request
+   * Perform a [indices.get_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-mapping.html) request
    *
    * @param {list} index - A comma-separated list of index names
    * @param {list} type - A comma-separated list of document types
-   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
 
   const acceptedQuerystring = [
-    'include_type_name',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
-    'master_timeout',
     'local',
     'pretty',
     'human',
@@ -53,11 +49,9 @@ function buildIndicesGetMapping (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -72,6 +66,15 @@ function buildIndicesGetMapping (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesGetMapping(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

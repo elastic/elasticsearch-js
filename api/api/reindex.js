@@ -26,7 +26,7 @@ function buildReindex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html) request
+   * Perform a [reindex](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html) request
    *
    * @param {boolean} refresh - Should the effected indexes be refreshed?
    * @param {time} timeout - Time each individual bulk request should wait for shards that are unavailable.
@@ -69,6 +69,15 @@ function buildReindex (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        reindex(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,7 +26,7 @@ function buildIndicesRecovery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.recovery](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html) request
+   * Perform a [indices.recovery](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-recovery.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {boolean} detailed - Whether to display detailed information about shard recovery
@@ -59,6 +59,15 @@ function buildIndicesRecovery (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesRecovery(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

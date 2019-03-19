@@ -26,7 +26,7 @@ function buildMtermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [mtermvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
+   * Perform a [mtermvectors](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-termvectors.html) request
    *
    * @param {string} index - The index in which the document resides.
    * @param {string} type - The type of the document.
@@ -85,6 +85,15 @@ function buildMtermvectors (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        mtermvectors(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required url components

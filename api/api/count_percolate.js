@@ -22,26 +22,37 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesClose (opts) {
+function buildCountPercolate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.close](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html) request
+   * Perform a [count_percolate](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html) request
    *
-   * @param {list} index - A comma separated list of indices to close
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
+   * @param {string} index - The index of the document being count percolated.
+   * @param {string} type - The type of the document being count percolated.
+   * @param {string} id - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
+   * @param {list} routing - A comma-separated list of specific routing values
+   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {string} percolate_index - The index to count percolate the document into. Defaults to index.
+   * @param {string} percolate_type - The type to count percolate document into. Defaults to type.
+   * @param {number} version - Explicit version number for concurrency control
+   * @param {enum} version_type - Specific version type
+   * @param {object} body - The count percolator request definition using the percolate DSL
    */
 
   const acceptedQuerystring = [
-    'timeout',
-    'master_timeout',
+    'routing',
+    'preference',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'percolate_index',
+    'percolate_type',
+    'version',
+    'version_type',
     'pretty',
     'human',
     'error_trace',
@@ -50,15 +61,17 @@ function buildIndicesClose (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    percolateIndex: 'percolate_index',
+    percolateType: 'percolate_type',
+    versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
-  return function indicesClose (params, options, callback) {
+  return function countPercolate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -73,7 +86,7 @@ function buildIndicesClose (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        indicesClose(params, options, (err, body) => {
+        countPercolate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -86,9 +99,22 @@ function buildIndicesClose (opts) {
         result
       )
     }
-    if (params.body != null) {
+    if (params['type'] == null) {
       return callback(
-        new ConfigurationError('This API does not require a body'),
+        new ConfigurationError('Missing required parameter: type'),
+        result
+      )
+    }
+
+    // check required url components
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: type, index'),
+        result
+      )
+    } else if (params['type'] != null && (params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -102,11 +128,11 @@ function buildIndicesClose (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, index, type, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -116,13 +142,17 @@ function buildIndicesClose (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_close'
+    if ((index) != null && (type) != null && (id) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_percolate' + '/' + 'count'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_percolate' + '/' + 'count'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 
@@ -157,4 +187,4 @@ function buildIndicesClose (opts) {
   }
 }
 
-module.exports = buildIndicesClose
+module.exports = buildCountPercolate

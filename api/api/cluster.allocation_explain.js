@@ -26,7 +26,7 @@ function buildClusterAllocationExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.allocation_explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html) request
+   * Perform a [cluster.allocation_explain](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-explain.html) request
    *
    * @param {boolean} include_yes_decisions - Return 'YES' decisions in explanation (default: false)
    * @param {boolean} include_disk_info - Return information about disk usage and shard sizes (default: false)
@@ -60,6 +60,15 @@ function buildClusterAllocationExplain (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterAllocationExplain(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

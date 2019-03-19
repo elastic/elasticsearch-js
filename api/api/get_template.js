@@ -22,29 +22,16 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatRepositories (opts) {
+function buildGetTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.repositories](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.html) request
+   * Perform a [get_template](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html) request
    *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} local - Return local information, do not retrieve the state from master node
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
+   * @param {string} id - Template ID
    */
 
   const acceptedQuerystring = [
-    'format',
-    'local',
-    'master_timeout',
-    'h',
-    'help',
-    's',
-    'v',
     'pretty',
     'human',
     'error_trace',
@@ -53,12 +40,11 @@ function buildCatRepositories (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
-  return function catRepositories (params, options, callback) {
+  return function getTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -73,13 +59,19 @@ function buildCatRepositories (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catRepositories(params, options, (err, body) => {
+        getTemplate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
+    if (params['id'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: id'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -96,8 +88,8 @@ function buildCatRepositories (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
       method = 'GET'
@@ -110,7 +102,7 @@ function buildCatRepositories (opts) {
 
     var path = ''
 
-    path = '/' + '_cat' + '/' + 'repositories'
+    path = '/' + '_search' + '/' + 'template' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -151,4 +143,4 @@ function buildCatRepositories (opts) {
   }
 }
 
-module.exports = buildCatRepositories
+module.exports = buildGetTemplate

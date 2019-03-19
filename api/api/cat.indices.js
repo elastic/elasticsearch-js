@@ -26,7 +26,7 @@ function buildCatIndices (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
+   * Perform a [cat.indices](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-indices.html) request
    *
    * @param {list} index - A comma-separated list of index names to limit the returned information
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
@@ -75,6 +75,15 @@ function buildCatIndices (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catIndices(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,7 +26,7 @@ function buildClusterPendingTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.pending_tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html) request
+   * Perform a [cluster.pending_tasks](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-pending.html) request
    *
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {time} master_timeout - Specify timeout for connection to master
@@ -58,6 +58,15 @@ function buildClusterPendingTasks (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterPendingTasks(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

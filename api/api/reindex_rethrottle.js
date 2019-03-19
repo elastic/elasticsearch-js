@@ -26,7 +26,7 @@ function buildReindexRethrottle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [reindex_rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html) request
+   * Perform a [reindex_rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html) request
    *
    * @param {string} task_id - The task id to rethrottle
    * @param {number} requests_per_second - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
@@ -59,13 +59,16 @@ function buildReindexRethrottle (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['task_id'] == null && params['taskId'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: task_id or taskId'),
-        result
-      )
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        reindexRethrottle(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
+
+    // check required parameters
     if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond'),
@@ -102,7 +105,13 @@ function buildReindexRethrottle (opts) {
 
     var path = ''
 
-    path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    if ((task_id || taskId) != null) {
+      path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    } else if ((task_id || taskId) != null) {
+      path = '/' + '_update_by_query' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    } else {
+      path = '/' + '_delete_by_query' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    }
 
     // build request object
     const request = {

@@ -26,7 +26,7 @@ function buildDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html) request
+   * Perform a [delete](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html) request
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
@@ -36,8 +36,6 @@ function buildDelete (opts) {
    * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
-   * @param {number} if_seq_no - only perform the delete operation if the last operation that has changed the document has the specified sequence number
-   * @param {number} if_primary_term - only perform the delete operation if the last operation that has changed the document has the specified primary term
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
@@ -48,8 +46,6 @@ function buildDelete (opts) {
     'refresh',
     'routing',
     'timeout',
-    'if_seq_no',
-    'if_primary_term',
     'version',
     'version_type',
     'pretty',
@@ -61,8 +57,6 @@ function buildDelete (opts) {
 
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -80,6 +74,15 @@ function buildDelete (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        _delete(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -93,6 +96,12 @@ function buildDelete (opts) {
         result
       )
     }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
@@ -101,7 +110,12 @@ function buildDelete (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: type, index'),
+        result
+      )
+    } else if (params['type'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
         result
@@ -131,11 +145,7 @@ function buildDelete (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

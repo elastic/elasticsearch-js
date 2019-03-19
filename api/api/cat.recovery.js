@@ -26,7 +26,7 @@ function buildCatRecovery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.recovery](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html) request
+   * Perform a [cat.recovery](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-recovery.html) request
    *
    * @param {list} index - A comma-separated list of index names to limit the returned information
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
@@ -69,6 +69,15 @@ function buildCatRecovery (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catRecovery(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

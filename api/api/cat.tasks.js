@@ -26,12 +26,13 @@ function buildCatTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+   * Perform a [cat.tasks](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html) request
    *
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {list} actions - A comma-separated list of actions that should be returned. Leave empty to return all.
    * @param {boolean} detailed - Return detailed task information (default: false)
+   * @param {string} parent_node - Return tasks with specified parent node.
    * @param {number} parent_task - Return tasks with specified parent task id. Set to -1 to return all.
    * @param {list} h - Comma-separated list of column names to display
    * @param {boolean} help - Return help information
@@ -44,6 +45,7 @@ function buildCatTasks (opts) {
     'node_id',
     'actions',
     'detailed',
+    'parent_node',
     'parent_task',
     'h',
     'help',
@@ -58,6 +60,7 @@ function buildCatTasks (opts) {
 
   const snakeCase = {
     nodeId: 'node_id',
+    parentNode: 'parent_node',
     parentTask: 'parent_task',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -73,6 +76,15 @@ function buildCatTasks (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catTasks(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

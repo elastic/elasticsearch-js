@@ -26,7 +26,7 @@ function buildBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
+   * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html) request
    *
    * @param {string} index - Default index for items which don't provide one
    * @param {string} type - Default document type for items which don't provide one
@@ -35,9 +35,10 @@ function buildBulk (opts) {
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
    * @param {string} type - Default document type for items which don't provide one
+   * @param {list} fields - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
    * @param {list} _source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
-   * @param {list} _source_excludes - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
-   * @param {list} _source_includes - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
+   * @param {list} _source_exclude - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
+   * @param {list} _source_include - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The operation definition and data (action-data pairs), separated by newlines
    */
@@ -48,9 +49,10 @@ function buildBulk (opts) {
     'routing',
     'timeout',
     'type',
+    'fields',
     '_source',
-    '_source_excludes',
-    '_source_includes',
+    '_source_exclude',
+    '_source_include',
     'pipeline',
     'pretty',
     'human',
@@ -61,8 +63,8 @@ function buildBulk (opts) {
 
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -77,6 +79,15 @@ function buildBulk (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        bulk(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

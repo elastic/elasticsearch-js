@@ -26,7 +26,7 @@ function buildSnapshotDeleteRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [snapshot.delete_repository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+   * Perform a [snapshot.delete_repository](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html) request
    *
    * @param {list} repository - A comma-separated list of repository names
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
@@ -59,6 +59,15 @@ function buildSnapshotDeleteRepository (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        snapshotDeleteRepository(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

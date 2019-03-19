@@ -26,7 +26,7 @@ function buildExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html) request
+   * Perform a [explain](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-explain.html) request
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
@@ -42,8 +42,8 @@ function buildExplain (opts) {
    * @param {string} q - Query in the Lucene query string syntax
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
+   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
+   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {object} body - The query definition using the Query DSL
    */
 
@@ -59,8 +59,8 @@ function buildExplain (opts) {
     'q',
     'routing',
     '_source',
-    '_source_excludes',
-    '_source_includes',
+    '_source_exclude',
+    '_source_include',
     'pretty',
     'human',
     'error_trace',
@@ -72,8 +72,8 @@ function buildExplain (opts) {
     analyzeWildcard: 'analyze_wildcard',
     defaultOperator: 'default_operator',
     storedFields: 'stored_fields',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -90,6 +90,15 @@ function buildExplain (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        explain(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -100,6 +109,12 @@ function buildExplain (opts) {
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -127,11 +142,7 @@ function buildExplain (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_explain'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_explain'
 
     // build request object
     const request = {

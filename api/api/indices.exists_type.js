@@ -26,7 +26,7 @@ function buildIndicesExistsType (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.exists_type](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html) request
+   * Perform a [indices.exists_type](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-types-exists.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` to check the types across all indices
    * @param {list} type - A comma-separated list of document types to check
@@ -66,6 +66,15 @@ function buildIndicesExistsType (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesExistsType(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,11 +26,10 @@ function buildIndicesShrink (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.shrink](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html) request
+   * Perform a [indices.shrink](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index.html) request
    *
    * @param {string} index - The name of the source index to shrink
    * @param {string} target - The name of the target index to shrink into
-   * @param {boolean} copy_settings - whether or not to copy settings from the source index (defaults to false)
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the shrunken index before the operation returns.
@@ -38,7 +37,6 @@ function buildIndicesShrink (opts) {
    */
 
   const acceptedQuerystring = [
-    'copy_settings',
     'timeout',
     'master_timeout',
     'wait_for_active_shards',
@@ -50,7 +48,6 @@ function buildIndicesShrink (opts) {
   ]
 
   const snakeCase = {
-    copySettings: 'copy_settings',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',
     errorTrace: 'error_trace',
@@ -67,6 +64,15 @@ function buildIndicesShrink (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesShrink(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,7 +26,7 @@ function buildIndicesOpen (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.open](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
+   * Perform a [indices.open](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html) request
    *
    * @param {list} index - A comma separated list of indices to open
    * @param {time} timeout - Explicit operation timeout
@@ -34,7 +34,6 @@ function buildIndicesOpen (opts) {
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
    */
 
   const acceptedQuerystring = [
@@ -43,7 +42,6 @@ function buildIndicesOpen (opts) {
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
-    'wait_for_active_shards',
     'pretty',
     'human',
     'error_trace',
@@ -56,7 +54,6 @@ function buildIndicesOpen (opts) {
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
-    waitForActiveShards: 'wait_for_active_shards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -71,6 +68,15 @@ function buildIndicesOpen (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesOpen(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

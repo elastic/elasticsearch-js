@@ -26,7 +26,7 @@ function buildCatHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html) request
+   * Perform a [cat.health](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-health.html) request
    *
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
@@ -70,6 +70,15 @@ function buildCatHealth (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catHealth(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

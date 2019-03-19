@@ -26,7 +26,7 @@ function buildCatNodes (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.nodes](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html) request
+   * Perform a [cat.nodes](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodes.html) request
    *
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
    * @param {boolean} full_id - Return the full node ID instead of the shortened version (default: false)
@@ -71,6 +71,15 @@ function buildCatNodes (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catNodes(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

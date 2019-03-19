@@ -26,17 +26,19 @@ function buildTasksCancel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+   * Perform a [tasks.cancel](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html) request
    *
    * @param {string} task_id - Cancel the task with specified task id (node_id:task_number)
    * @param {list} nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {list} actions - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
+   * @param {string} parent_node - Cancel tasks with specified parent node.
    * @param {string} parent_task_id - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
    */
 
   const acceptedQuerystring = [
     'nodes',
     'actions',
+    'parent_node',
     'parent_task_id',
     'pretty',
     'human',
@@ -46,6 +48,7 @@ function buildTasksCancel (opts) {
   ]
 
   const snakeCase = {
+    parentNode: 'parent_node',
     parentTaskId: 'parent_task_id',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -61,6 +64,15 @@ function buildTasksCancel (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        tasksCancel(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,7 +26,7 @@ function buildIngestDeletePipeline (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [ingest.delete_pipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+   * Perform a [ingest.delete_pipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html) request
    *
    * @param {string} id - Pipeline ID
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
@@ -59,6 +59,15 @@ function buildIngestDeletePipeline (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        ingestDeletePipeline(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

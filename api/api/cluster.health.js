@@ -26,7 +26,7 @@ function buildClusterHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
+   * Perform a [cluster.health](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-health.html) request
    *
    * @param {list} index - Limit the information returned to a specific index
    * @param {enum} level - Specify the level of detail for returned information
@@ -37,7 +37,6 @@ function buildClusterHealth (opts) {
    * @param {string} wait_for_nodes - Wait until the specified number of nodes is available
    * @param {enum} wait_for_events - Wait until all currently queued events with the given priority are processed
    * @param {boolean} wait_for_no_relocating_shards - Whether to wait until there are no relocating shards in the cluster
-   * @param {boolean} wait_for_no_initializing_shards - Whether to wait until there are no initializing shards in the cluster
    * @param {enum} wait_for_status - Wait until cluster is in a specific state
    */
 
@@ -50,7 +49,6 @@ function buildClusterHealth (opts) {
     'wait_for_nodes',
     'wait_for_events',
     'wait_for_no_relocating_shards',
-    'wait_for_no_initializing_shards',
     'wait_for_status',
     'pretty',
     'human',
@@ -65,7 +63,6 @@ function buildClusterHealth (opts) {
     waitForNodes: 'wait_for_nodes',
     waitForEvents: 'wait_for_events',
     waitForNoRelocatingShards: 'wait_for_no_relocating_shards',
-    waitForNoInitializingShards: 'wait_for_no_initializing_shards',
     waitForStatus: 'wait_for_status',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -81,6 +78,15 @@ function buildClusterHealth (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterHealth(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

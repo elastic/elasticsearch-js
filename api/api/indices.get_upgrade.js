@@ -26,7 +26,7 @@ function buildIndicesGetUpgrade (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.get_upgrade](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
+   * Perform a [indices.get_upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -63,6 +63,15 @@ function buildIndicesGetUpgrade (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesGetUpgrade(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,11 +26,10 @@ function buildIndicesPutSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.put_settings](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html) request
+   * Perform a [indices.put_settings](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-update-settings.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {time} timeout - Explicit operation timeout
    * @param {boolean} preserve_existing - Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -41,7 +40,6 @@ function buildIndicesPutSettings (opts) {
 
   const acceptedQuerystring = [
     'master_timeout',
-    'timeout',
     'preserve_existing',
     'ignore_unavailable',
     'allow_no_indices',
@@ -75,6 +73,15 @@ function buildIndicesPutSettings (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesPutSettings(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

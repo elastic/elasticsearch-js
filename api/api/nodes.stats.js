@@ -26,7 +26,7 @@ function buildNodesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [nodes.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html) request
+   * Perform a [nodes.stats](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-stats.html) request
    *
    * @param {list} metric - Limit the information returned to the specified metrics
    * @param {list} index_metric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
@@ -75,6 +75,15 @@ function buildNodesStats (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        nodesStats(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

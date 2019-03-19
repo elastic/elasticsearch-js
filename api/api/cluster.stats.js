@@ -26,7 +26,7 @@ function buildClusterStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html) request
+   * Perform a [cluster.stats](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html) request
    *
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
@@ -59,6 +59,15 @@ function buildClusterStats (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterStats(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

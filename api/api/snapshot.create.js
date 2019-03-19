@@ -26,7 +26,7 @@ function buildSnapshotCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [snapshot.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+   * Perform a [snapshot.create](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html) request
    *
    * @param {string} repository - A repository name
    * @param {string} snapshot - A snapshot name
@@ -62,6 +62,15 @@ function buildSnapshotCreate (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        snapshotCreate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

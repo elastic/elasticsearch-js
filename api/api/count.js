@@ -26,12 +26,11 @@ function buildCount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [count](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html) request
+   * Perform a [count](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-count.html) request
    *
    * @param {list} index - A comma-separated list of indices to restrict the results
    * @param {list} type - A comma-separated list of types to restrict the results
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} ignore_throttled - Whether specified concrete, expanded or aliased indices should be ignored when throttled
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {number} min_score - Include only documents with a specific `_score` value in the result
@@ -49,7 +48,6 @@ function buildCount (opts) {
 
   const acceptedQuerystring = [
     'ignore_unavailable',
-    'ignore_throttled',
     'allow_no_indices',
     'expand_wildcards',
     'min_score',
@@ -71,7 +69,6 @@ function buildCount (opts) {
 
   const snakeCase = {
     ignoreUnavailable: 'ignore_unavailable',
-    ignoreThrottled: 'ignore_throttled',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
     minScore: 'min_score',
@@ -92,6 +89,15 @@ function buildCount (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        count(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required url components

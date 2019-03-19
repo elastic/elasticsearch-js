@@ -26,7 +26,7 @@ function buildIndicesExistsAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.exists_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
+   * Perform a [indices.exists_alias](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html) request
    *
    * @param {list} index - A comma-separated list of index names to filter aliases
    * @param {list} name - A comma-separated list of alias names to return
@@ -68,13 +68,16 @@ function buildIndicesExistsAlias (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['name'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: name'),
-        result
-      )
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesExistsAlias(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
+
+    // check required parameters
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),

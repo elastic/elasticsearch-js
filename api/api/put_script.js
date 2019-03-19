@@ -26,20 +26,18 @@ function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [put_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+   * Perform a [put_script](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html) request
    *
    * @param {string} id - Script ID
-   * @param {string} context - Script context
+   * @param {string} lang - Script language
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {string} context - Context name to compile script against
    * @param {object} body - The document
    */
 
   const acceptedQuerystring = [
     'timeout',
     'master_timeout',
-    'context',
     'pretty',
     'human',
     'error_trace',
@@ -65,10 +63,25 @@ function buildPutScript (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        putScript(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: id'),
+        result
+      )
+    }
+    if (params['lang'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: lang'),
         result
       )
     }
@@ -80,9 +93,9 @@ function buildPutScript (opts) {
     }
 
     // check required url components
-    if (params['context'] != null && (params['id'] == null)) {
+    if (params['id'] != null && (params['lang'] == null)) {
       return callback(
-        new ConfigurationError('Missing required parameter of the url: id'),
+        new ConfigurationError('Missing required parameter of the url: lang'),
         result
       )
     }
@@ -96,8 +109,8 @@ function buildPutScript (opts) {
     }
 
     var warnings = null
-    var { method, body, id, context } = params
-    var querystring = semicopy(params, ['method', 'body', 'id', 'context'])
+    var { method, body, id, lang } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'lang'])
 
     if (method == null) {
       method = 'PUT'
@@ -110,10 +123,10 @@ function buildPutScript (opts) {
 
     var path = ''
 
-    if ((id) != null && (context) != null) {
-      path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context)
+    if ((lang) != null && (id) != null) {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(lang) + '/' + encodeURIComponent(id)
     } else {
-      path = '/' + '_scripts' + '/' + encodeURIComponent(id)
+      path = '/' + '_scripts' + '/' + encodeURIComponent(lang)
     }
 
     // build request object

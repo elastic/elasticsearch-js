@@ -26,14 +26,13 @@ function buildGetScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [get_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+   * Perform a [get_script](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html) request
    *
    * @param {string} id - Script ID
-   * @param {time} master_timeout - Specify timeout for connection to master
+   * @param {string} lang - Script language
    */
 
   const acceptedQuerystring = [
-    'master_timeout',
     'pretty',
     'human',
     'error_trace',
@@ -42,7 +41,6 @@ function buildGetScript (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -59,6 +57,15 @@ function buildGetScript (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        getScript(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -66,9 +73,23 @@ function buildGetScript (opts) {
         result
       )
     }
+    if (params['lang'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: lang'),
+        result
+      )
+    }
     if (params.body != null) {
       return callback(
         new ConfigurationError('This API does not require a body'),
+        result
+      )
+    }
+
+    // check required url components
+    if (params['id'] != null && (params['lang'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: lang'),
         result
       )
     }
@@ -82,8 +103,8 @@ function buildGetScript (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body, id, lang } = params
+    var querystring = semicopy(params, ['method', 'body', 'id', 'lang'])
 
     if (method == null) {
       method = 'GET'
@@ -96,7 +117,11 @@ function buildGetScript (opts) {
 
     var path = ''
 
-    path = '/' + '_scripts' + '/' + encodeURIComponent(id)
+    if ((lang) != null && (id) != null) {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(lang) + '/' + encodeURIComponent(id)
+    } else {
+      path = '/' + '_scripts' + '/' + encodeURIComponent(lang)
+    }
 
     // build request object
     const request = {

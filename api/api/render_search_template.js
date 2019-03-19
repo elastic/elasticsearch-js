@@ -26,7 +26,7 @@ function buildRenderSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+   * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html) request
    *
    * @param {string} id - The id of the stored search template
    * @param {object} body - The search definition template and its params
@@ -55,6 +55,15 @@ function buildRenderSearchTemplate (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        renderSearchTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

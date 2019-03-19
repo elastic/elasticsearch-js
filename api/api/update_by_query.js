@@ -26,7 +26,7 @@ function buildUpdateByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [update_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
+   * Perform a [update_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
@@ -50,8 +50,8 @@ function buildUpdateByQuery (opts) {
    * @param {number} size - Number of hits to return (default: 10)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
+   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
+   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
    * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
    * @param {boolean} version - Specify whether to return document version as part of a hit
@@ -60,7 +60,7 @@ function buildUpdateByQuery (opts) {
    * @param {boolean} refresh - Should the effected indexes be refreshed?
    * @param {time} timeout - Time each individual bulk request should wait for shards that are unavailable.
    * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {number} scroll_size - Size on the scroll request powering the update by query
+   * @param {number} scroll_size - Size on the scroll request powering the update_by_query
    * @param {boolean} wait_for_completion - Should the request should block until the update by query operation is complete.
    * @param {number} requests_per_second - The throttle to set on this request in sub-requests per second. -1 means no throttle.
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
@@ -88,8 +88,8 @@ function buildUpdateByQuery (opts) {
     'size',
     'sort',
     '_source',
-    '_source_excludes',
-    '_source_includes',
+    '_source_exclude',
+    '_source_include',
     'terminate_after',
     'stats',
     'version',
@@ -117,8 +117,8 @@ function buildUpdateByQuery (opts) {
     expandWildcards: 'expand_wildcards',
     searchType: 'search_type',
     searchTimeout: 'search_timeout',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
     terminateAfter: 'terminate_after',
     versionType: 'version_type',
     requestCache: 'request_cache',
@@ -140,6 +140,15 @@ function buildUpdateByQuery (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        updateByQuery(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

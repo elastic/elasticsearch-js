@@ -26,15 +26,35 @@ function buildIndicesAnalyze (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.analyze](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
+   * Perform a [indices.analyze](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-analyze.html) request
    *
    * @param {string} index - The name of the index to scope the operation
+   * @param {string} analyzer - The name of the analyzer to use
+   * @param {list} char_filter - A comma-separated list of character filters to use for the analysis
+   * @param {string} field - Use the analyzer configured for this field (instead of passing the analyzer name)
+   * @param {list} filter - A comma-separated list of filters to use for the analysis
    * @param {string} index - The name of the index to scope the operation
-   * @param {object} body - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
+   * @param {boolean} prefer_local - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+   * @param {list} text - The text on which the analysis should be performed (when request body is not used)
+   * @param {string} tokenizer - The name of the tokenizer to use for the analysis
+   * @param {boolean} explain - With `true`, outputs more advanced details. (default: false)
+   * @param {list} attributes - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
+   * @param {enum} format - Format of the output
+   * @param {object} body - The text on which the analysis should be performed
    */
 
   const acceptedQuerystring = [
+    'analyzer',
+    'char_filter',
+    'field',
+    'filter',
     'index',
+    'prefer_local',
+    'text',
+    'tokenizer',
+    'explain',
+    'attributes',
+    'format',
     'pretty',
     'human',
     'error_trace',
@@ -43,6 +63,8 @@ function buildIndicesAnalyze (opts) {
   ]
 
   const snakeCase = {
+    charFilter: 'char_filter',
+    preferLocal: 'prefer_local',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -57,6 +79,15 @@ function buildIndicesAnalyze (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesAnalyze(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object

@@ -22,29 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatRepositories (opts) {
+function buildMpercolate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.repositories](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.html) request
+   * Perform a [mpercolate](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html) request
    *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} local - Return local information, do not retrieve the state from master node
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
+   * @param {string} index - The index of the document being count percolated to use as default
+   * @param {string} type - The type of the document being percolated to use as default.
+   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {object} body - The percolate request definitions (header & body pair), separated by newlines
    */
 
   const acceptedQuerystring = [
-    'format',
-    'local',
-    'master_timeout',
-    'h',
-    'help',
-    's',
-    'v',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -53,12 +48,14 @@ function buildCatRepositories (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
-  return function catRepositories (params, options, callback) {
+  return function mpercolate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -73,16 +70,24 @@ function buildCatRepositories (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        catRepositories(params, options, (err, body) => {
+        mpercolate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
+    if (params['body'] == null) {
       return callback(
-        new ConfigurationError('This API does not require a body'),
+        new ConfigurationError('Missing required parameter: body'),
+        result
+      )
+    }
+
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
     }
@@ -96,11 +101,11 @@ function buildCatRepositories (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
 
     if (method == null) {
-      method = 'GET'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -110,13 +115,19 @@ function buildCatRepositories (opts) {
 
     var path = ''
 
-    path = '/' + '_cat' + '/' + 'repositories'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mpercolate'
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mpercolate'
+    } else {
+      path = '/' + '_mpercolate'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -151,4 +162,4 @@ function buildCatRepositories (opts) {
   }
 }
 
-module.exports = buildCatRepositories
+module.exports = buildMpercolate

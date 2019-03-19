@@ -26,7 +26,7 @@ function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
+   * Perform a [create](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html) request
    *
    * @param {string} id - Document ID
    * @param {string} index - The name of the index
@@ -36,6 +36,8 @@ function buildCreate (opts) {
    * @param {enum} refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
+   * @param {time} timestamp - Explicit timestamp for the document
+   * @param {time} ttl - Expiration time for the document
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
@@ -48,6 +50,8 @@ function buildCreate (opts) {
     'refresh',
     'routing',
     'timeout',
+    'timestamp',
+    'ttl',
     'version',
     'version_type',
     'pipeline',
@@ -77,6 +81,15 @@ function buildCreate (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        create(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -87,6 +100,12 @@ function buildCreate (opts) {
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -120,11 +139,7 @@ function buildCreate (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
 
     // build request object
     const request = {

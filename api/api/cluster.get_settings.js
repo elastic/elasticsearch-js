@@ -26,7 +26,7 @@ function buildClusterGetSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cluster.get_settings](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html) request
+   * Perform a [cluster.get_settings](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html) request
    *
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
@@ -64,6 +64,15 @@ function buildClusterGetSettings (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        clusterGetSettings(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

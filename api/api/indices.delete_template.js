@@ -26,7 +26,7 @@ function buildIndicesDeleteTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.delete_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
+   * Perform a [indices.delete_template](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html) request
    *
    * @param {string} name - The name of the template
    * @param {time} timeout - Explicit operation timeout
@@ -59,6 +59,15 @@ function buildIndicesDeleteTemplate (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesDeleteTemplate(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

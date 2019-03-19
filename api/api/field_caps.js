@@ -26,13 +26,14 @@ function buildFieldCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [field_caps](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html) request
+   * Perform a [field_caps](http://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-caps.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} fields - A comma-separated list of field names
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {object} body - Field json objects containing an array of field names
    */
 
   const acceptedQuerystring = [
@@ -67,12 +68,13 @@ function buildFieldCaps (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        fieldCaps(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // validate headers object
@@ -108,7 +110,7 @@ function buildFieldCaps (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

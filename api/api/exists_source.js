@@ -30,15 +30,15 @@ function buildExistsSource (opts) {
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
-   * @param {string} type - The type of the document; deprecated and optional starting with 7.0
+   * @param {string} type - The type of the document; use `_all` to fetch the first document matching the ID across all types
    * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
+   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
+   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
@@ -50,8 +50,8 @@ function buildExistsSource (opts) {
     'refresh',
     'routing',
     '_source',
-    '_source_excludes',
-    '_source_includes',
+    '_source_exclude',
+    '_source_include',
     'version',
     'version_type',
     'pretty',
@@ -62,8 +62,8 @@ function buildExistsSource (opts) {
   ]
 
   const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
+    _sourceExclude: '_source_exclude',
+    _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -81,6 +81,15 @@ function buildExistsSource (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        existsSource(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -91,6 +100,12 @@ function buildExistsSource (opts) {
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -137,11 +152,7 @@ function buildExistsSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
 
     // build request object
     const request = {

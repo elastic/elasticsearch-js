@@ -26,7 +26,7 @@ function buildIndicesUpdateAliases (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.update_aliases](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
+   * Perform a [indices.update_aliases](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html) request
    *
    * @param {time} timeout - Request timeout
    * @param {time} master_timeout - Specify timeout for connection to master
@@ -59,6 +59,15 @@ function buildIndicesUpdateAliases (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesUpdateAliases(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

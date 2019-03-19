@@ -26,7 +26,7 @@ function buildIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [index](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
+   * Perform a [index](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html) request
    *
    * @param {string} id - Document ID
    * @param {string} index - The name of the index
@@ -37,10 +37,10 @@ function buildIndex (opts) {
    * @param {enum} refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
+   * @param {time} timestamp - Explicit timestamp for the document
+   * @param {time} ttl - Expiration time for the document
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
-   * @param {number} if_seq_no - only perform the index operation if the last operation that has changed the document has the specified sequence number
-   * @param {number} if_primary_term - only perform the index operation if the last operation that has changed the document has the specified primary term
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The document
    */
@@ -52,10 +52,10 @@ function buildIndex (opts) {
     'refresh',
     'routing',
     'timeout',
+    'timestamp',
+    'ttl',
     'version',
     'version_type',
-    'if_seq_no',
-    'if_primary_term',
     'pipeline',
     'pretty',
     'human',
@@ -68,8 +68,6 @@ function buildIndex (opts) {
     waitForActiveShards: 'wait_for_active_shards',
     opType: 'op_type',
     versionType: 'version_type',
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
@@ -86,10 +84,25 @@ function buildIndex (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        _index(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -101,7 +114,12 @@ function buildIndex (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
+      return callback(
+        new ConfigurationError('Missing required parameter of the url: type, index'),
+        result
+      )
+    } else if (params['type'] != null && (params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: index'),
         result
@@ -133,12 +151,8 @@ function buildIndex (opts) {
 
     if ((index) != null && (type) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     }
 
     // build request object

@@ -26,11 +26,10 @@ function buildIndicesRollover (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
+   * Perform a [indices.rollover](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-index.html) request
    *
    * @param {string} alias - The name of the alias to rollover
    * @param {string} new_index - The name of the rollover index
-   * @param {boolean} include_type_name - Whether a type should be included in the body of the mappings.
    * @param {time} timeout - Explicit operation timeout
    * @param {boolean} dry_run - If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
    * @param {time} master_timeout - Specify timeout for connection to master
@@ -39,7 +38,6 @@ function buildIndicesRollover (opts) {
    */
 
   const acceptedQuerystring = [
-    'include_type_name',
     'timeout',
     'dry_run',
     'master_timeout',
@@ -52,7 +50,6 @@ function buildIndicesRollover (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     dryRun: 'dry_run',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',
@@ -70,6 +67,15 @@ function buildIndicesRollover (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        indicesRollover(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

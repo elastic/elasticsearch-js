@@ -26,7 +26,7 @@ function buildGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [get](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
+   * Perform a [get](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html) request
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
@@ -38,8 +38,6 @@ function buildGet (opts) {
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
    * @param {string} routing - Specific routing value
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
    * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
@@ -54,8 +52,6 @@ function buildGet (opts) {
     'refresh',
     'routing',
     '_source',
-    '_source_excludes',
-    '_source_includes',
     '_source_exclude',
     '_source_include',
     'version',
@@ -69,8 +65,6 @@ function buildGet (opts) {
 
   const snakeCase = {
     storedFields: 'stored_fields',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
     _sourceExclude: '_source_exclude',
     _sourceInclude: '_source_include',
     versionType: 'version_type',
@@ -90,6 +84,15 @@ function buildGet (opts) {
       options = {}
     }
 
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        get(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
+    }
+
     // check required parameters
     if (params['id'] == null) {
       return callback(
@@ -100,6 +103,12 @@ function buildGet (opts) {
     if (params['index'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: index'),
+        result
+      )
+    }
+    if (params['type'] == null) {
+      return callback(
+        new ConfigurationError('Missing required parameter: type'),
         result
       )
     }
@@ -133,11 +142,7 @@ function buildGet (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

@@ -26,7 +26,7 @@ function buildCatTemplates (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [cat.templates](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html) request
+   * Perform a [cat.templates](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-templates.html) request
    *
    * @param {string} name - A pattern that returned template names must match
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
@@ -69,6 +69,15 @@ function buildCatTemplates (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        catTemplates(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters

@@ -26,7 +26,7 @@ function buildPing (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [ping](http://www.elastic.co/guide/) request
+   * Perform a [ping](https://www.elastic.co/guide/) request
    *
    */
 
@@ -53,6 +53,15 @@ function buildPing (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // promises support
+    if (callback == null) {
+      return new Promise((resolve, reject) => {
+        ping(params, options, (err, body) => {
+          err ? reject(err) : resolve(body)
+        })
+      })
     }
 
     // check required parameters
