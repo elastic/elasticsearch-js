@@ -29,10 +29,11 @@ function buildDataFrameStartDataFrameTransform (opts) {
    * Perform a [data_frame.start_data_frame_transform](TODO) request
    *
    * @param {string} transform_id - The id of the transform to start
+   * @param {time} timeout - Controls the time to wait for the transform to start
    */
 
   const acceptedQuerystring = [
-
+    'timeout'
   ]
 
   const snakeCase = {

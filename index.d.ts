@@ -329,9 +329,6 @@ declare class Client extends EventEmitter {
   mget: ApiMethod<RequestParams.Mget>
   migration: {
     deprecations: ApiMethod<RequestParams.MigrationDeprecations>
-    get_assistance: ApiMethod<RequestParams.MigrationGetAssistance>
-    getAssistance: ApiMethod<RequestParams.MigrationGetAssistance>
-    upgrade: ApiMethod<RequestParams.MigrationUpgrade>
   }
   ml: {
     close_job: ApiMethod<RequestParams.MlCloseJob>

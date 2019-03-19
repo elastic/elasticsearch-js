@@ -254,10 +254,7 @@ function ESAPI (opts) {
     },
     mget: lazyLoad('mget', opts),
     migration: {
-      deprecations: lazyLoad('migration.deprecations', opts),
-      get_assistance: lazyLoad('migration.get_assistance', opts),
-      getAssistance: lazyLoad('migration.get_assistance', opts),
-      upgrade: lazyLoad('migration.upgrade', opts)
+      deprecations: lazyLoad('migration.deprecations', opts)
     },
     ml: {
       close_job: lazyLoad('ml.close_job', opts),

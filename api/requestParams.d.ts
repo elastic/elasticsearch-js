@@ -1400,6 +1400,7 @@ export interface DataFramePutDataFrameTransform extends Generic {
 
 export interface DataFrameStartDataFrameTransform extends Generic {
   transform_id: string;
+  timeout?: string;
 }
 
 export interface DataFrameStopDataFrameTransform extends Generic {
@@ -1504,18 +1505,6 @@ export interface LicensePostStartTrial extends Generic {
 
 export interface MigrationDeprecations extends Generic {
   index?: string;
-}
-
-export interface MigrationGetAssistance extends Generic {
-  index?: string | string[];
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
-  ignore_unavailable?: boolean;
-}
-
-export interface MigrationUpgrade extends Generic {
-  index: string;
-  wait_for_completion?: boolean;
 }
 
 export interface MlCloseJob extends Generic {
