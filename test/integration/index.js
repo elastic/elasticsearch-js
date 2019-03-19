@@ -34,6 +34,15 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
+  // fails with ES5 with x-pack enabled
+  'cat.shards/10_basic.yaml',
+  // fails with ES5,`repository` is a required field
+  'cat.snapshots/10_basic.yaml',
+  // fails with ES5 with x-pack enabled
+  'cat.templates/10_basic.yaml',
+  'get_source/55_parent_with_routing.yaml',
+  'search/10_source_filtering.yaml',
+  'delete/50_refresh.yaml',
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml',
@@ -91,7 +100,7 @@ function Runner (opts) {
 Runner.prototype.waitCluster = function (callback, times = 0) {
   this.log.text = 'Waiting for ElasticSearch'
   this.client.cluster.health(
-    { waitForStatus: 'green', timeout: '50s' },
+    { waitForStatus: 'yellow', timeout: '50s' },
     (err, res) => {
       if (++times < 10) {
         setTimeout(() => {
