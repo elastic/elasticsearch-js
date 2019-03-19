@@ -62,7 +62,12 @@ function start (opts) {
     }
 
     const apiFolderContents = readdirSync(apiFolder)
-    const xPackFolderContents = readdirSync(xPackFolder)
+    var xPackFolderContents = []
+    try {
+      xPackFolderContents = readdirSync(xPackFolder)
+    } catch (err) {
+      xPackFolderContents = []
+    }
 
     apiFolderContents.forEach(generateApiFile(apiFolder, log))
     xPackFolderContents.forEach(generateApiFile(xPackFolder, log))

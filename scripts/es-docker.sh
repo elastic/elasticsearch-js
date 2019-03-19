@@ -6,6 +6,7 @@ exec docker run \
   -e "path.repo=/tmp" \
   -e "repositories.url.allowed_urls=http://snapshot.*" \
   -e "discovery.type=single-node" \
+  -e "xpack.security.enabled=false" \
   -p 9200:9200 \
   --network=elastic \
   --name=elasticsearch \
