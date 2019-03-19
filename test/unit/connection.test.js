@@ -681,7 +681,16 @@ test('Util.inspect Connection class should hide agent and ssl', t => {
     headers: { foo: 'bar' }
   })
 
-  t.strictEqual(inspect(connection), `{ url:
+  // Removes spaces and new lines because
+  // utils.inspect is handled differently
+  // between major versions of Node.js
+  function cleanStr (str) {
+    return str
+      .replace(/\s/g, '')
+      .replace(/(\r\n|\n|\r)/gm, '')
+  }
+
+  t.strictEqual(cleanStr(inspect(connection)), cleanStr(`{ url:
    URL {
      href: 'http://localhost:9200/',
      origin: 'http://localhost:9200',
@@ -701,6 +710,6 @@ test('Util.inspect Connection class should hide agent and ssl', t => {
   resurrectTimeout: 0,
   _openRequests: 0,
   status: 'alive',
-  roles: { master: true, data: true, ingest: true, ml: false } }`
+  roles: { master: true, data: true, ingest: true, ml: false } }`)
   )
 })
