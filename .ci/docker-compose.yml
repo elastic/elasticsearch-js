@@ -22,7 +22,7 @@ services:
       - elasticsearch-oss
 
   elasticsearch-oss:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.6.2}
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION:-6.6.2}
     volumes:
       - esvol:/tmp
     networks:
