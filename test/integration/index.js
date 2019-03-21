@@ -128,7 +128,7 @@ function Runner (opts) {
 Runner.prototype.waitCluster = function (callback, times = 0) {
   this.log.text = 'Waiting for ElasticSearch'
   this.client.cluster.health(
-    { waitForStatus: 'yellow', timeout: '50s' },
+    { waitForStatus: 'green', timeout: '50s' },
     (err, res) => {
       if (++times < 10) {
         setTimeout(() => {
