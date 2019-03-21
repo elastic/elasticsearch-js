@@ -10,12 +10,101 @@
 #   - $NODE_JS_VERSION
 #
 
+set -eo pipefail
+
 set +x
 export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
 export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-js/codecov)
 unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
 
-ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-oss
+function cleanup {
+  docker container rm --force --volumes elasticsearch-oss > /dev/null 2>&1 || true
+  docker container rm --force --volumes elasticsearch-platinum > /dev/null 2>&1 || true
+  docker container rm --force --volumes elasticsearch-js-oss > /dev/null 2>&1 || true
+  docker container rm --force --volumes elasticsearch-js-platinum > /dev/null 2>&1 || true
+  docker network rm esnet-oss > /dev/null
+  docker network rm esnet-platinum > /dev/null
+}
 
-ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} NODE_JS_VERSION=${NODE_JS_VERSION} docker-compose -f .ci/docker-compose.yml run client-platinum
+trap cleanup EXIT
+
+# create network and volume
+docker network create esnet-oss
+docker network create esnet-platinum
+
+# create client image
+docker build \
+  --file .ci/Dockerfile \
+  --tag elastic/elasticsearch-js \
+  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
+  .
+
+# run elasticsearch oss
+docker run \
+  --rm \
+  --env "node.attr.testattr=test" \
+  --env "path.repo=/tmp" \
+  --env "repositories.url.allowed_urls=http://snapshot.*" \
+  --env "discovery.type=single-node" \
+  --network=esnet-oss \
+  --name=elasticsearch-oss \
+  --detach \
+  docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
+
+# run elasticsearch platinum
+repo=$(pwd)
+testnodecrt="/.ci/certs/testnode.crt"
+testnodekey="/.ci/certs/testnode.key"
+cacrt="/.ci/certs/ca.crt"
+
+docker run \
+  --rm \
+  --env "node.attr.testattr=test" \
+  --env "path.repo=/tmp" \
+  --env "repositories.url.allowed_urls=http://snapshot.*" \
+  --env "discovery.type=single-node" \
+  --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+  --env "ELASTIC_PASSWORD=changeme" \
+  --env "xpack.security.enabled=true" \
+  --env "xpack.license.self_generated.type=trial" \
+  --env "xpack.security.http.ssl.enabled=true" \
+  --env "xpack.security.http.ssl.verification_mode=certificate" \
+  --env "xpack.security.http.ssl.key=certs/testnode.key" \
+  --env "xpack.security.http.ssl.certificate=certs/testnode.crt" \
+  --env "xpack.security.http.ssl.certificate_authorities=certs/ca.crt" \
+  --env "xpack.security.transport.ssl.enabled=true" \
+  --env "xpack.security.transport.ssl.key=certs/testnode.key" \
+  --env "xpack.security.transport.ssl.certificate=certs/testnode.crt" \
+  --env "xpack.security.transport.ssl.certificate_authorities=certs/ca.crt" \
+  --volume "$repo$testnodecrt:/usr/share/elasticsearch/config/certs/testnode.crt" \
+  --volume "$repo$testnodekey:/usr/share/elasticsearch/config/certs/testnode.key" \
+  --volume "$repo$cacrt:/usr/share/elasticsearch/config/certs/ca.crt" \
+  --network=esnet-platinum \
+  --name=elasticsearch-platinum \
+  --detach \
+  docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
+
+# run the client unit and oss integration test
+docker run \
+  --network=esnet-oss \
+  --env "TEST_ES_SERVER=http://elasticsearch-oss:9200" \
+  --env "CODECOV_TOKEN" \
+  --volume $repo:/usr/src/app \
+  --volume /usr/src/app/node_modules \
+  --name elasticsearch-js-oss \
+  --rm \
+  elastic/elasticsearch-js \
+  npm run ci
+
+# run the client platinium integration test
+docker run \
+  --network=esnet-platinum \
+  --env "TEST_ES_SERVER=https://elastic:changeme@elasticsearch-platinum:9200" \
+  --volume $repo:/usr/src/app \
+  --volume /usr/src/app/node_modules \
+  --name elasticsearch-js-platinum \
+  --rm \
+  elastic/elasticsearch-js \
+  npm run test:integration
+
