@@ -34,7 +34,11 @@ docker network create esnet-oss
 docker network create esnet-platinum
 
 # create client image
-docker build --file .ci/Dockerfile --tag elastic/elasticsearch-js --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} .
+docker build \
+  --file .ci/Dockerfile \
+  --tag elastic/elasticsearch-js \
+  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
+  .
 
 # run elasticsearch oss
 docker run \
@@ -86,7 +90,7 @@ docker run \
   --network=esnet-oss \
   --env "TEST_ES_SERVER=http://elasticsearch-oss:9200" \
   --env "CODECOV_TOKEN" \
-  --volume $(pwd):/usr/src/app \
+  --volume $repo:/usr/src/app \
   --volume /usr/src/app/node_modules \
   --name elasticsearch-js-oss \
   --rm \
@@ -97,7 +101,7 @@ docker run \
 docker run \
   --network=esnet-platinum \
   --env "TEST_ES_SERVER=https://elastic:changeme@elasticsearch-platinum:9200" \
-  --volume $(pwd):/usr/src/app \
+  --volume $repo:/usr/src/app \
   --volume /usr/src/app/node_modules \
   --name elasticsearch-js-platinum \
   --rm \
