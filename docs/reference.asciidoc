@@ -2587,6 +2587,14 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
 |`include_unloaded_segments` or `includeUnloadedSegments`
 |`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
 
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+    _Default:_ `open`
+
+|`forbid_closed_indices` or `forbidClosedIndices`
+|`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
+    _Default:_ `true`
+
 |===
 === indices.updateAliases
 [source,js]
@@ -4188,7 +4196,13 @@ TODO
 [cols=2*]
 |===
 |`transform_id` or `transformId`
-|`string` - The id of the transforms to get, '_all' or '*' implies get all transforms
+|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
 
 |===
 === dataFrame.getDataFrameTransformStats

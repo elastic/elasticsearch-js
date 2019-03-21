@@ -28,11 +28,14 @@ function buildDataFrameGetDataFrameTransform (opts) {
   /**
    * Perform a [data_frame.get_data_frame_transform](TODO) request
    *
-   * @param {string} transform_id - The id of the transforms to get, '_all' or '*' implies get all transforms
+   * @param {string} transform_id - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+   * @param {int} from - skips a number of transform configs, defaults to 0
+   * @param {int} size - specifies a max number of transforms to get, defaults to 100
    */
 
   const acceptedQuerystring = [
-
+    'from',
+    'size'
   ]
 
   const snakeCase = {
@@ -91,7 +94,11 @@ function buildDataFrameGetDataFrameTransform (opts) {
 
     var path = ''
 
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    if ((transform_id || transformId) != null) {
+      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    } else {
+      path = '/' + '_data_frame' + '/' + 'transforms'
+    }
 
     // build request object
     const request = {

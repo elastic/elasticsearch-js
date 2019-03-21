@@ -864,6 +864,8 @@ export interface IndicesStats extends Generic {
   types?: string | string[];
   include_segment_file_sizes?: boolean;
   include_unloaded_segments?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  forbid_closed_indices?: boolean;
 }
 
 export interface IndicesUpdateAliases extends Generic {
@@ -1383,6 +1385,8 @@ export interface DataFrameDeleteDataFrameTransform extends Generic {
 
 export interface DataFrameGetDataFrameTransform extends Generic {
   transform_id?: string;
+  from?: number;
+  size?: number;
 }
 
 export interface DataFrameGetDataFrameTransformStats extends Generic {
