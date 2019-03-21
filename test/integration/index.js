@@ -42,6 +42,7 @@ const customSkips = [
   'cat.snapshots/10_basic.yaml',
   // fails with ES5 with x-pack enabled
   'cat.templates/10_basic.yaml',
+  'cluster.health/10_basic.yaml',
   'cluster.health/20_request_timeout.yaml',
   'delete/11_shard_header.yaml',
   'delete/45_parent_with_routing.yaml',
@@ -66,6 +67,8 @@ const customSkips = [
   'search.aggregation/40_range.yaml',
   'search.aggregation/50_filter.yaml',
   'search.highlight/30_fvh.yml',
+  'snapshot.restore/10_basic.yaml',
+  'snapshot.status/10_basic.yaml',
   'update/11_shard_header.yaml',
   'update/55_parent_with_routing.yaml',
   // skipping because we are booting ES with `discovery.type=single-node`
