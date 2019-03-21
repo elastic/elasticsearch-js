@@ -42,8 +42,11 @@ docker run \
   --env "node.attr.testattr=test" \
   --env "path.repo=/tmp" \
   --env "repositories.url.allowed_urls=http://snapshot.*" \
-  --env "discovery.type=single-node" \
+  --env "discovery.zen.ping.unicast.hosts=elasticsearch"  \
   --env "xpack.security.enabled=false" \
+  --env "xpack.monitoring.enabled=false" \
+  --env "xpack.ml.enabled=false" \
+  --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
   --network=esnet-oss \
   --name=elasticsearch-oss \
   --detach \
