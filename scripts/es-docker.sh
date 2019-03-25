@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Images are cached locally, it may be needed
+# to delete an old image and download again
+# the latest snapshot.
+
 exec docker run \
   --rm \
   -e "node.attr.testattr=test" \
