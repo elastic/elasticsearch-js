@@ -26,7 +26,7 @@ function buildDataFrameStopDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [data_frame.stop_data_frame_transform](TODO) request
+   * Perform a [data_frame.stop_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html) request
    *
    * @param {string} transform_id - The id of the transform to stop
    * @param {boolean} wait_for_completion - Whether to wait for the transform to fully stop before returning or not. Default to false

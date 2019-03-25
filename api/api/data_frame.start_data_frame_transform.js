@@ -26,7 +26,7 @@ function buildDataFrameStartDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [data_frame.start_data_frame_transform](TODO) request
+   * Perform a [data_frame.start_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html) request
    *
    * @param {string} transform_id - The id of the transform to start
    * @param {time} timeout - Controls the time to wait for the transform to start

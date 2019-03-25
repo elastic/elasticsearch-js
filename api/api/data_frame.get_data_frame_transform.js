@@ -26,7 +26,7 @@ function buildDataFrameGetDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [data_frame.get_data_frame_transform](TODO) request
+   * Perform a [data_frame.get_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html) request
    *
    * @param {string} transform_id - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
    * @param {int} from - skips a number of transform configs, defaults to 0

@@ -4180,7 +4180,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current
 ----
 client.dataFrame.deleteDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4192,7 +4192,7 @@ TODO
 ----
 client.dataFrame.getDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4210,7 +4210,7 @@ TODO
 ----
 client.dataFrame.getDataFrameTransformStats([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4222,7 +4222,7 @@ TODO
 ----
 client.dataFrame.previewDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html
 [cols=2*]
 |===
 |`body`
@@ -4234,7 +4234,7 @@ TODO
 ----
 client.dataFrame.putDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4249,7 +4249,7 @@ TODO
 ----
 client.dataFrame.startDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4264,7 +4264,7 @@ TODO
 ----
 client.dataFrame.stopDataFrameTransform([params] [, options] [, callback])
 ----
-TODO
+https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html
 [cols=2*]
 |===
 |`transform_id` or `transformId`

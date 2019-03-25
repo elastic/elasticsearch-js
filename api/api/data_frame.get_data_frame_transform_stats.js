@@ -26,7 +26,7 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [data_frame.get_data_frame_transform_stats](TODO) request
+   * Perform a [data_frame.get_data_frame_transform_stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html) request
    *
    * @param {string} transform_id - The id of the transform for which to get stats. '_all' or '*' implies all transforms
    */

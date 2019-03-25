@@ -26,7 +26,7 @@ function buildDataFramePreviewDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, result } = opts
   /**
-   * Perform a [data_frame.preview_data_frame_transform](TODO) request
+   * Perform a [data_frame.preview_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html) request
    *
    * @param {object} body - The definition for the data_frame transform to preview
    */
