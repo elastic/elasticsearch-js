@@ -68,7 +68,6 @@ function buildFieldCaps (opts) {
       options = {}
     }
 
-<<<<<<< HEAD
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -76,12 +75,6 @@ function buildFieldCaps (opts) {
           err ? reject(err) : resolve(body)
         })
       })
-=======
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
->>>>>>> master
     }
 
     // validate headers object

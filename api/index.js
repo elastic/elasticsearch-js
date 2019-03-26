@@ -59,11 +59,6 @@ function ESAPI (opts) {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
       deleteAutoFollowPattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
       follow: lazyLoad('ccr.follow', opts),
-<<<<<<< HEAD
-=======
-      follow_info: lazyLoad('ccr.follow_info', opts),
-      followInfo: lazyLoad('ccr.follow_info', opts),
->>>>>>> master
       follow_stats: lazyLoad('ccr.follow_stats', opts),
       followStats: lazyLoad('ccr.follow_stats', opts),
       get_auto_follow_pattern: lazyLoad('ccr.get_auto_follow_pattern', opts),
@@ -209,103 +204,6 @@ function ESAPI (opts) {
       simulate: lazyLoad('ingest.simulate', opts)
     },
     mget: lazyLoad('mget', opts),
-<<<<<<< HEAD
-=======
-    ml: {
-      close_job: lazyLoad('ml.close_job', opts),
-      closeJob: lazyLoad('ml.close_job', opts),
-      delete_calendar: lazyLoad('ml.delete_calendar', opts),
-      deleteCalendar: lazyLoad('ml.delete_calendar', opts),
-      delete_calendar_event: lazyLoad('ml.delete_calendar_event', opts),
-      deleteCalendarEvent: lazyLoad('ml.delete_calendar_event', opts),
-      delete_calendar_job: lazyLoad('ml.delete_calendar_job', opts),
-      deleteCalendarJob: lazyLoad('ml.delete_calendar_job', opts),
-      delete_datafeed: lazyLoad('ml.delete_datafeed', opts),
-      deleteDatafeed: lazyLoad('ml.delete_datafeed', opts),
-      delete_expired_data: lazyLoad('ml.delete_expired_data', opts),
-      deleteExpiredData: lazyLoad('ml.delete_expired_data', opts),
-      delete_filter: lazyLoad('ml.delete_filter', opts),
-      deleteFilter: lazyLoad('ml.delete_filter', opts),
-      delete_forecast: lazyLoad('ml.delete_forecast', opts),
-      deleteForecast: lazyLoad('ml.delete_forecast', opts),
-      delete_job: lazyLoad('ml.delete_job', opts),
-      deleteJob: lazyLoad('ml.delete_job', opts),
-      delete_model_snapshot: lazyLoad('ml.delete_model_snapshot', opts),
-      deleteModelSnapshot: lazyLoad('ml.delete_model_snapshot', opts),
-      find_file_structure: lazyLoad('ml.find_file_structure', opts),
-      findFileStructure: lazyLoad('ml.find_file_structure', opts),
-      flush_job: lazyLoad('ml.flush_job', opts),
-      flushJob: lazyLoad('ml.flush_job', opts),
-      forecast: lazyLoad('ml.forecast', opts),
-      get_buckets: lazyLoad('ml.get_buckets', opts),
-      getBuckets: lazyLoad('ml.get_buckets', opts),
-      get_calendar_events: lazyLoad('ml.get_calendar_events', opts),
-      getCalendarEvents: lazyLoad('ml.get_calendar_events', opts),
-      get_calendars: lazyLoad('ml.get_calendars', opts),
-      getCalendars: lazyLoad('ml.get_calendars', opts),
-      get_categories: lazyLoad('ml.get_categories', opts),
-      getCategories: lazyLoad('ml.get_categories', opts),
-      get_datafeed_stats: lazyLoad('ml.get_datafeed_stats', opts),
-      getDatafeedStats: lazyLoad('ml.get_datafeed_stats', opts),
-      get_datafeeds: lazyLoad('ml.get_datafeeds', opts),
-      getDatafeeds: lazyLoad('ml.get_datafeeds', opts),
-      get_filters: lazyLoad('ml.get_filters', opts),
-      getFilters: lazyLoad('ml.get_filters', opts),
-      get_influencers: lazyLoad('ml.get_influencers', opts),
-      getInfluencers: lazyLoad('ml.get_influencers', opts),
-      get_job_stats: lazyLoad('ml.get_job_stats', opts),
-      getJobStats: lazyLoad('ml.get_job_stats', opts),
-      get_jobs: lazyLoad('ml.get_jobs', opts),
-      getJobs: lazyLoad('ml.get_jobs', opts),
-      get_model_snapshots: lazyLoad('ml.get_model_snapshots', opts),
-      getModelSnapshots: lazyLoad('ml.get_model_snapshots', opts),
-      get_overall_buckets: lazyLoad('ml.get_overall_buckets', opts),
-      getOverallBuckets: lazyLoad('ml.get_overall_buckets', opts),
-      get_records: lazyLoad('ml.get_records', opts),
-      getRecords: lazyLoad('ml.get_records', opts),
-      info: lazyLoad('ml.info', opts),
-      open_job: lazyLoad('ml.open_job', opts),
-      openJob: lazyLoad('ml.open_job', opts),
-      post_calendar_events: lazyLoad('ml.post_calendar_events', opts),
-      postCalendarEvents: lazyLoad('ml.post_calendar_events', opts),
-      post_data: lazyLoad('ml.post_data', opts),
-      postData: lazyLoad('ml.post_data', opts),
-      preview_datafeed: lazyLoad('ml.preview_datafeed', opts),
-      previewDatafeed: lazyLoad('ml.preview_datafeed', opts),
-      put_calendar: lazyLoad('ml.put_calendar', opts),
-      putCalendar: lazyLoad('ml.put_calendar', opts),
-      put_calendar_job: lazyLoad('ml.put_calendar_job', opts),
-      putCalendarJob: lazyLoad('ml.put_calendar_job', opts),
-      put_datafeed: lazyLoad('ml.put_datafeed', opts),
-      putDatafeed: lazyLoad('ml.put_datafeed', opts),
-      put_filter: lazyLoad('ml.put_filter', opts),
-      putFilter: lazyLoad('ml.put_filter', opts),
-      put_job: lazyLoad('ml.put_job', opts),
-      putJob: lazyLoad('ml.put_job', opts),
-      revert_model_snapshot: lazyLoad('ml.revert_model_snapshot', opts),
-      revertModelSnapshot: lazyLoad('ml.revert_model_snapshot', opts),
-      set_upgrade_mode: lazyLoad('ml.set_upgrade_mode', opts),
-      setUpgradeMode: lazyLoad('ml.set_upgrade_mode', opts),
-      start_datafeed: lazyLoad('ml.start_datafeed', opts),
-      startDatafeed: lazyLoad('ml.start_datafeed', opts),
-      stop_datafeed: lazyLoad('ml.stop_datafeed', opts),
-      stopDatafeed: lazyLoad('ml.stop_datafeed', opts),
-      update_datafeed: lazyLoad('ml.update_datafeed', opts),
-      updateDatafeed: lazyLoad('ml.update_datafeed', opts),
-      update_filter: lazyLoad('ml.update_filter', opts),
-      updateFilter: lazyLoad('ml.update_filter', opts),
-      update_job: lazyLoad('ml.update_job', opts),
-      updateJob: lazyLoad('ml.update_job', opts),
-      update_model_snapshot: lazyLoad('ml.update_model_snapshot', opts),
-      updateModelSnapshot: lazyLoad('ml.update_model_snapshot', opts),
-      validate: lazyLoad('ml.validate', opts),
-      validate_detector: lazyLoad('ml.validate_detector', opts),
-      validateDetector: lazyLoad('ml.validate_detector', opts)
-    },
-    monitoring: {
-      bulk: lazyLoad('monitoring.bulk', opts)
-    },
->>>>>>> master
     msearch: lazyLoad('msearch', opts),
     msearch_template: lazyLoad('msearch_template', opts),
     msearchTemplate: lazyLoad('msearch_template', opts),
@@ -318,78 +216,6 @@ function ESAPI (opts) {
       reloadSecureSettings: lazyLoad('nodes.reload_secure_settings', opts),
       stats: lazyLoad('nodes.stats', opts),
       usage: lazyLoad('nodes.usage', opts)
-<<<<<<< HEAD
-=======
-    },
-    ping: lazyLoad('ping', opts),
-    put_script: lazyLoad('put_script', opts),
-    putScript: lazyLoad('put_script', opts),
-    rank_eval: lazyLoad('rank_eval', opts),
-    rankEval: lazyLoad('rank_eval', opts),
-    reindex: lazyLoad('reindex', opts),
-    reindex_rethrottle: lazyLoad('reindex_rethrottle', opts),
-    reindexRethrottle: lazyLoad('reindex_rethrottle', opts),
-    render_search_template: lazyLoad('render_search_template', opts),
-    renderSearchTemplate: lazyLoad('render_search_template', opts),
-    scripts_painless_execute: lazyLoad('scripts_painless_execute', opts),
-    scriptsPainlessExecute: lazyLoad('scripts_painless_execute', opts),
-    scroll: lazyLoad('scroll', opts),
-    search: lazyLoad('search', opts),
-    search_shards: lazyLoad('search_shards', opts),
-    searchShards: lazyLoad('search_shards', opts),
-    search_template: lazyLoad('search_template', opts),
-    searchTemplate: lazyLoad('search_template', opts),
-    security: {
-      authenticate: lazyLoad('security.authenticate', opts),
-      change_password: lazyLoad('security.change_password', opts),
-      changePassword: lazyLoad('security.change_password', opts),
-      clear_cached_realms: lazyLoad('security.clear_cached_realms', opts),
-      clearCachedRealms: lazyLoad('security.clear_cached_realms', opts),
-      clear_cached_roles: lazyLoad('security.clear_cached_roles', opts),
-      clearCachedRoles: lazyLoad('security.clear_cached_roles', opts),
-      create_api_key: lazyLoad('security.create_api_key', opts),
-      createApiKey: lazyLoad('security.create_api_key', opts),
-      delete_privileges: lazyLoad('security.delete_privileges', opts),
-      deletePrivileges: lazyLoad('security.delete_privileges', opts),
-      delete_role: lazyLoad('security.delete_role', opts),
-      deleteRole: lazyLoad('security.delete_role', opts),
-      delete_role_mapping: lazyLoad('security.delete_role_mapping', opts),
-      deleteRoleMapping: lazyLoad('security.delete_role_mapping', opts),
-      delete_user: lazyLoad('security.delete_user', opts),
-      deleteUser: lazyLoad('security.delete_user', opts),
-      disable_user: lazyLoad('security.disable_user', opts),
-      disableUser: lazyLoad('security.disable_user', opts),
-      enable_user: lazyLoad('security.enable_user', opts),
-      enableUser: lazyLoad('security.enable_user', opts),
-      get_api_key: lazyLoad('security.get_api_key', opts),
-      getApiKey: lazyLoad('security.get_api_key', opts),
-      get_privileges: lazyLoad('security.get_privileges', opts),
-      getPrivileges: lazyLoad('security.get_privileges', opts),
-      get_role: lazyLoad('security.get_role', opts),
-      getRole: lazyLoad('security.get_role', opts),
-      get_role_mapping: lazyLoad('security.get_role_mapping', opts),
-      getRoleMapping: lazyLoad('security.get_role_mapping', opts),
-      get_token: lazyLoad('security.get_token', opts),
-      getToken: lazyLoad('security.get_token', opts),
-      get_user: lazyLoad('security.get_user', opts),
-      getUser: lazyLoad('security.get_user', opts),
-      get_user_privileges: lazyLoad('security.get_user_privileges', opts),
-      getUserPrivileges: lazyLoad('security.get_user_privileges', opts),
-      has_privileges: lazyLoad('security.has_privileges', opts),
-      hasPrivileges: lazyLoad('security.has_privileges', opts),
-      invalidate_api_key: lazyLoad('security.invalidate_api_key', opts),
-      invalidateApiKey: lazyLoad('security.invalidate_api_key', opts),
-      invalidate_token: lazyLoad('security.invalidate_token', opts),
-      invalidateToken: lazyLoad('security.invalidate_token', opts),
-      put_privileges: lazyLoad('security.put_privileges', opts),
-      putPrivileges: lazyLoad('security.put_privileges', opts),
-      put_role: lazyLoad('security.put_role', opts),
-      putRole: lazyLoad('security.put_role', opts),
-      put_role_mapping: lazyLoad('security.put_role_mapping', opts),
-      putRoleMapping: lazyLoad('security.put_role_mapping', opts),
-      put_user: lazyLoad('security.put_user', opts),
-      putUser: lazyLoad('security.put_user', opts)
->>>>>>> master
     },
     ping: lazyLoad('ping', opts),
     put_script: lazyLoad('put_script', opts),
@@ -423,12 +249,6 @@ function ESAPI (opts) {
       status: lazyLoad('snapshot.status', opts),
       verify_repository: lazyLoad('snapshot.verify_repository', opts),
       verifyRepository: lazyLoad('snapshot.verify_repository', opts)
-<<<<<<< HEAD
-=======
-    },
-    ssl: {
-      certificates: lazyLoad('ssl.certificates', opts)
->>>>>>> master
     },
     tasks: {
       cancel: lazyLoad('tasks.cancel', opts),
@@ -464,7 +284,6 @@ function ESAPI (opts) {
         get_assistance: lazyLoad('xpack.migration.get_assistance', opts),
         getAssistance: lazyLoad('xpack.migration.get_assistance', opts),
         upgrade: lazyLoad('xpack.migration.upgrade', opts)
-<<<<<<< HEAD
       },
       ml: {
         close_job: lazyLoad('xpack.ml.close_job', opts),
@@ -557,8 +376,6 @@ function ESAPI (opts) {
       },
       monitoring: {
         bulk: lazyLoad('xpack.monitoring.bulk', opts)
-=======
->>>>>>> master
       },
       rollup: {
         delete_job: lazyLoad('xpack.rollup.delete_job', opts),
@@ -577,7 +394,6 @@ function ESAPI (opts) {
         startJob: lazyLoad('xpack.rollup.start_job', opts),
         stop_job: lazyLoad('xpack.rollup.stop_job', opts),
         stopJob: lazyLoad('xpack.rollup.stop_job', opts)
-<<<<<<< HEAD
       },
       security: {
         authenticate: lazyLoad('xpack.security.authenticate', opts),
@@ -623,20 +439,15 @@ function ESAPI (opts) {
         putRoleMapping: lazyLoad('xpack.security.put_role_mapping', opts),
         put_user: lazyLoad('xpack.security.put_user', opts),
         putUser: lazyLoad('xpack.security.put_user', opts)
-=======
->>>>>>> master
       },
       sql: {
         clear_cursor: lazyLoad('xpack.sql.clear_cursor', opts),
         clearCursor: lazyLoad('xpack.sql.clear_cursor', opts),
         query: lazyLoad('xpack.sql.query', opts),
         translate: lazyLoad('xpack.sql.translate', opts)
-<<<<<<< HEAD
       },
       ssl: {
         certificates: lazyLoad('xpack.ssl.certificates', opts)
-=======
->>>>>>> master
       },
       usage: lazyLoad('xpack.usage', opts),
       watcher: {
@@ -654,10 +465,7 @@ function ESAPI (opts) {
         getWatch: lazyLoad('xpack.watcher.get_watch', opts),
         put_watch: lazyLoad('xpack.watcher.put_watch', opts),
         putWatch: lazyLoad('xpack.watcher.put_watch', opts),
-<<<<<<< HEAD
         restart: lazyLoad('xpack.watcher.restart', opts),
-=======
->>>>>>> master
         start: lazyLoad('xpack.watcher.start', opts),
         stats: lazyLoad('xpack.watcher.stats', opts),
         stop: lazyLoad('xpack.watcher.stop', opts)

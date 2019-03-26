@@ -50,7 +50,6 @@ function buildXpackMlInfo (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/xpack.ml.info.js
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -58,12 +57,6 @@ function buildXpackMlInfo (opts) {
           err ? reject(err) : resolve(body)
         })
       })
-=======
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
->>>>>>> master:api/api/ssl.certificates.js
     }
 
     // validate headers object
