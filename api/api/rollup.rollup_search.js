@@ -57,18 +57,6 @@ function buildRollupRollupSearch (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/rollup.rollup_search.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupRollupSearch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.rollup.rollup_search.js
     // check required parameters
     if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')

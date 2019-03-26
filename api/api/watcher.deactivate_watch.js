@@ -51,18 +51,6 @@ function buildWatcherDeactivateWatch (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/watcher.deactivate_watch.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        watcherDeactivateWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.watcher.deactivate_watch.js
     // check required parameters
     if (params['watch_id'] == null && params['watchId'] == null) {
       const err = new ConfigurationError('Missing required parameter: watch_id or watchId')

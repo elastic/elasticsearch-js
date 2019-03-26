@@ -50,18 +50,6 @@ function buildWatcherStart (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/watcher.start.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        watcherStart(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.watcher.start.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

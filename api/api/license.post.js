@@ -52,18 +52,6 @@ function buildLicensePost (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.post.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licensePost(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.post.js
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)

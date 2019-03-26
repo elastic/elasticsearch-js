@@ -51,18 +51,6 @@ function buildSqlClearCursor (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/sql.clear_cursor.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        sqlClearCursor(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.sql.clear_cursor.js
     // check required parameters
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')

@@ -50,18 +50,6 @@ function buildLicenseDelete (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.delete.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licenseDelete(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.delete.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

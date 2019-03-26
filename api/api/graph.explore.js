@@ -56,18 +56,6 @@ function buildGraphExplore (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/graph.explore.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        graphExplore(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.graph.explore.js
     // check required url components
     if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')

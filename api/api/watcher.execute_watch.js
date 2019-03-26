@@ -53,18 +53,6 @@ function buildWatcherExecuteWatch (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/watcher.execute_watch.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        watcherExecuteWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.watcher.execute_watch.js
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)

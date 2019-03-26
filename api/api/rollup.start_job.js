@@ -51,18 +51,6 @@ function buildRollupStartJob (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/rollup.start_job.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupStartJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.rollup.start_job.js
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')

@@ -51,18 +51,6 @@ function buildWatcherDeleteWatch (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/watcher.delete_watch.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        watcherDeleteWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.watcher.delete_watch.js
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')

@@ -51,18 +51,6 @@ function buildRollupGetRollupIndexCaps (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/rollup.get_rollup_index_caps.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupGetRollupIndexCaps(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.rollup.get_rollup_index_caps.js
     // check required parameters
     if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')

@@ -51,18 +51,6 @@ function buildMigrationDeprecations (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/migration.deprecations.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        migrationDeprecations(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.migration.deprecations.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

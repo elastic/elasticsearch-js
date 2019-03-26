@@ -51,26 +51,12 @@ function buildCcrFollowStats (opts) {
       options = {}
     }
 
-<<<<<<< HEAD
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ccrFollowStats(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
 
-=======
->>>>>>> master
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)

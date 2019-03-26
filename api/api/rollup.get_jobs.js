@@ -51,18 +51,6 @@ function buildRollupGetJobs (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/rollup.get_jobs.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupGetJobs(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.rollup.get_jobs.js
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)

@@ -51,18 +51,6 @@ function buildLicensePostStartBasic (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.post_start_basic.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licensePostStartBasic(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.post_start_basic.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

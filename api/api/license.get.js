@@ -51,18 +51,6 @@ function buildLicenseGet (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.get.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licenseGet(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.get.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

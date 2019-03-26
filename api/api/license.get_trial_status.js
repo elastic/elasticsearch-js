@@ -50,18 +50,6 @@ function buildLicenseGetTrialStatus (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.get_trial_status.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licenseGetTrialStatus(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.get_trial_status.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

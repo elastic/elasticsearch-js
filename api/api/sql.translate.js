@@ -51,18 +51,6 @@ function buildSqlTranslate (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/sql.translate.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        sqlTranslate(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.sql.translate.js
     // check required parameters
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')

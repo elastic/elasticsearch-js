@@ -51,18 +51,6 @@ function buildRollupDeleteJob (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/rollup.delete_job.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupDeleteJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.rollup.delete_job.js
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')

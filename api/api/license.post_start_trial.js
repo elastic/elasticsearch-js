@@ -53,18 +53,6 @@ function buildLicensePostStartTrial (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/license.post_start_trial.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        licensePostStartTrial(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.license.post_start_trial.js
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

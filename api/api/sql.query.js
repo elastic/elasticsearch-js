@@ -52,18 +52,6 @@ function buildSqlQuery (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/sql.query.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        sqlQuery(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.sql.query.js
     // check required parameters
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')

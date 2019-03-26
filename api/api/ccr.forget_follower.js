@@ -52,28 +52,14 @@ function buildCcrForgetFollower (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/ccr.forget_follower.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ccrForgetFollower(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.migration.upgrade.js
     // check required parameters
     if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // validate headers object

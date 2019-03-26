@@ -60,18 +60,6 @@ function buildWatcherPutWatch (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/watcher.put_watch.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        watcherPutWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.watcher.put_watch.js
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
