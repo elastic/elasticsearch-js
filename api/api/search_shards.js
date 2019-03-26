@@ -24,7 +24,7 @@
 
 function buildSearchShards (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [search_shards](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html) request
    *
@@ -83,10 +83,8 @@ function buildSearchShards (opts) {
 
     // check required parameters
     if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // check required url components
@@ -99,10 +97,8 @@ function buildSearchShards (opts) {
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

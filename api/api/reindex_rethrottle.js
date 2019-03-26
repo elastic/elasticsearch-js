@@ -24,7 +24,7 @@
 
 function buildReindexRethrottle (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [reindex_rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html) request
    *
@@ -59,6 +59,7 @@ function buildReindexRethrottle (opts) {
       options = {}
     }
 
+<<<<<<< HEAD
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -66,28 +67,28 @@ function buildReindexRethrottle (opts) {
           err ? reject(err) : resolve(body)
         })
       })
+=======
+    // check required parameters
+    if (params['task_id'] == null && params['taskId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: task_id or taskId')
+      return handleError(err, callback)
+>>>>>>> master
     }
 
     // check required parameters
     if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond')
+      return handleError(err, callback)
     }
     if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

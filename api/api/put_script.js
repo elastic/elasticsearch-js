@@ -24,7 +24,7 @@
 
 function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [put_script](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html) request
    *
@@ -74,10 +74,8 @@ function buildPutScript (opts) {
 
     // check required parameters
     if (params['id'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: id'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
     }
     if (params['lang'] == null) {
       return callback(
@@ -86,26 +84,28 @@ function buildPutScript (opts) {
       )
     }
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // check required url components
+<<<<<<< HEAD
     if (params['id'] != null && (params['lang'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: lang'),
         result
       )
+=======
+    if (params['context'] != null && (params['id'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: id')
+      return handleError(err, callback)
+>>>>>>> master
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

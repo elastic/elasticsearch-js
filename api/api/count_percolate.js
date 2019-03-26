@@ -24,7 +24,7 @@
 
 function buildCountPercolate (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [count_percolate](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html) request
    *
@@ -94,11 +94,10 @@ function buildCountPercolate (opts) {
 
     // check required parameters
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
+<<<<<<< HEAD:api/api/count_percolate.js
     if (params['type'] == null) {
       return callback(
         new ConfigurationError('Missing required parameter: type'),
@@ -117,14 +116,17 @@ function buildCountPercolate (opts) {
         new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
+=======
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
+>>>>>>> master:api/api/indices.freeze.js
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null
