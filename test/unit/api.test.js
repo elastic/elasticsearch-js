@@ -20,7 +20,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client } = require('../../index')
+const { Client, errors } = require('../../index')
 const { buildServer } = require('../utils')
 
 test('Basic (callback)', t => {
@@ -293,6 +293,35 @@ test('If the API uses the same key for both url and query parameter, the url sho
       server.stop()
     })
   })
+})
+
+test('ConfigurationError (callback)', t => {
+  t.plan(1)
+
+  const client = new Client({
+    node: 'http://localhost:9200'
+  })
+
+  client.index({
+    body: { foo: 'bar' }
+  }, (err, { body }) => {
+    t.ok(err instanceof errors.ConfigurationError)
+  })
+})
+
+test('ConfigurationError (promises)', t => {
+  t.plan(1)
+
+  const client = new Client({
+    node: 'http://localhost:9200'
+  })
+
+  client
+    .index({ body: { foo: 'bar' } })
+    .then(t.fail)
+    .catch(err => {
+      t.ok(err instanceof errors.ConfigurationError)
+    })
 })
 
 if (Number(process.version.split('.')[0].slice(1)) >= 8) {

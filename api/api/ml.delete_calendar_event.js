@@ -24,7 +24,7 @@
 
 function buildMlDeleteCalendarEvent (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [ml.delete_calendar_event](undefined) request
    *
@@ -52,49 +52,30 @@ function buildMlDeleteCalendarEvent (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlDeleteCalendarEvent(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['calendar_id'] == null && params['calendarId'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: calendar_id or calendarId'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
+      return handleError(err, callback)
     }
     if (params['event_id'] == null && params['eventId'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: event_id or eventId'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: event_id or eventId')
+      return handleError(err, callback)
     }
     if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // check required url components
     if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: calendar_id'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: calendar_id')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

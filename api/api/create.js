@@ -24,7 +24,7 @@
 
 function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
@@ -77,41 +77,24 @@ function buildCreate (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        create(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['id'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: id'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
     }
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

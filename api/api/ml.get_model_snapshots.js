@@ -24,7 +24,7 @@
 
 function buildMlGetModelSnapshots (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [ml.get_model_snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html) request
    *
@@ -64,37 +64,22 @@ function buildMlGetModelSnapshots (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlGetModelSnapshots(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['job_id'] == null && params['jobId'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: job_id or jobId'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: job_id or jobId')
+      return handleError(err, callback)
     }
 
     // check required url components
     if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: job_id'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: job_id')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

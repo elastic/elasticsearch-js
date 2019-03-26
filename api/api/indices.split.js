@@ -24,7 +24,7 @@
 
 function buildIndicesSplit (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [indices.split](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html) request
    *
@@ -69,43 +69,26 @@ function buildIndicesSplit (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        indicesSplit(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
     if (params['target'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: target'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: target')
+      return handleError(err, callback)
     }
 
     // check required url components
     if (params['target'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null
