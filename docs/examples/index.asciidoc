@@ -1,0 +1,10 @@
+[[examples]]
+= Examples
+
+This section has examples of using specific features.
+
+include::asStream.asciidoc[]
+include::bulk.asciidoc[]
+include::exists.asciidoc[]
+include::get.asciidoc[]
+include::ignore.asciidoc[]

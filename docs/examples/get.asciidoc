@@ -1,3 +1,4 @@
+[[get_examples]]
 == Get
 
 The get API allows to get a typed JSON document from the index based on its id. +

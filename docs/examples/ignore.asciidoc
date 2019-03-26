@@ -1,3 +1,4 @@
+[[ignore_examples]]
 == Ignore
 HTTP status codes which should not be considered errors for this request.
 
