@@ -24,7 +24,7 @@
 
 function buildSecurityPutRole (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [security.put_role](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html) request
    *
@@ -53,35 +53,20 @@ function buildSecurityPutRole (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        securityPutRole(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['name'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: name'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
     }
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null
