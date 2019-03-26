@@ -24,7 +24,7 @@
 
 function buildXpackRollupGetJobs (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [xpack.rollup.get_jobs]() request
    *
@@ -62,10 +62,8 @@ function buildXpackRollupGetJobs (opts) {
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

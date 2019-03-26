@@ -1,0 +1,24 @@
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 15
+
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 7
+
+# Issues with these labels will never be considered stale
+exemptLabels:
+  - "discussion"
+  - "feature request"
+  - "bug"
+
+# Label to use when marking an issue as stale
+staleLabel: stale
+
+# Comment to post when marking an issue as stale. Set to `false` to disable
+markComment: |
+  We understand that this might be important for you, but this issue has been automatically marked as stale because it has not had recent activity either from our end or yours.
+  It will be closed if no further activity occurs, please write a comment if you would like to keep this going.
+
+  Note: in the past months we have built a new client, that has just landed in master. If you want to open an issue or a pr for the legacy client, you should do that in https://github.com/elastic/elasticsearch-js-legacy
+
+# Comment to post when closing a stale issue. Set to `false` to disable
+closeComment: false

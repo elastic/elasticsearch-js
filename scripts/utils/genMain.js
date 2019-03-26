@@ -123,10 +123,18 @@ function genFactory (folder) {
     assert(opts.ConfigurationError, 'Missing ConfigurationError class')
     assert(opts.result, 'Missing default result object')
 
+    const { result } = opts
+    opts.handleError = handleError
+
     const apis = ${apisStr}
 
 
     return apis
+
+    function handleError(err, callback) {
+      if (callback) return callback(err, result)
+      return Promise.reject(err)
+    }
   }
 
   // It's unlikely that a user needs all of our APIs,

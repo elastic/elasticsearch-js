@@ -24,7 +24,7 @@
 
 function buildIndex (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [index](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
@@ -97,10 +97,8 @@ function buildIndex (opts) {
 
     // check required parameters
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
     if (params['type'] == null) {
       return callback(
@@ -109,13 +107,12 @@ function buildIndex (opts) {
       )
     }
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // check required url components
+<<<<<<< HEAD
     if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
       return callback(
         new ConfigurationError('Missing required parameter of the url: type, index'),
@@ -126,14 +123,17 @@ function buildIndex (opts) {
         new ConfigurationError('Missing required parameter of the url: index'),
         result
       )
+=======
+    if (params['id'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
+>>>>>>> master
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null
