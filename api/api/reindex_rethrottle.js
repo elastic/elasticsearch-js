@@ -59,7 +59,6 @@ function buildReindexRethrottle (opts) {
       options = {}
     }
 
-<<<<<<< HEAD
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -67,12 +66,6 @@ function buildReindexRethrottle (opts) {
           err ? reject(err) : resolve(body)
         })
       })
-=======
-    // check required parameters
-    if (params['task_id'] == null && params['taskId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: task_id or taskId')
-      return handleError(err, callback)
->>>>>>> master
     }
 
     // check required parameters

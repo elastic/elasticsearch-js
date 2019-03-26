@@ -64,7 +64,6 @@ function buildClusterPutSettings (opts) {
       options = {}
     }
 
-<<<<<<< HEAD
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -72,12 +71,6 @@ function buildClusterPutSettings (opts) {
           err ? reject(err) : resolve(body)
         })
       })
-=======
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
->>>>>>> master
     }
 
     // validate headers object

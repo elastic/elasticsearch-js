@@ -101,10 +101,8 @@ function buildTermvectors (opts) {
       return handleError(err, callback)
     }
     if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: type')
+      return handleError(err, callback)
     }
 
     // validate headers object

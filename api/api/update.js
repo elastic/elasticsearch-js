@@ -112,17 +112,9 @@ function buildUpdate (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-<<<<<<< HEAD
     if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
-=======
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+      const err = new ConfigurationError('Missing required parameter: type')
       return handleError(err, callback)
->>>>>>> master
     }
 
     // validate headers object

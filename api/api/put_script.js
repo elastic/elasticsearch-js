@@ -78,10 +78,8 @@ function buildPutScript (opts) {
       return handleError(err, callback)
     }
     if (params['lang'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: lang'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: lang')
+      return handleError(err, callback)
     }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
@@ -89,17 +87,9 @@ function buildPutScript (opts) {
     }
 
     // check required url components
-<<<<<<< HEAD
     if (params['id'] != null && (params['lang'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: lang'),
-        result
-      )
-=======
-    if (params['context'] != null && (params['id'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: id')
+      const err = new ConfigurationError('Missing required parameter of the url: lang')
       return handleError(err, callback)
->>>>>>> master
     }
 
     // validate headers object

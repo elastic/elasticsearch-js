@@ -99,10 +99,8 @@ function buildIndex (opts) {
       return handleError(err, callback)
     }
     if (params['type'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: type'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: type')
+      return handleError(err, callback)
     }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
@@ -110,22 +108,12 @@ function buildIndex (opts) {
     }
 
     // check required url components
-<<<<<<< HEAD
     if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: type, index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: type, index')
+      return handleError(err, callback)
     } else if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
-=======
-    if (params['id'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
->>>>>>> master
     }
 
     // validate headers object

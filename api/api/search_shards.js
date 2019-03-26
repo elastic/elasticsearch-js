@@ -89,10 +89,8 @@ function buildSearchShards (opts) {
 
     // check required url components
     if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
     }
 
     // validate headers object

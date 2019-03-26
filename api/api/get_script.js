@@ -72,10 +72,8 @@ function buildGetScript (opts) {
       return handleError(err, callback)
     }
     if (params['lang'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: lang'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: lang')
+      return handleError(err, callback)
     }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
@@ -84,10 +82,8 @@ function buildGetScript (opts) {
 
     // check required url components
     if (params['id'] != null && (params['lang'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: lang'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: lang')
+      return handleError(err, callback)
     }
 
     // validate headers object

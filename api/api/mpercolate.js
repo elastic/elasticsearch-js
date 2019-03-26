@@ -77,29 +77,15 @@ function buildMpercolate (opts) {
     }
 
     // check required parameters
-<<<<<<< HEAD:api/api/mpercolate.js
     if (params['body'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: body'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // check required url components
     if (params['type'] != null && (params['index'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: index'),
-        result
-      )
-=======
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+      const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
->>>>>>> master:api/api/indices.unfreeze.js
     }
 
     // validate headers object
