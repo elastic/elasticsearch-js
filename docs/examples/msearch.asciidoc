@@ -1,3 +1,4 @@
+[[msearch_examples]]
 == MSearch
 
 The multi search API allows to execute several search requests within the same API. 
