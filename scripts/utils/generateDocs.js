@@ -116,8 +116,7 @@ function generateApiDoc (spec) {
   ${documentationUrl || ''}\n`
 
   if (params.length !== 0) {
-    doc += dedent
-    `[cols=2*]
+    doc += dedent`[cols=2*]
     |===\n`
     doc += params.reduce((acc, val) => {
       const name = isSnakeCased(val.name) && val.name !== camelify(val.name)
