@@ -24,7 +24,7 @@
 
 function buildXpackRollupStopJob (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [xpack.rollup.stop_job]() request
    *
@@ -66,18 +66,14 @@ function buildXpackRollupStopJob (opts) {
 
     // check required parameters
     if (params['id'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: id'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null
