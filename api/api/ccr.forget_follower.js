@@ -24,7 +24,7 @@
 
 function buildCcrForgetFollower (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [ccr.forget_follower](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
    *
@@ -52,6 +52,7 @@ function buildCcrForgetFollower (opts) {
       options = {}
     }
 
+<<<<<<< HEAD:api/api/ccr.forget_follower.js
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
@@ -61,12 +62,12 @@ function buildCcrForgetFollower (opts) {
       })
     }
 
+=======
+>>>>>>> master:api/api/xpack.migration.upgrade.js
     // check required parameters
     if (params['index'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: index'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
     if (params['body'] == null) {
       return callback(
@@ -77,10 +78,8 @@ function buildCcrForgetFollower (opts) {
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

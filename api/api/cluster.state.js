@@ -24,7 +24,7 @@
 
 function buildClusterState (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [cluster.state](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html) request
    *
@@ -80,37 +80,22 @@ function buildClusterState (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        clusterState(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params.body != null) {
-      return callback(
-        new ConfigurationError('This API does not require a body'),
-        result
-      )
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // check required url components
     if (params['index'] != null && (params['metric'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: metric'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: metric')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

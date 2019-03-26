@@ -24,7 +24,7 @@
 
 function buildSnapshotRestore (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, result } = opts
+  const { makeRequest, ConfigurationError, handleError } = opts
   /**
    * Perform a [snapshot.restore](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -64,43 +64,26 @@ function buildSnapshotRestore (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        snapshotRestore(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['repository'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: repository'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: repository')
+      return handleError(err, callback)
     }
     if (params['snapshot'] == null) {
-      return callback(
-        new ConfigurationError('Missing required parameter: snapshot'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter: snapshot')
+      return handleError(err, callback)
     }
 
     // check required url components
     if (params['snapshot'] != null && (params['repository'] == null)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: repository'),
-        result
-      )
+      const err = new ConfigurationError('Missing required parameter of the url: repository')
+      return handleError(err, callback)
     }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`),
-        result
-      )
+      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
+      return handleError(err, callback)
     }
 
     var warnings = null

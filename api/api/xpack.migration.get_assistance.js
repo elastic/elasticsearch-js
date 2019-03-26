@@ -22,24 +22,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSqlClearCursor (opts) {
+function buildXpackMigrationGetAssistance (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [sql.clear_cursor](Clear SQL cursor) request
+   * Perform a [xpack.migration.get_assistance](https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html) request
    *
-   * @param {object} body - Specify the cursor value in the `cursor` element to clean the cursor.
+   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
    */
 
   const acceptedQuerystring = [
-
+    'allow_no_indices',
+    'expand_wildcards',
+    'ignore_unavailable'
   ]
 
   const snakeCase = {
-
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    ignoreUnavailable: 'ignore_unavailable'
   }
 
-  return function sqlClearCursor (params, options, callback) {
+  return function xpackMigrationGetAssistance (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,24 +58,6 @@ function buildSqlClearCursor (opts) {
       options = {}
     }
 
-<<<<<<< HEAD:api/api/sql.clear_cursor.js
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        sqlClearCursor(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-=======
->>>>>>> master:api/api/xpack.sql.clear_cursor.js
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -76,11 +65,11 @@ function buildSqlClearCursor (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -90,13 +79,17 @@ function buildSqlClearCursor (opts) {
 
     var path = ''
 
-    path = '/' + '_sql' + '/' + 'close'
+    if ((index) != null) {
+      path = '/' + '_migration' + '/' + 'assistance' + '/' + encodeURIComponent(index)
+    } else {
+      path = '/' + '_migration' + '/' + 'assistance'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -131,4 +124,4 @@ function buildSqlClearCursor (opts) {
   }
 }
 
-module.exports = buildSqlClearCursor
+module.exports = buildXpackMigrationGetAssistance

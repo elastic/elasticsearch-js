@@ -19,7 +19,7 @@
 
 'use strict'
 
-const { Client } = require('../../index')
+const { Client, errors } = require('../../index')
 const { buildServer } = require('../utils')
 
 function runAsyncTest (test) {
@@ -74,6 +74,21 @@ function runAsyncTest (test) {
       }
       server.stop()
     })
+  })
+
+  test('async await (ConfigurationError)', async t => {
+    t.plan(1)
+
+    const client = new Client({
+      node: 'http://localhost:9200'
+    })
+
+    try {
+      await client.index({ body: { foo: 'bar' } })
+      t.fail('Should throw')
+    } catch (err) {
+      t.ok(err instanceof errors.ConfigurationError)
+    }
   })
 }
 
