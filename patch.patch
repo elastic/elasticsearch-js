@@ -1,0 +1,58 @@
+diff --git a/docs/index.asciidoc b/docs/index.asciidoc
+index 2c4d7fb8..b25d4a69 100644
+--- a/docs/index.asciidoc
++++ b/docs/index.asciidoc
+@@ -1,8 +1,9 @@
+ = @elastic/elasticsearch
+ 
++== Introduction
+ The official Node.js client for Elasticsearch.
+ 
+-== Features
++=== Features
+ * One-to-one mapping with REST API.
+ * Generalized, pluggable architecture.
+ * Configurable, automatic discovery of cluster nodes.
+@@ -10,7 +11,7 @@ The official Node.js client for Elasticsearch.
+ * Load balancing (with pluggable selection strategy) across all available nodes.
+ * TypeScript support out of the box.
+ 
+-== Install
++=== Install
+ [source,sh]
+ ----
+ npm install @elastic/elasticsearch
+@@ -19,7 +20,7 @@ By default the latest version of the module will be installed, which is the same
+ If you need to work with older versions of Elasticsearch, you should install the same version of the client as well. +
+ For example, if you are using Elasticsearch `v6.5.4`, you will need the client `v6`, and you can easily do that with `npm install @elastic/elasticsearch@6`.
+ 
+-== Usage
++=== Usage
+ [source,js]
+ ----
+ const { Client } = require('@elastic/elasticsearch')
+@@ -40,7 +41,7 @@ client.search({
+ })
+ ----
+ 
+-== Reference
++=== Reference
+ * Client configuration
+ * Client usage
+ * API methods
+@@ -49,3 +50,5 @@ client.search({
+ * Breaking changes from old client
+ * Authentication
+ * Child client
++
++include::usage.asciidoc[]
+diff --git a/docs/usage.asciidoc b/docs/usage.asciidoc
+index 07441e78..ea0c3964 100644
+--- a/docs/usage.asciidoc
++++ b/docs/usage.asciidoc
+@@ -1,4 +1,4 @@
+-= Usage
++== Usage
+ 
+ Use the  client is pretty straightforward, it supports all the public APIs of Elasticsearch, and every method exposes the same signature.
+ 

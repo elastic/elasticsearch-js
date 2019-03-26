@@ -72,7 +72,7 @@ _Default:_ `false`
 
 |`resurrectStrategy`
 |`string` - Configure the node resurrection strategy. +
-_Options:_ `'ping'`, `'optimistic'`, `'none'` +
+_Options:_ `'ping'`, `'optimistic'`, `'none'` +
 _Default:_ `'ping'`
 
 |`suggestCompression`
