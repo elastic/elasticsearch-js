@@ -1,12 +1,12 @@
-= Breaking changes coming from the old client
+== Breaking changes coming from the old client
 
 If you were already using the previous version of this client --i.e. the one you used to install with `npm install elasticsearch`-- you will encounter some breaking changes.
 
-=== Don’t panic!
+==== Don’t panic!
 
 Every breaking change was carefully weighed, and each is justified. Furthermore, the new codebase has been rewritten with modern JavaScript and has been carefully designed to be easy to maintain.
 
-=== Breaking changes
+==== Breaking changes
 
 *  Minimum supported version of Node.js is `v6`.
 
@@ -165,7 +165,7 @@ client.transport.request({
 })
 ----
 
-=== Talk is cheap. Show me the code.
+==== Talk is cheap. Show me the code.
 
 Following you will find a snippet of code with the old client, followed by the same code logic, but with the new client.
 

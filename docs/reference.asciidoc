@@ -1,4 +1,4 @@
-= API Reference
+== API Reference
 
 === Common parameters
 Parameters that are accepted by all API endpoints.
