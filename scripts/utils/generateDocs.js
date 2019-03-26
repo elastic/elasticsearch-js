@@ -22,7 +22,7 @@
 const dedent = require('dedent')
 
 function generateDocs (common, spec) {
-  var doc = '= API Reference\n\n'
+  var doc = '== API Reference\n\n'
   doc += commonParameters(common)
   spec.forEach(s => {
     doc += '\n' + generateApiDoc(s)
