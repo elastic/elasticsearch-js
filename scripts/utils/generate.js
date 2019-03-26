@@ -108,25 +108,14 @@ function generate (spec, common) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ${safeWords(name)}(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     ${genRequiredChecks()}
 
     ${genUrlValidation(paths, api)}
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
-      return callback(
-        new ConfigurationError(\`Headers should be an object, instead got: \${typeof options.headers}\`),
-        result
-      )
+      const err = new ConfigurationError(\`Headers should be an object, instead got: \${typeof options.headers}\`)
+      return handleError(err, callback)
     }
 
     var warnings = null
@@ -212,7 +201,7 @@ function generate (spec, common) {
 
   function build${name[0].toUpperCase() + name.slice(1)} (opts) {
     // eslint-disable-next-line no-unused-vars
-    const { makeRequest, ConfigurationError, result } = opts
+    const { makeRequest, ConfigurationError, handleError } = opts
     ${generateDocumentation(spec[api], api)}
 
     const acceptedQuerystring = [
@@ -252,20 +241,16 @@ function generate (spec, common) {
       if (param === camelCased) {
         const check = `
           if (params['${param}'] == null) {
-            return callback(
-              new ConfigurationError('Missing required parameter: ${param}'),
-              result
-            )
+            const err = new ConfigurationError('Missing required parameter: ${param}')
+            return handleError(err, callback)
           }
         `
         return check.trim()
       } else {
         const check = `
           if (params['${param}'] == null && params['${camelCased}'] == null) {
-            return callback(
-              new ConfigurationError('Missing required parameter: ${param} or ${camelCased}'),
-              result
-            )
+            const err = new ConfigurationError('Missing required parameter: ${param} or ${camelCased}')
+            return handleError(err, callback)
           }
         `
         return check.trim()
@@ -275,10 +260,8 @@ function generate (spec, common) {
     function _noBody () {
       const check = `
         if (params.body != null) {
-          return callback(
-            new ConfigurationError('This API does not require a body'),
-            result
-          )
+          const err = new ConfigurationError('This API does not require a body')
+          return handleError(err, callback)
         }
       `
       return spec[api].body === null ? check.trim() : ''
@@ -495,10 +478,9 @@ function genUrlValidation (paths, api) {
       }
     }
     code += `)) {
-      return callback(
-        new ConfigurationError('Missing required parameter of the url: ${params.join(', ')}'),
-        result
-      )`
+      const err = new ConfigurationError('Missing required parameter of the url: ${params.join(', ')}')
+      return handleError(err, callback)
+    `
   })
 
   if (chunks.length > 1) {
