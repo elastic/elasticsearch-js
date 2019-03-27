@@ -1,3 +1,4 @@
+[[as_stream_examples]]
 == asStream
 
 Instead of getting the parsed body back, you will get the raw Node.js stream of data.

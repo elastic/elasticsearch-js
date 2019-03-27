@@ -1,4 +1,4 @@
-= TypeScript support
+== TypeScript support
 
 The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
 
@@ -6,7 +6,7 @@ While the client offers type definitions for Request parameters, Request bodies 
 
 NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
 
-== How to extend the provided typings?
+=== How to extend the provided typings?
 Extend the provided typings is very straightforward, you should declare a custom `.d.ts` file and then write inside your type extensions, following there is an example of how do it.
 [source,ts]
 ----
