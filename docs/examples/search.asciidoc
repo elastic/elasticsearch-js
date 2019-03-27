@@ -1,4 +1,5 @@
-= Search
+[[search_examples]]
+== Search
 
 The `search` API allows you to execute a search query and get back search hits that match the query. +
 The query can either be provided using a simple https://www.elastic.co/guide/en/elasticsearch/reference/6.6/search-uri-request.html[query string as a parameter], or using a https://www.elastic.co/guide/en/elasticsearch/reference/6.6/search-request-body.html[request body].

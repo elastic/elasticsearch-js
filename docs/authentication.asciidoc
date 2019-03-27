@@ -1,8 +1,8 @@
-= Authentication
+== Authentication
 
 This document contains code snippets to show you how to connect to various Elasticsearch providers.
 
-== Basic Auth
+=== Basic Auth
 
 You can provide your credentials in the node(s) URL.
 
@@ -29,7 +29,7 @@ const client = new Client({
 })
 ----
 
-== SSL configuration
+=== SSL configuration
 
 Without any additional configuration you can specify `https://` node urls, but the certificates used to sign these requests will not verified (`rejectUnauthorized: false`). To turn on certificate verification you must specify an `ssl` object either in the top level config or in each host config object and set `rejectUnauthorized: true`. The ssl config object can contain many of the same configuration options that https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[tls.connect()] accepts.
 
@@ -45,7 +45,7 @@ const client = new Client({
 })
 ----
 
-== Elastic Cloud
+=== Elastic Cloud
 
 If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers a easy way to connect to it via the `cloud` option. +
 You must pass the Cloud ID that you can find in the cloud console, then your username and password.
