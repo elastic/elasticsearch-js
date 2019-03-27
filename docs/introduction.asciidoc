@@ -1,0 +1,52 @@
+== Introduction
+
+The official Node.js client for Elasticsearch.
+
+=== Features
+* One-to-one mapping with REST API.
+* Generalized, pluggable architecture.
+* Configurable, automatic discovery of cluster nodes.
+* Persistent, Keep-Alive connections.
+* Load balancing (with pluggable selection strategy) across all available nodes.
+* TypeScript support out of the box.
+
+=== Install
+[source,sh]
+----
+npm install @elastic/elasticsearch
+----
+
+=== Compatibility
+
+The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
+----
+# Elasticsearch 7.x
+@elastic/elasticsearch@7
+
+# Elasticsearch 6.x
+@elastic/elasticsearch@6
+
+# Elasticsearch 5.x
+@elastic/elasticsearch@5
+----
+
+=== Usage
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+// promise API
+const result = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+})
+
+// callback API
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----

@@ -1,4 +1,5 @@
-= transport.request
+[[transport_request_examples]]
+== transport.request
 
 It can happen that you need to communicate with Elasticsearch by using an API that is not supported by the client, to mitigate this issue you can directly call `client.transport.request`, which is the internal utility that the client uses to communicate with Elasticsearch when you use an API method.
 

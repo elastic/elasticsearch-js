@@ -1,4 +1,4 @@
-= Usage
+== Usage
 
 Use the  client is pretty straightforward, it supports all the public APIs of Elasticsearch, and every method exposes the same signature.
 
