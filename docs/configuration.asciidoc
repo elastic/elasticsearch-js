@@ -1,4 +1,4 @@
-= Client configuration
+== Client configuration
 
 The client is designed to be easily configured as you see fit for your needs, following you can see all the possible basic options that you can use to configure it.
 
@@ -14,7 +14,7 @@ const client = new Client({
 })
 ----
 
-== Basic options
+=== Basic options
 [cols=2*]
 |===
 |`node` or `nodes`
@@ -72,7 +72,7 @@ _Default:_ `false`
 
 |`resurrectStrategy`
 |`string` - Configure the node resurrection strategy. +
-_Options:_ `'ping'`, `'optimistic'`, `'none'` +
+_Options:_ `'ping'`, `'optimistic'`, `'none'` +
 _Default:_ `'ping'`
 
 |`suggestCompression`
@@ -122,7 +122,7 @@ function nodeSelector (connections) {
 ----
 |===
 
-== Advanced configuration
+=== Advanced configuration
 If you need to customize the client behavior heavily, you are in the right place! +
 The client allows you to customize the following internals:
 

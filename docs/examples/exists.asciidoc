@@ -1,4 +1,5 @@
-= Exists
+[[exists_examples]]
+== Exists
 
 Check that the document `/game-of-thrones/1` exists.
 
