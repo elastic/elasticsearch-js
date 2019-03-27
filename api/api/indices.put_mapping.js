@@ -75,15 +75,6 @@ function buildIndicesPutMapping (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        indicesPutMapping(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['type'] == null) {
       const err = new ConfigurationError('Missing required parameter: type')

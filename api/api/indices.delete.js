@@ -61,15 +61,6 @@ function buildIndicesDelete (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        indicesDelete(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
