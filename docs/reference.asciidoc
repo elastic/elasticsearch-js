@@ -820,7 +820,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.htm
 
 |`expand_wildcards` or `expandWildcards`
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `all`
+_Default:_ `all`
 
 |`level`
 |`'cluster', 'indices', 'shards'` - Specify the level of detail for returned information +
@@ -2672,11 +2672,11 @@ _Default:_ `indices`
 
 |`expand_wildcards` or `expandWildcards`
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `open`
+_Default:_ `open`
 
 |`forbid_closed_indices` or `forbidClosedIndices`
 |`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
-    _Default:_ `true`
+_Default:_ `true`
 
 |===
 
@@ -3281,7 +3281,7 @@ _Default:_ `true`
 
 |`scroll`
 |`string` - Control how long to keep the search context alive +
-    _Default:_ `5m`
+_Default:_ `5m`
 
 |`slices`
 |`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
@@ -3323,7 +3323,7 @@ http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-temp
 |`object` - The search definition template and its params
 
 |===
-<<<<<<< HEAD
+
 === scriptsPainlessContext
 [source,js]
 ----
@@ -3336,9 +3336,7 @@ client.scriptsPainlessContext([params] [, options] [, callback])
 |`string` - Select a specific context to retrieve API information about
 
 |===
-=======
 
->>>>>>> master
 === scriptsPainlessExecute
 [source,js]
 ----
@@ -4214,7 +4212,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-s
 |`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
 
 |===
-<<<<<<< HEAD
+
 === ccr.forgetFollower
 [source,js]
 ----
@@ -4230,9 +4228,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current
 |`object` - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
 
 |===
-=======
 
->>>>>>> master
 === ccr.getAutoFollowPattern
 [source,js]
 ----
@@ -4311,7 +4307,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current
 |`string` - The name of the follower index that should be turned into a regular index.
 
 |===
-<<<<<<< HEAD
+
 === dataFrame.deleteDataFrameTransform
 [source,js]
 ----
@@ -4324,6 +4320,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-fram
 |`string` - The id of the transform to delete
 
 |===
+
 === dataFrame.getDataFrameTransform
 [source,js]
 ----
@@ -4342,6 +4339,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-t
 |`number` - specifies a max number of transforms to get, defaults to 100
 
 |===
+
 === dataFrame.getDataFrameTransformStats
 [source,js]
 ----
@@ -4354,6 +4352,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-t
 |`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
 
 |===
+
 === dataFrame.previewDataFrameTransform
 [source,js]
 ----
@@ -4366,6 +4365,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-fra
 |`object` - The definition for the data_frame transform to preview
 
 |===
+
 === dataFrame.putDataFrameTransform
 [source,js]
 ----
@@ -4381,6 +4381,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-t
 |`object` - The data frame transform definition
 
 |===
+
 === dataFrame.startDataFrameTransform
 [source,js]
 ----
@@ -4396,6 +4397,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame
 |`string` - Controls the time to wait for the transform to start
 
 |===
+
 === dataFrame.stopDataFrameTransform
 [source,js]
 ----
@@ -4414,6 +4416,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-
 |`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
 
 |===
+
 === graph.explore
 [source,js]
 ----
@@ -4438,9 +4441,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-ap
 |`object` - Graph Query DSL
 
 |===
-=======
 
->>>>>>> master
 === ilm.deleteLifecycle
 [source,js]
 ----
@@ -4465,13 +4466,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-life
 |`index`
 |`string` - The name of the index to explain
 
-<<<<<<< HEAD
-=======
-|`human`
-|`boolean` - Return data such as dates in a human readable format +
-_Default:_ `false`
-
->>>>>>> master
 |===
 
 === ilm.getLifecycle
@@ -4632,16 +4626,15 @@ _Default:_ `closed`
 |`string` - Sets the number of active shards to wait for before the operation returns.
 
 |===
-<<<<<<< HEAD
+
 === license.delete
 [source,js]
 ----
 client.license.delete([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
+
+
 === license.get
 [source,js]
 ----
@@ -4654,24 +4647,23 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
 |===
+
 === license.getBasicStatus
 [source,js]
 ----
 client.license.getBasicStatus([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
+
+
 === license.getTrialStatus
 [source,js]
 ----
 client.license.getTrialStatus([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
+
+
 === license.post
 [source,js]
 ----
@@ -4687,6 +4679,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 |`object` - licenses to be installed
 
 |===
+
 === license.postStartBasic
 [source,js]
 ----
@@ -4699,6 +4692,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 |`boolean` - whether the user has acknowledged acknowledge messages (default: false)
 
 |===
+
 === license.postStartTrial
 [source,js]
 ----
@@ -4714,6 +4708,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 |`boolean` - whether the user has acknowledged acknowledge messages (default: false)
 
 |===
+
 === migration.deprecations
 [source,js]
 ----
@@ -4726,9 +4721,7 @@ http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
 |`string` - Index pattern
 
 |===
-=======
 
->>>>>>> master
 === ml.closeJob
 [source,js]
 ----
@@ -5716,17 +5709,12 @@ http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
 |`object` - The operation definition and data (action-data pairs), separated by newlines
 
 |===
-<<<<<<< HEAD
-=== rollup.deleteJob
-=======
 
-=== security.authenticate
->>>>>>> master
+=== rollup.deleteJob
 [source,js]
 ----
 client.rollup.deleteJob([params] [, options] [, callback])
 ----
-<<<<<<< HEAD
 
 [cols=2*]
 |===
@@ -5734,13 +5722,8 @@ client.rollup.deleteJob([params] [, options] [, callback])
 |`string` - The ID of the job to delete
 
 |===
+
 === rollup.getJobs
-=======
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
-
-
-=== security.changePassword
->>>>>>> master
 [source,js]
 ----
 client.rollup.getJobs([params] [, options] [, callback])
@@ -5752,12 +5735,8 @@ client.rollup.getJobs([params] [, options] [, callback])
 |`string` - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
 
 |===
-<<<<<<< HEAD
-=== rollup.getRollupCaps
-=======
 
-=== security.clearCachedRealms
->>>>>>> master
+=== rollup.getRollupCaps
 [source,js]
 ----
 client.rollup.getRollupCaps([params] [, options] [, callback])
@@ -5769,12 +5748,8 @@ client.rollup.getRollupCaps([params] [, options] [, callback])
 |`string` - The ID of the index to check rollup capabilities on, or left blank for all jobs
 
 |===
-<<<<<<< HEAD
-=== rollup.getRollupIndexCaps
-=======
 
-=== security.clearCachedRoles
->>>>>>> master
+=== rollup.getRollupIndexCaps
 [source,js]
 ----
 client.rollup.getRollupIndexCaps([params] [, options] [, callback])
@@ -5786,12 +5761,8 @@ client.rollup.getRollupIndexCaps([params] [, options] [, callback])
 |`string` - The rollup index or index pattern to obtain rollup capabilities from.
 
 |===
-<<<<<<< HEAD
-=== rollup.putJob
-=======
 
-=== security.createApiKey
->>>>>>> master
+=== rollup.putJob
 [source,js]
 ----
 client.rollup.putJob([params] [, options] [, callback])
@@ -5806,12 +5777,8 @@ client.rollup.putJob([params] [, options] [, callback])
 |`object` - The job configuration
 
 |===
-<<<<<<< HEAD
-=== rollup.rollupSearch
-=======
 
-=== security.deletePrivileges
->>>>>>> master
+=== rollup.rollupSearch
 [source,js]
 ----
 client.rollup.rollupSearch([params] [, options] [, callback])
@@ -5835,6 +5802,7 @@ client.rollup.rollupSearch([params] [, options] [, callback])
 |`object` - The search request body
 
 |===
+
 === rollup.startJob
 [source,js]
 ----
@@ -5847,6 +5815,7 @@ client.rollup.startJob([params] [, options] [, callback])
 |`string` - The ID of the job to start
 
 |===
+
 === rollup.stopJob
 [source,js]
 ----
@@ -5865,15 +5834,15 @@ client.rollup.stopJob([params] [, options] [, callback])
 |`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
 
 |===
+
 === security.authenticate
 [source,js]
 ----
 client.security.authenticate([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
-[cols=2*]
-|===
-|===
+
+
 === security.changePassword
 [source,js]
 ----
@@ -5892,6 +5861,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cha
 |`object` - the new password for the user
 
 |===
+
 === security.clearCachedRealms
 [source,js]
 ----
@@ -5907,6 +5877,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 |`string, string[]` - Comma-separated list of usernames to clear from the cache
 
 |===
+
 === security.clearCachedRoles
 [source,js]
 ----
@@ -5919,6 +5890,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 |`string, string[]` - Role name
 
 |===
+
 === security.createApiKey
 [source,js]
 ----
@@ -5934,6 +5906,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cre
 |`object` - The api key request to create an API key
 
 |===
+
 === security.deletePrivileges
 [source,js]
 ----
@@ -6223,7 +6196,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 |`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 |`body`
-|`object` - The role to add
+|`object` - The role mapping to add
 
 |===
 
@@ -6245,324 +6218,11 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 |`object` - The user to add
 
 |===
-<<<<<<< HEAD
+
 === sql.clearCursor
 [source,js]
 ----
 client.sql.clearCursor([params] [, options] [, callback])
-=======
-
-=== ssl.certificates
-[source,js]
-----
-client.ssl.certificates([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
-
-
-=== xpack.graph.explore
-[source,js]
-----
-client.xpack.graph.explore([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
-=== xpack.info
-[source,js]
-----
-client.xpack.info([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
-[cols=2*]
-|===
-|`categories`
-|`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-
-=== xpack.license.delete
-[source,js]
-----
-client.xpack.license.delete([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-
-
-=== xpack.license.get
-[source,js]
-----
-client.xpack.license.get([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-
-=== xpack.license.getBasicStatus
-[source,js]
-----
-client.xpack.license.getBasicStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-
-
-=== xpack.license.getTrialStatus
-[source,js]
-----
-client.xpack.license.getTrialStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-
-
-=== xpack.license.post
-[source,js]
-----
-client.xpack.license.post([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|`body`
-|`object` - licenses to be installed
-
-|===
-
-=== xpack.license.postStartBasic
-[source,js]
-----
-client.xpack.license.postStartBasic([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-
-=== xpack.license.postStartTrial
-[source,js]
-----
-client.xpack.license.postStartTrial([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`type`
-|`string` - The type of trial license to generate (default: "trial")
-
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-
-=== xpack.migration.deprecations
-[source,js]
-----
-client.xpack.migration.deprecations([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
-[cols=2*]
-|===
-|`index`
-|`string` - Index pattern
-
-|===
-
-=== xpack.migration.getAssistance
-[source,js]
-----
-client.xpack.migration.getAssistance([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|===
-
-=== xpack.migration.upgrade
-[source,js]
-----
-client.xpack.migration.upgrade([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request block until the upgrade operation is completed +
-_Default:_ `true`
-
-|===
-
-=== xpack.rollup.deleteJob
-[source,js]
-----
-client.xpack.rollup.deleteJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to delete
-
-|===
-
-=== xpack.rollup.getJobs
-[source,js]
-----
-client.xpack.rollup.getJobs([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
-
-|===
-
-=== xpack.rollup.getRollupCaps
-[source,js]
-----
-client.xpack.rollup.getRollupCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the index to check rollup capabilities on, or left blank for all jobs
-
-|===
-
-=== xpack.rollup.getRollupIndexCaps
-[source,js]
-----
-client.xpack.rollup.getRollupIndexCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The rollup index or index pattern to obtain rollup capabilities from.
-
-|===
-
-=== xpack.rollup.putJob
-[source,js]
-----
-client.xpack.rollup.putJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job configuration
-
-|===
-
-=== xpack.rollup.rollupSearch
-[source,js]
-----
-client.xpack.rollup.rollupSearch([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The index or index-pattern (containing rollup or regular data) that should be searched
-
-|`type`
-|`string` - The doc type inside the index
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`body`
-|`object` - The search request body
-
-|===
-
-=== xpack.rollup.startJob
-[source,js]
-----
-client.xpack.rollup.startJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to start
-
-|===
-
-=== xpack.rollup.stopJob
-[source,js]
-----
-client.xpack.rollup.stopJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-
-|`timeout`
-|`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-
-|===
-
-=== xpack.sql.clearCursor
-[source,js]
-----
-client.xpack.sql.clearCursor([params] [, options] [, callback])
->>>>>>> master
 ----
 Clear SQL cursor
 [cols=2*]
@@ -6571,12 +6231,8 @@ Clear SQL cursor
 |`object` - Specify the cursor value in the `cursor` element to clean the cursor.
 
 |===
-<<<<<<< HEAD
-=== sql.query
-=======
 
-=== xpack.sql.query
->>>>>>> master
+=== sql.query
 [source,js]
 ----
 client.sql.query([params] [, options] [, callback])
@@ -6591,12 +6247,8 @@ Execute SQL
 |`object` - Use the `query` element to start a query. Use the `cursor` element to continue a query.
 
 |===
-<<<<<<< HEAD
-=== sql.translate
-=======
 
-=== xpack.sql.translate
->>>>>>> master
+=== sql.translate
 [source,js]
 ----
 client.sql.translate([params] [, options] [, callback])
@@ -6608,26 +6260,16 @@ Translate SQL into Elasticsearch queries
 |`object` - Specify the query in the `query` element.
 
 |===
-<<<<<<< HEAD
-=== ssl.certificates
-=======
 
-=== xpack.usage
->>>>>>> master
+=== ssl.certificates
 [source,js]
 ----
 client.ssl.certificates([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
-[cols=2*]
-|===
-|===
-<<<<<<< HEAD
-=== watcher.ackWatch
-=======
 
-=== xpack.watcher.ackWatch
->>>>>>> master
+
+=== watcher.ackWatch
 [source,js]
 ----
 client.watcher.ackWatch([params] [, options] [, callback])
@@ -6642,12 +6284,8 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-w
 |`string, string[]` - A comma-separated list of the action ids to be acked
 
 |===
-<<<<<<< HEAD
-=== watcher.activateWatch
-=======
 
-=== xpack.watcher.activateWatch
->>>>>>> master
+=== watcher.activateWatch
 [source,js]
 ----
 client.watcher.activateWatch([params] [, options] [, callback])
@@ -6659,12 +6297,8 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-acti
 |`string` - Watch ID
 
 |===
-<<<<<<< HEAD
-=== watcher.deactivateWatch
-=======
 
-=== xpack.watcher.deactivateWatch
->>>>>>> master
+=== watcher.deactivateWatch
 [source,js]
 ----
 client.watcher.deactivateWatch([params] [, options] [, callback])
@@ -6676,12 +6310,8 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deac
 |`string` - Watch ID
 
 |===
-<<<<<<< HEAD
-=== watcher.deleteWatch
-=======
 
-=== xpack.watcher.deleteWatch
->>>>>>> master
+=== watcher.deleteWatch
 [source,js]
 ----
 client.watcher.deleteWatch([params] [, options] [, callback])
@@ -6693,12 +6323,8 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delet
 |`string` - Watch ID
 
 |===
-<<<<<<< HEAD
-=== watcher.executeWatch
-=======
 
-=== xpack.watcher.executeWatch
->>>>>>> master
+=== watcher.executeWatch
 [source,js]
 ----
 client.watcher.executeWatch([params] [, options] [, callback])
@@ -6716,12 +6342,8 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execu
 |`object` - Execution control
 
 |===
-<<<<<<< HEAD
-=== watcher.getWatch
-=======
 
-=== xpack.watcher.getWatch
->>>>>>> master
+=== watcher.getWatch
 [source,js]
 ----
 client.watcher.getWatch([params] [, options] [, callback])
@@ -6733,12 +6355,8 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-w
 |`string` - Watch ID
 
 |===
-<<<<<<< HEAD
-=== watcher.putWatch
-=======
 
-=== xpack.watcher.putWatch
->>>>>>> master
+=== watcher.putWatch
 [source,js]
 ----
 client.watcher.putWatch([params] [, options] [, callback])
@@ -6765,27 +6383,16 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-w
 |`object` - The watch
 
 |===
-<<<<<<< HEAD
-=== watcher.start
-=======
 
-=== xpack.watcher.start
->>>>>>> master
+=== watcher.start
 [source,js]
 ----
 client.watcher.start([params] [, options] [, callback])
 ----
 http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
-<<<<<<< HEAD
-[cols=2*]
-|===
-|===
+
+
 === watcher.stats
-=======
-
-
-=== xpack.watcher.stats
->>>>>>> master
 [source,js]
 ----
 client.watcher.stats([params] [, options] [, callback])
@@ -6803,21 +6410,15 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats
 |`boolean` - Emits stack traces of currently running watches
 
 |===
-<<<<<<< HEAD
-=== watcher.stop
-=======
 
-=== xpack.watcher.stop
->>>>>>> master
+=== watcher.stop
 [source,js]
 ----
 client.watcher.stop([params] [, options] [, callback])
 ----
 http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
-<<<<<<< HEAD
-[cols=2*]
-|===
-|===
+
+
 === xpack.info
 [source,js]
 ----
@@ -6830,6 +6431,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
 |`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
 
 |===
+
 === xpack.usage
 [source,js]
 ----
@@ -6842,6 +6444,3 @@ Retrieve information about xpack features usage
 |`string` - Specify timeout for watch write operation
 
 |===
-=======
-
->>>>>>> master
