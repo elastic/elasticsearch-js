@@ -62,6 +62,10 @@ function buildXpackSecurityEnableUser (opts) {
     }
 
     // check required parameters
+    if (params['username'] == null) {
+      const err = new ConfigurationError('Missing required parameter: username')
+      return handleError(err, callback)
+    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)

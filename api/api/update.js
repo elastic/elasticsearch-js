@@ -42,6 +42,8 @@ function buildUpdate (opts) {
    * @param {number} retry_on_conflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
+   * @param {number} if_seq_no - only perform the update operation if the last operation that has changed the document has the specified sequence number
+   * @param {number} if_primary_term - only perform the update operation if the last operation that has changed the document has the specified primary term
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    * @param {object} body - The request definition requires either `script` or partial `doc`
@@ -59,6 +61,8 @@ function buildUpdate (opts) {
     'retry_on_conflict',
     'routing',
     'timeout',
+    'if_seq_no',
+    'if_primary_term',
     'version',
     'version_type',
     'pretty',
@@ -73,6 +77,8 @@ function buildUpdate (opts) {
     _sourceExcludes: '_source_excludes',
     _sourceIncludes: '_source_includes',
     retryOnConflict: 'retry_on_conflict',
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'

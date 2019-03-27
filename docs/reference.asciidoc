@@ -1773,6 +1773,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-ind
 |`index`
 |`string` - The name of the index
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be expected in the body of the mappings.
+
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for before the operation returns.
 
@@ -2067,6 +2070,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.
 |`index`
 |`string, string[]` - A comma-separated list of index names
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether to add the type name to the response (default: true)
+
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
@@ -2137,6 +2143,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-
 |`fields`
 |`string, string[]` - A comma-separated list of fields
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
+
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether the default mapping values should be returned as well
 
@@ -2168,6 +2177,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappin
 
 |`type`
 |`string, string[]` - A comma-separated list of document types
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether to add the type name to the response.
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2235,6 +2247,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 |===
 |`name`
 |`string, string[]` - The comma separated names of the index templates
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -2341,6 +2356,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappin
 |`type`
 |`string` - The name of the document type
 
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be expected in the body of the mappings.
+
 |`timeout`
 |`string` - Explicit operation timeout
 
@@ -2413,6 +2431,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 |===
 |`name`
 |`string` - The name of the template
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`order`
 |`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -2489,6 +2510,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-i
 
 |`new_index` or `newIndex`
 |`string` - The name of the rollover index
+
+|`include_type_name` or `includeTypeName`
+|`boolean` - Whether a type should be included in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -3452,6 +3476,9 @@ _Default:_ `true`
 |`version`
 |`boolean` - Specify whether to return document version as part of a hit
 
+|`seq_no_primary_term` or `seqNoPrimaryTerm`
+|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
+
 |`request_cache` or `requestCache`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
@@ -3946,6 +3973,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 |`timeout`
 |`string` - Explicit operation timeout
 
+|`if_seq_no` or `ifSeqNo`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
+
 |`version`
 |`number` - Explicit version number for concurrency control
 
@@ -4124,8 +4157,25 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.h
 |`index`
 |`string` - The name of the follower index
 
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
+_Default:_ `0`
+
 |`body`
 |`object` - The name of the leader index and other optional ccr related parameters
+
+|===
+
+=== ccr.followInfo
+[source,js]
+----
+client.ccr.followInfo([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+[cols=2*]
+|===
+|`index`
+|`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
 
 |===
 
@@ -4139,6 +4189,22 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-s
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+
+|===
+
+=== ccr.forgetFollower
+[source,js]
+----
+client.ccr.forgetFollower([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current
+[cols=2*]
+|===
+|`index`
+|`string` - the name of the leader index for which specified follower retention leases should be removed
+
+|`body`
+|`object` - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
 
 |===
 
@@ -4410,6 +4476,57 @@ _Default:_ `closed`
 
 |===
 
+=== security.createApiKey
+[source,js]
+----
+client.security.createApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+[cols=2*]
+|===
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The api key request to create an API key
+
+|===
+
+=== security.getApiKey
+[source,js]
+----
+client.security.getApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+[cols=2*]
+|===
+|`id`
+|`string` - API key id of the API key to be retrieved
+
+|`name`
+|`string` - API key name of the API key to be retrieved
+
+|`username`
+|`string` - user name of the user who created this API key to be retrieved
+
+|`realm_name` or `realmName`
+|`string` - realm name of the user who created this API key to be retrieved
+
+|===
+
+=== security.invalidateApiKey
+[source,js]
+----
+client.security.invalidateApiKey([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
+[cols=2*]
+|===
+|`body`
+|`object` - The api key request to invalidate API key(s)
+
+|===
+
 === xpack.graph.explore
 [source,js]
 ----
@@ -4602,6 +4719,9 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
 
 |`timeout`
 |`string` - Controls the time to wait until a job has closed. Default to 30 minutes
+
+|`body`
+|`object` - The URL params optionally sent in the body
 
 |===
 
@@ -5381,6 +5501,22 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapsho
 
 |`body`
 |`object` - Reversion options
+
+|===
+
+=== xpack.ml.setUpgradeMode
+[source,js]
+----
+client.xpack.ml.setUpgradeMode([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+[cols=2*]
+|===
+|`enabled`
+|`boolean` - Whether to enable upgrade_mode ML setting or not. Defaults to false.
+
+|`timeout`
+|`string` - Controls the time to wait before action times out. Defaults to 30 seconds
 
 |===
 
@@ -6185,6 +6321,12 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-w
 
 |`version`
 |`number` - Explicit version number for concurrency control
+
+|`if_seq_no` or `ifSeqNo`
+|`number` - only update the watch if the last operation that has changed the watch has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only update the watch if the last operation that has changed the watch has the specified primary term
 
 |`body`
 |`object` - The watch

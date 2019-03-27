@@ -130,8 +130,12 @@ declare class Client extends EventEmitter {
     delete_auto_follow_pattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     deleteAutoFollowPattern: ApiMethod<RequestParams.CcrDeleteAutoFollowPattern>
     follow: ApiMethod<RequestParams.CcrFollow>
+    follow_info: ApiMethod<RequestParams.CcrFollowInfo>
+    followInfo: ApiMethod<RequestParams.CcrFollowInfo>
     follow_stats: ApiMethod<RequestParams.CcrFollowStats>
     followStats: ApiMethod<RequestParams.CcrFollowStats>
+    forget_follower: ApiMethod<RequestParams.CcrForgetFollower>
+    forgetFollower: ApiMethod<RequestParams.CcrForgetFollower>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     getAutoFollowPattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     pause_follow: ApiMethod<RequestParams.CcrPauseFollow>
@@ -306,6 +310,14 @@ declare class Client extends EventEmitter {
   searchShards: ApiMethod<RequestParams.SearchShards>
   search_template: ApiMethod<RequestParams.SearchTemplate>
   searchTemplate: ApiMethod<RequestParams.SearchTemplate>
+  security: {
+    create_api_key: ApiMethod<RequestParams.SecurityCreateApiKey>
+    createApiKey: ApiMethod<RequestParams.SecurityCreateApiKey>
+    get_api_key: ApiMethod<RequestParams.SecurityGetApiKey>
+    getApiKey: ApiMethod<RequestParams.SecurityGetApiKey>
+    invalidate_api_key: ApiMethod<RequestParams.SecurityInvalidateApiKey>
+    invalidateApiKey: ApiMethod<RequestParams.SecurityInvalidateApiKey>
+  }
   snapshot: {
     create: ApiMethod<RequestParams.SnapshotCreate>
     create_repository: ApiMethod<RequestParams.SnapshotCreateRepository>
@@ -429,6 +441,8 @@ declare class Client extends EventEmitter {
       putJob: ApiMethod<RequestParams.XpackMlPutJob>
       revert_model_snapshot: ApiMethod<RequestParams.XpackMlRevertModelSnapshot>
       revertModelSnapshot: ApiMethod<RequestParams.XpackMlRevertModelSnapshot>
+      set_upgrade_mode: ApiMethod<RequestParams.XpackMlSetUpgradeMode>
+      setUpgradeMode: ApiMethod<RequestParams.XpackMlSetUpgradeMode>
       start_datafeed: ApiMethod<RequestParams.XpackMlStartDatafeed>
       startDatafeed: ApiMethod<RequestParams.XpackMlStartDatafeed>
       stop_datafeed: ApiMethod<RequestParams.XpackMlStopDatafeed>

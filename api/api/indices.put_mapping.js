@@ -30,6 +30,7 @@ function buildIndicesPutMapping (opts) {
    *
    * @param {list} index - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
    * @param {string} type - The name of the document type
+   * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -40,6 +41,7 @@ function buildIndicesPutMapping (opts) {
    */
 
   const acceptedQuerystring = [
+    'include_type_name',
     'timeout',
     'master_timeout',
     'ignore_unavailable',
@@ -54,6 +56,7 @@ function buildIndicesPutMapping (opts) {
   ]
 
   const snakeCase = {
+    includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
@@ -85,10 +88,6 @@ function buildIndicesPutMapping (opts) {
     }
 
     // check required parameters
-    if (params['type'] == null) {
-      const err = new ConfigurationError('Missing required parameter: type')
-      return handleError(err, callback)
-    }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
@@ -125,8 +124,12 @@ function buildIndicesPutMapping (opts) {
       path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
     } else if ((type) != null) {
       path = '/' + '_mapping' + '/' + encodeURIComponent(type)
-    } else {
+    } else if ((type) != null) {
       path = '/' + '_mappings' + '/' + encodeURIComponent(type)
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mappings'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
     }
 
     // build request object

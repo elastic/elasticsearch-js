@@ -29,6 +29,7 @@ function buildIndicesCreate (opts) {
    * Perform a [indices.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
    *
    * @param {string} index - The name of the index
+   * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.
    * @param {string} wait_for_active_shards - Set the number of active shards to wait for before the operation returns.
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
@@ -37,6 +38,7 @@ function buildIndicesCreate (opts) {
    */
 
   const acceptedQuerystring = [
+    'include_type_name',
     'wait_for_active_shards',
     'timeout',
     'master_timeout',
@@ -49,6 +51,7 @@ function buildIndicesCreate (opts) {
   ]
 
   const snakeCase = {
+    includeTypeName: 'include_type_name',
     waitForActiveShards: 'wait_for_active_shards',
     masterTimeout: 'master_timeout',
     updateAllTypes: 'update_all_types',

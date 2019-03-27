@@ -32,18 +32,23 @@ function buildXpackWatcherPutWatch (opts) {
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} active - Specify whether the watch is in/active by default
    * @param {number} version - Explicit version number for concurrency control
+   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
+   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
    * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
     'master_timeout',
     'active',
-    'version'
+    'version',
+    'if_seq_no',
+    'if_primary_term'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout'
-
+    masterTimeout: 'master_timeout',
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term'
   }
 
   return function xpackWatcherPutWatch (params, options, callback) {

@@ -582,6 +582,7 @@ export interface IndicesClose extends Generic {
 
 export interface IndicesCreate extends Generic {
   index: string;
+  include_type_name?: boolean;
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
@@ -674,6 +675,7 @@ export interface IndicesForcemerge extends Generic {
 
 export interface IndicesGet extends Generic {
   index: string | string[];
+  include_type_name?: boolean;
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -696,6 +698,7 @@ export interface IndicesGetFieldMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
   fields: string | string[];
+  include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -706,6 +709,7 @@ export interface IndicesGetFieldMapping extends Generic {
 export interface IndicesGetMapping extends Generic {
   index?: string | string[];
   type?: string | string[];
+  include_type_name?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -727,6 +731,7 @@ export interface IndicesGetSettings extends Generic {
 
 export interface IndicesGetTemplate extends Generic {
   name?: string | string[];
+  include_type_name?: boolean;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -759,7 +764,8 @@ export interface IndicesPutAlias extends Generic {
 
 export interface IndicesPutMapping extends Generic {
   index?: string | string[];
-  type: string;
+  type?: string;
+  include_type_name?: boolean;
   timeout?: string;
   master_timeout?: string;
   ignore_unavailable?: boolean;
@@ -783,6 +789,7 @@ export interface IndicesPutSettings extends Generic {
 
 export interface IndicesPutTemplate extends Generic {
   name: string;
+  include_type_name?: boolean;
   order?: number;
   create?: boolean;
   timeout?: string;
@@ -807,6 +814,7 @@ export interface IndicesRefresh extends Generic {
 export interface IndicesRollover extends Generic {
   alias: string;
   new_index?: string;
+  include_type_name?: boolean;
   timeout?: string;
   dry_run?: boolean;
   master_timeout?: string;
@@ -1110,6 +1118,7 @@ export interface Search extends Generic {
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
+  seq_no_primary_term?: boolean;
   request_cache?: boolean;
   batched_reduce_size?: number;
   max_concurrent_shard_requests?: number;
@@ -1266,6 +1275,8 @@ export interface Update extends Generic {
   retry_on_conflict?: number;
   routing?: string;
   timeout?: string;
+  if_seq_no?: number;
+  if_primary_term?: number;
   version?: number;
   version_type?: 'internal' | 'force';
   body: any;
@@ -1322,11 +1333,21 @@ export interface CcrDeleteAutoFollowPattern extends Generic {
 
 export interface CcrFollow extends Generic {
   index: string;
+  wait_for_active_shards?: string;
   body: any;
+}
+
+export interface CcrFollowInfo extends Generic {
+  index?: string | string[];
 }
 
 export interface CcrFollowStats extends Generic {
   index?: string | string[];
+}
+
+export interface CcrForgetFollower extends Generic {
+  index: string;
+  body: any;
 }
 
 export interface CcrGetAutoFollowPattern extends Generic {
@@ -1414,6 +1435,22 @@ export interface IndicesUnfreeze extends Generic {
   wait_for_active_shards?: string;
 }
 
+export interface SecurityCreateApiKey extends Generic {
+  refresh?: 'true' | 'false' | 'wait_for';
+  body: any;
+}
+
+export interface SecurityGetApiKey extends Generic {
+  id?: string;
+  name?: string;
+  username?: string;
+  realm_name?: string;
+}
+
+export interface SecurityInvalidateApiKey extends Generic {
+  body: any;
+}
+
 export interface XpackGraphExplore extends Generic {
   index?: string | string[];
   type?: string | string[];
@@ -1474,6 +1511,7 @@ export interface XpackMlCloseJob extends Generic {
   allow_no_jobs?: boolean;
   force?: boolean;
   timeout?: string;
+  body?: any;
 }
 
 export interface XpackMlDeleteCalendar extends Generic {
@@ -1724,6 +1762,11 @@ export interface XpackMlRevertModelSnapshot extends Generic {
   body?: any;
 }
 
+export interface XpackMlSetUpgradeMode extends Generic {
+  enabled?: boolean;
+  timeout?: string;
+}
+
 export interface XpackMlStartDatafeed extends Generic {
   datafeed_id: string;
   start?: string;
@@ -1854,12 +1897,12 @@ export interface XpackSecurityDeleteUser extends Generic {
 }
 
 export interface XpackSecurityDisableUser extends Generic {
-  username?: string;
+  username: string;
   refresh?: 'true' | 'false' | 'wait_for';
 }
 
 export interface XpackSecurityEnableUser extends Generic {
-  username?: string;
+  username: string;
   refresh?: 'true' | 'false' | 'wait_for';
 }
 
@@ -1975,6 +2018,8 @@ export interface XpackWatcherPutWatch extends Generic {
   master_timeout?: string;
   active?: boolean;
   version?: number;
+  if_seq_no?: number;
+  if_primary_term?: number;
   body?: any;
 }
 

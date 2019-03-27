@@ -22,31 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackMlCloseJob (opts) {
+function buildCcrForgetFollower (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.ml.close_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html) request
+   * Perform a [ccr.forget_follower](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
    *
-   * @param {string} job_id - The name of the job to close
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {boolean} force - True if the job should be forcefully closed
-   * @param {time} timeout - Controls the time to wait until a job has closed. Default to 30 minutes
-   * @param {object} body - The URL params optionally sent in the body
+   * @param {string} index - the name of the leader index for which specified follower retention leases should be removed
+   * @param {object} body - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
    */
 
   const acceptedQuerystring = [
-    'allow_no_jobs',
-    'force',
-    'timeout'
+
   ]
 
   const snakeCase = {
-    allowNoJobs: 'allow_no_jobs'
 
   }
 
-  return function xpackMlCloseJob (params, options, callback) {
+  return function ccrForgetFollower (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -61,15 +55,19 @@ function buildXpackMlCloseJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMlCloseJob(params, options, (err, body) => {
+        ccrForgetFollower(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['job_id'] == null && params['jobId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: job_id or jobId')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -80,8 +78,8 @@ function buildXpackMlCloseJob (opts) {
     }
 
     var warnings = null
-    var { method, body, jobId, job_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'jobId', 'job_id'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
       method = 'POST'
@@ -94,7 +92,7 @@ function buildXpackMlCloseJob (opts) {
 
     var path = ''
 
-    path = '/' + '_xpack' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
 
     // build request object
     const request = {
@@ -135,4 +133,4 @@ function buildXpackMlCloseJob (opts) {
   }
 }
 
-module.exports = buildXpackMlCloseJob
+module.exports = buildCcrForgetFollower
