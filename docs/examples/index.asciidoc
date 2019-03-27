@@ -1,0 +1,28 @@
+[[examples]]
+= Examples
+
+Following you can find some examples on how to use the client.
+
+* Use of the <<as_stream_examples,asStream>> parameter;
+* Executing a <<bulk_examples,bulk>> request;
+* Executing a <<exists_examples,exists>> request;
+* Executing a <<get_examples,get>> request;
+* Use of the <<ignore_examples,ignore>> parameter;
+* Executing a <<msearch_examples,msearch>> request;
+* How do I <<scroll_examples,scroll>>?
+* Executing a <<search_examples,search>> request;
+* I need <<suggest_examples,suggestions>>;
+* How to use the <<transport_request_examples,transport.request>> method;
+* How to use <<typescript_examples,TypeScript>>;
+
+include::asStream.asciidoc[]
+include::bulk.asciidoc[]
+include::exists.asciidoc[]
+include::get.asciidoc[]
+include::ignore.asciidoc[]
+include::msearch.asciidoc[]
+include::scroll.asciidoc[]
+include::search.asciidoc[]
+include::suggest.asciidoc[]
+include::transport.request.asciidoc[]
+include::typescript.asciidoc[]
