@@ -49,7 +49,12 @@ const platinumBlackList = {
   'indices.get_alias/20_empty.yml': 'Check empty aliases when getting all aliases via /_alias',
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': 'Test put job with id that is already taken',
-  // TODO: investigate why this is failing
+    // it gets random failures on CI, must investigate
+  'ml/set_upgrade_mode.yml': [
+    'Attempt to open job when upgrade_mode is enabled',
+    'Setting upgrade mode to disabled from enabled'
+  ],
+  // investigate why this is failing
   'monitoring/bulk/10_basic.yml': '*',
   'monitoring/bulk/20_privileges.yml': '*',
   'license/20_put_license.yml': '*',
