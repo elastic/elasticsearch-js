@@ -108,15 +108,6 @@ function generate (spec, common) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ${safeWords(name)}(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     ${genRequiredChecks()}
 
     ${genUrlValidation(paths, api)}
