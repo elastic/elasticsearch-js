@@ -19,9 +19,9 @@ unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
 
 function cleanup {
-  docker container rm --force --volumes elasticsearch-oss > /dev/null 2>&1 || true
+#  docker container rm --force --volumes elasticsearch-oss > /dev/null 2>&1 || true
   docker container rm --force --volumes elasticsearch-platinum > /dev/null 2>&1 || true
-  docker container rm --force --volumes elasticsearch-js-oss > /dev/null 2>&1 || true
+#  docker container rm --force --volumes elasticsearch-js-oss > /dev/null 2>&1 || true
   docker container rm --force --volumes elasticsearch-js-platinum > /dev/null 2>&1 || true
   docker network rm esnet-oss > /dev/null
   docker network rm esnet-platinum > /dev/null
@@ -41,16 +41,16 @@ docker build \
   .
 
 # run elasticsearch oss
-docker run \
-  --rm \
-  --env "node.attr.testattr=test" \
-  --env "path.repo=/tmp" \
-  --env "repositories.url.allowed_urls=http://snapshot.*" \
-  --env "discovery.type=single-node" \
-  --network=esnet-oss \
-  --name=elasticsearch-oss \
-  --detach \
-  docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
+# docker run \
+#   --rm \
+#   --env "node.attr.testattr=test" \
+#   --env "path.repo=/tmp" \
+#   --env "repositories.url.allowed_urls=http://snapshot.*" \
+#   --env "discovery.type=single-node" \
+#   --network=esnet-oss \
+#   --name=elasticsearch-oss \
+#   --detach \
+#   docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
 
 # run elasticsearch platinum
 repo=$(pwd)
@@ -82,20 +82,19 @@ docker run \
   --volume "$repo$cacrt:/usr/share/elasticsearch/config/certs/ca.crt" \
   --network=esnet-platinum \
   --name=elasticsearch-platinum \
-  --detach \
   docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
 
 # run the client unit and oss integration test
-docker run \
-  --network=esnet-oss \
-  --env "TEST_ES_SERVER=http://elasticsearch-oss:9200" \
-  --env "CODECOV_TOKEN" \
-  --volume $repo:/usr/src/app \
-  --volume /usr/src/app/node_modules \
-  --name elasticsearch-js-oss \
-  --rm \
-  elastic/elasticsearch-js \
-  npm run ci
+# docker run \
+#   --network=esnet-oss \
+#   --env "TEST_ES_SERVER=http://elasticsearch-oss:9200" \
+#   --env "CODECOV_TOKEN" \
+#   --volume $repo:/usr/src/app \
+#   --volume /usr/src/app/node_modules \
+#   --name elasticsearch-js-oss \
+#   --rm \
+#   elastic/elasticsearch-js \
+#   npm run ci
 
 # run the client platinium integration test
 docker run \
