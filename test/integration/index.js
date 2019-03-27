@@ -44,11 +44,14 @@ const customSkips = [
 const platinumBlackList = {
   // file path: test name
   'cat.aliases/10_basic.yml': 'Empty cluster',
+  'deprecation/10_basic.yml': 'Test Deprecations',
   'index/10_with_id.yml': 'Index with ID',
   'indices.get_alias/10_basic.yml': 'Get alias against closed indices',
   'indices.get_alias/20_empty.yml': 'Check empty aliases when getting all aliases via /_alias',
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': 'Test put job with id that is already taken',
+  // fails in ES6.7+ only on CI
+  'ml/set_upgrade_mode.yml': 'Attempt to open job when upgrade_mode is enabled',
   // TODO: investigate why this is failing
   'monitoring/bulk/10_basic.yml': '*',
   'monitoring/bulk/20_privileges.yml': '*',
