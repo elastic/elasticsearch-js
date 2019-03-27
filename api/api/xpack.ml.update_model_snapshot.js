@@ -53,15 +53,6 @@ function buildXpackMlUpdateModelSnapshot (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackMlUpdateModelSnapshot(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')

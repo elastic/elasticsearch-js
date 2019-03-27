@@ -52,15 +52,6 @@ function buildXpackSecurityEnableUser (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackSecurityEnableUser(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['username'] == null) {
       const err = new ConfigurationError('Missing required parameter: username')

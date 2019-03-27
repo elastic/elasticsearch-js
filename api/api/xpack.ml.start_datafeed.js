@@ -57,15 +57,6 @@ function buildXpackMlStartDatafeed (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackMlStartDatafeed(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['datafeed_id'] == null && params['datafeedId'] == null) {
       const err = new ConfigurationError('Missing required parameter: datafeed_id or datafeedId')
