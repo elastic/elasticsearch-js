@@ -28,4 +28,4 @@ exec docker run \
   -v "$repo$testnodekey:/usr/share/elasticsearch/config/certs/testnode.key" \
   -v "$repo$cacrt:/usr/share/elasticsearch/config/certs/ca.crt" \
   -p 9200:9200 \
-  docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+  docker.elastic.co/elasticsearch/elasticsearch:6.7.0
