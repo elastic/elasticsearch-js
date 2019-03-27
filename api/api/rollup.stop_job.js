@@ -55,15 +55,6 @@ function buildRollupStopJob (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        rollupStopJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')

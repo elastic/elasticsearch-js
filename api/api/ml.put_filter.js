@@ -52,15 +52,6 @@ function buildMlPutFilter (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlPutFilter(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['filter_id'] == null && params['filterId'] == null) {
       const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
