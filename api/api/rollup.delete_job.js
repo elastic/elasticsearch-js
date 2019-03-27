@@ -22,25 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackMigrationUpgrade (opts) {
+function buildRollupDeleteJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.migration.upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html) request
+   * Perform a [rollup.delete_job]() request
    *
-   * @param {string} index - The name of the index
-   * @param {boolean} wait_for_completion - Should the request block until the upgrade operation is completed
+   * @param {string} id - The ID of the job to delete
    */
 
   const acceptedQuerystring = [
-    'wait_for_completion'
+
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion'
+
   }
 
-  return function xpackMigrationUpgrade (params, options, callback) {
+  return function rollupDeleteJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,15 +54,15 @@ function buildXpackMigrationUpgrade (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMigrationUpgrade(params, options, (err, body) => {
+        rollupDeleteJob(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
 
@@ -74,11 +73,11 @@ function buildXpackMigrationUpgrade (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -88,7 +87,7 @@ function buildXpackMigrationUpgrade (opts) {
 
     var path = ''
 
-    path = '/' + '_migration' + '/' + 'upgrade' + '/' + encodeURIComponent(index)
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -129,4 +128,4 @@ function buildXpackMigrationUpgrade (opts) {
   }
 }
 
-module.exports = buildXpackMigrationUpgrade
+module.exports = buildRollupDeleteJob

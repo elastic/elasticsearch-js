@@ -22,26 +22,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherExecuteWatch (opts) {
+function buildGraphExplore (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.execute_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html) request
+   * Perform a [graph.explore](https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html) request
    *
-   * @param {string} id - Watch ID
-   * @param {boolean} debug - indicates whether the watch should execute in debug mode
-   * @param {object} body - Execution control
+   * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
+   * @param {string} routing - Specific routing value
+   * @param {time} timeout - Explicit operation timeout
+   * @param {object} body - Graph Query DSL
    */
 
   const acceptedQuerystring = [
-    'debug'
+    'routing',
+    'timeout'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackWatcherExecuteWatch (params, options, callback) {
+  return function graphExplore (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -56,10 +59,16 @@ function buildXpackWatcherExecuteWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherExecuteWatch(params, options, (err, body) => {
+        graphExplore(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
+    }
+
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -69,11 +78,11 @@ function buildXpackWatcherExecuteWatch (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
 
     if (method == null) {
-      method = 'PUT'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -83,10 +92,10 @@ function buildXpackWatcherExecuteWatch (opts) {
 
     var path = ''
 
-    if ((id) != null) {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_graph' + '/' + 'explore'
     } else {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
+      path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
     }
 
     // build request object
@@ -128,4 +137,4 @@ function buildXpackWatcherExecuteWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherExecuteWatch
+module.exports = buildGraphExplore

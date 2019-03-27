@@ -22,14 +22,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherAckWatch (opts) {
+function buildLicenseGetTrialStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.ack_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html) request
+   * Perform a [license.get_trial_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} watch_id - Watch ID
-   * @param {list} action_id - A comma-separated list of the action ids to be acked
    */
 
   const acceptedQuerystring = [
@@ -40,7 +38,7 @@ function buildXpackWatcherAckWatch (opts) {
 
   }
 
-  return function xpackWatcherAckWatch (params, options, callback) {
+  return function licenseGetTrialStatus (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,25 +53,15 @@ function buildXpackWatcherAckWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherAckWatch(params, options, (err, body) => {
+        licenseGetTrialStatus(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['watch_id'] == null && params['watchId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
-      return handleError(err, callback)
-    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
-    // check required url components
-    if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null && params['watchId'] == null))) {
-      const err = new ConfigurationError('Missing required parameter of the url: watch_id')
       return handleError(err, callback)
     }
 
@@ -84,11 +72,11 @@ function buildXpackWatcherAckWatch (opts) {
     }
 
     var warnings = null
-    var { method, body, watchId, watch_id, actionId, action_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'watchId', 'watch_id', 'actionId', 'action_id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -98,17 +86,13 @@ function buildXpackWatcherAckWatch (opts) {
 
     var path = ''
 
-    if ((watch_id || watchId) != null && (action_id || actionId) != null) {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
-    } else {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack'
-    }
+    path = '/' + '_license' + '/' + 'trial_status'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -143,4 +127,4 @@ function buildXpackWatcherAckWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherAckWatch
+module.exports = buildLicenseGetTrialStatus

@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackSqlTranslate (opts) {
+function buildMigrationDeprecations (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.sql.translate](Translate SQL into Elasticsearch queries) request
+   * Perform a [migration.deprecations](http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html) request
    *
-   * @param {object} body - Specify the query in the `query` element.
+   * @param {string} index - Index pattern
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackSqlTranslate (opts) {
 
   }
 
-  return function xpackSqlTranslate (params, options, callback) {
+  return function migrationDeprecations (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,15 +54,15 @@ function buildXpackSqlTranslate (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackSqlTranslate(params, options, (err, body) => {
+        migrationDeprecations(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -73,11 +73,11 @@ function buildXpackSqlTranslate (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -87,13 +87,17 @@ function buildXpackSqlTranslate (opts) {
 
     var path = ''
 
-    path = '/' + '_sql' + '/' + 'translate'
+    if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'
+    } else {
+      path = '/' + '_migration' + '/' + 'deprecations'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -128,4 +132,4 @@ function buildXpackSqlTranslate (opts) {
   }
 }
 
-module.exports = buildXpackSqlTranslate
+module.exports = buildMigrationDeprecations

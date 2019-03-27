@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupGetRollupIndexCaps (opts) {
+function buildWatcherGetWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.get_rollup_index_caps]() request
+   * Perform a [watcher.get_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html) request
    *
-   * @param {string} index - The rollup index or index pattern to obtain rollup capabilities from.
+   * @param {string} id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
 
   }
 
-  return function xpackRollupGetRollupIndexCaps (params, options, callback) {
+  return function watcherGetWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,15 +54,19 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupGetRollupIndexCaps(params, options, (err, body) => {
+        watcherGetWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -73,8 +77,8 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
       method = 'GET'
@@ -87,7 +91,7 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -128,4 +132,4 @@ function buildXpackRollupGetRollupIndexCaps (opts) {
   }
 }
 
-module.exports = buildXpackRollupGetRollupIndexCaps
+module.exports = buildWatcherGetWatch

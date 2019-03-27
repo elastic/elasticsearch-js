@@ -22,24 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupGetRollupCaps (opts) {
+function buildLicensePostStartTrial (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.get_rollup_caps]() request
+   * Perform a [license.post_start_trial](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} id - The ID of the index to check rollup capabilities on, or left blank for all jobs
+   * @param {string} type - The type of trial license to generate (default: "trial")
+   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
    */
 
   const acceptedQuerystring = [
-
+    'type',
+    'acknowledge'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackRollupGetRollupCaps (params, options, callback) {
+  return function licensePostStartTrial (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,10 +56,16 @@ function buildXpackRollupGetRollupCaps (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupGetRollupCaps(params, options, (err, body) => {
+        licensePostStartTrial(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
+    }
+
+    // check required parameters
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -67,11 +75,11 @@ function buildXpackRollupGetRollupCaps (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'GET'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -81,17 +89,13 @@ function buildXpackRollupGetRollupCaps (opts) {
 
     var path = ''
 
-    if ((id) != null) {
-      path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + '_rollup' + '/' + 'data'
-    }
+    path = '/' + '_license' + '/' + 'start_trial'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: '',
       querystring
     }
 
@@ -126,4 +130,4 @@ function buildXpackRollupGetRollupCaps (opts) {
   }
 }
 
-module.exports = buildXpackRollupGetRollupCaps
+module.exports = buildLicensePostStartTrial

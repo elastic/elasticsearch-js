@@ -22,24 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherDeactivateWatch (opts) {
+function buildLicenseGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.deactivate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html) request
+   * Perform a [license.get](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} watch_id - Watch ID
+   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
 
   const acceptedQuerystring = [
-
+    'local'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackWatcherDeactivateWatch (params, options, callback) {
+  return function licenseGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,17 +54,13 @@ function buildXpackWatcherDeactivateWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherDeactivateWatch(params, options, (err, body) => {
+        licenseGet(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['watch_id'] == null && params['watchId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
-      return handleError(err, callback)
-    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
@@ -77,11 +73,11 @@ function buildXpackWatcherDeactivateWatch (opts) {
     }
 
     var warnings = null
-    var { method, body, watchId, watch_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'watchId', 'watch_id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -91,13 +87,13 @@ function buildXpackWatcherDeactivateWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate'
+    path = '/' + '_license'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -132,4 +128,4 @@ function buildXpackWatcherDeactivateWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherDeactivateWatch
+module.exports = buildLicenseGet

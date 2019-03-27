@@ -22,24 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackMigrationDeprecations (opts) {
+function buildLicensePostStartBasic (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.migration.deprecations](http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html) request
+   * Perform a [license.post_start_basic](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} index - Index pattern
+   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
    */
 
   const acceptedQuerystring = [
-
+    'acknowledge'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackMigrationDeprecations (params, options, callback) {
+  return function licensePostStartBasic (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +54,7 @@ function buildXpackMigrationDeprecations (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackMigrationDeprecations(params, options, (err, body) => {
+        licensePostStartBasic(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -73,11 +73,11 @@ function buildXpackMigrationDeprecations (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'GET'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -87,17 +87,13 @@ function buildXpackMigrationDeprecations (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'
-    } else {
-      path = '/' + '_migration' + '/' + 'deprecations'
-    }
+    path = '/' + '_license' + '/' + 'start_basic'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: '',
       querystring
     }
 
@@ -132,4 +128,4 @@ function buildXpackMigrationDeprecations (opts) {
   }
 }
 
-module.exports = buildXpackMigrationDeprecations
+module.exports = buildLicensePostStartBasic

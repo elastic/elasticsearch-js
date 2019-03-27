@@ -22,27 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherStats (opts) {
+function buildSqlTranslate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html) request
+   * Perform a [sql.translate](Translate SQL into Elasticsearch queries) request
    *
-   * @param {enum} metric - Controls what additional stat metrics should be include in the response
-   * @param {enum} metric - Controls what additional stat metrics should be include in the response
-   * @param {boolean} emit_stacktraces - Emits stack traces of currently running watches
+   * @param {object} body - Specify the query in the `query` element.
    */
 
   const acceptedQuerystring = [
-    'metric',
-    'emit_stacktraces'
+
   ]
 
   const snakeCase = {
-    emitStacktraces: 'emit_stacktraces'
+
   }
 
-  return function xpackWatcherStats (params, options, callback) {
+  return function sqlTranslate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -57,15 +54,15 @@ function buildXpackWatcherStats (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherStats(params, options, (err, body) => {
+        sqlTranslate(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -76,11 +73,11 @@ function buildXpackWatcherStats (opts) {
     }
 
     var warnings = null
-    var { method, body, metric } = params
-    var querystring = semicopy(params, ['method', 'body', 'metric'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'GET'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -90,17 +87,13 @@ function buildXpackWatcherStats (opts) {
 
     var path = ''
 
-    if ((metric) != null) {
-      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
-    } else {
-      path = '/' + '_watcher' + '/' + 'stats'
-    }
+    path = '/' + '_sql' + '/' + 'translate'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -135,4 +128,4 @@ function buildXpackWatcherStats (opts) {
   }
 }
 
-module.exports = buildXpackWatcherStats
+module.exports = buildSqlTranslate

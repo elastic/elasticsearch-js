@@ -22,24 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicensePostStartBasic (opts) {
+function buildSqlClearCursor (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.post_start_basic](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [sql.clear_cursor](Clear SQL cursor) request
    *
-   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
+   * @param {object} body - Specify the cursor value in the `cursor` element to clean the cursor.
    */
 
   const acceptedQuerystring = [
-    'acknowledge'
+
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackLicensePostStartBasic (params, options, callback) {
+  return function sqlClearCursor (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,15 +54,15 @@ function buildXpackLicensePostStartBasic (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackLicensePostStartBasic(params, options, (err, body) => {
+        sqlClearCursor(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -87,13 +87,13 @@ function buildXpackLicensePostStartBasic (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'start_basic'
+    path = '/' + '_sql' + '/' + 'close'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 
@@ -128,4 +128,4 @@ function buildXpackLicensePostStartBasic (opts) {
   }
 }
 
-module.exports = buildXpackLicensePostStartBasic
+module.exports = buildSqlClearCursor

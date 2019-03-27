@@ -22,14 +22,14 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupPutJob (opts) {
+function buildCcrForgetFollower (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.put_job]() request
+   * Perform a [ccr.forget_follower](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
    *
-   * @param {string} id - The ID of the job to create
-   * @param {object} body - The job configuration
+   * @param {string} index - the name of the leader index for which specified follower retention leases should be removed
+   * @param {object} body - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
    */
 
   const acceptedQuerystring = [
@@ -40,7 +40,7 @@ function buildXpackRollupPutJob (opts) {
 
   }
 
-  return function xpackRollupPutJob (params, options, callback) {
+  return function ccrForgetFollower (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,15 +55,15 @@ function buildXpackRollupPutJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupPutJob(params, options, (err, body) => {
+        ccrForgetFollower(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
     if (params['body'] == null) {
@@ -78,11 +78,11 @@ function buildXpackRollupPutJob (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -92,7 +92,7 @@ function buildXpackRollupPutJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
 
     // build request object
     const request = {
@@ -133,4 +133,4 @@ function buildXpackRollupPutJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupPutJob
+module.exports = buildCcrForgetFollower

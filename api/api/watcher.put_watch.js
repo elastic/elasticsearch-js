@@ -22,24 +22,33 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherDeleteWatch (opts) {
+function buildWatcherPutWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.delete_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html) request
+   * Perform a [watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
    *
    * @param {string} id - Watch ID
+   * @param {boolean} active - Specify whether the watch is in/active by default
+   * @param {number} version - Explicit version number for concurrency control
+   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
+   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
+   * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
-
+    'active',
+    'version',
+    'if_seq_no',
+    'if_primary_term'
   ]
 
   const snakeCase = {
-
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term'
   }
 
-  return function xpackWatcherDeleteWatch (params, options, callback) {
+  return function watcherPutWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +63,7 @@ function buildXpackWatcherDeleteWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherDeleteWatch(params, options, (err, body) => {
+        watcherPutWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -63,10 +72,6 @@ function buildXpackWatcherDeleteWatch (opts) {
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -81,7 +86,7 @@ function buildXpackWatcherDeleteWatch (opts) {
     var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'DELETE'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -97,7 +102,7 @@ function buildXpackWatcherDeleteWatch (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 
@@ -132,4 +137,4 @@ function buildXpackWatcherDeleteWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherDeleteWatch
+module.exports = buildWatcherPutWatch

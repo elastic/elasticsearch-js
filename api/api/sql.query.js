@@ -22,24 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherGetWatch (opts) {
+function buildSqlQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.get_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html) request
+   * Perform a [sql.query](Execute SQL) request
    *
-   * @param {string} id - Watch ID
+   * @param {string} format - a short version of the Accept header, e.g. json, yaml
+   * @param {object} body - Use the `query` element to start a query. Use the `cursor` element to continue a query.
    */
 
   const acceptedQuerystring = [
-
+    'format'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackWatcherGetWatch (params, options, callback) {
+  return function sqlQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,19 +55,15 @@ function buildXpackWatcherGetWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherGetWatch(params, options, (err, body) => {
+        sqlQuery(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -77,11 +74,11 @@ function buildXpackWatcherGetWatch (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'GET'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -91,13 +88,13 @@ function buildXpackWatcherGetWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_sql'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -132,4 +129,4 @@ function buildXpackWatcherGetWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherGetWatch
+module.exports = buildSqlQuery

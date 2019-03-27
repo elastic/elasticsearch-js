@@ -22,33 +22,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherPutWatch (opts) {
+function buildRollupStopJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
+   * Perform a [rollup.stop_job]() request
    *
-   * @param {string} id - Watch ID
-   * @param {boolean} active - Specify whether the watch is in/active by default
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
-   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
-   * @param {object} body - The watch
+   * @param {string} id - The ID of the job to stop
+   * @param {boolean} wait_for_completion - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
+   * @param {time} timeout - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
    */
 
   const acceptedQuerystring = [
-    'active',
-    'version',
-    'if_seq_no',
-    'if_primary_term'
+    'wait_for_completion',
+    'timeout'
   ]
 
   const snakeCase = {
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term'
+    waitForCompletion: 'wait_for_completion'
+
   }
 
-  return function xpackWatcherPutWatch (params, options, callback) {
+  return function rollupStopJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -63,7 +58,7 @@ function buildXpackWatcherPutWatch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherPutWatch(params, options, (err, body) => {
+        rollupStopJob(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -86,7 +81,7 @@ function buildXpackWatcherPutWatch (opts) {
     var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -96,7 +91,7 @@ function buildXpackWatcherPutWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_stop'
 
     // build request object
     const request = {
@@ -137,4 +132,4 @@ function buildXpackWatcherPutWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherPutWatch
+module.exports = buildRollupStopJob

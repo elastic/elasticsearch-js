@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicenseGetBasicStatus (opts) {
+function buildRollupGetRollupIndexCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.get_basic_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [rollup.get_rollup_index_caps]() request
    *
+   * @param {string} index - The rollup index or index pattern to obtain rollup capabilities from.
    */
 
   const acceptedQuerystring = [
@@ -38,7 +39,7 @@ function buildXpackLicenseGetBasicStatus (opts) {
 
   }
 
-  return function xpackLicenseGetBasicStatus (params, options, callback) {
+  return function rollupGetRollupIndexCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,15 +54,15 @@ function buildXpackLicenseGetBasicStatus (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackLicenseGetBasicStatus(params, options, (err, body) => {
+        rollupGetRollupIndexCaps(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
@@ -72,8 +73,8 @@ function buildXpackLicenseGetBasicStatus (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
       method = 'GET'
@@ -86,7 +87,7 @@ function buildXpackLicenseGetBasicStatus (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'basic_status'
+    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
 
     // build request object
     const request = {
@@ -127,4 +128,4 @@ function buildXpackLicenseGetBasicStatus (opts) {
   }
 }
 
-module.exports = buildXpackLicenseGetBasicStatus
+module.exports = buildRollupGetRollupIndexCaps

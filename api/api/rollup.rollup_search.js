@@ -22,24 +22,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicenseGet (opts) {
+function buildRollupRollupSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.get](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [rollup.rollup_search]() request
    *
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
+   * @param {list} index - The indices or index-pattern(s) (containing rollup or regular data) that should be searched
+   * @param {string} type - The doc type inside the index
+   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+   * @param {object} body - The search request body
    */
 
   const acceptedQuerystring = [
-    'local'
+    'typed_keys',
+    'rest_total_hits_as_int'
   ]
 
   const snakeCase = {
-
+    typedKeys: 'typed_keys',
+    restTotalHitsAsInt: 'rest_total_hits_as_int'
   }
 
-  return function xpackLicenseGet (params, options, callback) {
+  return function rollupRollupSearch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,15 +60,25 @@ function buildXpackLicenseGet (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackLicenseGet(params, options, (err, body) => {
+        rollupRollupSearch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
+    }
+
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }
 
@@ -73,11 +89,11 @@ function buildXpackLicenseGet (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, index, type } = params
+    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
 
     if (method == null) {
-      method = 'GET'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -87,13 +103,17 @@ function buildXpackLicenseGet (opts) {
 
     var path = ''
 
-    path = '/' + '_license'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -128,4 +148,4 @@ function buildXpackLicenseGet (opts) {
   }
 }
 
-module.exports = buildXpackLicenseGet
+module.exports = buildRollupRollupSearch

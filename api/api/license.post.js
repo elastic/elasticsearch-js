@@ -22,30 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupRollupSearch (opts) {
+function buildLicensePost (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.rollup_search]() request
+   * Perform a [license.post](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} index - The index or index-pattern (containing rollup or regular data) that should be searched
-   * @param {string} type - The doc type inside the index
-   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {object} body - The search request body
+   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
+   * @param {object} body - licenses to be installed
    */
 
   const acceptedQuerystring = [
-    'typed_keys',
-    'rest_total_hits_as_int'
+    'acknowledge'
   ]
 
   const snakeCase = {
-    typedKeys: 'typed_keys',
-    restTotalHitsAsInt: 'rest_total_hits_as_int'
+
   }
 
-  return function xpackRollupRollupSearch (params, options, callback) {
+  return function licensePost (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -60,26 +55,10 @@ function buildXpackRollupRollupSearch (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupRollupSearch(params, options, (err, body) => {
+        licensePost(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
-    }
-
-    // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -89,11 +68,11 @@ function buildXpackRollupRollupSearch (opts) {
     }
 
     var warnings = null
-    var { method, body, index, type } = params
-    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -103,11 +82,7 @@ function buildXpackRollupRollupSearch (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
-    }
+    path = '/' + '_license'
 
     // build request object
     const request = {
@@ -148,4 +123,4 @@ function buildXpackRollupRollupSearch (opts) {
   }
 }
 
-module.exports = buildXpackRollupRollupSearch
+module.exports = buildLicensePost

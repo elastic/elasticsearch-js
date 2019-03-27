@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherStart (opts) {
+function buildRollupGetJobs (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.start](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html) request
+   * Perform a [rollup.get_jobs]() request
    *
+   * @param {string} id - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
    */
 
   const acceptedQuerystring = [
@@ -38,7 +39,7 @@ function buildXpackWatcherStart (opts) {
 
   }
 
-  return function xpackWatcherStart (params, options, callback) {
+  return function rollupGetJobs (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,16 +54,10 @@ function buildXpackWatcherStart (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherStart(params, options, (err, body) => {
+        rollupGetJobs(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -72,11 +67,11 @@ function buildXpackWatcherStart (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -86,13 +81,17 @@ function buildXpackWatcherStart (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + '_start'
+    if ((id) != null) {
+      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    } else {
+      path = '/' + '_rollup' + '/' + 'job'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -127,4 +126,4 @@ function buildXpackWatcherStart (opts) {
   }
 }
 
-module.exports = buildXpackWatcherStart
+module.exports = buildRollupGetJobs

@@ -22,23 +22,27 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherStop (opts) {
+function buildWatcherStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.stop](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html) request
+   * Perform a [watcher.stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html) request
    *
+   * @param {list} metric - Controls what additional stat metrics should be include in the response
+   * @param {list} metric - Controls what additional stat metrics should be include in the response
+   * @param {boolean} emit_stacktraces - Emits stack traces of currently running watches
    */
 
   const acceptedQuerystring = [
-
+    'metric',
+    'emit_stacktraces'
   ]
 
   const snakeCase = {
-
+    emitStacktraces: 'emit_stacktraces'
   }
 
-  return function xpackWatcherStop (params, options, callback) {
+  return function watcherStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,7 +57,7 @@ function buildXpackWatcherStop (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackWatcherStop(params, options, (err, body) => {
+        watcherStats(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
@@ -72,11 +76,11 @@ function buildXpackWatcherStop (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, metric } = params
+    var querystring = semicopy(params, ['method', 'body', 'metric'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -86,13 +90,17 @@ function buildXpackWatcherStop (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + '_stop'
+    if ((metric) != null) {
+      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
+    } else {
+      path = '/' + '_watcher' + '/' + 'stats'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -127,4 +135,4 @@ function buildXpackWatcherStop (opts) {
   }
 }
 
-module.exports = buildXpackWatcherStop
+module.exports = buildWatcherStats

@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicenseDelete (opts) {
+function buildWatcherDeleteWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.delete](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [watcher.delete_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html) request
    *
+   * @param {string} id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -38,7 +39,7 @@ function buildXpackLicenseDelete (opts) {
 
   }
 
-  return function xpackLicenseDelete (params, options, callback) {
+  return function watcherDeleteWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,13 +54,17 @@ function buildXpackLicenseDelete (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackLicenseDelete(params, options, (err, body) => {
+        watcherDeleteWatch(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
@@ -72,8 +77,8 @@ function buildXpackLicenseDelete (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
       method = 'DELETE'
@@ -86,7 +91,7 @@ function buildXpackLicenseDelete (opts) {
 
     var path = ''
 
-    path = '/' + '_license'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -127,4 +132,4 @@ function buildXpackLicenseDelete (opts) {
   }
 }
 
-module.exports = buildXpackLicenseDelete
+module.exports = buildWatcherDeleteWatch

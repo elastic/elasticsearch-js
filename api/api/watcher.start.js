@@ -22,28 +22,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupStopJob (opts) {
+function buildWatcherStart (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.stop_job]() request
+   * Perform a [watcher.start](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html) request
    *
-   * @param {string} id - The ID of the job to stop
-   * @param {boolean} wait_for_completion - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-   * @param {time} timeout - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
    */
 
   const acceptedQuerystring = [
-    'wait_for_completion',
-    'timeout'
+
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion'
 
   }
 
-  return function xpackRollupStopJob (params, options, callback) {
+  return function watcherStart (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -58,15 +53,15 @@ function buildXpackRollupStopJob (opts) {
     // promises support
     if (callback == null) {
       return new Promise((resolve, reject) => {
-        xpackRollupStopJob(params, options, (err, body) => {
+        watcherStart(params, options, (err, body) => {
           err ? reject(err) : resolve(body)
         })
       })
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -77,8 +72,8 @@ function buildXpackRollupStopJob (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
       method = 'POST'
@@ -91,13 +86,13 @@ function buildXpackRollupStopJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_stop'
+    path = '/' + '_watcher' + '/' + '_start'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -132,4 +127,4 @@ function buildXpackRollupStopJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupStopJob
+module.exports = buildWatcherStart
