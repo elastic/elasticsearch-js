@@ -2931,15 +2931,7 @@ _Default:_ `128`
 _Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
-<<<<<<< HEAD
 |`boolean` - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
-=======
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
->>>>>>> ad6f56c... Doc updates (#791)
 
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
@@ -2970,15 +2962,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sear
 |`number` - Controls the maximum number of concurrent searches the multi search api will execute
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
-<<<<<<< HEAD
 |`boolean` - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
-=======
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
->>>>>>> ad6f56c... Doc updates (#791)
 
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
@@ -3365,13 +3349,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
 
-<<<<<<< HEAD
-=======
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
-
->>>>>>> ad6f56c... Doc updates (#791)
 |`default_operator` or `defaultOperator`
 |`'AND', 'OR'` - The default operator for query string query (AND or OR) +
 _Default:_ `OR`
@@ -3483,13 +3460,8 @@ _Default:_ `true`
 _Default:_ `512`
 
 |`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-<<<<<<< HEAD
 |`number` - The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-    _Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
-=======
-|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `The default is 5.`
->>>>>>> ad6f56c... Doc updates (#791)
+_Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
 
 |`pre_filter_shard_size` or `preFilterShardSize`
 |`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
@@ -3584,15 +3556,7 @@ _Default:_ `open`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
-<<<<<<< HEAD
 |`boolean` - This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
-=======
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
->>>>>>> ad6f56c... Doc updates (#791)
 
 |`body`
 |`object` - The search definition template and its params
@@ -4160,34 +4124,11 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.h
 |`index`
 |`string` - The name of the follower index
 
-<<<<<<< HEAD
-=======
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
-_Default:_ `0`
-
->>>>>>> ad6f56c... Doc updates (#791)
 |`body`
 |`object` - The name of the leader index and other optional ccr related parameters
 
 |===
-<<<<<<< HEAD
-=======
 
-=== ccr.followInfo
-[source,js]
-----
-client.ccr.followInfo([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-
->>>>>>> ad6f56c... Doc updates (#791)
 === ccr.followStats
 [source,js]
 ----
@@ -4468,1940 +4409,6 @@ _Default:_ `closed`
 |`string` - Sets the number of active shards to wait for before the operation returns.
 
 |===
-<<<<<<< HEAD
-=== xpack.graph.explore
-[source,js]
-----
-client.xpack.graph.explore([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-=== xpack.info
-[source,js]
-----
-client.xpack.info([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
-[cols=2*]
-|===
-|`categories`
-|`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-=== xpack.license.delete
-[source,js]
-----
-client.xpack.license.delete([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.get
-[source,js]
-----
-client.xpack.license.get([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-=== xpack.license.getBasicStatus
-[source,js]
-----
-client.xpack.license.getBasicStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.getTrialStatus
-[source,js]
-----
-client.xpack.license.getTrialStatus([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|===
-=== xpack.license.post
-[source,js]
-----
-client.xpack.license.post([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|`body`
-|`object` - licenses to be installed
-
-|===
-=== xpack.license.postStartBasic
-[source,js]
-----
-client.xpack.license.postStartBasic([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-=== xpack.license.postStartTrial
-[source,js]
-----
-client.xpack.license.postStartTrial([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
-[cols=2*]
-|===
-|`type`
-|`string` - The type of trial license to generate (default: "trial")
-
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-=== xpack.migration.deprecations
-[source,js]
-----
-client.xpack.migration.deprecations([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
-[cols=2*]
-|===
-|`index`
-|`string` - Index pattern
-
-|===
-=== xpack.migration.getAssistance
-[source,js]
-----
-client.xpack.migration.getAssistance([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-    _Default:_ `open`
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|===
-=== xpack.migration.upgrade
-[source,js]
-----
-client.xpack.migration.upgrade([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request block until the upgrade operation is completed +
-    _Default:_ `true`
-
-|===
-=== xpack.ml.closeJob
-=======
-
-=== ml.closeJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.closeJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to close
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`force`
-|`boolean` - True if the job should be forcefully closed
-
-|`timeout`
-|`string` - Controls the time to wait until a job has closed. Default to 30 minutes
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteCalendar
-=======
-
-=== ml.deleteCalendar
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteCalendar([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to delete
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteCalendarEvent
-=======
-
-=== ml.deleteCalendarEvent
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteCalendarEvent([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`event_id` or `eventId`
-|`string` - The ID of the event to remove from the calendar
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteCalendarJob
-=======
-
-=== ml.deleteCalendarJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteCalendarJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to remove from the calendar
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteDatafeed
-=======
-
-=== ml.deleteDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to delete
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully deleted
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteExpiredData
-=======
-
-=== ml.deleteExpiredData
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteExpiredData([params] [, options] [, callback])
-----
-
-<<<<<<< HEAD
-[cols=2*]
-|===
-|===
-=== xpack.ml.deleteFilter
-=======
-
-
-=== ml.deleteFilter
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to delete
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteForecast
-=======
-
-=== ml.deleteForecast
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteForecast([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job from which to delete forecasts
-
-|`forecast_id` or `forecastId`
-|`string` - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
-
-|`allow_no_forecasts` or `allowNoForecasts`
-|`boolean` - Whether to ignore if `_all` matches no forecasts
-
-|`timeout`
-|`string` - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteJob
-=======
-
-=== ml.deleteJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to delete
-
-|`force`
-|`boolean` - True if the job should be forcefully deleted
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should this request wait until the operation has completed before returning +
-_Default:_ `true`
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.deleteModelSnapshot
-=======
-
-=== ml.deleteModelSnapshot
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.deleteModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to delete
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.findFileStructure
-=======
-
-=== ml.findFileStructure
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.findFileStructure([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-file-structure.html
-[cols=2*]
-|===
-|`lines_to_sample` or `linesToSample`
-|`number` - How many lines of the file should be included in the analysis +
-_Default:_ `1000`
-
-|`timeout`
-|`string` - Timeout after which the analysis will be aborted +
-_Default:_ `25s`
-
-|`charset`
-|`string` - Optional parameter to specify the character set of the file
-
-|`format`
-|`'ndjson', 'xml', 'delimited', 'semi_structured_text'` - Optional parameter to specify the high level file format
-
-|`has_header_row` or `hasHeaderRow`
-|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
-
-|`column_names` or `columnNames`
-|`string, string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
-
-|`delimiter`
-|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
-
-|`quote`
-|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
-
-|`should_trim_fields` or `shouldTrimFields`
-|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
-
-|`grok_pattern` or `grokPattern`
-|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
-
-|`timestamp_field` or `timestampField`
-|`string` - Optional parameter to specify the timestamp field in the file
-
-|`timestamp_format` or `timestampFormat`
-|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
-
-|`explain`
-|`boolean` - Whether to include a commentary on how the structure was derived
-
-|`body`
-|`object` - The contents of the file to be analyzed
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.flushJob
-=======
-
-=== ml.flushJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.flushJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to flush
-
-|`calc_interim` or `calcInterim`
-|`boolean` - Calculates interim results for the most recent bucket or all buckets within the latency period
-
-|`start`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`end`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`advance_time` or `advanceTime`
-|`string` - Advances time to the given value generating results and updating the model for the advanced interval
-
-|`skip_time` or `skipTime`
-|`string` - Skips time to the given value without generating results or updating the model for the skipped interval
-
-|`body`
-|`object` - Flush parameters
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.forecast
-=======
-
-=== ml.forecast
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.forecast([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to forecast for
-
-|`duration`
-|`string` - The duration of the forecast
-
-|`expires_in` or `expiresIn`
-|`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getBuckets
-=======
-
-=== ml.getBuckets
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getBuckets([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - ID of the job to get bucket results from
-
-|`timestamp`
-|`string` - The timestamp of the desired single bucket result
-
-|`expand`
-|`boolean` - Include anomaly records
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of buckets
-
-|`size`
-|`number` - specifies a max number of buckets to get
-
-|`start`
-|`string` - Start time filter for buckets
-
-|`end`
-|`string` - End time filter for buckets
-
-|`anomaly_score` or `anomalyScore`
-|`number` - Filter for the most anomalous buckets
-
-|`sort`
-|`string` - Sort buckets by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Bucket selection details if not provided in URI
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getCalendarEvents
-=======
-
-=== ml.getCalendarEvents
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getCalendarEvents([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar containing the events
-
-|`job_id` or `jobId`
-|`string` - Get events for the job. When this option is used calendar_id must be '_all'
-
-|`start`
-|`string` - Get events after this time
-
-|`end`
-|`string` - Get events before this time
-
-|`from`
-|`number` - Skips a number of events
-
-|`size`
-|`number` - Specifies a max number of events to get
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getCalendars
-=======
-
-=== ml.getCalendars
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getCalendars([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to fetch
-
-|`from`
-|`number` - skips a number of calendars
-
-|`size`
-|`number` - specifies a max number of calendars to get
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getCategories
-=======
-
-=== ml.getCategories
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getCategories([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job
-
-|`category_id` or `categoryId`
-|`number` - The identifier of the category definition of interest
-
-|`from`
-|`number` - skips a number of categories
-
-|`size`
-|`number` - specifies a max number of categories to get
-
-|`body`
-|`object` - Category selection details if not provided in URI
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getDatafeedStats
-=======
-
-=== ml.getDatafeedStats
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getDatafeedStats([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds stats to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getDatafeeds
-=======
-
-=== ml.getDatafeeds
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getDatafeeds([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getFilters
-=======
-
-=== ml.getFilters
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getFilters([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to fetch
-
-|`from`
-|`number` - skips a number of filters
-
-|`size`
-|`number` - specifies a max number of filters to get
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getInfluencers
-=======
-
-=== ml.getInfluencers
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getInfluencers([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of influencers
-
-|`size`
-|`number` - specifies a max number of influencers to get
-
-|`start`
-|`string` - start timestamp for the requested influencers
-
-|`end`
-|`string` - end timestamp for the requested influencers
-
-|`influencer_score` or `influencerScore`
-|`number` - influencer score threshold for the requested influencers
-
-|`sort`
-|`string` - sort field for the requested influencers
-
-|`desc`
-|`boolean` - whether the results should be sorted in decending order
-
-|`body`
-|`object` - Influencer selection criteria
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getJobStats
-=======
-
-=== ml.getJobStats
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getJobStats([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs stats to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getJobs
-=======
-
-=== ml.getJobs
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getJobs([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getModelSnapshots
-=======
-
-=== ml.getModelSnapshots
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getModelSnapshots([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to fetch
-
-|`from`
-|`number` - Skips a number of documents
-
-|`size`
-|`number` - The default number of documents returned in queries as a string.
-
-|`start`
-|`string` - The filter 'start' query parameter
-
-|`end`
-|`string` - The filter 'end' query parameter
-
-|`sort`
-|`string` - Name of the field to sort on
-
-|`desc`
-|`boolean` - True if the results should be sorted in descending order
-
-|`body`
-|`object` - Model snapshot selection criteria
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getOverallBuckets
-=======
-
-=== ml.getOverallBuckets
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getOverallBuckets([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The job IDs for which to calculate overall bucket results
-
-|`top_n` or `topN`
-|`number` - The number of top job bucket scores to be used in the overall_score calculation
-
-|`bucket_span` or `bucketSpan`
-|`string` - The span of the overall buckets. Defaults to the longest job bucket_span
-
-|`overall_score` or `overallScore`
-|`number` - Returns overall buckets with overall scores higher than this value
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - If true overall buckets that include interim buckets will be excluded
-
-|`start`
-|`string` - Returns overall buckets with timestamps after this time
-
-|`end`
-|`string` - Returns overall buckets with timestamps earlier than this time
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`body`
-|`object` - Overall bucket selection details if not provided in URI
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.getRecords
-=======
-
-=== ml.getRecords
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.getRecords([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of records
-
-|`size`
-|`number` - specifies a max number of records to get
-
-|`start`
-|`string` - Start time filter for records
-
-|`end`
-|`string` - End time filter for records
-
-|`record_score` or `recordScore`
-|`number` - undefined
-
-|`sort`
-|`string` - Sort records by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Record selection criteria
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.info
-=======
-
-=== ml.info
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.info([params] [, options] [, callback])
-----
-
-<<<<<<< HEAD
-[cols=2*]
-|===
-|===
-=== xpack.ml.openJob
-=======
-
-
-=== ml.openJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.openJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to open
-
-|`ignore_downtime` or `ignoreDowntime`
-|`boolean` - Controls if gaps in data are treated as anomalous or as a maintenance window after a job re-start
-
-|`timeout`
-|`string` - Controls the time to wait until a job has opened. Default to 30 minutes
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.postCalendarEvents
-=======
-
-=== ml.postCalendarEvents
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.postCalendarEvents([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`body`
-|`object` - A list of events
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.postData
-=======
-
-=== ml.postData
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.postData([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job receiving the data
-
-|`reset_start` or `resetStart`
-|`string` - Optional parameter to specify the start of the bucket resetting range
-
-|`reset_end` or `resetEnd`
-|`string` - Optional parameter to specify the end of the bucket resetting range
-
-|`body`
-|`object` - The data to process
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.previewDatafeed
-=======
-
-=== ml.previewDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.previewDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to preview
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.putCalendar
-=======
-
-=== ml.putCalendar
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.putCalendar([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to create
-
-|`body`
-|`object` - The calendar details
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.putCalendarJob
-=======
-
-=== ml.putCalendarJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.putCalendarJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to add to the calendar
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.putDatafeed
-=======
-
-=== ml.putDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.putDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to create
-
-|`body`
-|`object` - The datafeed config
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.putFilter
-=======
-
-=== ml.putFilter
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.putFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to create
-
-|`body`
-|`object` - The filter details
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.putJob
-=======
-
-=== ml.putJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.putJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.revertModelSnapshot
-=======
-
-=== ml.revertModelSnapshot
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.revertModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to revert to
-
-|`delete_intervening_results` or `deleteInterveningResults`
-|`boolean` - Should we reset the results back to the time of the snapshot?
-
-|`body`
-|`object` - Reversion options
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.startDatafeed
-=======
-
-=== ml.setUpgradeMode
-[source,js]
-----
-client.ml.setUpgradeMode([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
-[cols=2*]
-|===
-|`enabled`
-|`boolean` - Whether to enable upgrade_mode ML setting or not. Defaults to false.
-
-|`timeout`
-|`string` - Controls the time to wait before action times out. Defaults to 30 seconds
-
-|===
-
-=== ml.startDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.startDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to start
-
-|`start`
-|`string` - The start time from where the datafeed should begin
-
-|`end`
-|`string` - The end time when the datafeed should stop. When not set, the datafeed continues in real time
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has started. Default to 20 seconds
-
-|`body`
-|`object` - The start datafeed parameters
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.stopDatafeed
-=======
-
-=== ml.stopDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.stopDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to stop
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully stopped.
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.updateDatafeed
-=======
-
-=== ml.updateDatafeed
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.updateDatafeed([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to update
-
-|`body`
-|`object` - The datafeed update settings
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.updateFilter
-=======
-
-=== ml.updateFilter
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.updateFilter([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to update
-
-|`body`
-|`object` - The filter update
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.updateJob
-=======
-
-=== ml.updateJob
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.updateJob([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job update settings
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.updateModelSnapshot
-=======
-
-=== ml.updateModelSnapshot
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.updateModelSnapshot([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to update
-
-|`body`
-|`object` - The model snapshot properties to update
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.validate
-=======
-
-=== ml.validate
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.validate([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`body`
-|`object` - The job config
-
-|===
-<<<<<<< HEAD
-=== xpack.ml.validateDetector
-=======
-
-=== ml.validateDetector
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.ml.validateDetector([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`body`
-|`object` - The detector
-
-|===
-<<<<<<< HEAD
-=== xpack.monitoring.bulk
-=======
-
-=== monitoring.bulk
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.monitoring.bulk([params] [, options] [, callback])
-----
-http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
-[cols=2*]
-|===
-|`type`
-|`string` - Default document type for items which don't provide one
-
-|`system_id` or `systemId`
-|`string` - Identifier of the monitored system
-
-|`system_api_version` or `systemApiVersion`
-|`string` - API Version of the monitored system
-
-|`interval`
-|`string` - Collection interval (e.g., '10s' or '10000ms') of the payload
-
-|`body`
-|`object` - The operation definition and data (action-data pairs), separated by newlines
-
-|===
-<<<<<<< HEAD
-=== xpack.rollup.deleteJob
-=======
-
-=== security.authenticate
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.rollup.deleteJob([params] [, options] [, callback])
-----
-<<<<<<< HEAD
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to delete
-
-|===
-=== xpack.rollup.getJobs
-=======
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
-
-
-=== security.changePassword
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.rollup.getJobs([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
-
-|===
-<<<<<<< HEAD
-=== xpack.rollup.getRollupCaps
-=======
-
-=== security.clearCachedRealms
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.rollup.getRollupCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the index to check rollup capabilities on, or left blank for all jobs
-
-|===
-<<<<<<< HEAD
-=== xpack.rollup.getRollupIndexCaps
-=======
-
-=== security.clearCachedRoles
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.rollup.getRollupIndexCaps([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The rollup index or index pattern to obtain rollup capabilities from.
-
-|===
-<<<<<<< HEAD
-=== xpack.rollup.putJob
-=======
-
-=== security.createApiKey
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.rollup.putJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job configuration
-
-|===
-=== xpack.rollup.rollupSearch
-[source,js]
-----
-client.xpack.rollup.rollupSearch([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`index`
-|`string` - The index or index-pattern (containing rollup or regular data) that should be searched
-
-|`type`
-|`string` - The doc type inside the index
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`body`
-|`object` - The search request body
-
-|===
-=== xpack.rollup.startJob
-[source,js]
-----
-client.xpack.rollup.startJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to start
-
-|===
-=== xpack.rollup.stopJob
-[source,js]
-----
-client.xpack.rollup.stopJob([params] [, options] [, callback])
-----
-
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-
-|`timeout`
-|`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-
-|===
-=== xpack.security.authenticate
-[source,js]
-----
-client.xpack.security.authenticate([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
-[cols=2*]
-|===
-|===
-=== xpack.security.changePassword
-[source,js]
-----
-client.xpack.security.changePassword([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to change the password for
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - the new password for the user
-
-|===
-=== xpack.security.clearCachedRealms
-[source,js]
-----
-client.xpack.security.clearCachedRealms([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
-[cols=2*]
-|===
-|`realms`
-|`string, string[]` - Comma-separated list of realms to clear
-
-|`usernames`
-|`string, string[]` - Comma-separated list of usernames to clear from the cache
-
-|===
-<<<<<<< HEAD
-=== xpack.security.clearCachedRoles
-=======
-
-=== security.deletePrivileges
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.clearCachedRoles([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
-[cols=2*]
-|===
-|`name`
-|`string, string[]` - Role name
-
-|===
-=== xpack.security.deletePrivileges
-[source,js]
-----
-client.xpack.security.deletePrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.deleteRole
-=======
-
-=== security.deleteRole
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.deleteRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.deleteRoleMapping
-=======
-
-=== security.deleteRoleMapping
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.deleteRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.deleteUser
-=======
-
-=== security.deleteUser
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.deleteUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - username
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.disableUser
-=======
-
-=== security.disableUser
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.disableUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to disable
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.enableUser
-=======
-
-=== security.enableUser
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.enableUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to enable
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getPrivileges
-=======
-
-=== security.getApiKey
-[source,js]
-----
-client.security.getApiKey([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
-[cols=2*]
-|===
-|`id`
-|`string` - API key id of the API key to be retrieved
-
-|`name`
-|`string` - API key name of the API key to be retrieved
-
-|`username`
-|`string` - user name of the user who created this API key to be retrieved
-
-|`realm_name` or `realmName`
-|`string` - realm name of the user who created this API key to be retrieved
-
-|===
-
-=== security.getPrivileges
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getPrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getRole
-=======
-
-=== security.getRole
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getRoleMapping
-=======
-
-=== security.getRoleMapping
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-Mapping name
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getToken
-=======
-
-=== security.getToken
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getToken([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
-[cols=2*]
-|===
-|`body`
-|`object` - The token request to get
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getUser
-=======
-
-=== security.getUser
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
-[cols=2*]
-|===
-|`username`
-|`string, string[]` - A comma-separated list of usernames
-
-|===
-<<<<<<< HEAD
-=== xpack.security.getUserPrivileges
-=======
-
-=== security.getUserPrivileges
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.getUserPrivileges([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
-<<<<<<< HEAD
-[cols=2*]
-|===
-|===
-=== xpack.security.hasPrivileges
-=======
-
-
-=== security.hasPrivileges
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.hasPrivileges([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
-[cols=2*]
-|===
-|`user`
-|`string` - Username
-
-|`body`
-|`object` - The privileges to test
-
-|===
-<<<<<<< HEAD
-=== xpack.security.invalidateToken
-[source,js]
-----
-client.xpack.security.invalidateToken([params] [, options] [, callback])
-=======
-
-=== security.invalidateApiKey
-[source,js]
-----
-client.security.invalidateApiKey([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
-[cols=2*]
-|===
-|`body`
-|`object` - The api key request to invalidate API key(s)
-
-|===
-
-=== security.invalidateToken
-[source,js]
-----
-client.security.invalidateToken([params] [, options] [, callback])
->>>>>>> ad6f56c... Doc updates (#791)
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
-[cols=2*]
-|===
-|`body`
-|`object` - The token to invalidate
-
-|===
-<<<<<<< HEAD
-=== xpack.security.putPrivileges
-=======
-
-=== security.putPrivileges
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.putPrivileges([params] [, options] [, callback])
-----
-TODO
-[cols=2*]
-|===
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The privilege(s) to add
-
-|===
-<<<<<<< HEAD
-=== xpack.security.putRole
-=======
-
-=== security.putRole
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.putRole([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role to add
-
-|===
-<<<<<<< HEAD
-=== xpack.security.putRoleMapping
-=======
-
-=== security.putRoleMapping
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.putRoleMapping([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role to add
-
-|===
-<<<<<<< HEAD
-=== xpack.security.putUser
-=======
-
-=== security.putUser
->>>>>>> ad6f56c... Doc updates (#791)
-[source,js]
-----
-client.xpack.security.putUser([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the User
-
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The user to add
-
-|===
-<<<<<<< HEAD
-=======
-
-=== ssl.certificates
-[source,js]
-----
-client.ssl.certificates([params] [, options] [, callback])
-----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
-
 
 === xpack.graph.explore
 [source,js]
@@ -6576,6 +4583,972 @@ _Default:_ `true`
 
 |===
 
+=== xpack.ml.closeJob
+[source,js]
+----
+client.xpack.ml.closeJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The name of the job to close
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`force`
+|`boolean` - True if the job should be forcefully closed
+
+|`timeout`
+|`string` - Controls the time to wait until a job has closed. Default to 30 minutes
+
+|===
+
+=== xpack.ml.deleteCalendar
+[source,js]
+----
+client.xpack.ml.deleteCalendar([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to delete
+
+|===
+
+=== xpack.ml.deleteCalendarEvent
+[source,js]
+----
+client.xpack.ml.deleteCalendarEvent([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to modify
+
+|`event_id` or `eventId`
+|`string` - The ID of the event to remove from the calendar
+
+|===
+
+=== xpack.ml.deleteCalendarJob
+[source,js]
+----
+client.xpack.ml.deleteCalendarJob([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to modify
+
+|`job_id` or `jobId`
+|`string` - The ID of the job to remove from the calendar
+
+|===
+
+=== xpack.ml.deleteDatafeed
+[source,js]
+----
+client.xpack.ml.deleteDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to delete
+
+|`force`
+|`boolean` - True if the datafeed should be forcefully deleted
+
+|===
+
+=== xpack.ml.deleteExpiredData
+[source,js]
+----
+client.xpack.ml.deleteExpiredData([params] [, options] [, callback])
+----
+
+
+
+=== xpack.ml.deleteFilter
+[source,js]
+----
+client.xpack.ml.deleteFilter([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`filter_id` or `filterId`
+|`string` - The ID of the filter to delete
+
+|===
+
+=== xpack.ml.deleteForecast
+[source,js]
+----
+client.xpack.ml.deleteForecast([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job from which to delete forecasts
+
+|`forecast_id` or `forecastId`
+|`string` - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
+
+|`allow_no_forecasts` or `allowNoForecasts`
+|`boolean` - Whether to ignore if `_all` matches no forecasts
+
+|`timeout`
+|`string` - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
+
+|===
+
+=== xpack.ml.deleteJob
+[source,js]
+----
+client.xpack.ml.deleteJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to delete
+
+|`force`
+|`boolean` - True if the job should be forcefully deleted
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should this request wait until the operation has completed before returning +
+_Default:_ `true`
+
+|===
+
+=== xpack.ml.deleteModelSnapshot
+[source,js]
+----
+client.xpack.ml.deleteModelSnapshot([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to fetch
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot to delete
+
+|===
+
+=== xpack.ml.findFileStructure
+[source,js]
+----
+client.xpack.ml.findFileStructure([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-file-structure.html
+[cols=2*]
+|===
+|`lines_to_sample` or `linesToSample`
+|`number` - How many lines of the file should be included in the analysis +
+_Default:_ `1000`
+
+|`timeout`
+|`string` - Timeout after which the analysis will be aborted +
+_Default:_ `25s`
+
+|`charset`
+|`string` - Optional parameter to specify the character set of the file
+
+|`format`
+|`'ndjson', 'xml', 'delimited', 'semi_structured_text'` - Optional parameter to specify the high level file format
+
+|`has_header_row` or `hasHeaderRow`
+|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
+
+|`column_names` or `columnNames`
+|`string, string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
+
+|`delimiter`
+|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
+
+|`quote`
+|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
+
+|`should_trim_fields` or `shouldTrimFields`
+|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
+
+|`grok_pattern` or `grokPattern`
+|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
+
+|`timestamp_field` or `timestampField`
+|`string` - Optional parameter to specify the timestamp field in the file
+
+|`timestamp_format` or `timestampFormat`
+|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
+
+|`explain`
+|`boolean` - Whether to include a commentary on how the structure was derived
+
+|`body`
+|`object` - The contents of the file to be analyzed
+
+|===
+
+=== xpack.ml.flushJob
+[source,js]
+----
+client.xpack.ml.flushJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The name of the job to flush
+
+|`calc_interim` or `calcInterim`
+|`boolean` - Calculates interim results for the most recent bucket or all buckets within the latency period
+
+|`start`
+|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
+
+|`end`
+|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
+
+|`advance_time` or `advanceTime`
+|`string` - Advances time to the given value generating results and updating the model for the advanced interval
+
+|`skip_time` or `skipTime`
+|`string` - Skips time to the given value without generating results or updating the model for the skipped interval
+
+|`body`
+|`object` - Flush parameters
+
+|===
+
+=== xpack.ml.forecast
+[source,js]
+----
+client.xpack.ml.forecast([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to forecast for
+
+|`duration`
+|`string` - The duration of the forecast
+
+|`expires_in` or `expiresIn`
+|`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
+
+|===
+
+=== xpack.ml.getBuckets
+[source,js]
+----
+client.xpack.ml.getBuckets([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - ID of the job to get bucket results from
+
+|`timestamp`
+|`string` - The timestamp of the desired single bucket result
+
+|`expand`
+|`boolean` - Include anomaly records
+
+|`exclude_interim` or `excludeInterim`
+|`boolean` - Exclude interim results
+
+|`from`
+|`number` - skips a number of buckets
+
+|`size`
+|`number` - specifies a max number of buckets to get
+
+|`start`
+|`string` - Start time filter for buckets
+
+|`end`
+|`string` - End time filter for buckets
+
+|`anomaly_score` or `anomalyScore`
+|`number` - Filter for the most anomalous buckets
+
+|`sort`
+|`string` - Sort buckets by a particular field
+
+|`desc`
+|`boolean` - Set the sort direction
+
+|`body`
+|`object` - Bucket selection details if not provided in URI
+
+|===
+
+=== xpack.ml.getCalendarEvents
+[source,js]
+----
+client.xpack.ml.getCalendarEvents([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar containing the events
+
+|`job_id` or `jobId`
+|`string` - Get events for the job. When this option is used calendar_id must be '_all'
+
+|`start`
+|`string` - Get events after this time
+
+|`end`
+|`string` - Get events before this time
+
+|`from`
+|`number` - Skips a number of events
+
+|`size`
+|`number` - Specifies a max number of events to get
+
+|===
+
+=== xpack.ml.getCalendars
+[source,js]
+----
+client.xpack.ml.getCalendars([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to fetch
+
+|`from`
+|`number` - skips a number of calendars
+
+|`size`
+|`number` - specifies a max number of calendars to get
+
+|===
+
+=== xpack.ml.getCategories
+[source,js]
+----
+client.xpack.ml.getCategories([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The name of the job
+
+|`category_id` or `categoryId`
+|`number` - The identifier of the category definition of interest
+
+|`from`
+|`number` - skips a number of categories
+
+|`size`
+|`number` - specifies a max number of categories to get
+
+|`body`
+|`object` - Category selection details if not provided in URI
+
+|===
+
+=== xpack.ml.getDatafeedStats
+[source,js]
+----
+client.xpack.ml.getDatafeedStats([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeeds stats to fetch
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|===
+
+=== xpack.ml.getDatafeeds
+[source,js]
+----
+client.xpack.ml.getDatafeeds([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeeds to fetch
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|===
+
+=== xpack.ml.getFilters
+[source,js]
+----
+client.xpack.ml.getFilters([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`filter_id` or `filterId`
+|`string` - The ID of the filter to fetch
+
+|`from`
+|`number` - skips a number of filters
+
+|`size`
+|`number` - specifies a max number of filters to get
+
+|===
+
+=== xpack.ml.getInfluencers
+[source,js]
+----
+client.xpack.ml.getInfluencers([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - undefined
+
+|`exclude_interim` or `excludeInterim`
+|`boolean` - Exclude interim results
+
+|`from`
+|`number` - skips a number of influencers
+
+|`size`
+|`number` - specifies a max number of influencers to get
+
+|`start`
+|`string` - start timestamp for the requested influencers
+
+|`end`
+|`string` - end timestamp for the requested influencers
+
+|`influencer_score` or `influencerScore`
+|`number` - influencer score threshold for the requested influencers
+
+|`sort`
+|`string` - sort field for the requested influencers
+
+|`desc`
+|`boolean` - whether the results should be sorted in decending order
+
+|`body`
+|`object` - Influencer selection criteria
+
+|===
+
+=== xpack.ml.getJobStats
+[source,js]
+----
+client.xpack.ml.getJobStats([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the jobs stats to fetch
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|===
+
+=== xpack.ml.getJobs
+[source,js]
+----
+client.xpack.ml.getJobs([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the jobs to fetch
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|===
+
+=== xpack.ml.getModelSnapshots
+[source,js]
+----
+client.xpack.ml.getModelSnapshots([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to fetch
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot to fetch
+
+|`from`
+|`number` - Skips a number of documents
+
+|`size`
+|`number` - The default number of documents returned in queries as a string.
+
+|`start`
+|`string` - The filter 'start' query parameter
+
+|`end`
+|`string` - The filter 'end' query parameter
+
+|`sort`
+|`string` - Name of the field to sort on
+
+|`desc`
+|`boolean` - True if the results should be sorted in descending order
+
+|`body`
+|`object` - Model snapshot selection criteria
+
+|===
+
+=== xpack.ml.getOverallBuckets
+[source,js]
+----
+client.xpack.ml.getOverallBuckets([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The job IDs for which to calculate overall bucket results
+
+|`top_n` or `topN`
+|`number` - The number of top job bucket scores to be used in the overall_score calculation
+
+|`bucket_span` or `bucketSpan`
+|`string` - The span of the overall buckets. Defaults to the longest job bucket_span
+
+|`overall_score` or `overallScore`
+|`number` - Returns overall buckets with overall scores higher than this value
+
+|`exclude_interim` or `excludeInterim`
+|`boolean` - If true overall buckets that include interim buckets will be excluded
+
+|`start`
+|`string` - Returns overall buckets with timestamps after this time
+
+|`end`
+|`string` - Returns overall buckets with timestamps earlier than this time
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`body`
+|`object` - Overall bucket selection details if not provided in URI
+
+|===
+
+=== xpack.ml.getRecords
+[source,js]
+----
+client.xpack.ml.getRecords([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - undefined
+
+|`exclude_interim` or `excludeInterim`
+|`boolean` - Exclude interim results
+
+|`from`
+|`number` - skips a number of records
+
+|`size`
+|`number` - specifies a max number of records to get
+
+|`start`
+|`string` - Start time filter for records
+
+|`end`
+|`string` - End time filter for records
+
+|`record_score` or `recordScore`
+|`number` - undefined
+
+|`sort`
+|`string` - Sort records by a particular field
+
+|`desc`
+|`boolean` - Set the sort direction
+
+|`body`
+|`object` - Record selection criteria
+
+|===
+
+=== xpack.ml.info
+[source,js]
+----
+client.xpack.ml.info([params] [, options] [, callback])
+----
+
+
+
+=== xpack.ml.openJob
+[source,js]
+----
+client.xpack.ml.openJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to open
+
+|`ignore_downtime` or `ignoreDowntime`
+|`boolean` - Controls if gaps in data are treated as anomalous or as a maintenance window after a job re-start
+
+|`timeout`
+|`string` - Controls the time to wait until a job has opened. Default to 30 minutes
+
+|===
+
+=== xpack.ml.postCalendarEvents
+[source,js]
+----
+client.xpack.ml.postCalendarEvents([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to modify
+
+|`body`
+|`object` - A list of events
+
+|===
+
+=== xpack.ml.postData
+[source,js]
+----
+client.xpack.ml.postData([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The name of the job receiving the data
+
+|`reset_start` or `resetStart`
+|`string` - Optional parameter to specify the start of the bucket resetting range
+
+|`reset_end` or `resetEnd`
+|`string` - Optional parameter to specify the end of the bucket resetting range
+
+|`body`
+|`object` - The data to process
+
+|===
+
+=== xpack.ml.previewDatafeed
+[source,js]
+----
+client.xpack.ml.previewDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to preview
+
+|===
+
+=== xpack.ml.putCalendar
+[source,js]
+----
+client.xpack.ml.putCalendar([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to create
+
+|`body`
+|`object` - The calendar details
+
+|===
+
+=== xpack.ml.putCalendarJob
+[source,js]
+----
+client.xpack.ml.putCalendarJob([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`calendar_id` or `calendarId`
+|`string` - The ID of the calendar to modify
+
+|`job_id` or `jobId`
+|`string` - The ID of the job to add to the calendar
+
+|===
+
+=== xpack.ml.putDatafeed
+[source,js]
+----
+client.xpack.ml.putDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to create
+
+|`body`
+|`object` - The datafeed config
+
+|===
+
+=== xpack.ml.putFilter
+[source,js]
+----
+client.xpack.ml.putFilter([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`filter_id` or `filterId`
+|`string` - The ID of the filter to create
+
+|`body`
+|`object` - The filter details
+
+|===
+
+=== xpack.ml.putJob
+[source,js]
+----
+client.xpack.ml.putJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to create
+
+|`body`
+|`object` - The job
+
+|===
+
+=== xpack.ml.revertModelSnapshot
+[source,js]
+----
+client.xpack.ml.revertModelSnapshot([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to fetch
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot to revert to
+
+|`delete_intervening_results` or `deleteInterveningResults`
+|`boolean` - Should we reset the results back to the time of the snapshot?
+
+|`body`
+|`object` - Reversion options
+
+|===
+
+=== xpack.ml.startDatafeed
+[source,js]
+----
+client.xpack.ml.startDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to start
+
+|`start`
+|`string` - The start time from where the datafeed should begin
+
+|`end`
+|`string` - The end time when the datafeed should stop. When not set, the datafeed continues in real time
+
+|`timeout`
+|`string` - Controls the time to wait until a datafeed has started. Default to 20 seconds
+
+|`body`
+|`object` - The start datafeed parameters
+
+|===
+
+=== xpack.ml.stopDatafeed
+[source,js]
+----
+client.xpack.ml.stopDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to stop
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`force`
+|`boolean` - True if the datafeed should be forcefully stopped.
+
+|`timeout`
+|`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
+
+|===
+
+=== xpack.ml.updateDatafeed
+[source,js]
+----
+client.xpack.ml.updateDatafeed([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeed to update
+
+|`body`
+|`object` - The datafeed update settings
+
+|===
+
+=== xpack.ml.updateFilter
+[source,js]
+----
+client.xpack.ml.updateFilter([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`filter_id` or `filterId`
+|`string` - The ID of the filter to update
+
+|`body`
+|`object` - The filter update
+
+|===
+
+=== xpack.ml.updateJob
+[source,js]
+----
+client.xpack.ml.updateJob([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to create
+
+|`body`
+|`object` - The job update settings
+
+|===
+
+=== xpack.ml.updateModelSnapshot
+[source,js]
+----
+client.xpack.ml.updateModelSnapshot([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to fetch
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot to update
+
+|`body`
+|`object` - The model snapshot properties to update
+
+|===
+
+=== xpack.ml.validate
+[source,js]
+----
+client.xpack.ml.validate([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`body`
+|`object` - The job config
+
+|===
+
+=== xpack.ml.validateDetector
+[source,js]
+----
+client.xpack.ml.validateDetector([params] [, options] [, callback])
+----
+
+[cols=2*]
+|===
+|`body`
+|`object` - The detector
+
+|===
+
+=== xpack.monitoring.bulk
+[source,js]
+----
+client.xpack.monitoring.bulk([params] [, options] [, callback])
+----
+http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
+[cols=2*]
+|===
+|`type`
+|`string` - Default document type for items which don't provide one
+
+|`system_id` or `systemId`
+|`string` - Identifier of the monitored system
+
+|`system_api_version` or `systemApiVersion`
+|`string` - API Version of the monitored system
+
+|`interval`
+|`string` - Collection interval (e.g., '10s' or '10000ms') of the payload
+
+|`body`
+|`object` - The operation definition and data (action-data pairs), separated by newlines
+
+|===
+
 === xpack.rollup.deleteJob
 [source,js]
 ----
@@ -6661,9 +5634,6 @@ client.xpack.rollup.rollupSearch([params] [, options] [, callback])
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
 |`body`
 |`object` - The search request body
 
@@ -6701,7 +5671,339 @@ client.xpack.rollup.stopJob([params] [, options] [, callback])
 
 |===
 
->>>>>>> ad6f56c... Doc updates (#791)
+=== xpack.security.authenticate
+[source,js]
+----
+client.xpack.security.authenticate([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
+
+
+=== xpack.security.changePassword
+[source,js]
+----
+client.xpack.security.changePassword([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+[cols=2*]
+|===
+|`username`
+|`string` - The username of the user to change the password for
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - the new password for the user
+
+|===
+
+=== xpack.security.clearCachedRealms
+[source,js]
+----
+client.xpack.security.clearCachedRealms([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+[cols=2*]
+|===
+|`realms`
+|`string, string[]` - Comma-separated list of realms to clear
+
+|`usernames`
+|`string, string[]` - Comma-separated list of usernames to clear from the cache
+
+|===
+
+=== xpack.security.clearCachedRoles
+[source,js]
+----
+client.xpack.security.clearCachedRoles([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
+[cols=2*]
+|===
+|`name`
+|`string, string[]` - Role name
+
+|===
+
+=== xpack.security.deletePrivileges
+[source,js]
+----
+client.xpack.security.deletePrivileges([params] [, options] [, callback])
+----
+TODO
+[cols=2*]
+|===
+|`application`
+|`string` - Application name
+
+|`name`
+|`string` - Privilege name
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.deleteRole
+[source,js]
+----
+client.xpack.security.deleteRole([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role name
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.deleteRoleMapping
+[source,js]
+----
+client.xpack.security.deleteRoleMapping([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role-mapping name
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.deleteUser
+[source,js]
+----
+client.xpack.security.deleteUser([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
+[cols=2*]
+|===
+|`username`
+|`string` - username
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.disableUser
+[source,js]
+----
+client.xpack.security.disableUser([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
+[cols=2*]
+|===
+|`username`
+|`string` - The username of the user to disable
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.enableUser
+[source,js]
+----
+client.xpack.security.enableUser([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
+[cols=2*]
+|===
+|`username`
+|`string` - The username of the user to enable
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+=== xpack.security.getPrivileges
+[source,js]
+----
+client.xpack.security.getPrivileges([params] [, options] [, callback])
+----
+TODO
+[cols=2*]
+|===
+|`application`
+|`string` - Application name
+
+|`name`
+|`string` - Privilege name
+
+|===
+
+=== xpack.security.getRole
+[source,js]
+----
+client.xpack.security.getRole([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role name
+
+|===
+
+=== xpack.security.getRoleMapping
+[source,js]
+----
+client.xpack.security.getRoleMapping([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role-Mapping name
+
+|===
+
+=== xpack.security.getToken
+[source,js]
+----
+client.xpack.security.getToken([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
+[cols=2*]
+|===
+|`body`
+|`object` - The token request to get
+
+|===
+
+=== xpack.security.getUser
+[source,js]
+----
+client.xpack.security.getUser([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
+[cols=2*]
+|===
+|`username`
+|`string, string[]` - A comma-separated list of usernames
+
+|===
+
+=== xpack.security.getUserPrivileges
+[source,js]
+----
+client.xpack.security.getUserPrivileges([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
+
+
+=== xpack.security.hasPrivileges
+[source,js]
+----
+client.xpack.security.hasPrivileges([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
+[cols=2*]
+|===
+|`user`
+|`string` - Username
+
+|`body`
+|`object` - The privileges to test
+
+|===
+
+=== xpack.security.invalidateToken
+[source,js]
+----
+client.xpack.security.invalidateToken([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
+[cols=2*]
+|===
+|`body`
+|`object` - The token to invalidate
+
+|===
+
+=== xpack.security.putPrivileges
+[source,js]
+----
+client.xpack.security.putPrivileges([params] [, options] [, callback])
+----
+TODO
+[cols=2*]
+|===
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The privilege(s) to add
+
+|===
+
+=== xpack.security.putRole
+[source,js]
+----
+client.xpack.security.putRole([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role name
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The role to add
+
+|===
+
+=== xpack.security.putRoleMapping
+[source,js]
+----
+client.xpack.security.putRoleMapping([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
+[cols=2*]
+|===
+|`name`
+|`string` - Role-mapping name
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The role to add
+
+|===
+
+=== xpack.security.putUser
+[source,js]
+----
+client.xpack.security.putUser([params] [, options] [, callback])
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
+[cols=2*]
+|===
+|`username`
+|`string` - The username of the User
+
+|`refresh`
+|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The user to add
+
+|===
+
 === xpack.sql.clearCursor
 [source,js]
 ----
@@ -6743,19 +6045,15 @@ Translate SQL into Elasticsearch queries
 |`object` - Specify the query in the `query` element.
 
 |===
-<<<<<<< HEAD
+
 === xpack.ssl.certificates
 [source,js]
 ----
 client.xpack.ssl.certificates([params] [, options] [, callback])
 ----
 https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
-[cols=2*]
-|===
-|===
-=======
 
->>>>>>> ad6f56c... Doc updates (#791)
+
 === xpack.usage
 [source,js]
 ----
@@ -6892,19 +6190,15 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-w
 |`object` - The watch
 
 |===
-<<<<<<< HEAD
+
 === xpack.watcher.restart
 [source,js]
 ----
 client.xpack.watcher.restart([params] [, options] [, callback])
 ----
 http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-restart.html
-[cols=2*]
-|===
-|===
-=======
 
->>>>>>> ad6f56c... Doc updates (#791)
+
 === xpack.watcher.start
 [source,js]
 ----
