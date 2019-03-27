@@ -43,28 +43,28 @@ const customSkips = [
 ]
 const platinumBlackList = {
   // file path: test name
-  'cat.aliases/10_basic.yml': 'Empty cluster',
-  'index/10_with_id.yml': 'Index with ID',
-  'indices.get_alias/10_basic.yml': 'Get alias against closed indices',
-  'indices.get_alias/20_empty.yml': 'Check empty aliases when getting all aliases via /_alias',
+  'cat.aliases/10_basic.yml': ['Empty cluster'],
+  'index/10_with_id.yml': ['Index with ID'],
+  'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
+  'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
   // https://github.com/elastic/elasticsearch/pull/39400
-  'ml/jobs_crud.yml': 'Test put job with id that is already taken',
+  'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
   // TODO: investigate why this is failing
-  'monitoring/bulk/10_basic.yml': '*',
-  'monitoring/bulk/20_privileges.yml': '*',
-  'license/20_put_license.yml': '*',
-  'snapshot/10_basic.yml': '*',
+  'monitoring/bulk/10_basic.yml': ['*'],
+  'monitoring/bulk/20_privileges.yml': ['*'],
+  'license/20_put_license.yml': ['*'],
+  'snapshot/10_basic.yml': ['*'],
   // the body is correct, but the regex is failing
-  'sql/sql.yml': 'Getting textual representation',
+  'sql/sql.yml': ['Getting textual representation'],
   // we are setting two certificates in the docker config
-  'ssl/10_basic.yml': '*',
+  'ssl/10_basic.yml': ['*'],
   // docker issue?
-  'watcher/execute_watch/60_http_input.yml': '*',
+  'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
   // I bet is because the backslashes in the rg
-  'watcher/execute_watch/70_invalid.yml': '*',
-  'watcher/put_watch/10_basic.yml': '*',
-  'xpack/15_basic.yml': '*'
+  'watcher/execute_watch/70_invalid.yml': ['*'],
+  'watcher/put_watch/10_basic.yml': ['*'],
+  'xpack/15_basic.yml': ['*']
 }
 
 function Runner (opts) {
@@ -93,7 +93,7 @@ Runner.prototype.waitCluster = function (callback, times = 0) {
   this.client.cluster.health(
     { waitForStatus: 'green', timeout: '50s' },
     (err, res) => {
-      if (++times < 10) {
+      if (err && ++times < 10) {
         setTimeout(() => {
           this.waitCluster(callback, times)
         }, 5000)
@@ -184,10 +184,13 @@ Runner.prototype.start = function (opts) {
           if (opts.isPlatinum) {
             const list = Object.keys(platinumBlackList)
             for (i = 0; i < list.length; i++) {
-              if (file.endsWith(list[i]) && (name === platinumBlackList[list[i]] || platinumBlackList[list[i]] === '*')) {
-                const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-                tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
-                return
+              const platTest = platinumBlackList[list[i]]
+              for (var j = 0; j < platTest.length; j++) {
+                if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
+                  const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
+                  tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
+                  return
+                }
               }
             }
           }
