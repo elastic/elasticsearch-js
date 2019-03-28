@@ -1,3 +1,4 @@
+[[child-client]]
 == Creating a child client
 
 There are some use cases where you may need multiple instances of the client. You can easily do that by calling `new Client()` as many times as you need, but you will lose all the benefits of using one single client, such as the long living connections and the connection pool handling. +
