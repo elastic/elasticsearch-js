@@ -1,3 +1,4 @@
+[[breaking-changes]]
 == Breaking changes coming from the old client
 
 If you were already using the previous version of this client --i.e. the one you used to install with `npm install elasticsearch`-- you will encounter some breaking changes.

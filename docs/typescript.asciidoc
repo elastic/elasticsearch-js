@@ -1,3 +1,4 @@
+[[typescript]]
 == TypeScript support
 
 The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
