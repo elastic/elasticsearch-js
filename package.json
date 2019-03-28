@@ -21,7 +21,6 @@
     "test:behavior": "tap test/behavior/*.test.js -J -t 300",
     "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
     "test:types": "tsc --project ./test/types/tsconfig.json",
-    "test:benchmarks": "nanobench test/benchmarks/*.bench.js",
     "test:coverage": "nyc npm run test:unit && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
     "lint:fix": "standard --fix",
