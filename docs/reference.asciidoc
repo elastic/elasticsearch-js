@@ -35,7 +35,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.h
 ----
 client.bulk([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-bulk.html
 [cols=2*]
 |===
 |`index`
@@ -84,7 +84,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-bulk.html
 ----
 client.cat.aliases([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-alias.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-alias.html
 [cols=2*]
 |===
 |`name`
@@ -118,7 +118,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-alias.html
 ----
 client.cat.allocation([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-allocation.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-allocation.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -155,7 +155,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-allocation.html
 ----
 client.cat.count([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-count.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-count.html
 [cols=2*]
 |===
 |`index`
@@ -189,7 +189,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-count.html
 ----
 client.cat.fielddata([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-fielddata.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-fielddata.html
 [cols=2*]
 |===
 |`fields`
@@ -229,7 +229,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-fielddata.html
 ----
 client.cat.health([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-health.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-health.html
 [cols=2*]
 |===
 |`format`
@@ -264,7 +264,7 @@ _Default:_ `true`
 ----
 client.cat.help([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat.html
 [cols=2*]
 |===
 |`help`
@@ -280,7 +280,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat.html
 ----
 client.cat.indices([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-indices.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-indices.html
 [cols=2*]
 |===
 |`index`
@@ -323,7 +323,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-indices.html
 ----
 client.cat.master([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-master.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-master.html
 [cols=2*]
 |===
 |`format`
@@ -354,7 +354,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-master.html
 ----
 client.cat.nodeattrs([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodeattrs.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-nodeattrs.html
 [cols=2*]
 |===
 |`format`
@@ -385,7 +385,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodeattrs.html
 ----
 client.cat.nodes([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodes.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-nodes.html
 [cols=2*]
 |===
 |`format`
@@ -419,7 +419,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-nodes.html
 ----
 client.cat.pendingTasks([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-pending-tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-pending-tasks.html
 [cols=2*]
 |===
 |`format`
@@ -450,7 +450,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-pending-tasks.ht
 ----
 client.cat.plugins([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-plugins.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-plugins.html
 [cols=2*]
 |===
 |`format`
@@ -481,7 +481,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-plugins.html
 ----
 client.cat.recovery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-recovery.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-recovery.html
 [cols=2*]
 |===
 |`index`
@@ -515,7 +515,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-recovery.html
 ----
 client.cat.repositories([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-repositories.html
 [cols=2*]
 |===
 |`format`
@@ -546,7 +546,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-repositories.htm
 ----
 client.cat.segments([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-segments.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-segments.html
 [cols=2*]
 |===
 |`index`
@@ -577,7 +577,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-segments.html
 ----
 client.cat.shards([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-shards.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-shards.html
 [cols=2*]
 |===
 |`index`
@@ -614,7 +614,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-shards.html
 ----
 client.cat.snapshots([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -648,7 +648,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-snapshots.html
 ----
 client.cat.tasks([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/tasks.html
 [cols=2*]
 |===
 |`format`
@@ -688,7 +688,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 ----
 client.cat.templates([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-templates.html
 [cols=2*]
 |===
 |`name`
@@ -722,7 +722,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-templates.html
 ----
 client.cat.threadPool([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-thread-pool.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cat-thread-pool.html
 [cols=2*]
 |===
 |`thread_pool_patterns` or `threadPoolPatterns`
@@ -759,7 +759,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-thread-pool.html
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-request-scroll.html
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -775,7 +775,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scrol
 ----
 client.cluster.allocationExplain([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-explain.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-allocation-explain.html
 [cols=2*]
 |===
 |`include_yes_decisions` or `includeYesDecisions`
@@ -794,7 +794,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-allocation-e
 ----
 client.cluster.getSettings([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-update-settings.html
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -816,7 +816,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-setti
 ----
 client.cluster.health([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-health.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-health.html
 [cols=2*]
 |===
 |`index`
@@ -857,7 +857,7 @@ _Default:_ `cluster`
 ----
 client.cluster.pendingTasks([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-pending.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-pending.html
 [cols=2*]
 |===
 |`local`
@@ -873,7 +873,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-pending.html
 ----
 client.cluster.putSettings([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-update-settings.html
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -895,7 +895,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-setti
 ----
 client.cluster.remoteInfo([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-remote-info.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-remote-info.html
 
 
 === cluster.reroute
@@ -903,7 +903,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-remote-info.h
 ----
 client.cluster.reroute([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-reroute.html
 [cols=2*]
 |===
 |`dry_run` or `dryRun`
@@ -934,7 +934,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-reroute.html
 ----
 client.cluster.state([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-state.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-state.html
 [cols=2*]
 |===
 |`index`
@@ -969,7 +969,7 @@ _Default:_ `open`
 ----
 client.cluster.stats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-stats.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -988,7 +988,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html
 ----
 client.count([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-count.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-count.html
 [cols=2*]
 |===
 |`index`
@@ -1048,7 +1048,7 @@ _Default:_ `OR`
 ----
 client.countPercolate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-percolate.html
 [cols=2*]
 |===
 |`index`
@@ -1098,7 +1098,7 @@ _Default:_ `open`
 ----
 client.create([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-index_.html
 [cols=2*]
 |===
 |`id`
@@ -1150,7 +1150,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html
 ----
 client.delete([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-delete.html
 [cols=2*]
 |===
 |`id`
@@ -1190,7 +1190,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete.html
 ----
 client.deleteByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-delete-by-query.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-delete-by-query.html
 [cols=2*]
 |===
 |`index`
@@ -1311,7 +1311,7 @@ _Default:_ `1`
 ----
 client.deleteScript([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-scripting.html
 [cols=2*]
 |===
 |`id`
@@ -1333,7 +1333,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.ht
 ----
 client.deleteTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-template.html
 [cols=2*]
 |===
 |`id`
@@ -1346,7 +1346,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
 ----
 client.exists([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1447,7 +1447,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.explain([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-explain.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-explain.html
 [cols=2*]
 |===
 |`id`
@@ -1509,7 +1509,7 @@ _Default:_ `OR`
 ----
 client.fieldCaps([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-caps.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-caps.html
 [cols=2*]
 |===
 |`index`
@@ -1538,7 +1538,7 @@ _Default:_ `open`
 ----
 client.fieldStats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-field-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
 [cols=2*]
 |===
 |`index`
@@ -1571,7 +1571,7 @@ _Default:_ `open`
 ----
 client.get([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1623,7 +1623,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
 ----
 client.getScript([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-scripting.html
 [cols=2*]
 |===
 |`id`
@@ -1639,7 +1639,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.ht
 ----
 client.getSource([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-get.html
 [cols=2*]
 |===
 |`id`
@@ -1688,7 +1688,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-get.html
 ----
 client.getTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-template.html
 [cols=2*]
 |===
 |`id`
@@ -1701,7 +1701,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
 ----
 client.index([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-index_.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-index_.html
 [cols=2*]
 |===
 |`id`
@@ -1757,7 +1757,7 @@ _Default:_ `index`
 ----
 client.indices.analyze([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-analyze.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-analyze.html
 [cols=2*]
 |===
 |`index`
@@ -1807,7 +1807,7 @@ _Default:_ `detailed`
 ----
 client.indices.clearCache([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-clearcache.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-clearcache.html
 [cols=2*]
 |===
 |`index`
@@ -1854,7 +1854,7 @@ _Default:_ `open`
 ----
 client.indices.close([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-open-close.html
 [cols=2*]
 |===
 |`index`
@@ -1883,7 +1883,7 @@ _Default:_ `open`
 ----
 client.indices.create([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-create-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-create-index.html
 [cols=2*]
 |===
 |`index`
@@ -1911,7 +1911,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-create-index
 ----
 client.indices.delete([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-delete-index.html
 [cols=2*]
 |===
 |`index`
@@ -1930,7 +1930,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-delete-index
 ----
 client.indices.deleteAlias([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -1952,7 +1952,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 ----
 client.indices.deleteTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -1971,7 +1971,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.ht
 ----
 client.indices.exists([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html
+http://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-exists.html
 [cols=2*]
 |===
 |`index`
@@ -2003,7 +2003,7 @@ _Default:_ `open`
 ----
 client.indices.existsAlias([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -2032,7 +2032,7 @@ _Default:_ `all`
 ----
 client.indices.existsTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -2054,7 +2054,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.ht
 ----
 client.indices.existsType([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-types-exists.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-types-exists.html
 [cols=2*]
 |===
 |`index`
@@ -2083,7 +2083,7 @@ _Default:_ `open`
 ----
 client.indices.flush([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-flush.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-flush.html
 [cols=2*]
 |===
 |`index`
@@ -2112,7 +2112,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-synced-flush.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-synced-flush.html
 [cols=2*]
 |===
 |`index`
@@ -2135,7 +2135,7 @@ _Default:_ `open`
 ----
 client.indices.forcemerge([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-forcemerge.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-forcemerge.html
 [cols=2*]
 |===
 |`index`
@@ -2173,7 +2173,7 @@ _Default:_ `open`
 ----
 client.indices.get([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-get-index.html
 [cols=2*]
 |===
 |`index`
@@ -2208,7 +2208,7 @@ _Default:_ `open`
 ----
 client.indices.getAlias([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -2237,7 +2237,7 @@ _Default:_ `all`
 ----
 client.indices.getFieldMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-field-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-get-field-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2272,7 +2272,7 @@ _Default:_ `open`
 ----
 client.indices.getMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-get-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2301,7 +2301,7 @@ _Default:_ `open`
 ----
 client.indices.getSettings([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-get-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-get-settings.html
 [cols=2*]
 |===
 |`index`
@@ -2336,7 +2336,7 @@ _Default:_ `open,closed`
 ----
 client.indices.getTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -2358,7 +2358,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.ht
 ----
 client.indices.getUpgrade([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-upgrade.html
 [cols=2*]
 |===
 |`index`
@@ -2381,7 +2381,7 @@ _Default:_ `open`
 ----
 client.indices.open([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-open-close.html
 [cols=2*]
 |===
 |`index`
@@ -2410,7 +2410,7 @@ _Default:_ `closed`
 ----
 client.indices.putAlias([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-aliases.html
 [cols=2*]
 |===
 |`index`
@@ -2435,7 +2435,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 ----
 client.indices.putMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-put-mapping.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-put-mapping.html
 [cols=2*]
 |===
 |`index`
@@ -2473,7 +2473,7 @@ _Default:_ `open`
 ----
 client.indices.putSettings([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-update-settings.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-update-settings.html
 [cols=2*]
 |===
 |`index`
@@ -2508,7 +2508,7 @@ _Default:_ `open`
 ----
 client.indices.putTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-templates.html
 [cols=2*]
 |===
 |`name`
@@ -2539,7 +2539,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-templates.ht
 ----
 client.indices.recovery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-recovery.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-recovery.html
 [cols=2*]
 |===
 |`index`
@@ -2558,7 +2558,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-recovery.htm
 ----
 client.indices.refresh([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-refresh.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-refresh.html
 [cols=2*]
 |===
 |`index`
@@ -2581,7 +2581,7 @@ _Default:_ `open`
 ----
 client.indices.rollover([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-rollover-index.html
 [cols=2*]
 |===
 |`alias`
@@ -2612,7 +2612,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-rollover-ind
 ----
 client.indices.segments([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-segments.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-segments.html
 [cols=2*]
 |===
 |`index`
@@ -2641,7 +2641,7 @@ _Default:_ `open`
 ----
 client.indices.shardStores([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shards-stores.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-shards-stores.html
 [cols=2*]
 |===
 |`index`
@@ -2670,7 +2670,7 @@ _Default:_ `open`
 ----
 client.indices.shrink([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-shrink-index.html
 [cols=2*]
 |===
 |`index`
@@ -2698,7 +2698,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-shrink-index
 ----
 client.indices.stats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-stats.html
 [cols=2*]
 |===
 |`index`
@@ -2736,7 +2736,7 @@ _Default:_ `indices`
 ----
 client.indices.updateAliases([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-aliases.html
 [cols=2*]
 |===
 |`timeout`
@@ -2755,7 +2755,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-aliases.html
 ----
 client.indices.upgrade([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-upgrade.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-upgrade.html
 [cols=2*]
 |===
 |`index`
@@ -2784,7 +2784,7 @@ _Default:_ `open`
 ----
 client.indices.validateQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-validate.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-validate.html
 [cols=2*]
 |===
 |`index`
@@ -2852,7 +2852,7 @@ https://www.elastic.co/guide/
 ----
 client.ingest.deletePipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2871,7 +2871,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 ----
 client.ingest.getPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2895,7 +2895,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.putPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2917,7 +2917,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 ----
 client.ingest.simulate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
+https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/ingest.html
 [cols=2*]
 |===
 |`id`
@@ -2936,7 +2936,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 ----
 client.mget([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-get.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-multi-get.html
 [cols=2*]
 |===
 |`index`
@@ -2979,7 +2979,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-get.html
 ----
 client.mpercolate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-percolate.html
 [cols=2*]
 |===
 |`index`
@@ -3008,7 +3008,7 @@ _Default:_ `open`
 ----
 client.msearch([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-multi-search.html
 [cols=2*]
 |===
 |`index`
@@ -3068,7 +3068,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.
 ----
 client.mtermvectors([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-multi-termvectors.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-multi-termvectors.html
 [cols=2*]
 |===
 |`index`
@@ -3130,7 +3130,7 @@ _Default:_ `true`
 ----
 client.nodes.hotThreads([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-hot-threads.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-nodes-hot-threads.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3161,7 +3161,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-hot-th
 ----
 client.nodes.info([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-info.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-nodes-info.html
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3183,7 +3183,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-info.h
 ----
 client.nodes.stats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-stats.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/cluster-nodes-stats.html
 [cols=2*]
 |===
 |`metric`
@@ -3227,7 +3227,7 @@ _Default:_ `node`
 ----
 client.percolate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-percolate.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-percolate.html
 [cols=2*]
 |===
 |`index`
@@ -3294,7 +3294,7 @@ https://www.elastic.co/guide/
 ----
 client.putScript([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-scripting.html
 [cols=2*]
 |===
 |`id`
@@ -3319,7 +3319,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-scripting.ht
 ----
 client.putTemplate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-template.html
 [cols=2*]
 |===
 |`id`
@@ -3335,7 +3335,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-template.html
 ----
 client.reindex([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-reindex.html
 [cols=2*]
 |===
 |`refresh`
@@ -3369,7 +3369,7 @@ _Default:_ `1`
 ----
 client.reindexRethrottle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-reindex.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3385,7 +3385,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-reindex.html
 ----
 client.renderSearchTemplate([params] [, options] [, callback])
 ----
-http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html
+http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.6/search-template.html
 [cols=2*]
 |===
 |`id`
@@ -3401,7 +3401,7 @@ http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-templat
 ----
 client.scroll([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scroll.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-request-scroll.html
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -3423,7 +3423,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-request-scrol
 ----
 client.search([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-search.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-search.html
 [cols=2*]
 |===
 |`index`
@@ -3559,7 +3559,7 @@ _Default:_ `128`
 ----
 client.searchShards([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-shards.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-shards.html
 [cols=2*]
 |===
 |`index`
@@ -3644,7 +3644,7 @@ _Default:_ `open`
 ----
 client.snapshot.create([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3669,7 +3669,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.createRepository([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3694,7 +3694,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.delete([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3713,7 +3713,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.deleteRepository([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3732,7 +3732,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.get([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3757,7 +3757,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.getRepository([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3776,7 +3776,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.restore([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3801,7 +3801,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.status([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3823,7 +3823,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.snapshot.verifyRepository([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-snapshots.html
 [cols=2*]
 |===
 |`repository`
@@ -3842,7 +3842,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/modules-snapshots.ht
 ----
 client.suggest([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-suggesters.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-suggesters.html
 [cols=2*]
 |===
 |`index`
@@ -3874,7 +3874,7 @@ _Default:_ `open`
 ----
 client.tasks.cancel([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/tasks.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3899,7 +3899,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 ----
 client.tasks.get([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/tasks.html
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3915,7 +3915,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
 ----
 client.tasks.list([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/tasks.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/tasks.html
 [cols=2*]
 |===
 |`nodes`
@@ -3947,7 +3947,7 @@ _Default:_ `nodes`
 ----
 client.termvectors([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-termvectors.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-termvectors.html
 [cols=2*]
 |===
 |`index`
@@ -4009,7 +4009,7 @@ _Default:_ `true`
 ----
 client.update([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-update.html
 [cols=2*]
 |===
 |`id`
@@ -4076,7 +4076,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html
 ----
 client.updateByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-update-by-query.html
 [cols=2*]
 |===
 |`index`
