@@ -16,7 +16,7 @@ WARNING: Due to the complex nature of the configuration, the config object you p
 [[config-options]]
 === Config options
 [horizontal]
-`host or hosts`[[config-hosts]]::
+[[config-hosts]]`host or hosts`::
 `String, String[], Object[]` -- Specify the hosts that this client will connect to. If sniffing is enabled, or you call `client.sniff()`, this list will be used as seeds to discover the rest of your cluster.
 +
 The value(s) are passed to the <<host-reference,`Host`>> constructor. `Host` objects can help enforce path-prefixes, default headers and query strings, and can be helpful in making more intelligent selection algorithms; Head over to <<host-reference,the `Host` docs>> for more information.
@@ -29,7 +29,7 @@ Default:::
 ------
 
 
-`httpAuth`[[config-http-auth]]:: `String` -- Specifies the default http auth as a String with username and password separated by a colon (eg. `user:pass`). Applies to any host defined in the original config, and any hosts discovered while sniffing.
+[[config-http-auth]]`httpAuth`:: `String` -- Specifies the default http auth as a String with username and password separated by a colon (eg. `user:pass`). Applies to any host defined in the original config, and any hosts discovered while sniffing.
 
 
 `log`[[config-log]]:: `String, String[], Object, Object[], Constructor` -- Unless a constructor is specified, this sets the output settings for the bundled logger. See the section on configuring-logging[logging] for more information.
@@ -48,7 +48,7 @@ Default in Node:::
 
 
 
-`apiVersion`[[config-api-version]]:: `String` -- Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.
+[[config-api-version]]`apiVersion`:: `String` -- Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
@@ -74,7 +74,7 @@ Options in the browser :::
 
 
 
-`plugins`[[config-plugins]]:: `Function[]` -- Plugin instantiators that will be called when the Client initializes. Each function is called in order with the arguments `Constructor`, `config`, and `components`.
+[[config-plugins]]`plugins`:: `Function[]` -- Plugin instantiators that will be called when the Client initializes. Each function is called in order with the arguments `Constructor`, `config`, and `components`.
 +
 `Constructor` is the class that will be newed up to create the client instance. It's prototype contains the api methods that correlate to the `apiVersion` requested.
 +
@@ -83,7 +83,7 @@ Options in the browser :::
 `components` is a map of the internal classes for this version of the elasticsearch client. The values on this object are listed https://github.com/elastic/elasticsearch-js/blob/master/src/lib/client.js#L80[here].
 
 
-`sniffOnStart`[[config-sniff-on-start]]:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
+[[config-sniff-on-start]]`sniffOnStart`:: `Boolean` -- Should the client attempt to detect the rest of the cluster when it is first instantiated?
 
 Default::: `false`
 
@@ -91,7 +91,7 @@ Default::: `false`
 
 
 
-`sniffInterval`[[config-sniff-interval]]:: `Number, false` -- Every `n` milliseconds, perform a sniff operation and make sure our list of nodes is complete.
+[[config-sniff-interval]]`sniffInterval`:: `Number, false` -- Every `n` milliseconds, perform a sniff operation and make sure our list of nodes is complete.
 
 Default::: `false`
 
@@ -99,14 +99,14 @@ Default::: `false`
 
 
 
-`sniffOnConnectionFault`[[config-sniff-on-connection-fault]]:: `Boolean` -- Should the client immediately sniff for a more current list of nodes when a connection dies?
+[[config-sniff-on-connection-fault]]`sniffOnConnectionFault`:: `Boolean` -- Should the client immediately sniff for a more current list of nodes when a connection dies?
 
 Default::: `false`
 
 
 
 
-`maxRetries`[[config-max-retries]]:: `Integer` -- How many times should the client try to connect to other nodes before returning a <<connection-fault,ConnectionFault>> error.
+[[config-max-retries]]`maxRetries`:: `Integer` -- How many times should the client try to connect to other nodes before returning a <<connection-fault,ConnectionFault>> error.
 
 Default::: `3`
 
@@ -114,7 +114,7 @@ Default::: `3`
 
 
 
-`requestTimeout`[[config-request-timeout]]:: `Number` -- Milliseconds before an HTTP request will be aborted and retried. This can also be set per request.
+[[config-request-timeout]]`requestTimeout`:: `Number` -- Milliseconds before an HTTP request will be aborted and retried. This can also be set per request.
 
 Default::: `30000`
 
@@ -122,47 +122,47 @@ Default::: `30000`
 
 
 
-`deadTimeout`[[config-dead-timeout]]:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
+[[config-dead-timeout]]`deadTimeout`:: `Number` -- Milliseconds that a dead connection will wait before attempting to revive itself.
 
 Default::: `60000`
 
 
-`pingTimeout`[[config-ping-timeout]]:: `Number` -- Milliseconds that a ping request can take before timing out.
+[[config-ping-timeout]]`pingTimeout`:: `Number` -- Milliseconds that a ping request can take before timing out.
 
 Default::: `3000`
 
 
-`maxSockets`[[config-keep-alive-max-sockets]]:: `Number` -- Maximum number of sockets to allow per host.
+[[config-keep-alive-max-sockets]]`maxSockets`:: `Number` -- Maximum number of sockets to allow per host.
 
 Default::: `Infinity`
 
 
-`keepAlive`[[config-keep-alive]]:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
+[[config-keep-alive]]`keepAlive`:: `Boolean` -- Should the connections to the node be kept open forever? This behavior is recommended when you are connecting directly to Elasticsearch.
 
 Default::: `true`
 
 
-`keepAliveInterval`[[config-keep-alive-interval]]:: `Number` -- How often, in milliseconds, should TCP KeepAlive packets be sent over sockets being kept alive. Only relevant if `keepAlive` is set to `true`.
+[[config-keep-alive-interval]]`keepAliveInterval`:: `Number` -- How often, in milliseconds, should TCP KeepAlive packets be sent over sockets being kept alive. Only relevant if `keepAlive` is set to `true`.
 
 Default::: `1000`
 
 
-`keepAliveMaxFreeSockets`[[config-keep-alive-max-free-sockets]]:: `Number` -- Maximum number of inactive sockets to keep connected to a node. Only relevant if `keepAlive` is set to `true`.
+[[config-keep-alive-max-free-sockets]]`keepAliveMaxFreeSockets`:: `Number` -- Maximum number of inactive sockets to keep connected to a node. Only relevant if `keepAlive` is set to `true`.
 
 Default::: `256`
 
 
-`keepAliveFreeSocketTimeout`[[config-keep-alive-free-socket-timeout]]:: `Number` -- Sets inactive sockets to timeout after milliseconds of inactivity. Only relevant if `keepAlive` is set to `true`.
+[[config-keep-alive-free-socket-timeout]]`keepAliveFreeSocketTimeout`:: `Number` -- Sets inactive sockets to timeout after milliseconds of inactivity. Only relevant if `keepAlive` is set to `true`.
 
 Default::: `60000`
 
 
-`suggestCompression`[[config-suggest-compression]]:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.
+[[config-suggest-compression]]`suggestCompression`:: `Boolean` -- The client should inform Elasticsearch, on each request, that it can accept compressed responses. In order for the responses to actually be compressed, you must enable `http.compression` in Elasticsearch. See http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-http.html[these docs] for additional info.
 
 Default::: `false`
 
 
-`connectionClass`[[config-connection-class]]:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
+[[config-connection-class]]`connectionClass`:: `String, Constructor` -- Defines the class that will be used to create connections to store in the connection pool. If you are looking to implement additional protocols you should probably start by writing a Connection class that extends the ConnectionAbstract.
 
 Defaults:::
   * Node: `"http"`
@@ -171,12 +171,12 @@ Defaults:::
   * jQuery Build: `"jquery"`
 
 
-`sniffedNodesProtocol`[[config-sniffed-nodes-protocol]]:: `String` -- Defines the protocol that will be used to communicate with nodes discovered during sniffing.
+[[config-sniffed-nodes-protocol]]`sniffedNodesProtocol`:: `String` -- Defines the protocol that will be used to communicate with nodes discovered during sniffing.
 
 Default::: If all of the hosts/host passed to the client via configuration use the same protocol then this defaults to that protocol, otherwise it defaults to `"http"`.
 
 
-`ssl`[[config-ssl]]:: `Object` -- An object defining HTTPS/SSL configuration to use for all nodes. The properties of this mimic the options accepted by http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] with the exception of `rejectUnauthorized`, which defaults to `false` allowing self-signed certificates to work out-of-the-box.
+[[config-ssl]]`ssl`:: `Object` -- An object defining HTTPS/SSL configuration to use for all nodes. The properties of this mimic the options accepted by http://nodejs.org/docs/latest/api/tls.html#tls_tls_connect_port_host_options_callback[`tls.connect()`] with the exception of `rejectUnauthorized`, which defaults to `false` allowing self-signed certificates to work out-of-the-box.
 +
 Additional information available in <<auth-reference>>.
 
@@ -206,7 +206,7 @@ var client = new elasticsearch.Client({
 -----
 
 
-`selector`[[config-selector]]:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
+[[config-selector]]`selector`:: `String, Function` -- This function will be used to select a connection from the ConnectionPool. It should received a single argument, the list of "active" connections, and return the connection to use. Use this selector to implement special logic for your client such as preferring nodes in a certain rack or data-center.
 +
 To make this function asynchronous, accept a second argument which will be the callback to use. The callback should be called Node-style with a possible error like: `cb(err, selectedConnection)`.
 
@@ -220,7 +220,7 @@ Options:::
 
 
 
-`defer`[[config-defer]]:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
+[[config-defer]]`defer`:: `Function` -- Override the way that the client creates promises. If you would rather use any other promise library this is how you'd do that. Elasticsearch.js expects that the defer object has a `promise` property (which will be returned to promise consumers), as well as `resolve` and `reject` methods.
 
 Default::: Defer object created with ES6 Promise
 
@@ -238,7 +238,7 @@ var client = new elasticsearch.Client({
 
 
 
-`nodesToHostCallback`[[config-nodes-to-host-callback]]:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
+[[config-nodes-to-host-callback]]`nodesToHostCallback`:: `Function` - This function will receive the list of nodes returned from the `_cluster/nodes` API during a sniff operation. The function should return an array of objects which match the <<config-hosts,specification for the `hosts` config>>.
 
 Default:::
 see https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/nodes_to_host.js[nodes_to_host.js]
@@ -246,7 +246,7 @@ see https://github.com/elasticsearch/elasticsearch-js/blob/master/src/lib/nodes_
 
 
 
-`createNodeAgent`[[config-create-node-agent]]:: `Function` -- Override the way that the client creates node.js `Agent`[https://nodejs.org/api/http.html#http_class_http_agent] objects. The value of this property will be executed every time a new Node is added to the client (either from the initial seed or from sniffing) and can return any value that node's http(s) module accepts as `agent:` configuration.
+[[config-create-node-agent]]`createNodeAgent`:: `Function` -- Override the way that the client creates node.js `Agent`[https://nodejs.org/api/http.html#http_class_http_agent] objects. The value of this property will be executed every time a new Node is added to the client (either from the initial seed or from sniffing) and can return any value that node's http(s) module accepts as `agent:` configuration.
 +
 The function is called with two arguments, first an `HttpConnector`[http://github.com/spalger/elasticsearch-js/blob/master/src/lib/connectors/http.js] object and the second the config object initially passed when creating the client.
 
