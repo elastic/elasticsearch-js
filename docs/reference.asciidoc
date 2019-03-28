@@ -1,3 +1,4 @@
+[[api-reference]]
 == API Reference
 
 ////////
