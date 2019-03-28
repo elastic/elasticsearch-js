@@ -10,7 +10,8 @@ node scripts/run.js --tag v7.0.0-beta
 
 === Common parameters
 Parameters that are accepted by all API endpoints.
-https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html
+
+link:{ref}/common-options.html[Reference]
 [cols=2*]
 |===
 |`pretty`
@@ -35,7 +36,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.h
 ----
 client.bulk([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+link:{ref}/docs-bulk.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -81,7 +82,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
 ----
 client.cat.aliases([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html
+link:{ref}/cat-alias.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -115,7 +116,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html
 ----
 client.cat.allocation([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
+link:{ref}/cat-allocation.html[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -152,7 +153,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.htm
 ----
 client.cat.count([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html
+link:{ref}/cat-count.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -186,7 +187,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html
 ----
 client.cat.fielddata([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
+link:{ref}/cat-fielddata.html[Reference]
 [cols=2*]
 |===
 |`fields`
@@ -226,7 +227,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
 ----
 client.cat.health([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
+link:{ref}/cat-health.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -261,7 +262,7 @@ _Default:_ `true`
 ----
 client.cat.help([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
+link:{ref}/cat.html[Reference]
 [cols=2*]
 |===
 |`help`
@@ -277,7 +278,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
 ----
 client.cat.indices([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+link:{ref}/cat-indices.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -323,7 +324,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
 ----
 client.cat.master([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html
+link:{ref}/cat-master.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -354,7 +355,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html
 ----
 client.cat.nodeattrs([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
+link:{ref}/cat-nodeattrs.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -385,7 +386,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
 ----
 client.cat.nodes([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
+link:{ref}/cat-nodes.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -419,7 +420,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
 ----
 client.cat.pendingTasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html
+link:{ref}/cat-pending-tasks.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -450,7 +451,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.
 ----
 client.cat.plugins([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
+link:{ref}/cat-plugins.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -481,7 +482,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
 ----
 client.cat.recovery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
+link:{ref}/cat-recovery.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -515,7 +516,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
 ----
 client.cat.repositories([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html
+link:{ref}/cat-repositories.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -546,7 +547,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.h
 ----
 client.cat.segments([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
+link:{ref}/cat-segments.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -577,7 +578,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
 ----
 client.cat.shards([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html
+link:{ref}/cat-shards.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -614,7 +615,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html
 ----
 client.cat.snapshots([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html
+link:{ref}/cat-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -648,7 +649,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html
 ----
 client.cat.tasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+link:{ref}/tasks.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -685,7 +686,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.cat.templates([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
+link:{ref}/cat-templates.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -719,7 +720,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
 ----
 client.cat.threadPool([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html
+link:{ref}/cat-thread-pool.html[Reference]
 [cols=2*]
 |===
 |`thread_pool_patterns` or `threadPoolPatterns`
@@ -756,7 +757,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.ht
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -772,7 +773,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scr
 ----
 client.cluster.allocationExplain([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html
+link:{ref}/cluster-allocation-explain.html[Reference]
 [cols=2*]
 |===
 |`include_yes_decisions` or `includeYesDecisions`
@@ -791,7 +792,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation
 ----
 client.cluster.getSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+link:{ref}/cluster-update-settings.html[Reference]
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -813,7 +814,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-set
 ----
 client.cluster.health([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html
+link:{ref}/cluster-health.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -861,7 +862,7 @@ _Default:_ `cluster`
 ----
 client.cluster.pendingTasks([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html
+link:{ref}/cluster-pending.html[Reference]
 [cols=2*]
 |===
 |`local`
@@ -877,7 +878,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.ht
 ----
 client.cluster.putSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+link:{ref}/cluster-update-settings.html[Reference]
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -899,7 +900,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-set
 ----
 client.cluster.remoteInfo([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html
+link:{ref}/cluster-remote-info.html[Reference]
 
 
 === cluster.reroute
@@ -907,7 +908,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-inf
 ----
 client.cluster.reroute([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
+link:{ref}/cluster-reroute.html[Reference]
 [cols=2*]
 |===
 |`dry_run` or `dryRun`
@@ -938,7 +939,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.ht
 ----
 client.cluster.state([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html
+link:{ref}/cluster-state.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -979,7 +980,7 @@ _Default:_ `open`
 ----
 client.cluster.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+link:{ref}/cluster-stats.html[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -998,7 +999,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
 ----
 client.count([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+link:{ref}/search-count.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1061,7 +1062,7 @@ _Default:_ `OR`
 ----
 client.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+link:{ref}/docs-index_.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1107,7 +1108,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
 ----
 client.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
+link:{ref}/docs-delete.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1153,7 +1154,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
 ----
 client.deleteByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html
+link:{ref}/docs-delete-by-query.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1274,7 +1275,7 @@ _Default:_ `1`
 ----
 client.deleteByQueryRethrottle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
+link:{ref}/docs-delete-by-query.html[Reference]
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -1290,7 +1291,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-q
 ----
 client.deleteScript([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+link:{ref}/modules-scripting.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1309,7 +1310,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.
 ----
 client.exists([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+link:{ref}/docs-get.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1361,7 +1362,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.existsSource([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+link:{ref}/docs-get.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1410,7 +1411,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.explain([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
+link:{ref}/search-explain.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1472,7 +1473,7 @@ _Default:_ `OR`
 ----
 client.fieldCaps([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
+link:{ref}/search-field-caps.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1498,7 +1499,7 @@ _Default:_ `open`
 ----
 client.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+link:{ref}/docs-get.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1556,7 +1557,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.getScript([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+link:{ref}/modules-scripting.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1572,7 +1573,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.
 ----
 client.getSource([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+link:{ref}/docs-get.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1621,7 +1622,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
 ----
 client.index([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+link:{ref}/docs-index_.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -1677,7 +1678,7 @@ _Default:_ `index`
 ----
 client.indices.analyze([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+link:{ref}/indices-analyze.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1696,7 +1697,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.ht
 ----
 client.indices.clearCache([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
+link:{ref}/indices-clearcache.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1734,7 +1735,7 @@ _Default:_ `open`
 ----
 client.indices.close([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+link:{ref}/indices-open-close.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1766,7 +1767,7 @@ _Default:_ `open`
 ----
 client.indices.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
+link:{ref}/indices-create-index.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1794,7 +1795,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-ind
 ----
 client.indices.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
+link:{ref}/indices-delete-index.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1823,7 +1824,7 @@ _Default:_ `open`
 ----
 client.indices.deleteAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1845,7 +1846,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.deleteTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+link:{ref}/indices-templates.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -1864,7 +1865,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.exists([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
+link:{ref}/indices-exists.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1896,7 +1897,7 @@ _Default:_ `open`
 ----
 client.indices.existsAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1925,7 +1926,7 @@ _Default:_ `all`
 ----
 client.indices.existsTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+link:{ref}/indices-templates.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -1947,7 +1948,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.existsType([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html
+link:{ref}/indices-types-exists.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -1976,7 +1977,7 @@ _Default:_ `open`
 ----
 client.indices.flush([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html
+link:{ref}/indices-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2005,7 +2006,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush.html
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2028,7 +2029,7 @@ _Default:_ `open`
 ----
 client.indices.forcemerge([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
+link:{ref}/indices-forcemerge.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2060,7 +2061,7 @@ _Default:_ `open`
 ----
 client.indices.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
+link:{ref}/indices-get-index.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2098,7 +2099,7 @@ _Default:_ `open`
 ----
 client.indices.getAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2127,7 +2128,7 @@ _Default:_ `all`
 ----
 client.indices.getFieldMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+link:{ref}/indices-get-field-mapping.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2165,7 +2166,7 @@ _Default:_ `open`
 ----
 client.indices.getMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+link:{ref}/indices-get-mapping.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2200,7 +2201,7 @@ _Default:_ `open`
 ----
 client.indices.getSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html
+link:{ref}/indices-get-settings.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2238,7 +2239,7 @@ _Default:_ `open,closed`
 ----
 client.indices.getTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+link:{ref}/indices-templates.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -2263,7 +2264,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.getUpgrade([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+link:{ref}/indices-upgrade.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2286,7 +2287,7 @@ _Default:_ `open`
 ----
 client.indices.open([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+link:{ref}/indices-open-close.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2318,7 +2319,7 @@ _Default:_ `closed`
 ----
 client.indices.putAlias([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2343,7 +2344,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.putMapping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
+link:{ref}/indices-put-mapping.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2381,7 +2382,7 @@ _Default:_ `open`
 ----
 client.indices.putSettings([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html
+link:{ref}/indices-update-settings.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2419,7 +2420,7 @@ _Default:_ `open`
 ----
 client.indices.putTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+link:{ref}/indices-templates.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -2453,7 +2454,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.
 ----
 client.indices.recovery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html
+link:{ref}/indices-recovery.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2472,7 +2473,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.h
 ----
 client.indices.refresh([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html
+link:{ref}/indices-refresh.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2495,7 +2496,7 @@ _Default:_ `open`
 ----
 client.indices.rollover([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html
+link:{ref}/indices-rollover-index.html[Reference]
 [cols=2*]
 |===
 |`alias`
@@ -2529,7 +2530,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-i
 ----
 client.indices.segments([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html
+link:{ref}/indices-segments.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2555,7 +2556,7 @@ _Default:_ `open`
 ----
 client.indices.shardStores([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html
+link:{ref}/indices-shards-stores.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2581,7 +2582,7 @@ _Default:_ `open`
 ----
 client.indices.shrink([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html
+link:{ref}/indices-shrink-index.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2609,7 +2610,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-ind
 ----
 client.indices.split([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html
+link:{ref}/indices-split-index.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2637,7 +2638,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-inde
 ----
 client.indices.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+link:{ref}/indices-stats.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2686,7 +2687,7 @@ _Default:_ `true`
 ----
 client.indices.updateAliases([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
 |`timeout`
@@ -2705,7 +2706,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.ht
 ----
 client.indices.upgrade([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+link:{ref}/indices-upgrade.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2734,7 +2735,7 @@ _Default:_ `open`
 ----
 client.indices.validateQuery([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+link:{ref}/search-validate.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2791,7 +2792,7 @@ _Default:_ `OR`
 ----
 client.info([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/
+link:http://www.elastic.co/guide/[Reference]
 
 
 === ingest.deletePipeline
@@ -2799,7 +2800,7 @@ http://www.elastic.co/guide/
 ----
 client.ingest.deletePipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2818,7 +2819,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.getPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2834,7 +2835,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.processorGrok([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
 
 
 === ingest.putPipeline
@@ -2842,7 +2843,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.putPipeline([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2864,7 +2865,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.ingest.simulate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2883,7 +2884,7 @@ https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 ----
 client.mget([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html
+link:{ref}/docs-multi-get.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2926,7 +2927,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.htm
 ----
 client.msearch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
+link:{ref}/search-multi-search.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2969,7 +2970,7 @@ _Default:_ `true`
 ----
 client.msearchTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+link:{ref}/search-multi-search.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3004,7 +3005,7 @@ _Default:_ `true`
 ----
 client.mtermvectors([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+link:{ref}/docs-multi-termvectors.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3066,7 +3067,7 @@ _Default:_ `true`
 ----
 client.nodes.hotThreads([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
+link:{ref}/cluster-nodes-hot-threads.html[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3097,7 +3098,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-
 ----
 client.nodes.info([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html
+link:{ref}/cluster-nodes-info.html[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3119,7 +3120,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info
 ----
 client.nodes.reloadSecureSettings([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings
+link:https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3135,7 +3136,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.h
 ----
 client.nodes.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+link:{ref}/cluster-nodes-stats.html[Reference]
 [cols=2*]
 |===
 |`metric`
@@ -3179,7 +3180,7 @@ _Default:_ `node`
 ----
 client.nodes.usage([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html
+link:{ref}/cluster-nodes-usage.html[Reference]
 [cols=2*]
 |===
 |`metric`
@@ -3198,7 +3199,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usag
 ----
 client.ping([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/
+link:http://www.elastic.co/guide/[Reference]
 
 
 === putScript
@@ -3206,7 +3207,7 @@ http://www.elastic.co/guide/
 ----
 client.putScript([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+link:{ref}/modules-scripting.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -3234,7 +3235,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.
 ----
 client.rankEval([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html
+link:{ref}/search-rank-eval.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3260,7 +3261,7 @@ _Default:_ `open`
 ----
 client.reindex([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
+link:{ref}/docs-reindex.html[Reference]
 [cols=2*]
 |===
 |`refresh`
@@ -3298,7 +3299,7 @@ _Default:_ `1`
 ----
 client.reindexRethrottle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
+link:{ref}/docs-reindex.html[Reference]
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3314,7 +3315,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 ----
 client.renderSearchTemplate([params] [, options] [, callback])
 ----
-http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
+link:{ref}/search-template.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -3330,7 +3331,6 @@ http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-temp
 ----
 client.scriptsPainlessContext([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`context`
@@ -3343,7 +3343,7 @@ client.scriptsPainlessContext([params] [, options] [, callback])
 ----
 client.scriptsPainlessExecute([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
+link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -3356,7 +3356,7 @@ https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-a
 ----
 client.scroll([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -3381,7 +3381,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scr
 ----
 client.search([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
+link:{ref}/search-search.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3534,7 +3534,7 @@ _Default:_ `128`
 ----
 client.searchShards([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html
+link:{ref}/search-shards.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3566,7 +3566,7 @@ _Default:_ `open`
 ----
 client.searchTemplate([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
+link:{ref}/search-template.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3626,7 +3626,7 @@ _Default:_ `true`
 ----
 client.snapshot.create([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3651,7 +3651,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.createRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3676,7 +3676,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.delete([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3695,7 +3695,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.deleteRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3714,7 +3714,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3739,7 +3739,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.getRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3758,7 +3758,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.restore([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3783,7 +3783,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.status([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3805,7 +3805,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.snapshot.verifyRepository([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+link:{ref}/modules-snapshots.html[Reference]
 [cols=2*]
 |===
 |`repository`
@@ -3824,7 +3824,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.
 ----
 client.tasks.cancel([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+link:{ref}/tasks.html[Reference]
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3846,7 +3846,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.tasks.get([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+link:{ref}/tasks.html[Reference]
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -3865,7 +3865,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
 ----
 client.tasks.list([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+link:{ref}/tasks.html[Reference]
 [cols=2*]
 |===
 |`nodes`
@@ -3897,7 +3897,7 @@ _Default:_ `nodes`
 ----
 client.termvectors([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
+link:{ref}/docs-termvectors.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3959,7 +3959,7 @@ _Default:_ `true`
 ----
 client.update([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+link:{ref}/docs-update.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -4017,7 +4017,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
 ----
 client.updateByQuery([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+link:{ref}/docs-update-by-query.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4144,7 +4144,7 @@ _Default:_ `1`
 ----
 client.updateByQueryRethrottle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
+link:{ref}/docs-update-by-query.html[Reference]
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -4160,7 +4160,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-q
 ----
 client.ccr.deleteAutoFollowPattern([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-follow-pattern.html
+link:{ref}/ccr-delete-auto-follow-pattern.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -4173,7 +4173,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-
 ----
 client.ccr.follow([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
+link:{ref}/ccr-put-follow.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4193,7 +4193,7 @@ _Default:_ `0`
 ----
 client.ccr.followInfo([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+link:{ref}/ccr-get-follow-info.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4206,7 +4206,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-i
 ----
 client.ccr.followStats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
+link:{ref}/ccr-get-follow-stats.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4219,7 +4219,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-s
 ----
 client.ccr.forgetFollower([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current
+link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4235,7 +4235,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current
 ----
 client.ccr.getAutoFollowPattern([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
+link:{ref}/ccr-get-auto-follow-pattern.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -4248,7 +4248,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-fol
 ----
 client.ccr.pauseFollow([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
+link:{ref}/ccr-post-pause-follow.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4261,7 +4261,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-f
 ----
 client.ccr.putAutoFollowPattern([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-auto-follow-pattern.html
+link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -4277,7 +4277,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-auto-fol
 ----
 client.ccr.resumeFollow([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
+link:{ref}/ccr-post-resume-follow.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4293,7 +4293,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-
 ----
 client.ccr.stats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
+link:{ref}/ccr-get-stats.html[Reference]
 
 
 === ccr.unfollow
@@ -4301,7 +4301,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.ht
 ----
 client.ccr.unfollow([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current
+link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4314,7 +4314,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current
 ----
 client.dataFrame.deleteDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
+link:{ref}/delete-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4327,7 +4327,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-fram
 ----
 client.dataFrame.getDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html
+link:{ref}/get-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4346,7 +4346,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-t
 ----
 client.dataFrame.getDataFrameTransformStats([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
+link:{ref}/get-data-frame-transform-stats.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4359,7 +4359,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-t
 ----
 client.dataFrame.previewDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html
+link:{ref}/preview-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -4372,7 +4372,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-fra
 ----
 client.dataFrame.putDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
+link:{ref}/put-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4388,7 +4388,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-t
 ----
 client.dataFrame.startDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
+link:{ref}/start-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4404,7 +4404,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame
 ----
 client.dataFrame.stopDataFrameTransform([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html
+link:{ref}/stop-data-frame-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -4423,7 +4423,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-
 ----
 client.graph.explore([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
+link:{ref}/graph-explore-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4448,7 +4448,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-ap
 ----
 client.ilm.deleteLifecycle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
+link:{ref}/ilm-delete-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`policy`
@@ -4461,7 +4461,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifec
 ----
 client.ilm.explainLifecycle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
+link:{ref}/ilm-explain-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4474,7 +4474,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-life
 ----
 client.ilm.getLifecycle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
+link:{ref}/ilm-get-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`policy`
@@ -4487,7 +4487,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycl
 ----
 client.ilm.getStatus([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
+link:{ref}/ilm-get-status.html[Reference]
 
 
 === ilm.moveToStep
@@ -4495,7 +4495,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.h
 ----
 client.ilm.moveToStep([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
+link:{ref}/ilm-move-to-step.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4511,7 +4511,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step
 ----
 client.ilm.putLifecycle([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
+link:{ref}/ilm-put-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`policy`
@@ -4527,7 +4527,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycl
 ----
 client.ilm.removePolicy([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
+link:{ref}/ilm-remove-policy.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4540,7 +4540,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-polic
 ----
 client.ilm.retry([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
+link:{ref}/ilm-retry-policy.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4553,7 +4553,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy
 ----
 client.ilm.start([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
+link:{ref}/ilm-start.html[Reference]
 
 
 === ilm.stop
@@ -4561,7 +4561,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
 ----
 client.ilm.stop([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
+link:{ref}/ilm-stop.html[Reference]
 
 
 === indices.freeze
@@ -4569,7 +4569,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
 ----
 client.indices.freeze([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
+link:{ref}/freeze-index-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4601,7 +4601,7 @@ _Default:_ `closed`
 ----
 client.indices.unfreeze([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
+link:{ref}/freeze-index-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4633,7 +4633,7 @@ _Default:_ `closed`
 ----
 client.license.delete([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/delete-license.html[Reference]
 
 
 === license.get
@@ -4641,7 +4641,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.get([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/get-license.html[Reference]
 [cols=2*]
 |===
 |`local`
@@ -4654,7 +4654,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.getBasicStatus([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/get-basic-status.html[Reference]
 
 
 === license.getTrialStatus
@@ -4662,7 +4662,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.getTrialStatus([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/get-trial-status.html[Reference]
 
 
 === license.post
@@ -4670,7 +4670,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.post([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/update-license.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4686,7 +4686,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.postStartBasic([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/start-basic.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4699,7 +4699,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.license.postStartTrial([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/x-pack/current/license-management.html
+link:{ref}/start-trial.html[Reference]
 [cols=2*]
 |===
 |`type`
@@ -4715,7 +4715,7 @@ https://www.elastic.co/guide/en/x-pack/current/license-management.html
 ----
 client.migration.deprecations([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
+link:{ref}/migration-api-deprecation.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4728,7 +4728,7 @@ http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html
 ----
 client.ml.closeJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+link:{ref}/ml-close-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4753,7 +4753,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
 ----
 client.ml.deleteCalendar([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -4766,7 +4765,6 @@ client.ml.deleteCalendar([params] [, options] [, callback])
 ----
 client.ml.deleteCalendarEvent([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -4782,7 +4780,6 @@ client.ml.deleteCalendarEvent([params] [, options] [, callback])
 ----
 client.ml.deleteCalendarJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -4798,7 +4795,7 @@ client.ml.deleteCalendarJob([params] [, options] [, callback])
 ----
 client.ml.deleteDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+link:{ref}/ml-delete-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -4816,13 +4813,11 @@ client.ml.deleteExpiredData([params] [, options] [, callback])
 ----
 
 
-
 === ml.deleteFilter
 [source,js]
 ----
 client.ml.deleteFilter([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -4835,7 +4830,7 @@ client.ml.deleteFilter([params] [, options] [, callback])
 ----
 client.ml.deleteForecast([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+link:{ref}/ml-delete-forecast.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4857,7 +4852,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecas
 ----
 client.ml.deleteJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
+link:{ref}/ml-delete-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4877,7 +4872,7 @@ _Default:_ `true`
 ----
 client.ml.deleteModelSnapshot([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+link:{ref}/ml-delete-snapshot.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4893,7 +4888,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapsho
 ----
 client.ml.findFileStructure([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-file-structure.html
+link:{ref}/ml-find-file-structure.html[Reference]
 [cols=2*]
 |===
 |`lines_to_sample` or `linesToSample`
@@ -4947,7 +4942,7 @@ _Default:_ `25s`
 ----
 client.ml.flushJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
+link:{ref}/ml-flush-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4978,7 +4973,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
 ----
 client.ml.forecast([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -4997,7 +4991,7 @@ client.ml.forecast([params] [, options] [, callback])
 ----
 client.ml.getBuckets([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
+link:{ref}/ml-get-bucket.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5043,7 +5037,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.htm
 ----
 client.ml.getCalendarEvents([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -5071,7 +5064,6 @@ client.ml.getCalendarEvents([params] [, options] [, callback])
 ----
 client.ml.getCalendars([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -5093,7 +5085,7 @@ client.ml.getCalendars([params] [, options] [, callback])
 ----
 client.ml.getCategories([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
+link:{ref}/ml-get-category.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5118,7 +5110,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.h
 ----
 client.ml.getDatafeedStats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+link:{ref}/ml-get-datafeed-stats.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5134,7 +5126,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-s
 ----
 client.ml.getDatafeeds([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
+link:{ref}/ml-get-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5150,7 +5142,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.h
 ----
 client.ml.getFilters([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -5169,7 +5160,7 @@ client.ml.getFilters([params] [, options] [, callback])
 ----
 client.ml.getInfluencers([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
+link:{ref}/ml-get-influencer.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5209,7 +5200,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer
 ----
 client.ml.getJobStats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+link:{ref}/ml-get-job-stats.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5225,7 +5216,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.
 ----
 client.ml.getJobs([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+link:{ref}/ml-get-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5241,7 +5232,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
 ----
 client.ml.getModelSnapshots([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+link:{ref}/ml-get-snapshot.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5278,7 +5269,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.h
 ----
 client.ml.getOverallBuckets([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
+link:{ref}/ml-get-overall-buckets.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5315,7 +5306,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-bu
 ----
 client.ml.getRecords([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
+link:{ref}/ml-get-record.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5357,13 +5348,12 @@ client.ml.info([params] [, options] [, callback])
 ----
 
 
-
 === ml.openJob
 [source,js]
 ----
 client.ml.openJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+link:{ref}/ml-open-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5382,7 +5372,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
 ----
 client.ml.postCalendarEvents([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -5398,7 +5387,7 @@ client.ml.postCalendarEvents([params] [, options] [, callback])
 ----
 client.ml.postData([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+link:{ref}/ml-post-data.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5420,7 +5409,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
 ----
 client.ml.previewDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
+link:{ref}/ml-preview-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5433,7 +5422,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafe
 ----
 client.ml.putCalendar([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -5449,7 +5437,6 @@ client.ml.putCalendar([params] [, options] [, callback])
 ----
 client.ml.putCalendarJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -5465,7 +5452,7 @@ client.ml.putCalendarJob([params] [, options] [, callback])
 ----
 client.ml.putDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
+link:{ref}/ml-put-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5481,7 +5468,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.h
 ----
 client.ml.putFilter([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -5497,7 +5483,7 @@ client.ml.putFilter([params] [, options] [, callback])
 ----
 client.ml.putJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+link:{ref}/ml-put-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5513,7 +5499,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
 ----
 client.ml.revertModelSnapshot([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
+link:{ref}/ml-revert-snapshot.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5535,7 +5521,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapsho
 ----
 client.ml.setUpgradeMode([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+link:{ref}/ml-set-upgrade-mode.html[Reference]
 [cols=2*]
 |===
 |`enabled`
@@ -5551,7 +5537,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mo
 ----
 client.ml.startDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
+link:{ref}/ml-start-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5576,7 +5562,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed
 ----
 client.ml.stopDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+link:{ref}/ml-stop-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5598,7 +5584,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.
 ----
 client.ml.updateDatafeed([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
+link:{ref}/ml-update-datafeed.html[Reference]
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5614,7 +5600,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafee
 ----
 client.ml.updateFilter([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -5630,7 +5615,7 @@ client.ml.updateFilter([params] [, options] [, callback])
 ----
 client.ml.updateJob([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
+link:{ref}/ml-update-job.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5646,7 +5631,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.htm
 ----
 client.ml.updateModelSnapshot([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
+link:{ref}/ml-update-snapshot.html[Reference]
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5665,7 +5650,6 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapsho
 ----
 client.ml.validate([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`body`
@@ -5678,7 +5662,6 @@ client.ml.validate([params] [, options] [, callback])
 ----
 client.ml.validateDetector([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`body`
@@ -5691,7 +5674,7 @@ client.ml.validateDetector([params] [, options] [, callback])
 ----
 client.monitoring.bulk([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
+link:{ref}/es-monitoring.html[Reference]
 [cols=2*]
 |===
 |`type`
@@ -5716,7 +5699,6 @@ http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html
 ----
 client.rollup.deleteJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5729,7 +5711,6 @@ client.rollup.deleteJob([params] [, options] [, callback])
 ----
 client.rollup.getJobs([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5742,7 +5723,6 @@ client.rollup.getJobs([params] [, options] [, callback])
 ----
 client.rollup.getRollupCaps([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5755,7 +5735,6 @@ client.rollup.getRollupCaps([params] [, options] [, callback])
 ----
 client.rollup.getRollupIndexCaps([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`index`
@@ -5768,7 +5747,6 @@ client.rollup.getRollupIndexCaps([params] [, options] [, callback])
 ----
 client.rollup.putJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5784,7 +5762,6 @@ client.rollup.putJob([params] [, options] [, callback])
 ----
 client.rollup.rollupSearch([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`index`
@@ -5809,7 +5786,6 @@ client.rollup.rollupSearch([params] [, options] [, callback])
 ----
 client.rollup.startJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5822,7 +5798,6 @@ client.rollup.startJob([params] [, options] [, callback])
 ----
 client.rollup.stopJob([params] [, options] [, callback])
 ----
-
 [cols=2*]
 |===
 |`id`
@@ -5841,7 +5816,7 @@ client.rollup.stopJob([params] [, options] [, callback])
 ----
 client.security.authenticate([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
+link:{ref}/security-api-authenticate.html[Reference]
 
 
 === security.changePassword
@@ -5849,7 +5824,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-aut
 ----
 client.security.changePassword([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+link:{ref}/security-api-change-password.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -5868,7 +5843,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cha
 ----
 client.security.clearCachedRealms([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+link:{ref}/security-api-clear-cache.html[Reference]
 [cols=2*]
 |===
 |`realms`
@@ -5884,7 +5859,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 ----
 client.security.clearCachedRoles([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
+link:{ref}/security-api-clear-role-cache.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5897,7 +5872,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 ----
 client.security.createApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+link:{ref}/security-api-create-api-key.html[Reference]
 [cols=2*]
 |===
 |`refresh`
@@ -5913,7 +5888,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cre
 ----
 client.security.deletePrivileges([params] [, options] [, callback])
 ----
-TODO
+link:TODO[Reference]
 [cols=2*]
 |===
 |`application`
@@ -5932,7 +5907,7 @@ TODO
 ----
 client.security.deleteRole([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html
+link:{ref}/security-api-delete-role.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5948,7 +5923,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 ----
 client.security.deleteRoleMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
+link:{ref}/security-api-delete-role-mapping.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5964,7 +5939,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 ----
 client.security.deleteUser([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
+link:{ref}/security-api-delete-user.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -5980,7 +5955,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 ----
 client.security.disableUser([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
+link:{ref}/security-api-disable-user.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -5996,7 +5971,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-dis
 ----
 client.security.enableUser([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
+link:{ref}/security-api-enable-user.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -6012,7 +5987,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 ----
 client.security.getApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+link:{ref}/security-api-get-api-key.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -6034,7 +6009,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.getPrivileges([params] [, options] [, callback])
 ----
-TODO
+link:TODO[Reference]
 [cols=2*]
 |===
 |`application`
@@ -6050,7 +6025,7 @@ TODO
 ----
 client.security.getRole([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+link:{ref}/security-api-get-role.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -6063,7 +6038,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.getRoleMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
+link:{ref}/security-api-get-role-mapping.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -6076,7 +6051,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.getToken([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
+link:{ref}/security-api-get-token.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -6089,7 +6064,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.getUser([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
+link:{ref}/security-api-get-user.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -6102,7 +6077,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.getUserPrivileges([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
+link:{ref}/security-api-get-privileges.html[Reference]
 
 
 === security.hasPrivileges
@@ -6110,7 +6085,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.hasPrivileges([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
+link:{ref}/security-api-has-privileges.html[Reference]
 [cols=2*]
 |===
 |`user`
@@ -6126,7 +6101,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has
 ----
 client.security.invalidateApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
+link:{ref}/security-api-invalidate-api-key.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -6139,7 +6114,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-inv
 ----
 client.security.invalidateToken([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
+link:{ref}/security-api-invalidate-token.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -6152,7 +6127,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-inv
 ----
 client.security.putPrivileges([params] [, options] [, callback])
 ----
-TODO
+link:TODO[Reference]
 [cols=2*]
 |===
 |`refresh`
@@ -6168,7 +6143,7 @@ TODO
 ----
 client.security.putRole([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
+link:{ref}/security-api-put-role.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -6187,7 +6162,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 ----
 client.security.putRoleMapping([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
+link:{ref}/security-api-put-role-mapping.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -6206,7 +6181,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 ----
 client.security.putUser([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
+link:{ref}/security-api-put-user.html[Reference]
 [cols=2*]
 |===
 |`username`
@@ -6225,7 +6200,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 ----
 client.sql.clearCursor([params] [, options] [, callback])
 ----
-Clear SQL cursor
+link:Clear SQL cursor[Reference]
 [cols=2*]
 |===
 |`body`
@@ -6238,7 +6213,7 @@ Clear SQL cursor
 ----
 client.sql.query([params] [, options] [, callback])
 ----
-Execute SQL
+link:Execute SQL[Reference]
 [cols=2*]
 |===
 |`format`
@@ -6254,7 +6229,7 @@ Execute SQL
 ----
 client.sql.translate([params] [, options] [, callback])
 ----
-Translate SQL into Elasticsearch queries
+link:Translate SQL into Elasticsearch queries[Reference]
 [cols=2*]
 |===
 |`body`
@@ -6267,7 +6242,7 @@ Translate SQL into Elasticsearch queries
 ----
 client.ssl.certificates([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
+link:{ref}/security-api-ssl.html[Reference]
 
 
 === watcher.ackWatch
@@ -6275,7 +6250,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl
 ----
 client.watcher.ackWatch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+link:{ref}/watcher-api-ack-watch.html[Reference]
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -6291,7 +6266,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-w
 ----
 client.watcher.activateWatch([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
+link:{ref}/watcher-api-activate-watch.html[Reference]
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -6304,7 +6279,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-acti
 ----
 client.watcher.deactivateWatch([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html
+link:{ref}/watcher-api-deactivate-watch.html[Reference]
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -6317,7 +6292,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deac
 ----
 client.watcher.deleteWatch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
+link:{ref}/watcher-api-delete-watch.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -6330,7 +6305,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delet
 ----
 client.watcher.executeWatch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
+link:{ref}/watcher-api-execute-watch.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -6349,7 +6324,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execu
 ----
 client.watcher.getWatch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
+link:{ref}/watcher-api-get-watch.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -6362,7 +6337,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-w
 ----
 client.watcher.putWatch([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
+link:{ref}/watcher-api-put-watch.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -6390,7 +6365,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-w
 ----
 client.watcher.start([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
+link:{ref}/watcher-api-start.html[Reference]
 
 
 === watcher.stats
@@ -6398,7 +6373,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start
 ----
 client.watcher.stats([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
+link:{ref}/watcher-api-stats.html[Reference]
 [cols=2*]
 |===
 |`metric`
@@ -6417,7 +6392,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats
 ----
 client.watcher.stop([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
+link:{ref}/watcher-api-stop.html[Reference]
 
 
 === xpack.info
@@ -6425,7 +6400,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.
 ----
 client.xpack.info([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+link:{ref}/info-api.html[Reference]
 [cols=2*]
 |===
 |`categories`
@@ -6438,7 +6413,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
 ----
 client.xpack.usage([params] [, options] [, callback])
 ----
-Retrieve information about xpack features usage
+link:Retrieve information about xpack features usage[Reference]
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
