@@ -22,30 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupRollupSearch (opts) {
+function buildCcrForgetFollower (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.rollup_search]() request
+   * Perform a [ccr.forget_follower](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
    *
-   * @param {string} index - The index or index-pattern (containing rollup or regular data) that should be searched
-   * @param {string} type - The doc type inside the index
-   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {object} body - The search request body
+   * @param {string} index - the name of the leader index for which specified follower retention leases should be removed
+   * @param {object} body - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
    */
 
   const acceptedQuerystring = [
-    'typed_keys',
-    'rest_total_hits_as_int'
+
   ]
 
   const snakeCase = {
-    typedKeys: 'typed_keys',
-    restTotalHitsAsInt: 'rest_total_hits_as_int'
+
   }
 
-  return function xpackRollupRollupSearch (params, options, callback) {
+  return function ccrForgetFollower (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,15 +50,6 @@ function buildXpackRollupRollupSearch (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupRollupSearch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
     }
 
     // check required parameters
@@ -76,12 +62,6 @@ function buildXpackRollupRollupSearch (opts) {
       return handleError(err, callback)
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -89,11 +69,11 @@ function buildXpackRollupRollupSearch (opts) {
     }
 
     var warnings = null
-    var { method, body, index, type } = params
-    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
+    var { method, body, index } = params
+    var querystring = semicopy(params, ['method', 'body', 'index'])
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -103,11 +83,7 @@ function buildXpackRollupRollupSearch (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
 
     // build request object
     const request = {
@@ -148,4 +124,4 @@ function buildXpackRollupRollupSearch (opts) {
   }
 }
 
-module.exports = buildXpackRollupRollupSearch
+module.exports = buildCcrForgetFollower

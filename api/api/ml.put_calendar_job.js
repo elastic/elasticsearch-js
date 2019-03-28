@@ -52,15 +52,6 @@ function buildMlPutCalendarJob (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        mlPutCalendarJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['calendar_id'] == null && params['calendarId'] == null) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')

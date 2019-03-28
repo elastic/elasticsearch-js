@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackSqlTranslate (opts) {
+function buildSqlClearCursor (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.sql.translate](Translate SQL into Elasticsearch queries) request
+   * Perform a [sql.clear_cursor](Clear SQL cursor) request
    *
-   * @param {object} body - Specify the query in the `query` element.
+   * @param {object} body - Specify the cursor value in the `cursor` element to clean the cursor.
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackSqlTranslate (opts) {
 
   }
 
-  return function xpackSqlTranslate (params, options, callback) {
+  return function sqlClearCursor (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -49,15 +49,6 @@ function buildXpackSqlTranslate (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackSqlTranslate(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
     }
 
     // check required parameters
@@ -77,7 +68,7 @@ function buildXpackSqlTranslate (opts) {
     var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -87,7 +78,7 @@ function buildXpackSqlTranslate (opts) {
 
     var path = ''
 
-    path = '/' + '_sql' + '/' + 'translate'
+    path = '/' + '_sql' + '/' + 'close'
 
     // build request object
     const request = {
@@ -128,4 +119,4 @@ function buildXpackSqlTranslate (opts) {
   }
 }
 
-module.exports = buildXpackSqlTranslate
+module.exports = buildSqlClearCursor

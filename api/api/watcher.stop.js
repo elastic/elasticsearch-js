@@ -22,14 +22,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupPutJob (opts) {
+function buildWatcherStop (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.put_job]() request
+   * Perform a [watcher.stop](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html) request
    *
-   * @param {string} id - The ID of the job to create
-   * @param {object} body - The job configuration
    */
 
   const acceptedQuerystring = [
@@ -40,7 +38,7 @@ function buildXpackRollupPutJob (opts) {
 
   }
 
-  return function xpackRollupPutJob (params, options, callback) {
+  return function watcherStop (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -52,22 +50,9 @@ function buildXpackRollupPutJob (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupPutJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -78,11 +63,11 @@ function buildXpackRollupPutJob (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -92,13 +77,13 @@ function buildXpackRollupPutJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    path = '/' + '_watcher' + '/' + '_stop'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -133,4 +118,4 @@ function buildXpackRollupPutJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupPutJob
+module.exports = buildWatcherStop

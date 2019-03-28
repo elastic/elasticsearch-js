@@ -22,13 +22,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupDeleteJob (opts) {
+function buildWatcherStart (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.delete_job]() request
+   * Perform a [watcher.start](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html) request
    *
-   * @param {string} id - The ID of the job to delete
    */
 
   const acceptedQuerystring = [
@@ -39,7 +38,7 @@ function buildXpackRollupDeleteJob (opts) {
 
   }
 
-  return function xpackRollupDeleteJob (params, options, callback) {
+  return function watcherStart (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,18 +50,9 @@ function buildXpackRollupDeleteJob (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupDeleteJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -73,11 +63,11 @@ function buildXpackRollupDeleteJob (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'DELETE'
+      method = 'POST'
     }
 
     var ignore = options.ignore || null
@@ -87,13 +77,13 @@ function buildXpackRollupDeleteJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    path = '/' + '_watcher' + '/' + '_start'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -128,4 +118,4 @@ function buildXpackRollupDeleteJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupDeleteJob
+module.exports = buildWatcherStart

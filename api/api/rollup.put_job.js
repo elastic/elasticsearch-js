@@ -22,33 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherPutWatch (opts) {
+function buildRollupPutJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
+   * Perform a [rollup.put_job]() request
    *
-   * @param {string} id - Watch ID
-   * @param {boolean} active - Specify whether the watch is in/active by default
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
-   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
-   * @param {object} body - The watch
+   * @param {string} id - The ID of the job to create
+   * @param {object} body - The job configuration
    */
 
   const acceptedQuerystring = [
-    'active',
-    'version',
-    'if_seq_no',
-    'if_primary_term'
+
   ]
 
   const snakeCase = {
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term'
+
   }
 
-  return function xpackWatcherPutWatch (params, options, callback) {
+  return function rollupPutJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -60,18 +52,13 @@ function buildXpackWatcherPutWatch (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackWatcherPutWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -96,7 +83,7 @@ function buildXpackWatcherPutWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -137,4 +124,4 @@ function buildXpackWatcherPutWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherPutWatch
+module.exports = buildRollupPutJob

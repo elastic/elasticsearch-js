@@ -29,11 +29,10 @@ function buildIlmExplainLifecycle (opts) {
    * Perform a [ilm.explain_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html) request
    *
    * @param {string} index - The name of the index to explain
-   * @param {boolean} human - Return data such as dates in a human readable format
    */
 
   const acceptedQuerystring = [
-    'human'
+
   ]
 
   const snakeCase = {
@@ -50,15 +49,6 @@ function buildIlmExplainLifecycle (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ilmExplainLifecycle(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
     }
 
     // check required parameters

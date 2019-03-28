@@ -51,13 +51,10 @@ function buildCcrFollowStats (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        ccrFollowStats(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
+    // check required parameters
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
 
     // validate headers object

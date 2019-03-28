@@ -22,13 +22,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherActivateWatch (opts) {
+function buildLicenseGetTrialStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.activate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html) request
+   * Perform a [license.get_trial_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} watch_id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -39,7 +38,7 @@ function buildXpackWatcherActivateWatch (opts) {
 
   }
 
-  return function xpackWatcherActivateWatch (params, options, callback) {
+  return function licenseGetTrialStatus (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,20 +50,7 @@ function buildXpackWatcherActivateWatch (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackWatcherActivateWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['watch_id'] == null && params['watchId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
-      return handleError(err, callback)
-    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
@@ -77,11 +63,11 @@ function buildXpackWatcherActivateWatch (opts) {
     }
 
     var warnings = null
-    var { method, body, watchId, watch_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'watchId', 'watch_id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'PUT'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -91,13 +77,13 @@ function buildXpackWatcherActivateWatch (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
+    path = '/' + '_license' + '/' + 'trial_status'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -132,4 +118,4 @@ function buildXpackWatcherActivateWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherActivateWatch
+module.exports = buildLicenseGetTrialStatus

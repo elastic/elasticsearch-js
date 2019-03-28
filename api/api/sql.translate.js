@@ -22,25 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackMigrationUpgrade (opts) {
+function buildSqlTranslate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.migration.upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html) request
+   * Perform a [sql.translate](Translate SQL into Elasticsearch queries) request
    *
-   * @param {string} index - The name of the index
-   * @param {boolean} wait_for_completion - Should the request block until the upgrade operation is completed
+   * @param {object} body - Specify the query in the `query` element.
    */
 
   const acceptedQuerystring = [
-    'wait_for_completion'
+
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion'
+
   }
 
-  return function xpackMigrationUpgrade (params, options, callback) {
+  return function sqlTranslate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -52,18 +51,9 @@ function buildXpackMigrationUpgrade (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackMigrationUpgrade(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -74,11 +64,11 @@ function buildXpackMigrationUpgrade (opts) {
     }
 
     var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
-      method = 'POST'
+      method = body == null ? 'GET' : 'POST'
     }
 
     var ignore = options.ignore || null
@@ -88,7 +78,7 @@ function buildXpackMigrationUpgrade (opts) {
 
     var path = ''
 
-    path = '/' + '_migration' + '/' + 'upgrade' + '/' + encodeURIComponent(index)
+    path = '/' + '_sql' + '/' + 'translate'
 
     // build request object
     const request = {
@@ -129,4 +119,4 @@ function buildXpackMigrationUpgrade (opts) {
   }
 }
 
-module.exports = buildXpackMigrationUpgrade
+module.exports = buildSqlTranslate

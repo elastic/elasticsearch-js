@@ -52,15 +52,6 @@ function buildSecurityGetPrivileges (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        securityGetPrivileges(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
@@ -94,9 +85,9 @@ function buildSecurityGetPrivileges (opts) {
 
     var path = ''
 
-    if (application && name) {
+    if ((application) != null && (name) != null) {
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
-    } else if (application) {
+    } else if ((application) != null) {
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application)
     } else {
       path = '/' + '_security' + '/' + 'privilege'

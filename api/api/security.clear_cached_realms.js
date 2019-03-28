@@ -52,15 +52,6 @@ function buildSecurityClearCachedRealms (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        securityClearCachedRealms(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['realms'] == null) {
       const err = new ConfigurationError('Missing required parameter: realms')

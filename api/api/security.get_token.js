@@ -51,15 +51,6 @@ function buildSecurityGetToken (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        securityGetToken(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')

@@ -51,15 +51,6 @@ function buildSecurityGetUser (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        securityGetUser(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')

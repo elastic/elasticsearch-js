@@ -22,25 +22,27 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackSqlQuery (opts) {
+function buildWatcherStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.sql.query](Execute SQL) request
+   * Perform a [watcher.stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html) request
    *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {object} body - Use the `query` element to start a query. Use the `cursor` element to continue a query.
+   * @param {list} metric - Controls what additional stat metrics should be include in the response
+   * @param {list} metric - Controls what additional stat metrics should be include in the response
+   * @param {boolean} emit_stacktraces - Emits stack traces of currently running watches
    */
 
   const acceptedQuerystring = [
-    'format'
+    'metric',
+    'emit_stacktraces'
   ]
 
   const snakeCase = {
-
+    emitStacktraces: 'emit_stacktraces'
   }
 
-  return function xpackSqlQuery (params, options, callback) {
+  return function watcherStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -52,18 +54,9 @@ function buildXpackSqlQuery (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackSqlQuery(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -74,11 +67,11 @@ function buildXpackSqlQuery (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, metric } = params
+    var querystring = semicopy(params, ['method', 'body', 'metric'])
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -88,13 +81,17 @@ function buildXpackSqlQuery (opts) {
 
     var path = ''
 
-    path = '/' + '_sql'
+    if ((metric) != null) {
+      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
+    } else {
+      path = '/' + '_watcher' + '/' + 'stats'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -129,4 +126,4 @@ function buildXpackSqlQuery (opts) {
   }
 }
 
-module.exports = buildXpackSqlQuery
+module.exports = buildWatcherStats

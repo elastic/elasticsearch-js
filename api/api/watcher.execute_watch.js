@@ -22,24 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupStartJob (opts) {
+function buildWatcherExecuteWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.start_job]() request
+   * Perform a [watcher.execute_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html) request
    *
-   * @param {string} id - The ID of the job to start
+   * @param {string} id - Watch ID
+   * @param {boolean} debug - indicates whether the watch should execute in debug mode
+   * @param {object} body - Execution control
    */
 
   const acceptedQuerystring = [
-
+    'debug'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackRollupStartJob (params, options, callback) {
+  return function watcherExecuteWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -49,21 +51,6 @@ function buildXpackRollupStartJob (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupStartJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-    // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -77,7 +64,7 @@ function buildXpackRollupStartJob (opts) {
     var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -87,7 +74,11 @@ function buildXpackRollupStartJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_start'
+    if ((id) != null) {
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
+    } else {
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
+    }
 
     // build request object
     const request = {
@@ -128,4 +119,4 @@ function buildXpackRollupStartJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupStartJob
+module.exports = buildWatcherExecuteWatch

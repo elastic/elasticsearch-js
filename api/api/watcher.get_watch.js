@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupGetJobs (opts) {
+function buildWatcherGetWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.get_jobs]() request
+   * Perform a [watcher.get_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html) request
    *
-   * @param {string} id - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
+   * @param {string} id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackRollupGetJobs (opts) {
 
   }
 
-  return function xpackRollupGetJobs (params, options, callback) {
+  return function watcherGetWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,13 +51,14 @@ function buildXpackRollupGetJobs (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupGetJobs(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
+    // check required parameters
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -81,11 +82,7 @@ function buildXpackRollupGetJobs (opts) {
 
     var path = ''
 
-    if ((id) != null) {
-      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + '_rollup' + '/' + 'job'
-    }
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -126,4 +123,4 @@ function buildXpackRollupGetJobs (opts) {
   }
 }
 
-module.exports = buildXpackRollupGetJobs
+module.exports = buildWatcherGetWatch

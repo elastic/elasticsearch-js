@@ -22,25 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicensePost (opts) {
+function buildWatcherDeactivateWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.post](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [watcher.deactivate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html) request
    *
-   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
-   * @param {object} body - licenses to be installed
+   * @param {string} watch_id - Watch ID
    */
 
   const acceptedQuerystring = [
-    'acknowledge'
+
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackLicensePost (params, options, callback) {
+  return function watcherDeactivateWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -52,13 +51,14 @@ function buildXpackLicensePost (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackLicensePost(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
+    // check required parameters
+    if (params['watch_id'] == null && params['watchId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
+      return handleError(err, callback)
+    }
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -68,8 +68,8 @@ function buildXpackLicensePost (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, watchId, watch_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'watchId', 'watch_id'])
 
     if (method == null) {
       method = 'PUT'
@@ -82,13 +82,13 @@ function buildXpackLicensePost (opts) {
 
     var path = ''
 
-    path = '/' + '_license'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -123,4 +123,4 @@ function buildXpackLicensePost (opts) {
   }
 }
 
-module.exports = buildXpackLicensePost
+module.exports = buildWatcherDeactivateWatch

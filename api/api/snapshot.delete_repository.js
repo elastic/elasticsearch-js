@@ -61,15 +61,6 @@ function buildSnapshotDeleteRepository (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        snapshotDeleteRepository(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
     if (params['repository'] == null) {
       const err = new ConfigurationError('Missing required parameter: repository')

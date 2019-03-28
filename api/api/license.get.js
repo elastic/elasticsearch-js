@@ -22,23 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicenseGetTrialStatus (opts) {
+function buildLicenseGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.get_trial_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.get](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
+   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
 
   const acceptedQuerystring = [
-
+    'local'
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackLicenseGetTrialStatus (params, options, callback) {
+  return function licenseGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -48,15 +49,6 @@ function buildXpackLicenseGetTrialStatus (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackLicenseGetTrialStatus(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
     }
 
     // check required parameters
@@ -86,7 +78,7 @@ function buildXpackLicenseGetTrialStatus (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'trial_status'
+    path = '/' + '_license'
 
     // build request object
     const request = {
@@ -127,4 +119,4 @@ function buildXpackLicenseGetTrialStatus (opts) {
   }
 }
 
-module.exports = buildXpackLicenseGetTrialStatus
+module.exports = buildLicenseGet

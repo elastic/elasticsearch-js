@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupGetRollupCaps (opts) {
+function buildWatcherActivateWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.get_rollup_caps]() request
+   * Perform a [watcher.activate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html) request
    *
-   * @param {string} id - The ID of the index to check rollup capabilities on, or left blank for all jobs
+   * @param {string} watch_id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackRollupGetRollupCaps (opts) {
 
   }
 
-  return function xpackRollupGetRollupCaps (params, options, callback) {
+  return function watcherActivateWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,13 +51,14 @@ function buildXpackRollupGetRollupCaps (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupGetRollupCaps(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
+    // check required parameters
+    if (params['watch_id'] == null && params['watchId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
+      return handleError(err, callback)
+    }
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -67,11 +68,11 @@ function buildXpackRollupGetRollupCaps (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body, watchId, watch_id } = params
+    var querystring = semicopy(params, ['method', 'body', 'watchId', 'watch_id'])
 
     if (method == null) {
-      method = 'GET'
+      method = 'PUT'
     }
 
     var ignore = options.ignore || null
@@ -81,17 +82,13 @@ function buildXpackRollupGetRollupCaps (opts) {
 
     var path = ''
 
-    if ((id) != null) {
-      path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + '_rollup' + '/' + 'data'
-    }
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: '',
       querystring
     }
 
@@ -126,4 +123,4 @@ function buildXpackRollupGetRollupCaps (opts) {
   }
 }
 
-module.exports = buildXpackRollupGetRollupCaps
+module.exports = buildWatcherActivateWatch

@@ -22,24 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicensePostStartBasic (opts) {
+function buildRollupStartJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.post_start_basic](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [rollup.start_job]() request
    *
-   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
+   * @param {string} id - The ID of the job to start
    */
 
   const acceptedQuerystring = [
-    'acknowledge'
+
   ]
 
   const snakeCase = {
 
   }
 
-  return function xpackLicensePostStartBasic (params, options, callback) {
+  return function rollupStartJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,18 +51,9 @@ function buildXpackLicensePostStartBasic (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackLicensePostStartBasic(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
 
@@ -73,8 +64,8 @@ function buildXpackLicensePostStartBasic (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
       method = 'POST'
@@ -87,13 +78,13 @@ function buildXpackLicensePostStartBasic (opts) {
 
     var path = ''
 
-    path = '/' + '_license' + '/' + 'start_basic'
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_start'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 
@@ -128,4 +119,4 @@ function buildXpackLicensePostStartBasic (opts) {
   }
 }
 
-module.exports = buildXpackLicensePostStartBasic
+module.exports = buildRollupStartJob

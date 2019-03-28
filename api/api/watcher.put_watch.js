@@ -22,26 +22,33 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherExecuteWatch (opts) {
+function buildWatcherPutWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.execute_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html) request
+   * Perform a [watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
    *
    * @param {string} id - Watch ID
-   * @param {boolean} debug - indicates whether the watch should execute in debug mode
-   * @param {object} body - Execution control
+   * @param {boolean} active - Specify whether the watch is in/active by default
+   * @param {number} version - Explicit version number for concurrency control
+   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
+   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
+   * @param {object} body - The watch
    */
 
   const acceptedQuerystring = [
-    'debug'
+    'active',
+    'version',
+    'if_seq_no',
+    'if_primary_term'
   ]
 
   const snakeCase = {
-
+    ifSeqNo: 'if_seq_no',
+    ifPrimaryTerm: 'if_primary_term'
   }
 
-  return function xpackWatcherExecuteWatch (params, options, callback) {
+  return function watcherPutWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,13 +60,10 @@ function buildXpackWatcherExecuteWatch (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackWatcherExecuteWatch(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
+    // check required parameters
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -83,11 +87,7 @@ function buildXpackWatcherExecuteWatch (opts) {
 
     var path = ''
 
-    if ((id) != null) {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
-    } else {
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
-    }
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -128,4 +128,4 @@ function buildXpackWatcherExecuteWatch (opts) {
   }
 }
 
-module.exports = buildXpackWatcherExecuteWatch
+module.exports = buildWatcherPutWatch

@@ -22,11 +22,11 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackLicenseGetBasicStatus (opts) {
+function buildLicenseGetBasicStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.license.get_basic_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.get_basic_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
    */
 
@@ -38,7 +38,7 @@ function buildXpackLicenseGetBasicStatus (opts) {
 
   }
 
-  return function xpackLicenseGetBasicStatus (params, options, callback) {
+  return function licenseGetBasicStatus (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -48,15 +48,6 @@ function buildXpackLicenseGetBasicStatus (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackLicenseGetBasicStatus(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
     }
 
     // check required parameters
@@ -127,4 +118,4 @@ function buildXpackLicenseGetBasicStatus (opts) {
   }
 }
 
-module.exports = buildXpackLicenseGetBasicStatus
+module.exports = buildLicenseGetBasicStatus

@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackMigrationDeprecations (opts) {
+function buildRollupGetRollupIndexCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.migration.deprecations](http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html) request
+   * Perform a [rollup.get_rollup_index_caps]() request
    *
-   * @param {string} index - Index pattern
+   * @param {string} index - The rollup index or index pattern to obtain rollup capabilities from.
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackMigrationDeprecations (opts) {
 
   }
 
-  return function xpackMigrationDeprecations (params, options, callback) {
+  return function rollupGetRollupIndexCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,18 +51,9 @@ function buildXpackMigrationDeprecations (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackMigrationDeprecations(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
@@ -87,11 +78,7 @@ function buildXpackMigrationDeprecations (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'
-    } else {
-      path = '/' + '_migration' + '/' + 'deprecations'
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
 
     // build request object
     const request = {
@@ -132,4 +119,4 @@ function buildXpackMigrationDeprecations (opts) {
   }
 }
 
-module.exports = buildXpackMigrationDeprecations
+module.exports = buildRollupGetRollupIndexCaps

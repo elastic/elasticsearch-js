@@ -22,13 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackSqlClearCursor (opts) {
+function buildWatcherDeleteWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.sql.clear_cursor](Clear SQL cursor) request
+   * Perform a [watcher.delete_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html) request
    *
-   * @param {object} body - Specify the cursor value in the `cursor` element to clean the cursor.
+   * @param {string} id - Watch ID
    */
 
   const acceptedQuerystring = [
@@ -39,7 +39,7 @@ function buildXpackSqlClearCursor (opts) {
 
   }
 
-  return function xpackSqlClearCursor (params, options, callback) {
+  return function watcherDeleteWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,18 +51,13 @@ function buildXpackSqlClearCursor (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackSqlClearCursor(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -73,11 +68,11 @@ function buildXpackSqlClearCursor (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'DELETE'
     }
 
     var ignore = options.ignore || null
@@ -87,13 +82,13 @@ function buildXpackSqlClearCursor (opts) {
 
     var path = ''
 
-    path = '/' + '_sql' + '/' + 'close'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -128,4 +123,4 @@ function buildXpackSqlClearCursor (opts) {
   }
 }
 
-module.exports = buildXpackSqlClearCursor
+module.exports = buildWatcherDeleteWatch

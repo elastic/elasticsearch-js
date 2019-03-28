@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackWatcherStop (opts) {
+function buildRollupGetRollupCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.watcher.stop](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html) request
+   * Perform a [rollup.get_rollup_caps]() request
    *
+   * @param {string} id - The ID of the index to check rollup capabilities on, or left blank for all jobs
    */
 
   const acceptedQuerystring = [
@@ -38,7 +39,7 @@ function buildXpackWatcherStop (opts) {
 
   }
 
-  return function xpackWatcherStop (params, options, callback) {
+  return function rollupGetRollupCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -50,21 +51,6 @@ function buildXpackWatcherStop (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackWatcherStop(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -72,11 +58,11 @@ function buildXpackWatcherStop (opts) {
     }
 
     var warnings = null
-    var { method, body } = params
-    var querystring = semicopy(params, ['method', 'body'])
+    var { method, body, id } = params
+    var querystring = semicopy(params, ['method', 'body', 'id'])
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore || null
@@ -86,13 +72,17 @@ function buildXpackWatcherStop (opts) {
 
     var path = ''
 
-    path = '/' + '_watcher' + '/' + '_stop'
+    if ((id) != null) {
+      path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
+    } else {
+      path = '/' + '_rollup' + '/' + 'data'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -127,4 +117,4 @@ function buildXpackWatcherStop (opts) {
   }
 }
 
-module.exports = buildXpackWatcherStop
+module.exports = buildRollupGetRollupCaps

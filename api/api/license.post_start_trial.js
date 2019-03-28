@@ -22,28 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackRollupStopJob (opts) {
+function buildLicensePostStartTrial (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [xpack.rollup.stop_job]() request
+   * Perform a [license.post_start_trial](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
    *
-   * @param {string} id - The ID of the job to stop
-   * @param {boolean} wait_for_completion - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-   * @param {time} timeout - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
+   * @param {string} type - The type of trial license to generate (default: "trial")
+   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
    */
 
   const acceptedQuerystring = [
-    'wait_for_completion',
-    'timeout'
+    'type',
+    'acknowledge'
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion'
 
   }
 
-  return function xpackRollupStopJob (params, options, callback) {
+  return function licensePostStartTrial (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,18 +53,9 @@ function buildXpackRollupStopJob (opts) {
       options = {}
     }
 
-    // promises support
-    if (callback == null) {
-      return new Promise((resolve, reject) => {
-        xpackRollupStopJob(params, options, (err, body) => {
-          err ? reject(err) : resolve(body)
-        })
-      })
-    }
-
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -77,8 +66,8 @@ function buildXpackRollupStopJob (opts) {
     }
 
     var warnings = null
-    var { method, body, id } = params
-    var querystring = semicopy(params, ['method', 'body', 'id'])
+    var { method, body } = params
+    var querystring = semicopy(params, ['method', 'body'])
 
     if (method == null) {
       method = 'POST'
@@ -91,13 +80,13 @@ function buildXpackRollupStopJob (opts) {
 
     var path = ''
 
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_stop'
+    path = '/' + '_license' + '/' + 'start_trial'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -132,4 +121,4 @@ function buildXpackRollupStopJob (opts) {
   }
 }
 
-module.exports = buildXpackRollupStopJob
+module.exports = buildLicensePostStartTrial
