@@ -144,24 +144,24 @@ function generateApiDoc (spec) {
 }
 
 const LINK_OVERRIDES = {
-  "license.delete": "{ref}/delete-license.html",
-  "license.get": "{ref}/get-license.html",
-  "license.get_basic_status": "{ref}/get-basic-status.html",
-  "license.get_trial_status": "{ref}/get-trial-status.html",
-  "license.post": "{ref}/update-license.html",
-  "license.post_start_basic": "{ref}/start-basic.html",
-  "license.post_start_trial": "{ref}/start-trial.html",
-  "migration.deprecations": "{ref}/migration-api-deprecation.html",
-  "monitoring.bulk": "{ref}/es-monitoring.html",
+  'license.delete': '{ref}/delete-license.html',
+  'license.get': '{ref}/get-license.html',
+  'license.get_basic_status': '{ref}/get-basic-status.html',
+  'license.get_trial_status': '{ref}/get-trial-status.html',
+  'license.post': '{ref}/update-license.html',
+  'license.post_start_basic': '{ref}/start-basic.html',
+  'license.post_start_trial': '{ref}/start-trial.html',
+  'migration.deprecations': '{ref}/migration-api-deprecation.html',
+  'monitoring.bulk': '{ref}/es-monitoring.html'
 }
 // Fixes bad urls in the JSON spec
 function fixLink (name, str) {
-  var override = LINK_OVERRIDES[name]
+  const override = LINK_OVERRIDES[name]
   if (override) return override
   if (!str) return ''
   /* Replace references to the guide with the attribute {ref} because
    * the json files in the Elasticsearch repo are a bit of a mess. */
-  str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^\/]+\/([^\.\/]*\.html)$/, '{ref}/$1')
+  str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^/]+\/([^./]*\.html)$/, '{ref}/$1')
   str = str.replace(/frozen\.html/, 'freeze-index-api.html')
   str = str.replace(/ml-file-structure\.html/, 'ml-find-file-structure.html')
   str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
