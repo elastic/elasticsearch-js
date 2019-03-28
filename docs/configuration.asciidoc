@@ -1,3 +1,4 @@
+[[client-configuration]]
 == Client configuration
 
 The client is designed to be easily configured as you see fit for your needs, following you can see all the possible basic options that you can use to configure it.

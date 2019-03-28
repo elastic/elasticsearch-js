@@ -23,6 +23,7 @@ const dedent = require('dedent')
 
 function generateDocs (common, spec) {
   var doc = dedent`
+  [[api-reference]]
   == API Reference
 
   ////////
@@ -68,7 +69,7 @@ function commonParameters (spec) {
 
 function generateApiDoc (spec) {
   const name = Object.keys(spec)[0]
-  const documentationUrl = spec[name].documentation
+  const documentationUrl = fixLink(spec[name].documentation)
   const params = []
   // url params
   const urlParts = spec[name].url.parts
@@ -137,6 +138,17 @@ function generateApiDoc (spec) {
   }
   doc += '\n'
   return doc
+}
+
+// Fixes bad urls in the JSON spec
+function fixLink (str) {
+  if (!str) return ''
+  if (str.includes('/5.x/')) {
+    // fixes wrong url in ES5
+    str = str.replace(/5\.x/, '5.6')
+  }
+
+  return str
 }
 
 function getType (type, options) {
