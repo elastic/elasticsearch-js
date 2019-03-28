@@ -1,3 +1,4 @@
+[[introduction]]
 == Introduction
 
 The official Node.js client for Elasticsearch.

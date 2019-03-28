@@ -1,3 +1,4 @@
+[[auth-reference]]
 == Authentication
 
 This document contains code snippets to show you how to connect to various Elasticsearch providers.
