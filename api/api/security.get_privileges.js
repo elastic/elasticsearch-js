@@ -85,9 +85,9 @@ function buildSecurityGetPrivileges (opts) {
 
     var path = ''
 
-    if (application && name) {
+    if ((application) != null && (name) != null) {
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
-    } else if (application) {
+    } else if ((application) != null) {
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application)
     } else {
       path = '/' + '_security' + '/' + 'privilege'

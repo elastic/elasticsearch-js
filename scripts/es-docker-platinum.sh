@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Images are cached locally, it may be needed
+# to delete an old image and download again
+# the latest snapshot.
+
 repo=$(pwd)
 testnodecrt="/.ci/certs/testnode.crt"
 testnodekey="/.ci/certs/testnode.key"
@@ -28,5 +32,4 @@ exec docker run \
   -v "$repo$testnodekey:/usr/share/elasticsearch/config/certs/testnode.key" \
   -v "$repo$cacrt:/usr/share/elasticsearch/config/certs/ca.crt" \
   -p 9200:9200 \
-  docker.elastic.co/elasticsearch/elasticsearch:7.0.0-beta1
-  # docker.elastic.co/elasticsearch/elasticsearch:6.6.0
+  docker.elastic.co/elasticsearch/elasticsearch:8.0.0-SNAPSHOT

@@ -115,6 +115,7 @@ export interface CatIndices extends Generic {
   pri?: boolean;
   s?: string | string[];
   v?: boolean;
+  include_unloaded_segments?: boolean;
 }
 
 export interface CatMaster extends Generic {
@@ -277,6 +278,7 @@ export interface ClusterGetSettings extends Generic {
 
 export interface ClusterHealth extends Generic {
   index?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
   level?: 'cluster' | 'indices' | 'shards';
   local?: boolean;
   master_timeout?: string;
@@ -574,6 +576,7 @@ export interface IndicesClose extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  wait_for_active_shards?: string;
 }
 
 export interface IndicesCreate extends Generic {
@@ -835,7 +838,6 @@ export interface IndicesShardStores extends Generic {
 export interface IndicesShrink extends Generic {
   index: string;
   target: string;
-  copy_settings?: boolean;
   timeout?: string;
   master_timeout?: string;
   wait_for_active_shards?: string;
@@ -845,7 +847,6 @@ export interface IndicesShrink extends Generic {
 export interface IndicesSplit extends Generic {
   index: string;
   target: string;
-  copy_settings?: boolean;
   timeout?: string;
   master_timeout?: string;
   wait_for_active_shards?: string;
@@ -862,6 +863,9 @@ export interface IndicesStats extends Generic {
   level?: 'cluster' | 'indices' | 'shards';
   types?: string | string[];
   include_segment_file_sizes?: boolean;
+  include_unloaded_segments?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  forbid_closed_indices?: boolean;
 }
 
 export interface IndicesUpdateAliases extends Generic {
@@ -1051,6 +1055,7 @@ export interface Reindex extends Generic {
   wait_for_active_shards?: string;
   wait_for_completion?: boolean;
   requests_per_second?: number;
+  scroll?: string;
   slices?: number;
   body: any;
 }
@@ -1063,6 +1068,10 @@ export interface ReindexRethrottle extends Generic {
 export interface RenderSearchTemplate extends Generic {
   id?: string;
   body?: any;
+}
+
+export interface ScriptsPainlessContext extends Generic {
+  context?: string;
 }
 
 export interface ScriptsPainlessExecute extends Generic {
@@ -1337,7 +1346,12 @@ export interface CcrFollowInfo extends Generic {
 }
 
 export interface CcrFollowStats extends Generic {
-  index?: string | string[];
+  index: string | string[];
+}
+
+export interface CcrForgetFollower extends Generic {
+  index: string;
+  body: any;
 }
 
 export interface CcrGetAutoFollowPattern extends Generic {
@@ -1365,13 +1379,54 @@ export interface CcrUnfollow extends Generic {
   index: string;
 }
 
+export interface DataFrameDeleteDataFrameTransform extends Generic {
+  transform_id: string;
+}
+
+export interface DataFrameGetDataFrameTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface DataFrameGetDataFrameTransformStats extends Generic {
+  transform_id?: string;
+}
+
+export interface DataFramePreviewDataFrameTransform extends Generic {
+  body: any;
+}
+
+export interface DataFramePutDataFrameTransform extends Generic {
+  transform_id: string;
+  body: any;
+}
+
+export interface DataFrameStartDataFrameTransform extends Generic {
+  transform_id: string;
+  timeout?: string;
+}
+
+export interface DataFrameStopDataFrameTransform extends Generic {
+  transform_id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
+}
+
+export interface GraphExplore extends Generic {
+  index?: string | string[];
+  type?: string | string[];
+  routing?: string;
+  timeout?: string;
+  body?: any;
+}
+
 export interface IlmDeleteLifecycle extends Generic {
   policy?: string;
 }
 
 export interface IlmExplainLifecycle extends Generic {
   index?: string;
-  human?: boolean;
 }
 
 export interface IlmGetLifecycle extends Generic {
@@ -1423,6 +1478,37 @@ export interface IndicesUnfreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface LicenseDelete extends Generic {
+}
+
+export interface LicenseGet extends Generic {
+  local?: boolean;
+}
+
+export interface LicenseGetBasicStatus extends Generic {
+}
+
+export interface LicenseGetTrialStatus extends Generic {
+}
+
+export interface LicensePost extends Generic {
+  acknowledge?: boolean;
+  body?: any;
+}
+
+export interface LicensePostStartBasic extends Generic {
+  acknowledge?: boolean;
+}
+
+export interface LicensePostStartTrial extends Generic {
+  type?: string;
+  acknowledge?: boolean;
+}
+
+export interface MigrationDeprecations extends Generic {
+  index?: string;
 }
 
 export interface MlCloseJob extends Generic {
@@ -1538,6 +1624,7 @@ export interface MlGetCalendars extends Generic {
   calendar_id?: string;
   from?: number;
   size?: number;
+  body?: any;
 }
 
 export interface MlGetCategories extends Generic {
@@ -1738,6 +1825,45 @@ export interface MonitoringBulk extends Generic {
   body: any;
 }
 
+export interface RollupDeleteJob extends Generic {
+  id: string;
+}
+
+export interface RollupGetJobs extends Generic {
+  id?: string;
+}
+
+export interface RollupGetRollupCaps extends Generic {
+  id?: string;
+}
+
+export interface RollupGetRollupIndexCaps extends Generic {
+  index: string;
+}
+
+export interface RollupPutJob extends Generic {
+  id: string;
+  body: any;
+}
+
+export interface RollupRollupSearch extends Generic {
+  index: string | string[];
+  type?: string;
+  typed_keys?: boolean;
+  rest_total_hits_as_int?: boolean;
+  body: any;
+}
+
+export interface RollupStartJob extends Generic {
+  id: string;
+}
+
+export interface RollupStopJob extends Generic {
+  id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
+}
+
 export interface SecurityAuthenticate extends Generic {
 }
 
@@ -1783,12 +1909,12 @@ export interface SecurityDeleteUser extends Generic {
 }
 
 export interface SecurityDisableUser extends Generic {
-  username?: string;
+  username: string;
   refresh?: 'true' | 'false' | 'wait_for';
 }
 
 export interface SecurityEnableUser extends Generic {
-  username?: string;
+  username: string;
   refresh?: 'true' | 'false' | 'wait_for';
 }
 
@@ -1859,148 +1985,50 @@ export interface SecurityPutUser extends Generic {
   body: any;
 }
 
-export interface SslCertificates extends Generic {
-}
-
-export interface XpackGraphExplore extends Generic {
-  index?: string | string[];
-  type?: string | string[];
-  routing?: string;
-  timeout?: string;
-  body?: any;
-}
-
-export interface XpackInfo extends Generic {
-  categories?: string | string[];
-}
-
-export interface XpackLicenseDelete extends Generic {
-}
-
-export interface XpackLicenseGet extends Generic {
-  local?: boolean;
-}
-
-export interface XpackLicenseGetBasicStatus extends Generic {
-}
-
-export interface XpackLicenseGetTrialStatus extends Generic {
-}
-
-export interface XpackLicensePost extends Generic {
-  acknowledge?: boolean;
-  body?: any;
-}
-
-export interface XpackLicensePostStartBasic extends Generic {
-  acknowledge?: boolean;
-}
-
-export interface XpackLicensePostStartTrial extends Generic {
-  type?: string;
-  acknowledge?: boolean;
-}
-
-export interface XpackMigrationDeprecations extends Generic {
-  index?: string;
-}
-
-export interface XpackMigrationGetAssistance extends Generic {
-  index?: string | string[];
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
-  ignore_unavailable?: boolean;
-}
-
-export interface XpackMigrationUpgrade extends Generic {
-  index: string;
-  wait_for_completion?: boolean;
-}
-
-export interface XpackRollupDeleteJob extends Generic {
-  id: string;
-}
-
-export interface XpackRollupGetJobs extends Generic {
-  id?: string;
-}
-
-export interface XpackRollupGetRollupCaps extends Generic {
-  id?: string;
-}
-
-export interface XpackRollupGetRollupIndexCaps extends Generic {
-  index: string;
-}
-
-export interface XpackRollupPutJob extends Generic {
-  id: string;
+export interface SqlClearCursor extends Generic {
   body: any;
 }
 
-export interface XpackRollupRollupSearch extends Generic {
-  index: string;
-  type?: string;
-  typed_keys?: boolean;
-  rest_total_hits_as_int?: boolean;
-  body: any;
-}
-
-export interface XpackRollupStartJob extends Generic {
-  id: string;
-}
-
-export interface XpackRollupStopJob extends Generic {
-  id: string;
-  wait_for_completion?: boolean;
-  timeout?: string;
-}
-
-export interface XpackSqlClearCursor extends Generic {
-  body: any;
-}
-
-export interface XpackSqlQuery extends Generic {
+export interface SqlQuery extends Generic {
   format?: string;
   body: any;
 }
 
-export interface XpackSqlTranslate extends Generic {
+export interface SqlTranslate extends Generic {
   body: any;
 }
 
-export interface XpackUsage extends Generic {
-  master_timeout?: string;
+export interface SslCertificates extends Generic {
 }
 
-export interface XpackWatcherAckWatch extends Generic {
+export interface WatcherAckWatch extends Generic {
   watch_id: string;
   action_id?: string | string[];
 }
 
-export interface XpackWatcherActivateWatch extends Generic {
+export interface WatcherActivateWatch extends Generic {
   watch_id: string;
 }
 
-export interface XpackWatcherDeactivateWatch extends Generic {
+export interface WatcherDeactivateWatch extends Generic {
   watch_id: string;
 }
 
-export interface XpackWatcherDeleteWatch extends Generic {
+export interface WatcherDeleteWatch extends Generic {
   id: string;
 }
 
-export interface XpackWatcherExecuteWatch extends Generic {
+export interface WatcherExecuteWatch extends Generic {
   id?: string;
   debug?: boolean;
   body?: any;
 }
 
-export interface XpackWatcherGetWatch extends Generic {
+export interface WatcherGetWatch extends Generic {
   id: string;
 }
 
-export interface XpackWatcherPutWatch extends Generic {
+export interface WatcherPutWatch extends Generic {
   id: string;
   active?: boolean;
   version?: number;
@@ -2009,13 +2037,21 @@ export interface XpackWatcherPutWatch extends Generic {
   body?: any;
 }
 
-export interface XpackWatcherStart extends Generic {
+export interface WatcherStart extends Generic {
 }
 
-export interface XpackWatcherStats extends Generic {
-  metric?: '_all' | 'queued_watches' | 'current_watches' | 'pending_watches';
+export interface WatcherStats extends Generic {
+  metric?: string | string[];
   emit_stacktraces?: boolean;
 }
 
-export interface XpackWatcherStop extends Generic {
+export interface WatcherStop extends Generic {
+}
+
+export interface XpackInfo extends Generic {
+  categories?: string | string[];
+}
+
+export interface XpackUsage extends Generic {
+  master_timeout?: string;
 }

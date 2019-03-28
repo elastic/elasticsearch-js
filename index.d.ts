@@ -134,6 +134,8 @@ declare class Client extends EventEmitter {
     followInfo: ApiMethod<RequestParams.CcrFollowInfo>
     follow_stats: ApiMethod<RequestParams.CcrFollowStats>
     followStats: ApiMethod<RequestParams.CcrFollowStats>
+    forget_follower: ApiMethod<RequestParams.CcrForgetFollower>
+    forgetFollower: ApiMethod<RequestParams.CcrForgetFollower>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     getAutoFollowPattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     pause_follow: ApiMethod<RequestParams.CcrPauseFollow>
@@ -165,6 +167,38 @@ declare class Client extends EventEmitter {
   }
   count: ApiMethod<RequestParams.Count>
   create: ApiMethod<RequestParams.Create>
+  data_frame: {
+    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+  }
+  dataFrame: {
+    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+  }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
   deleteByQuery: ApiMethod<RequestParams.DeleteByQuery>
@@ -183,6 +217,9 @@ declare class Client extends EventEmitter {
   getScript: ApiMethod<RequestParams.GetScript>
   get_source: ApiMethod<RequestParams.GetSource>
   getSource: ApiMethod<RequestParams.GetSource>
+  graph: {
+    explore: ApiMethod<RequestParams.GraphExplore>
+  }
   ilm: {
     delete_lifecycle: ApiMethod<RequestParams.IlmDeleteLifecycle>
     deleteLifecycle: ApiMethod<RequestParams.IlmDeleteLifecycle>
@@ -276,7 +313,23 @@ declare class Client extends EventEmitter {
     putPipeline: ApiMethod<RequestParams.IngestPutPipeline>
     simulate: ApiMethod<RequestParams.IngestSimulate>
   }
+  license: {
+    delete: ApiMethod<RequestParams.LicenseDelete>
+    get: ApiMethod<RequestParams.LicenseGet>
+    get_basic_status: ApiMethod<RequestParams.LicenseGetBasicStatus>
+    getBasicStatus: ApiMethod<RequestParams.LicenseGetBasicStatus>
+    get_trial_status: ApiMethod<RequestParams.LicenseGetTrialStatus>
+    getTrialStatus: ApiMethod<RequestParams.LicenseGetTrialStatus>
+    post: ApiMethod<RequestParams.LicensePost>
+    post_start_basic: ApiMethod<RequestParams.LicensePostStartBasic>
+    postStartBasic: ApiMethod<RequestParams.LicensePostStartBasic>
+    post_start_trial: ApiMethod<RequestParams.LicensePostStartTrial>
+    postStartTrial: ApiMethod<RequestParams.LicensePostStartTrial>
+  }
   mget: ApiMethod<RequestParams.Mget>
+  migration: {
+    deprecations: ApiMethod<RequestParams.MigrationDeprecations>
+  }
   ml: {
     close_job: ApiMethod<RequestParams.MlCloseJob>
     closeJob: ApiMethod<RequestParams.MlCloseJob>
@@ -394,6 +447,26 @@ declare class Client extends EventEmitter {
   reindexRethrottle: ApiMethod<RequestParams.ReindexRethrottle>
   render_search_template: ApiMethod<RequestParams.RenderSearchTemplate>
   renderSearchTemplate: ApiMethod<RequestParams.RenderSearchTemplate>
+  rollup: {
+    delete_job: ApiMethod<RequestParams.RollupDeleteJob>
+    deleteJob: ApiMethod<RequestParams.RollupDeleteJob>
+    get_jobs: ApiMethod<RequestParams.RollupGetJobs>
+    getJobs: ApiMethod<RequestParams.RollupGetJobs>
+    get_rollup_caps: ApiMethod<RequestParams.RollupGetRollupCaps>
+    getRollupCaps: ApiMethod<RequestParams.RollupGetRollupCaps>
+    get_rollup_index_caps: ApiMethod<RequestParams.RollupGetRollupIndexCaps>
+    getRollupIndexCaps: ApiMethod<RequestParams.RollupGetRollupIndexCaps>
+    put_job: ApiMethod<RequestParams.RollupPutJob>
+    putJob: ApiMethod<RequestParams.RollupPutJob>
+    rollup_search: ApiMethod<RequestParams.RollupRollupSearch>
+    rollupSearch: ApiMethod<RequestParams.RollupRollupSearch>
+    start_job: ApiMethod<RequestParams.RollupStartJob>
+    startJob: ApiMethod<RequestParams.RollupStartJob>
+    stop_job: ApiMethod<RequestParams.RollupStopJob>
+    stopJob: ApiMethod<RequestParams.RollupStopJob>
+  }
+  scripts_painless_context: ApiMethod<RequestParams.ScriptsPainlessContext>
+  scriptsPainlessContext: ApiMethod<RequestParams.ScriptsPainlessContext>
   scripts_painless_execute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scriptsPainlessExecute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scroll: ApiMethod<RequestParams.Scroll>
@@ -468,6 +541,12 @@ declare class Client extends EventEmitter {
     verify_repository: ApiMethod<RequestParams.SnapshotVerifyRepository>
     verifyRepository: ApiMethod<RequestParams.SnapshotVerifyRepository>
   }
+  sql: {
+    clear_cursor: ApiMethod<RequestParams.SqlClearCursor>
+    clearCursor: ApiMethod<RequestParams.SqlClearCursor>
+    query: ApiMethod<RequestParams.SqlQuery>
+    translate: ApiMethod<RequestParams.SqlTranslate>
+  }
   ssl: {
     certificates: ApiMethod<RequestParams.SslCertificates>
   }
@@ -482,74 +561,28 @@ declare class Client extends EventEmitter {
   updateByQuery: ApiMethod<RequestParams.UpdateByQuery>
   update_by_query_rethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
   updateByQueryRethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
+  watcher: {
+    ack_watch: ApiMethod<RequestParams.WatcherAckWatch>
+    ackWatch: ApiMethod<RequestParams.WatcherAckWatch>
+    activate_watch: ApiMethod<RequestParams.WatcherActivateWatch>
+    activateWatch: ApiMethod<RequestParams.WatcherActivateWatch>
+    deactivate_watch: ApiMethod<RequestParams.WatcherDeactivateWatch>
+    deactivateWatch: ApiMethod<RequestParams.WatcherDeactivateWatch>
+    delete_watch: ApiMethod<RequestParams.WatcherDeleteWatch>
+    deleteWatch: ApiMethod<RequestParams.WatcherDeleteWatch>
+    execute_watch: ApiMethod<RequestParams.WatcherExecuteWatch>
+    executeWatch: ApiMethod<RequestParams.WatcherExecuteWatch>
+    get_watch: ApiMethod<RequestParams.WatcherGetWatch>
+    getWatch: ApiMethod<RequestParams.WatcherGetWatch>
+    put_watch: ApiMethod<RequestParams.WatcherPutWatch>
+    putWatch: ApiMethod<RequestParams.WatcherPutWatch>
+    start: ApiMethod<RequestParams.WatcherStart>
+    stats: ApiMethod<RequestParams.WatcherStats>
+    stop: ApiMethod<RequestParams.WatcherStop>
+  }
   xpack: {
-    graph: {
-      explore: ApiMethod<RequestParams.XpackGraphExplore>
-    }
     info: ApiMethod<RequestParams.XpackInfo>
-    license: {
-      delete: ApiMethod<RequestParams.XpackLicenseDelete>
-      get: ApiMethod<RequestParams.XpackLicenseGet>
-      get_basic_status: ApiMethod<RequestParams.XpackLicenseGetBasicStatus>
-      getBasicStatus: ApiMethod<RequestParams.XpackLicenseGetBasicStatus>
-      get_trial_status: ApiMethod<RequestParams.XpackLicenseGetTrialStatus>
-      getTrialStatus: ApiMethod<RequestParams.XpackLicenseGetTrialStatus>
-      post: ApiMethod<RequestParams.XpackLicensePost>
-      post_start_basic: ApiMethod<RequestParams.XpackLicensePostStartBasic>
-      postStartBasic: ApiMethod<RequestParams.XpackLicensePostStartBasic>
-      post_start_trial: ApiMethod<RequestParams.XpackLicensePostStartTrial>
-      postStartTrial: ApiMethod<RequestParams.XpackLicensePostStartTrial>
-    }
-    migration: {
-      deprecations: ApiMethod<RequestParams.XpackMigrationDeprecations>
-      get_assistance: ApiMethod<RequestParams.XpackMigrationGetAssistance>
-      getAssistance: ApiMethod<RequestParams.XpackMigrationGetAssistance>
-      upgrade: ApiMethod<RequestParams.XpackMigrationUpgrade>
-    }
-    rollup: {
-      delete_job: ApiMethod<RequestParams.XpackRollupDeleteJob>
-      deleteJob: ApiMethod<RequestParams.XpackRollupDeleteJob>
-      get_jobs: ApiMethod<RequestParams.XpackRollupGetJobs>
-      getJobs: ApiMethod<RequestParams.XpackRollupGetJobs>
-      get_rollup_caps: ApiMethod<RequestParams.XpackRollupGetRollupCaps>
-      getRollupCaps: ApiMethod<RequestParams.XpackRollupGetRollupCaps>
-      get_rollup_index_caps: ApiMethod<RequestParams.XpackRollupGetRollupIndexCaps>
-      getRollupIndexCaps: ApiMethod<RequestParams.XpackRollupGetRollupIndexCaps>
-      put_job: ApiMethod<RequestParams.XpackRollupPutJob>
-      putJob: ApiMethod<RequestParams.XpackRollupPutJob>
-      rollup_search: ApiMethod<RequestParams.XpackRollupRollupSearch>
-      rollupSearch: ApiMethod<RequestParams.XpackRollupRollupSearch>
-      start_job: ApiMethod<RequestParams.XpackRollupStartJob>
-      startJob: ApiMethod<RequestParams.XpackRollupStartJob>
-      stop_job: ApiMethod<RequestParams.XpackRollupStopJob>
-      stopJob: ApiMethod<RequestParams.XpackRollupStopJob>
-    }
-    sql: {
-      clear_cursor: ApiMethod<RequestParams.XpackSqlClearCursor>
-      clearCursor: ApiMethod<RequestParams.XpackSqlClearCursor>
-      query: ApiMethod<RequestParams.XpackSqlQuery>
-      translate: ApiMethod<RequestParams.XpackSqlTranslate>
-    }
     usage: ApiMethod<RequestParams.XpackUsage>
-    watcher: {
-      ack_watch: ApiMethod<RequestParams.XpackWatcherAckWatch>
-      ackWatch: ApiMethod<RequestParams.XpackWatcherAckWatch>
-      activate_watch: ApiMethod<RequestParams.XpackWatcherActivateWatch>
-      activateWatch: ApiMethod<RequestParams.XpackWatcherActivateWatch>
-      deactivate_watch: ApiMethod<RequestParams.XpackWatcherDeactivateWatch>
-      deactivateWatch: ApiMethod<RequestParams.XpackWatcherDeactivateWatch>
-      delete_watch: ApiMethod<RequestParams.XpackWatcherDeleteWatch>
-      deleteWatch: ApiMethod<RequestParams.XpackWatcherDeleteWatch>
-      execute_watch: ApiMethod<RequestParams.XpackWatcherExecuteWatch>
-      executeWatch: ApiMethod<RequestParams.XpackWatcherExecuteWatch>
-      get_watch: ApiMethod<RequestParams.XpackWatcherGetWatch>
-      getWatch: ApiMethod<RequestParams.XpackWatcherGetWatch>
-      put_watch: ApiMethod<RequestParams.XpackWatcherPutWatch>
-      putWatch: ApiMethod<RequestParams.XpackWatcherPutWatch>
-      start: ApiMethod<RequestParams.XpackWatcherStart>
-      stats: ApiMethod<RequestParams.XpackWatcherStats>
-      stop: ApiMethod<RequestParams.XpackWatcherStop>
-    }
   }
 }
 

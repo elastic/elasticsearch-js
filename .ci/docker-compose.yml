@@ -22,7 +22,7 @@ services:
       - elasticsearch-oss
 
   elasticsearch-oss:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-8.0.0-SNAPSHOT}
     volumes:
       - esvol:/tmp
     networks:
@@ -58,7 +58,7 @@ services:
     command: ["npm", "run", "test:integration"]
 
   elasticsearch-platinum:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-7.0.0-beta1}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-8.0.0-SNAPSHOT}
     ports:
       - "9200:9200"
     networks:

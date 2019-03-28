@@ -39,6 +39,7 @@ function buildCatIndices (opts) {
    * @param {boolean} pri - Set to true to return stats only for primary shards
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    * @param {boolean} v - Verbose mode. Display column headers
+   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
    */
 
   const acceptedQuerystring = [
@@ -52,6 +53,7 @@ function buildCatIndices (opts) {
     'pri',
     's',
     'v',
+    'include_unloaded_segments',
     'pretty',
     'human',
     'error_trace',
@@ -61,6 +63,7 @@ function buildCatIndices (opts) {
 
   const snakeCase = {
     masterTimeout: 'master_timeout',
+    includeUnloadedSegments: 'include_unloaded_segments',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

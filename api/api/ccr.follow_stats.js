@@ -51,6 +51,12 @@ function buildCcrFollowStats (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
