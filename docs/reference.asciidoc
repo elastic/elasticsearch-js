@@ -3115,11 +3115,7 @@ link:{ref}/cluster-nodes-info.html[Reference]
 ----
 client.nodes.reloadSecureSettings([params] [, options] [, callback])
 ----
-<<<<<<< HEAD
-https://www.elastic.co/guide/en/elasticsearch/reference/6.x/secure-settings.html#reloadable-secure-settings
-=======
-link:https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings[Reference]
->>>>>>> c92b156... Docs: Fix the API reference (#799)
+link:https://www.elastic.co/guide/en/elasticsearch/reference/6.x/secure-settings.html#reloadable-secure-settings[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3321,21 +3317,6 @@ link:{ref}/search-template.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== scriptsPainlessContext
-[source,js]
-----
-client.scriptsPainlessContext([params] [, options] [, callback])
-----
-[cols=2*]
-|===
-|`context`
-|`string` - Select a specific context to retrieve API information about
-
-|===
-
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 === scriptsPainlessExecute
 [source,js]
 ----
@@ -4308,143 +4289,6 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== dataFrame.deleteDataFrameTransform
-[source,js]
-----
-client.dataFrame.deleteDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/delete-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to delete
-
-|===
-
-=== dataFrame.getDataFrameTransform
-[source,js]
-----
-client.dataFrame.getDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/get-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|===
-
-=== dataFrame.getDataFrameTransformStats
-[source,js]
-----
-client.dataFrame.getDataFrameTransformStats([params] [, options] [, callback])
-----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|===
-
-=== dataFrame.previewDataFrameTransform
-[source,js]
-----
-client.dataFrame.previewDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/preview-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the data_frame transform to preview
-
-|===
-
-=== dataFrame.putDataFrameTransform
-[source,js]
-----
-client.dataFrame.putDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/put-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`body`
-|`object` - The data frame transform definition
-
-|===
-
-=== dataFrame.startDataFrameTransform
-[source,js]
-----
-client.dataFrame.startDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/start-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrame.stopDataFrameTransform
-[source,js]
-----
-client.dataFrame.stopDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/stop-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|===
-
-=== graph.explore
-[source,js]
-----
-client.graph.explore([params] [, options] [, callback])
-----
-link:{ref}/graph-explore-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 === ilm.deleteLifecycle
 [source,js]
 ----
@@ -4639,7 +4483,7 @@ _Default:_ `closed`
 ----
 client.security.createApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+link:{ref}/security-api-create-api-key.html[Reference]
 [cols=2*]
 |===
 |`refresh`
@@ -4655,7 +4499,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cre
 ----
 client.security.getApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+link:{ref}/security-api-get-api-key.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -4677,7 +4521,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 ----
 client.security.invalidateApiKey([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
+link:{ref}/security-api-invalidate-api-key.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -4690,7 +4534,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-inv
 ----
 client.xpack.graph.explore([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
+link:{ref}/graph-explore-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4715,7 +4559,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-ap
 ----
 client.xpack.info([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+link:{ref}/info-api.html[Reference]
 [cols=2*]
 |===
 |`categories`
@@ -4728,7 +4572,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
 ----
 client.xpack.license.delete([params] [, options] [, callback])
 ----
-link:{ref}/delete-license.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 
 
 === xpack.license.get
@@ -4736,7 +4580,7 @@ link:{ref}/delete-license.html[Reference]
 ----
 client.xpack.license.get([params] [, options] [, callback])
 ----
-link:{ref}/get-license.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 [cols=2*]
 |===
 |`local`
@@ -4749,7 +4593,7 @@ link:{ref}/get-license.html[Reference]
 ----
 client.xpack.license.getBasicStatus([params] [, options] [, callback])
 ----
-link:{ref}/get-basic-status.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 
 
 === xpack.license.getTrialStatus
@@ -4757,7 +4601,7 @@ link:{ref}/get-basic-status.html[Reference]
 ----
 client.xpack.license.getTrialStatus([params] [, options] [, callback])
 ----
-link:{ref}/get-trial-status.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 
 
 === xpack.license.post
@@ -4765,7 +4609,7 @@ link:{ref}/get-trial-status.html[Reference]
 ----
 client.xpack.license.post([params] [, options] [, callback])
 ----
-link:{ref}/update-license.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4781,7 +4625,7 @@ link:{ref}/update-license.html[Reference]
 ----
 client.xpack.license.postStartBasic([params] [, options] [, callback])
 ----
-link:{ref}/start-basic.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4794,7 +4638,7 @@ link:{ref}/start-basic.html[Reference]
 ----
 client.xpack.license.postStartTrial([params] [, options] [, callback])
 ----
-link:{ref}/start-trial.html[Reference]
+link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
 [cols=2*]
 |===
 |`type`
@@ -4810,7 +4654,7 @@ link:{ref}/start-trial.html[Reference]
 ----
 client.xpack.migration.deprecations([params] [, options] [, callback])
 ----
-link:{ref}/migration-api-deprecation.html[Reference]
+link:http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4823,7 +4667,7 @@ link:{ref}/migration-api-deprecation.html[Reference]
 ----
 client.xpack.migration.getAssistance([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
+link:{ref}/migration-api-assistance.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4846,7 +4690,7 @@ _Default:_ `open`
 ----
 client.xpack.migration.upgrade([params] [, options] [, callback])
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-upgrade.html
+link:{ref}/migration-api-upgrade.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -4948,12 +4792,7 @@ client.xpack.ml.deleteExpiredData([params] [, options] [, callback])
 ----
 
 
-<<<<<<< HEAD
-
 === xpack.ml.deleteFilter
-=======
-=== ml.deleteFilter
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 [source,js]
 ----
 client.xpack.ml.deleteFilter([params] [, options] [, callback])
@@ -5485,12 +5324,7 @@ client.xpack.ml.info([params] [, options] [, callback])
 ----
 
 
-<<<<<<< HEAD
-
 === xpack.ml.openJob
-=======
-=== ml.openJob
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 [source,js]
 ----
 client.xpack.ml.openJob([params] [, options] [, callback])
@@ -5816,7 +5650,7 @@ client.xpack.ml.validateDetector([params] [, options] [, callback])
 ----
 client.xpack.monitoring.bulk([params] [, options] [, callback])
 ----
-link:{ref}/es-monitoring.html[Reference]
+link:http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html[Reference]
 [cols=2*]
 |===
 |`type`
@@ -6006,27 +5840,7 @@ link:{ref}/security-api-clear-role-cache.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.deletePrivileges
-=======
-=== security.createApiKey
-[source,js]
-----
-client.security.createApiKey([params] [, options] [, callback])
-----
-link:{ref}/security-api-create-api-key.html[Reference]
-[cols=2*]
-|===
-|`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The api key request to create an API key
-
-|===
-
-=== security.deletePrivileges
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 [source,js]
 ----
 client.xpack.security.deletePrivileges([params] [, options] [, callback])
@@ -6125,33 +5939,7 @@ link:{ref}/security-api-enable-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getPrivileges
-=======
-=== security.getApiKey
-[source,js]
-----
-client.security.getApiKey([params] [, options] [, callback])
-----
-link:{ref}/security-api-get-api-key.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - API key id of the API key to be retrieved
-
-|`name`
-|`string` - API key name of the API key to be retrieved
-
-|`username`
-|`string` - user name of the user who created this API key to be retrieved
-
-|`realm_name` or `realmName`
-|`string` - realm name of the user who created this API key to be retrieved
-
-|===
-
-=== security.getPrivileges
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 [source,js]
 ----
 client.xpack.security.getPrivileges([params] [, options] [, callback])
@@ -6243,24 +6031,7 @@ link:{ref}/security-api-has-privileges.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.invalidateToken
-=======
-=== security.invalidateApiKey
-[source,js]
-----
-client.security.invalidateApiKey([params] [, options] [, callback])
-----
-link:{ref}/security-api-invalidate-api-key.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The api key request to invalidate API key(s)
-
-|===
-
-=== security.invalidateToken
->>>>>>> c92b156... Docs: Fix the API reference (#799)
 [source,js]
 ----
 client.xpack.security.invalidateToken([params] [, options] [, callback])
@@ -6401,7 +6172,7 @@ link:{ref}/security-api-ssl.html[Reference]
 ----
 client.xpack.usage([params] [, options] [, callback])
 ----
-Retrieve information about xpack features usage
+link:Retrieve information about xpack features usage[Reference]
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
@@ -6544,7 +6315,7 @@ link:{ref}/watcher-api-put-watch.html[Reference]
 ----
 client.xpack.watcher.restart([params] [, options] [, callback])
 ----
-http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-restart.html
+link:{ref}/watcher-api-restart.html[Reference]
 
 
 === xpack.watcher.start
@@ -6581,32 +6352,3 @@ client.xpack.watcher.stop([params] [, options] [, callback])
 ----
 link:{ref}/watcher-api-stop.html[Reference]
 
-<<<<<<< HEAD
-=======
-
-=== xpack.info
-[source,js]
-----
-client.xpack.info([params] [, options] [, callback])
-----
-link:{ref}/info-api.html[Reference]
-[cols=2*]
-|===
-|`categories`
-|`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-
-=== xpack.usage
-[source,js]
-----
-client.xpack.usage([params] [, options] [, callback])
-----
-link:Retrieve information about xpack features usage[Reference]
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for watch write operation
-
-|===
->>>>>>> c92b156... Docs: Fix the API reference (#799)
