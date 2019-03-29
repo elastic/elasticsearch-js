@@ -156,12 +156,15 @@ const LINK_OVERRIDES = {
 }
 // Fixes bad urls in the JSON spec
 function fixLink (name, str) {
+  /* In 6.x some API start with `xpack.` when in master they do not. We
+   * can safely ignore that for link generation. */
+  name = name.replace(/^xpack\./, '')
   const override = LINK_OVERRIDES[name]
   if (override) return override
   if (!str) return ''
   /* Replace references to the guide with the attribute {ref} because
    * the json files in the Elasticsearch repo are a bit of a mess. */
-  str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^/]+\/([^./]*\.html)$/, '{ref}/$1')
+  str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^/]+\/([^./]*\.html(?:#.+)?)$/, '{ref}/$1')
   str = str.replace(/frozen\.html/, 'freeze-index-api.html')
   str = str.replace(/ml-file-structure\.html/, 'ml-find-file-structure.html')
   str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
