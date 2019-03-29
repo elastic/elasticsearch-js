@@ -152,7 +152,12 @@ const LINK_OVERRIDES = {
   'license.post_start_basic': '{ref}/start-basic.html',
   'license.post_start_trial': '{ref}/start-trial.html',
   'migration.deprecations': '{ref}/migration-api-deprecation.html',
-  'monitoring.bulk': '{ref}/es-monitoring.html'
+  'monitoring.bulk': '{ref}/es-monitoring.html',
+  'ingest.delete_pipeline': '{ref}/delete-pipeline-api.html',
+  'ingest.get_pipeline': '{ref}/get-pipeline-api.html',
+  'ingest.put_pipeline': '{ref}/put-pipeline-api.html',
+  'ingest.simulate': '{ref}/simulate-pipeline-api.html',
+  'ingest.processor_grok': '{ref}/grok-processor.html#grok-processor-rest-get'
 }
 // Fixes bad urls in the JSON spec
 function fixLink (name, str) {
@@ -167,7 +172,6 @@ function fixLink (name, str) {
   str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^/]+\/([^./]*\.html(?:#.+)?)$/, '{ref}/$1')
   str = str.replace(/frozen\.html/, 'freeze-index-api.html')
   str = str.replace(/ml-file-structure\.html/, 'ml-find-file-structure.html')
-  str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
   str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
 
   return str
