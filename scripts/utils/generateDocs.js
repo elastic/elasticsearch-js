@@ -43,7 +43,8 @@ function commonParameters (spec) {
   var doc = dedent`
   === Common parameters
   Parameters that are accepted by all API endpoints.
-  https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html
+
+  link:{ref}/common-options.html[Reference]
   [cols=2*]
   |===\n`
   Object.keys(spec.params).forEach(key => {
@@ -69,7 +70,7 @@ function commonParameters (spec) {
 
 function generateApiDoc (spec) {
   const name = Object.keys(spec)[0]
-  const documentationUrl = fixLink(spec[name].documentation)
+  const documentationUrl = fixLink(name, spec[name].documentation)
   const params = []
   // url params
   const urlParts = spec[name].url.parts
@@ -113,8 +114,10 @@ function generateApiDoc (spec) {
   [source,js]
   ----
   client.${camelify(name)}([params] [, options] [, callback])
-  ----
-  ${documentationUrl || ''}\n`
+  ----\n`
+  if (documentationUrl) {
+    doc += `link:${documentationUrl}[Reference]\n`
+  }
 
   if (params.length !== 0) {
     doc += dedent`[cols=2*]
@@ -140,13 +143,29 @@ function generateApiDoc (spec) {
   return doc
 }
 
+const LINK_OVERRIDES = {
+  'license.delete': '{ref}/delete-license.html',
+  'license.get': '{ref}/get-license.html',
+  'license.get_basic_status': '{ref}/get-basic-status.html',
+  'license.get_trial_status': '{ref}/get-trial-status.html',
+  'license.post': '{ref}/update-license.html',
+  'license.post_start_basic': '{ref}/start-basic.html',
+  'license.post_start_trial': '{ref}/start-trial.html',
+  'migration.deprecations': '{ref}/migration-api-deprecation.html',
+  'monitoring.bulk': '{ref}/es-monitoring.html'
+}
 // Fixes bad urls in the JSON spec
-function fixLink (str) {
+function fixLink (name, str) {
+  const override = LINK_OVERRIDES[name]
+  if (override) return override
   if (!str) return ''
-  if (str.includes('/5.x/')) {
-    // fixes wrong url in ES5
-    str = str.replace(/5\.x/, '5.6')
-  }
+  /* Replace references to the guide with the attribute {ref} because
+   * the json files in the Elasticsearch repo are a bit of a mess. */
+  str = str.replace(/^.+guide\/en\/elasticsearch\/reference\/[^/]+\/([^./]*\.html)$/, '{ref}/$1')
+  str = str.replace(/frozen\.html/, 'freeze-index-api.html')
+  str = str.replace(/ml-file-structure\.html/, 'ml-find-file-structure.html')
+  str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
+  str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
 
   return str
 }
