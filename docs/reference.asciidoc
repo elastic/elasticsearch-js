@@ -2803,7 +2803,7 @@ link:http://www.elastic.co/guide/[Reference]
 ----
 client.ingest.deletePipeline([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
+link:{ref}/delete-pipeline-api.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2822,7 +2822,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Re
 ----
 client.ingest.getPipeline([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
+link:{ref}/get-pipeline-api.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2838,7 +2838,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Re
 ----
 client.ingest.processorGrok([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
+link:{ref}/grok-processor.html#grok-processor-rest-get[Reference]
 
 
 === ingest.putPipeline
@@ -2846,7 +2846,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Re
 ----
 client.ingest.putPipeline([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
+link:{ref}/put-pipeline-api.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -2868,7 +2868,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Re
 ----
 client.ingest.simulate([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html[Reference]
+link:{ref}/simulate-pipeline-api.html[Reference]
 [cols=2*]
 |===
 |`id`
