@@ -1,6 +1,6 @@
 = @elastic/elasticsearch
 
-:branch: 6.x
+:branch: 6.7
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]
