@@ -3115,7 +3115,7 @@ link:{ref}/cluster-nodes-info.html[Reference]
 ----
 client.nodes.reloadSecureSettings([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/reference/6.x/secure-settings.html#reloadable-secure-settings[Reference]
+link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -4572,7 +4572,7 @@ link:{ref}/info-api.html[Reference]
 ----
 client.xpack.license.delete([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/delete-license.html[Reference]
 
 
 === xpack.license.get
@@ -4580,7 +4580,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.get([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/get-license.html[Reference]
 [cols=2*]
 |===
 |`local`
@@ -4593,7 +4593,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.getBasicStatus([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/get-basic-status.html[Reference]
 
 
 === xpack.license.getTrialStatus
@@ -4601,7 +4601,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.getTrialStatus([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/get-trial-status.html[Reference]
 
 
 === xpack.license.post
@@ -4609,7 +4609,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.post([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/update-license.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4625,7 +4625,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.postStartBasic([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/start-basic.html[Reference]
 [cols=2*]
 |===
 |`acknowledge`
@@ -4638,7 +4638,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.license.postStartTrial([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Reference]
+link:{ref}/start-trial.html[Reference]
 [cols=2*]
 |===
 |`type`
@@ -4654,7 +4654,7 @@ link:https://www.elastic.co/guide/en/x-pack/current/license-management.html[Refe
 ----
 client.xpack.migration.deprecations([params] [, options] [, callback])
 ----
-link:http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html[Reference]
+link:{ref}/migration-api-deprecation.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -5650,7 +5650,7 @@ client.xpack.ml.validateDetector([params] [, options] [, callback])
 ----
 client.xpack.monitoring.bulk([params] [, options] [, callback])
 ----
-link:http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html[Reference]
+link:{ref}/es-monitoring.html[Reference]
 [cols=2*]
 |===
 |`type`
