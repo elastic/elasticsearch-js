@@ -3120,7 +3120,7 @@ link:{ref}/cluster-nodes-info.html[Reference]
 ----
 client.nodes.reloadSecureSettings([params] [, options] [, callback])
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings[Reference]
+link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
 [cols=2*]
 |===
 |`node_id` or `nodeId`
