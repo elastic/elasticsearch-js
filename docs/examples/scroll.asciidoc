@@ -21,7 +21,7 @@ async function run () {
   const responseQueue = []
 
   // Let's index some data!
-  await client.bulk({
+  const { body: bulkResponse } = await client.bulk({
     // here we are forcing an index refresh,
     // otherwise we will not get any result
     // in the consequent search
@@ -48,6 +48,11 @@ async function run () {
       }
     ]
   })
+
+  if (bulkResponse.errors) {
+    console.log(bulkResponse)
+    process.exit(1)
+  }
 
   // start things off by searching, setting a scroll timeout, and pushing
   // our first response into the queue to be processed
