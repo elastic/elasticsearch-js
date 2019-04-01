@@ -11,7 +11,7 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
 async function run () {
-  await client.bulk({
+  const { body: bulkResponse } = await client.bulk({
     refresh: true,
     body: [
       { index: { _index: 'game-of-thrones' } },
@@ -33,6 +33,11 @@ async function run () {
       }
     ]
   })
+
+  if (bulkResponse.errors) {
+    console.log(bulkResponse)
+    process.exit(1)
+  }
 
   const { body } = await client.msearch({
     body: [
