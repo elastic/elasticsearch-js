@@ -58,7 +58,7 @@ function buildCluster (options, callback) {
       }
       sniffResult.nodes[opts.id] = {
         http: {
-          publish_address: `http://localhost:${port}`
+          publish_address: `localhost:${port}`
         },
         roles: ['master', 'data', 'ingest']
       }
