@@ -53,12 +53,14 @@ function buildCluster (options, callback) {
 
     buildServer(options.handler || handler, ({ port }, server) => {
       nodes[opts.id] = {
-        url: `http://localhost:${port}`,
+        url: `http://127.0.0.1:${port}`,
         server
       }
       sniffResult.nodes[opts.id] = {
         http: {
-          publish_address: `http://localhost:${port}`
+          publish_address: options.hostPublishAddress
+            ? `localhost/127.0.0.1:${port}`
+            : `127.0.0.1:${port}`
         },
         roles: ['master', 'data', 'ingest']
       }
