@@ -282,41 +282,112 @@ test('API', t => {
   })
 
   t.test('nodesToHost', t => {
-    const pool = new ConnectionPool({ Connection })
-    const nodes = {
-      a1: {
-        http: {
-          publish_address: '127.0.0.1:9200'
+    t.test('publish_address as ip address', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: '127.0.0.1:9200'
+          },
+          roles: ['master', 'data', 'ingest']
         },
-        roles: ['master', 'data', 'ingest']
-      },
-      a2: {
-        http: {
-          publish_address: '127.0.0.1:9202'
-        },
-        roles: ['master', 'data', 'ingest']
+        a2: {
+          http: {
+            publish_address: '127.0.0.1:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
       }
-    }
 
-    t.deepEqual(pool.nodesToHost(nodes), [{
-      url: new URL('http://127.0.0.1:9200'),
-      id: 'a1',
-      roles: {
-        master: true,
-        data: true,
-        ingest: true,
-        ml: false
+      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+        url: new URL('http://127.0.0.1:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }, {
+        url: new URL('http://127.0.0.1:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }])
+
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, '127.0.0.1:9200')
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, '127.0.0.1:9201')
+      t.end()
+    })
+
+    t.test('publish_address as host/ip', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: 'example.com/127.0.0.1:9200'
+          },
+          roles: ['master', 'data', 'ingest']
+        },
+        a2: {
+          http: {
+            publish_address: 'example.com/127.0.0.1:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
       }
-    }, {
-      url: new URL('http://127.0.0.1:9201'),
-      id: 'a2',
-      roles: {
-        master: true,
-        data: true,
-        ingest: true,
-        ml: false
+
+      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+        url: new URL('http://example.com:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }, {
+        url: new URL('http://example.com:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }])
+
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
+      t.end()
+    })
+
+    t.test('Should use the configure protocol', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: 'example.com/127.0.0.1:9200'
+          },
+          roles: ['master', 'data', 'ingest']
+        },
+        a2: {
+          http: {
+            publish_address: 'example.com/127.0.0.1:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
       }
-    }])
+
+      t.strictEqual(pool.nodesToHost(nodes, 'https:')[0].url.protocol, 'https:')
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.protocol, 'http:')
+      t.end()
+    })
+
     t.end()
   })
 
