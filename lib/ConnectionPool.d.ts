@@ -127,7 +127,7 @@ export default class ConnectionPool {
    * @param {object} nodes
    * @returns {array} hosts
    */
-  nodesToHost(nodes: any): any[];
+  nodesToHost(nodes: any, protocol: string): any[];
   /**
    * Transforms an url string to a host object
    *
