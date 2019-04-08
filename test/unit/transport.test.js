@@ -2107,3 +2107,37 @@ test('Should accept custom querystring in the optons object', t => {
 
   t.end()
 })
+
+test('Should add an User-Agent header', t => {
+  t.plan(2)
+  function handler (req, res) {
+    t.match(req.headers, {
+      'user-agent': `elasticsearch-javascript/${require('../../package.json').version}`
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
