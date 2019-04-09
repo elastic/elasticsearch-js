@@ -22,15 +22,16 @@
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util';
 import * as http from 'http';
-import * as https from 'http';
 import { SecureContextOptions } from 'tls';
+
+export declare type agentFn = () => any;
 
 interface ConnectionOptions {
   url: URL;
   ssl?: SecureContextOptions;
   id?: string;
   headers?: any;
-  agent?: AgentOptions | http.Agent | https.Agent;
+  agent?: AgentOptions | agentFn;
   status?: string;
   roles?: any;
 }

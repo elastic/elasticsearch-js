@@ -21,8 +21,6 @@
 
 import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
-import * as http from 'http';
-import * as https from 'https';
 import Transport, {
   ApiResponse,
   RequestEvent,
@@ -31,7 +29,7 @@ import Transport, {
   nodeFilterFn,
   nodeSelectorFn
 } from './lib/Transport';
-import Connection, { AgentOptions } from './lib/Connection';
+import Connection, { AgentOptions, agentFn } from './lib/Connection';
 import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
@@ -84,7 +82,7 @@ interface ClientOptions {
   suggestCompression?: boolean;
   compression?: 'gzip';
   ssl?: SecureContextOptions;
-  agent?: AgentOptions | http.Agent | https.Agent;
+  agent?: AgentOptions | agentFn;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
   headers?: anyObject;
