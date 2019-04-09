@@ -5,4 +5,4 @@ exec docker run \
   -e ELASTICSEARCH_URL="http://elasticsearch:9200" \
   -p 5601:5601 \
   --network=elastic \
-  docker.elastic.co/kibana/kibana:7.0.0-beta1
+  docker.elastic.co/kibana/kibana:7.0.0-rc2
