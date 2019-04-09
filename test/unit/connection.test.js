@@ -171,7 +171,7 @@ test('Custom http agent', t => {
     agent.custom = true
     const connection = new Connection({
       url: new URL(`http://localhost:${port}`),
-      agent
+      agent: () => agent
     })
     t.true(connection.agent.custom)
     connection.request({
