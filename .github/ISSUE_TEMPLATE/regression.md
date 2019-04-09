@@ -42,6 +42,6 @@ Paste the results here:
 ## Your Environment
 
 - *node version*: 6,8,10
-- *@elastic/elasticsearch version*: >=7.0.0
+- `@elastic/elasticsearch` *version*: >=7.0.0
 - *os*: Mac, Windows, Linux
 - *any other relevant information*
