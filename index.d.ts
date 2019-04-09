@@ -21,6 +21,8 @@
 
 import { EventEmitter } from 'events';
 import { SecureContextOptions } from 'tls';
+import * as http from 'http';
+import * as https from 'https';
 import Transport, {
   ApiResponse,
   RequestEvent,
@@ -82,7 +84,7 @@ interface ClientOptions {
   suggestCompression?: boolean;
   compression?: 'gzip';
   ssl?: SecureContextOptions;
-  agent?: AgentOptions;
+  agent?: AgentOptions | http.Agent | https.Agent;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
   headers?: anyObject;

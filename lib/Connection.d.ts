@@ -22,6 +22,7 @@
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util';
 import * as http from 'http';
+import * as https from 'http';
 import { SecureContextOptions } from 'tls';
 
 interface ConnectionOptions {
@@ -29,7 +30,7 @@ interface ConnectionOptions {
   ssl?: SecureContextOptions;
   id?: string;
   headers?: any;
-  agent?: AgentOptions;
+  agent?: AgentOptions | http.Agent | https.Agent;
   status?: string;
   roles?: any;
 }
