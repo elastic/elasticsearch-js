@@ -90,7 +90,7 @@ _Default:_ `false`
 _Default:_ `null`
 
 |`agent`
-|`http.AgentOptions` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options]. +
+|`http.AgentOptions` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], or an actual http agent instance. +
 _Default:_ `null`
 
 |`nodeFilter`
