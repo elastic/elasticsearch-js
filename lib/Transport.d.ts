@@ -49,7 +49,7 @@ interface TransportOptions {
   headers?: anyObject;
 }
 
-export interface RequestEvent {
+export interface RequestEvent<T = any> {
   body: any;
   statusCode: number | null;
   headers: anyObject | null;
@@ -71,7 +71,7 @@ export interface RequestEvent {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse extends RequestEvent {}
+export interface ApiResponse<T = any> extends RequestEvent<T> {}
 
 declare type anyObject = {
   [key: string]: any;
