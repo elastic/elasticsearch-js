@@ -4352,6 +4352,12 @@ link:{ref}/get-data-frame-transform-stats.html[Reference]
 |`transform_id` or `transformId`
 |`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
 
+|`from`
+|`number` - skips a number of transform stats, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transform stats to get, defaults to 100
+
 |===
 
 === dataFrame.previewDataFrameTransform

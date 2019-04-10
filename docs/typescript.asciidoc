@@ -3,58 +3,146 @@
 
 The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
 
-While the client offers type definitions for Request parameters, Request bodies and responses are shipped with `any` because there is not an official spec that defines them, so we cannot make guarantees over them (but since they are shipped with `any`, you can easily override them with your own typing definitions).
-
 NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
 
-=== How to extend the provided typings?
-Extend the provided typings is very straightforward, you should declare a custom `.d.ts` file and then write inside your type extensions, following there is an example of how do it.
+Other than the types for the surface API, the client offers the types for every request method, via the `RequestParams`, if you need the types for a search request for instance, you can access them via `RequestParams.Search`.
+Every API that supports a body, accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the request body, if you don't configure anything, it will default to `any`.
+
+For example:
+
 [source,ts]
 ----
-declare module '@elastic/elasticsearch' {
-  export interface ShardsResponse {
-    total: number;
-    successful: number;
-    failed: number;
-    skipped: number;
-  }
+import { RequestParams } from '@elastic/elasticsearch'
 
-   export interface Explanation {
-    value: number;
-    description: string;
-    details: Explanation[];
-  }
-
-   export interface SearchResponse<T> {
-    took: number;
-    timed_out: boolean;
-    _scroll_id?: string;
-    _shards: ShardsResponse;
-    hits: {
-      total: number;
-      max_score: number;
-      hits: Array<{
-        _index: string;
-        _type: string;
-        _id: string;
-        _score: number;
-        _source: T;
-        _version?: number;
-        _explanation?: Explanation;
-        fields?: any;
-        highlight?: any;
-        inner_hits?: any;
-        matched_queries?: string[];
-        sort?: string[];
-      }>;
-    };
-    aggregations?: any;
-  }
-
-   export interface MSearchResponse<T> {
-    responses?: Array<SearchResponse<T>>;
+interface SearchBody {
+  query: {
+    match: { foo: string }
   }
 }
 
-export {};
+const searchParams: RequestParams.Search<SearchBody> = {
+  index: 'test',
+  body: {
+    query: {
+      match: { foo: 'bar' }
+    }
+  }
+}
+
+// This is valid as well
+const searchParams: RequestParams.Search = {
+  index: 'test',
+  body: {
+    query: {
+      match: { foo: 'bar' }
+    }
+  }
+}
+----
+
+You can find the type definiton of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
+
+[source,ts]
+----
+interface SearchResponse<T> {
+  hits: {
+    hits: Array<{
+      _source: T;
+    }>
+  }
+}
+
+// Define the intefrace of the source object
+interface Source {
+  foo: string
+}
+
+client.search(searchParams)
+  .then((response: ApiResponse<SearchResponse<Source>>) => console.log(response))
+  .catch((err: Error) => {})
+----
+
+=== A complete example
+
+[source,ts]
+----
+import {
+  Client,
+  // Object that contains the type definitions of every API method
+  RequestParams,
+  // Interface of the generic API response
+  ApiResponse,
+} from '@elastic/elasticsearch'
+
+const client = new Client({ node: 'http://localhost:9200' })
+
+// Define the type of the body for the Search request
+interface SearchBody {
+  query: {
+    match: { foo: string }
+  }
+}
+
+// Complete definition of the Search response
+interface ShardsResponse {
+  total: number;
+  successful: number;
+  failed: number;
+  skipped: number;
+}
+
+interface Explanation {
+  value: number;
+  description: string;
+  details: Explanation[];
+}
+
+interface SearchResponse<T> {
+  took: number;
+  timed_out: boolean;
+  _scroll_id?: string;
+  _shards: ShardsResponse;
+  hits: {
+    total: number;
+    max_score: number;
+    hits: Array<{
+      _index: string;
+      _type: string;
+      _id: string;
+      _score: number;
+      _source: T;
+      _version?: number;
+      _explanation?: Explanation;
+      fields?: any;
+      highlight?: any;
+      inner_hits?: any;
+      matched_queries?: string[];
+      sort?: string[];
+    }>;
+  };
+  aggregations?: any;
+}
+
+// Define the intefrace of the source object
+interface Source {
+  foo: string
+}
+
+async function run (): Promise<void> {
+  // Define the search parameters
+  const searchParams: RequestParams.Search<SearchBody> = {
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }
+
+  // Craft the final type definition
+  const response: ApiResponse<SearchResponse<Source>> = await client.search(searchParams)
+  console.log(response.body)
+}
+
+run().catch(console.log)
 ----
