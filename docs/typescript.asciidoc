@@ -3,18 +3,72 @@
 
 The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
 
-While the client offers type definitions for Request parameters, Request bodies and responses are shipped with https://www.typescriptlang.org/docs/handbook/generics.html[generics] (with a default type of `any`) because there is not an official spec that defines them, so we cannot make guarantees over them.
-
 NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
 
-Following you can find an example that uses TypeScript and extends the default API response via generics.
+Other than the types for the surface API, the client offers the types for every request method, via the `RequestParams`, if you need the types for a search request for instance, you can access them via `RequestParams.Search`.
+Every API that supports a body, accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the request body, if you don't configure anything, it will default to `any`.
+
+For example:
+
+[source,ts]
+----
+import { RequestParams } from '@elastic/elasticsearch'
+
+interface SearchBody {
+  query: {
+    match: { foo: string }
+  }
+}
+
+const searchParams: RequestParams.Search<SearchBody> = {
+  index: 'test',
+  body: {
+    query: {
+      match: { foo: 'bar' }
+    }
+  }
+}
+
+// This is valid as well
+const searchParams: RequestParams.Search = {
+  index: 'test',
+  body: {
+    query: {
+      match: { foo: 'bar' }
+    }
+  }
+}
+----
+
+You can find the type definiton of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
+
+[source,ts]
+----
+interface SearchResponse<T> {
+  hits: {
+    hits: Array<{
+      _source: T;
+    }>
+  }
+}
+
+// Define the intefrace of the source object
+interface Source {
+  foo: string
+}
+
+client.search(searchParams)
+  .then((response: ApiResponse<SearchResponse<Source>>) => console.log(response))
+  .catch((err: Error) => {})
+----
+
+=== A complete example
 
 [source,ts]
 ----
 import {
   Client,
-  // Object that contains the type definitions
-  // of every API method
+  // Object that contains the type definitions of every API method
   RequestParams,
   // Interface of the generic API response
   ApiResponse,
@@ -22,6 +76,14 @@ import {
 
 const client = new Client({ node: 'http://localhost:9200' })
 
+// Define the type of the body for the Search request
+interface SearchBody {
+  query: {
+    match: { foo: string }
+  }
+}
+
+// Complete definition of the Search response
 interface ShardsResponse {
   total: number;
   successful: number;
@@ -61,16 +123,20 @@ interface SearchResponse<T> {
   aggregations?: any;
 }
 
+// Define the intefrace of the source object
+interface Source {
+  foo: string
+}
+
 async function run (): Promise<void> {
   // Define the search parameters
-  const searchParams: RequestParams.Search = {
+  const searchParams: RequestParams.Search<SearchBody> = {
     index: 'test',
-    q: 'foo:bar'
-  }
-
-  // Define the intefrace of the source object
-  interface Source {
-    foo: string
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
   }
 
   // Craft the final type definition
