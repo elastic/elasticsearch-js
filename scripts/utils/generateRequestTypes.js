@@ -74,10 +74,10 @@ export interface Generic {
     }
 
     const code = `
-export interface ${name[0].toUpperCase() + name.slice(1)} extends Generic {
+export interface ${name[0].toUpperCase() + name.slice(1)}${body ? '<T = any>' : ''} extends Generic {
   ${partsArr.map(genLine).join('\n  ')}
   ${paramsArr.map(genLine).join('\n  ')}
-  ${body ? `body${body.required ? '' : '?'}: any;` : ''}
+  ${body ? `body${body.required ? '' : '?'}: T;` : ''}
 }
 `
 
