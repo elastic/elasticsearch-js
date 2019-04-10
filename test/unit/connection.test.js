@@ -23,6 +23,7 @@ const { test } = require('tap')
 const { inspect } = require('util')
 const { createGzip, createDeflate } = require('zlib')
 const { URL } = require('url')
+const { Agent } = require('http')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
@@ -124,6 +125,55 @@ test('Basic (https with ssl agent)', t => {
       url: new URL(`https://localhost:${port}`),
       ssl: { key, cert }
     })
+    connection.request({
+      path: '/hello',
+      method: 'GET',
+      headers: {
+        'X-Custom-Test': true
+      }
+    }, (err, res) => {
+      t.error(err)
+
+      t.match(res.headers, {
+        connection: 'keep-alive'
+      })
+
+      var payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.strictEqual(payload, 'ok')
+        server.stop()
+      })
+    })
+  })
+})
+
+test('Custom http agent', t => {
+  t.plan(5)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      'x-custom-test': 'true',
+      connection: 'keep-alive'
+    })
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const agent = new Agent({
+      keepAlive: true,
+      keepAliveMsecs: 1000,
+      maxSockets: 256,
+      maxFreeSockets: 256
+    })
+    agent.custom = true
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`),
+      agent: () => agent
+    })
+    t.true(connection.agent.custom)
     connection.request({
       path: '/hello',
       method: 'GET',

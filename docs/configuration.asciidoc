@@ -90,8 +90,20 @@ _Default:_ `false`
 _Default:_ `null`
 
 |`agent`
-|`http.AgentOptions` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options]. +
+a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], or a function that returns an actual http agent instance. +
 _Default:_ `null`
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  agent: { agent: 'options' }
+})
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  agent: () => new CustomAgent()
+})
+----
 
 |`nodeFilter`
 a|`function` - Filters which node not to use for a request. +
