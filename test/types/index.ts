@@ -22,6 +22,7 @@
 import {
   Client,
   ApiResponse,
+  RequestParams,
   RequestEvent,
   ResurrectEvent,
   events,
@@ -92,6 +93,40 @@ client.index({
   requestTimeout: 2000
 })
   .then((result: ApiResponse) => {})
+  .catch((err: Error) => {})
+
+// --- Use generics ---
+// Define the search parameters
+interface SearchBody {
+  query: {
+    match: { foo: string }
+  }
+}
+const searchParams: RequestParams.Search<SearchBody> = {
+  index: 'test',
+  body: {
+    query: {
+      match: { foo: 'bar' }
+    }
+  }
+}
+
+// Dewfine the interface of the search response
+interface SearchResponse<T> {
+  hits: {
+    hits: Array<{
+      _source: T;
+    }>
+  }
+}
+
+// Define the intefrace of the source object
+interface Source {
+  foo: string
+}
+
+client.search(searchParams)
+  .then((response: ApiResponse<SearchResponse<Source>>) => console.log(response))
   .catch((err: Error) => {})
 
 // extend client
