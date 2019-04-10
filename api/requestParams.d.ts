@@ -1066,17 +1066,8 @@ export interface RenderSearchTemplate<T = any> extends Generic {
   body?: T;
 }
 
-<<<<<<< HEAD
-export interface ScriptsPainlessExecute extends Generic {
-  body?: any;
-=======
-export interface ScriptsPainlessContext extends Generic {
-  context?: string;
-}
-
 export interface ScriptsPainlessExecute<T = any> extends Generic {
   body?: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface Scroll<T = any> extends Generic {
@@ -1380,47 +1371,7 @@ export interface CcrUnfollow extends Generic {
   index: string;
 }
 
-<<<<<<< HEAD
-export interface GraphExplore extends Generic {
-=======
-export interface DataFrameDeleteDataFrameTransform extends Generic {
-  transform_id: string;
-}
-
-export interface DataFrameGetDataFrameTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface DataFrameGetDataFrameTransformStats extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
-  body: T;
-}
-
-export interface DataFramePutDataFrameTransform<T = any> extends Generic {
-  transform_id: string;
-  body: T;
-}
-
-export interface DataFrameStartDataFrameTransform extends Generic {
-  transform_id: string;
-  timeout?: string;
-}
-
-export interface DataFrameStopDataFrameTransform extends Generic {
-  transform_id: string;
-  wait_for_completion?: boolean;
-  timeout?: string;
-}
-
 export interface GraphExplore<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
   index?: string | string[];
   type?: string | string[];
   routing?: string;
