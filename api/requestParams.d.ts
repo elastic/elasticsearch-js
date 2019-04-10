@@ -486,13 +486,13 @@ export interface Explain<T = any> extends Generic {
   body?: T;
 }
 
-export interface FieldCaps extends Generic {
+export interface FieldCaps<T = any> extends Generic {
   index?: string | string[];
   fields?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
-  body?: any;
+  body?: T;
 }
 
 export interface Get extends Generic {
@@ -586,12 +586,8 @@ export interface IndicesCreate<T = any> extends Generic {
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
-<<<<<<< HEAD
   update_all_types?: boolean;
-  body?: any;
-=======
   body?: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface IndicesDelete extends Generic {
@@ -775,12 +771,8 @@ export interface IndicesPutMapping<T = any> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
-<<<<<<< HEAD
   update_all_types?: boolean;
-  body: any;
-=======
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface IndicesPutSettings<T = any> extends Generic {
@@ -964,12 +956,7 @@ export interface Msearch<T = any> extends Generic {
   pre_filter_shard_size?: number;
   max_concurrent_shard_requests?: number;
   rest_total_hits_as_int?: boolean;
-<<<<<<< HEAD
-  body: any;
-=======
-  ccs_minimize_roundtrips?: boolean;
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface MsearchTemplate<T = any> extends Generic {
@@ -979,12 +966,7 @@ export interface MsearchTemplate<T = any> extends Generic {
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
-<<<<<<< HEAD
-  body: any;
-=======
-  ccs_minimize_roundtrips?: boolean;
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface Mtermvectors<T = any> extends Generic {
@@ -1087,17 +1069,8 @@ export interface RenderSearchTemplate<T = any> extends Generic {
   body?: T;
 }
 
-<<<<<<< HEAD
-export interface ScriptsPainlessExecute extends Generic {
-  body?: any;
-=======
-export interface ScriptsPainlessContext extends Generic {
-  context?: string;
-}
-
 export interface ScriptsPainlessExecute<T = any> extends Generic {
   body?: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface Scroll<T = any> extends Generic {
@@ -1179,12 +1152,7 @@ export interface SearchTemplate<T = any> extends Generic {
   profile?: boolean;
   typed_keys?: boolean;
   rest_total_hits_as_int?: boolean;
-<<<<<<< HEAD
-  body: any;
-=======
-  ccs_minimize_roundtrips?: boolean;
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface SnapshotCreate<T = any> extends Generic {
@@ -1309,13 +1277,9 @@ export interface Update<T = any> extends Generic {
   timeout?: string;
   if_seq_no?: number;
   if_primary_term?: number;
-<<<<<<< HEAD
   version?: number;
   version_type?: 'internal' | 'force';
-  body: any;
-=======
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface UpdateByQuery<T = any> extends Generic {
@@ -1411,53 +1375,6 @@ export interface CcrUnfollow extends Generic {
   index: string;
 }
 
-<<<<<<< HEAD
-=======
-export interface DataFrameDeleteDataFrameTransform extends Generic {
-  transform_id: string;
-}
-
-export interface DataFrameGetDataFrameTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface DataFrameGetDataFrameTransformStats extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-}
-
-export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
-  body: T;
-}
-
-export interface DataFramePutDataFrameTransform<T = any> extends Generic {
-  transform_id: string;
-  body: T;
-}
-
-export interface DataFrameStartDataFrameTransform extends Generic {
-  transform_id: string;
-  timeout?: string;
-}
-
-export interface DataFrameStopDataFrameTransform extends Generic {
-  transform_id: string;
-  wait_for_completion?: boolean;
-  timeout?: string;
-}
-
-export interface GraphExplore<T = any> extends Generic {
-  index?: string | string[];
-  type?: string | string[];
-  routing?: string;
-  timeout?: string;
-  body?: T;
-}
-
->>>>>>> a21281f... Improve typings (#813)
 export interface IlmDeleteLifecycle extends Generic {
   policy?: string;
 }
@@ -1518,9 +1435,9 @@ export interface IndicesUnfreeze extends Generic {
   wait_for_active_shards?: string;
 }
 
-export interface SecurityCreateApiKey extends Generic {
+export interface SecurityCreateApiKey<T = any> extends Generic {
   refresh?: 'true' | 'false' | 'wait_for';
-  body: any;
+  body: T;
 }
 
 export interface SecurityGetApiKey extends Generic {
@@ -1530,16 +1447,16 @@ export interface SecurityGetApiKey extends Generic {
   realm_name?: string;
 }
 
-export interface SecurityInvalidateApiKey extends Generic {
-  body: any;
+export interface SecurityInvalidateApiKey<T = any> extends Generic {
+  body: T;
 }
 
-export interface XpackGraphExplore extends Generic {
+export interface XpackGraphExplore<T = any> extends Generic {
   index?: string | string[];
   type?: string | string[];
   routing?: string;
   timeout?: string;
-  body?: any;
+  body?: T;
 }
 
 export interface XpackInfo extends Generic {
@@ -1559,11 +1476,7 @@ export interface XpackLicenseGetBasicStatus extends Generic {
 export interface XpackLicenseGetTrialStatus extends Generic {
 }
 
-<<<<<<< HEAD
-export interface XpackLicensePost extends Generic {
-=======
-export interface LicensePost<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackLicensePost<T = any> extends Generic {
   acknowledge?: boolean;
   body?: T;
 }
@@ -1581,7 +1494,6 @@ export interface XpackMigrationDeprecations extends Generic {
   index?: string;
 }
 
-<<<<<<< HEAD
 export interface XpackMigrationGetAssistance extends Generic {
   index?: string | string[];
   allow_no_indices?: boolean;
@@ -1594,10 +1506,7 @@ export interface XpackMigrationUpgrade extends Generic {
   wait_for_completion?: boolean;
 }
 
-export interface XpackMlCloseJob extends Generic {
-=======
-export interface MlCloseJob<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlCloseJob<T = any> extends Generic {
   job_id: string;
   allow_no_jobs?: boolean;
   force?: boolean;
@@ -1649,11 +1558,7 @@ export interface XpackMlDeleteModelSnapshot extends Generic {
   snapshot_id: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlFindFileStructure extends Generic {
-=======
-export interface MlFindFileStructure<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlFindFileStructure<T = any> extends Generic {
   lines_to_sample?: number;
   timeout?: string;
   charset?: string;
@@ -1670,11 +1575,7 @@ export interface MlFindFileStructure<T = any> extends Generic {
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlFlushJob extends Generic {
-=======
-export interface MlFlushJob<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlFlushJob<T = any> extends Generic {
   job_id: string;
   calc_interim?: boolean;
   start?: string;
@@ -1690,11 +1591,7 @@ export interface XpackMlForecast extends Generic {
   expires_in?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlGetBuckets extends Generic {
-=======
-export interface MlGetBuckets<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetBuckets<T = any> extends Generic {
   job_id: string;
   timestamp?: string;
   expand?: boolean;
@@ -1718,24 +1615,13 @@ export interface XpackMlGetCalendarEvents extends Generic {
   size?: number;
 }
 
-<<<<<<< HEAD
 export interface XpackMlGetCalendars extends Generic {
   calendar_id?: string;
   from?: number;
   size?: number;
 }
 
-export interface XpackMlGetCategories extends Generic {
-=======
-export interface MlGetCalendars<T = any> extends Generic {
-  calendar_id?: string;
-  from?: number;
-  size?: number;
-  body?: T;
-}
-
-export interface MlGetCategories<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetCategories<T = any> extends Generic {
   job_id: string;
   category_id?: number;
   from?: number;
@@ -1759,11 +1645,7 @@ export interface XpackMlGetFilters extends Generic {
   size?: number;
 }
 
-<<<<<<< HEAD
-export interface XpackMlGetInfluencers extends Generic {
-=======
-export interface MlGetInfluencers<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetInfluencers<T = any> extends Generic {
   job_id: string;
   exclude_interim?: boolean;
   from?: number;
@@ -1786,11 +1668,7 @@ export interface XpackMlGetJobs extends Generic {
   allow_no_jobs?: boolean;
 }
 
-<<<<<<< HEAD
-export interface XpackMlGetModelSnapshots extends Generic {
-=======
-export interface MlGetModelSnapshots<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetModelSnapshots<T = any> extends Generic {
   job_id: string;
   snapshot_id?: string;
   from?: number;
@@ -1802,11 +1680,7 @@ export interface MlGetModelSnapshots<T = any> extends Generic {
   body?: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlGetOverallBuckets extends Generic {
-=======
-export interface MlGetOverallBuckets<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetOverallBuckets<T = any> extends Generic {
   job_id: string;
   top_n?: number;
   bucket_span?: string;
@@ -1818,11 +1692,7 @@ export interface MlGetOverallBuckets<T = any> extends Generic {
   body?: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlGetRecords extends Generic {
-=======
-export interface MlGetRecords<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlGetRecords<T = any> extends Generic {
   job_id: string;
   exclude_interim?: boolean;
   from?: number;
@@ -1844,20 +1714,12 @@ export interface XpackMlOpenJob extends Generic {
   timeout?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPostCalendarEvents extends Generic {
-=======
-export interface MlPostCalendarEvents<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPostCalendarEvents<T = any> extends Generic {
   calendar_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPostData extends Generic {
-=======
-export interface MlPostData<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPostData<T = any> extends Generic {
   job_id: string;
   reset_start?: string;
   reset_end?: string;
@@ -1868,11 +1730,7 @@ export interface XpackMlPreviewDatafeed extends Generic {
   datafeed_id: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPutCalendar extends Generic {
-=======
-export interface MlPutCalendar<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPutCalendar<T = any> extends Generic {
   calendar_id: string;
   body?: T;
 }
@@ -1882,38 +1740,22 @@ export interface XpackMlPutCalendarJob extends Generic {
   job_id: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPutDatafeed extends Generic {
-=======
-export interface MlPutDatafeed<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPutDatafeed<T = any> extends Generic {
   datafeed_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPutFilter extends Generic {
-=======
-export interface MlPutFilter<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPutFilter<T = any> extends Generic {
   filter_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlPutJob extends Generic {
-=======
-export interface MlPutJob<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlPutJob<T = any> extends Generic {
   job_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlRevertModelSnapshot extends Generic {
-=======
-export interface MlRevertModelSnapshot<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlRevertModelSnapshot<T = any> extends Generic {
   job_id: string;
   snapshot_id: string;
   delete_intervening_results?: boolean;
@@ -1925,11 +1767,7 @@ export interface XpackMlSetUpgradeMode extends Generic {
   timeout?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlStartDatafeed extends Generic {
-=======
-export interface MlStartDatafeed<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlStartDatafeed<T = any> extends Generic {
   datafeed_id: string;
   start?: string;
   end?: string;
@@ -1944,64 +1782,36 @@ export interface XpackMlStopDatafeed extends Generic {
   timeout?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackMlUpdateDatafeed extends Generic {
-=======
-export interface MlUpdateDatafeed<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlUpdateDatafeed<T = any> extends Generic {
   datafeed_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlUpdateFilter extends Generic {
-=======
-export interface MlUpdateFilter<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlUpdateFilter<T = any> extends Generic {
   filter_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlUpdateJob extends Generic {
-=======
-export interface MlUpdateJob<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlUpdateJob<T = any> extends Generic {
   job_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlUpdateModelSnapshot extends Generic {
-=======
-export interface MlUpdateModelSnapshot<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMlUpdateModelSnapshot<T = any> extends Generic {
   job_id: string;
   snapshot_id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackMlValidate extends Generic {
-  body: any;
-}
-
-export interface XpackMlValidateDetector extends Generic {
-  body: any;
-}
-
-export interface XpackMonitoringBulk extends Generic {
-=======
-export interface MlValidate<T = any> extends Generic {
+export interface XpackMlValidate<T = any> extends Generic {
   body: T;
 }
 
-export interface MlValidateDetector<T = any> extends Generic {
+export interface XpackMlValidateDetector<T = any> extends Generic {
   body: T;
 }
 
-export interface MonitoringBulk<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackMonitoringBulk<T = any> extends Generic {
   type?: string;
   system_id?: string;
   system_api_version?: string;
@@ -2025,29 +1835,16 @@ export interface XpackRollupGetRollupIndexCaps extends Generic {
   index: string;
 }
 
-<<<<<<< HEAD
-export interface XpackRollupPutJob extends Generic {
-=======
-export interface RollupPutJob<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackRollupPutJob<T = any> extends Generic {
   id: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackRollupRollupSearch extends Generic {
+export interface XpackRollupRollupSearch<T = any> extends Generic {
   index: string;
   type?: string;
   typed_keys?: boolean;
-  body: any;
-=======
-export interface RollupRollupSearch<T = any> extends Generic {
-  index: string | string[];
-  type?: string;
-  typed_keys?: boolean;
-  rest_total_hits_as_int?: boolean;
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface XpackRollupStartJob extends Generic {
@@ -2063,11 +1860,7 @@ export interface XpackRollupStopJob extends Generic {
 export interface XpackSecurityAuthenticate extends Generic {
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityChangePassword extends Generic {
-=======
-export interface SecurityChangePassword<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityChangePassword<T = any> extends Generic {
   username?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
@@ -2082,16 +1875,7 @@ export interface XpackSecurityClearCachedRoles extends Generic {
   name: string | string[];
 }
 
-<<<<<<< HEAD
 export interface XpackSecurityDeletePrivileges extends Generic {
-=======
-export interface SecurityCreateApiKey<T = any> extends Generic {
-  refresh?: 'true' | 'false' | 'wait_for';
-  body: T;
-}
-
-export interface SecurityDeletePrivileges extends Generic {
->>>>>>> a21281f... Improve typings (#813)
   application: string;
   name: string;
   refresh?: 'true' | 'false' | 'wait_for';
@@ -2135,13 +1919,8 @@ export interface XpackSecurityGetRoleMapping extends Generic {
   name?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityGetToken extends Generic {
-  body: any;
-=======
-export interface SecurityGetToken<T = any> extends Generic {
+export interface XpackSecurityGetToken<T = any> extends Generic {
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface XpackSecurityGetUser extends Generic {
@@ -2151,90 +1930,49 @@ export interface XpackSecurityGetUser extends Generic {
 export interface XpackSecurityGetUserPrivileges extends Generic {
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityHasPrivileges extends Generic {
-=======
-export interface SecurityHasPrivileges<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityHasPrivileges<T = any> extends Generic {
   user?: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityInvalidateToken extends Generic {
-  body: any;
-}
-
-export interface XpackSecurityPutPrivileges extends Generic {
-=======
-export interface SecurityInvalidateApiKey<T = any> extends Generic {
+export interface XpackSecurityInvalidateToken<T = any> extends Generic {
   body: T;
 }
 
-export interface SecurityInvalidateToken<T = any> extends Generic {
-  body: T;
-}
-
-export interface SecurityPutPrivileges<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityPutPrivileges<T = any> extends Generic {
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityPutRole extends Generic {
-=======
-export interface SecurityPutRole<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityPutRole<T = any> extends Generic {
   name: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityPutRoleMapping extends Generic {
-=======
-export interface SecurityPutRoleMapping<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityPutRoleMapping<T = any> extends Generic {
   name: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSecurityPutUser extends Generic {
-=======
-export interface SecurityPutUser<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSecurityPutUser<T = any> extends Generic {
   username: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSqlClearCursor extends Generic {
-  body: any;
-}
-
-export interface XpackSqlQuery extends Generic {
-=======
-export interface SqlClearCursor<T = any> extends Generic {
+export interface XpackSqlClearCursor<T = any> extends Generic {
   body: T;
 }
 
-export interface SqlQuery<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackSqlQuery<T = any> extends Generic {
   format?: string;
   body: T;
 }
 
-<<<<<<< HEAD
-export interface XpackSqlTranslate extends Generic {
-  body: any;
-=======
-export interface SqlTranslate<T = any> extends Generic {
+export interface XpackSqlTranslate<T = any> extends Generic {
   body: T;
->>>>>>> a21281f... Improve typings (#813)
 }
 
 export interface XpackSslCertificates extends Generic {
@@ -2265,11 +2003,7 @@ export interface XpackWatcherDeleteWatch extends Generic {
   master_timeout?: string;
 }
 
-<<<<<<< HEAD
-export interface XpackWatcherExecuteWatch extends Generic {
-=======
-export interface WatcherExecuteWatch<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackWatcherExecuteWatch<T = any> extends Generic {
   id?: string;
   debug?: boolean;
   body?: T;
@@ -2279,11 +2013,7 @@ export interface XpackWatcherGetWatch extends Generic {
   id: string;
 }
 
-<<<<<<< HEAD
-export interface XpackWatcherPutWatch extends Generic {
-=======
-export interface WatcherPutWatch<T = any> extends Generic {
->>>>>>> a21281f... Improve typings (#813)
+export interface XpackWatcherPutWatch<T = any> extends Generic {
   id: string;
   master_timeout?: string;
   active?: boolean;
