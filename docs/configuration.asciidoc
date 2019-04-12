@@ -8,7 +8,7 @@ The client is designed to be easily configured as you see fit for your needs, fo
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({
-  node: 'http://localhost:9200'
+  host: 'http://localhost:9200'
   maxRetries: 5,
   requestTimeout: 60000,
   sniffOnStart: true
@@ -18,21 +18,21 @@ const client = new Client({
 === Basic options
 [cols=2*]
 |===
-|`node` or `nodes`
+|`host` or `hosts`
 a|The Elasticsearch endpoint to use. +
 It can be a single string or an array of strings:
 [source,js]
 ----
-node: 'http://localhost:9200'
+host: 'http://localhost:9200'
 ----
-Or it can be an object (or an array of objects) that represents the node
+Or it can be an object (or an array of objects) that represents the host
 [source,js]
 ----
-node: {
+host: {
   url: new URL('http://localhost:9200'),
   ssl: 'ssl options',
   agent: 'http agent options',
-  id: 'custom node id',
+  id: 'custom host id',
   headers: { 'custom': 'headers' }
   roles: {
     master: true,
@@ -95,12 +95,12 @@ _Default:_ `null`
 [source,js]
 ----
 const client = new Client({
-  node: 'http://localhost:9200',
+  host: 'http://localhost:9200',
   agent: { agent: 'options' }
 })
 
 const client = new Client({
-  node: 'http://localhost:9200',
+  host: 'http://localhost:9200',
   agent: () => new CustomAgent()
 })
 ----
