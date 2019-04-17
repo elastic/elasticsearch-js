@@ -27,7 +27,8 @@ import Transport, {
   TransportRequestParams,
   TransportRequestOptions,
   nodeFilterFn,
-  nodeSelectorFn
+  nodeSelectorFn,
+  TransportRequestCallback
 } from './lib/Transport';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
 import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
@@ -38,12 +39,18 @@ import * as errors from './lib/errors';
 declare type anyObject = {
   [key: string]: any;
 };
-declare type callbackFn = (err: Error | null, result: ApiResponse) => void;
 
-interface ApiMethod<T> {
-  (callback?: callbackFn): any;
-  (params: T, callback?: callbackFn): any;
-  (params: T, options: TransportRequestOptions, callback?: callbackFn): any;
+declare type callbackFn<T> = (err: Error | null, result: ApiResponse<T>) => void;
+
+interface ApiMethod<TParams, TBody = any> {
+  // Promise API
+  (): Promise<ApiResponse<TBody>>;
+  (params: TParams): Promise<ApiResponse<TBody>>;
+  (params: TParams, options: TransportRequestOptions): Promise<ApiResponse<TBody>>;
+  // Callback API
+  (callback: callbackFn<TBody>): TransportRequestCallback;
+  (params: TParams, callback: callbackFn<TBody>): TransportRequestCallback;
+  (params: TParams, options: TransportRequestOptions, callback: callbackFn<TBody>): TransportRequestCallback;
 }
 
 // Extend API
@@ -604,5 +611,6 @@ export {
   RequestEvent,
   ResurrectEvent,
   RequestParams,
+  ClientOptions,
   ClientExtendsCallbackOptions
 };
