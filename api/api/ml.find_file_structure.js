@@ -26,7 +26,7 @@ function buildMlFindFileStructure (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [ml.find_file_structure](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-file-structure.html) request
+   * Perform a [ml.find_file_structure](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html) request
    *
    * @param {int} lines_to_sample - How many lines of the file should be included in the analysis
    * @param {time} timeout - Timeout after which the analysis will be aborted

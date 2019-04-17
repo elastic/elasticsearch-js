@@ -26,7 +26,7 @@ function buildIngestProcessorGrok (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [ingest.processor_grok](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+   * Perform a [ingest.processor_grok](https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html#grok-processor-rest-get) request
    *
    */
 

@@ -26,7 +26,7 @@ function buildSecurityGetUserPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [security.get_user_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html) request
+   * Perform a [security.get_user_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html) request
    *
    */
 

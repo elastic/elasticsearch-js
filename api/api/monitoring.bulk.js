@@ -26,7 +26,7 @@ function buildMonitoringBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [monitoring.bulk](http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html) request
+   * Perform a [monitoring.bulk](https://www.elastic.co/guide/en/elasticsearch/reference/master/es-monitoring.html) request
    *
    * @param {string} type - Default document type for items which don't provide one
    * @param {string} system_id - Identifier of the monitored system

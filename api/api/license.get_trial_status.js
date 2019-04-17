@@ -26,7 +26,7 @@ function buildLicenseGetTrialStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [license.get_trial_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.get_trial_status](https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html) request
    *
    */
 
