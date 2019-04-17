@@ -5,9 +5,9 @@ sudo: required
 language: node_js
 
 node_js:
+  - "11"
   - "10"
   - "8"
-  - "6"
 
 env:
   global:
