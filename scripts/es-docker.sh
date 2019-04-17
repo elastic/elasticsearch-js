@@ -9,4 +9,4 @@ exec docker run \
   -p 9200:9200 \
   --network=elastic \
   --name=elasticsearch \
-  docker.elastic.co/elasticsearch/elasticsearch:7.0.0-rc2
+  docker.elastic.co/elasticsearch/elasticsearch:7.0.0
