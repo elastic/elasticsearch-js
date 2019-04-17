@@ -96,6 +96,10 @@ export interface TransportRequestOptions {
   warnings?: [string];
 }
 
+export interface TransportRequestCallback {
+  abort: () => void;
+}
+
 export default class Transport {
   static sniffReasons: {
     SNIFF_ON_START: string;
@@ -117,7 +121,8 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: TransportRequestParams, options: TransportRequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
+  request(params: TransportRequestParams, options?: TransportRequestOptions): Promise<ApiResponse>;
+  request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: Error | null, result: ApiResponse) => void): TransportRequestCallback;
   getConnection(): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }
