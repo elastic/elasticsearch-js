@@ -6,6 +6,5 @@ NODE_JS_VERSION:
 - 11
 - 10
 - 8
-- 6
 
 exclude: ~

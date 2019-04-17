@@ -27,6 +27,8 @@ npm install @elastic/elasticsearch
 
 ### Compatibility
 
+The minimum supported version of Node.js is `v8`.
+
 The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
 ```
 # Elasticsearch 7.x
@@ -40,7 +42,9 @@ The library is compatible with all Elasticsearch versions since 5.x, but you sho
 ```
 
 ## Usage
-You can find the full documentation in the [docs](https://github.com/elastic/elasticsearch-js/tree/master/docs) folder.
+
+You can find the full documentation in our [docs](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html) website.
+
 ```js
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
@@ -70,7 +74,9 @@ The returned value of **every** API call is formed as follows:
 }
 ```
 ### Client options
+
 The client is designed to be easily configured as you see fit for your needs, following you can see all the possible options that you can use to configure it.
+
 ```ts
 {
   // the Elasticsearch endpoint to use

@@ -18,6 +18,7 @@ npm install @elastic/elasticsearch
 ----
 
 === Compatibility
+The minimum supported version of Node.js is `v8`.
 
 The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
 ----
