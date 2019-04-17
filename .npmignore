@@ -67,3 +67,6 @@ scripts
 .ci
 .travis.yml
 certs
+.github
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
