@@ -50,7 +50,7 @@ interface TransportOptions {
 }
 
 export interface RequestEvent<T = any> {
-  body: any;
+  body: T;
   statusCode: number | null;
   headers: anyObject | null;
   warnings: string[] | null;
