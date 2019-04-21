@@ -57,9 +57,6 @@ link:{ref}/docs-bulk.html[Reference]
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`type`
-|`string` - Default document type for items which don't provide one
-
 |`_source`
 |`string, string[]` - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
 
