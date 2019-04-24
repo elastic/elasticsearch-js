@@ -121,11 +121,7 @@ function buildDelete (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

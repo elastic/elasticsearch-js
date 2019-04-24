@@ -113,12 +113,8 @@ function buildTermvectors (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
-    } else if ((index) != null && (id) != null) {
+    if ((index) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
     }

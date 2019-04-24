@@ -123,12 +123,8 @@ function buildIndex (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (id) != null) {
+    if ((index) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_doc'
     }

@@ -67,12 +67,6 @@ function buildRollupRollupSearch (opts) {
       return handleError(err, callback)
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -94,11 +88,7 @@ function buildRollupRollupSearch (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
 
     // build request object
     const request = {

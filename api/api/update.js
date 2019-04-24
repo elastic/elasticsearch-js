@@ -124,11 +124,7 @@ function buildUpdate (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_update'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_update' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_update' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

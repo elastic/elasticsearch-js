@@ -116,11 +116,7 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

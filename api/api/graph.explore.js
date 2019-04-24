@@ -56,12 +56,6 @@ function buildGraphExplore (opts) {
       options = {}
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -83,11 +77,7 @@ function buildGraphExplore (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_graph' + '/' + 'explore'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
 
     // build request object
     const request = {

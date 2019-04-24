@@ -101,12 +101,8 @@ function buildIndicesGetMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
-    } else if ((index) != null) {
+    if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
-    } else if ((type) != null) {
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else {
       path = '/' + '_mapping'
     }

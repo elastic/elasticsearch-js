@@ -1492,6 +1492,9 @@ link:{ref}/search-field-caps.html[Reference]
 |`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
+|`include_unmapped` or `includeUnmapped`
+|`boolean` - Indicates whether unmapped fields should be included in the response.
+
 |===
 
 === get
@@ -1536,12 +1539,6 @@ link:{ref}/docs-get.html[Reference]
 |`string, string[]` - A list of fields to exclude from the returned _source field
 
 |`_source_includes` or `_sourceIncludes`
-|`string, string[]` - A list of fields to extract and return from the _source field
-
-|`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
 |`string, string[]` - A list of fields to extract and return from the _source field
 
 |`version`

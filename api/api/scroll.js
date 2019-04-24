@@ -86,11 +86,7 @@ function buildScroll (opts) {
 
     var path = ''
 
-    if ((scroll_id || scrollId) != null) {
-      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)
-    } else {
-      path = '/' + '_search' + '/' + 'scroll'
-    }
+    path = '/' + '_search' + '/' + 'scroll'
 
     // build request object
     const request = {

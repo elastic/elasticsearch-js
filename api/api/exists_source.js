@@ -96,10 +96,7 @@ function buildExistsSource (opts) {
     }
 
     // check required url components
-    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: type, index')
-      return handleError(err, callback)
-    } else if (params['type'] != null && (params['index'] == null)) {
+    if (params['id'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }
@@ -125,11 +122,7 @@ function buildExistsSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

@@ -106,12 +106,8 @@ function buildIndicesGetFieldMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (fields) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type) + '/' + 'field' + '/' + encodeURIComponent(fields)
-    } else if ((index) != null && (fields) != null) {
+    if ((index) != null && (fields) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
-    } else if ((type) != null && (fields) != null) {
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type) + '/' + 'field' + '/' + encodeURIComponent(fields)
     } else {
       path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
     }

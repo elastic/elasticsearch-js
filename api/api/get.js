@@ -40,8 +40,6 @@ function buildGet (opts) {
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
    * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
@@ -56,8 +54,6 @@ function buildGet (opts) {
     '_source',
     '_source_excludes',
     '_source_includes',
-    '_source_exclude',
-    '_source_include',
     'version',
     'version_type',
     'pretty',
@@ -71,8 +67,6 @@ function buildGet (opts) {
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
     _sourceIncludes: '_source_includes',
-    _sourceExclude: '_source_exclude',
-    _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
@@ -125,11 +119,7 @@ function buildGet (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
