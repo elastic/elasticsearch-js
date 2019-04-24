@@ -102,7 +102,23 @@ function buildIndicesPutMapping (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mapping'
+    } else if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
+    } else if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mappings'
+    } else if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
+    } else if ((type) != null) {
+      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
+    } else if ((type) != null) {
+      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_mappings'
+    }
 
     // build request object
     const request = {

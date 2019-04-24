@@ -97,7 +97,13 @@ function buildNodesHotThreads (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null) {
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
+    } else if ((node_id || nodeId) != null) {
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
+    } else if ((node_id || nodeId) != null) {
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
+    } else if ((node_id || nodeId) != null) {
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
     } else {
       path = '/' + '_nodes' + '/' + 'hot_threads'
     }
