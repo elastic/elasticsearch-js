@@ -43,7 +43,7 @@ test('Should emit a request event when a request is performed', t => {
         request: {
           params: {
             method: 'GET',
-            path: '/test/doc/_search',
+            path: '/test/_search',
             body: '',
             querystring: 'q=foo%3Abar',
             headers: {
@@ -72,7 +72,6 @@ test('Should emit a request event when a request is performed', t => {
 
   client.search({
     index: 'test',
-    type: 'doc',
     q: 'foo:bar'
   }, (err, result) => {
     t.error(err)
@@ -101,7 +100,7 @@ test('Should emit a response event in case of a successful response', t => {
         request: {
           params: {
             method: 'GET',
-            path: '/test/doc/_search',
+            path: '/test/_search',
             body: '',
             querystring: 'q=foo%3Abar',
             headers: {
@@ -130,7 +129,6 @@ test('Should emit a response event in case of a successful response', t => {
 
   client.search({
     index: 'test',
-    type: 'doc',
     q: 'foo:bar'
   }, (err, result) => {
     t.error(err)
@@ -157,7 +155,7 @@ test('Should emit a response event with the error set', t => {
         request: {
           params: {
             method: 'GET',
-            path: '/test/doc/_search',
+            path: '/test/_search',
             body: '',
             querystring: 'q=foo%3Abar',
             headers: {
@@ -186,7 +184,6 @@ test('Should emit a response event with the error set', t => {
 
   client.search({
     index: 'test',
-    type: 'doc',
     q: 'foo:bar'
   }, {
     requestTimeout: 500
