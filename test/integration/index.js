@@ -34,6 +34,9 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
+  // TODO: remove this once 'arbitrary_key' is implemented
+  // https://github.com/elastic/elasticsearch/pull/41492
+  'indices.split/30_copy_settings.yml',
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml',
