@@ -17,9 +17,9 @@
   ],
   "scripts": {
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
-    "test:unit": "tap test/unit/*.test.js -J -t 300",
-    "test:behavior": "tap test/behavior/*.test.js -J -t 300",
-    "test:integration": "tap test/integration/index.js -T --harmony --no-esm",
+    "test:unit": "tap test/unit/*.test.js -t 300 --no-coverage",
+    "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
+    "test:integration": "tap test/integration/index.js -T --harmony --no-esm --no-coverage",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:coverage": "nyc npm run test:unit && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
@@ -36,7 +36,7 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
-    "@types/node": "^11.13.4",
+    "@types/node": "^11.13.7",
     "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
@@ -44,7 +44,7 @@
     "dezalgo": "^1.0.3",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
-    "lolex": "^3.1.0",
+    "lolex": "^4.0.1",
     "minimist": "^1.2.0",
     "ora": "^3.4.0",
     "pretty-hrtime": "^1.0.3",
@@ -55,8 +55,8 @@
     "split2": "^3.1.1",
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
-    "tap": "^12.6.1",
-    "typescript": "^3.4.3",
+    "tap": "^13.0.1",
+    "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },
   "dependencies": {
