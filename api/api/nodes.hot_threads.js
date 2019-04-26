@@ -101,14 +101,9 @@ function buildNodesHotThreads (opts) {
     } else if ((node_id || nodeId) != null) {
       path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
     } else if ((node_id || nodeId) != null) {
-<<<<<<< HEAD
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
     } else if ((node_id || nodeId) != null) {
-=======
->>>>>>> 349b832... Support for deprecated paths (#828)
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
-    } else if ((node_id || nodeId) != null) {
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
     } else {
       path = '/' + '_cluster' + '/' + 'nodes' + '/' + 'hotthreads'
     }
