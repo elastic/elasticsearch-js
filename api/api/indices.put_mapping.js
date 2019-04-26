@@ -111,6 +111,7 @@ function buildIndicesPutMapping (opts) {
     } else if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
     } else if ((type) != null) {
+<<<<<<< HEAD
       path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else if ((type) != null) {
       path = '/' + '_mappings' + '/' + encodeURIComponent(type)
@@ -118,6 +119,15 @@ function buildIndicesPutMapping (opts) {
       path = '/' + encodeURIComponent(index) + '/' + '_mappings'
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+=======
+      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
+    } else if ((type) != null) {
+      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
+    } else if ((index) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_mappings'
+>>>>>>> 349b832... Support for deprecated paths (#828)
     }
 
     // build request object

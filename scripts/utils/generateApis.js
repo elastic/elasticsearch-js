@@ -17,6 +17,8 @@
  * under the License.
  */
 
+/* eslint camelcase: 0 */
+
 'use strict'
 
 const dedent = require('dedent')
@@ -33,6 +35,7 @@ const noPathValidation = [
   'explain',
   'get',
   'get_source',
+  'index',
   'indices.get_alias',
   'indices.exists_alias',
   'indices.get_field_mapping',
@@ -40,6 +43,7 @@ const noPathValidation = [
   'indices.get_settings',
   'indices.put_mapping',
   'indices.stats',
+  'delete',
   'nodes.info',
   'nodes.stats',
   'nodes.usage',
@@ -66,9 +70,15 @@ function generate (spec, common) {
     .replace(/_([a-z])/g, k => k[1].toUpperCase())
 
   const methods = spec[api].methods
-  const { paths, parts, params } = spec[api].url
+  const { paths, deprecated_paths, parts, params } = spec[api].url
   const acceptedQuerystring = []
   const required = []
+
+  if (deprecated_paths) {
+    for (const p of deprecated_paths) {
+      paths.push(p.path)
+    }
+  }
 
   for (const key in parts) {
     if (parts[key].required) {
