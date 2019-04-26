@@ -86,7 +86,11 @@ function buildMonitoringBulk (opts) {
 
     var path = ''
 
-    path = '/' + '_monitoring' + '/' + 'bulk'
+    if ((type) != null) {
+      path = '/' + '_monitoring' + '/' + encodeURIComponent(type) + '/' + 'bulk'
+    } else {
+      path = '/' + '_monitoring' + '/' + 'bulk'
+    }
 
     // build request object
     const request = {

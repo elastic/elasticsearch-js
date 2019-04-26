@@ -79,6 +79,12 @@ function buildMsearchTemplate (opts) {
       return handleError(err, callback)
     }
 
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -100,7 +106,9 @@ function buildMsearchTemplate (opts) {
 
     var path = ''
 
-    if ((index) != null) {
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch' + '/' + 'template'
+    } else if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
     } else {
       path = '/' + '_msearch' + '/' + 'template'
