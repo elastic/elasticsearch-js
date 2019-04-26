@@ -9,21 +9,11 @@ node_js:
   - "10"
   - "8"
 
-env:
-  global:
-    - ELASTICSEARCH_VERSION=8.0.0-SNAPSHOT
-    - QUIET=true
-
-before_install:
-  - wget https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz
-  - tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz
-  - ./elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*' &> /dev/null &
-
 install:
   - npm install
 
 script:
-  - npm run ci
+  - npm run license-checker && npm run test
 
 notifications:
   email:
