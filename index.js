@@ -80,7 +80,8 @@ class Client extends EventEmitter {
       agent: null,
       headers: {},
       nodeFilter: null,
-      nodeSelector: 'round-robin'
+      nodeSelector: 'round-robin',
+      generateRequestId: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -118,7 +119,8 @@ class Client extends EventEmitter {
       compression: options.compression,
       headers: options.headers,
       nodeFilter: options.nodeFilter,
-      nodeSelector: options.nodeSelector
+      nodeSelector: options.nodeSelector,
+      generateRequestId: options.generateRequestId
     })
 
     const apis = buildApi({

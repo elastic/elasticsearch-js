@@ -29,6 +29,10 @@ export interface nodeFilterFn {
   (connection: Connection): boolean;
 }
 
+export interface generateRequestIdFn {
+  (...args: any[]): any;
+}
+
 declare type noopFn = (...args: any[]) => void;
 declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
 
@@ -47,6 +51,7 @@ interface TransportOptions {
   nodeFilter?: nodeFilterFn;
   nodeSelector?: string | nodeSelectorFn;
   headers?: anyObject;
+  generateRequestId?: generateRequestIdFn
 }
 
 export interface RequestEvent<T = any> {
@@ -58,6 +63,7 @@ export interface RequestEvent<T = any> {
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
+      id: any;
     };
     connection: Connection;
     attempts: number;
@@ -93,6 +99,7 @@ export interface TransportRequestOptions {
   headers?: anyObject;
   querystring?: anyObject;
   compression?: string;
+  id?: any;
   warnings?: [string];
 }
 

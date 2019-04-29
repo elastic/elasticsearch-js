@@ -28,6 +28,7 @@ import Transport, {
   TransportRequestOptions,
   nodeFilterFn,
   nodeSelectorFn,
+  generateRequestIdFn,
   TransportRequestCallback
 } from './lib/Transport';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
@@ -93,6 +94,7 @@ interface ClientOptions {
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
   headers?: anyObject;
+  generateRequestId?: generateRequestIdFn;
   cloud?: {
     id: string;
     username: string;
