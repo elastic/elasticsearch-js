@@ -111,6 +111,7 @@ function buildMlDeleteModelSnapshot (opts) {
       headers: options.headers || null,
       querystring: options.querystring || null,
       compression: options.compression || false,
+      id: options.id || null,
       warnings
     }
 
