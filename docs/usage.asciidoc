@@ -164,6 +164,10 @@ _Default:_ `null`
 |`querystring`
 |`object` - Custom querystring for the request. +
 _Default:_ `null`
+
+|`id`
+|`any` - Custom request id. _(overrides the top level request id generator)_ +
+_Default:_ `null`
 |===
 
 === Error handling
@@ -283,6 +287,7 @@ The values of `req` in `request`, `response` and `sniff` will be:
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
+      id: any;
     };
     connection: Connection;
     attempts: number;

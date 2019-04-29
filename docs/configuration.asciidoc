@@ -133,6 +133,18 @@ function nodeSelector (connections) {
   return connections[index]
 }
 ----
+
+|`generateRequestId`
+a|`function` - function for generate the request id of every request. +
+By default it generates an incremental integer for every request. +
+_Custom function example:_
+[source,js]
+----
+function generateRequestId () {
+  var id = 0
+  return () => id++
+}
+----
 |===
 
 === Advanced configuration
