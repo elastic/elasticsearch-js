@@ -7,7 +7,7 @@ Correlate those events can be quite hard, especially if your applications has a 
 
 To help you with this, the client offers you a correlation id system and other features, let's see them in action.
 
-==== Correlation id
+=== Correlation id
 Correlate events can be quite hard, especially if there are happening many events at the same time, the client offers you an automatic (and configurable) system to help you handle this problem.
 [source,js]
 ----
@@ -63,7 +63,7 @@ client.search({
 })
 ----
 
-==== Context object
+=== Context object
 Sometimes, you might need to make some custom data available in your events, you can do that via the `context` option of a request: 
 [source,js]
 ----
@@ -96,7 +96,7 @@ client.search({
 })
 ----
 
-==== Client name
+=== Client name
 If you are using multiple instances of the client or if you are using multiple child clients _(which is the recommended way to have multiple instances of the client)_, you might need to recognize which client you are using, the `name` options will help you in this regard:
 [source,js]
 ----
