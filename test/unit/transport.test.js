@@ -22,6 +22,7 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const { createGunzip } = require('zlib')
+const os = require('os')
 const intoStream = require('into-stream')
 const {
   buildServer,
@@ -2110,9 +2111,12 @@ test('Should accept custom querystring in the optons object', t => {
 
 test('Should add an User-Agent header', t => {
   t.plan(2)
+  const clientVersion = require('../../package.json').version
+  const userAgent = `elasticsearch-js/${clientVersion} (${os.platform()} ${os.release()}-${os.arch()}; Node.js ${process.version})`
+
   function handler (req, res) {
     t.match(req.headers, {
-      'user-agent': `elasticsearch-javascript/${require('../../package.json').version}`
+      'user-agent': userAgent
     })
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
