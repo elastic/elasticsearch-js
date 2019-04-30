@@ -145,6 +145,10 @@ function generateRequestId () {
   return () => id++
 }
 ----
+
+|`name`
+|`string` - The name to identify the client istance in the events. +
+_Default:_ `elasticsearch-js`
 |===
 
 === Advanced configuration

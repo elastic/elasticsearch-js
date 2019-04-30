@@ -1,0 +1,144 @@
+[[observability]]
+== Observability
+
+The client does not provide a default logger, but instead it offers an event emitter interfaces to hook into internal events, such as `request` and `response`.
+
+Correlate those events can be quite hard, especially if your applications has a large codebase with many events happening at the same time.
+
+To help you with this, the client offers you a correlation id system and other features, let's see them in action.
+
+==== Correlation id
+Correlate events can be quite hard, especially if there are happening many events at the same time, the client offers you an automatic (and configurable) system to help you handle this problem.
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+client.on('request', (err, event) => {
+  const { id } = event.meta.request
+  if (err) {
+    console.log({ error: err, reqId: id })
+  }
+})
+
+client.on('response', (err, event) => {
+  const { id } = event.meta.request
+  if (err) {
+    console.log({ error: err, reqId: id })
+  }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----
+
+By default the id is an incremental integer, but you can easily configure that with the `generateRequestId` option:
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200',
+  generateRequestId: function () {
+    // your id generation logic
+    // must be syncronous
+    return 'id'
+  }
+})
+----
+
+You can also specify a custom id per request:
+[source,js]
+----
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  id: 'custom-id'
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----
+
+==== Context object
+Sometimes, you might need to make some custom data available in your events, you can do that via the `context` option of a request: 
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+client.on('request', (err, event) => {
+  const { id } = event.meta.request
+  const { context } = event.meta
+  if (err) {
+    console.log({ error: err, reqId: id, context })
+  }
+})
+
+client.on('response', (err, event) => {
+  const { id } = event.meta.request
+  const { context } = event.meta
+  if (err) {
+    console.log({ error: err, reqId: id, context })
+  }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  context: { winter: 'is coming' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----
+
+==== Client name
+If you are using multiple instances of the client or if you are using multiple child clients _(which is the recommended way to have multiple instances of the client)_, you might need to recognize which client you are using, the `name` options will help you in this regard:
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200',
+  name: 'parent-client' // default to 'elasticsearch-js'
+})
+
+const child = client.child({
+  name: 'child-client'
+})
+
+console.log(client.name, child.name)
+
+client.on('request', (err, event) => {
+  const { id } = event.meta.request
+  const { name } = event.meta
+  if (err) {
+    console.log({ error: err, reqId: id, name })
+  }
+})
+
+client.on('response', (err, event) => {
+  const { id } = event.meta.request
+  const { name } = event.meta
+  if (err) {
+    console.log({ error: err, reqId: id, name })
+  }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+
+child.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----

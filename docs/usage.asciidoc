@@ -168,6 +168,10 @@ _Default:_ `null`
 |`id`
 |`any` - Custom request id. _(overrides the top level request id generator)_ +
 _Default:_ `null`
+
+|`context`
+|`any` - Custom object per request. _(you can use it to pass some data to the clients events)_ +
+_Default:_ `null`
 |===
 
 === Error handling
@@ -284,6 +288,8 @@ The values of `req` in `request`, `response` and `sniff` will be:
   headers: anyObject | null;
   warnings: string[] | null;
   meta: {
+    context: any;
+    name: string;
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
@@ -306,5 +312,9 @@ export interface ResurrectEvent {
   strategy: string;
   isAlive: boolean;
   connection: Connection;
+  name: string;
+  request: {
+    id: any;
+  };
 }
 ----
