@@ -249,3 +249,34 @@ test('Should create a child client (generateRequestId check)', t => {
     child.info(t.error)
   })
 })
+
+test('Should create a child client (name check)', t => {
+  t.plan(8)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    name: 'parent'
+  })
+  const child = client.child({
+    Connection: MockConnection,
+    name: 'child'
+  })
+
+  t.strictEqual(client.name, 'parent')
+  t.strictEqual(child.name, 'child')
+
+  var count = 0
+  client.on('request', (err, { meta }) => {
+    t.error(err)
+    t.strictEqual(
+      meta.name,
+      count++ === 0 ? 'parent' : 'child'
+    )
+  })
+
+  client.info(err => {
+    t.error(err)
+    child.info(t.error)
+  })
+})

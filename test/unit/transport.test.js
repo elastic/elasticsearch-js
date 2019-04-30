@@ -705,11 +705,13 @@ test('Should call markAlive with a successful response', t => {
 })
 
 test('Should call resurrect on every request', t => {
-  t.plan(3)
+  t.plan(5)
 
   class CustomConnectionPool extends ConnectionPool {
-    resurrect (now) {
+    resurrect ({ now, requestId, name }) {
       t.type(now, 'number')
+      t.type(requestId, 'number')
+      t.type(name, 'string')
     }
   }
 
@@ -726,7 +728,8 @@ test('Should call resurrect on every request', t => {
     maxRetries: 3,
     requestTimeout: 30000,
     sniffInterval: false,
-    sniffOnStart: false
+    sniffOnStart: false,
+    name: 'elasticsearch-js'
   })
 
   transport.request({
@@ -2168,6 +2171,52 @@ test('Request id', t => {
     })
 
     client.info({}, { id: 'custom-id' }, t.error)
+  })
+
+  t.end()
+})
+
+test('Request context', t => {
+  t.test('no value', t => {
+    t.plan(5)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    client.on('request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.context, null)
+    })
+
+    client.on('response', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.context, null)
+    })
+
+    client.info(t.error)
+  })
+
+  t.test('custom value', t => {
+    t.plan(5)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    client.on('request', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'is coming' })
+    })
+
+    client.on('response', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'is coming' })
+    })
+
+    client.info({}, { context: { winter: 'is coming' } }, t.error)
   })
 
   t.end()
