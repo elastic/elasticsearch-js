@@ -95,6 +95,7 @@ interface ClientOptions {
   nodeSelector?: nodeSelectorFn | string;
   headers?: anyObject;
   generateRequestId?: generateRequestIdFn;
+  name?: string;
   cloud?: {
     id: string;
     username: string;

@@ -51,7 +51,8 @@ interface TransportOptions {
   nodeFilter?: nodeFilterFn;
   nodeSelector?: string | nodeSelectorFn;
   headers?: anyObject;
-  generateRequestId?: generateRequestIdFn
+  generateRequestId?: generateRequestIdFn;
+  name: string;
 }
 
 export interface RequestEvent<T = any> {
@@ -60,6 +61,8 @@ export interface RequestEvent<T = any> {
   headers: anyObject | null;
   warnings: string[] | null;
   meta: {
+    context: any;
+    name: string;
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
@@ -100,11 +103,16 @@ export interface TransportRequestOptions {
   querystring?: anyObject;
   compression?: string;
   id?: any;
+  context?: any;
   warnings?: [string];
 }
 
 export interface TransportRequestCallback {
   abort: () => void;
+}
+
+export interface TransportGetConnectionOptions {
+  requestId: string;
 }
 
 export default class Transport {
@@ -130,7 +138,7 @@ export default class Transport {
   constructor(opts: TransportOptions);
   request(params: TransportRequestParams, options?: TransportRequestOptions): Promise<ApiResponse>;
   request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: Error | null, result: ApiResponse) => void): TransportRequestCallback;
-  getConnection(): Connection | null;
+  getConnection(opts: TransportGetConnectionOptions): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }
 
