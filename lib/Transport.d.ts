@@ -49,8 +49,8 @@ interface TransportOptions {
   headers?: anyObject;
 }
 
-export interface RequestEvent {
-  body: any;
+export interface RequestEvent<T = any> {
+  body: T;
   statusCode: number | null;
   headers: anyObject | null;
   warnings: string[] | null;
@@ -71,7 +71,7 @@ export interface RequestEvent {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse extends RequestEvent {}
+export interface ApiResponse<T = any> extends RequestEvent<T> {}
 
 declare type anyObject = {
   [key: string]: any;
@@ -96,6 +96,10 @@ export interface TransportRequestOptions {
   warnings?: [string];
 }
 
+export interface TransportRequestCallback {
+  abort: () => void;
+}
+
 export default class Transport {
   static sniffReasons: {
     SNIFF_ON_START: string;
@@ -117,7 +121,8 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: TransportRequestParams, options: TransportRequestOptions, callback: (err: Error | null, result: ApiResponse) => void): any;
+  request(params: TransportRequestParams, options?: TransportRequestOptions): Promise<ApiResponse>;
+  request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: Error | null, result: ApiResponse) => void): TransportRequestCallback;
   getConnection(): Connection | null;
   sniff(callback?: (...args: any[]) => void): void;
 }

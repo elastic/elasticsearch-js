@@ -26,7 +26,7 @@ function buildIngestPutPipeline (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [ingest.put_pipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+   * Perform a [ingest.put_pipeline](https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html) request
    *
    * @param {string} id - Pipeline ID
    * @param {time} master_timeout - Explicit operation timeout for connection to master node

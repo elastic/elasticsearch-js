@@ -26,7 +26,7 @@ function buildIngestSimulate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html) request
+   * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html) request
    *
    * @param {string} id - Pipeline ID
    * @param {boolean} verbose - Verbose mode. Display data output for each processor in executed pipeline

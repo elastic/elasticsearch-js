@@ -29,10 +29,13 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
    * Perform a [data_frame.get_data_frame_transform_stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html) request
    *
    * @param {string} transform_id - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+   * @param {number} from - skips a number of transform stats, defaults to 0
+   * @param {number} size - specifies a max number of transform stats to get, defaults to 100
    */
 
   const acceptedQuerystring = [
-
+    'from',
+    'size'
   ]
 
   const snakeCase = {

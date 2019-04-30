@@ -26,7 +26,7 @@ function buildLicenseDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [license.delete](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.delete](https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html) request
    *
    */
 

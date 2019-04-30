@@ -93,6 +93,39 @@ test('Should update the connection pool', t => {
   })
 })
 
+test('Should handle hostnames in publish_address', t => {
+  t.plan(10)
+
+  buildCluster({ hostPublishAddress: true }, ({ nodes, shutdown }) => {
+    const client = new Client({
+      node: nodes[Object.keys(nodes)[0]].url
+    })
+    t.strictEqual(client.connectionPool.connections.size, 1)
+
+    client.on(events.SNIFF, (err, request) => {
+      t.error(err)
+      t.strictEqual(
+        request.meta.sniff.reason,
+        Transport.sniffReasons.DEFAULT
+      )
+    })
+
+    // run the sniffer
+    client.transport.sniff((err, hosts) => {
+      t.error(err)
+      t.strictEqual(hosts.length, 4)
+
+      for (var i = 0; i < hosts.length; i++) {
+        // the first node will be an update of the existing one
+        t.strictEqual(hosts[i].url.hostname, 'localhost')
+      }
+
+      t.strictEqual(client.connectionPool.connections.size, 4)
+    })
+    t.teardown(shutdown)
+  })
+})
+
 test('Sniff interval', t => {
   t.plan(10)
 

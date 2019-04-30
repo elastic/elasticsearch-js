@@ -26,7 +26,7 @@ function buildLicensePostStartTrial (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [license.post_start_trial](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.post_start_trial](https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html) request
    *
    * @param {string} type - The type of trial license to generate (default: "trial")
    * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)

@@ -26,7 +26,7 @@ function buildLicensePostStartBasic (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [license.post_start_basic](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [license.post_start_basic](https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html) request
    *
    * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
    */

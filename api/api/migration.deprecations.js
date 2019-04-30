@@ -26,7 +26,7 @@ function buildMigrationDeprecations (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError } = opts
   /**
-   * Perform a [migration.deprecations](http://www.elastic.co/guide/en/migration/current/migration-api-deprecation.html) request
+   * Perform a [migration.deprecations](http://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html) request
    *
    * @param {string} index - Index pattern
    */

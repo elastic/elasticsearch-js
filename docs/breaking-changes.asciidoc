@@ -9,7 +9,7 @@ Every breaking change was carefully weighed, and each is justified. Furthermore,
 
 === Breaking changes
 
-*  Minimum supported version of Node.js is `v6`.
+*  Minimum supported version of Node.js is `v8`.
 
 * Everything has been rewritten using ES6 classes to help users extend the defaults more easily.
 
