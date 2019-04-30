@@ -131,6 +131,7 @@ function buildMsearchTemplate (opts) {
       querystring: options.querystring || null,
       compression: options.compression || false,
       id: options.id || null,
+      context: options.context || null,
       warnings
     }
 
