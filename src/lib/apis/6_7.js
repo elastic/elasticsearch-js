@@ -4870,7 +4870,7 @@ api.info = ca({
 api.ingest = namespace();
 
 /**
- * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/6.7/ingest.html) request
+ * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/delete-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -4899,7 +4899,7 @@ api.ingest.prototype.deletePipeline = ca({
 });
 
 /**
- * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/6.7/ingest.html) request
+ * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/get-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -4928,7 +4928,7 @@ api.ingest.prototype.getPipeline = ca({
 });
 
 /**
- * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/plugins/6.7/ingest.html) request
+ * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/grok-processor.html#grok-processor-rest-get) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -4939,7 +4939,7 @@ api.ingest.prototype.processorGrok = ca({
 });
 
 /**
- * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/6.7/ingest.html) request
+ * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/put-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -4969,7 +4969,7 @@ api.ingest.prototype.putPipeline = ca({
 });
 
 /**
- * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/6.7/ingest.html) request
+ * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/simulate-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.verbose - Verbose mode. Display data output for each processor in executed pipeline

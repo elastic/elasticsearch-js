@@ -1,5 +1,7 @@
 module.exports = {
-  get '_default'() { return require('./6_6'); },
+  get '7.0'() { return require('./7_0'); },
+  get '_default'() { return require('./6_7'); },
+  get '6.7'() { return require('./6_7'); },
   get '6.6'() { return require('./6_6'); },
   get '6.5'() { return require('./6_5'); },
   get '6.4'() { return require('./6_4'); },
@@ -11,8 +13,8 @@ module.exports = {
   get '2.4'() { return require('./2_4'); },
   get '1.7'() { return require('./1_7'); },
   get '0.90'() { return require('./0_90'); },
-  get '6.7'() { return require('./6_7'); },
-  get '7.0'() { return require('./7_0'); },
+  get '6.8'() { return require('./6_8'); },
+  get '7.1'() { return require('./7_1'); },
   get '7.x'() { return require('./7_x'); },
   get 'master'() { return require('./master'); },
 };

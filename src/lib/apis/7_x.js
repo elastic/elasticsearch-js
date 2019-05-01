@@ -440,6 +440,7 @@ api.cat.prototype.help = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.pri - Set to true to return stats only for primary shards
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.s - Comma-separated list of column names or column aliases to sort by
  * @param {<<api-param-type-boolean,`Boolean`>>} params.v - Verbose mode. Display column headers
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeUnloadedSegments - If set to true segment stats will include stats for segments that are not currently loaded into memory
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to limit the returned information
  */
 api.cat.prototype.indices = ca({
@@ -489,6 +490,11 @@ api.cat.prototype.indices = ca({
     v: {
       type: 'boolean',
       'default': false
+    },
+    includeUnloadedSegments: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_unloaded_segments'
     }
   },
   urls: [
@@ -1218,19 +1224,9 @@ api.cat.prototype.threadPool = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.scrollId - A comma-separated list of scroll IDs to clear
  */
 api.clearScroll = ca({
-  urls: [
-    {
-      fmt: '/_search/scroll/<%=scrollId%>',
-      req: {
-        scrollId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_search/scroll'
-    }
-  ],
+  url: {
+    fmt: '/_search/scroll'
+  },
   paramAsBody: {
     param: 'scrollId',
     body: 'scroll_id'
@@ -1301,6 +1297,7 @@ api.cluster.prototype.getSettings = ca({
  * Perform a [cluster.health](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-health.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=all] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
  * @param {<<api-param-type-string,`String`>>} [params.level=cluster] - Specify the level of detail for returned information
  * @param {<<api-param-type-boolean,`Boolean`>>} params.local - Return local information, do not retrieve the state from master node (default: false)
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -1315,6 +1312,17 @@ api.cluster.prototype.getSettings = ca({
  */
 api.cluster.prototype.health = ca({
   params: {
+    expandWildcards: {
+      type: 'enum',
+      'default': 'all',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    },
     level: {
       type: 'enum',
       'default': 'cluster',
@@ -1723,17 +1731,6 @@ api.count = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_count',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_count',
       req: {
         index: {
@@ -1805,33 +1802,17 @@ api.create = ca({
       type: 'string'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_create',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_create/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_create/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   needBody: true,
   method: 'POST'
 });
@@ -1899,33 +1880,17 @@ api['delete'] = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_doc/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_doc/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   method: 'DELETE'
 });
 
@@ -2107,27 +2072,14 @@ api.deleteByQuery = ca({
       'default': 1
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_delete_by_query',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_delete_by_query',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>/_delete_by_query',
+    req: {
+      index: {
+        type: 'list'
       }
     }
-  ],
+  },
   needBody: true,
   method: 'POST'
 });
@@ -2252,33 +2204,17 @@ api.exists = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_doc/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_doc/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   method: 'HEAD'
 });
 
@@ -2342,33 +2278,17 @@ api.existsSource = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_source',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_source/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_source/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   method: 'HEAD'
 });
 
@@ -2445,33 +2365,17 @@ api.explain = ca({
       name: '_source_includes'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_explain',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_explain/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_explain/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   method: 'POST'
 });
 
@@ -2483,6 +2387,7 @@ api.explain = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeUnmapped - Indicates whether unmapped fields should be included in the response.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  */
 api.fieldCaps = ca({
@@ -2508,6 +2413,11 @@ api.fieldCaps = ca({
         'all'
       ],
       name: 'expand_wildcards'
+    },
+    includeUnmapped: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_unmapped'
     }
   },
   urls: [
@@ -2601,33 +2511,17 @@ api.get = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_doc/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_doc/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ]
+  }
 });
 
 /**
@@ -2714,33 +2608,17 @@ api.getSource = ca({
       name: 'version_type'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_source',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_source/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_source/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ]
+  }
 });
 
 /**
@@ -2821,31 +2699,6 @@ api.index = ca({
     }
   },
   urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/<%=type%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
     {
       fmt: '/<%=index%>/_doc/<%=id%>',
       req: {
@@ -2975,6 +2828,7 @@ api.indices.prototype.clearCache = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.allowNoIndices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
  * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of active shards to wait for before the operation returns.
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma separated list of indices to close
  */
 api.indices.prototype.close = ca({
@@ -3004,6 +2858,10 @@ api.indices.prototype.close = ca({
         'all'
       ],
       name: 'expand_wildcards'
+    },
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
     }
   },
   url: {
@@ -3719,34 +3577,9 @@ api.indices.prototype.getFieldMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/_mapping/<%=type%>/field/<%=fields%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        },
-        fields: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_mapping/field/<%=fields%>',
       req: {
         index: {
-          type: 'list'
-        },
-        fields: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_mapping/<%=type%>/field/<%=fields%>',
-      req: {
-        type: {
           type: 'list'
         },
         fields: {
@@ -3813,28 +3646,9 @@ api.indices.prototype.getMapping = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/_mapping/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_mapping',
       req: {
         index: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_mapping/<%=type%>',
-      req: {
-        type: {
           type: 'list'
         }
       }
@@ -4158,35 +3972,14 @@ api.indices.prototype.putMapping = ca({
       name: 'expand_wildcards'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/_mapping/<%=type%>',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_mapping/<%=type%>',
-      req: {
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_mapping',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>/_mapping',
+    req: {
+      index: {
+        type: 'list'
       }
     }
-  ],
+  },
   needBody: true,
   method: 'PUT'
 });
@@ -4651,6 +4444,9 @@ api.indices.prototype.split = ca({
  * @param {<<api-param-type-string,`String`>>} [params.level=indices] - Return stats aggregated at cluster, index or shard level
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.types - A comma-separated list of document types for the `indexing` index metric
  * @param {<<api-param-type-boolean,`Boolean`>>} params.includeSegmentFileSizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+ * @param {<<api-param-type-boolean,`Boolean`>>} params.includeUnloadedSegments - If set to true segment stats will include stats for segments that are not currently loaded into memory
+ * @param {<<api-param-type-string,`String`>>} [params.expandWildcards=open] - Whether to expand wildcard expression to concrete indices that are open, closed or both.
+ * @param {<<api-param-type-boolean,`Boolean`>>} [params.forbidClosedIndices=true] - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.metric - Limit the information returned the specific metrics.
  */
@@ -4686,6 +4482,27 @@ api.indices.prototype.stats = ca({
       type: 'boolean',
       'default': false,
       name: 'include_segment_file_sizes'
+    },
+    includeUnloadedSegments: {
+      type: 'boolean',
+      'default': false,
+      name: 'include_unloaded_segments'
+    },
+    expandWildcards: {
+      type: 'enum',
+      'default': 'open',
+      options: [
+        'open',
+        'closed',
+        'none',
+        'all'
+      ],
+      name: 'expand_wildcards'
+    },
+    forbidClosedIndices: {
+      type: 'boolean',
+      'default': true,
+      name: 'forbid_closed_indices'
     }
   },
   urls: [
@@ -4917,17 +4734,6 @@ api.indices.prototype.validateQuery = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_validate/query',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_validate/query',
       req: {
         index: {
@@ -4956,7 +4762,7 @@ api.info = ca({
 api.ingest = namespace();
 
 /**
- * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/ingest.html) request
+ * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/delete-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -4985,7 +4791,7 @@ api.ingest.prototype.deletePipeline = ca({
 });
 
 /**
- * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/ingest.html) request
+ * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -5014,7 +4820,7 @@ api.ingest.prototype.getPipeline = ca({
 });
 
 /**
- * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/ingest.html) request
+ * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/grok-processor.html#grok-processor-rest-get) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -5025,7 +4831,7 @@ api.ingest.prototype.processorGrok = ca({
 });
 
 /**
- * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/ingest.html) request
+ * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -5055,7 +4861,7 @@ api.ingest.prototype.putPipeline = ca({
 });
 
 /**
- * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/ingest.html) request
+ * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/simulate-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.verbose - Verbose mode. Display data output for each processor in executed pipeline
@@ -5132,17 +4938,6 @@ api.mget = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_mget',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_mget',
       req: {
         index: {
@@ -5215,17 +5010,6 @@ api.msearch = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_msearch',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_msearch',
       req: {
         index: {
@@ -5286,17 +5070,6 @@ api.msearchTemplate = ca({
     }
   },
   urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_msearch/template',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
     {
       fmt: '/<%=index%>/_msearch/template',
       req: {
@@ -5403,17 +5176,6 @@ api.mtermvectors = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_mtermvectors',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_mtermvectors',
       req: {
         index: {
@@ -5469,19 +5231,7 @@ api.nodes.prototype.hotThreads = ca({
       type: 'time'
     }
   },
-  urls: [
-    {
-      fmt: '/_nodes/<%=nodeId%>/hotthreads',
-      req: {
-        nodeId: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/_nodes/hotthreads'
-    }
-  ]
+  url: {}
 });
 
 /**
@@ -5960,6 +5710,7 @@ api.rankEval = ca({
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {<<api-param-type-boolean,`Boolean`>>} [params.waitForCompletion=true] - Should the request should block until the reindex is complete.
  * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} [params.scroll=5m] - Control how long to keep the search context alive
  * @param {<<api-param-type-number,`Number`>>} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
  */
 api.reindex = ca({
@@ -5984,6 +5735,10 @@ api.reindex = ca({
       type: 'number',
       'default': 0,
       name: 'requests_per_second'
+    },
+    scroll: {
+      type: 'time',
+      'default': '5m'
     },
     slices: {
       type: 'number',
@@ -6047,6 +5802,23 @@ api.renderSearchTemplate = ca({
 });
 
 /**
+ * Perform a [scriptsPainlessContext]() request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-string,`String`>>} params.context - Select a specific context to retrieve API information about
+ */
+api.scriptsPainlessContext = ca({
+  params: {
+    context: {
+      type: 'string'
+    }
+  },
+  url: {
+    fmt: '/_scripts/painless/_context'
+  }
+});
+
+/**
  * Perform a [scriptsPainlessExecute](https://www.elastic.co/guide/en/elasticsearch/painless/7.x/painless-execute-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -6081,19 +5853,9 @@ api.scroll = ca({
       name: 'rest_total_hits_as_int'
     }
   },
-  urls: [
-    {
-      fmt: '/_search/scroll/<%=scrollId%>',
-      req: {
-        scrollId: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/_search/scroll'
-    }
-  ],
+  url: {
+    fmt: '/_search/scroll'
+  },
   paramAsBody: {
     param: 'scrollId',
     body: 'scroll_id'
@@ -6336,17 +6098,6 @@ api.search = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/_search',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_search',
       req: {
         index: {
@@ -6506,17 +6257,6 @@ api.searchTemplate = ca({
     }
   },
   urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_search/template',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
     {
       fmt: '/<%=index%>/_search/template',
       req: {
@@ -7045,20 +6785,6 @@ api.termvectors = ca({
   },
   urls: [
     {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_termvectors',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
       fmt: '/<%=index%>/_termvectors/<%=id%>',
       req: {
         index: {
@@ -7070,18 +6796,7 @@ api.termvectors = ca({
       }
     },
     {
-      fmt: '/<%=index%>/<%=type%>/_termvectors',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_termvectors/',
+      fmt: '/<%=index%>/_termvectors',
       req: {
         index: {
           type: 'string'
@@ -7163,33 +6878,17 @@ api.update = ca({
       name: 'if_primary_term'
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/<%=id%>/_update',
-      req: {
-        index: {
-          type: 'string'
-        },
-        type: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_update/<%=id%>',
-      req: {
-        index: {
-          type: 'string'
-        },
-        id: {
-          type: 'string'
-        }
+  url: {
+    fmt: '/<%=index%>/_update/<%=id%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      id: {
+        type: 'string'
       }
     }
-  ],
+  },
   needBody: true,
   method: 'POST'
 });
@@ -7381,27 +7080,14 @@ api.updateByQuery = ca({
       'default': 1
     }
   },
-  urls: [
-    {
-      fmt: '/<%=index%>/<%=type%>/_update_by_query',
-      req: {
-        index: {
-          type: 'list'
-        },
-        type: {
-          type: 'list'
-        }
-      }
-    },
-    {
-      fmt: '/<%=index%>/_update_by_query',
-      req: {
-        index: {
-          type: 'list'
-        }
+  url: {
+    fmt: '/<%=index%>/_update_by_query',
+    req: {
+      index: {
+        type: 'list'
       }
     }
-  ],
+  },
   method: 'POST'
 });
 

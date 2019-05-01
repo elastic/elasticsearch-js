@@ -201,10 +201,10 @@ module.exports = function (branch, done) {
         def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
       }
 
-      def.documentation = def.documentation.replace(
+      def.documentation = def.documentation ? def.documentation.replace(
         /^https?:\/\/.+?\/guide\/en\/elasticsearch\/(.+?)\/.+?\//,
         `https://www.elastic.co/guide/en/elasticsearch/$1/${branch}/`
-      );
+      ) : '';
 
       var steps = name.split('.');
 

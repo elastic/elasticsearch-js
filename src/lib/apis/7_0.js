@@ -4956,7 +4956,7 @@ api.info = ca({
 api.ingest = namespace();
 
 /**
- * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/ingest.html) request
+ * Perform a [ingest.deletePipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.0/delete-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -4985,7 +4985,7 @@ api.ingest.prototype.deletePipeline = ca({
 });
 
 /**
- * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/ingest.html) request
+ * Perform a [ingest.getPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.0/get-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -5014,7 +5014,7 @@ api.ingest.prototype.getPipeline = ca({
 });
 
 /**
- * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/ingest.html) request
+ * Perform a [ingest.processorGrok](https://www.elastic.co/guide/en/elasticsearch/reference/7.0/grok-processor.html#grok-processor-rest-get) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -5025,7 +5025,7 @@ api.ingest.prototype.processorGrok = ca({
 });
 
 /**
- * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/ingest.html) request
+ * Perform a [ingest.putPipeline](https://www.elastic.co/guide/en/elasticsearch/reference/7.0/put-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Explicit operation timeout for connection to master node
@@ -5055,7 +5055,7 @@ api.ingest.prototype.putPipeline = ca({
 });
 
 /**
- * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/ingest.html) request
+ * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/reference/7.0/simulate-pipeline-api.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.verbose - Verbose mode. Display data output for each processor in executed pipeline
@@ -5960,6 +5960,7 @@ api.rankEval = ca({
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {<<api-param-type-boolean,`Boolean`>>} [params.waitForCompletion=true] - Should the request should block until the reindex is complete.
  * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+ * @param {<<api-param-type-duration-string,`DurationString`>>} [params.scroll=5m] - Control how long to keep the search context alive
  * @param {<<api-param-type-number,`Number`>>} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
  */
 api.reindex = ca({
@@ -5984,6 +5985,10 @@ api.reindex = ca({
       type: 'number',
       'default': 0,
       name: 'requests_per_second'
+    },
+    scroll: {
+      type: 'time',
+      'default': '5m'
     },
     slices: {
       type: 'number',
