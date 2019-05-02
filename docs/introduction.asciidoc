@@ -32,23 +32,50 @@ The library is compatible with all Elasticsearch versions since 5.x, but you sho
 @elastic/elasticsearch@5
 ----
 
-=== Usage
+==== Install multiple versions
+If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. +
+In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
+
+The command you must run to install different version of the client is:
+
+[source,sh]
+----
+npm install <alias>@npm:@elastic/elasticsearch@<version>
+----
+
+So for example if you need to install `7.x` and `6.x`, you will run
+[source,sh]
+----
+npm install es6@npm:@elastic/elasticsearch@6
+npm install es7@npm:@elastic/elasticsearch@7
+----
+
+And your `package.json` will look like the following:
+[source,json]
+----
+"dependencies": {
+  "es6": "npm:@elastic/elasticsearch@^6.7.0",
+  "es7": "npm:@elastic/elasticsearch@^7.0.0"
+}
+----
+
+And finally, you will require the packages from your code by using the alias you have defined.
+
 [source,js]
 ----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const { Client: Client6 } = require('es6')
+const { Client: Client7 } = require('es7')
 
-// promise API
-const result = await client.search({
-  index: 'my-index',
-  body: { foo: 'bar' }
-})
+const client6 = new Client6({ node: 'http://localhost:9200' })
+const client7 = new Client7({ node: 'http://localhost:9201' })
 
-// callback API
-client.search({
-  index: 'my-index',
-  body: { foo: 'bar' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+client6.info(console.log)
+client7.info(console.log)
 ----
+
+Finally, if you want to install the client for the next version of Elasticsearch (the one that lives in Elasticsearch's master branch), you can use the following command:
+[source,sh]
+----
+npm install esmaster@github:elastic/elasticsearch-js
+----
+WARNING: This command will install the master branch of the client, which is not considered stable.
