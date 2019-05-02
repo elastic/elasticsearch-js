@@ -115,7 +115,7 @@ export interface ResurrectEvent {
 ----
 
 === Correlation id
-Correlate events can be quite hard, especially if there are happening many events at the same time, the client offers you an automatic (and configurable) system to help you handle this problem.
+Correlating events can be quite hard, especially if there are many events at the same time. The client offers you an automatic (and configurable) system to help you handle this problem.
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
