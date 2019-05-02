@@ -187,9 +187,9 @@ client.on('request', (err, event) => {
 
 client.on('response', (err, event) => {
   const { id } = event.meta.request
-  const { context } = event.meta
+  const { winter } = event.meta.context
   if (err) {
-    console.log({ error: err, reqId: id, context })
+    console.log({ error: err, reqId: id, winter })
   }
 })
 
