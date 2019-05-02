@@ -41,7 +41,6 @@ const ConnectionPool = require('../../lib/ConnectionPool')
 const Connection = require('../../lib/Connection')
 const Serializer = require('../../lib/Serializer')
 const Transport = require('../../lib/Transport')
-const { Client } = require('../../index')
 
 test('Basic', t => {
   t.plan(2)
@@ -2107,116 +2106,6 @@ test('Should accept custom querystring in the optons object', t => {
         server.stop()
       })
     })
-  })
-
-  t.end()
-})
-
-test('Request id', t => {
-  t.test('Default generateRequestId', t => {
-    const { generateRequestId } = Transport.internals
-    t.type(generateRequestId, 'function')
-
-    const genReqId = generateRequestId()
-    t.type(genReqId, 'function')
-
-    for (var i = 1; i <= 10; i++) {
-      t.strictEqual(genReqId(), i)
-    }
-
-    t.end()
-  })
-
-  t.test('Custom generateRequestId', t => {
-    t.plan(6)
-
-    const client = new Client({
-      node: 'http://localhost:9200',
-      Connection: MockConnection,
-      generateRequestId: () => {
-        t.ok('called')
-        return 'custom-id'
-      }
-    })
-
-    client.on('request', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
-    })
-
-    client.on('response', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
-    })
-
-    client.info(t.error)
-  })
-
-  t.test('Custom request id in method options', t => {
-    t.plan(5)
-
-    const client = new Client({
-      node: 'http://localhost:9200',
-      Connection: MockConnection
-    })
-
-    client.on('request', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
-    })
-
-    client.on('response', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
-    })
-
-    client.info({}, { id: 'custom-id' }, t.error)
-  })
-
-  t.end()
-})
-
-test('Request context', t => {
-  t.test('no value', t => {
-    t.plan(5)
-
-    const client = new Client({
-      node: 'http://localhost:9200',
-      Connection: MockConnection
-    })
-
-    client.on('request', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.context, null)
-    })
-
-    client.on('response', (err, { meta }) => {
-      t.error(err)
-      t.strictEqual(meta.context, null)
-    })
-
-    client.info(t.error)
-  })
-
-  t.test('custom value', t => {
-    t.plan(5)
-
-    const client = new Client({
-      node: 'http://localhost:9200',
-      Connection: MockConnection
-    })
-
-    client.on('request', (err, { meta }) => {
-      t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
-    })
-
-    client.on('response', (err, { meta }) => {
-      t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
-    })
-
-    client.info({}, { context: { winter: 'is coming' } }, t.error)
   })
 
   t.end()
