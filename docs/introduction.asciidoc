@@ -72,3 +72,10 @@ const client7 = new Client7({ node: 'http://localhost:9201' })
 client6.info(console.log)
 client7.info(console.log)
 ----
+
+Finally, if you want to install the client for the next version of Elasticsearch (the one that lives in Elasticsearch's master branch), you can use the following command:
+[source,sh]
+----
+npm install esmaster@github:elastic/elasticsearch-js
+----
+WARNING: This command will install the master branch of the client, which is not considered stable.
