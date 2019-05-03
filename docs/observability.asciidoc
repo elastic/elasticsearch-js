@@ -25,11 +25,11 @@ const logger = require('my-logger')()
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('response', (err, req) => {
+client.on('response', (err, result) => {
   if (err) {
     logger.error(err)
   } else {
-    logger.info(req)
+    logger.info(result)
   }
 })
 ----
@@ -38,11 +38,11 @@ The client emits the following events:
 [cols=2*]
 |===
 |`request`
-a|Emitted before sending the actual request to Elasticsearch.
+a|Emitted before sending the actual request to Elasticsearch _(emitted multiple times in case of retries)_.
 [source,js]
 ----
-client.on('request', (err, req) => {
-  console.log(err, req)
+client.on('request', (err, result) => {
+  console.log(err, result)
 })
 ----
 
@@ -50,8 +50,8 @@ client.on('request', (err, req) => {
 a|Emitted once Elasticsearch response has been received and parsed.
 [source,js]
 ----
-client.on('response', (err, req) => {
-  console.log(err, req)
+client.on('response', (err, result) => {
+  console.log(err, result)
 })
 ----
 
@@ -59,8 +59,8 @@ client.on('response', (err, req) => {
 a|Emitted when the client ends a sniffing request.
 [source,js]
 ----
-client.on('sniff', (err, req) => {
-  console.log(err, req)
+client.on('sniff', (err, result) => {
+  console.log(err, result)
 })
 ----
 
@@ -68,50 +68,48 @@ client.on('sniff', (err, req) => {
 a|Emitted if the client is able to resurrect a dead node.
 [source,js]
 ----
-client.on('resurrect', (err, req) => {
-  console.log(err, req)
+client.on('resurrect', (err, result) => {
+  console.log(err, result)
 })
 ----
 
 |===
 
-The values of `req` in `request`, `response` and `sniff` will be:
+The values of `result` in `request`, `response` and `sniff` will be:
 [source,ts]
 ----
-  body: any;
-  statusCode: number | null;
-  headers: anyObject | null;
-  warnings: string[] | null;
-  meta: {
-    context: any;
-    name: string;
-    request: {
-      params: TransportRequestParams;
-      options: TransportRequestOptions;
-      id: any;
-    };
-    connection: Connection;
-    attempts: number;
-    aborted: boolean;
-    sniff?: {
-      hosts: any[];
-      reason: string;
-    };
-  };
-----
-
-While the `req` value in `resurrect` will be:
-[source,ts]
-----
-export interface ResurrectEvent {
-  strategy: string;
-  isAlive: boolean;
-  connection: Connection;
+body: any;
+statusCode: number | null;
+headers: anyObject | null;
+warnings: string[] | null;
+meta: {
+  context: any;
   name: string;
   request: {
+    params: TransportRequestParams;
+    options: TransportRequestOptions;
     id: any;
   };
-}
+  connection: Connection;
+  attempts: number;
+  aborted: boolean;
+  sniff?: {
+    hosts: any[];
+    reason: string;
+  };
+};
+----
+
+While the `result` value in `resurrect` will be:
+[source,ts]
+----
+strategy: string;
+isAlive: boolean;
+connection: Connection;
+name: string;
+request: {
+  id: any;
+};
 ----
 
 === Correlation id
@@ -121,15 +119,15 @@ Correlating events can be quite hard, especially if there are many events at the
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('request', (err, event) => {
-  const { id } = event.meta.request
+client.on('request', (err, result) => {
+  const { id } = result.meta.request
   if (err) {
     console.log({ error: err, reqId: id })
   }
 })
 
-client.on('response', (err, event) => {
-  const { id } = event.meta.request
+client.on('response', (err, result) => {
+  const { id } = result.meta.request
   if (err) {
     console.log({ error: err, reqId: id })
   }
@@ -177,17 +175,17 @@ Sometimes, you might need to make some custom data available in your events, you
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('request', (err, event) => {
-  const { id } = event.meta.request
-  const { context } = event.meta
+client.on('request', (err, result) => {
+  const { id } = result.meta.request
+  const { context } = result.meta
   if (err) {
     console.log({ error: err, reqId: id, context })
   }
 })
 
-client.on('response', (err, event) => {
-  const { id } = event.meta.request
-  const { winter } = event.meta.context
+client.on('response', (err, result) => {
+  const { id } = result.meta.request
+  const { winter } = result.meta.context
   if (err) {
     console.log({ error: err, reqId: id, winter })
   }
@@ -219,17 +217,17 @@ const child = client.child({
 
 console.log(client.name, child.name)
 
-client.on('request', (err, event) => {
-  const { id } = event.meta.request
-  const { name } = event.meta
+client.on('request', (err, result) => {
+  const { id } = result.meta.request
+  const { name } = result.meta
   if (err) {
     console.log({ error: err, reqId: id, name })
   }
 })
 
-client.on('response', (err, event) => {
-  const { id } = event.meta.request
-  const { name } = event.meta
+client.on('response', (err, result) => {
+  const { id } = result.meta.request
+  const { name } = result.meta
   if (err) {
     console.log({ error: err, reqId: id, name })
   }
