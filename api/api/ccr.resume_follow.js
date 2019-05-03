@@ -72,7 +72,7 @@ function buildCcrResumeFollow (opts) {
       method = 'POST'
     }
 
-    var ignore = options.ignore || null
+    var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
     }
