@@ -147,7 +147,7 @@ function generateRequestId () {
 ----
 
 |`name`
-|`string` - The name to identify the client istance in the events. +
+|`string` - The name to identify the client instance in the events. +
 _Default:_ `elasticsearch-js`
 |===
 
