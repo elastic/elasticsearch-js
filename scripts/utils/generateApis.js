@@ -128,15 +128,15 @@ function generate (spec, common) {
       return handleError(err, callback)
     }
 
-    var warnings = null
-    var { ${genQueryBlacklist(false)} } = params
-    var querystring = semicopy(params, [${genQueryBlacklist()}])
+    var warnings = []
+    var { ${genQueryBlacklist(false)}, ...querystring } = params
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
       ${generatePickMethod(methods)}
     }
 
-    var ignore = options.ignore || null
+    var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
     }
@@ -153,24 +153,8 @@ function generate (spec, common) {
       querystring
     }
 
-    options.warnings = warnings
+    options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
-
-    function semicopy (obj, exclude) {
-      var target = {}
-      var keys = Object.keys(obj)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        if (exclude.indexOf(key) === -1) {
-          target[snakeCase[key] || key] = obj[key]
-          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-            warnings = warnings || []
-            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          }
-        }
-      }
-      return target
-    }
   }
   `.trim() // always call trim to avoid newlines
 
@@ -201,7 +185,7 @@ function generate (spec, common) {
 
   function build${name[0].toUpperCase() + name.slice(1)} (opts) {
     // eslint-disable-next-line no-unused-vars
-    const { makeRequest, ConfigurationError, handleError } = opts
+    const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
     ${generateDocumentation(spec[api], api)}
 
     const acceptedQuerystring = [
