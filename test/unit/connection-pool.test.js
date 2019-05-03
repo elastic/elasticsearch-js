@@ -282,7 +282,7 @@ test('API', t => {
   })
 
   t.test('nodesToHost', t => {
-    t.test('publish_address as ip address', t => {
+    t.test('publish_address as ip address (IPv4)', t => {
       const pool = new ConnectionPool({ Connection })
       const nodes = {
         a1: {
@@ -324,7 +324,49 @@ test('API', t => {
       t.end()
     })
 
-    t.test('publish_address as host/ip', t => {
+    t.test('publish_address as ip address (IPv6)', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: '[::1]:9200'
+          },
+          roles: ['master', 'data', 'ingest']
+        },
+        a2: {
+          http: {
+            publish_address: '[::1]:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
+      }
+
+      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+        url: new URL('http://[::1]:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }, {
+        url: new URL('http://[::1]:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }])
+
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, '[::1]:9200')
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, '[::1]:9201')
+      t.end()
+    })
+
+    t.test('publish_address as host/ip (IPv4)', t => {
       const pool = new ConnectionPool({ Connection })
       const nodes = {
         a1: {
@@ -336,6 +378,48 @@ test('API', t => {
         a2: {
           http: {
             publish_address: 'example.com/127.0.0.1:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
+      }
+
+      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+        url: new URL('http://example.com:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }, {
+        url: new URL('http://example.com:9201'),
+        id: 'a2',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: false
+        }
+      }])
+
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
+      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
+      t.end()
+    })
+
+    t.test('publish_address as host/ip (IPv6)', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: 'example.com/[::1]:9200'
+          },
+          roles: ['master', 'data', 'ingest']
+        },
+        a2: {
+          http: {
+            publish_address: 'example.com/[::1]:9201'
           },
           roles: ['master', 'data', 'ingest']
         }
