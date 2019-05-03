@@ -38,7 +38,7 @@ The client emits the following events:
 [cols=2*]
 |===
 |`request`
-a|Emitted before to send the actual request to Elasticsearch.
+a|Emitted before sending the actual request to Elasticsearch.
 [source,js]
 ----
 client.on('request', (err, req) => {
