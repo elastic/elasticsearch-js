@@ -73,6 +73,47 @@ class MockConnectionError extends Connection {
   }
 }
 
+class MockConnectionSniff extends Connection {
+  request (params, callback) {
+    var aborted = false
+    const sniffResult = {
+      nodes: {
+        'node-1': {
+          http: {
+            publish_address: 'localhost:9200'
+          },
+          roles: ['master', 'data', 'ingest']
+        },
+        'node-2': {
+          http: {
+            publish_address: 'localhost:9201'
+          },
+          roles: ['master', 'data', 'ingest']
+        }
+      }
+    }
+    const stream = intoStream(JSON.stringify(sniffResult))
+    stream.statusCode = setStatusCode(params.path)
+    stream.headers = {
+      'content-type': 'application/json;utf=8',
+      'date': new Date().toISOString(),
+      'connection': 'keep-alive',
+      'content-length': '205'
+    }
+    process.nextTick(() => {
+      if (!aborted) {
+        if (params.headers.timeout) {
+          callback(new TimeoutError('Request timed out', params), null)
+        } else {
+          callback(null, stream)
+        }
+      }
+    })
+    return {
+      abort: () => { aborted = true }
+    }
+  }
+}
 function setStatusCode (path) {
   const statusCode = Number(path.slice(1))
   if (Number.isInteger(statusCode)) {
@@ -81,4 +122,9 @@ function setStatusCode (path) {
   return 200
 }
 
-module.exports = { MockConnection, MockConnectionTimeout, MockConnectionError }
+module.exports = {
+  MockConnection,
+  MockConnectionTimeout,
+  MockConnectionError,
+  MockConnectionSniff
+}

@@ -133,6 +133,23 @@ function nodeSelector (connections) {
   return connections[index]
 }
 ----
+
+|`generateRequestId`
+a|`function` - function to generate the request id for every request, it takes two parameters, the request parameters and options. +
+By default it generates an incremental integer for every request. +
+_Custom function example:_
+[source,js]
+----
+function generateRequestId (params, options) {
+  // your id generation logic
+  // must be syncronous
+  return 'id'
+}
+----
+
+|`name`
+|`string` - The name to identify the client instance in the events. +
+_Default:_ `elasticsearch-js`
 |===
 
 === Advanced configuration
