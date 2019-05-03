@@ -80,13 +80,13 @@ class MockConnectionSniff extends Connection {
       nodes: {
         'node-1': {
           http: {
-            publish_address: 'http://localhost:9200'
+            publish_address: 'localhost:9200'
           },
           roles: ['master', 'data', 'ingest']
         },
         'node-2': {
           http: {
-            publish_address: 'http://localhost:9201'
+            publish_address: 'localhost:9201'
           },
           roles: ['master', 'data', 'ingest']
         }
