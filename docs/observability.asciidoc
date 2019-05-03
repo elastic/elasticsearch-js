@@ -47,7 +47,7 @@ client.on('request', (err, req) => {
 ----
 
 |`response`
-a|Emitted before to send the actual request to Elasticsearch.
+a|Emitted once Elasticsearch response has been received and parsed.
 [source,js]
 ----
 client.on('response', (err, req) => {
