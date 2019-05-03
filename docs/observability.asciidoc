@@ -56,7 +56,7 @@ client.on('response', (err, req) => {
 ----
 
 |`sniff`
-a|Emitted when the clients ends a sniffing request.
+a|Emitted when the client ends a sniffing request.
 [source,js]
 ----
 client.on('sniff', (err, req) => {
