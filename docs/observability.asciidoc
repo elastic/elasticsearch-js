@@ -147,7 +147,8 @@ By default the id is an incremental integer, but you can easily configure that w
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
   node: 'http://localhost:9200',
-  generateRequestId: function () {
+  // it takes two parameters, the request parameters and options
+  generateRequestId: function (params, options) {
     // your id generation logic
     // must be syncronous
     return 'id'

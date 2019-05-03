@@ -24,13 +24,16 @@ test('Request id', t => {
   })
 
   t.test('Custom generateRequestId', t => {
-    t.plan(6)
+    t.plan(7)
+
+    const options = { context: { winter: 'is coming' } }
 
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection,
-      generateRequestId: () => {
-        t.ok('called')
+      generateRequestId: function (requestParams, requestOptions) {
+        t.match(requestParams, { method: 'GET', path: '/' })
+        t.match(requestOptions, options)
         return 'custom-id'
       }
     })
@@ -45,7 +48,7 @@ test('Request id', t => {
       t.strictEqual(meta.request.id, 'custom-id')
     })
 
-    client.info(t.error)
+    client.info({}, options, t.error)
   })
 
   t.test('Custom request id in method options', t => {

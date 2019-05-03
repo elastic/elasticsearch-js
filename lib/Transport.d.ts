@@ -30,7 +30,7 @@ export interface nodeFilterFn {
 }
 
 export interface generateRequestIdFn {
-  (...args: any[]): any;
+  (params: TransportRequestParams, options: TransportRequestOptions): any;
 }
 
 declare type noopFn = (...args: any[]) => void;
@@ -55,13 +55,13 @@ interface TransportOptions {
   name: string;
 }
 
-export interface RequestEvent<T = any> {
+export interface RequestEvent<T = any, C = any> {
   body: T;
   statusCode: number | null;
   headers: anyObject | null;
   warnings: string[] | null;
   meta: {
-    context: any;
+    context: C;
     name: string;
     request: {
       params: TransportRequestParams;
@@ -80,7 +80,7 @@ export interface RequestEvent<T = any> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<T = any> extends RequestEvent<T> {}
+export interface ApiResponse<T = any, C = any> extends RequestEvent<T, C> {}
 
 declare type anyObject = {
   [key: string]: any;
