@@ -64,15 +64,9 @@ function buildXpackMigrationUpgrade (opts) {
       return handleError(err, callback)
     }
 
-<<<<<<< HEAD:api/api/xpack.migration.upgrade.js
-    var warnings = null
-    var { method, body, index } = params
-    var querystring = semicopy(params, ['method', 'body', 'index'])
-=======
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
->>>>>>> 215cc03... Simplify API wrappers (#839):api/api/data_frame.preview_data_frame_transform.js
 
     if (method == null) {
       method = 'POST'
