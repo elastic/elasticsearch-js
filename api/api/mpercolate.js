@@ -85,15 +85,9 @@ function buildMpercolate (opts) {
       return handleError(err, callback)
     }
 
-<<<<<<< HEAD:api/api/mpercolate.js
-    var warnings = null
-    var { method, body, index, type } = params
-    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
-=======
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
->>>>>>> 215cc03... Simplify API wrappers (#839):api/api/indices.unfreeze.js
 
     if (method == null) {
       method = body == null ? 'GET' : 'POST'

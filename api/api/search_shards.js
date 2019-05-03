@@ -90,15 +90,9 @@ function buildSearchShards (opts) {
       return handleError(err, callback)
     }
 
-<<<<<<< HEAD
-    var warnings = null
-    var { method, body, index, type } = params
-    var querystring = semicopy(params, ['method', 'body', 'index', 'type'])
-=======
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
->>>>>>> 215cc03... Simplify API wrappers (#839)
 
     if (method == null) {
       method = body == null ? 'GET' : 'POST'

@@ -89,15 +89,9 @@ function buildPutScript (opts) {
       return handleError(err, callback)
     }
 
-<<<<<<< HEAD
-    var warnings = null
-    var { method, body, id, lang } = params
-    var querystring = semicopy(params, ['method', 'body', 'id', 'lang'])
-=======
     var warnings = []
-    var { method, body, id, context, ...querystring } = params
+    var { method, body, id, lang, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
->>>>>>> 215cc03... Simplify API wrappers (#839)
 
     if (method == null) {
       method = 'PUT'
