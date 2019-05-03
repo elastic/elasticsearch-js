@@ -24,7 +24,7 @@
 
 function buildDataFrameStartDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError } = opts
+  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
    * Perform a [data_frame.start_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html) request
    *
@@ -68,17 +68,17 @@ function buildDataFrameStartDataFrameTransform (opts) {
       return handleError(err, callback)
     }
 
-    var warnings = null
-    var { method, body, transformId, transform_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'transformId', 'transform_id'])
+    var warnings = []
+    var { method, body, transformId, transform_id, ...querystring } = params
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
       method = 'POST'
     }
 
-    var ignore = options.ignore || null
+    var ignore = options.ignore
     if (typeof ignore === 'number') {
-      ignore = [ignore]
+      options.ignore = [ignore]
     }
 
     var path = ''
@@ -93,36 +93,8 @@ function buildDataFrameStartDataFrameTransform (opts) {
       querystring
     }
 
-    const requestOptions = {
-      ignore,
-      requestTimeout: options.requestTimeout || null,
-      maxRetries: options.maxRetries || null,
-      asStream: options.asStream || false,
-      headers: options.headers || null,
-      querystring: options.querystring || null,
-      compression: options.compression || false,
-      id: options.id || null,
-      context: options.context || null,
-      warnings
-    }
-
-    return makeRequest(request, requestOptions, callback)
-
-    function semicopy (obj, exclude) {
-      var target = {}
-      var keys = Object.keys(obj)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        if (exclude.indexOf(key) === -1) {
-          target[snakeCase[key] || key] = obj[key]
-          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-            warnings = warnings || []
-            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          }
-        }
-      }
-      return target
-    }
+    options.warnings = warnings.length === 0 ? null : warnings
+    return makeRequest(request, options, callback)
   }
 }
 
