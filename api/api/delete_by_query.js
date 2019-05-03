@@ -169,7 +169,7 @@ function buildDeleteByQuery (opts) {
 
     var ignore = options.ignore || null
     if (typeof ignore === 'number') {
-      ignore = [ignore]
+      options.ignore = [ignore]
     }
 
     var path = ''
@@ -188,20 +188,8 @@ function buildDeleteByQuery (opts) {
       querystring
     }
 
-    const requestOptions = {
-      ignore,
-      requestTimeout: options.requestTimeout || null,
-      maxRetries: options.maxRetries || null,
-      asStream: options.asStream || false,
-      headers: options.headers || null,
-      querystring: options.querystring || null,
-      compression: options.compression || false,
-      id: options.id || null,
-      context: options.context || null,
-      warnings
-    }
-
-    return makeRequest(request, requestOptions, callback)
+    options.warnings = warnings
+    return makeRequest(request, options, callback)
 
     function semicopy (obj, exclude) {
       var target = {}
