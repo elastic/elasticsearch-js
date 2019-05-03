@@ -24,7 +24,7 @@
 
 function buildSecurityEnableUser (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError } = opts
+  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
    * Perform a [security.enable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html) request
    *
@@ -68,9 +68,9 @@ function buildSecurityEnableUser (opts) {
       return handleError(err, callback)
     }
 
-    var warnings = null
-    var { method, body, username } = params
-    var querystring = semicopy(params, ['method', 'body', 'username'])
+    var warnings = []
+    var { method, body, username, ...querystring } = params
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
       method = 'PUT'
@@ -93,24 +93,8 @@ function buildSecurityEnableUser (opts) {
       querystring
     }
 
-    options.warnings = warnings
+    options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
-
-    function semicopy (obj, exclude) {
-      var target = {}
-      var keys = Object.keys(obj)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        if (exclude.indexOf(key) === -1) {
-          target[snakeCase[key] || key] = obj[key]
-          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-            warnings = warnings || []
-            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          }
-        }
-      }
-      return target
-    }
   }
 }
 

@@ -24,7 +24,7 @@
 
 function buildIndicesRollover (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError } = opts
+  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
    * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
    *
@@ -90,9 +90,9 @@ function buildIndicesRollover (opts) {
       return handleError(err, callback)
     }
 
-    var warnings = null
-    var { method, body, alias, newIndex, new_index } = params
-    var querystring = semicopy(params, ['method', 'body', 'alias', 'newIndex', 'new_index'])
+    var warnings = []
+    var { method, body, alias, newIndex, new_index, ...querystring } = params
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
       method = 'POST'
@@ -119,24 +119,8 @@ function buildIndicesRollover (opts) {
       querystring
     }
 
-    options.warnings = warnings
+    options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
-
-    function semicopy (obj, exclude) {
-      var target = {}
-      var keys = Object.keys(obj)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        if (exclude.indexOf(key) === -1) {
-          target[snakeCase[key] || key] = obj[key]
-          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-            warnings = warnings || []
-            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          }
-        }
-      }
-      return target
-    }
   }
 }
 

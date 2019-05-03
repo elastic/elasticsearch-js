@@ -28,6 +28,7 @@ function ESAPI (opts) {
 
   const { result } = opts
   opts.handleError = handleError
+  opts.snakeCaseKeys = snakeCaseKeys
 
   const apis = {
     bulk: lazyLoad('bulk', opts),
@@ -520,6 +521,19 @@ function ESAPI (opts) {
   function handleError (err, callback) {
     if (callback) return callback(err, result)
     return Promise.reject(err)
+  }
+
+  function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
+    var target = {}
+    var keys = Object.keys(querystring)
+    for (var i = 0, len = keys.length; i < len; i++) {
+      var key = keys[i]
+      target[snakeCase[key] || key] = querystring[key]
+      if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
+        warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
+      }
+    }
+    return target
   }
 }
 

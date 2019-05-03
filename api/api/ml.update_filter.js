@@ -24,7 +24,7 @@
 
 function buildMlUpdateFilter (opts) {
   // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError } = opts
+  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
    * Perform a [ml.update_filter](undefined) request
    *
@@ -68,9 +68,9 @@ function buildMlUpdateFilter (opts) {
       return handleError(err, callback)
     }
 
-    var warnings = null
-    var { method, body, filterId, filter_id } = params
-    var querystring = semicopy(params, ['method', 'body', 'filterId', 'filter_id'])
+    var warnings = []
+    var { method, body, filterId, filter_id, ...querystring } = params
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
       method = 'POST'
@@ -93,24 +93,8 @@ function buildMlUpdateFilter (opts) {
       querystring
     }
 
-    options.warnings = warnings
+    options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
-
-    function semicopy (obj, exclude) {
-      var target = {}
-      var keys = Object.keys(obj)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        if (exclude.indexOf(key) === -1) {
-          target[snakeCase[key] || key] = obj[key]
-          if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-            warnings = warnings || []
-            warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-          }
-        }
-      }
-      return target
-    }
   }
 }
 
