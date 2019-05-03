@@ -118,7 +118,12 @@ test('API', t => {
         const href = 'http://localhost:9200/'
         var connection = pool.addConnection(href)
         pool.markDead(connection)
-        pool.resurrect(Date.now() + 1000 * 60 * 3, (isAlive, connection) => {
+        const opts = {
+          now: Date.now() + 1000 * 60 * 3,
+          requestId: 1,
+          name: 'elasticsearch-js'
+        }
+        pool.resurrect(opts, (isAlive, connection) => {
           t.true(isAlive)
           connection = pool.connections.get(connection.id)
           t.strictEqual(connection.deadCount, 0)
@@ -139,7 +144,12 @@ test('API', t => {
         const href = 'http://localhost:9200/'
         var connection = pool.addConnection(href)
         pool.markDead(connection)
-        pool.resurrect(Date.now() + 1000 * 60 * 3, (isAlive, connection) => {
+        const opts = {
+          now: Date.now() + 1000 * 60 * 3,
+          requestId: 1,
+          name: 'elasticsearch-js'
+        }
+        pool.resurrect(opts, (isAlive, connection) => {
           t.false(isAlive)
           connection = pool.connections.get(connection.id)
           t.strictEqual(connection.deadCount, 2)
@@ -162,7 +172,12 @@ test('API', t => {
       const href = 'http://localhost:9200/'
       var connection = pool.addConnection(href)
       pool.markDead(connection)
-      pool.resurrect(Date.now() + 1000 * 60 * 3, (isAlive, connection) => {
+      const opts = {
+        now: Date.now() + 1000 * 60 * 3,
+        requestId: 1,
+        name: 'elasticsearch-js'
+      }
+      pool.resurrect(opts, (isAlive, connection) => {
         t.true(isAlive)
         connection = pool.connections.get(connection.id)
         t.strictEqual(connection.deadCount, 1)
@@ -182,7 +197,12 @@ test('API', t => {
       const href = 'http://localhost:9200/'
       var connection = pool.addConnection(href)
       pool.markDead(connection)
-      pool.resurrect(Date.now() + 1000 * 60 * 3, (isAlive, connection) => {
+      const opts = {
+        now: Date.now() + 1000 * 60 * 3,
+        requestId: 1,
+        name: 'elasticsearch-js'
+      }
+      pool.resurrect(opts, (isAlive, connection) => {
         t.ok(isAlive === null)
         t.ok(connection === null)
         connection = pool.connections.get(href)
