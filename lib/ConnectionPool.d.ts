@@ -36,10 +36,20 @@ export interface getConnectionOptions {
   selector?: nodeSelectorFn;
 }
 
+export interface resurrectOptions {
+  now?: number;
+  requestId: string;
+  name: string;
+}
+
 export interface ResurrectEvent {
   strategy: string;
   isAlive: boolean;
   connection: Connection;
+  name: string;
+  request: {
+    id: any;
+  };
 }
 
 export default class ConnectionPool {
@@ -79,10 +89,10 @@ export default class ConnectionPool {
    * If enabled, tries to resurrect a connection with the given
    * resurrect strategy ('ping', 'optimistic', 'none').
    *
-   * @param {number} epoch
+   * @param {object} { now, requestId, name }
    * @param {function} callback (isAlive, connection)
    */
-  resurrect(now?: number, callback?: (isAlive: boolean | null, connection: Connection | null) => void): void;
+  resurrect(opts: resurrectOptions, callback?: (isAlive: boolean | null, connection: Connection | null) => void): void;
   /**
    * Returns an alive connection if present,
    * otherwise returns null.
