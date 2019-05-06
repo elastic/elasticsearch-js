@@ -41,6 +41,42 @@ The library is compatible with all Elasticsearch versions since 5.x, but you sho
 @elastic/elasticsearch@5
 ```
 
+#### Install multiple versions
+If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
+
+The command you must run to install different version of the client is:
+```sh
+npm install <alias>@npm:@elastic/elasticsearch@<version>
+```
+So for example if you need to install `7.x` and `6.x`, you will run
+```sh
+npm install es6@npm:@elastic/elasticsearch@6
+npm install es7@npm:@elastic/elasticsearch@7
+```
+And your `package.json` will look like the following:
+```json
+"dependencies": {
+  "es6": "npm:@elastic/elasticsearch@^6.7.0",
+  "es7": "npm:@elastic/elasticsearch@^7.0.0"
+}
+```
+And finally, you will require the packages from your code by using the alias you have defined.
+```js
+const { Client: Client6 } = require('es6')
+const { Client: Client7 } = require('es7')
+
+const client6 = new Client6({ node: 'http://localhost:9200' })
+const client7 = new Client7({ node: 'http://localhost:9201' })
+
+client6.info(console.log)
+client7.info(console.log)
+```
+
+Finally, if you want to install the client for the next version of Elasticsearch *(the one that lives in Elasticsearch’s master branch)*, you can use the following command:
+```sh
+npm install esmaster@github:elastic/elasticsearch-js
+```
+
 ## Usage
 
 You can find the full documentation in our [docs](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html) website.
