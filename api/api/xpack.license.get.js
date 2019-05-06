@@ -26,7 +26,7 @@ function buildXpackLicenseGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [xpack.license.get](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [xpack.license.get](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/get-license.html) request
    *
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */

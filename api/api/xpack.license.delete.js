@@ -26,7 +26,7 @@ function buildXpackLicenseDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [xpack.license.delete](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [xpack.license.delete](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/delete-license.html) request
    *
    */
 

@@ -26,7 +26,7 @@ function buildXpackMonitoringBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [xpack.monitoring.bulk](http://www.elastic.co/guide/en/monitoring/current/appendix-api-bulk.html) request
+   * Perform a [xpack.monitoring.bulk](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/es-monitoring.html) request
    *
    * @param {string} type - Default document type for items which don't provide one
    * @param {string} system_id - Identifier of the monitored system

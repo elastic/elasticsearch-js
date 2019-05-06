@@ -26,7 +26,7 @@ function buildXpackSecurityGetUserPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [xpack.security.get_user_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html) request
+   * Perform a [xpack.security.get_user_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/security-api-get-privileges.html) request
    *
    */
 

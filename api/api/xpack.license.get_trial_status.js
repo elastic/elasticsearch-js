@@ -26,7 +26,7 @@ function buildXpackLicenseGetTrialStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [xpack.license.get_trial_status](https://www.elastic.co/guide/en/x-pack/current/license-management.html) request
+   * Perform a [xpack.license.get_trial_status](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/get-basic-status.html) request
    *
    */
 
