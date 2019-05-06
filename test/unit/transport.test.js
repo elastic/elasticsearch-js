@@ -705,11 +705,13 @@ test('Should call markAlive with a successful response', t => {
 })
 
 test('Should call resurrect on every request', t => {
-  t.plan(3)
+  t.plan(5)
 
   class CustomConnectionPool extends ConnectionPool {
-    resurrect (now) {
+    resurrect ({ now, requestId, name }) {
       t.type(now, 'number')
+      t.type(requestId, 'number')
+      t.type(name, 'string')
     }
   }
 
@@ -726,7 +728,8 @@ test('Should call resurrect on every request', t => {
     maxRetries: 3,
     requestTimeout: 30000,
     sniffInterval: false,
-    sniffOnStart: false
+    sniffOnStart: false,
+    name: 'elasticsearch-js'
   })
 
   transport.request({
@@ -2144,4 +2147,31 @@ test('Should add an User-Agent header', t => {
       server.stop()
     })
   })
+})
+
+test('Should pass request params and options to generateRequestId', t => {
+  t.plan(3)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection('http://localhost:9200')
+
+  const params = { method: 'GET', path: '/hello' }
+  const options = { context: { winter: 'is coming' } }
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false,
+    generateRequestId: function (requestParams, requestOptions) {
+      t.deepEqual(requestParams, params)
+      t.deepEqual(requestOptions, options)
+      return 'id'
+    }
+  })
+
+  transport.request(params, options, t.error)
 })

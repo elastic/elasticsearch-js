@@ -40,6 +40,8 @@ test('Should emit a request event when a request is performed', t => {
       headers: null,
       warnings: null,
       meta: {
+        context: null,
+        name: 'elasticsearch-js',
         request: {
           params: {
             method: 'GET',
@@ -51,15 +53,8 @@ test('Should emit a request event when a request is performed', t => {
               'Content-Length': '0'
             }
           },
-          options: {
-            ignore: null,
-            requestTimeout: null,
-            maxRetries: null,
-            asStream: false,
-            headers: null,
-            compression: false,
-            warnings: null
-          }
+          options: {},
+          id: 1
         },
         connection: {
           id: 'http://localhost:9200'
@@ -97,6 +92,8 @@ test('Should emit a response event in case of a successful response', t => {
       },
       warnings: null,
       meta: {
+        context: null,
+        name: 'elasticsearch-js',
         request: {
           params: {
             method: 'GET',
@@ -108,15 +105,8 @@ test('Should emit a response event in case of a successful response', t => {
               'Content-Length': '0'
             }
           },
-          options: {
-            ignore: null,
-            requestTimeout: null,
-            maxRetries: null,
-            asStream: false,
-            headers: null,
-            compression: false,
-            warnings: null
-          }
+          options: {},
+          id: 1
         },
         connection: {
           id: 'http://localhost:9200'
@@ -152,6 +142,8 @@ test('Should emit a response event with the error set', t => {
       headers: null,
       warnings: null,
       meta: {
+        context: null,
+        name: 'elasticsearch-js',
         request: {
           params: {
             method: 'GET',
@@ -164,14 +156,9 @@ test('Should emit a response event with the error set', t => {
             }
           },
           options: {
-            ignore: null,
-            requestTimeout: 500,
-            maxRetries: null,
-            asStream: false,
-            headers: null,
-            compression: false,
-            warnings: null
-          }
+            requestTimeout: 500
+          },
+          id: 1
         },
         connection: {
           id: 'http://localhost:9200'

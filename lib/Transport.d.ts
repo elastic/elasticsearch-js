@@ -29,6 +29,10 @@ export interface nodeFilterFn {
   (connection: Connection): boolean;
 }
 
+export interface generateRequestIdFn {
+  (params: TransportRequestParams, options: TransportRequestOptions): any;
+}
+
 declare type noopFn = (...args: any[]) => void;
 declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
 
@@ -47,17 +51,22 @@ interface TransportOptions {
   nodeFilter?: nodeFilterFn;
   nodeSelector?: string | nodeSelectorFn;
   headers?: anyObject;
+  generateRequestId?: generateRequestIdFn;
+  name: string;
 }
 
-export interface RequestEvent<T = any> {
+export interface RequestEvent<T = any, C = any> {
   body: T;
   statusCode: number | null;
   headers: anyObject | null;
   warnings: string[] | null;
   meta: {
+    context: C;
+    name: string;
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
+      id: any;
     };
     connection: Connection;
     attempts: number;
@@ -71,7 +80,7 @@ export interface RequestEvent<T = any> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<T = any> extends RequestEvent<T> {}
+export interface ApiResponse<T = any, C = any> extends RequestEvent<T, C> {}
 
 declare type anyObject = {
   [key: string]: any;
@@ -93,11 +102,22 @@ export interface TransportRequestOptions {
   headers?: anyObject;
   querystring?: anyObject;
   compression?: string;
+  id?: any;
+  context?: any;
   warnings?: [string];
 }
 
 export interface TransportRequestCallback {
   abort: () => void;
+}
+
+export interface TransportGetConnectionOptions {
+  requestId: string;
+}
+
+export interface TransportSniffOptions {
+  reason: string;
+  requestId?: string;
 }
 
 export default class Transport {
@@ -123,8 +143,8 @@ export default class Transport {
   constructor(opts: TransportOptions);
   request(params: TransportRequestParams, options?: TransportRequestOptions): Promise<ApiResponse>;
   request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: Error | null, result: ApiResponse) => void): TransportRequestCallback;
-  getConnection(): Connection | null;
-  sniff(callback?: (...args: any[]) => void): void;
+  getConnection(opts: TransportGetConnectionOptions): Connection | null;
+  sniff(opts?: TransportSniffOptions, callback?: (...args: any[]) => void): void;
 }
 
 export {};

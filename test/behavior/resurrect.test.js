@@ -37,7 +37,7 @@ const { Client, events } = require('../../index')
  */
 
 test('Should execute the recurrect API with the ping strategy', t => {
-  t.plan(6)
+  t.plan(8)
 
   const clock = lolex.install({ toFake: ['Date'] })
   const q = workq()
@@ -59,6 +59,8 @@ test('Should execute the recurrect API with the ping strategy', t => {
       t.strictEqual(meta.strategy, 'ping')
       t.false(meta.isAlive)
       t.strictEqual(meta.connection.id, 'node0')
+      t.strictEqual(meta.name, 'elasticsearch-js')
+      t.deepEqual(meta.request, { id: 2 })
     })
 
     q.add((q, done) => {
@@ -89,7 +91,7 @@ test('Should execute the recurrect API with the ping strategy', t => {
 })
 
 test('Resurrect a node and handle 502/3/4 status code', t => {
-  t.plan(11)
+  t.plan(15)
 
   const clock = lolex.install({ toFake: ['Date'] })
   const q = workq()
@@ -114,10 +116,13 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
       maxRetries: 0
     })
 
+    var idCount = 2
     client.on(events.RESURRECT, (err, meta) => {
       t.error(err)
       t.strictEqual(meta.strategy, 'ping')
       t.strictEqual(meta.connection.id, 'node0')
+      t.strictEqual(meta.name, 'elasticsearch-js')
+      t.deepEqual(meta.request, { id: idCount++ })
       if (count < 3) {
         t.false(meta.isAlive)
       } else {
@@ -156,7 +161,7 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
 })
 
 test('Should execute the recurrect API with the optimistic strategy', t => {
-  t.plan(6)
+  t.plan(8)
 
   const clock = lolex.install({ toFake: ['Date'] })
   const q = workq()
@@ -179,6 +184,8 @@ test('Should execute the recurrect API with the optimistic strategy', t => {
       t.strictEqual(meta.strategy, 'optimistic')
       t.true(meta.isAlive)
       t.strictEqual(meta.connection.id, 'node0')
+      t.strictEqual(meta.name, 'elasticsearch-js')
+      t.deepEqual(meta.request, { id: 2 })
     })
 
     q.add((q, done) => {

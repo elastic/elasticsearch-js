@@ -119,6 +119,10 @@ The client is designed to be easily configured as you see fit for your needs, fo
   nodeFilter: nodeFilterFn;
   // custom selection strategy, defaults `round-robin`
   nodeSelector: nodeSelectorFn | string;
+  // function to generate the request id for every request
+  generateRequestId: generateRequestIdFn;
+  // name to identify the client instance in the events
+  name: string;
 }
 ```
 
@@ -143,7 +147,9 @@ The supported *request specific options* are:
   asStream: boolean, // default `false`
   compression: string, // default `false`
   headers: object, // default `null`
-  querystring: object // default `null`
+  querystring: object // default `null`,
+  context: object // default `null`,
+  id: any // default incr. integer
 }
 ```
 

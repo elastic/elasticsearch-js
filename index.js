@@ -80,12 +80,15 @@ class Client extends EventEmitter {
       agent: null,
       headers: {},
       nodeFilter: null,
-      nodeSelector: 'round-robin'
+      nodeSelector: 'round-robin',
+      generateRequestId: null,
+      name: 'elasticsearch-js'
     }, opts)
 
     this[kInitialOptions] = options
     this[kExtensions] = []
 
+    this.name = options.name
     this.serializer = new options.Serializer()
     this.connectionPool = new options.ConnectionPool({
       pingTimeout: options.pingTimeout,
@@ -118,7 +121,9 @@ class Client extends EventEmitter {
       compression: options.compression,
       headers: options.headers,
       nodeFilter: options.nodeFilter,
-      nodeSelector: options.nodeSelector
+      nodeSelector: options.nodeSelector,
+      generateRequestId: options.generateRequestId,
+      name: options.name
     })
 
     const apis = buildApi({
