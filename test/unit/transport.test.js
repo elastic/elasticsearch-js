@@ -22,6 +22,7 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const { createGunzip } = require('zlib')
+const os = require('os')
 const intoStream = require('into-stream')
 const {
   buildServer,
@@ -2109,6 +2110,43 @@ test('Should accept custom querystring in the optons object', t => {
   })
 
   t.end()
+})
+
+test('Should add an User-Agent header', t => {
+  t.plan(2)
+  const clientVersion = require('../../package.json').version
+  const userAgent = `elasticsearch-js/${clientVersion} (${os.platform()} ${os.release()}-${os.arch()}; Node.js ${process.version})`
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      'user-agent': userAgent
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      server.stop()
+    })
+  })
 })
 
 test('Should pass request params and options to generateRequestId', t => {
