@@ -4,7 +4,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "0.1.0-beta.2",
+  "version": "8.0.0-alpha",
   "keywords": [
     "elasticsearch",
     "elastic",
