@@ -582,6 +582,7 @@ export {
   Connection,
   Serializer,
   events,
+  errors,
   ApiResponse,
   RequestEvent,
   ResurrectEvent,
