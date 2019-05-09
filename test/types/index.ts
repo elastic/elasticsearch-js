@@ -26,6 +26,7 @@ import {
   RequestEvent,
   ResurrectEvent,
   events,
+  errors,
   ClientExtendsCallbackOptions
 } from '../../index'
 
@@ -33,23 +34,23 @@ import { TransportRequestParams, TransportRequestOptions } from '../../lib/Trans
 
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on(events.RESPONSE, (err: Error | null, request: RequestEvent) => {
+client.on(events.RESPONSE, (err: errors.ElasticsearchClientError | null, request: RequestEvent) => {
   if (err) console.log(err)
   const { body, statusCode } = request
   const { params } = request.meta.request
   console.log(params, body, statusCode)
 })
-client.on(events.RESURRECT, (err: Error | null, meta: ResurrectEvent) => {})
+client.on(events.RESURRECT, (err: errors.ElasticsearchClientError | null, meta: ResurrectEvent) => {})
 
 // Callbacks
-client.info((err: Error | null, result: ApiResponse) => {})
+client.info((err: errors.ElasticsearchClientError | null, result: ApiResponse) => {})
 
 client.index({
   index: 'test',
   type: 'test',
   id: 'test',
   body: { hello: 'world' }
-}, (err: Error | null, result: ApiResponse) => {})
+}, (err: errors.ElasticsearchClientError | null, result: ApiResponse) => {})
 
 // request options
 client.index({
@@ -65,12 +66,12 @@ client.index({
   querystring: { baz: 'faz' },
   compression: 'gzip',
   asStream: false
-}, (err: Error | null, result: ApiResponse) => {})
+}, (err: errors.ElasticsearchClientError | null, result: ApiResponse) => {})
 
 // Promises
 client.info()
   .then((result: ApiResponse) => {})
-  .catch((err: Error) => {})
+  .catch((err: errors.ElasticsearchClientError) => {})
 
 client.index({
   index: 'test',
@@ -79,7 +80,7 @@ client.index({
   body: { hello: 'world' }
 })
   .then((result: ApiResponse) => {})
-  .catch((err: Error) => {})
+  .catch((err: errors.ElasticsearchClientError) => {})
 
 // request options
 client.index({
@@ -93,7 +94,7 @@ client.index({
   requestTimeout: 2000
 })
   .then((result: ApiResponse) => {})
-  .catch((err: Error) => {})
+  .catch((err: errors.ElasticsearchClientError) => {})
 
 // --- Use generics ---
 // Define the search parameters
@@ -127,7 +128,7 @@ interface Source {
 
 client.search(searchParams)
   .then((response: ApiResponse<SearchResponse<Source>>) => console.log(response))
-  .catch((err: Error) => {})
+  .catch((err: errors.ElasticsearchClientError) => {})
 
 // extend client
 client.extend('namespace.method', (options: ClientExtendsCallbackOptions) => {
