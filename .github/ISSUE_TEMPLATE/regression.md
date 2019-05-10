@@ -29,6 +29,14 @@ Paste your code here:
 
 ```
 
+<!--
+In some cases, it might be challenging to reproduce the bug in a few lines of code.
+You can fork the following repository, which contains all the configuration needed
+to spin up a three nodes Elasticsearch cluster with security enabled.
+The repository also contains a preconfigured client instance that you can use to reproduce the issue.
+https://github.com/delvedor/es-reproduce-issue
+--->
+
 ## Expected behavior
 
 A clear and concise description of what you expected to happen.
