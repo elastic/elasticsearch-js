@@ -763,3 +763,34 @@ test('Util.inspect Connection class should hide agent and ssl', t => {
   roles: { master: true, data: true, ingest: true, ml: false } }`)
   )
 })
+
+// https://github.com/elastic/elasticsearch-js/issues/843
+test('Port handling', t => {
+  t.test('http 80', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:80')
+    })
+
+    t.strictEqual(
+      connection.buildRequestObject({}).port,
+      undefined
+    )
+
+    t.end()
+  })
+
+  t.test('https 443', t => {
+    const connection = new Connection({
+      url: new URL('https://localhost:443')
+    })
+
+    t.strictEqual(
+      connection.buildRequestObject({}).port,
+      undefined
+    )
+
+    t.end()
+  })
+
+  t.end()
+})
