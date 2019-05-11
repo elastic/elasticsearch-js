@@ -76,6 +76,7 @@ export default class Connection {
   setRole(role: string, enabled: boolean): Connection;
   status: string;
   buildRequestObject(params: any): http.ClientRequestArgs;
+  // @ts-ignore
   [inspect.custom](object: any, options: InspectOptions): string;
 }
 
