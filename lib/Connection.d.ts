@@ -78,6 +78,7 @@ export default class Connection {
   buildRequestObject(params: any): http.ClientRequestArgs;
   // @ts-ignore
   [inspect.custom](object: any, options: InspectOptions): string;
+  toJSON(): any;
 }
 
 export {};
