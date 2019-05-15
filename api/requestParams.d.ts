@@ -387,7 +387,6 @@ export interface Delete extends Generic {
 
 export interface DeleteByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -946,7 +945,6 @@ export interface Mget<T = any> extends Generic {
 
 export interface Msearch<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   max_concurrent_searches?: number;
   typed_keys?: boolean;
@@ -959,7 +957,6 @@ export interface Msearch<T = any> extends Generic {
 
 export interface MsearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   typed_keys?: boolean;
   max_concurrent_searches?: number;
@@ -970,7 +967,6 @@ export interface MsearchTemplate<T = any> extends Generic {
 
 export interface Mtermvectors<T = any> extends Generic {
   index?: string;
-  type?: string;
   ids?: string | string[];
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1086,7 +1082,6 @@ export interface Scroll<T = any> extends Generic {
 
 export interface Search<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   ccs_minimize_roundtrips?: boolean;
@@ -1144,7 +1139,6 @@ export interface SearchShards extends Generic {
 
 export interface SearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
@@ -1249,7 +1243,6 @@ export interface TasksList extends Generic {
 
 export interface Termvectors<T = any> extends Generic {
   index: string;
-  type?: string;
   id?: string;
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1287,7 +1280,6 @@ export interface Update<T = any> extends Generic {
 
 export interface UpdateByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
