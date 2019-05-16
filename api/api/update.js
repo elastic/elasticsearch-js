@@ -53,13 +53,7 @@ function buildUpdate (opts) {
     'wait_for_active_shards',
     'fields',
     '_source',
-<<<<<<< HEAD
     '_source_exclude',
-=======
-    '_source_excludes',
-    '_source_exclude',
-    '_source_includes',
->>>>>>> 844206e... Patch deprecated parameters (#851)
     '_source_include',
     'lang',
     'parent',
@@ -80,13 +74,7 @@ function buildUpdate (opts) {
 
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
-<<<<<<< HEAD
     _sourceExclude: '_source_exclude',
-=======
-    _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
-    _sourceIncludes: '_source_includes',
->>>>>>> 844206e... Patch deprecated parameters (#851)
     _sourceInclude: '_source_include',
     retryOnConflict: 'retry_on_conflict',
     versionType: 'version_type',
