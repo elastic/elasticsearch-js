@@ -29,7 +29,6 @@ function buildTermvectors (opts) {
    * Perform a [termvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
    *
    * @param {string} index - The index in which the document resides.
-   * @param {string} type - The type of the document.
    * @param {string} id - The id of the document, when not specified a doc param should be supplied.
    * @param {boolean} term_statistics - Specifies if total term frequency and document frequency should be returned.
    * @param {boolean} field_statistics - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
@@ -99,7 +98,7 @@ function buildTermvectors (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, id, ...querystring } = params
+    var { method, body, index, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -113,12 +112,8 @@ function buildTermvectors (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
-    } else if ((index) != null && (id) != null) {
+    if ((index) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
     }

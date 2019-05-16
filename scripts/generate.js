@@ -69,7 +69,7 @@ function start (opts) {
 
     writeFileSync(
       requestParamsOutputFile,
-      generateRequestTypes(allSpec),
+      generateRequestTypes(opts.branch || opts.tag, allSpec),
       { encoding: 'utf8' }
     )
 
@@ -113,7 +113,7 @@ function start (opts) {
 
       const spec = require(join(apiFolder, file))
       allSpec.push(spec)
-      const code = generate(spec, common)
+      const code = generate(opts.branch || opts.tag, spec, common)
       const filePath = join(apiOutputFolder, `${file.slice(0, file.lastIndexOf('.'))}.js`)
 
       writeFileSync(filePath, code, { encoding: 'utf8' })

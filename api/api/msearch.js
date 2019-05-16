@@ -29,7 +29,6 @@ function buildMsearch (opts) {
    * Perform a [msearch](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html) request
    *
    * @param {list} index - A comma-separated list of index names to use as default
-   * @param {list} type - A comma-separated list of document types to use as default
    * @param {enum} search_type - Search operation type
    * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
    * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -85,12 +84,6 @@ function buildMsearch (opts) {
       return handleError(err, callback)
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -98,7 +91,7 @@ function buildMsearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -112,9 +105,7 @@ function buildMsearch (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch'
-    } else if ((index) != null) {
+    if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_msearch'
     } else {
       path = '/' + '_msearch'
