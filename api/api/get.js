@@ -57,10 +57,8 @@ function buildGet (opts) {
     '_source_excludes',
     '_source_exclude',
     '_source_includes',
-<<<<<<< HEAD
+    '_source_include',
     '_source_exclude',
-=======
->>>>>>> 844206e... Patch deprecated parameters (#851)
     '_source_include',
     'version',
     'version_type',
@@ -76,10 +74,8 @@ function buildGet (opts) {
     _sourceExcludes: '_source_excludes',
     _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-<<<<<<< HEAD
+    _sourceInclude: '_source_include',
     _sourceExclude: '_source_exclude',
-=======
->>>>>>> 844206e... Patch deprecated parameters (#851)
     _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
