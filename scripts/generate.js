@@ -69,7 +69,7 @@ function start (opts) {
 
     writeFileSync(
       requestParamsOutputFile,
-      generateRequestTypes(allSpec),
+      generateRequestTypes(opts.branch || opts.tag, allSpec),
       { encoding: 'utf8' }
     )
 

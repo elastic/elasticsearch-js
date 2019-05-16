@@ -28,6 +28,10 @@ const allowedMethods = {
   body: ['POST', 'PUT', 'DELETE']
 }
 
+// if a parameter is depracted in a minor release
+// we should be able to support it until the next major
+const deprecatedParameters = require('./patch.json')
+
 // list of apis that does not need any kind of validation
 // because of how the url is built or the `type` handling in ES7
 const noPathValidation = [
@@ -63,23 +67,6 @@ const ndjsonApi = [
   'xpack.ml.find_file_structure',
   'xpack.monitoring.bulk'
 ]
-
-// if a parameter is depracted in a minor release
-// we should be able to support it until the next major
-const deprecatedParameters = {
-  6: {
-    _source_includes: '_source_include',
-    _source_excludes: '_source_exclude'
-  },
-  7: {
-    _source_includes: '_source_include',
-    _source_excludes: '_source_exclude'
-  },
-  master: {
-    _source_includes: '_source_include',
-    _source_excludes: '_source_exclude'
-  }
-}
 
 function generate (version, spec, common) {
   const release = semver.valid(version) ? semver.major(version) : version
