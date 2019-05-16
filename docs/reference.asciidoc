@@ -1153,6 +1153,9 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+
 |`analyzer`
 |`string` - The analyzer to use for the query string
 
@@ -2915,6 +2918,9 @@ link:{ref}/search-multi-search.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to use as default
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to use as default
+
 |`search_type` or `searchType`
 |`'query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch'` - Search operation type
 
@@ -2955,6 +2961,9 @@ link:{ref}/search-multi-search.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to use as default
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to use as default
+
 |`search_type` or `searchType`
 |`'query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch'` - Search operation type
 
@@ -2986,6 +2995,9 @@ link:{ref}/docs-multi-termvectors.html[Reference]
 |===
 |`index`
 |`string` - The index in which the document resides.
+
+|`type`
+|`string` - The type of the document.
 
 |`ids`
 |`string, string[]` - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
@@ -3348,6 +3360,9 @@ link:{ref}/search-search.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+
 |`analyzer`
 |`string` - The analyzer to use for the query string
 
@@ -3529,6 +3544,9 @@ link:{ref}/search-template.html[Reference]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3858,6 +3876,9 @@ link:{ref}/docs-termvectors.html[Reference]
 |`index`
 |`string` - The index in which the document resides.
 
+|`type`
+|`string` - The type of the document.
+
 |`id`
 |`string` - The id of the document, when not specified a doc param should be supplied.
 
@@ -3974,6 +3995,9 @@ link:{ref}/docs-update-by-query.html[Reference]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string

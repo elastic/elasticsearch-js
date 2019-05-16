@@ -29,6 +29,7 @@ function buildDeleteByQuery (opts) {
    * Perform a [delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {string} analyzer - The analyzer to use for the query string
    * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
    * @param {enum} default_operator - The default operator for query string query (AND or OR)
@@ -150,6 +151,12 @@ function buildDeleteByQuery (opts) {
       return handleError(err, callback)
     }
 
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -157,7 +164,7 @@ function buildDeleteByQuery (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -171,7 +178,11 @@ function buildDeleteByQuery (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_delete_by_query'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query'
+    }
 
     // build request object
     const request = {
