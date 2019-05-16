@@ -19,7 +19,11 @@
 
 'use strict'
 
-function generate (api) {
+const semver = require('semver')
+const deprecatedParameters = require('./patch.json')
+
+function generate (version, api) {
+  const release = semver.valid(version) ? semver.major(version) : version
   var types = `/*
  * Licensed to Elasticsearch B.V. under one or more contributor
  * license agreements. See the NOTICE file distributed with
@@ -64,9 +68,20 @@ export interface Generic {
 
     const partsArr = Object.keys(parts)
       .map(k => ({ key: k, value: parts[k] }))
+    const deprecatedParametersToAdd = []
     const paramsArr = Object.keys(params)
       .filter(k => !Object.keys(parts).includes(k))
-      .map(k => ({ key: k, value: params[k] }))
+      .map(k => {
+        if (deprecatedParameters[release] && deprecatedParameters[release][k]) {
+          deprecatedParametersToAdd.push({
+            key: deprecatedParameters[release][k],
+            value: params[k]
+          })
+        }
+        return { key: k, value: params[k] }
+      })
+
+    deprecatedParametersToAdd.forEach(k => partsArr.push(k))
 
     const genLine = e => {
       const optional = e.value.required ? '' : '?'

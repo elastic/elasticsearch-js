@@ -22,10 +22,15 @@
 'use strict'
 
 const dedent = require('dedent')
+const semver = require('semver')
 const allowedMethods = {
   noBody: ['GET', 'HEAD', 'DELETE'],
   body: ['POST', 'PUT', 'DELETE']
 }
+
+// if a parameter is depracted in a minor release
+// we should be able to support it until the next major
+const deprecatedParameters = require('./patch.json')
 
 // list of apis that does not need any kind of validation
 // because of how the url is built or the `type` handling in ES7
@@ -63,7 +68,8 @@ const ndjsonApi = [
   'xpack.monitoring.bulk'
 ]
 
-function generate (spec, common) {
+function generate (version, spec, common) {
+  const release = semver.valid(version) ? semver.major(version) : version
   const api = Object.keys(spec)[0]
   const name = api
     .replace(/\.([a-z])/g, k => k[1].toUpperCase())
@@ -90,7 +96,11 @@ function generate (spec, common) {
     if (params[key].required) {
       required.push(key)
     }
+
     acceptedQuerystring.push(key)
+    if (deprecatedParameters[release] && deprecatedParameters[release][key]) {
+      acceptedQuerystring.push(deprecatedParameters[release][key])
+    }
   }
 
   for (const key in spec[api]) {

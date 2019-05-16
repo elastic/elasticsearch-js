@@ -29,7 +29,6 @@ function buildSearch (opts) {
    * Perform a [search](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {string} analyzer - The analyzer to use for the query string
    * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
    * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
@@ -99,7 +98,9 @@ function buildSearch (opts) {
     'sort',
     '_source',
     '_source_excludes',
+    '_source_exclude',
     '_source_includes',
+    '_source_include',
     'terminate_after',
     'stats',
     'suggest_field',
@@ -137,7 +138,9 @@ function buildSearch (opts) {
     expandWildcards: 'expand_wildcards',
     searchType: 'search_type',
     _sourceExcludes: '_source_excludes',
+    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
+    _sourceInclude: '_source_include',
     terminateAfter: 'terminate_after',
     suggestField: 'suggest_field',
     suggestMode: 'suggest_mode',
@@ -169,12 +172,6 @@ function buildSearch (opts) {
       options = {}
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -182,7 +179,7 @@ function buildSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -196,9 +193,7 @@ function buildSearch (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_search'
-    } else if ((index) != null) {
+    if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_search'
     } else {
       path = '/' + '_search'

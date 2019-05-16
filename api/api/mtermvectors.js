@@ -29,7 +29,6 @@ function buildMtermvectors (opts) {
    * Perform a [mtermvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
    *
    * @param {string} index - The index in which the document resides.
-   * @param {string} type - The type of the document.
    * @param {list} ids - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
    * @param {boolean} term_statistics - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
    * @param {boolean} field_statistics - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
@@ -87,12 +86,6 @@ function buildMtermvectors (opts) {
       options = {}
     }
 
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -100,7 +93,7 @@ function buildMtermvectors (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -114,9 +107,7 @@ function buildMtermvectors (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mtermvectors'
-    } else if ((index) != null) {
+    if ((index) != null) {
       path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
     } else {
       path = '/' + '_mtermvectors'
