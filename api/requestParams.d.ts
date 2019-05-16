@@ -30,6 +30,8 @@ export interface Generic {
 export interface Bulk<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   wait_for_active_shards?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
@@ -399,7 +401,8 @@ export interface Delete extends Generic {
 
 export interface DeleteByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -449,7 +452,13 @@ export interface DeleteTemplate extends Generic {
 export interface Exists extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   stored_fields?: string | string[];
   parent?: string;
   preference?: string;
@@ -466,7 +475,13 @@ export interface Exists extends Generic {
 export interface ExistsSource extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -482,7 +497,13 @@ export interface ExistsSource extends Generic {
 export interface Explain<T = any> extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   analyze_wildcard?: boolean;
   analyzer?: string;
   default_operator?: 'AND' | 'OR';
@@ -521,7 +542,13 @@ export interface FieldStats<T = any> extends Generic {
 export interface Get extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   stored_fields?: string | string[];
   parent?: string;
   preference?: string;
@@ -543,7 +570,13 @@ export interface GetScript extends Generic {
 export interface GetSource extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   parent?: string;
   preference?: string;
   realtime?: boolean;
@@ -951,6 +984,8 @@ export interface IngestSimulate<T = any> extends Generic {
 export interface Mget<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -973,7 +1008,6 @@ export interface Mpercolate<T = any> extends Generic {
 
 export interface Msearch<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   max_concurrent_searches?: number;
   typed_keys?: boolean;
@@ -983,7 +1017,6 @@ export interface Msearch<T = any> extends Generic {
 
 export interface MsearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   typed_keys?: boolean;
   max_concurrent_searches?: number;
@@ -992,7 +1025,6 @@ export interface MsearchTemplate<T = any> extends Generic {
 
 export interface Mtermvectors<T = any> extends Generic {
   index?: string;
-  type?: string;
   ids?: string | string[];
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1103,7 +1135,8 @@ export interface Scroll<T = any> extends Generic {
 
 export interface Search<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -1157,7 +1190,6 @@ export interface SearchShards extends Generic {
 
 export interface SearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -1269,7 +1301,10 @@ export interface TasksList extends Generic {
 
 export interface Termvectors<T = any> extends Generic {
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   id?: string;
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1289,7 +1324,13 @@ export interface Termvectors<T = any> extends Generic {
 export interface Update<T = any> extends Generic {
   id: string;
   index: string;
+<<<<<<< HEAD
   type: string;
+=======
+  type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> 844206e... Patch deprecated parameters (#851)
   wait_for_active_shards?: string;
   fields?: string | string[];
   _source?: string | string[];
@@ -1310,7 +1351,8 @@ export interface Update<T = any> extends Generic {
 
 export interface UpdateByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
