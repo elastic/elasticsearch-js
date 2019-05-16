@@ -1,0 +1,14 @@
+{
+  "6": {
+    "_source_includes": "_source_include",
+    "_source_excludes": "_source_exclude"
+  },
+  "7": {
+    "_source_includes": "_source_include",
+    "_source_excludes": "_source_exclude"
+  },
+  "master": {
+    "_source_includes": "_source_include",
+    "_source_excludes": "_source_exclude"
+  }
+}
