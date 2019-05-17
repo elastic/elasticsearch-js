@@ -75,8 +75,6 @@ function buildGet (opts) {
     _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
     _sourceInclude: '_source_include',
-    _sourceExclude: '_source_exclude',
-    _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
