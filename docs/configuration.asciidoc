@@ -8,7 +8,7 @@ The client is designed to be easily configured as you see fit for your needs, fo
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({
-  node: 'http://localhost:9200'
+  node: 'http://localhost:9200',
   maxRetries: 5,
   requestTimeout: 60000,
   sniffOnStart: true
