@@ -526,7 +526,8 @@ test('Url with auth', t => {
 
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
-      url: new URL(`http://foo:bar@localhost:${port}`)
+      url: new URL(`http://foo:bar@localhost:${port}`),
+      auth: { username: 'foo', password: 'bar' }
     })
     connection.request({
       path: '/hello',
