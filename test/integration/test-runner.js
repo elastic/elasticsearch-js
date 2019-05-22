@@ -21,11 +21,10 @@
 
 const t = require('tap')
 const semver = require('semver')
-const workq = require('workq')
 const helper = require('./helper')
 const { ConfigurationError } = require('../../lib/errors')
 
-const { delve } = helper
+const { delve, to } = helper
 
 const supportedFeatures = [
   'gtelte',
@@ -50,248 +49,201 @@ function TestRunner (opts) {
   this.stash = new Map()
   this.tap = opts.tap || t
   this.isPlatinum = opts.isPlatinum
-  this.q = opts.q || workq()
 }
 
 /**
  * Runs a cleanup, removes all indices and templates
- * @param {queue}
- * @param {function} done
+ * @returns {Promise}
  */
-TestRunner.prototype.cleanup = function (q, done) {
+TestRunner.prototype.cleanup = async function () {
   this.tap.comment('Cleanup')
 
   this.response = null
   this.stash = new Map()
 
-  q.add((q, done) => {
-    this.client.indices.delete({ index: '*' }, { ignore: 404 }, err => {
-      this.tap.error(err, 'should not error: indices.delete')
-      done()
-    })
-  })
+  try {
+    await this.client.indices.delete({ index: '*' }, { ignore: 404 })
+  } catch (err) {
+    this.tap.error(err, 'should not error: indices.delete')
+  }
 
-  q.add((q, done) => {
-    this.client.indices.deleteTemplate({ name: '*' }, { ignore: 404 }, err => {
-      this.tap.error(err, 'should not error: indices.deleteTemplate')
-      done()
-    })
-  })
+  try {
+    await this.client.indices.deleteTemplate({ name: '*' }, { ignore: 404 })
+  } catch (err) {
+    this.tap.error(err, 'should not error: indices.deleteTemplate')
+  }
 
-  q.add((q, done) => {
-    this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 }, err => {
-      this.tap.error(err, 'should not error: snapshot.delete')
-      done()
-    })
-  })
+  try {
+    await this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 })
+  } catch (err) {
+    this.tap.error(err, 'should not error: snapshot.delete')
+  }
 
-  q.add((q, done) => {
-    this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 }, err => {
-      this.tap.error(err, 'should not error: snapshot.deleteRepository')
-      done()
-    })
-  })
-
-  done()
+  try {
+    await this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 })
+  } catch (err) {
+    this.tap.error(err, 'should not error: snapshot.deleteRepository')
+  }
 }
 
 /**
  * Runs some additional API calls to prepare ES for the Platinum test,
  * This set of calls should be executed before the final clenup.
- * @param {queue}
- * @param {function} done
+ * @returns {Promise}
  */
-TestRunner.prototype.cleanupPlatinum = function (q, done) {
+TestRunner.prototype.cleanupPlatinum = async function () {
   this.tap.comment('Platinum Cleanup')
 
-  q.add((q, done) => {
-    this.client.security.getRole((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getRole')
-      const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
-      helper.runInParallel(
-        this.client, 'security.deleteRole',
-        roles.map(r => ({ name: r, refresh: 'wait_for' }))
-      )
-        .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deleteRole'))
-    })
-  })
+  try {
+    const { body } = await this.client.security.getRole()
+    const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
+    await helper.runInParallel(
+      this.client, 'security.deleteRole',
+      roles.map(r => ({ name: r, refresh: 'wait_for' }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should not error: security role cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.security.getUser((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getUser')
-      const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
-      helper.runInParallel(
-        this.client, 'security.deleteUser',
-        users.map(r => ({ username: r, refresh: 'wait_for' }))
-      )
-        .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deleteUser'))
-    })
-  })
+  try {
+    const { body } = await this.client.security.getUser()
+    const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
+    await helper.runInParallel(
+      this.client, 'security.deleteUser',
+      users.map(r => ({ username: r, refresh: 'wait_for' }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should not error: security user cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.security.getPrivileges((err, { body }) => {
-      this.tap.error(err, 'should not error: security.getPrivileges')
-      const privileges = []
-      Object.keys(body).forEach(app => {
-        Object.keys(body[app]).forEach(priv => {
-          privileges.push({
-            name: body[app][priv].name,
-            application: body[app][priv].application,
-            refresh: 'wait_for'
-          })
+  try {
+    const { body } = await this.client.security.getPrivileges()
+    const privileges = []
+    Object.keys(body).forEach(app => {
+      Object.keys(body[app]).forEach(priv => {
+        privileges.push({
+          name: body[app][priv].name,
+          application: body[app][priv].application,
+          refresh: 'wait_for'
         })
       })
-      helper.runInParallel(this.client, 'security.deletePrivileges', privileges)
-        .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: security.deletePrivileges'))
     })
-  })
+    await helper.runInParallel(this.client, 'security.deletePrivileges', privileges)
+  } catch (err) {
+    this.tap.error(err, 'should not error: security privileges cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.ml.stopDatafeed({ datafeedId: '*', force: true }, err => {
-      this.tap.error(err, 'should not error: ml.stopDatafeed')
-      this.client.ml.getDatafeeds({ datafeedId: '*' }, (err, { body }) => {
-        this.tap.error(err, 'should error: not ml.getDatafeeds')
-        const feeds = body.datafeeds.map(f => f.datafeed_id)
-        helper.runInParallel(
-          this.client, 'ml.deleteDatafeed',
-          feeds.map(f => ({ datafeedId: f }))
-        )
-          .then(() => done())
-          .catch(err => this.tap.error(err, 'should not error: ml.deleteDatafeed'))
-      })
-    })
-  })
+  try {
+    await this.client.ml.stopDatafeed({ datafeedId: '*', force: true })
+    const { body } = await this.client.ml.getDatafeeds({ datafeedId: '*' })
+    const feeds = body.datafeeds.map(f => f.datafeed_id)
+    await helper.runInParallel(
+      this.client, 'ml.deleteDatafeed',
+      feeds.map(f => ({ datafeedId: f }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should error: not ml datafeed cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.ml.closeJob({ jobId: '*', force: true }, err => {
-      this.tap.error(err, 'should not error: ml.closeJob')
-      this.client.ml.getJobs({ jobId: '*' }, (err, { body }) => {
-        this.tap.error(err, 'should not error: ml.getJobs')
-        const jobs = body.jobs.map(j => j.job_id)
-        helper.runInParallel(
-          this.client, 'ml.deleteJob',
-          jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
-        )
-          .then(() => done())
-          .catch(err => this.tap.error(err, 'should not error: ml.deleteJob'))
-      })
-    })
-  })
+  try {
+    await this.client.ml.closeJob({ jobId: '*', force: true })
+    const { body } = await this.client.ml.getJobs({ jobId: '*' })
+    const jobs = body.jobs.map(j => j.job_id)
+    await helper.runInParallel(
+      this.client, 'ml.deleteJob',
+      jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should not error: ml job cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.rollup.getJobs({ id: '_all' }, (err, { body }) => {
-      this.tap.error(err, 'should not error: rollup.getJobs')
-      const jobs = body.jobs.map(j => j.config.id)
-      helper.runInParallel(
-        this.client, 'rollup.stopJob',
-        jobs.map(j => ({ id: j, waitForCompletion: true }))
-      )
-        .then(() => helper.runInParallel(
-          this.client, 'rollup.deleteJob',
-          jobs.map(j => ({ id: j }))
-        ))
-        .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: rollup.stopJob/deleteJob'))
-    })
-  })
+  try {
+    const { body } = await this.client.rollup.getJobs({ id: '_all' })
+    const jobs = body.jobs.map(j => j.config.id)
+    await helper.runInParallel(
+      this.client, 'rollup.stopJob',
+      jobs.map(j => ({ id: j, waitForCompletion: true }))
+    )
+    await helper.runInParallel(
+      this.client, 'rollup.deleteJob',
+      jobs.map(j => ({ id: j }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should not error: rollup jobs cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.tasks.list((err, { body }) => {
-      this.tap.error(err, 'should not error: tasks.list')
-      const tasks = Object.keys(body.nodes)
-        .reduce((acc, node) => {
-          const { tasks } = body.nodes[node]
-          Object.keys(tasks).forEach(id => {
-            if (tasks[id].cancellable) acc.push(id)
-          })
-          return acc
-        }, [])
+  try {
+    const { body } = await this.client.tasks.list()
+    const tasks = Object.keys(body.nodes)
+      .reduce((acc, node) => {
+        const { tasks } = body.nodes[node]
+        Object.keys(tasks).forEach(id => {
+          if (tasks[id].cancellable) acc.push(id)
+        })
+        return acc
+      }, [])
 
-      helper.runInParallel(
-        this.client, 'tasks.cancel',
-        tasks.map(id => ({ taskId: id }))
-      )
-        .then(() => done())
-        .catch(err => this.tap.error(err, 'should not error: tasks.cancel'))
-    })
-  })
+    await helper.runInParallel(
+      this.client, 'tasks.cancel',
+      tasks.map(id => ({ taskId: id }))
+    )
+  } catch (err) {
+    this.tap.error(err, 'should not error: tasks cleanup')
+  }
 
-  q.add((q, done) => {
-    this.client.indices.delete({ index: '.ml-*' }, { ignore: 404 }, err => {
-      this.tap.error(err, 'should not error: indices.delete (ml indices)')
-      done()
-    })
-  })
-
-  done()
+  try {
+    await this.client.indices.delete({ index: '.ml-*' }, { ignore: 404 })
+  } catch (err) {
+    this.tap.error(err, 'should not error: indices.delete (ml indices)')
+  }
 }
 
 /**
  * Runs the given test.
  * It runs the test components in the following order:
+ *    - skip check
+ *    - platinum user
  *    - setup
  *    - the actual test
  *    - teardown
+ *    - platinum cleanup
  *    - cleanup
-* Internally uses a queue to guarantee the order of the test sections.
  * @param {object} setup (null if not needed)
  * @param {object} test
  * @oaram {object} teardown (null if not needed)
- * @param {function} end
+ * @returns {Promise}
  */
-TestRunner.prototype.run = function (setup, test, teardown, end) {
+TestRunner.prototype.run = async function (setup, test, teardown) {
   // if we should skip a feature in the setup/teardown section
   // we should skip the entire test file
   const skip = getSkip(setup) || getSkip(teardown)
   if (skip && this.shouldSkip(skip)) {
     this.skip(skip)
-    return end()
+    return
   }
 
   if (this.isPlatinum) {
-    this.tap.comment('Creating x-pack user')
     // Some platinum test requires this user
-    this.q.add((q, done) => {
-      this.client.security.putUser({
+    this.tap.comment('Creating x-pack user')
+    try {
+      await this.client.security.putUser({
         username: 'x_pack_rest_user',
         body: { password: 'x-pack-test-password', roles: ['superuser'] }
-      }, (err, { body }) => {
-        this.tap.error(err, 'should not error: security.putUser')
-        done()
       })
-    })
+    } catch (err) {
+      this.tap.error(err, 'should not error: security.putUser')
+    }
   }
 
-  if (setup) {
-    this.q.add((q, done) => {
-      this.exec('Setup', setup, q, done)
-    })
-  }
+  if (setup) await this.exec('Setup', setup)
 
-  this.q.add((q, done) => {
-    this.exec('Test', test, q, done)
-  })
+  await this.exec('Test', test)
 
-  if (teardown) {
-    this.q.add((q, done) => {
-      this.exec('Teardown', teardown, q, done)
-    })
-  }
+  if (teardown) await this.exec('Teardown', teardown)
 
-  if (this.isPlatinum) {
-    this.q.add((q, done) => {
-      this.cleanupPlatinum(q, done)
-    })
-  }
+  if (this.isPlatinum) await this.cleanupPlatinum()
 
-  this.q.add((q, done) => {
-    this.cleanup(q, done)
-  })
-
-  this.q.add((q, done) => end() && done())
+  await this.cleanup()
 }
 
 /**
@@ -301,11 +253,11 @@ TestRunner.prototype.run = function (setup, test, teardown, end) {
  */
 TestRunner.prototype.skip = function (action) {
   if (action.reason && action.version) {
-    this.tap.skip(`Skip: ${action.reason} (${action.version})`)
+    this.tap.comment(`Skip: ${action.reason} (${action.version})`)
   } else if (action.features) {
-    this.tap.skip(`Skip: ${JSON.stringify(action.features)})`)
+    this.tap.comment(`Skip: ${JSON.stringify(action.features)})`)
   } else {
-    this.tap.skip('Skipped')
+    this.tap.comment('Skipped')
   }
   return this
 }
@@ -485,79 +437,79 @@ TestRunner.prototype.transform_and_set = function (name, transform) {
 /**
  * Runs a client command
  * @param {object} the action to perform
- * @param {Queue}
+ * @returns {Promise}
  */
-TestRunner.prototype.do = function (action, done) {
+TestRunner.prototype.do = async function (action) {
   const cmd = this.parseDo(action)
   const api = delve(this.client, cmd.method).bind(this.client)
+
   const options = { ignore: cmd.params.ignore, headers: action.headers }
   if (cmd.params.ignore) delete cmd.params.ignore
-  api(cmd.params, options, (err, { body, warnings }) => {
-    if (action.warnings && warnings === null) {
-      this.tap.fail('We should get a warning header', action.warnings)
-    } else if (!action.warnings && warnings !== null) {
-      // if there is only the 'default shard will change'
-      // warning we skip the check, because the yaml
-      // spec may not be updated
-      let hasDefaultShardsWarning = false
-      warnings.forEach(h => {
-        if (/default\snumber\sof\sshards/g.test(h)) {
-          hasDefaultShardsWarning = true
-        }
-      })
 
-      if (hasDefaultShardsWarning === true && warnings.length > 1) {
-        this.tap.fail('We are not expecting warnings', warnings)
+  const [err, result] = await to(api(cmd.params, options))
+  var warnings = result ? result.warnings : null
+  var body = result ? result.body : null
+
+  if (action.warnings && warnings === null) {
+    this.tap.fail('We should get a warning header', action.warnings)
+  } else if (!action.warnings && warnings !== null) {
+    // if there is only the 'default shard will change'
+    // warning we skip the check, because the yaml
+    // spec may not be updated
+    let hasDefaultShardsWarning = false
+    warnings.forEach(h => {
+      if (/default\snumber\sof\sshards/g.test(h)) {
+        hasDefaultShardsWarning = true
       }
-    } else if (action.warnings && warnings !== null) {
-      // if the yaml warnings do not contain the
-      // 'default shard will change' warning
-      // we do not check it presence in the warnings array
-      // because the yaml spec may not be updated
-      let hasDefaultShardsWarning = false
-      action.warnings.forEach(h => {
-        if (/default\snumber\sof\sshards/g.test(h)) {
-          hasDefaultShardsWarning = true
-        }
-      })
+    })
 
-      if (hasDefaultShardsWarning === false) {
-        warnings = warnings.filter(h => !h.test(/default\snumber\sof\sshards/g))
+    if (hasDefaultShardsWarning === true && warnings.length > 1) {
+      this.tap.fail('We are not expecting warnings', warnings)
+    }
+  } else if (action.warnings && warnings !== null) {
+    // if the yaml warnings do not contain the
+    // 'default shard will change' warning
+    // we do not check it presence in the warnings array
+    // because the yaml spec may not be updated
+    let hasDefaultShardsWarning = false
+    action.warnings.forEach(h => {
+      if (/default\snumber\sof\sshards/g.test(h)) {
+        hasDefaultShardsWarning = true
       }
+    })
 
-      this.tap.deepEqual(warnings, action.warnings)
+    if (hasDefaultShardsWarning === false) {
+      warnings = warnings.filter(h => !h.test(/default\snumber\sof\sshards/g))
     }
 
-    if (action.catch) {
-      this.tap.true(
-        parseDoError(err, action.catch),
-        `the error should be: ${action.catch}`
-      )
-      try {
-        this.response = JSON.parse(err.body)
-      } catch (e) {
-        this.response = err.body
-      }
-    } else {
-      this.tap.error(err, `should not error: ${cmd.method}`, action)
-      this.response = body
-    }
+    this.tap.deepEqual(warnings, action.warnings)
+  }
 
-    done()
-  })
+  if (action.catch) {
+    this.tap.true(
+      parseDoError(err, action.catch),
+      `the error should be: ${action.catch}`
+    )
+    try {
+      this.response = JSON.parse(err.body)
+    } catch (e) {
+      this.response = err.body
+    }
+  } else {
+    this.tap.error(err, `should not error: ${cmd.method}`, action)
+    this.response = body
+  }
 }
 
 /**
  * Runs an actual test
  * @param {string} the name of the test
  * @param {object} the actions to perform
- * @param {Queue}
+ * @returns {Promise}
  */
-TestRunner.prototype.exec = function (name, actions, q, done) {
+TestRunner.prototype.exec = async function (name, actions) {
   this.tap.comment(name)
-  for (var i = 0; i < actions.length; i++) {
-    const action = actions[i]
-
+  for (const action of actions) {
     if (action.skip) {
       if (this.shouldSkip(action.skip)) {
         this.skip(this.fillStashedValues(action.skip))
@@ -566,132 +518,100 @@ TestRunner.prototype.exec = function (name, actions, q, done) {
     }
 
     if (action.do) {
-      q.add((q, done) => {
-        this.do(this.fillStashedValues(action.do), done)
-      })
+      await this.do(this.fillStashedValues(action.do))
     }
 
     if (action.set) {
-      q.add((q, done) => {
-        const key = Object.keys(action.set)[0]
-        this.set(this.fillStashedValues(key), action.set[key])
-        done()
-      })
+      const key = Object.keys(action.set)[0]
+      this.set(this.fillStashedValues(key), action.set[key])
     }
 
     if (action.transform_and_set) {
-      q.add((q, done) => {
-        const key = Object.keys(action.transform_and_set)[0]
-        this.transform_and_set(key, action.transform_and_set[key])
-        done()
-      })
+      const key = Object.keys(action.transform_and_set)[0]
+      this.transform_and_set(key, action.transform_and_set[key])
     }
 
     if (action.match) {
-      q.add((q, done) => {
-        const key = Object.keys(action.match)[0]
-        this.match(
-          // in some cases, the yaml refers to the body with an empty string
-          key === '$body' || key === ''
-            ? this.response
-            : delve(this.response, this.fillStashedValues(key)),
-          key === '$body'
-            ? action.match[key]
-            : this.fillStashedValues(action.match)[key],
-          action.match
-        )
-        done()
-      })
+      const key = Object.keys(action.match)[0]
+      this.match(
+        // in some cases, the yaml refers to the body with an empty string
+        key === '$body' || key === ''
+          ? this.response
+          : delve(this.response, this.fillStashedValues(key)),
+        key === '$body'
+          ? action.match[key]
+          : this.fillStashedValues(action.match)[key],
+        action.match
+      )
     }
 
     if (action.lt) {
-      q.add((q, done) => {
-        const key = Object.keys(action.lt)[0]
-        this.lt(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.lt)[key]
-        )
-        done()
-      })
+      const key = Object.keys(action.lt)[0]
+      this.lt(
+        delve(this.response, this.fillStashedValues(key)),
+        this.fillStashedValues(action.lt)[key]
+      )
     }
 
     if (action.gt) {
-      q.add((q, done) => {
-        const key = Object.keys(action.gt)[0]
-        this.gt(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.gt)[key]
-        )
-        done()
-      })
+      const key = Object.keys(action.gt)[0]
+      this.gt(
+        delve(this.response, this.fillStashedValues(key)),
+        this.fillStashedValues(action.gt)[key]
+      )
     }
 
     if (action.lte) {
-      q.add((q, done) => {
-        const key = Object.keys(action.lte)[0]
-        this.lte(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.lte)[key]
-        )
-        done()
-      })
+      const key = Object.keys(action.lte)[0]
+      this.lte(
+        delve(this.response, this.fillStashedValues(key)),
+        this.fillStashedValues(action.lte)[key]
+      )
     }
 
     if (action.gte) {
-      q.add((q, done) => {
-        const key = Object.keys(action.gte)[0]
-        this.gte(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.gte)[key]
-        )
-        done()
-      })
+      const key = Object.keys(action.gte)[0]
+      this.gte(
+        delve(this.response, this.fillStashedValues(key)),
+        this.fillStashedValues(action.gte)[key]
+      )
     }
 
     if (action.length) {
-      q.add((q, done) => {
-        const key = Object.keys(action.length)[0]
-        this.length(
-          key === '$body' || key === ''
-            ? this.response
-            : delve(this.response, this.fillStashedValues(key)),
-          key === '$body'
-            ? action.length[key]
-            : this.fillStashedValues(action.length)[key]
-        )
-        done()
-      })
+      const key = Object.keys(action.length)[0]
+      this.length(
+        key === '$body' || key === ''
+          ? this.response
+          : delve(this.response, this.fillStashedValues(key)),
+        key === '$body'
+          ? action.length[key]
+          : this.fillStashedValues(action.length)[key]
+      )
     }
 
     if (action.is_true) {
-      q.add((q, done) => {
-        const isTrue = this.fillStashedValues(action.is_true)
-        this.is_true(
-          delve(this.response, isTrue),
-          isTrue
-        )
-        done()
-      })
+      const isTrue = this.fillStashedValues(action.is_true)
+      this.is_true(
+        delve(this.response, isTrue),
+        isTrue
+      )
     }
 
     if (action.is_false) {
-      q.add((q, done) => {
-        const isFalse = this.fillStashedValues(action.is_false)
-        this.is_false(
-          delve(this.response, isFalse),
-          isFalse
-        )
-        done()
-      })
+      const isFalse = this.fillStashedValues(action.is_false)
+      this.is_false(
+        delve(this.response, isFalse),
+        isFalse
+      )
     }
   }
-  done()
 }
 
 /**
  * Asserts that the given value is truthy
  * @param {any} the value to check
  * @param {string} an optional message
+ * @returns {TestRunner}
  */
 TestRunner.prototype.is_true = function (val, msg) {
   this.tap.true(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`)
@@ -702,6 +622,7 @@ TestRunner.prototype.is_true = function (val, msg) {
  * Asserts that the given value is falsey
  * @param {any} the value to check
  * @param {string} an optional message
+ * @returns {TestRunner}
  */
 TestRunner.prototype.is_false = function (val, msg) {
   this.tap.false(val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`)

@@ -82,4 +82,10 @@ function delve (obj, key, def, p) {
   return (obj === undefined || p < key.length) ? def : obj
 }
 
-module.exports = { runInParallel, esDefaultRoles, esDefaultUsers, delve }
+function to (promise) {
+  return promise.then(data => [null, data], err => [err, undefined])
+}
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+module.exports = { runInParallel, esDefaultRoles, esDefaultUsers, delve, to, sleep }
