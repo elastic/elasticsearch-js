@@ -106,5 +106,5 @@ docker run \
   --name elasticsearch-js-platinum \
   --rm \
   elastic/elasticsearch-js \
-  npm run test:integration
+  npm run test:integration:report
 
