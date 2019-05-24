@@ -3983,6 +3983,9 @@ link:{ref}/docs-update.html[Reference]
 |`body`
 |`object` - The request definition requires either `script` or partial `doc`
 
+|`doc_as_upsert`
+|`boolean` - Instead of sending a partial doc plus an upsert doc, setting doc_as_upsert to true will use the contents of doc as the upsert value
+
 |===
 
 === updateByQuery
