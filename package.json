@@ -29,15 +29,16 @@
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
     },
-    "default_api_branch": "7.0",
+    "default_api_branch": "7.1",
     "supported_es_branches": [
+      "7.1",
       "7.0",
       "6.7",
       "5.6"
     ],
     "unstable_es_branches": [
+      "7.2",
       "6.8",
-      "7.1",
       "7.x",
       "master"
     ]
