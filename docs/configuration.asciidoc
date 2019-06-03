@@ -150,6 +150,15 @@ function generateRequestId (params, options) {
 |`name`
 |`string` - The name to identify the client instance in the events. +
 _Default:_ `elasticsearch-js`
+
+|`headers`
+|`object` - A set of custom headers to send in every request. +
+_Default:_ `{}`
+
+|`cloud`
+|`object` - Custom configuration for connecting to https://cloud.elastic.co[Elastic Cloud]. +
+_Default:_ `null`
+
 |===
 
 === Advanced configuration
