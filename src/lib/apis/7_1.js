@@ -2539,8 +2539,6 @@ api.fieldCaps = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -2578,14 +2576,6 @@ api.get = ca({
     _sourceIncludes: {
       type: 'list',
       name: '_source_includes'
-    },
-    _sourceExclude: {
-      type: 'list',
-      name: '_source_exclude'
-    },
-    _sourceInclude: {
-      type: 'list',
-      name: '_source_include'
     },
     version: {
       type: 'number'

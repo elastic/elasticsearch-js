@@ -7,7 +7,7 @@
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
   "homepage": "https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/16.x/index.html",
-  "version": "16.0.0",
+  "version": "16.1.0",
   "keywords": [
     "elasticsearch",
     "mapping",
@@ -29,15 +29,16 @@
     "blanket": {
       "pattern": "specified in test/unit/coverage.js"
     },
-    "default_api_branch": "7.0",
+    "default_api_branch": "7.1",
     "supported_es_branches": [
+      "7.1",
       "7.0",
       "6.7",
       "5.6"
     ],
     "unstable_es_branches": [
+      "7.2",
       "6.8",
-      "7.1",
       "7.x",
       "master"
     ]

@@ -1750,7 +1750,6 @@ api.count = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
- * @param {<<api-param-type-string,`String`>>} params.parent - ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1766,9 +1765,6 @@ api.create = ca({
     waitForActiveShards: {
       type: 'string',
       name: 'wait_for_active_shards'
-    },
-    parent: {
-      type: 'string'
     },
     refresh: {
       type: 'enum',
@@ -1822,7 +1818,6 @@ api.create = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
- * @param {<<api-param-type-string,`String`>>} params.parent - ID of parent document
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -1839,9 +1834,6 @@ api['delete'] = ca({
     waitForActiveShards: {
       type: 'string',
       name: 'wait_for_active_shards'
-    },
-    parent: {
-      type: 'string'
     },
     refresh: {
       type: 'enum',
@@ -2144,7 +2136,6 @@ api.deleteScript = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.storedFields - A comma-separated list of stored fields to return in the response
- * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
@@ -2163,9 +2154,6 @@ api.exists = ca({
     storedFields: {
       type: 'list',
       name: 'stored_fields'
-    },
-    parent: {
-      type: 'string'
     },
     preference: {
       type: 'string'
@@ -2222,7 +2210,6 @@ api.exists = ca({
  * Perform a [existsSource](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
@@ -2238,9 +2225,6 @@ api.exists = ca({
  */
 api.existsSource = ca({
   params: {
-    parent: {
-      type: 'string'
-    },
     preference: {
       type: 'string'
     },
@@ -2302,7 +2286,6 @@ api.existsSource = ca({
  * @param {<<api-param-type-string,`String`>>} params.df - The default field for query string query (default: _all)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.storedFields - A comma-separated list of stored fields to return in the response
  * @param {<<api-param-type-boolean,`Boolean`>>} params.lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
- * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {<<api-param-type-string,`String`>>} params.q - Query in the Lucene query string syntax
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
@@ -2340,9 +2323,6 @@ api.explain = ca({
     },
     lenient: {
       type: 'boolean'
-    },
-    parent: {
-      type: 'string'
     },
     preference: {
       type: 'string'
@@ -2441,7 +2421,6 @@ api.fieldCaps = ca({
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.storedFields - A comma-separated list of stored fields to return in the response
- * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
@@ -2449,8 +2428,6 @@ api.fieldCaps = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExclude - A list of fields to exclude from the returned _source field
- * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceInclude - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
  * @param {<<api-param-type-string,`String`>>} params.id - The document ID
@@ -2462,9 +2439,6 @@ api.get = ca({
     storedFields: {
       type: 'list',
       name: 'stored_fields'
-    },
-    parent: {
-      type: 'string'
     },
     preference: {
       type: 'string'
@@ -2488,14 +2462,6 @@ api.get = ca({
     _sourceIncludes: {
       type: 'list',
       name: '_source_includes'
-    },
-    _sourceExclude: {
-      type: 'list',
-      name: '_source_exclude'
-    },
-    _sourceInclude: {
-      type: 'list',
-      name: '_source_include'
     },
     version: {
       type: 'number'
@@ -2552,7 +2518,6 @@ api.getScript = ca({
  * Perform a [getSource](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-get.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>} params.parent - The ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random)
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specify whether to perform the operation in realtime or search mode
  * @param {<<api-param-type-boolean,`Boolean`>>} params.refresh - Refresh the shard containing the document before performing the operation
@@ -2568,9 +2533,6 @@ api.getScript = ca({
  */
 api.getSource = ca({
   params: {
-    parent: {
-      type: 'string'
-    },
     preference: {
       type: 'string'
     },
@@ -2627,7 +2589,6 @@ api.getSource = ca({
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
  * @param {<<api-param-type-string,`String`>>} [params.opType=index] - Explicit operation type
- * @param {<<api-param-type-string,`String`>>} params.parent - ID of the parent document
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
@@ -2654,9 +2615,6 @@ api.index = ca({
         'create'
       ],
       name: 'op_type'
-    },
-    parent: {
-      type: 'string'
     },
     refresh: {
       type: 'enum',
@@ -5100,7 +5058,6 @@ api.msearchTemplate = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} [params.payloads=true] - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
- * @param {<<api-param-type-string,`String`>>} params.parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
@@ -5149,10 +5106,6 @@ api.mtermvectors = ca({
       required: false
     },
     routing: {
-      type: 'string',
-      required: false
-    },
-    parent: {
       type: 'string',
       required: false
     },
@@ -6712,7 +6665,6 @@ api.tasks.prototype.list = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} [params.payloads=true] - Specifies if term payloads should be returned.
  * @param {<<api-param-type-string,`String`>>} params.preference - Specify the node or shard the operation should be performed on (default: random).
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value.
- * @param {<<api-param-type-string,`String`>>} params.parent - Parent id of documents.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
  * @param {<<api-param-type-number,`Number`>>} params.version - Explicit version number for concurrency control
  * @param {<<api-param-type-string,`String`>>} params.versionType - Specific version type
@@ -6758,10 +6710,6 @@ api.termvectors = ca({
       required: false
     },
     routing: {
-      type: 'string',
-      required: false
-    },
-    parent: {
       type: 'string',
       required: false
     },
@@ -6816,7 +6764,6 @@ api.termvectors = ca({
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceIncludes - A list of fields to extract and return from the _source field
  * @param {<<api-param-type-string,`String`>>} params.lang - The script language (default: painless)
- * @param {<<api-param-type-string,`String`>>} params.parent - ID of the parent document. Is is only used for routing and when for the upsert request
  * @param {<<api-param-type-string,`String`>>} params.refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
  * @param {<<api-param-type-number,`Number`>>} params.retryOnConflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
  * @param {<<api-param-type-string,`String`>>} params.routing - Specific routing value
@@ -6845,9 +6792,6 @@ api.update = ca({
       name: '_source_includes'
     },
     lang: {
-      type: 'string'
-    },
-    parent: {
       type: 'string'
     },
     refresh: {
