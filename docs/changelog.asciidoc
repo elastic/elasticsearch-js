@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 16.1.1 (Jun 4 2019)
+  * Updated readme
+
 === 16.1.0 (May 29 2019)
   * apiVersion `"7.1"` is now the default
 
