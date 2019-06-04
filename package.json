@@ -6,7 +6,7 @@
   "name": "elasticsearch",
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
-  "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
+  "homepage": "https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/16.x/index.html",
   "version": "16.1.0",
   "keywords": [
     "elasticsearch",
@@ -112,7 +112,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/elastic/elasticsearch-js.git"
+    "url": "https://github.com/elastic/elasticsearch-js-legacy.git"
   },
   "engines": {
     "node": ">=0.8"
