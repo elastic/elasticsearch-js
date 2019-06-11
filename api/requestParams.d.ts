@@ -362,7 +362,6 @@ export interface Create<T = any> extends Generic {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -377,7 +376,6 @@ export interface Delete extends Generic {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -408,6 +406,7 @@ export interface DeleteByQuery<T = any> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
   size?: number;
+  max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -444,7 +443,6 @@ export interface Exists extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -462,7 +460,6 @@ export interface ExistsSource extends Generic {
   type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -486,7 +483,6 @@ export interface Explain<T = any> extends Generic {
   df?: string;
   stored_fields?: string | string[];
   lenient?: boolean;
-  parent?: string;
   preference?: string;
   q?: string;
   routing?: string;
@@ -512,7 +508,6 @@ export interface Get extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -535,7 +530,6 @@ export interface GetSource extends Generic {
   type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -553,7 +547,6 @@ export interface Index<T = any> extends Generic {
   type?: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -992,7 +985,6 @@ export interface Mtermvectors<T = any> extends Generic {
   payloads?: boolean;
   preference?: string;
   routing?: string;
-  parent?: string;
   realtime?: boolean;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
@@ -1068,6 +1060,7 @@ export interface Reindex<T = any> extends Generic {
   requests_per_second?: number;
   scroll?: string;
   slices?: number;
+  max_docs?: number;
   body: T;
 }
 
@@ -1270,7 +1263,6 @@ export interface Termvectors<T = any> extends Generic {
   payloads?: boolean;
   preference?: string;
   routing?: string;
-  parent?: string;
   realtime?: boolean;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
@@ -1288,7 +1280,6 @@ export interface Update<T = any> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   lang?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   retry_on_conflict?: number;
   routing?: string;
@@ -1320,6 +1311,7 @@ export interface UpdateByQuery<T = any> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
   size?: number;
+  max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -1580,6 +1572,7 @@ export interface MlDeleteModelSnapshot extends Generic {
 
 export interface MlFindFileStructure<T = any> extends Generic {
   lines_to_sample?: number;
+  line_merge_size_limit?: number;
   timeout?: string;
   charset?: string;
   format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';

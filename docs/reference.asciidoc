@@ -1077,9 +1077,6 @@ link:{ref}/docs-index_.html[Reference]
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
-|`parent`
-|`string` - ID of the parent document
-
 |`refresh`
 |`'true', 'false', 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
@@ -1122,9 +1119,6 @@ link:{ref}/docs-delete.html[Reference]
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-
-|`parent`
-|`string` - ID of parent document
 
 |`refresh`
 |`'true', 'false', 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -1212,7 +1206,10 @@ _Default:_ `open`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
 |`size`
-|`number` - Number of hits to return (default: 10)
+|`number` - Deprecated, please use `max_docs` instead
+
+|`max_docs` or `maxDocs`
+|`number` - Maximum number of documents to process (default: all documents)
 
 |`sort`
 |`string, string[]` - A comma-separated list of <field>:<direction> pairs
@@ -1322,9 +1319,6 @@ link:{ref}/docs-get.html[Reference]
 |`stored_fields` or `storedFields`
 |`string, string[]` - A comma-separated list of stored fields to return in the response
 
-|`parent`
-|`string` - The ID of the parent document
-
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
 
@@ -1370,9 +1364,6 @@ link:{ref}/docs-get.html[Reference]
 
 |`type`
 |`string` - The type of the document; deprecated and optional starting with 7.0
-
-|`parent`
-|`string` - The ID of the parent document
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -1438,9 +1429,6 @@ _Default:_ `OR`
 
 |`lenient`
 |`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-
-|`parent`
-|`string` - The ID of the parent document
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -1514,9 +1502,6 @@ link:{ref}/docs-get.html[Reference]
 |`stored_fields` or `storedFields`
 |`string, string[]` - A comma-separated list of stored fields to return in the response
 
-|`parent`
-|`string` - The ID of the parent document
-
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
 
@@ -1579,9 +1564,6 @@ link:{ref}/docs-get.html[Reference]
 |`type`
 |`string` - The type of the document; deprecated and optional starting with 7.0
 
-|`parent`
-|`string` - The ID of the parent document
-
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
 
@@ -1634,9 +1616,6 @@ link:{ref}/docs-index_.html[Reference]
 |`op_type` or `opType`
 |`'index', 'create'` - Explicit operation type +
 _Default:_ `index`
-
-|`parent`
-|`string` - ID of the parent document
 
 |`refresh`
 |`'true', 'false', 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -2941,8 +2920,8 @@ link:{ref}/search-multi-search.html[Reference]
 _Default:_ `128`
 
 |`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `The default grows with the number of nodes in the cluster but is at most 256.`
+|`number` - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+_Default:_ `5`
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -3029,9 +3008,6 @@ _Default:_ `true`
 
 |`routing`
 |`string` - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-
-|`parent`
-|`string` - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
 
 |`realtime`
 |`boolean` - Specifies if requests are real-time as opposed to near-real-time (default: true).
@@ -3274,6 +3250,9 @@ _Default:_ `5m`
 |`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
 _Default:_ `1`
 
+|`max_docs` or `maxDocs`
+|`number` - Maximum number of documents to process (default: all documents)
+
 |`body`
 |`object` - The search definition using the Query DSL and the prototype for the index request.
 
@@ -3497,7 +3476,7 @@ _Default:_ `512`
 
 |`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
 |`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `The default is 5.`
+_Default:_ `5`
 
 |`pre_filter_shard_size` or `preFilterShardSize`
 |`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
@@ -3913,9 +3892,6 @@ _Default:_ `true`
 |`routing`
 |`string` - Specific routing value.
 
-|`parent`
-|`string` - Parent id of documents.
-
 |`realtime`
 |`boolean` - Specifies if request is real-time as opposed to near-real-time (default: true).
 
@@ -3961,9 +3937,6 @@ link:{ref}/docs-update.html[Reference]
 
 |`lang`
 |`string` - The script language (default: painless)
-
-|`parent`
-|`string` - ID of the parent document. Is is only used for routing and when for the upsert request
 
 |`refresh`
 |`'true', 'false', 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -4054,7 +4027,10 @@ _Default:_ `open`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
 |`size`
-|`number` - Number of hits to return (default: 10)
+|`number` - Deprecated, please use `max_docs` instead
+
+|`max_docs` or `maxDocs`
+|`number` - Maximum number of documents to process (default: all documents)
 
 |`sort`
 |`string, string[]` - A comma-separated list of <field>:<direction> pairs
@@ -4873,6 +4849,10 @@ link:{ref}/ml-find-file-structure.html[Reference]
 |`lines_to_sample` or `linesToSample`
 |`number` - How many lines of the file should be included in the analysis +
 _Default:_ `1000`
+
+|`line_merge_size_limit` or `lineMergeSizeLimit`
+|`number` - Maximum number of characters permitted in a single message when lines are merged to create messages. +
+_Default:_ `10000`
 
 |`timeout`
 |`string` - Timeout after which the analysis will be aborted +
