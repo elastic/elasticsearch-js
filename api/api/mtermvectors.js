@@ -38,7 +38,6 @@ function buildMtermvectors (opts) {
    * @param {boolean} payloads - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
    * @param {string} routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {string} parent - Parent id of documents. Applies to all returned documents unless otherwise specified in body "params" or "docs".
    * @param {boolean} realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
@@ -55,7 +54,6 @@ function buildMtermvectors (opts) {
     'payloads',
     'preference',
     'routing',
-    'parent',
     'realtime',
     'version',
     'version_type',
