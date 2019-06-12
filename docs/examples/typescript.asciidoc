@@ -59,7 +59,7 @@ async function run (): void {
   client
     .search(params)
     .then((result: ApiResponse) => {
-      console.og(result.body.hits.hits)
+      console.log(result.body.hits.hits)
     })
     .catch((err: Error) => {
       console.log(err)
