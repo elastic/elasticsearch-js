@@ -156,8 +156,19 @@ _Default:_ `elasticsearch-js`
 _Default:_ `{}`
 
 |`cloud`
-|`object` - Custom configuration for connecting to https://cloud.elastic.co[Elastic Cloud]. +
-_Default:_ `null`
+a|`object` - Custom configuration for connecting to https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] for more details. +
+_Default:_ `null` + 
+_Cloud configuration example:_ 
+[source,js]
+----
+const client = new Client({
+  cloud: {
+    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----
 
 |===
 
