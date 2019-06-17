@@ -27,12 +27,28 @@ import {
   ResurrectEvent,
   events,
   errors,
-  ClientExtendsCallbackOptions
+  ClientExtendsCallbackOptions,
+  NodeOptions
 } from '../../index'
 
 import { TransportRequestParams, TransportRequestOptions } from '../../lib/Transport'
+import { URL } from 'url'
 
 const client = new Client({ node: 'http://localhost:9200' })
+
+const nodeOpts: NodeOptions = {
+  url: new URL('http://localhost:9200'),
+  id: 'winteriscoming',
+  headers: { 'foo': 'bar' },
+  roles: {
+    master: false,
+    data: true,
+    ingest: false,
+    ml: false
+  }
+}
+
+const client2 = new Client({ node: nodeOpts })
 
 client.on(events.RESPONSE, (err: errors.ElasticsearchClientError | null, request: RequestEvent) => {
   if (err) console.log(err)
