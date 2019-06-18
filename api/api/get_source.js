@@ -31,7 +31,6 @@ function buildGetSource (opts) {
    * @param {string} id - The document ID
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document; deprecated and optional starting with 7.0
-   * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
@@ -44,16 +43,13 @@ function buildGetSource (opts) {
    */
 
   const acceptedQuerystring = [
-    'parent',
     'preference',
     'realtime',
     'refresh',
     'routing',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'version',
     'version_type',
     'pretty',
@@ -65,9 +61,7 @@ function buildGetSource (opts) {
 
   const snakeCase = {
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'

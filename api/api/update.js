@@ -36,7 +36,6 @@ function buildUpdate (opts) {
    * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {string} lang - The script language (default: painless)
-   * @param {string} parent - ID of the parent document. Is is only used for routing and when for the upsert request
    * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {number} retry_on_conflict - Specify how many times should the operation be retried when a conflict occurs (default: 0)
    * @param {string} routing - Specific routing value
@@ -50,11 +49,8 @@ function buildUpdate (opts) {
     'wait_for_active_shards',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'lang',
-    'parent',
     'refresh',
     'retry_on_conflict',
     'routing',
@@ -71,9 +67,7 @@ function buildUpdate (opts) {
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     retryOnConflict: 'retry_on_conflict',
     ifSeqNo: 'if_seq_no',
     ifPrimaryTerm: 'if_primary_term',

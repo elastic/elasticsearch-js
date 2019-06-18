@@ -32,7 +32,6 @@ function buildDelete (opts) {
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document
    * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {string} parent - ID of parent document
    * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
    * @param {string} routing - Specific routing value
    * @param {time} timeout - Explicit operation timeout
@@ -44,7 +43,6 @@ function buildDelete (opts) {
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
-    'parent',
     'refresh',
     'routing',
     'timeout',

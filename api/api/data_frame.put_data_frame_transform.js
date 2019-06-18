@@ -22,26 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityPutRoleMapping (opts) {
+function buildDataFramePutDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.put_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html) request
+   * Perform a [data_frame.put_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html) request
    *
-   * @param {string} name - Role-mapping name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role mapping to add
+   * @param {string} transform_id - The id of the new transform.
+   * @param {object} body - The data frame transform definition
    */
 
   const acceptedQuerystring = [
-    'refresh'
+
   ]
 
   const snakeCase = {
 
   }
 
-  return function securityPutRoleMapping (params, options, callback) {
+  return function dataFramePutDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,8 +53,8 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
     if (params['body'] == null) {
@@ -70,7 +69,7 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, name, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -84,7 +83,7 @@ function buildSecurityPutRoleMapping (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
@@ -99,4 +98,4 @@ function buildSecurityPutRoleMapping (opts) {
   }
 }
 
-module.exports = buildSecurityPutRoleMapping
+module.exports = buildDataFramePutDataFrameTransform

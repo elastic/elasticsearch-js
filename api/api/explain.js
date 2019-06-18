@@ -37,7 +37,6 @@ function buildExplain (opts) {
    * @param {string} df - The default field for query string query (default: _all)
    * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
    * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-   * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {string} q - Query in the Lucene query string syntax
    * @param {string} routing - Specific routing value
@@ -54,15 +53,12 @@ function buildExplain (opts) {
     'df',
     'stored_fields',
     'lenient',
-    'parent',
     'preference',
     'q',
     'routing',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'pretty',
     'human',
     'error_trace',
@@ -75,9 +71,7 @@ function buildExplain (opts) {
     defaultOperator: 'default_operator',
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

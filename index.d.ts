@@ -177,6 +177,38 @@ declare class Client extends EventEmitter {
   }
   count: ApiMethod<RequestParams.Count>
   create: ApiMethod<RequestParams.Create>
+  data_frame: {
+    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+  }
+  dataFrame: {
+    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
+    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
+    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
+    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
+    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
+    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
+    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+  }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
   deleteByQuery: ApiMethod<RequestParams.DeleteByQuery>
@@ -443,6 +475,8 @@ declare class Client extends EventEmitter {
     stop_job: ApiMethod<RequestParams.RollupStopJob>
     stopJob: ApiMethod<RequestParams.RollupStopJob>
   }
+  scripts_painless_context: ApiMethod<RequestParams.ScriptsPainlessContext>
+  scriptsPainlessContext: ApiMethod<RequestParams.ScriptsPainlessContext>
   scripts_painless_execute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scriptsPainlessExecute: ApiMethod<RequestParams.ScriptsPainlessExecute>
   scroll: ApiMethod<RequestParams.Scroll>

@@ -22,26 +22,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityPutRoleMapping (opts) {
+function buildScriptsPainlessContext (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.put_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html) request
+   * Perform a [scripts_painless_context](undefined) request
    *
-   * @param {string} name - Role-mapping name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role mapping to add
+   * @param {string} context - Select a specific context to retrieve API information about
    */
 
   const acceptedQuerystring = [
-    'refresh'
+    'context',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
-  return function securityPutRoleMapping (params, options, callback) {
+  return function scriptsPainlessContext (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,16 +57,6 @@ function buildSecurityPutRoleMapping (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -70,11 +64,11 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, name, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'GET'
     }
 
     var ignore = options.ignore
@@ -84,13 +78,13 @@ function buildSecurityPutRoleMapping (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    path = '/' + '_scripts' + '/' + 'painless' + '/' + '_context'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -99,4 +93,4 @@ function buildSecurityPutRoleMapping (opts) {
   }
 }
 
-module.exports = buildSecurityPutRoleMapping
+module.exports = buildScriptsPainlessContext

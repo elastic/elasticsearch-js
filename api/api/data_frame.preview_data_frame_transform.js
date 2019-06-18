@@ -22,26 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityPutRoleMapping (opts) {
+function buildDataFramePreviewDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.put_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html) request
+   * Perform a [data_frame.preview_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html) request
    *
-   * @param {string} name - Role-mapping name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role mapping to add
+   * @param {object} body - The definition for the data_frame transform to preview
    */
 
   const acceptedQuerystring = [
-    'refresh'
+
   ]
 
   const snakeCase = {
 
   }
 
-  return function securityPutRoleMapping (params, options, callback) {
+  return function dataFramePreviewDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,10 +52,6 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
-    }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
@@ -70,11 +64,11 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, name, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore
@@ -84,7 +78,7 @@ function buildSecurityPutRoleMapping (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + '_preview'
 
     // build request object
     const request = {
@@ -99,4 +93,4 @@ function buildSecurityPutRoleMapping (opts) {
   }
 }
 
-module.exports = buildSecurityPutRoleMapping
+module.exports = buildDataFramePreviewDataFrameTransform
