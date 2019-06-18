@@ -29,7 +29,7 @@ const apiFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'r
 const xPackFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'api')
 
 function cloneAndCheckout (opts, callback) {
-  const { log, tag } = opts
+  const { log, tag, branch } = opts
   withTag(tag, callback)
 
   /**
@@ -57,18 +57,27 @@ function cloneAndCheckout (opts, callback) {
 
     if (fresh) {
       clone(checkout)
+    } else if (opts.branch) {
+      checkout(true)
     } else {
       checkout()
     }
 
-    function checkout () {
-      log.text = `Checking out tag '${tag}'`
-      git.checkout(tag, err => {
+    function checkout (alsoPull = false) {
+      if (branch) {
+        log.text = `Checking out branch '${branch}'`
+      } else {
+        log.text = `Checking out tag '${tag}'`
+      }
+      git.checkout(branch || tag, err => {
         if (err) {
           if (retry++ > 0) {
             callback(new Error(`Cannot checkout tag '${tag}'`), { apiFolder, xPackFolder })
             return
           }
+          return pull(checkout)
+        }
+        if (alsoPull) {
           return pull(checkout)
         }
         callback(null, { apiFolder, xPackFolder })
