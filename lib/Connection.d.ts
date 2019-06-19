@@ -22,13 +22,13 @@
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util';
 import * as http from 'http';
-import { SecureContextOptions } from 'tls';
+import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 
 export declare type agentFn = () => any;
 
 interface ConnectionOptions {
   url: URL;
-  ssl?: SecureContextOptions;
+  ssl?: TlsConnectionOptions;
   id?: string;
   headers?: any;
   agent?: AgentOptions | agentFn;
@@ -59,7 +59,7 @@ export default class Connection {
     ML: string;
   };
   url: URL;
-  ssl: SecureContextOptions | null;
+  ssl: TlsConnectionOptions | null;
   id: string;
   headers: any;
   deadCount: number;
