@@ -38,7 +38,6 @@ function buildTermvectors (opts) {
    * @param {boolean} payloads - Specifies if term payloads should be returned.
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random).
    * @param {string} routing - Specific routing value.
-   * @param {string} parent - Parent id of documents.
    * @param {boolean} realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
@@ -54,7 +53,6 @@ function buildTermvectors (opts) {
     'payloads',
     'preference',
     'routing',
-    'parent',
     'realtime',
     'version',
     'version_type',

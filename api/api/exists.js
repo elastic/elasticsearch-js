@@ -32,7 +32,6 @@ function buildExists (opts) {
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
    * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
@@ -46,7 +45,6 @@ function buildExists (opts) {
 
   const acceptedQuerystring = [
     'stored_fields',
-    'parent',
     'preference',
     'realtime',
     'refresh',
