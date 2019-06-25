@@ -99,7 +99,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
     await helper.runInParallel(
       this.client, 'security.deleteRole',
-      roles.map(r => ({ name: r, refresh: 'true' }))
+      roles.map(r => ({ name: r }))
     )
   } catch (err) {
     this.tap.error(err, 'should not error: security role cleanup')
@@ -110,7 +110,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
     await helper.runInParallel(
       this.client, 'security.deleteUser',
-      users.map(r => ({ username: r, refresh: 'true' }))
+      users.map(r => ({ username: r }))
     )
   } catch (err) {
     this.tap.error(err, 'should not error: security user cleanup')
@@ -123,8 +123,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
       Object.keys(body[app]).forEach(priv => {
         privileges.push({
           name: body[app][priv].name,
-          application: body[app][priv].application,
-          refresh: 'true'
+          application: body[app][priv].application
         })
       })
     })
@@ -195,6 +194,13 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     await this.client.indices.delete({ index: '.ml-*' }, { ignore: 404 })
   } catch (err) {
     this.tap.error(err, 'should not error: indices.delete (ml indices)')
+  }
+
+  // refresh all indices
+  try {
+    await this.client.indices.refresh({ index: 'security' })
+  } catch (err) {
+    this.tap.error(err, 'should not error: indices.refresh')
   }
 }
 
