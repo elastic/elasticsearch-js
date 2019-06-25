@@ -20,7 +20,7 @@
 /// <reference types="node" />
 
 import { EventEmitter } from 'events';
-import { SecureContextOptions } from 'tls';
+import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 import Transport, {
   ApiResponse,
   RequestEvent,
@@ -31,6 +31,7 @@ import Transport, {
   generateRequestIdFn,
   TransportRequestCallback
 } from './lib/Transport';
+import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
 import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
@@ -72,8 +73,22 @@ interface ClientExtends {
 }
 // /Extend API
 
+interface NodeOptions {
+  url: URL;
+  id?: string;
+  agent?: AgentOptions;
+  ssl?: TlsConnectionOptions;
+  headers?: anyObject;
+  roles?: {
+    master: boolean;
+    data: boolean;
+    ingest: boolean;
+    ml: boolean;
+  }
+}
+
 interface ClientOptions {
-  node?: string | string[];
+  node?: string | string[] | NodeOptions | NodeOptions[];
   nodes?: string | string[];
   Connection?: typeof Connection;
   ConnectionPool?: typeof ConnectionPool;
@@ -89,7 +104,7 @@ interface ClientOptions {
   resurrectStrategy?: 'ping' | 'optimistic' | 'none';
   suggestCompression?: boolean;
   compression?: 'gzip';
-  ssl?: SecureContextOptions;
+  ssl?: TlsConnectionOptions;
   agent?: AgentOptions | agentFn;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
@@ -616,5 +631,6 @@ export {
   ResurrectEvent,
   RequestParams,
   ClientOptions,
+  NodeOptions,
   ClientExtendsCallbackOptions
 };
