@@ -99,7 +99,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
     await helper.runInParallel(
       this.client, 'security.deleteRole',
-      roles.map(r => ({ name: r, refresh: 'wait_for' }))
+      roles.map(r => ({ name: r, refresh: 'true' }))
     )
   } catch (err) {
     this.tap.error(err, 'should not error: security role cleanup')
@@ -110,7 +110,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
     await helper.runInParallel(
       this.client, 'security.deleteUser',
-      users.map(r => ({ username: r, refresh: 'wait_for' }))
+      users.map(r => ({ username: r, refresh: 'true' }))
     )
   } catch (err) {
     this.tap.error(err, 'should not error: security user cleanup')
@@ -124,7 +124,7 @@ TestRunner.prototype.cleanupPlatinum = async function () {
         privileges.push({
           name: body[app][priv].name,
           application: body[app][priv].application,
-          refresh: 'wait_for'
+          refresh: 'true'
         })
       })
     })
