@@ -196,9 +196,9 @@ TestRunner.prototype.cleanupPlatinum = async function () {
     this.tap.error(err, 'should not error: indices.delete (ml indices)')
   }
 
-  // refresh all indices
+  // refresh the security index
   try {
-    await this.client.indices.refresh({ index: 'security' })
+    await this.client.indices.refresh({ index: '.security*' })
   } catch (err) {
     this.tap.error(err, 'should not error: indices.refresh')
   }
