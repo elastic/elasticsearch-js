@@ -34,6 +34,10 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 const customSkips = [
+  // Test cat indices output for closed index (pre 7.2.0) is failing
+  'cat.indices/10_basic.yml',
+  // cluster health with closed index (pre 7.2.0) is failing
+  'cluster.health/10_basic.yml',
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml',
