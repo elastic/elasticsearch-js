@@ -22,29 +22,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameGetDataFrameTransform (opts) {
+function buildMlPutDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [data_frame.get_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html) request
+   * Perform a [ml.put_data_frame_analytics](undefined) request
    *
-   * @param {string} transform_id - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-   * @param {int} from - skips a number of transform configs, defaults to 0
-   * @param {int} size - specifies a max number of transforms to get, defaults to 100
-   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
+   * @param {string} id - The ID of the data frame analytics to create
+   * @param {object} body - The data frame analytics configuration
    */
 
   const acceptedQuerystring = [
-    'from',
-    'size',
-    'allow_no_match'
+
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
+
   }
 
-  return function dataFrameGetDataFrameTransform (params, options, callback) {
+  return function mlPutDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -57,8 +53,12 @@ function buildDataFrameGetDataFrameTransform (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -69,11 +69,11 @@ function buildDataFrameGetDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'GET'
+      method = 'PUT'
     }
 
     var ignore = options.ignore
@@ -83,17 +83,13 @@ function buildDataFrameGetDataFrameTransform (opts) {
 
     var path = ''
 
-    if ((transform_id || transformId) != null) {
-      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
-    } else {
-      path = '/' + '_data_frame' + '/' + 'transforms'
-    }
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -102,4 +98,4 @@ function buildDataFrameGetDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameGetDataFrameTransform
+module.exports = buildMlPutDataFrameAnalytics

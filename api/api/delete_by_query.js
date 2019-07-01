@@ -45,7 +45,6 @@ function buildDeleteByQuery (opts) {
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
    * @param {enum} search_type - Search operation type
    * @param {time} search_timeout - Explicit timeout for each search request. Defaults to no timeout.
-   * @param {number} size - Deprecated, please use `max_docs` instead
    * @param {number} max_docs - Maximum number of documents to process (default: all documents)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
@@ -82,7 +81,6 @@ function buildDeleteByQuery (opts) {
     'scroll',
     'search_type',
     'search_timeout',
-    'size',
     'max_docs',
     'sort',
     '_source',

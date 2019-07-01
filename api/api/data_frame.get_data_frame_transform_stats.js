@@ -31,15 +31,17 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
    * @param {string} transform_id - The id of the transform for which to get stats. '_all' or '*' implies all transforms
    * @param {number} from - skips a number of transform stats, defaults to 0
    * @param {number} size - specifies a max number of transform stats to get, defaults to 100
+   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
    */
 
   const acceptedQuerystring = [
     'from',
-    'size'
+    'size',
+    'allow_no_match'
   ]
 
   const snakeCase = {
-
+    allowNoMatch: 'allow_no_match'
   }
 
   return function dataFrameGetDataFrameTransformStats (params, options, callback) {

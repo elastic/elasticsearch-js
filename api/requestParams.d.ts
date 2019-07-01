@@ -405,7 +405,6 @@ export interface DeleteByQuery<T = any> extends Generic {
   scroll?: string;
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
-  size?: number;
   max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
@@ -1074,10 +1073,6 @@ export interface RenderSearchTemplate<T = any> extends Generic {
   body?: T;
 }
 
-export interface ScriptsPainlessContext extends Generic {
-  context?: string;
-}
-
 export interface ScriptsPainlessExecute<T = any> extends Generic {
   body?: T;
 }
@@ -1310,7 +1305,6 @@ export interface UpdateByQuery<T = any> extends Generic {
   scroll?: string;
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
-  size?: number;
   max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
@@ -1392,12 +1386,14 @@ export interface DataFrameGetDataFrameTransform extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
+  allow_no_match?: boolean;
 }
 
 export interface DataFrameGetDataFrameTransformStats extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
+  allow_no_match?: boolean;
 }
 
 export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
@@ -1418,6 +1414,7 @@ export interface DataFrameStopDataFrameTransform extends Generic {
   transform_id: string;
   wait_for_completion?: boolean;
   timeout?: string;
+  allow_no_match?: boolean;
 }
 
 export interface GraphExplore<T = any> extends Generic {
@@ -1475,6 +1472,13 @@ export interface IndicesFreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface IndicesReloadSearchAnalyzers extends Generic {
+  index?: string | string[];
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
 }
 
 export interface IndicesUnfreeze extends Generic {
@@ -1540,6 +1544,10 @@ export interface MlDeleteCalendarJob extends Generic {
   job_id: string;
 }
 
+export interface MlDeleteDataFrameAnalytics extends Generic {
+  id: string;
+}
+
 export interface MlDeleteDatafeed extends Generic {
   datafeed_id: string;
   force?: boolean;
@@ -1568,6 +1576,10 @@ export interface MlDeleteJob extends Generic {
 export interface MlDeleteModelSnapshot extends Generic {
   job_id: string;
   snapshot_id: string;
+}
+
+export interface MlEvaluateDataFrame<T = any> extends Generic {
+  body: T;
 }
 
 export interface MlFindFileStructure<T = any> extends Generic {
@@ -1641,6 +1653,20 @@ export interface MlGetCategories<T = any> extends Generic {
   from?: number;
   size?: number;
   body?: T;
+}
+
+export interface MlGetDataFrameAnalytics extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
+}
+
+export interface MlGetDataFrameAnalyticsStats extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
 }
 
 export interface MlGetDatafeedStats extends Generic {
@@ -1754,6 +1780,11 @@ export interface MlPutCalendarJob extends Generic {
   job_id: string;
 }
 
+export interface MlPutDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  body: T;
+}
+
 export interface MlPutDatafeed<T = any> extends Generic {
   datafeed_id: string;
   body: T;
@@ -1781,10 +1812,23 @@ export interface MlSetUpgradeMode extends Generic {
   timeout?: string;
 }
 
+export interface MlStartDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  timeout?: string;
+  body?: T;
+}
+
 export interface MlStartDatafeed<T = any> extends Generic {
   datafeed_id: string;
   start?: string;
   end?: string;
+  timeout?: string;
+  body?: T;
+}
+
+export interface MlStopDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  allow_no_match?: boolean;
   timeout?: string;
   body?: T;
 }
