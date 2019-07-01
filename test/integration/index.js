@@ -150,7 +150,7 @@ class Runner {
         folder[0].lastIndexOf(sep)
       )
 
-      tap.test(`Testing ${apiName}`, { bail: true }, t => {
+      tap.test(`Testing ${apiName}`, { bail: true, timeout: 0 }, t => {
         for (const file of folder) {
           const data = readFileSync(file, 'utf8')
           // get the test yaml (as object), some file has multiple yaml documents inside,
