@@ -58,7 +58,9 @@ function buildExplain (opts) {
     'routing',
     '_source',
     '_source_excludes',
+    '_source_exclude',
     '_source_includes',
+    '_source_include',
     'pretty',
     'human',
     'error_trace',
@@ -71,7 +73,9 @@ function buildExplain (opts) {
     defaultOperator: 'default_operator',
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
+    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
+    _sourceInclude: '_source_include',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
