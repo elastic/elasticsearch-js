@@ -22,8 +22,7 @@
 const { readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
-const Git = require('simple-git/promise')
-const ora = require('ora')
+const Git = require('simple-git')
 const tap = require('tap')
 const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
@@ -92,11 +91,10 @@ class Runner {
       }
     }
     this.client = new Client(options)
-    this.log = ora('Loading yaml suite').start()
+    console.log('Loading yaml suite')
   }
 
   async waitCluster (client, times = 0) {
-    this.log.text = 'Waiting for Elasticsearch'
     try {
       await client.cluster.health({ waitForStatus: 'green', timeout: '50s' })
     } catch (err) {
@@ -104,7 +102,7 @@ class Runner {
         await sleep(5000)
         return this.waitCluster(client, times)
       }
-      this.log.fail(err.message)
+      console.error(err)
       process.exit(1)
     }
   }
@@ -113,15 +111,16 @@ class Runner {
     const { client } = this
     const parse = this.parse.bind(this)
 
+    console.log('Waiting for Elasticsearch')
     await this.waitCluster(client)
 
     const { body } = await client.info()
     const { number: version, build_hash: sha } = body.version
 
-    this.log.succeed(`Cheking out sha ${sha}...`)
+    console.log(`Checking out sha ${sha}...`)
     await this.withSHA(sha)
 
-    this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
+    console.log(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
 
     const folders = []
       .concat(getAllFiles(yamlFolder))
@@ -206,7 +205,7 @@ class Runner {
     try {
       var doc = yaml.safeLoad(data)
     } catch (err) {
-      this.log.fail(err.message)
+      console.error(err)
       return
     }
     return doc
@@ -230,15 +229,14 @@ class Runner {
     return new Promise((resolve, reject) => {
       _withSHA.call(this, err => err ? reject(err) : resolve())
     })
+
     function _withSHA (callback) {
       var fresh = false
       var retry = 0
-      var log = this.log
 
       if (!this.pathExist(esFolder)) {
         if (!this.createFolder(esFolder)) {
-          log.fail('Failed folder creation')
-          return
+          return callback(new Error('Failed folder creation'))
         }
         fresh = true
       }
@@ -252,12 +250,11 @@ class Runner {
       }
 
       function checkout () {
-        log.text = `Checking out sha '${sha}'`
+        console.log(`Checking out sha '${sha}'`)
         git.checkout(sha, err => {
           if (err) {
             if (retry++ > 0) {
-              log.fail(`Cannot checkout sha '${sha}'`)
-              return
+              return callback(err)
             }
             return pull(checkout)
           }
@@ -266,22 +263,20 @@ class Runner {
       }
 
       function pull (cb) {
-        log.text = 'Pulling elasticsearch repository...'
+        console.log('Pulling elasticsearch repository...')
         git.pull(err => {
           if (err) {
-            log.fail(err.message)
-            return
+            return callback(err)
           }
           cb()
         })
       }
 
       function clone (cb) {
-        log.text = 'Cloning elasticsearch repository...'
+        console.log('Cloning elasticsearch repository...')
         git.clone(esRepo, esFolder, err => {
           if (err) {
-            log.fail(err.message)
-            return
+            return callback(err)
           }
           cb()
         })
