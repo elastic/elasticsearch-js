@@ -107,7 +107,7 @@ class Runner {
     }
   }
 
-  async start (opts) {
+  async start ({ isPlatinum }) {
     const { client } = this
     const parse = this.parse.bind(this)
 
@@ -120,11 +120,11 @@ class Runner {
     console.log(`Checking out sha ${sha}...`)
     await this.withSHA(sha)
 
-    console.log(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
+    console.log(`Testing ${isPlatinum ? 'platinum' : 'oss'} api...`)
 
     const folders = []
       .concat(getAllFiles(yamlFolder))
-      .concat(opts.isPlatinum ? getAllFiles(xPackYamlFolder) : [])
+      .concat(isPlatinum ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
       // we cluster the array based on the folder names,
       // to provide a better test log output
@@ -183,7 +183,7 @@ class Runner {
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
-          if (shouldSkip(t, file, name)) return
+          if (shouldSkip(t, isPlatinum, file, name)) return
 
           // create a subtest for the specific folder + test file + test name
           t.test(name, async t => {
@@ -323,7 +323,7 @@ if (require.main === module) {
   runner.start(opts).catch(console.log)
 }
 
-const shouldSkip = (t, file, name) => {
+const shouldSkip = (t, isPlatinum, file, name) => {
   var list = Object.keys(ossSkips)
   for (var i = 0; i < list.length; i++) {
     const ossTest = ossSkips[list[i]]
@@ -336,7 +336,7 @@ const shouldSkip = (t, file, name) => {
     }
   }
 
-  if (file.includes('x-pack')) {
+  if (file.includes('x-pack') || isPlatinum) {
     list = Object.keys(platinumBlackList)
     for (i = 0; i < list.length; i++) {
       const platTest = platinumBlackList[list[i]]
