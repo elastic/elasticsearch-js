@@ -1906,7 +1906,8 @@ api['delete'] = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
- * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
+ * @param {<<api-param-type-number,`Number`>>} params.size - Deprecated, please use `max_docs` instead
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
@@ -2005,6 +2006,10 @@ api.deleteByQuery = ca({
     },
     size: {
       type: 'number'
+    },
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     },
     sort: {
       type: 'list'
@@ -4919,7 +4924,7 @@ api.mget = ca({
  * @param {<<api-param-type-number,`Number`>>} params.maxConcurrentSearches - Controls the maximum number of concurrent searches the multi search api will execute
  * @param {<<api-param-type-boolean,`Boolean`>>} params.typedKeys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
  * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
- * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default grows with the number of nodes in the cluster but is at most 256.] - The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+ * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=5] - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
  * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
  * @param {<<api-param-type-boolean,`Boolean`>>} [params.ccsMinimizeRoundtrips=true] - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to use as default
@@ -4952,7 +4957,7 @@ api.msearch = ca({
     },
     maxConcurrentShardRequests: {
       type: 'number',
-      'default': 'The default grows with the number of nodes in the cluster but is at most 256.',
+      'default': 5,
       name: 'max_concurrent_shard_requests'
     },
     restTotalHitsAsInt: {
@@ -5665,6 +5670,7 @@ api.rankEval = ca({
  * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
  * @param {<<api-param-type-duration-string,`DurationString`>>} [params.scroll=5m] - Control how long to keep the search context alive
  * @param {<<api-param-type-number,`Number`>>} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  */
 api.reindex = ca({
   params: {
@@ -5696,6 +5702,10 @@ api.reindex = ca({
     slices: {
       type: 'number',
       'default': 1
+    },
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     }
   },
   url: {
@@ -5752,23 +5762,6 @@ api.renderSearchTemplate = ca({
     }
   ],
   method: 'POST'
-});
-
-/**
- * Perform a [scriptsPainlessContext]() request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>} params.context - Select a specific context to retrieve API information about
- */
-api.scriptsPainlessContext = ca({
-  params: {
-    context: {
-      type: 'string'
-    }
-  },
-  url: {
-    fmt: '/_scripts/painless/_context'
-  }
 });
 
 /**
@@ -5859,7 +5852,7 @@ api.scroll = ca({
  * @param {<<api-param-type-boolean,`Boolean`>>} params.seqNoPrimaryTerm - Specify whether to return sequence number and primary term of the last modification of each hit
  * @param {<<api-param-type-boolean,`Boolean`>>} params.requestCache - Specify if request cache should be used for this request or not, defaults to index level setting
  * @param {<<api-param-type-number,`Number`>>} [params.batchedReduceSize=512] - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
- * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=The default is 5.] - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+ * @param {<<api-param-type-number,`Number`>>} [params.maxConcurrentShardRequests=5] - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
  * @param {<<api-param-type-number,`Number`>>} [params.preFilterShardSize=128] - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
  * @param {<<api-param-type-boolean,`Boolean`>>} params.restTotalHitsAsInt - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
@@ -6035,7 +6028,7 @@ api.search = ca({
     },
     maxConcurrentShardRequests: {
       type: 'number',
-      'default': 'The default is 5.',
+      'default': 5,
       name: 'max_concurrent_shard_requests'
     },
     preFilterShardSize: {
@@ -6858,7 +6851,8 @@ api.update = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
- * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
+ * @param {<<api-param-type-number,`Number`>>} params.size - Deprecated, please use `max_docs` instead
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
@@ -6961,6 +6955,10 @@ api.updateByQuery = ca({
     },
     size: {
       type: 'number'
+    },
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     },
     sort: {
       type: 'list'

@@ -1906,7 +1906,7 @@ api['delete'] = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
- * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
@@ -2002,8 +2002,9 @@ api.deleteByQuery = ca({
       type: 'time',
       name: 'search_timeout'
     },
-    size: {
-      type: 'number'
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     },
     sort: {
       type: 'list'
@@ -5651,6 +5652,7 @@ api.rankEval = ca({
  * @param {<<api-param-type-number,`Number`>>} params.requestsPerSecond - The throttle to set on this request in sub-requests per second. -1 means no throttle.
  * @param {<<api-param-type-duration-string,`DurationString`>>} [params.scroll=5m] - Control how long to keep the search context alive
  * @param {<<api-param-type-number,`Number`>>} [params.slices=1] - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  */
 api.reindex = ca({
   params: {
@@ -5682,6 +5684,10 @@ api.reindex = ca({
     slices: {
       type: 'number',
       'default': 1
+    },
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     }
   },
   url: {
@@ -5738,23 +5744,6 @@ api.renderSearchTemplate = ca({
     }
   ],
   method: 'POST'
-});
-
-/**
- * Perform a [scriptsPainlessContext]() request
- *
- * @param {Object} params - An object with parameters used to carry out this action
- * @param {<<api-param-type-string,`String`>>} params.context - Select a specific context to retrieve API information about
- */
-api.scriptsPainlessContext = ca({
-  params: {
-    context: {
-      type: 'string'
-    }
-  },
-  url: {
-    fmt: '/_scripts/painless/_context'
-  }
 });
 
 /**
@@ -6841,7 +6830,7 @@ api.update = ca({
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
  * @param {<<api-param-type-string,`String`>>} params.searchType - Search operation type
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.searchTimeout - Explicit timeout for each search request. Defaults to no timeout.
- * @param {<<api-param-type-number,`Number`>>} params.size - Number of hits to return (default: 10)
+ * @param {<<api-param-type-number,`Number`>>} params.maxDocs - Maximum number of documents to process (default: all documents)
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.sort - A comma-separated list of <field>:<direction> pairs
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._source - True or false to return the _source field or not, or a list of fields to return
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params._sourceExcludes - A list of fields to exclude from the returned _source field
@@ -6941,8 +6930,9 @@ api.updateByQuery = ca({
       type: 'time',
       name: 'search_timeout'
     },
-    size: {
-      type: 'number'
+    maxDocs: {
+      type: 'number',
+      name: 'max_docs'
     },
     sort: {
       type: 'list'
