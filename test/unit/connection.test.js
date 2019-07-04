@@ -723,11 +723,11 @@ test('setRole', t => {
   t.end()
 })
 
-test('Util.inspect Connection class should hide agent and ssl', t => {
+test('Util.inspect Connection class should hide agent, ssl and auth', t => {
   t.plan(1)
 
   const connection = new Connection({
-    url: new URL('http://localhost:9200'),
+    url: new URL('http://user:password@localhost:9200'),
     id: 'node-id',
     headers: { foo: 'bar' }
   })
@@ -741,20 +741,7 @@ test('Util.inspect Connection class should hide agent and ssl', t => {
       .replace(/(\r\n|\n|\r)/gm, '')
   }
 
-  t.strictEqual(cleanStr(inspect(connection)), cleanStr(`{ url:
-   URL {
-     href: 'http://localhost:9200/',
-     origin: 'http://localhost:9200',
-     protocol: 'http:',
-     username: '',
-     password: '',
-     host: 'localhost:9200',
-     hostname: 'localhost',
-     port: '9200',
-     pathname: '/',
-     search: '',
-     searchParams: URLSearchParams {},
-     hash: '' },
+  t.strictEqual(cleanStr(inspect(connection)), cleanStr(`{ url: 'http://localhost:9200/',
   id: 'node-id',
   headers: { foo: 'bar' },
   deadCount: 0,
@@ -763,6 +750,34 @@ test('Util.inspect Connection class should hide agent and ssl', t => {
   status: 'alive',
   roles: { master: true, data: true, ingest: true, ml: false } }`)
   )
+})
+
+test('connection.toJSON should hide agent, ssl and auth', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('http://user:password@localhost:9200'),
+    id: 'node-id',
+    headers: { foo: 'bar' }
+  })
+
+  t.deepEqual(connection.toJSON(), {
+    url: 'http://localhost:9200/',
+    id: 'node-id',
+    headers: {
+      foo: 'bar'
+    },
+    deadCount: 0,
+    resurrectTimeout: 0,
+    _openRequests: 0,
+    status: 'alive',
+    roles: {
+      master: true,
+      data: true,
+      ingest: true,
+      ml: false
+    }
+  })
 })
 
 // https://github.com/elastic/elasticsearch-js/issues/843
