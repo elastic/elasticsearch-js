@@ -1205,9 +1205,6 @@ _Default:_ `open`
 |`search_timeout` or `searchTimeout`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
-|`size`
-|`number` - Deprecated, please use `max_docs` instead
-
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
 
@@ -3290,18 +3287,6 @@ link:{ref}/search-template.html[Reference]
 
 |===
 
-=== scriptsPainlessContext
-[source,js]
-----
-client.scriptsPainlessContext([params] [, options] [, callback])
-----
-[cols=2*]
-|===
-|`context`
-|`string` - Select a specific context to retrieve API information about
-
-|===
-
 === scriptsPainlessExecute
 [source,js]
 ----
@@ -4026,9 +4011,6 @@ _Default:_ `open`
 |`search_timeout` or `searchTimeout`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
-|`size`
-|`number` - Deprecated, please use `max_docs` instead
-
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
 
@@ -4288,6 +4270,9 @@ link:{ref}/get-data-frame-transform.html[Reference]
 |`size`
 |`number` - specifies a max number of transforms to get, defaults to 100
 
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
+
 |===
 
 === dataFrame.getDataFrameTransformStats
@@ -4306,6 +4291,9 @@ link:{ref}/get-data-frame-transform-stats.html[Reference]
 
 |`size`
 |`number` - specifies a max number of transform stats to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
 
 |===
 
@@ -4370,6 +4358,9 @@ link:{ref}/stop-data-frame-transform.html[Reference]
 
 |`timeout`
 |`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
 
 |===
 
@@ -4548,6 +4539,29 @@ _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of active shards to wait for before the operation returns.
+
+|===
+
+=== indices.reloadSearchAnalyzers
+[source,js]
+----
+client.indices.reloadSearchAnalyzers([params] [, options] [, callback])
+----
+link:{ref}/indices-reload-analyzers.html[Reference]
+[cols=2*]
+|===
+|`index`
+|`string, string[]` - A comma-separated list of index names to reload analyzers for
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
 
 |===
 
@@ -4745,6 +4759,18 @@ client.ml.deleteCalendarJob([params] [, options] [, callback])
 
 |===
 
+=== ml.deleteDataFrameAnalytics
+[source,js]
+----
+client.ml.deleteDataFrameAnalytics([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to delete
+
+|===
+
 === ml.deleteDatafeed
 [source,js]
 ----
@@ -4835,6 +4861,18 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |`snapshot_id` or `snapshotId`
 |`string` - The ID of the snapshot to delete
+
+|===
+
+=== ml.evaluateDataFrame
+[source,js]
+----
+client.ml.evaluateDataFrame([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`body`
+|`object` - The evaluation definition
 
 |===
 
@@ -5061,6 +5099,52 @@ link:{ref}/ml-get-category.html[Reference]
 
 |`body`
 |`object` - Category selection details if not provided in URI
+
+|===
+
+=== ml.getDataFrameAnalytics
+[source,js]
+----
+client.ml.getDataFrameAnalytics([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of analytics
+
+|`size`
+|`number` - specifies a max number of analytics to get +
+_Default:_ `100`
+
+|===
+
+=== ml.getDataFrameAnalyticsStats
+[source,js]
+----
+client.ml.getDataFrameAnalyticsStats([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of analytics
+
+|`size`
+|`number` - specifies a max number of analytics to get +
+_Default:_ `100`
 
 |===
 
@@ -5406,6 +5490,21 @@ client.ml.putCalendarJob([params] [, options] [, callback])
 
 |===
 
+=== ml.putDataFrameAnalytics
+[source,js]
+----
+client.ml.putDataFrameAnalytics([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to create
+
+|`body`
+|`object` - The data frame analytics configuration
+
+|===
+
 === ml.putDatafeed
 [source,js]
 ----
@@ -5491,6 +5590,24 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 
 |===
 
+=== ml.startDataFrameAnalytics
+[source,js]
+----
+client.ml.startDataFrameAnalytics([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to start
+
+|`timeout`
+|`string` - Controls the time to wait until the task has started. Defaults to 20 seconds
+
+|`body`
+|`object` - The start data frame analytics parameters
+
+|===
+
 === ml.startDatafeed
 [source,js]
 ----
@@ -5513,6 +5630,27 @@ link:{ref}/ml-start-datafeed.html[Reference]
 
 |`body`
 |`object` - The start datafeed parameters
+
+|===
+
+=== ml.stopDataFrameAnalytics
+[source,js]
+----
+client.ml.stopDataFrameAnalytics([params] [, options] [, callback])
+----
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to stop
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
+
+|`timeout`
+|`string` - Controls the time to wait until the task has stopped. Defaults to 20 seconds
+
+|`body`
+|`object` - The stop data frame analytics parameters
 
 |===
 

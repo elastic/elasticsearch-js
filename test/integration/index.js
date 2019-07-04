@@ -52,6 +52,12 @@ const platinumBlackList = {
   'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
+  // object keys must me strings, and `0.0.toString()` is `0`
+  'ml/evaluate_data_frame.yml': [
+    'Test binary_soft_classifition precision',
+    'Test binary_soft_classifition recall',
+    'Test binary_soft_classifition confusion_matrix'
+  ],
   // it gets random failures on CI, must investigate
   'ml/set_upgrade_mode.yml': [
     'Attempt to open job when upgrade_mode is enabled',
