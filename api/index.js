@@ -443,6 +443,8 @@ function ESAPI (opts) {
       enableUser: lazyLoad('security.enable_user', opts),
       get_api_key: lazyLoad('security.get_api_key', opts),
       getApiKey: lazyLoad('security.get_api_key', opts),
+      get_builtin_privileges: lazyLoad('security.get_builtin_privileges', opts),
+      getBuiltinPrivileges: lazyLoad('security.get_builtin_privileges', opts),
       get_privileges: lazyLoad('security.get_privileges', opts),
       getPrivileges: lazyLoad('security.get_privileges', opts),
       get_role: lazyLoad('security.get_role', opts),

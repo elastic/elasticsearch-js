@@ -5646,6 +5646,9 @@ client.ml.stopDataFrameAnalytics([params] [, options] [, callback])
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
 
+|`force`
+|`boolean` - True if the data frame analytics should be forcefully stopped
+
 |`timeout`
 |`string` - Controls the time to wait until the task has stopped. Defaults to 20 seconds
 
@@ -6101,12 +6104,20 @@ link:{ref}/security-api-get-api-key.html[Reference]
 
 |===
 
+=== security.getBuiltinPrivileges
+[source,js]
+----
+client.security.getBuiltinPrivileges([params] [, options] [, callback])
+----
+link:{ref}/security-api-get-builtin-privileges.html[Reference]
+
+
 === security.getPrivileges
 [source,js]
 ----
 client.security.getPrivileges([params] [, options] [, callback])
 ----
-link:TODO[Reference]
+link:{ref}/security-api-get-privileges.html[Reference]
 [cols=2*]
 |===
 |`application`
