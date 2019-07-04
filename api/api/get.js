@@ -32,7 +32,6 @@ function buildGet (opts) {
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
    * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {string} parent - The ID of the parent document
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
    * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
    * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
@@ -40,15 +39,12 @@ function buildGet (opts) {
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
    * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {list} _source_exclude - A list of fields to exclude from the returned _source field
-   * @param {list} _source_include - A list of fields to extract and return from the _source field
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
 
   const acceptedQuerystring = [
     'stored_fields',
-    'parent',
     'preference',
     'realtime',
     'refresh',
@@ -57,8 +53,6 @@ function buildGet (opts) {
     '_source_excludes',
     '_source_exclude',
     '_source_includes',
-    '_source_include',
-    '_source_exclude',
     '_source_include',
     'version',
     'version_type',

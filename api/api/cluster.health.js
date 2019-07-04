@@ -29,6 +29,7 @@ function buildClusterHealth (opts) {
    * Perform a [cluster.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
    *
    * @param {list} index - Limit the information returned to a specific index
+   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {enum} level - Specify the level of detail for returned information
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
@@ -42,6 +43,7 @@ function buildClusterHealth (opts) {
    */
 
   const acceptedQuerystring = [
+    'expand_wildcards',
     'level',
     'local',
     'master_timeout',
@@ -60,6 +62,7 @@ function buildClusterHealth (opts) {
   ]
 
   const snakeCase = {
+    expandWildcards: 'expand_wildcards',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',
     waitForNodes: 'wait_for_nodes',

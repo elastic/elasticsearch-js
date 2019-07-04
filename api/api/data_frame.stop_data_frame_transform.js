@@ -22,26 +22,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityPutRoleMapping (opts) {
+function buildDataFrameStopDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.put_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html) request
+   * Perform a [data_frame.stop_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html) request
    *
-   * @param {string} name - Role-mapping name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role mapping to add
+   * @param {string} transform_id - The id of the transform to stop
+   * @param {boolean} wait_for_completion - Whether to wait for the transform to fully stop before returning or not. Default to false
+   * @param {time} timeout - Controls the time to wait until the transform has stopped. Default to 30 seconds
    */
 
   const acceptedQuerystring = [
-    'refresh'
+    'wait_for_completion',
+    'timeout'
   ]
 
   const snakeCase = {
+    waitForCompletion: 'wait_for_completion'
 
   }
 
-  return function securityPutRoleMapping (params, options, callback) {
+  return function dataFrameStopDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,12 +56,12 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -70,11 +72,11 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, name, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore
@@ -84,13 +86,13 @@ function buildSecurityPutRoleMapping (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -99,4 +101,4 @@ function buildSecurityPutRoleMapping (opts) {
   }
 }
 
-module.exports = buildSecurityPutRoleMapping
+module.exports = buildDataFrameStopDataFrameTransform

@@ -26,6 +26,8 @@ const esDefaultRoles = [
   'beats_system',
   'code_admin',
   'code_user',
+  'data_frame_transforms_admin',
+  'data_frame_transforms_user',
   'ingest_admin',
   'kibana_dashboard_only_user',
   'kibana_system',

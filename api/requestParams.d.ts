@@ -117,6 +117,7 @@ export interface CatIndices extends Generic {
   pri?: boolean;
   s?: string | string[];
   v?: boolean;
+  include_unloaded_segments?: boolean;
 }
 
 export interface CatMaster extends Generic {
@@ -279,6 +280,7 @@ export interface ClusterGetSettings extends Generic {
 
 export interface ClusterHealth extends Generic {
   index?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
   level?: 'cluster' | 'indices' | 'shards';
   local?: boolean;
   master_timeout?: string;
@@ -360,7 +362,6 @@ export interface Create<T = any> extends Generic {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -375,7 +376,6 @@ export interface Delete extends Generic {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -443,7 +443,6 @@ export interface Exists extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -461,7 +460,6 @@ export interface ExistsSource extends Generic {
   type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -485,7 +483,6 @@ export interface Explain<T = any> extends Generic {
   df?: string;
   stored_fields?: string | string[];
   lenient?: boolean;
-  parent?: string;
   preference?: string;
   q?: string;
   routing?: string;
@@ -501,6 +498,7 @@ export interface FieldCaps extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  include_unmapped?: boolean;
 }
 
 export interface Get extends Generic {
@@ -510,7 +508,6 @@ export interface Get extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -533,7 +530,6 @@ export interface GetSource extends Generic {
   type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  parent?: string;
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -551,7 +547,6 @@ export interface Index<T = any> extends Generic {
   type?: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
@@ -586,6 +581,7 @@ export interface IndicesClose extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  wait_for_active_shards?: string;
 }
 
 export interface IndicesCreate<T = any> extends Generic {
@@ -874,6 +870,9 @@ export interface IndicesStats extends Generic {
   level?: 'cluster' | 'indices' | 'shards';
   types?: string | string[];
   include_segment_file_sizes?: boolean;
+  include_unloaded_segments?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  forbid_closed_indices?: boolean;
 }
 
 export interface IndicesUpdateAliases<T = any> extends Generic {
@@ -991,7 +990,6 @@ export interface Mtermvectors<T = any> extends Generic {
   payloads?: boolean;
   preference?: string;
   routing?: string;
-  parent?: string;
   realtime?: boolean;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
@@ -1078,6 +1076,10 @@ export interface ReindexRethrottle extends Generic {
 export interface RenderSearchTemplate<T = any> extends Generic {
   id?: string;
   body?: T;
+}
+
+export interface ScriptsPainlessContext extends Generic {
+  context?: string;
 }
 
 export interface ScriptsPainlessExecute<T = any> extends Generic {
@@ -1268,7 +1270,6 @@ export interface Termvectors<T = any> extends Generic {
   payloads?: boolean;
   preference?: string;
   routing?: string;
-  parent?: string;
   realtime?: boolean;
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
@@ -1286,7 +1287,6 @@ export interface Update<T = any> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   lang?: string;
-  parent?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   retry_on_conflict?: number;
   routing?: string;
@@ -1389,6 +1389,42 @@ export interface CcrStats extends Generic {
 
 export interface CcrUnfollow extends Generic {
   index: string;
+}
+
+export interface DataFrameDeleteDataFrameTransform extends Generic {
+  transform_id: string;
+}
+
+export interface DataFrameGetDataFrameTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface DataFrameGetDataFrameTransformStats extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+}
+
+export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
+  body: T;
+}
+
+export interface DataFramePutDataFrameTransform<T = any> extends Generic {
+  transform_id: string;
+  body: T;
+}
+
+export interface DataFrameStartDataFrameTransform extends Generic {
+  transform_id: string;
+  timeout?: string;
+}
+
+export interface DataFrameStopDataFrameTransform extends Generic {
+  transform_id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
 }
 
 export interface GraphExplore<T = any> extends Generic {

@@ -22,26 +22,27 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityPutRoleMapping (opts) {
+function buildDataFrameGetDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.put_role_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html) request
+   * Perform a [data_frame.get_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html) request
    *
-   * @param {string} name - Role-mapping name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role mapping to add
+   * @param {string} transform_id - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+   * @param {int} from - skips a number of transform configs, defaults to 0
+   * @param {int} size - specifies a max number of transforms to get, defaults to 100
    */
 
   const acceptedQuerystring = [
-    'refresh'
+    'from',
+    'size'
   ]
 
   const snakeCase = {
 
   }
 
-  return function securityPutRoleMapping (params, options, callback) {
+  return function dataFrameGetDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,12 +55,8 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -70,11 +67,11 @@ function buildSecurityPutRoleMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, name, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'GET'
     }
 
     var ignore = options.ignore
@@ -84,13 +81,17 @@ function buildSecurityPutRoleMapping (opts) {
 
     var path = ''
 
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    if ((transform_id || transformId) != null) {
+      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    } else {
+      path = '/' + '_data_frame' + '/' + 'transforms'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -99,4 +100,4 @@ function buildSecurityPutRoleMapping (opts) {
   }
 }
 
-module.exports = buildSecurityPutRoleMapping
+module.exports = buildDataFrameGetDataFrameTransform
