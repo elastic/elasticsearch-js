@@ -26,7 +26,7 @@ function buildSecurityGetPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [security.get_privileges](TODO) request
+   * Perform a [security.get_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html) request
    *
    * @param {string} application - Application name
    * @param {string} name - Privilege name

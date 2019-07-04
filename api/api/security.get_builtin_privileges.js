@@ -22,31 +22,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlStopDataFrameAnalytics (opts) {
+function buildSecurityGetBuiltinPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.stop_data_frame_analytics](undefined) request
+   * Perform a [security.get_builtin_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html) request
    *
-   * @param {string} id - The ID of the data frame analytics to stop
-   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-   * @param {boolean} force - True if the data frame analytics should be forcefully stopped
-   * @param {time} timeout - Controls the time to wait until the task has stopped. Defaults to 20 seconds
-   * @param {object} body - The stop data frame analytics parameters
    */
 
   const acceptedQuerystring = [
-    'allow_no_match',
-    'force',
-    'timeout'
+
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
 
   }
 
-  return function mlStopDataFrameAnalytics (params, options, callback) {
+  return function securityGetBuiltinPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -59,8 +51,8 @@ function buildMlStopDataFrameAnalytics (opts) {
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -71,11 +63,11 @@ function buildMlStopDataFrameAnalytics (opts) {
     }
 
     var warnings = []
-    var { method, body, id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'POST'
+      method = 'GET'
     }
 
     var ignore = options.ignore
@@ -85,13 +77,13 @@ function buildMlStopDataFrameAnalytics (opts) {
 
     var path = ''
 
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stop'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -100,4 +92,4 @@ function buildMlStopDataFrameAnalytics (opts) {
   }
 }
 
-module.exports = buildMlStopDataFrameAnalytics
+module.exports = buildSecurityGetBuiltinPrivileges

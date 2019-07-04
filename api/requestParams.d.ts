@@ -1829,6 +1829,7 @@ export interface MlStartDatafeed<T = any> extends Generic {
 export interface MlStopDataFrameAnalytics<T = any> extends Generic {
   id: string;
   allow_no_match?: boolean;
+  force?: boolean;
   timeout?: string;
   body?: T;
 }
@@ -1975,6 +1976,9 @@ export interface SecurityGetApiKey extends Generic {
   name?: string;
   username?: string;
   realm_name?: string;
+}
+
+export interface SecurityGetBuiltinPrivileges extends Generic {
 }
 
 export interface SecurityGetPrivileges extends Generic {

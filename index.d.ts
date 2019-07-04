@@ -538,6 +538,8 @@ declare class Client extends EventEmitter {
     enableUser: ApiMethod<RequestParams.SecurityEnableUser>
     get_api_key: ApiMethod<RequestParams.SecurityGetApiKey>
     getApiKey: ApiMethod<RequestParams.SecurityGetApiKey>
+    get_builtin_privileges: ApiMethod<RequestParams.SecurityGetBuiltinPrivileges>
+    getBuiltinPrivileges: ApiMethod<RequestParams.SecurityGetBuiltinPrivileges>
     get_privileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     getPrivileges: ApiMethod<RequestParams.SecurityGetPrivileges>
     get_role: ApiMethod<RequestParams.SecurityGetRole>
