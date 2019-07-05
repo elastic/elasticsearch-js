@@ -13,7 +13,7 @@ install:
   - npm install
 
 script:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; npm run license-checker; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then npm run license-checker; fi
   - npm run test
 
 notifications:
