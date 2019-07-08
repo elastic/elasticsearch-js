@@ -58,11 +58,11 @@ const esDefaultUsers = [
   'remote_monitoring_user'
 ]
 
-function runInParallel (client, operation, options) {
+function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()
   const operations = options.map(opts => {
     const api = delve(client, operation).bind(client)
-    return api(opts)
+    return api(opts, clientOptions)
   })
 
   return Promise.all(operations)

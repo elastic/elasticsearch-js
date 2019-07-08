@@ -52,7 +52,7 @@ class TestRunner {
   }
 
   /**
-   * Runs a cleanup, removes all indices and templates
+   * Runs a cleanup, removes all indices, aliases, templates, and snapshots
    * @returns {Promise}
    */
   async cleanup () {
@@ -62,27 +62,40 @@ class TestRunner {
     this.stash = new Map()
 
     try {
-      await this.client.indices.delete({ index: '*' }, { ignore: 404 })
+      await this.client.indices.delete({ index: '_all' }, { ignore: 404 })
     } catch (err) {
       this.tap.error(err, 'should not error: indices.delete')
     }
 
     try {
-      await this.client.indices.deleteTemplate({ name: '*' }, { ignore: 404 })
+      await this.client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
+    } catch (err) {
+      this.tap.error(err, 'should not error: indices.deleteAlias')
+    }
+
+    try {
+      const { body: templates } = await this.client.indices.getTemplate()
+      await helper.runInParallel(
+        this.client, 'indices.deleteTemplate',
+        Object.keys(templates).map(t => ({ name: t }))
+      )
     } catch (err) {
       this.tap.error(err, 'should not error: indices.deleteTemplate')
     }
 
     try {
-      await this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 })
+      const { body: repositories } = await this.client.snapshot.getRepository()
+      for (const repository of Object.keys(repositories)) {
+        const { body: snapshots } = await this.client.snapshot.get({ repository, snapshot: '_all' })
+        await helper.runInParallel(
+          this.client, 'snapshot.delete',
+          Object.keys(snapshots).map(snapshot => ({ snapshot, repository })),
+          { ignore: [404] }
+        )
+        await this.client.snapshot.deleteRepository({ repository }, { ignore: [404] })
+      }
     } catch (err) {
-      this.tap.error(err, 'should not error: snapshot.delete')
-    }
-
-    try {
-      await this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 })
-    } catch (err) {
-      this.tap.error(err, 'should not error: snapshot.deleteRepository')
+      this.tap.error(err, 'should not error: snapshot.delete / snapshot.deleteRepository')
     }
   }
 
