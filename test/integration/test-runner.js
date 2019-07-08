@@ -204,14 +204,14 @@ class TestRunner {
     }
 
     try {
-      await this.client.indices.delete({ index: '.ml-*' }, { ignore: 404 })
+      await this.client.ilm.removePolicy({ index: '_all' })
     } catch (err) {
-      this.tap.error(err, 'should not error: indices.delete (ml indices)')
+      this.tap.error(err, 'should not error: ilm.removePolicy')
     }
 
-    // refresh the security index
+    // refresh the all indexes
     try {
-      await this.client.indices.refresh({ index: '.security*' })
+      await this.client.indices.refresh({ index: '_all' })
     } catch (err) {
       this.tap.error(err, 'should not error: indices.refresh')
     }
