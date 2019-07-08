@@ -48,7 +48,7 @@ class TestRunner {
     this.response = null
     this.stash = new Map()
     this.tap = opts.tap || t
-    this.isPlatinum = opts.isPlatinum
+    this.isXPack = opts.isXPack
   }
 
   /**
@@ -100,12 +100,12 @@ class TestRunner {
   }
 
   /**
-   * Runs some additional API calls to prepare ES for the Platinum test,
+   * Runs some additional API calls to prepare ES for the xpack test,
    * This set of calls should be executed before the final clenup.
    * @returns {Promise}
    */
-  async cleanupPlatinum () {
-    this.tap.comment('Platinum Cleanup')
+  async cleanupXPack () {
+    this.tap.comment('XPack Cleanup')
 
     try {
       const { body } = await this.client.security.getRole()
@@ -221,11 +221,11 @@ class TestRunner {
    * Runs the given test.
    * It runs the test components in the following order:
    *    - skip check
-   *    - platinum user
+   *    - xpack user
    *    - setup
    *    - the actual test
    *    - teardown
-   *    - platinum cleanup
+   *    - xpack cleanup
    *    - cleanup
    * @param {object} setup (null if not needed)
    * @param {object} test
@@ -241,8 +241,8 @@ class TestRunner {
       return
     }
 
-    if (this.isPlatinum) {
-      // Some platinum test requires this user
+    if (this.isXPack) {
+      // Some xpack test requires this user
       this.tap.comment('Creating x-pack user')
       try {
         await this.client.security.putUser({
@@ -260,7 +260,7 @@ class TestRunner {
 
     if (teardown) await this.exec('Teardown', teardown)
 
-    if (this.isPlatinum) await this.cleanupPlatinum()
+    if (this.isXPack) await this.cleanupXPack()
 
     await this.cleanup()
   }

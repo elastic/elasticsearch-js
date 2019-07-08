@@ -44,7 +44,7 @@ const ossSkips = {
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml': ['*']
 }
-const platinumBlackList = {
+const xPackBlackList = {
   // file path: test name
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
@@ -84,7 +84,7 @@ const platinumBlackList = {
 class Runner {
   constructor (opts = {}) {
     const options = { node: opts.node }
-    if (opts.isPlatinum) {
+    if (opts.isXPack) {
       options.ssl = {
         ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
         rejectUnauthorized: false
@@ -107,7 +107,7 @@ class Runner {
     }
   }
 
-  async start ({ isPlatinum }) {
+  async start ({ isXPack }) {
     const { client } = this
     const parse = this.parse.bind(this)
 
@@ -120,11 +120,11 @@ class Runner {
     console.log(`Checking out sha ${sha}...`)
     await this.withSHA(sha)
 
-    console.log(`Testing ${isPlatinum ? 'platinum' : 'oss'} api...`)
+    console.log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
 
     const folders = []
       .concat(getAllFiles(yamlFolder))
-      .concat(isPlatinum ? getAllFiles(xPackYamlFolder) : [])
+      .concat(isXPack ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
       // we cluster the array based on the folder names,
       // to provide a better test log output
@@ -183,7 +183,7 @@ class Runner {
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
-          if (shouldSkip(t, isPlatinum, file, name)) return
+          if (shouldSkip(t, isXPack, file, name)) return
 
           // create a subtest for the specific folder + test file + test name
           t.test(name, async t => {
@@ -191,7 +191,7 @@ class Runner {
               client,
               version,
               tap: t,
-              isPlatinum: file.includes('x-pack')
+              isXPack: file.includes('x-pack')
             })
             await testRunner.run(setupTest, test[name], teardownTest)
           })
@@ -317,13 +317,13 @@ if (require.main === module) {
   const node = process.env.TEST_ES_SERVER || 'http://localhost:9200'
   const opts = {
     node,
-    isPlatinum: node.indexOf('@') > -1
+    isXPack: node.indexOf('@') > -1
   }
   const runner = new Runner(opts)
   runner.start(opts).catch(console.log)
 }
 
-const shouldSkip = (t, isPlatinum, file, name) => {
+const shouldSkip = (t, isXPack, file, name) => {
   var list = Object.keys(ossSkips)
   for (var i = 0; i < list.length; i++) {
     const ossTest = ossSkips[list[i]]
@@ -336,14 +336,14 @@ const shouldSkip = (t, isPlatinum, file, name) => {
     }
   }
 
-  if (file.includes('x-pack') || isPlatinum) {
-    list = Object.keys(platinumBlackList)
+  if (file.includes('x-pack') || isXPack) {
+    list = Object.keys(xPackBlackList)
     for (i = 0; i < list.length; i++) {
-      const platTest = platinumBlackList[list[i]]
+      const platTest = xPackBlackList[list[i]]
       for (j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-          t.comment(`Skipping test ${testName} because is blacklisted in the platinum test`)
+          t.comment(`Skipping test ${testName} because is blacklisted in the XPack test`)
           return true
         }
       }
