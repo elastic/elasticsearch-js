@@ -26,7 +26,7 @@ function buildMlStartDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.start_data_frame_analytics](undefined) request
+   * Perform a [ml.start_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html) request
    *
    * @param {string} id - The ID of the data frame analytics to start
    * @param {time} timeout - Controls the time to wait until the task has started. Defaults to 20 seconds

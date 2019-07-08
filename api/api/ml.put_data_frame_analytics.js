@@ -26,7 +26,7 @@ function buildMlPutDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.put_data_frame_analytics](undefined) request
+   * Perform a [ml.put_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html) request
    *
    * @param {string} id - The ID of the data frame analytics to create
    * @param {object} body - The data frame analytics configuration
