@@ -26,7 +26,7 @@ function buildMlEvaluateDataFrame (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.evaluate_data_frame](undefined) request
+   * Perform a [ml.evaluate_data_frame](http://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html) request
    *
    * @param {object} body - The evaluation definition
    */

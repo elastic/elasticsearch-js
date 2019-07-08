@@ -26,7 +26,7 @@ function buildMlGetDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.get_data_frame_analytics](undefined) request
+   * Perform a [ml.get_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html) request
    *
    * @param {string} id - The ID of the data frame analytics to fetch
    * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)

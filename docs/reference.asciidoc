@@ -4764,6 +4764,7 @@ client.ml.deleteCalendarJob([params] [, options] [, callback])
 ----
 client.ml.deleteDataFrameAnalytics([params] [, options] [, callback])
 ----
+link:{ref}/delete-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -4869,6 +4870,7 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 ----
 client.ml.evaluateDataFrame([params] [, options] [, callback])
 ----
+link:{ref}/evaluate-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -5107,6 +5109,7 @@ link:{ref}/ml-get-category.html[Reference]
 ----
 client.ml.getDataFrameAnalytics([params] [, options] [, callback])
 ----
+link:{ref}/get-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -5130,6 +5133,7 @@ _Default:_ `100`
 ----
 client.ml.getDataFrameAnalyticsStats([params] [, options] [, callback])
 ----
+link:{ref}/get-dfanalytics-stats.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -5495,6 +5499,7 @@ client.ml.putCalendarJob([params] [, options] [, callback])
 ----
 client.ml.putDataFrameAnalytics([params] [, options] [, callback])
 ----
+link:{ref}/put-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -5595,6 +5600,7 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 ----
 client.ml.startDataFrameAnalytics([params] [, options] [, callback])
 ----
+link:{ref}/start-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`id`
@@ -5638,6 +5644,7 @@ link:{ref}/ml-start-datafeed.html[Reference]
 ----
 client.ml.stopDataFrameAnalytics([params] [, options] [, callback])
 ----
+link:{ref}/stop-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`id`

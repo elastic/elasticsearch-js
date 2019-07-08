@@ -26,7 +26,7 @@ function buildMlDeleteDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ml.delete_data_frame_analytics](undefined) request
+   * Perform a [ml.delete_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html) request
    *
    * @param {string} id - The ID of the data frame analytics to delete
    */
