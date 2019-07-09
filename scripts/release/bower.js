@@ -16,30 +16,45 @@ bowerJson.version = esjsJson.version;
 bowerPackageJson.version = esjsJson.version;
 
 // write the new bower.json file
-fs.writeFileSync(bowerDir + '/bower.json', JSON.stringify(bowerJson, null, '  '));
+fs.writeFileSync(
+  bowerDir + '/bower.json',
+  JSON.stringify(bowerJson, null, '  ')
+);
 // write the new package.json file
-fs.writeFileSync(bowerDir + '/package.json', JSON.stringify(bowerPackageJson, null, '  '));
+fs.writeFileSync(
+  bowerDir + '/package.json',
+  JSON.stringify(bowerPackageJson, null, '  ')
+);
 
 function make(cmd, args) {
   return _.bind(spawn, null, cmd, args, {
     verbose: true,
-    cwd: bowerDir
+    cwd: bowerDir,
   });
 }
 
-async.series([
-  make('git', ['add', '-A']),
-  make('git', ['commit', '-m', 'version ' + bowerJson.version]),
-  make('git', ['tag', '-a', 'v' + bowerJson.version, '-m', 'version ' + bowerJson.version]),
-  make('git', ['push', 'origin', 'master']),
-  make('git', ['push', '--tags', 'origin']),
-  make('npm', ['publish'])
-], function (err) {
-  if (err) {
-    if (_.isNumber(err)) {
-      console.log('Non-zero exit code: %d', err);
-    } else {
-      console.log('Error: ', err.message ? err.message : err);
+async.series(
+  [
+    make('git', ['add', '-A']),
+    make('git', ['commit', '-m', 'version ' + bowerJson.version]),
+    make('git', [
+      'tag',
+      '-a',
+      'v' + bowerJson.version,
+      '-m',
+      'version ' + bowerJson.version,
+    ]),
+    make('git', ['push', 'origin', 'master']),
+    make('git', ['push', '--tags', 'origin']),
+    make('npm', ['publish']),
+  ],
+  function(err) {
+    if (err) {
+      if (_.isNumber(err)) {
+        console.log('Non-zero exit code: %d', err);
+      } else {
+        console.log('Error: ', err.message ? err.message : err);
+      }
     }
   }
-});
+);

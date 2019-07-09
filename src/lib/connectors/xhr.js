@@ -5,8 +5,9 @@
  */
 module.exports = XhrConnector;
 
-/* jshint browser:true */
+/* eslint-env browser */
 
+var _ = require('lodash');
 var utils = require('../utils');
 var ConnectionAbstract = require('../connection');
 var ConnectionFault = require('../errors').ConnectionFault;
@@ -25,32 +26,31 @@ var getXhr = _.noop;
 
 if (typeof XMLHttpRequest !== 'undefined') {
   // rewrite the getXhr method to always return the native implementation
-  getXhr = function () {
+  getXhr = function() {
     return new XMLHttpRequest();
   };
 } else {
   // find the first MS implementation available
   getXhr = _(['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'])
-  .map(function (appName) {
-    /* jshint unused: false */
-    try {
-      var test = new window.ActiveXObject(appName); // eslint-disable-line no-unused-vars
-      return function () {
-        return new window.ActiveXObject(appName);
-      };
-    } catch (e) {
-      return false;
-    }
-  })
-  .compact()
-  .head();
+    .map(function(appName) {
+      try {
+        var test = new window.ActiveXObject(appName); // eslint-disable-line no-unused-vars
+        return function() {
+          return new window.ActiveXObject(appName);
+        };
+      } catch (e) {
+        return false;
+      }
+    })
+    .compact()
+    .head();
 }
 
 if (!getXhr) {
   throw new Error('getXhr(): XMLHttpRequest not available');
 }
 
-XhrConnector.prototype.request = function (params, cb) {
+XhrConnector.prototype.request = function(params, cb) {
   var xhr = getXhr();
   var timeoutId;
   var host = this.host;
@@ -70,18 +70,20 @@ XhrConnector.prototype.request = function (params, cb) {
     }
   }
 
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       clearTimeout(timeoutId);
       log.trace(params.method, url, params.body, xhr.responseText, xhr.status);
-      var err = xhr.status ? void 0 : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
+      var err = xhr.status
+        ? void 0
+        : new ConnectionFault(xhr.statusText || 'Request failed to complete.');
       cb(err, xhr.responseText, xhr.status);
     }
   };
 
   xhr.send(params.body || void 0);
 
-  return function () {
+  return function() {
     xhr.abort();
   };
 };

@@ -28,25 +28,27 @@ function Stream(log, config) {
 }
 utils.inherits(Stream, LoggerAbstract);
 
-Stream.prototype.cleanUpListeners = utils.handler(function () {
+Stream.prototype.cleanUpListeners = utils.handler(function() {
   process.removeListener('exit', this.bound.onProcessExit);
   LoggerAbstract.prototype.cleanUpListeners.call(this);
 });
 
 // flush the write buffer to stderr synchronously
-Stream.prototype.onProcessExit = utils.handler(function () {
+Stream.prototype.onProcessExit = utils.handler(function() {
   // process is dying, lets manually flush the buffer synchronously to stderr.
   var unwritten = utils.getUnwrittenFromStream(this.stream);
   if (unwritten) {
-    console.error('Log stream did not get to finish writing. Flushing to stderr');
+    console.error(
+      'Log stream did not get to finish writing. Flushing to stderr'
+    );
     console.error(unwritten);
   }
 });
 
-Stream.prototype.write = function (label, message) {
+Stream.prototype.write = function(label, message) {
   this.stream.write(this.format(label, message), 'utf8');
 };
 
-Stream.prototype.close = function () {
+Stream.prototype.close = function() {
   this.stream.end();
 };

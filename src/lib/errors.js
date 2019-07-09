@@ -2,8 +2,8 @@ var _ = require('lodash');
 var utils = require('./utils');
 var errors = module.exports;
 
-var canCapture = (typeof Error.captureStackTrace === 'function');
-var canStack = !!(new Error()).stack;
+var canCapture = typeof Error.captureStackTrace === 'function';
+var canStack = !!new Error().stack;
 
 function ErrorAbstract(msg, constructor, metadata) {
   this.message = msg;
@@ -12,25 +12,26 @@ function ErrorAbstract(msg, constructor, metadata) {
 
   if (canCapture) {
     Error.captureStackTrace(this, constructor);
-  }
-  else if (canStack) {
-    this.stack = (new Error()).stack;
-  }
-  else {
+  } else if (canStack) {
+    this.stack = new Error().stack;
+  } else {
     this.stack = '';
   }
 
   if (metadata) {
     _.assign(this, metadata);
 
-    this.toString = function () {
+    this.toString = function() {
       return msg + ' :: ' + JSON.stringify(metadata);
     };
 
-    this.toJSON = function () {
-      return _.assign({
-        msg: msg
-      }, metadata);
+    this.toJSON = function() {
+      return _.assign(
+        {
+          msg: msg,
+        },
+        metadata
+      );
     };
   }
 }
@@ -51,7 +52,11 @@ utils.inherits(errors.ConnectionFault, ErrorAbstract);
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.NoConnections = function NoConnections(msg) {
-  ErrorAbstract.call(this, msg || 'No Living connections', errors.NoConnections);
+  ErrorAbstract.call(
+    this,
+    msg || 'No Living connections',
+    errors.NoConnections
+  );
 };
 utils.inherits(errors.NoConnections, ErrorAbstract);
 
@@ -73,22 +78,28 @@ errors.RequestTimeout = function RequestTimeout(msg) {
 };
 utils.inherits(errors.RequestTimeout, ErrorAbstract);
 
-
 /**
  * Request Body could not be parsed
  * @param {String} [msg] - An error message that will probably end up in a log.
  */
 errors.Serialization = function Serialization(msg) {
-  ErrorAbstract.call(this, msg || 'Unable to parse/serialize body', errors.Serialization);
+  ErrorAbstract.call(
+    this,
+    msg || 'Unable to parse/serialize body',
+    errors.Serialization
+  );
 };
 utils.inherits(errors.Serialization, ErrorAbstract);
-
 
 /**
  * Thrown when a browser compatability issue is detected (cough, IE, cough)
  */
 errors.RequestTypeError = function RequestTypeError(feature) {
-  ErrorAbstract.call(this, 'Cross-domain AJAX requests ' + feature + ' are not supported', errors.RequestTypeError);
+  ErrorAbstract.call(
+    this,
+    'Cross-domain AJAX requests ' + feature + ' are not supported',
+    errors.RequestTypeError
+  );
 };
 utils.inherits(errors.RequestTypeError, ErrorAbstract);
 
@@ -134,7 +145,7 @@ var statusCodes = [
   [504, 'Gateway Timeout'],
   [505, 'HTTPVersion Not Supported'],
   [506, 'Variant Also Negotiates'],
-  [510, 'Not Extended']
+  [510, 'Not Extended'],
 ];
 
 _.each(statusCodes, function createStatusCodeError(tuple) {
@@ -163,7 +174,7 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
       return this;
     }
 
-    msg = [].concat(esErrObject.root_cause || []).reduce(function (memo, cause) {
+    msg = [].concat(esErrObject.root_cause || []).reduce(function(memo, cause) {
       if (memo) memo += ' (and) ';
 
       memo += '[' + cause.type + '] ' + cause.reason;
@@ -186,27 +197,30 @@ _.each(statusCodes, function createStatusCodeError(tuple) {
   }
   utils.inherits(StatusCodeError, ErrorAbstract);
 
-  allNames.forEach(function (name) {
+  allNames.forEach(function(name) {
     errors[name] = StatusCodeError;
   });
 });
 
-
 function prettyPrint(data) {
-  const path = []
+  const path = [];
   return (function print(v) {
     if (typeof v === 'object') {
-      if (path.indexOf(v) > -1) return '[circular]'
-      path.push(v)
+      if (path.indexOf(v) > -1) return '[circular]';
+      path.push(v);
       try {
-        return '{ ' + _.map(v, function (subv, name) {
-          return name + '=' + print(subv)
-        }).join(' & ') + ' }'
+        return (
+          '{ ' +
+          _.map(v, function(subv, name) {
+            return name + '=' + print(subv);
+          }).join(' & ') +
+          ' }'
+        );
       } finally {
-        path.pop()
+        path.pop();
       }
     } else {
-      return JSON.stringify(v)
+      return JSON.stringify(v);
     }
-  }(data))
+  })(data);
 }

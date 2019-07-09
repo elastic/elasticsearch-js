@@ -25,7 +25,7 @@ var defaultColors = {
   warning: chalk.yellow.bold,
   info: chalk.cyan.bold,
   debug: chalk.magenta.bold,
-  trace: chalk.white.bold
+  trace: chalk.white.bold,
 };
 
 function Stdio(log, config) {
@@ -50,7 +50,7 @@ utils.inherits(Stdio, LoggerAbstract);
  * @param  {*} what - The message to log
  * @return {undefined}
  */
-Stdio.prototype.write = function (label, message, to, colorize) {
+Stdio.prototype.write = function(label, message, to, colorize) {
   label = 'Elasticsearch ' + label;
   if (this.color) {
     label = colorize(label);
@@ -66,8 +66,13 @@ Stdio.prototype.write = function (label, message, to, colorize) {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-Stdio.prototype.onError = utils.handler(function (e) {
-  this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack, process.stderr, this.colors.error);
+Stdio.prototype.onError = utils.handler(function(e) {
+  this.write(
+    e.name === 'Error' ? 'ERROR' : e.name,
+    e.stack,
+    process.stderr,
+    this.colors.error
+  );
 });
 
 /**
@@ -78,7 +83,7 @@ Stdio.prototype.onError = utils.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onWarning = utils.handler(function (msg) {
+Stdio.prototype.onWarning = utils.handler(function(msg) {
   this.write('WARNING', msg, process.stderr, this.colors.warning);
 });
 
@@ -90,7 +95,7 @@ Stdio.prototype.onWarning = utils.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onInfo = utils.handler(function (msg) {
+Stdio.prototype.onInfo = utils.handler(function(msg) {
   this.write('INFO', msg, process.stdout, this.colors.info);
 });
 
@@ -102,7 +107,7 @@ Stdio.prototype.onInfo = utils.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-Stdio.prototype.onDebug = utils.handler(function (msg) {
+Stdio.prototype.onDebug = utils.handler(function(msg) {
   this.write('DEBUG', msg, process.stdout, this.colors.debug);
 });
 
@@ -113,6 +118,11 @@ Stdio.prototype.onDebug = utils.handler(function (msg) {
  * @private
  * @return {undefined}
  */
-Stdio.prototype.onTrace = utils.handler(function (message) {
-  this.write('TRACE', this._formatTraceMessage(message), process.stdout, this.colors.trace);
+Stdio.prototype.onTrace = utils.handler(function(message) {
+  this.write(
+    'TRACE',
+    this._formatTraceMessage(message),
+    process.stdout,
+    this.colors.trace
+  );
 });

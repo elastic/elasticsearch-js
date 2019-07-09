@@ -17,28 +17,33 @@ function YamlFile(filename, docs) {
   // file level skipping flag
   file.skipping = false;
 
-  describe(filename, function () {
-    file.docs = _.map(docs, function (doc) {
+  describe(filename, function() {
+    file.docs = _.map(docs, function(doc) {
       doc = new YamlDoc(doc, file);
       if (doc.description === 'setup') {
-        beforeEach(/* doc */function (done) {
-          async.series(doc.getActionsRunners(), done);
-        });
+        beforeEach(
+          /* doc */ function(done) {
+            async.series(doc.getActionsRunners(), done);
+          }
+        );
       } else {
-        it(doc.description, function (done) {
+        it(doc.description, function(done) {
           async.series(doc.getActionsRunners(), done);
         });
       }
     });
 
-    afterEach(/* doc */function () {
-      clientManager.get().transport.log.debug(
-        '===========================\n' +
-        'Cleanup\n' +
-        '==========================='
-      );
-      return clientManager.get().clearEs();
-    });
+    afterEach(
+      /* doc */ function() {
+        clientManager
+          .get()
+          .transport.log.debug(
+            '===========================\n' +
+              'Cleanup\n' +
+              '==========================='
+          );
+        return clientManager.get().clearEs();
+      }
+    );
   });
-
 }

@@ -15,51 +15,77 @@ function Transport(config) {
   var self = this;
   config = self._config = config || {};
 
-  var LogClass = (typeof config.log === 'function') ? config.log : require('./log');
+  var LogClass =
+    typeof config.log === 'function' ? config.log : require('./log');
   config.log = self.log = new LogClass(config);
 
   // setup the connection pool
-  var ConnectionPool = utils.funcEnum(config, 'connectionPool', Transport.connectionPools, 'main');
+  var ConnectionPool = utils.funcEnum(
+    config,
+    'connectionPool',
+    Transport.connectionPools,
+    'main'
+  );
   self.connectionPool = new ConnectionPool(config);
 
   // setup the serializer
-  var Serializer = utils.funcEnum(config, 'serializer', Transport.serializers, 'json');
+  var Serializer = utils.funcEnum(
+    config,
+    'serializer',
+    Transport.serializers,
+    'json'
+  );
   self.serializer = new Serializer(config);
 
   // setup the nodesToHostCallback
-  self.nodesToHostCallback = utils.funcEnum(config, 'nodesToHostCallback', Transport.nodesToHostCallbacks, 'main');
+  self.nodesToHostCallback = utils.funcEnum(
+    config,
+    'nodesToHostCallback',
+    Transport.nodesToHostCallbacks,
+    'main'
+  );
 
   // setup max retries
   self.maxRetries = config.hasOwnProperty('maxRetries') ? config.maxRetries : 3;
 
   // setup endpoint to use for sniffing
-  self.sniffEndpoint = config.hasOwnProperty('sniffEndpoint') ? config.sniffEndpoint : '/_nodes/_all/http';
+  self.sniffEndpoint = config.hasOwnProperty('sniffEndpoint')
+    ? config.sniffEndpoint
+    : '/_nodes/_all/http';
 
   // setup requestTimeout default
-  self.requestTimeout = config.hasOwnProperty('requestTimeout') ? config.requestTimeout : 30000;
-  self.pingTimeout = config.hasOwnProperty('pingTimeout') ? config.pingTimeout : 3000;
+  self.requestTimeout = config.hasOwnProperty('requestTimeout')
+    ? config.requestTimeout
+    : 30000;
+  self.pingTimeout = config.hasOwnProperty('pingTimeout')
+    ? config.pingTimeout
+    : 3000;
 
   if (config.hasOwnProperty('defer')) {
     self.defer = config.defer;
   }
 
   // randomizeHosts option
-  var randomizeHosts = config.hasOwnProperty('randomizeHosts') ? !!config.randomizeHosts : true;
+  var randomizeHosts = config.hasOwnProperty('randomizeHosts')
+    ? !!config.randomizeHosts
+    : true;
 
   if (config.host) {
     config.hosts = config.host;
   }
 
   if (config.hosts) {
-    var hostsConfig = utils.createArray(config.hosts, function (val) {
+    var hostsConfig = utils.createArray(config.hosts, function(val) {
       if (_.isPlainObject(val) || _.isString(val) || val instanceof Host) {
         return val;
       }
     });
 
     if (!hostsConfig) {
-      throw new TypeError('Invalid hosts config. Expected a URL, an array of urls, a host config object, ' +
-        'or an array of host config objects.');
+      throw new TypeError(
+        'Invalid hosts config. Expected a URL, an array of urls, a host config object, ' +
+          'or an array of host config objects.'
+      );
     }
 
     if (randomizeHosts) {
@@ -72,7 +98,8 @@ function Transport(config) {
   if (config.hasOwnProperty('sniffedNodesProtocol')) {
     self.sniffedNodesProtocol = config.sniffedNodesProtocol || null;
   } else {
-    self.sniffedNodesProtocol = findCommonProtocol(self.connectionPool.getAllHosts()) || null;
+    self.sniffedNodesProtocol =
+      findCommonProtocol(self.connectionPool.getAllHosts()) || null;
   }
 
   if (config.hasOwnProperty('sniffedNodesFilterPath')) {
@@ -104,25 +131,25 @@ function Transport(config) {
 }
 
 Transport.connectionPools = {
-  main: require('./connection_pool')
+  main: require('./connection_pool'),
 };
 
 Transport.serializers = require('./serializers');
 
 Transport.nodesToHostCallbacks = {
-  main: require('./nodes_to_host')
+  main: require('./nodes_to_host'),
 };
 
-Transport.prototype.defer = function () {
+Transport.prototype.defer = function() {
   if (typeof Promise === 'undefined') {
     throw new Error(
       'No Promise implementation found. In order for elasticsearch-js to create promises ' +
-      'either specify the `defer` configuration or include a global Promise shim'
-    )
+        'either specify the `defer` configuration or include a global Promise shim'
+    );
   }
 
   var defer = {};
-  defer.promise = new Promise(function (resolve, reject) {
+  defer.promise = new Promise(function(resolve, reject) {
     defer.resolve = resolve;
     defer.reject = reject;
   });
@@ -146,7 +173,7 @@ Transport.prototype.defer = function () {
  * @param {String} params.body - The body of the HTTP request
  * @param {Function} cb - A function to call back with (error, responseBody, responseStatus)
  */
-Transport.prototype.request = function (params, cb) {
+Transport.prototype.request = function(params, cb) {
   var self = this;
   var remainingRetries = this.maxRetries;
   var requestTimeout = this.requestTimeout;
@@ -159,9 +186,11 @@ Transport.prototype.request = function (params, cb) {
   var defer; // the defer object, will be set when we are using promises.
 
   var body = params.body;
-  var headers = !params.headers ? {} : _.transform(params.headers, function (headers, val, name) {
-    headers[String(name).toLowerCase()] = val;
-  });
+  var headers = !params.headers
+    ? {}
+    : _.transform(params.headers, function(headers, val, name) {
+        headers[String(name).toLowerCase()] = val;
+      });
 
   self.log.debug('starting request', params);
 
@@ -172,7 +201,7 @@ Transport.prototype.request = function (params, cb) {
       cb = process.domain.bind(cb);
     }
     ret = {
-      abort: abortRequest
+      abort: abortRequest,
     };
   } else {
     defer = this.defer();
@@ -181,7 +210,10 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (body && params.method === 'GET') {
-    utils.nextTick(respond, new TypeError('Body can not be sent with method "GET"'));
+    utils.nextTick(
+      respond,
+      new TypeError('Body can not be sent with method "GET"')
+    );
     return ret;
   }
 
@@ -206,7 +238,8 @@ Transport.prototype.request = function (params, cb) {
 
   const pingRequest = params.path === '/' && params.method === 'HEAD';
   if (pingRequest) {
-    const requestParam = params.hasOwnProperty('requestTimeout') && params.requestTimeout;
+    const requestParam =
+      params.hasOwnProperty('requestTimeout') && params.requestTimeout;
     requestTimeout = requestParam || this.pingTimeout;
   }
 
@@ -215,7 +248,7 @@ Transport.prototype.request = function (params, cb) {
     path: params.path || '/',
     query: params.query,
     body: body,
-    headers: headers
+    headers: headers,
   };
 
   function sendReqWithConnection(err, _connection) {
@@ -258,8 +291,7 @@ Transport.prototype.request = function (params, cb) {
         ' ' +
         connection.host.makeUrl(params.req) +
         (errMsg.length ? ' => ' : '') +
-        errMsg
-      ;
+        errMsg;
 
       if (remainingRetries) {
         remainingRetries--;
@@ -282,7 +314,10 @@ Transport.prototype.request = function (params, cb) {
 
     self._timeout(requestTimeoutId);
     var parsedBody;
-    var isJson = !headers || (headers['content-type'] && ~headers['content-type'].indexOf('application/json'));
+    var isJson =
+      !headers ||
+      (headers['content-type'] &&
+        ~headers['content-type'].indexOf('application/json'));
 
     if (!err && body) {
       if (isJson) {
@@ -298,11 +333,10 @@ Transport.prototype.request = function (params, cb) {
 
     // does the response represent an error?
     if (
-      (!err || err instanceof errors.Serialization)
-      && (status < 200 || status >= 300)
-      && (!params.ignore || !_.includes(params.ignore, status))
+      (!err || err instanceof errors.Serialization) &&
+      (status < 200 || status >= 300) &&
+      (!params.ignore || !_.includes(params.ignore, status))
     ) {
-
       var errorMetadata = _.pick(params.req, ['path', 'query', 'body']);
       errorMetadata.statusCode = status;
       errorMetadata.response = body;
@@ -358,8 +392,12 @@ Transport.prototype.request = function (params, cb) {
   }
 
   if (requestTimeout && requestTimeout !== Infinity) {
-    requestTimeoutId = this._timeout(function () {
-      respond(new errors.RequestTimeout('Request Timeout after ' + requestTimeout + 'ms'));
+    requestTimeoutId = this._timeout(function() {
+      respond(
+        new errors.RequestTimeout(
+          'Request Timeout after ' + requestTimeout + 'ms'
+        )
+      );
       abortRequest();
     }, requestTimeout);
   }
@@ -373,20 +411,20 @@ Transport.prototype.request = function (params, cb) {
   return ret;
 };
 
-Transport.prototype._timeout = function (cb, delay) {
+Transport.prototype._timeout = function(cb, delay) {
   if (this.closed) return;
 
   var id;
   var timers = this._timers || (this._timers = []);
 
-  if ('function' !== typeof cb) {
+  if (typeof cb !== 'function') {
     id = cb;
     cb = void 0;
   }
 
   if (cb) {
     // set the timer
-    id = setTimeout(function () {
+    id = setTimeout(function() {
       _.pull(timers, id);
       cb();
     }, delay);
@@ -411,7 +449,7 @@ Transport.prototype._timeout = function (cb, delay) {
  *
  * @param  {Function} cb - Function to call back once complete
  */
-Transport.prototype.sniff = function (cb) {
+Transport.prototype.sniff = function(cb) {
   var self = this;
   var nodesToHostCallback = this.nodesToHostCallback;
   var log = this.log;
@@ -421,30 +459,39 @@ Transport.prototype.sniff = function (cb) {
   // make cb a function if it isn't
   cb = typeof cb === 'function' ? cb : _.noop;
 
-  this.request({
-    path: this.sniffEndpoint,
-    query: { filter_path: sniffedNodesFilterPath },
-    method: 'GET'
-  }, function (err, resp, status) {
-    if (!err && resp && resp.nodes) {
-      var hostsConfigs;
+  this.request(
+    {
+      path: this.sniffEndpoint,
+      query: { filter_path: sniffedNodesFilterPath },
+      method: 'GET',
+    },
+    function(err, resp, status) {
+      if (!err && resp && resp.nodes) {
+        var hostsConfigs;
 
-      try {
-        hostsConfigs = nodesToHostCallback(resp.nodes);
-      } catch (e) {
-        log.error(new Error('Unable to convert node list from ' + self.sniffEndpoint +
-          ' to hosts durring sniff. Encountered error:\n' + (e.stack || e.message)));
-        return;
+        try {
+          hostsConfigs = nodesToHostCallback(resp.nodes);
+        } catch (e) {
+          log.error(
+            new Error(
+              'Unable to convert node list from ' +
+                self.sniffEndpoint +
+                ' to hosts durring sniff. Encountered error:\n' +
+                (e.stack || e.message)
+            )
+          );
+          return;
+        }
+
+        _.forEach(hostsConfigs, function(hostConfig) {
+          if (sniffedNodesProtocol) hostConfig.protocol = sniffedNodesProtocol;
+        });
+
+        self.setHosts(hostsConfigs);
       }
-
-      _.forEach(hostsConfigs, function (hostConfig) {
-        if (sniffedNodesProtocol) hostConfig.protocol = sniffedNodesProtocol;
-      });
-
-      self.setHosts(hostsConfigs);
+      cb(err, resp, status);
     }
-    cb(err, resp, status);
-  });
+  );
 };
 
 /**
@@ -453,18 +500,20 @@ Transport.prototype.sniff = function (cb) {
  * @param {Array<HostConfig>} hostsConfigs - an array of Hosts, or configuration objects
  *                                         that will be used to create Host objects.
  */
-Transport.prototype.setHosts = function (hostsConfigs) {
+Transport.prototype.setHosts = function(hostsConfigs) {
   var globalConfig = this._config;
-  this.connectionPool.setHosts(_.map(hostsConfigs, function (conf) {
-    return (conf instanceof Host) ? conf : new Host(conf, globalConfig);
-  }));
+  this.connectionPool.setHosts(
+    _.map(hostsConfigs, function(conf) {
+      return conf instanceof Host ? conf : new Host(conf, globalConfig);
+    })
+  );
 };
 
 /**
  * Close the Transport, which closes the logs and connection pool
  * @return {[type]} [description]
  */
-Transport.prototype.close = function () {
+Transport.prototype.close = function() {
   this.log.close();
   this.closed = true;
   _.each(this._timers, clearTimeout);

@@ -1,3 +1,3 @@
 module.exports = {
-  console: require('./console')
+  console: require('./console'),
 };

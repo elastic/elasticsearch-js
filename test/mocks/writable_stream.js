@@ -7,32 +7,31 @@ var util = require('util');
 var MockWritableStream; // defined simply for 0.10+, in detail for older versions
 var Writable = require('stream').Writable;
 
-
 if (Writable) {
   // nice and simple for streams 2
-  MockWritableStream = module.exports = function (opts) {
+  MockWritableStream = module.exports = function(opts) {
     Writable.call(this, opts);
 
-    this._write = function () {};
+    this._write = function() {};
   };
   util.inherits(MockWritableStream, Writable);
 } else {
   // Node < 0.10 did not provide a usefull stream abstract
   var Stream = require('stream').Stream;
-  module.exports = MockWritableStream = function () {
+  module.exports = MockWritableStream = function() {
     Stream.call(this);
     this.writable = true;
   };
   util.inherits(MockWritableStream, Stream);
 
-  MockWritableStream.prototype.write = function () {
+  MockWritableStream.prototype.write = function() {
     if (!this.writable) {
       this.emit('error', new Error('stream not writable'));
       return false;
     }
 
     var cb;
-    if (typeof(arguments[arguments.length - 1]) === 'function') {
+    if (typeof arguments[arguments.length - 1] === 'function') {
       cb = arguments[arguments.length - 1];
     }
 
@@ -41,7 +40,7 @@ if (Writable) {
     }
   };
 
-  MockWritableStream.prototype.end = function (data, encoding) {
+  MockWritableStream.prototype.end = function(data, encoding) {
     if (typeof data === 'function') {
       // no callback support
     } else if (typeof encoding === 'function') {
@@ -53,18 +52,20 @@ if (Writable) {
     this.writable = false;
   };
 
-  MockWritableStream.prototype.destroy = function (cb) {
+  MockWritableStream.prototype.destroy = function(cb) {
     var self = this;
 
     if (!this.writable) {
       if (cb) {
-        process.nextTick(function () { cb(null); });
+        process.nextTick(function() {
+          cb(null);
+        });
       }
       return;
     }
     this.writable = false;
 
-    process.nextTick(function () {
+    process.nextTick(function() {
       if (cb) {
         cb(null);
       }
@@ -74,5 +75,4 @@ if (Writable) {
 
   // There is no shutdown() for files.
   MockWritableStream.prototype.destroySoon = MockWritableStream.prototype.end;
-
 }

@@ -5,7 +5,7 @@ module.exports = {
         expand: true,
         cwd: '<%= distDir %>/archives',
         src: '*',
-        dest: 'elasticsearch/elasticsearch-js/'
+        dest: 'elasticsearch/elasticsearch-js/',
       },
     ],
     options: {
@@ -14,8 +14,8 @@ module.exports = {
       bucket: 'download.elasticsearch.org',
       access: 'public-read',
       params: {
-        'ContentDisposition': 'attachment'
-      }
-    }
-  }
+        ContentDisposition: 'attachment',
+      },
+    },
+  },
 };

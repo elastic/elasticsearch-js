@@ -18,11 +18,10 @@ utils.inherits = nodeUtils.inherits;
  * @param  {Array} arr - An array to check
  * @return {Boolean}
  */
-utils.isArrayOfStrings = function (arr) {
+utils.isArrayOfStrings = function(arr) {
   // quick shallow check of arrays
   return _.isArray(arr) && _.every(arr.slice(0, 10), _.isString);
 };
-
 
 /**
  * Capitalize the first letter of a word
@@ -31,7 +30,7 @@ utils.isArrayOfStrings = function (arr) {
  * @param  {string} word - The word to transform
  * @return {string}
  */
-utils.ucfirst = function (word) {
+utils.ucfirst = function(word) {
   return word[0].toUpperCase() + word.substring(1).toLowerCase();
 };
 
@@ -41,7 +40,7 @@ utils.ucfirst = function (word) {
  * @return {Function}
  */
 function adjustWordCase(firstWordCap, otherWordsCap, sep) {
-  return function (string) {
+  return function(string) {
     var i = 0;
     var words = [];
     var word = '';
@@ -65,10 +64,12 @@ function adjustWordCase(firstWordCap, otherWordsCap, sep) {
         if (lower && word.length) {
           word += c;
         } else {
-          if ((!words.length && firstWordCap) || (words.length && otherWordsCap)) {
+          if (
+            (!words.length && firstWordCap) ||
+            (words.length && otherWordsCap)
+          ) {
             word = c.toUpperCase();
-          }
-          else {
+          } else {
             word = c.toLowerCase();
           }
         }
@@ -118,7 +119,7 @@ utils.snakeCase = adjustWordCase(false, false, '_');
  * @param any {*} - Something or nothing
  * @returns {string}
  */
-utils.toUpperString = function (any) {
+utils.toUpperString = function(any) {
   if (any) {
     if (typeof any !== 'string') {
       any = any.toString();
@@ -136,7 +137,7 @@ utils.toUpperString = function (any) {
  * @param  {*} val
  * @return {Boolean}
  */
-utils.isNumeric = function (val) {
+utils.isNumeric = function(val) {
   return typeof val !== 'object' && val - parseFloat(val) >= 0;
 };
 
@@ -150,7 +151,7 @@ var intervalRE = /^(\d+(?:\.\d+)?)(M|w|d|h|m|s|y|ms)$/;
  * @param {String} val
  * @return {Boolean}
  */
-utils.isInterval = function (val) {
+utils.isInterval = function(val) {
   return !!(val.match && val.match(intervalRE));
 };
 
@@ -163,8 +164,8 @@ utils.isInterval = function (val) {
  * @param {Number} times - Times the string should be repeated
  * @return {String}
  */
-utils.repeat = function (what, times) {
-  return (new Array(times + 1)).join(what);
+utils.repeat = function(what, times) {
+  return new Array(times + 1).join(what);
 };
 
 /**
@@ -176,7 +177,7 @@ utils.repeat = function (what, times) {
  * @param [sliceIndex=0] {Integer} - The index that args should be sliced at, before feeding args to func
  * @returns {*} - the return value of func
  */
-utils.applyArgs = function (func, context, args, sliceIndex) {
+utils.applyArgs = function(func, context, args, sliceIndex) {
   sliceIndex = sliceIndex || 0;
   switch (args.length - sliceIndex) {
     case 0:
@@ -186,12 +187,29 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
     case 2:
       return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex]);
     case 3:
-      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex]);
+      return func.call(
+        context,
+        args[0 + sliceIndex],
+        args[1 + sliceIndex],
+        args[2 + sliceIndex]
+      );
     case 4:
-      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex], args[2 + sliceIndex], args[3 + sliceIndex]);
+      return func.call(
+        context,
+        args[0 + sliceIndex],
+        args[1 + sliceIndex],
+        args[2 + sliceIndex],
+        args[3 + sliceIndex]
+      );
     case 5:
-      return func.call(context, args[0 + sliceIndex], args[1 + sliceIndex],
-      args[2 + sliceIndex], args[3 + sliceIndex], args[4 + sliceIndex]);
+      return func.call(
+        context,
+        args[0 + sliceIndex],
+        args[1 + sliceIndex],
+        args[2 + sliceIndex],
+        args[3 + sliceIndex],
+        args[4 + sliceIndex]
+      );
     default:
       return func.apply(context, Array.prototype.slice.call(args, sliceIndex));
   }
@@ -202,7 +220,7 @@ utils.applyArgs = function (func, context, args, sliceIndex) {
  * when it is called.
  * @return {[type]} [description]
  */
-utils.nextTick = function (cb) {
+utils.nextTick = function(cb) {
   // bind the function and schedule it
   process.nextTick(_.bindKey(utils, 'applyArgs', cb, null, arguments, 1));
 };
@@ -221,7 +239,7 @@ utils.nextTick = function (cb) {
  * @param  {Function} func - The method that is being defined
  * @return {Function}
  */
-utils.handler = function (func) {
+utils.handler = function(func) {
   func._provideBound = true;
   return func;
 };
@@ -242,7 +260,7 @@ utils.handler = function (func) {
  *
  * @param {Object} obj - The object to bind the methods to
  */
-utils.makeBoundMethods = function (obj) {
+utils.makeBoundMethods = function(obj) {
   obj.bound = {};
   for (var prop in obj) {
     // dearest maintainer, we want to look through the prototype
@@ -258,7 +276,7 @@ utils.makeBoundMethods = function (obj) {
  * @param  {Object} opts - a map of the options
  * @return {Function|undefined} - If a valid option was specified, then the constructor is returned
  */
-utils.funcEnum = function (config, name, opts, def) {
+utils.funcEnum = function(config, name, opts, def) {
   var val = config[name];
   switch (typeof val) {
     case 'undefined':
@@ -296,7 +314,7 @@ utils.funcEnum = function (config, name, opts, def) {
  * @param  {Function} transform - A function called for each element of the resulting array
  * @return {Array|false} - an array on success, or false on failure.
  */
-utils.createArray = function (input, transform) {
+utils.createArray = function(input, transform) {
   transform = typeof transform === 'function' ? transform : _.identity;
   var output = [];
   var item;
@@ -325,7 +343,7 @@ utils.createArray = function (input, transform) {
  * @param  {WritableStream} stream - an instance of stream.Writable
  * @return {string} - the remaining test to be written to the stream
  */
-utils.getUnwrittenFromStream = function (stream) {
+utils.getUnwrittenFromStream = function(stream) {
   var writeBuffer = utils.getStreamWriteBuffer(stream);
   if (!writeBuffer) return;
 
@@ -333,11 +351,14 @@ utils.getUnwrittenFromStream = function (stream) {
   var out = '';
   if (!writeBuffer.length) return out;
 
-  _.each(writeBuffer, function (writeReq) {
+  _.each(writeBuffer, function(writeReq) {
     if (writeReq.chunk) {
       // 0.9.12+ uses WriteReq objects with a chunk prop
       out += '' + writeReq.chunk;
-    } else if (_.isArray(writeReq) && (typeof writeReq[0] === 'string' || Buffer.isBuffer(writeReq[0]))) {
+    } else if (
+      _.isArray(writeReq) &&
+      (typeof writeReq[0] === 'string' || Buffer.isBuffer(writeReq[0]))
+    ) {
       // 0.9.4 - 0.9.9 buffers are arrays of arrays like [[chunk, cb], [chunk, undef], ...].
       out += '' + writeReq[0];
     } else {
@@ -347,7 +368,7 @@ utils.getUnwrittenFromStream = function (stream) {
   return out;
 };
 
-utils.getStreamWriteBuffer = function (stream) {
+utils.getStreamWriteBuffer = function(stream) {
   if (!stream || !stream._writableState) return;
 
   var writeState = stream._writableState;
@@ -359,7 +380,7 @@ utils.getStreamWriteBuffer = function (stream) {
   }
 };
 
-utils.clearWriteStreamBuffer = function (stream) {
+utils.clearWriteStreamBuffer = function(stream) {
   var buffer = utils.getStreamWriteBuffer(stream);
   return buffer && buffer.splice(0);
 };
@@ -367,8 +388,8 @@ utils.clearWriteStreamBuffer = function (stream) {
 /**
  * return the current time in milliseconds since epoch
  */
-utils.now = function () {
-  return (typeof Date.now === 'function') ? Date.now() : (new Date()).getTime();
+utils.now = function() {
+  return typeof Date.now === 'function' ? Date.now() : new Date().getTime();
 };
 
 module.exports = utils;

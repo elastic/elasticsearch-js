@@ -37,7 +37,7 @@ var TASKS = [];
 var output; // main output stream
 var taskOut; // task output stream
 
-task('NODE_UNIT', true, function () {
+task('NODE_UNIT', true, function() {
   if (!JENKINS) {
     return grunt('mochacov:ci_unit');
   }
@@ -45,67 +45,77 @@ task('NODE_UNIT', true, function () {
   return grunt('mochacov:jenkins_unit');
 });
 
-task('NODE_INTEGRATION', true, function () {
+task('NODE_INTEGRATION', true, function() {
   var branch = ENV.ES_REF;
 
-  return node('scripts/generate', '--no-api', '--branch', branch)
-  .then(function () {
-    var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
-    return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
-  });
+  return node('scripts/generate', '--no-api', '--branch', branch).then(
+    function() {
+      var target = (JENKINS ? 'jenkins_' : '') + 'integration:' + branch;
+      return grunt('esvm:ci_env', 'mocha_' + target, 'esvm_shutdown:ci_env');
+    }
+  );
 });
 
-task('SAUCE_LABS', false, function () {
-  return new Promise(function (resolve, reject) {
+task('SAUCE_LABS', false, function() {
+  return new Promise(function(resolve, reject) {
     // build the clients and start the server, once the server is ready call trySaucelabs()
-    var serverTasks = ['browser_clients:build', 'run:browser_test_server:keepalive'];
-    spawn(GRUNT, serverTasks, function (proc) {
+    var serverTasks = [
+      'browser_clients:build',
+      'run:browser_test_server:keepalive',
+    ];
+    spawn(GRUNT, serverTasks, function(proc) {
       var toLines = split();
 
-      proc.stdout
-      .pipe(toLines)
-      .pipe(through2(function (line, enc, cb) {
-        cb();
+      proc.stdout.pipe(toLines).pipe(
+        through2(function(line, enc, cb) {
+          cb();
 
-        if (String(line).indexOf('listening on port 8000') === -1) return;
+          if (String(line).indexOf('listening on port 8000') === -1) return;
 
+          trySaucelabs()
+            .finally(function() {
+              if (proc) proc.kill();
+            })
+            .then(resolve, reject);
 
-        trySaucelabs()
-        .finally(function () { if (proc) proc.kill(); })
-        .then(resolve, reject);
-
-        proc.on('exit', function () { proc = null; });
-        proc.stdout.unpipe(toLines);
-        toLines.end();
-      }));
+          proc.on('exit', function() {
+            proc = null;
+          });
+          proc.stdout.unpipe(toLines);
+          toLines.end();
+        })
+      );
     })
-    // ignore server errors
-    .catch(_.noop);
+      // ignore server errors
+      .catch(_.noop);
 
     // attempt to run tests on saucelabs and retry if it fails
     var saucelabsAttempts = 0;
     function trySaucelabs() {
       saucelabsAttempts++;
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         log(chalk.green('saucelabs attempt #', saucelabsAttempts));
-        spawn(GRUNT, ['saucelabs-mocha'], function (cp) {
-
+        spawn(GRUNT, ['saucelabs-mocha'], function(cp) {
           var failedTests = 0;
-          cp.stdout
-          .pipe(split())
-          .pipe(map(function (line) {
-            failedTests += String(line).trim() === 'Passed: false' ? 1 : 0;
-          }));
+          cp.stdout.pipe(split()).pipe(
+            map(function(line) {
+              failedTests += String(line).trim() === 'Passed: false' ? 1 : 0;
+            })
+          );
 
           cp.on('error', reject);
-          cp.on('exit', function (code) {
+          cp.on('exit', function(code) {
             if (code > 0) {
               if (failedTests > 0) {
                 return reject(new Error('Browser tests failed'));
               }
 
               if (saucelabsAttempts >= 3) {
-                return reject(new Error('Saucelabs is like really really down. Tried 3 times'));
+                return reject(
+                  new Error(
+                    'Saucelabs is like really really down. Tried 3 times'
+                  )
+                );
               }
 
               log(chalk.blue('trying saucelabs again...'));
@@ -115,21 +125,20 @@ task('SAUCE_LABS', false, function () {
             return resolve();
           });
         })
-        // swallow spawn() errors, custom error handler in place
-        .catch(_.noop);
+          // swallow spawn() errors, custom error handler in place
+          .catch(_.noop);
       });
     }
   });
 });
 
-task('CHECK_COVERAGE', false, function () {
-  return grunt('mochacov:ship_coverage')
-  .catch(function () {
-    log('FAILED TO SHIP COVERAGE! but that\'s okay');
+task('CHECK_COVERAGE', false, function() {
+  return grunt('mochacov:ship_coverage').catch(function() {
+    log("FAILED TO SHIP COVERAGE! but that's okay");
   });
 });
 
-execTask('SETUP', function () {
+execTask('SETUP', function() {
   return Promise.try(function readVersion() {
     if (!ENV.ES_V) {
       if (ENV.ES_RELEASE) {
@@ -141,8 +150,8 @@ execTask('SETUP', function () {
       }
     }
 
-    var match;
-    if (match = ENV.ES_V.match(/^(.*)_nightly$/)) {
+    var match = ENV.ES_V.match(/^(.*)_nightly$/);
+    if (match) {
       return [match[1], null];
     }
 
@@ -152,55 +161,56 @@ execTask('SETUP', function () {
 
     throw new Error('unable to parse ES_V ' + ENV.ES_V);
   })
-  .then(function readOtherConf(ver) {
-    if (!ver) {
-      throw new Error('Unable to run the ci script without at least an ES_REF or ES_RELEASE environment var.');
-    }
+    .then(function readOtherConf(ver) {
+      if (!ver) {
+        throw new Error(
+          'Unable to run the ci script without at least an ES_REF or ES_RELEASE environment var.'
+        );
+      }
 
-    log('ES_PORT:', ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10));
-    log('ES_HOST:', ENV.ES_HOST = ENV.ES_HOST || 'localhost');
+      log('ES_PORT:', (ENV.ES_PORT = parseInt(ENV.ES_PORT || 9400, 10)));
+      log('ES_HOST:', (ENV.ES_HOST = ENV.ES_HOST || 'localhost'));
 
-    if (ver[0]) log('ES_REF:', ENV.ES_REF = ver[0]);
-    else delete ENV.ES_REF;
+      if (ver[0]) log('ES_REF:', (ENV.ES_REF = ver[0]));
+      else delete ENV.ES_REF;
 
-    if (ver[1]) log('ES_RELEASE:', ENV.ES_RELEASE = ver[1]);
-    else delete ENV.ES_RELEASE;
-  })
-  .then(function readTasks() {
-    if (!ENV.RUN) {
-      return _.filter(TASKS, { default: true });
-    }
-
-    return ENV.RUN
-    .split(',')
-    .map(function (name) {
-      return _.find(TASKS, { name: name.trim() });
+      if (ver[1]) log('ES_RELEASE:', (ENV.ES_RELEASE = ver[1]));
+      else delete ENV.ES_RELEASE;
     })
-    .filter(Boolean);
-  });
-})
-.then(function (queue) {
-  if (!queue.length) {
-    throw new Error('no tasks to run');
-  }
+    .then(function readTasks() {
+      if (!ENV.RUN) {
+        return _.filter(TASKS, { default: true });
+      }
 
-  // Recursively do tasks until the queue is empty
-  return (function next() {
-    if (!queue.length) return;
-    return execTask(queue.shift()).then(next);
-  }());
+      return ENV.RUN.split(',')
+        .map(function(name) {
+          return _.find(TASKS, { name: name.trim() });
+        })
+        .filter(Boolean);
+    });
 })
-.then(function () {
-  logImportant(chalk.bold.green('✔︎ SUCCESS'));
-})
-.catch(function (e) {
-  logImportant(chalk.bold.red('✗ FAILURE\n\n' + e.stack));
+  .then(function(queue) {
+    if (!queue.length) {
+      throw new Error('no tasks to run');
+    }
 
-  // override process exit code once it is ready to close
-  process.once('exit', function () {
-    process.exit(1);
+    // Recursively do tasks until the queue is empty
+    return (function next() {
+      if (!queue.length) return;
+      return execTask(queue.shift()).then(next);
+    })();
+  })
+  .then(function() {
+    logImportant(chalk.bold.green('✔︎ SUCCESS'));
+  })
+  .catch(function(e) {
+    logImportant(chalk.bold.red('✗ FAILURE\n\n' + e.stack));
+
+    // override process exit code once it is ready to close
+    process.once('exit', function() {
+      process.exit(1);
+    });
   });
-});
 
 /** ****
  * utils
@@ -217,7 +227,7 @@ function logImportant(text) {
 }
 
 function push(m) {
-  return function () {
+  return function() {
     var args = _.toArray(arguments);
     var cb = args.pop();
     this.push(m.apply(this, args));
@@ -227,8 +237,12 @@ function push(m) {
 
 function indent() {
   var str = through2(
-    push(function (chunk) { return String(chunk).replace(NL_RE, '$1  '); }),
-    push(function () { return '\n'; })
+    push(function(chunk) {
+      return String(chunk).replace(NL_RE, '$1  ');
+    }),
+    push(function() {
+      return '\n';
+    })
   );
   str.push('  ');
   return str;
@@ -243,7 +257,7 @@ function task(name, def, fn) {
   TASKS.push({
     name: name,
     default: def,
-    fn: fn
+    fn: fn,
   });
 }
 
@@ -254,20 +268,20 @@ function execTask(name, task) {
   }
 
   output = through2();
-  output
-  .pipe(process.stdout, { end: false });
+  output.pipe(
+    process.stdout,
+    { end: false }
+  );
 
   log(chalk.white.underline(name));
 
   taskOut = through2();
-  taskOut
-  .pipe(indent())
-  .pipe(output);
+  taskOut.pipe(indent()).pipe(output);
 
   function flushTaskOut() {
-    return new Promise(function (resolve) {
+    return new Promise(function(resolve) {
       // wait for the taskOut to finish writing before continuing
-      output.once('finish', function () {
+      output.once('finish', function() {
         log('');
         resolve();
       });
@@ -280,26 +294,33 @@ function execTask(name, task) {
 }
 
 function spawn(file, args, block) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     var proc = cp.spawn(file, args, {
       cwd: ROOT,
       env: ENV,
-      stdio: [0, 'pipe', 'pipe']
+      stdio: [0, 'pipe', 'pipe'],
     });
 
-    proc.stdout.pipe(taskOut, { end: false });
-    proc.stderr.pipe(taskOut, { end: false });
+    proc.stdout.pipe(
+      taskOut,
+      { end: false }
+    );
+    proc.stderr.pipe(
+      taskOut,
+      { end: false }
+    );
 
     var stdout = '';
-    proc.stdout
-    .pipe(through2(function (chunk, enc, cb) {
-      stdout += chunk;
-      cb();
-    }));
+    proc.stdout.pipe(
+      through2(function(chunk, enc, cb) {
+        stdout += chunk;
+        cb();
+      })
+    );
 
     if (block) block(proc);
 
-    proc.on('exit', function (code) {
+    proc.on('exit', function(code) {
       if (code > 0) {
         reject(new Error('non-zero exit code: ' + code));
       } else {
@@ -307,22 +328,25 @@ function spawn(file, args, block) {
       }
     });
 
-    proc.on('error', function (origErr) {
-      reject(new Error('Unable to execute "' + file + ' ' + args.join(' ') + '": ' + origErr.message));
+    proc.on('error', function(origErr) {
+      reject(
+        new Error(
+          'Unable to execute "' +
+            file +
+            ' ' +
+            args.join(' ') +
+            '": ' +
+            origErr.message
+        )
+      );
     });
   });
 }
 
 function node(/* args... */) {
-  return spawn(
-    process.execPath,
-    _.toArray(arguments)
-  );
+  return spawn(process.execPath, _.toArray(arguments));
 }
 
 function grunt(/* args... */) {
-  return spawn(
-    GRUNT,
-    _.toArray(arguments)
-  );
+  return spawn(GRUNT, _.toArray(arguments));
 }

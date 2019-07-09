@@ -5,11 +5,11 @@ var XhrServer = MockHttpRequest.MockHttpServer;
 var parseUrl = MockHttpRequest.prototype.parseUri;
 var _ = require('lodash');
 
-var server = new XhrServer(function (request) {
+var server = new XhrServer(function(request) {
   var reqDetails = {
     method: request.method,
     host: request.urlParts.host,
-    path: request.urlParts.relative
+    path: request.urlParts.relative,
   };
   var response = _.find(interceptors, reqDetails);
 
@@ -24,36 +24,38 @@ var server = new XhrServer(function (request) {
 
     request.receive(response.status, response.body || void 0);
   } else {
-    throw new Error('No known match for request: ' + JSON.stringify(reqDetails));
+    throw new Error(
+      'No known match for request: ' + JSON.stringify(reqDetails)
+    );
   }
 });
 
 server.start();
 
-var mockNock = module.exports = function (url) {
+var mockNock = (module.exports = function(url) {
   var parsedUrl = parseUrl(url);
   var req = {
     method: 'GET',
     host: parsedUrl.host,
-    times: 1
+    times: 1,
   };
 
   var modifyReq = {
-    get: function (path) {
+    get: function(path) {
       req.path = path;
       req.method = 'GET';
       return modifyReq;
     },
-    port: function (path) {
+    port: function(path) {
       req.path = path;
       req.method = 'POST';
       return modifyReq;
     },
-    times: function (times) {
+    times: function(times) {
       req.times = times;
       return modifyReq;
     },
-    reply: function (status, body) {
+    reply: function(status, body) {
       req.status = status;
       req.body = body;
       switch (typeof req.body) {
@@ -64,20 +66,22 @@ var mockNock = module.exports = function (url) {
           try {
             req.body = req.body && JSON.stringify(req.body);
           } catch (e) {
-            req.body = req.body;
+            // noop
           }
       }
       interceptors.push(req);
       return mockNock(url);
     },
-    done: mockNock.done
+    done: mockNock.done,
   };
 
   return modifyReq;
-};
+});
 
-mockNock.done = function () {
+mockNock.done = function() {
   if (interceptors.length) {
-    throw new Error('Some interceptors were not called: ' + JSON.stringify(interceptors));
+    throw new Error(
+      'Some interceptors were not called: ' + JSON.stringify(interceptors)
+    );
   }
 };

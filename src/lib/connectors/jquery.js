@@ -16,34 +16,35 @@ function JqueryConnector(host, config) {
 }
 utils.inherits(JqueryConnector, ConnectionAbstract);
 
-JqueryConnector.prototype.request = function (params, cb) {
+JqueryConnector.prototype.request = function(params, cb) {
   var ajax = {
     url: this.host.makeUrl(params),
     data: params.body,
     type: params.method,
     dataType: 'text',
     headers: this.host.getHeaders(params.headers),
-    done: cb
+    done: cb,
   };
 
-  var jqXHR = jQuery.ajax(ajax)
-    .done(function (data) {
+  var jqXHR = jQuery
+    .ajax(ajax)
+    .done(function(data) {
       cb(null, data, jqXHR.statusCode(), {
-        'content-type': jqXHR.getResponseHeader('content-type')
+        'content-type': jqXHR.getResponseHeader('content-type'),
       });
     })
-    .fail(function (a, b, err) {
+    .fail(function(a, b, err) {
       // if response is available, execute cb. Else throw ConnectionFault
       if (a && a.responseText) {
         cb(null, a.responseText, jqXHR.statusCode(), {
-          'content-type': jqXHR.getResponseHeader('content-type')
+          'content-type': jqXHR.getResponseHeader('content-type'),
         });
       } else {
         cb(new ConnectionFault(err && err.message));
       }
     });
 
-  return function () {
+  return function() {
     jqXHR.abort();
   };
 };

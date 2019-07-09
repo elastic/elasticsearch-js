@@ -1,5 +1,5 @@
 module.exports = {
   dist: {
-    src: ['<%= distDir %>']
-  }
+    src: ['<%= distDir %>'],
+  },
 };

@@ -10,14 +10,15 @@ var Client = require('./lib/client');
 process.angular_build = true;
 
 /* global angular */
-angular.module('elasticsearch', [])
-  .factory('esFactory', ['$injector', '$q', function ($injector, $q) {
-
-    var factory = function (config) {
+angular.module('elasticsearch', []).factory('esFactory', [
+  '$injector',
+  '$q',
+  function($injector, $q) {
+    var factory = function(config) {
       config = config || {};
       config.connectionClass = AngularConnector;
       config.$injector = $injector;
-      config.defer = function () {
+      config.defer = function() {
         return $q.defer();
       };
       config.serializer = config.serializer || 'angular';
@@ -29,4 +30,5 @@ angular.module('elasticsearch', [])
     factory.Transport = require('./lib/transport');
 
     return factory;
-  }]);
+  },
+]);

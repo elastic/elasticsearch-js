@@ -1,6 +1,9 @@
 var _ = require('lodash');
 var pkg = require('../package.json');
-var branches = [...pkg.config.supported_es_branches, ...pkg.config.unstable_es_branches];
+var branches = [
+  ...pkg.config.supported_es_branches,
+  ...pkg.config.unstable_es_branches,
+];
 var semver = require('semver');
 
 function nextMajorVersion() {
@@ -8,14 +11,19 @@ function nextMajorVersion() {
     .map(v => parseFloat(v.split('.')[0]))
     .filter(n => !isNaN(n))
     .sort((a, b) => b - a)
-    .shift()
+    .shift();
 
-  return new Version(`${largestMajor + 1}.0.0`)
+  return new Version(`${largestMajor + 1}.0.0`);
 }
 
 function nextMinorVersion(major) {
   const largestMinor = branches
-    .map(v => v.split('.').map(parseFloat).slice(0, 2))
+    .map(v =>
+      v
+        .split('.')
+        .map(parseFloat)
+        .slice(0, 2)
+    )
     // ensure all tuples have length 2
     .filter(vt => vt.length === 2)
     // ensure all values in tuples are not NaN
@@ -37,38 +45,37 @@ function Version(v) {
   this.patch = semver.patch(v);
 }
 
-Version.fromBranch = function (branch) {
+Version.fromBranch = function(branch) {
   // n.m -> n.m.0
   if (/^\d+\.\d+$/.test(branch)) return new Version(branch + '.0');
 
   // n.x -> n.(maxVersion + 1).0
-  const match = branch.match(/^(\d+)\.x$/i)
+  const match = branch.match(/^(\d+)\.x$/i);
   if (match) return nextMinorVersion(match[1]);
 
   // master => (maxMajorVersion + 1).0.0
-  if (branch === 'master') return nextMajorVersion()
+  if (branch === 'master') return nextMajorVersion();
 
   throw new Error('unable to convert branch "' + branch + '" to semver');
 };
 
-Version.prototype.increment = function (which) {
+Version.prototype.increment = function(which) {
   return new Version(semver.inc(this.version, which));
 };
 
-Version.prototype.satisfies = function (range) {
+Version.prototype.satisfies = function(range) {
   return semver.satisfies(this.version, range);
 };
 
 // merge a list of option objects, each of which has a "version" key dictating
 // the range of versions those options should be included in. Options are merged
 // in the order of the array
-Version.prototype.mergeOpts = function (versioned, overrides) {
-
+Version.prototype.mergeOpts = function(versioned, overrides) {
   const candidates = versioned
     .filter(o => this.satisfies(o.version))
-    .map(o => _.omit(o, 'version'))
+    .map(o => _.omit(o, 'version'));
 
-  return _.merge({}, overrides || {}, ...candidates)
+  return _.merge({}, overrides || {}, ...candidates);
 };
 
 module.exports = Version;

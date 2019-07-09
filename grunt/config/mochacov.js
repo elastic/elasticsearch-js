@@ -1,6 +1,8 @@
 var root = require('find-root')(__dirname);
 var rel = require('path').resolve.bind(null, root);
-var rootReq = function (p) { return require(rel(p)); };
+var rootReq = function(p) {
+  return require(rel(p));
+};
 var utils = rootReq('src/lib/utils');
 var grunt = require('grunt');
 
@@ -10,22 +12,22 @@ var config = {
   unit: {
     src: 'test/unit/index.js',
     options: {
-      reporter: 'nyan'
-    }
+      reporter: 'nyan',
+    },
   },
 
   ci_unit: {
     src: 'test/unit/index.js',
     options: {
-      reporter: 'spec'
-    }
+      reporter: 'spec',
+    },
   },
 
   jenkins_unit: {
     src: 'test/unit/index.js',
     options: {
-      reporter: JENKINS_REPORTER
-    }
+      reporter: JENKINS_REPORTER,
+    },
   },
 
   // run the unit tests, and update coverage.html
@@ -33,8 +35,8 @@ var config = {
     src: 'test/unit/coverage.js',
     options: {
       reporter: 'html-cov',
-      instrument: false
-    }
+      instrument: false,
+    },
   },
 
   // for use by travis
@@ -43,26 +45,26 @@ var config = {
     options: {
       reporter: 'mocha-lcov-reporter',
       coveralls: true,
-      instrument: false
-    }
+      instrument: false,
+    },
   },
 
   integration: {
     src: null,
     options: {
-      reporter: 'spec'
-    }
+      reporter: 'spec',
+    },
   },
 
   jenkins_integration: {
     src: null,
     options: {
-      reporter: JENKINS_REPORTER
-    }
-  }
+      reporter: JENKINS_REPORTER,
+    },
+  },
 };
 
-grunt.registerTask('mocha_integration', function (branch) {
+grunt.registerTask('mocha_integration', function(branch) {
   grunt.config.set(
     'mochacov.integration.src',
     'test/integration/yaml_suite/index_' + utils.snakeCase(branch) + '.js'
@@ -70,7 +72,7 @@ grunt.registerTask('mocha_integration', function (branch) {
   grunt.task.run('mochacov:integration');
 });
 
-grunt.registerTask('mocha_jenkins_integration', function (branch) {
+grunt.registerTask('mocha_jenkins_integration', function(branch) {
   grunt.config.set(
     'mochacov.jenkins_integration.src',
     'test/integration/yaml_suite/index_' + utils.snakeCase(branch) + '.js'

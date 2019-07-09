@@ -3,12 +3,12 @@ module.exports = {
     cwd: '<%= distDir %>',
     src: '*.js',
     dest: '<%= distDir %>/elasticsearch-js/',
-    expand: true
+    expand: true,
   },
   dist_to_bower: {
     cwd: '<%= distDir %>',
     src: '*.js',
     dest: '<%= bowerSubmodule %>',
-    expand: true
-  }
+    expand: true,
+  },
 };

@@ -2,119 +2,110 @@ var Log = require('../../../src/lib/log');
 var _ = require('lodash');
 var expect = require('expect.js');
 
-describe('Log class', function () {
-  describe('::parseLevels', function () {
-    it('accepts a string and returns it and the other levels below it', function () {
+describe('Log class', function() {
+  describe('::parseLevels', function() {
+    it('accepts a string and returns it and the other levels below it', function() {
       expect(Log.parseLevels('trace')).to.eql([
         'error',
         'warning',
         'info',
         'debug',
-        'trace'
+        'trace',
       ]);
     });
 
-    it('accepts and validates an array of levels', function () {
+    it('accepts and validates an array of levels', function() {
       expect(Log.parseLevels(['warning', 'info'])).to.eql(['warning', 'info']);
     });
 
-    it('throws an error when an invalid string is supplied', function () {
-      expect(function () {
+    it('throws an error when an invalid string is supplied', function() {
+      expect(function() {
         Log.parseLevels('INVALID');
       }).to.throwError(/invalid logging level/);
     });
 
-    it('throws an error when an invalid string is supplied in side an array', function () {
-      expect(function () {
+    it('throws an error when an invalid string is supplied in side an array', function() {
+      expect(function() {
         Log.parseLevels(['error', 'INVALID']);
       }).to.throwError(/invalid logging level/);
     });
   });
 
-  describe('#addOutput', function () {
+  describe('#addOutput', function() {
     var log;
 
-    Log.loggers.stub = function (log, config) {
+    Log.loggers.stub = function(log, config) {
       this.config = config;
     };
 
-    beforeEach(function () {
+    beforeEach(function() {
       log = new Log();
     });
 
-    it('returns the newly created logger', function () {
+    it('returns the newly created logger', function() {
       expect(log.addOutput({ type: 'stub' })).to.be.a(Log.loggers.stub);
     });
 
-    it('Accepts a config object with `level: "{{level}}"`', function () {
+    it('Accepts a config object with `level: "{{level}}"`', function() {
       var logger = log.addOutput({
         type: 'stub',
-        level: 'warning'
+        level: 'warning',
       });
 
-      expect(logger.config.levels).to.eql([
-        'error', 'warning'
-      ]);
+      expect(logger.config.levels).to.eql(['error', 'warning']);
     });
 
-    it('Accepts a config object with `level: ["{{level}}"]`', function () {
+    it('Accepts a config object with `level: ["{{level}}"]`', function() {
       var logger = log.addOutput({
         type: 'stub',
-        level: ['warning']
+        level: ['warning'],
       });
 
-      expect(logger.config.levels).to.eql([
-        'warning'
-      ]);
+      expect(logger.config.levels).to.eql(['warning']);
     });
 
-
-    it('Accepts a config object with `levels: "{{level}}"`', function () {
+    it('Accepts a config object with `levels: "{{level}}"`', function() {
       var logger = log.addOutput({
         type: 'stub',
-        levels: 'warning'
+        levels: 'warning',
       });
 
-      expect(logger.config.levels).to.eql([
-        'error', 'warning'
-      ]);
+      expect(logger.config.levels).to.eql(['error', 'warning']);
     });
 
-    it('Accepts a config object with `levels: ["{{level}}"]`', function () {
+    it('Accepts a config object with `levels: ["{{level}}"]`', function() {
       var logger = log.addOutput({
         type: 'stub',
-        level: ['warning']
+        level: ['warning'],
       });
 
-      expect(logger.config.levels).to.eql([
-        'warning'
-      ]);
+      expect(logger.config.levels).to.eql(['warning']);
     });
   });
 
-  describe('#join', function () {
-    it('joins strings together with spaces', function () {
+  describe('#join', function() {
+    it('joins strings together with spaces', function() {
       expect(Log.join(['foo', 'bar'])).to.eql('foo bar');
     });
-    it('stringifies objects', function () {
+    it('stringifies objects', function() {
       expect(Log.join([{ foo: 'bar' }])).to.eql('{\n  "foo": "bar"\n}\n');
     });
 
-    it('fully stringifies deeply nested objects', function () {
+    it('fully stringifies deeply nested objects', function() {
       var object = { foo: { bar: { baz: 'value' } } };
       var expected = '{\n  "bar": {\n    "baz": "value"\n  }\n}\n';
       expect(Log.join(object)).to.eql(expected);
     });
   });
 
-  describe('instance without any outputs', function () {
+  describe('instance without any outputs', function() {
     var log;
-    beforeEach(function () {
+    beforeEach(function() {
       log = new Log();
     });
 
-    it('should not emit any events', function () {
-      log.emit = function () {
+    it('should not emit any events', function() {
+      log.emit = function() {
         throw new Error('Emit should not be called');
       };
 
@@ -123,37 +114,36 @@ describe('Log class', function () {
       log.warning();
       log.debug();
       log.trace();
-
     });
   });
 
-  describe('instance without one output listening to all events', function () {
+  describe('instance without one output listening to all events', function() {
     var log, call;
-    beforeEach(function () {
+    beforeEach(function() {
       call = void 0;
       log = new Log({
         log: [
           {
-            type: function (log) {
+            type: function(log) {
               log.on('error', _.noop);
               log.on('warning', _.noop);
               log.on('info', _.noop);
               log.on('debug', _.noop);
               log.on('trace', _.noop);
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
 
-      log.emit = function (eventName) {
+      log.emit = function(eventName) {
         call = {
           event: eventName,
-          args: Array.prototype.slice.call(arguments, 1)
+          args: Array.prototype.slice.call(arguments, 1),
         };
       };
     });
 
-    it('should emit an "error" event with an Error object arg', function () {
+    it('should emit an "error" event with an Error object arg', function() {
       var err = new Error('error');
       log.error(err);
       expect(call.event).to.eql('error');
@@ -167,40 +157,45 @@ describe('Log class', function () {
       expect(call.args[0].message).to.eql('error');
     });
 
-    it('should emit a "warning" event with a single message arg for #warning calls', function () {
+    it('should emit a "warning" event with a single message arg for #warning calls', function() {
       log.warning('shit!');
       expect(call.event).to.eql('warning');
       expect(call.args.length).to.be(1);
       expect(call.args[0]).to.eql('shit!');
     });
 
-    it('should emit a "info" event with a single message arg for #info calls', function () {
+    it('should emit a "info" event with a single message arg for #info calls', function() {
       log.info('look out!');
       expect(call.event).to.eql('info');
       expect(call.args.length).to.be(1);
       expect(call.args[0]).to.eql('look out!');
     });
 
-    it('should emit a "debug" event with a single message arg for #debug calls', function () {
+    it('should emit a "debug" event with a single message arg for #debug calls', function() {
       log.debug('here');
       expect(call.event).to.eql('debug');
       expect(call.args.length).to.be(1);
       expect(call.args[0]).to.eql('here');
     });
 
-    it('should emit a trace event for trace events, with normalized request details arg', function () {
+    it('should emit a trace event for trace events, with normalized request details arg', function() {
       log.trace('GET', 'http://localhost:9200/_cluster/nodes', '', '', 200);
       expect(call.event).to.eql('trace');
       expect(call.args.length).to.be(1);
       expect(call.args[0]).to.have.property('method', 'GET');
-      expect(call.args[0]).to.have.property('url', 'http://localhost:9200/_cluster/nodes');
+      expect(call.args[0]).to.have.property(
+        'url',
+        'http://localhost:9200/_cluster/nodes'
+      );
       expect(call.args[0]).to.have.property('status', 200);
     });
   });
 
-  describe('constructor', function () {
-    it('looks for output config options at config.log', function () {
-      var log = new Log({ log: { type: process.browser ? 'console' : 'stdio', level: 'error' } });
+  describe('constructor', function() {
+    it('looks for output config options at config.log', function() {
+      var log = new Log({
+        log: { type: process.browser ? 'console' : 'stdio', level: 'error' },
+      });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
       expect(log.listenerCount('info')).to.eql(0);
@@ -208,7 +203,7 @@ describe('Log class', function () {
       expect(log.listenerCount('trace')).to.eql(0);
     });
 
-    it('accepts a string and treat it as a log level', function () {
+    it('accepts a string and treat it as a log level', function() {
       var log = new Log({ log: 'error' });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
@@ -217,7 +212,7 @@ describe('Log class', function () {
       expect(log.listenerCount('trace')).to.eql(0);
     });
 
-    it('accepts an array of strings and treat it as a log level config', function () {
+    it('accepts an array of strings and treat it as a log level config', function() {
       var log = new Log({ log: ['error', 'trace'] });
       expect(log.listenerCount('error')).to.eql(1);
       expect(log.listenerCount('warning')).to.eql(0);
@@ -226,7 +221,7 @@ describe('Log class', function () {
       expect(log.listenerCount('trace')).to.eql(1);
     });
 
-    it('accepts an array of output config objects', function () {
+    it('accepts an array of output config objects', function() {
       var log = new Log({ log: [{ level: 'error' }, { level: 'trace' }] });
       expect(log.listenerCount('error')).to.eql(2);
       expect(log.listenerCount('warning')).to.eql(1);
@@ -235,28 +230,28 @@ describe('Log class', function () {
       expect(log.listenerCount('trace')).to.eql(1);
     });
 
-    it('rejects numbers and other truthy data-types', function () {
-      expect(function () {
+    it('rejects numbers and other truthy data-types', function() {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: 1515 });
       }).to.throwError(/invalid logging output config/i);
-      expect(function () {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: /regexp/ });
       }).to.throwError(/invalid logging output config/i);
-      expect(function () {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: new Date() });
       }).to.throwError(/invalid logging output config/i);
-      expect(function () {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: [1515] });
       }).to.throwError(/invalid logging output config/i);
-      expect(function () {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: [/regexp/] });
       }).to.throwError(/invalid logging output config/i);
-      expect(function () {
+      expect(function() {
         // eslint-disable-next-line no-new
         new Log({ log: [new Date()] });
       }).to.throwError(/invalid logging output config/i);

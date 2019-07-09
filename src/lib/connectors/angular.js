@@ -14,15 +14,18 @@ function AngularConnector(host, config) {
   ConnectionAbstract.call(this, host, config);
 
   var self = this;
-  config.$injector.invoke(['$http', '$q', function ($http, $q) {
-    self.$q = $q;
-    self.$http = $http;
-  }]);
-
+  config.$injector.invoke([
+    '$http',
+    '$q',
+    function($http, $q) {
+      self.$q = $q;
+      self.$http = $http;
+    },
+  ]);
 }
 utils.inherits(AngularConnector, ConnectionAbstract);
 
-AngularConnector.prototype.request = function (params, cb) {
+AngularConnector.prototype.request = function(params, cb) {
   var abort = this.$q.defer();
 
   this.$http({
@@ -34,18 +37,21 @@ AngularConnector.prototype.request = function (params, cb) {
     transformRequest: [],
     transformResponse: [],
     // not actually for timing out, that's handled by the transport
-    timeout: abort.promise
-  }).then(function (response) {
-    cb(null, response.data, response.status, response.headers());
-  }, function (err) {
-    if (err.status) {
-      cb(null, err.data, err.status, err.headers());
-    } else {
-      cb(new ConnectionFault(err.message));
+    timeout: abort.promise,
+  }).then(
+    function(response) {
+      cb(null, response.data, response.status, response.headers());
+    },
+    function(err) {
+      if (err.status) {
+        cb(null, err.data, err.status, err.headers());
+      } else {
+        cb(new ConnectionFault(err.message));
+      }
     }
-  });
+  );
 
-  return function () {
+  return function() {
     abort.resolve();
   };
 };

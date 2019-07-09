@@ -14,7 +14,7 @@ function Json() {}
  * see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify about other params
  * @return {String|Error} - A string is always returned, unless an error occured. then it will be that error.
  */
-Json.prototype.serialize = function (val, replacer, spaces) {
+Json.prototype.serialize = function(val, replacer, spaces) {
   switch (typeof val) {
     case 'string':
       return val;
@@ -28,7 +28,7 @@ Json.prototype.serialize = function (val, replacer, spaces) {
       }
     /* falls through */
     default:
-      return;
+      return undefined;
   }
 };
 
@@ -39,7 +39,7 @@ Json.prototype.serialize.contentType = 'application/json';
  * @param  {String} str - the string to parse
  * @return {[type]}
  */
-Json.prototype.deserialize = function (str) {
+Json.prototype.deserialize = function(str) {
   if (typeof str === 'string') {
     try {
       return JSON.parse(str);
@@ -47,8 +47,9 @@ Json.prototype.deserialize = function (str) {
   }
 };
 
-Json.prototype.bulkBody = function (val) {
-  var body = '', i;
+Json.prototype.bulkBody = function(val) {
+  var body = '';
+  var i;
 
   if (_.isArray(val)) {
     for (i = 0; i < val.length; i++) {
@@ -58,7 +59,9 @@ Json.prototype.bulkBody = function (val) {
     // make sure the string ends in a new line
     body = val + (val[val.length - 1] === '\n' ? '' : '\n');
   } else {
-    throw new TypeError('Bulk body should either be an Array of commands/string, or a String');
+    throw new TypeError(
+      'Bulk body should either be an Array of commands/string, or a String'
+    );
   }
 
   return body;

@@ -3,3 +3,6 @@ src/bower_es_js
 src/lib/apis
 docs
 bower_components
+!.eslintrc.js
+dist
+node_modules

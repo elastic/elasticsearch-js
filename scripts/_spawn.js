@@ -14,9 +14,12 @@ function indent(line) {
 
 function consume(stream) {
   stream
-  .pipe(split())
-  .pipe(map(indent))
-  .pipe(process.stdout, { end: false });
+    .pipe(split())
+    .pipe(map(indent))
+    .pipe(
+      process.stdout,
+      { end: false }
+    );
 }
 
 function _spawn(cmd, args, opts, cb) {
@@ -27,11 +30,7 @@ function _spawn(cmd, args, opts, cb) {
   }
 
   var conf = {
-    stdio: [
-      'ignore',
-      opts.verbose ? 'pipe' : 'ignore',
-      'pipe'
-    ]
+    stdio: ['ignore', opts.verbose ? 'pipe' : 'ignore', 'pipe'],
   };
 
   var subdir;
@@ -41,7 +40,12 @@ function _spawn(cmd, args, opts, cb) {
     subdir = path.relative(root, opts.cwd);
   }
 
-  console.log(chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') + cmd + ' ' + args.join(' '));
+  console.log(
+    chalk.white.bold((subdir ? subdir + ' ' : '') + '$ ') +
+      cmd +
+      ' ' +
+      args.join(' ')
+  );
 
   var cp = spawn(cmd, args, conf);
 
@@ -58,6 +62,6 @@ function _spawn(cmd, args, opts, cb) {
   return cp;
 }
 
-_spawn.exec = function (cmd, opts, cb) {
+_spawn.exec = function(cmd, opts, cb) {
   return _spawn('/bin/sh', ['-c', cmd], opts, cb);
 };

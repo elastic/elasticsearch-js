@@ -1,4 +1,4 @@
-describe('File Logger', function () {
+describe('File Logger', function() {
   var Log = require('../../../src/lib/log');
   var FileLogger = require('../../../src/lib/loggers/file');
   var once = require('events').EventEmitter.prototype.once;
@@ -10,11 +10,11 @@ describe('File Logger', function () {
   var fs = require('fs');
   var stub = require('../../utils/auto_release_stub').make();
 
-  beforeEach(function () {
+  beforeEach(function() {
     parentLog = new Log();
   });
 
-  afterEach(function () {
+  afterEach(function() {
     parentLog.close();
     if (logger) {
       utils.clearWriteStreamBuffer(logger.stream);
@@ -25,24 +25,25 @@ describe('File Logger', function () {
     parent = parent || parentLog;
     logger = new FileLogger(parent, {
       levels: Log.parseLevels(levels || 'trace'),
-      path: 'test.log'
+      path: 'test.log',
     });
     return logger;
   }
 
-  after(function () {
+  after(function() {
     fs.unlinkSync('test.log');
   });
 
   require('../generic_logger_tests')(makeLogger);
 
-  describe('buffer flush', function () {
+  describe('buffer flush', function() {
     if (require('stream').Writable) {
-      it('writes everything in the buffer to console.error', function () {
-        var line = 'This string is written 10 times to create buffered output\n';
+      it('writes everything in the buffer to console.error', function() {
+        var line =
+          'This string is written 10 times to create buffered output\n';
 
         var exitHandler;
-        stub(process, 'once', function (event, handler) {
+        stub(process, 'once', function(event, handler) {
           if (event === 'exit') {
             exitHandler = handler;
           }
@@ -52,13 +53,13 @@ describe('File Logger', function () {
         var logger = makeLogger();
 
         // write the line 10 times
-        _.times(10, function () {
+        _.times(10, function() {
           logger.onDebug(line);
         });
 
         // collect everything that is written to fs.appendFileSync
         var flushedOutput = '';
-        stub(fs, 'appendFileSync', function (path, str) {
+        stub(fs, 'appendFileSync', function(path, str) {
           flushedOutput += str;
         });
 
@@ -70,9 +71,9 @@ describe('File Logger', function () {
         expect(flushedOutput.match(new RegExp(line, 'g')).length).to.be(9);
       });
     } else {
-      it('does not fall apart with non streams2 streams', function () {
+      it('does not fall apart with non streams2 streams', function() {
         var exitHandler;
-        stub(process, 'once', function (event, handler) {
+        stub(process, 'once', function(event, handler) {
           if (event === 'exit') {
             exitHandler = handler;
           }
@@ -81,7 +82,7 @@ describe('File Logger', function () {
 
         makeLogger();
 
-        expect(function () {
+        expect(function() {
           // call the event handler
           exitHandler.call(process);
         }).to.not.throwError();

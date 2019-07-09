@@ -24,14 +24,14 @@ function File(log, config) {
   // yahoo!
   config.stream = fs.createWriteStream(this.path, {
     flags: 'a',
-    encoding: 'utf8'
+    encoding: 'utf8',
   });
 
   StreamLogger.call(this, log, config);
 }
 utils.inherits(File, StreamLogger);
 
-File.prototype.onProcessExit = utils.handler(function () {
+File.prototype.onProcessExit = utils.handler(function() {
   var toWrite = utils.getUnwrittenFromStream(this.stream);
   if (toWrite) {
     fs.appendFileSync(this.path, toWrite);

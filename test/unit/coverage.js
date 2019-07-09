@@ -1,5 +1,5 @@
 require('blanket')({
-  pattern: require('path').join(__dirname, '../../src')
+  pattern: require('path').join(__dirname, '../../src'),
 });
 
 require('./index');

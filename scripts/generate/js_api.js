@@ -1,4 +1,4 @@
-module.exports = function (branch, done) {
+module.exports = function(branch, done) {
   /**
    * Read the API actions form the rest-api-spec repo.
    * @type {[type]}
@@ -34,32 +34,29 @@ module.exports = function (branch, done) {
 
   var steps = [
     readSpecFiles,
-    function (done) {
+    function(done) {
       parseSpecFiles(branch, done);
     },
-    writeApiFile
+    writeApiFile,
   ];
 
   if (!~gruntUtils.unstableBranches.indexOf(branch)) {
-    steps.push(
-      ensureDocsDir,
-      formatDocVars,
-      writeMethodDocs
-    );
+    steps.push(ensureDocsDir, formatDocVars, writeMethodDocs);
   }
 
   // generate the API
-  async.series(steps, function (err) {
+  async.series(steps, function(err) {
     done(err);
   });
 
   function readSpecFiles(done) {
     var apiDir = path.join(esDir, 'rest-api-spec/api/');
-    files = fs.readdirSync(apiDir)
-      .filter(function (filename) {
-        return filename[0] !== '_'
+    files = fs
+      .readdirSync(apiDir)
+      .filter(function(filename) {
+        return filename[0] !== '_';
       })
-      .map(function (filename) {
+      .map(function(filename) {
         var module = require(apiDir + filename);
         delete require.cache[apiDir + filename];
         return module;
@@ -70,23 +67,25 @@ module.exports = function (branch, done) {
   function parseSpecFiles(branch, done) {
     var actions = [];
 
-    files.forEach(function (spec) {
-      __puke__transformSpec(branch, spec).forEach(function (action) {
+    files.forEach(function(spec) {
+      __puke__transformSpec(branch, spec).forEach(function(action) {
         actions.push(action);
       });
     });
 
     // collect the namespaces from the action locations
-    var namespaces = _.filter(_.map(actions, function (action) {
-      return action.location
-        .split('.')
-        .slice(0, -1)
-        .filter(step => step !== 'prototype')
-        .join('.prototype.')
-    }));
+    var namespaces = _.filter(
+      _.map(actions, function(action) {
+        return action.location
+          .split('.')
+          .slice(0, -1)
+          .filter(step => step !== 'prototype')
+          .join('.prototype.');
+      })
+    );
 
     // seperate the proxy actions
-    var groups = _.groupBy(actions, function (action) {
+    var groups = _.groupBy(actions, function(action) {
       return action.proxy ? 'proxies' : 'normal';
     });
 
@@ -94,7 +93,7 @@ module.exports = function (branch, done) {
       actions: groups.normal || [],
       proxies: groups.proxies || [],
       namespaces: _.uniq(namespaces.sort()),
-      clientActionModifier: overrides.clientActionModifier
+      clientActionModifier: overrides.clientActionModifier,
     };
 
     if (!_.find(apiSpec.actions, { name: 'create' })) {
@@ -105,7 +104,7 @@ module.exports = function (branch, done) {
           name: 'create',
           location: 'create',
           proxy: 'index',
-          transformBody: 'params.op_type = \'create\';'
+          transformBody: "params.op_type = 'create';",
         }
       );
 
@@ -116,36 +115,50 @@ module.exports = function (branch, done) {
       apiSpec.proxies.push(create);
     }
 
-    [].concat(apiSpec.actions, apiSpec.proxies)
-    .forEach(function (action) {
-      var examplePath = overrides.examples[action.name] || action.name + '.asciidoc';
-      var descriptionPath = overrides.descriptions[action.name] || action.name + '.asciidoc';
+    [].concat(apiSpec.actions, apiSpec.proxies).forEach(function(action) {
+      var examplePath =
+        overrides.examples[action.name] || action.name + '.asciidoc';
+      var descriptionPath =
+        overrides.descriptions[action.name] || action.name + '.asciidoc';
 
       try {
-        action.examples = fs.readFileSync(fromRoot('docs/_examples', examplePath), 'utf8');
+        action.examples = fs.readFileSync(
+          fromRoot('docs/_examples', examplePath),
+          'utf8'
+        );
       } catch (e) {
         action.examples = '// no examples';
       }
 
       try {
-        action.description = fs.readFileSync(fromRoot('docs/_descriptions', descriptionPath), 'utf8');
+        action.description = fs.readFileSync(
+          fromRoot('docs/_descriptions', descriptionPath),
+          'utf8'
+        );
       } catch (e) {
         action.description = '// no description';
       }
-    })
+    });
 
     done();
   }
 
   function writeApiFile(done) {
-    var outputPath = fromRoot('src/lib/apis/' + utils.snakeCase(branch) + '.js');
+    var outputPath = fromRoot(
+      'src/lib/apis/' + utils.snakeCase(branch) + '.js'
+    );
     fs.writeFileSync(outputPath, templates.apiFile(apiSpec));
-    console.log(chalk.white.bold('wrote'), apiSpec.actions.length, 'api actions to', outputPath);
+    console.log(
+      chalk.white.bold('wrote'),
+      apiSpec.actions.length,
+      'api actions to',
+      outputPath
+    );
     done();
   }
 
   function ensureDocsDir(done) {
-    fs.stat(fromRoot('docs'), function (err, stat) {
+    fs.stat(fromRoot('docs'), function(err, stat) {
       if (err) {
         if (err.message.match(/enoent/i)) {
           fs.mkdir('../../docs', done);
@@ -177,34 +190,37 @@ module.exports = function (branch, done) {
 
   function writeMethodDocs(done) {
     var filename = fromRoot('docs/api_methods' + branchSuffix + '.asciidoc');
-    fs.writeFile(
-      filename,
-      templates.apiMethods(docVars),
-      function (err) {
-        if (!err) {
-          console.log(chalk.white.bold('wrote'), branch + ' method docs to', filename);
-        }
-        done(err);
+    fs.writeFile(filename, templates.apiMethods(docVars), function(err) {
+      if (!err) {
+        console.log(
+          chalk.white.bold('wrote'),
+          branch + ' method docs to',
+          filename
+        );
       }
-    );
+      done(err);
+    });
   }
 
   function __puke__transformSpec(branch, spec) { // eslint-disable-line
     var actions = [];
 
     // itterate all of the specs within the file, should only be one
-    _.each(spec, function (def, name) {
+    _.each(spec, function(def, name) {
       // camelcase the name
       name = _.map(name.split('.'), utils.camelCase).join('.');
 
       if (name === 'cat.aliases') {
-        def.documentation = 'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
+        def.documentation =
+          'http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html';
       }
 
-      def.documentation = def.documentation ? def.documentation.replace(
-        /^https?:\/\/.+?\/guide\/en\/elasticsearch\/(.+?)\/.+?\//,
-        `https://www.elastic.co/guide/en/elasticsearch/$1/${branch}/`
-      ) : '';
+      def.documentation = def.documentation
+        ? def.documentation.replace(
+            /^https?:\/\/.+?\/guide\/en\/elasticsearch\/(.+?)\/.+?\//,
+            `https://www.elastic.co/guide/en/elasticsearch/$1/${branch}/`
+          )
+        : '';
 
       var steps = name.split('.');
 
@@ -222,27 +238,36 @@ module.exports = function (branch, done) {
 
       var allParams = _.extend({}, def.url.params, def.url.parts);
       _.forOwn(allParams, (paramSpec, paramName) => {
-        const toMerge = _.get(overrides, ['mergeConcatParams', name, paramName])
+        const toMerge = _.get(overrides, [
+          'mergeConcatParams',
+          name,
+          paramName,
+        ]);
         if (toMerge) {
           _.mergeWith(paramSpec, toMerge, (dest, src) => {
             if (_.isArray(dest) && _.isArray(src)) {
-              return dest.concat(src)
+              return dest.concat(src);
             }
-          })
+          });
         }
 
         if (paramSpec.options) {
-          const invalidOpts = paramSpec.options.some(opt => typeof opt !== 'string')
-          if (invalidOpts) throw new Error(`${name} has options that are not strings...`)
+          const invalidOpts = paramSpec.options.some(
+            opt => typeof opt !== 'string'
+          );
+          if (invalidOpts)
+            throw new Error(`${name} has options that are not strings...`);
         }
-      })
+      });
 
       var spec = {
         name: name,
-        methods: _.map(def.methods, function (m) { return m.toUpperCase(); }),
+        methods: _.map(def.methods, function(m) {
+          return m.toUpperCase();
+        }),
         params: def.url.params,
         body: def.body || null,
-        path2lib: utils.repeat('../', steps.length + 1) + 'lib/'
+        path2lib: utils.repeat('../', steps.length + 1) + 'lib/',
       };
 
       if (def.body && def.body.required) {
@@ -255,63 +280,83 @@ module.exports = function (branch, done) {
 
       var urls = _.difference(def.url.paths, overrides.aliases[name]);
       var urlSignatures = [];
-      urls = _.map(urls, function (url) {
+      urls = _.map(urls, function(url) {
         var optionalVars = {};
         var requiredVars = {};
         var param;
         var name;
         var target;
-        var match;
 
         if (url.charAt(0) !== '/') {
           url = '/' + url;
         }
 
-        while (match = urlParamRE.exec(url)) {
+        while (true) {
+          const match = urlParamRE.exec(url);
+          if (!match) {
+            break;
+          }
+
           name = utils.camelCase(match[1]);
           param = def.url.parts[name] || {};
-          target = (param.required || !param.default) ? requiredVars : optionalVars;
+          target =
+            param.required || !param.default ? requiredVars : optionalVars;
           target[name] = _.omit(param, ['required', 'description', 'name']);
         }
 
-        urlSignatures.push(_.union(_.keys(optionalVars), _.keys(requiredVars)).sort().join(':'));
+        urlSignatures.push(
+          _.union(_.keys(optionalVars), _.keys(requiredVars))
+            .sort()
+            .join(':')
+        );
 
-        return _.omitBy({
-          fmt: url.replace(urlParamRE, function (full, match) {
-            return '<%=' + utils.camelCase(match) + '%>';
-          }),
-          opt: _.size(optionalVars) ? optionalVars : null,
-          req: _.size(requiredVars) ? requiredVars : null,
-          sortOrder: _.size(requiredVars) * -1
-        }, function (v) {
-          return !v;
-        });
+        return _.omitBy(
+          {
+            fmt: url.replace(urlParamRE, function(full, match) {
+              return '<%=' + utils.camelCase(match) + '%>';
+            }),
+            opt: _.size(optionalVars) ? optionalVars : null,
+            req: _.size(requiredVars) ? requiredVars : null,
+            sortOrder: _.size(requiredVars) * -1,
+          },
+          function(v) {
+            return !v;
+          }
+        );
       });
 
       if (urlSignatures.length !== _.uniq(urlSignatures).length) {
         throw new Error(
           'Multiple URLS with the same signature detected for ' +
-          spec.name +
-          '\n' +
-          _.map(urls, 'fmt').join('\n') +
-          '\n'
+            spec.name +
+            '\n' +
+            _.map(urls, 'fmt').join('\n') +
+            '\n'
         );
       }
 
       if (urls.length > 1) {
-        spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function (url) {
+        spec.urls = _.map(_.sortBy(urls, 'sortOrder'), function(url) {
           return _.omit(url, 'sortOrder');
         });
       } else {
         spec.url = _.omit(urls[0], 'sortOrder');
       }
 
-      spec.params = _.transform(spec.params, function (note, param, name) {
-        // param.name = name;
-        note[name] = _.pick(param, [
-          'type', 'default', 'options', 'required', 'name'
-        ]);
-      }, {});
+      spec.params = _.transform(
+        spec.params,
+        function(note, param, name) {
+          // param.name = name;
+          note[name] = _.pick(param, [
+            'type',
+            'default',
+            'options',
+            'required',
+            'name',
+          ]);
+        },
+        {}
+      );
 
       if (overrides.paramAsBody[name]) {
         spec.paramAsBody = overrides.paramAsBody[name];
@@ -322,8 +367,10 @@ module.exports = function (branch, done) {
       }
 
       // escape method names with "special" keywords
-      var location = spec.name.split('.').join('.prototype.')
-        .replace(/(^|\.)(delete|default)(\.|$)/g, '[\'$2\']');
+      var location = spec.name
+        .split('.')
+        .join('.prototype.')
+        .replace(/(^|\.)(delete|default)(\.|$)/g, "['$2']");
 
       var action = {
         _methods: spec.methods,
@@ -334,13 +381,16 @@ module.exports = function (branch, done) {
           'needBody',
           'requestTimeout',
           'bulkBody',
-          'paramAsBody'
+          'paramAsBody',
         ]),
         location: location,
         docUrl: def.documentation,
         name: spec.name,
-        namespace: spec.name.split('.').slice(0, -1).join('.'),
-        allParams: allParams
+        namespace: spec.name
+          .split('.')
+          .slice(0, -1)
+          .join('.'),
+        allParams: allParams,
       };
 
       function hasMethod(/* ...methods */) {
@@ -354,7 +404,10 @@ module.exports = function (branch, done) {
         return true;
       }
       function methodsAre(/* ...methods */) {
-        return hasMethod.apply(null, arguments) && arguments.length === action._methods.length;
+        return (
+          hasMethod.apply(null, arguments) &&
+          arguments.length === action._methods.length
+        );
       }
 
       var method;
@@ -365,17 +418,13 @@ module.exports = function (branch, done) {
         // we need to define what the default method(s) will be
         if (hasMethod('DELETE', 'POST')) {
           method = 'POST';
-        }
-        else if (methodsAre('DELETE')) {
+        } else if (methodsAre('DELETE')) {
           method = 'DELETE';
-        }
-        else if (methodsAre('POST', 'PUT')) {
+        } else if (methodsAre('POST', 'PUT')) {
           method = action.name.match(/put/i) ? 'PUT' : 'POST';
-        }
-        else if (methodsAre('GET', 'POST')) {
+        } else if (methodsAre('GET', 'POST')) {
           method = 'POST';
-        }
-        else if (methodsAre('GET', 'HEAD')) {
+        } else if (methodsAre('GET', 'HEAD')) {
           method = 'GET';
         }
       }
@@ -385,7 +434,9 @@ module.exports = function (branch, done) {
           action.spec.method = method;
         }
       } else {
-        throw new Error('unable to pick a method for ' + JSON.stringify(action, null, '  '));
+        throw new Error(
+          'unable to pick a method for ' + JSON.stringify(action, null, '  ')
+        );
       }
 
       actions.push(action);

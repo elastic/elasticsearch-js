@@ -1,5 +1,5 @@
-const webpack = require('webpack')
-const { jsLoader, ignoreLoader, rel } = require('./lib')
+const webpack = require('webpack');
+const { jsLoader, ignoreLoader, rel } = require('./lib');
 
 module.exports = {
   context: rel('src'),
@@ -8,14 +8,14 @@ module.exports = {
     filename: 'elasticsearch.js',
     path: rel('dist'),
     library: 'elasticsearch',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
       jsLoader(),
       ignoreLoader([
         'src/lib/connectors/jquery.js',
-        'src/lib/connectors/angular.js'
+        'src/lib/connectors/angular.js',
       ]),
     ],
   },
@@ -24,4 +24,4 @@ module.exports = {
       'process.env.NODE_ENV': '"production"',
     }),
   ],
-}
+};

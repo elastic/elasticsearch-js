@@ -1,19 +1,18 @@
-
 var sinon = require('sinon');
 
-exports.make = function () {
+exports.make = function() {
   var log = [];
-  afterEach(function () {
-    var stub;
-    while (stub = log.pop()) {
+  afterEach(function() {
+    for (const stub of log) {
       stub.restore();
     }
+    log.length = 0;
   });
-  var stubber = function () {
+  var stubber = function() {
     log.push(sinon.stub.apply(sinon, arguments));
   };
 
-  stubber.autoRelease = function (item) {
+  stubber.autoRelease = function(item) {
     log.push(item);
   };
 

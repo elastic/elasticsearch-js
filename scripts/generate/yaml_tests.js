@@ -1,4 +1,4 @@
-module.exports = function (branch, done) {
+module.exports = function(branch, done) {
   /**
    * Creates a JSON version of the YAML test suite that can be simply bundled for use in the browser.
    */
@@ -14,24 +14,20 @@ module.exports = function (branch, done) {
   var esDir = fromRoot('src/_elasticsearch_' + utils.snakeCase(branch));
 
   // generate the yaml tests
-  async.series([
-    readYamlTests,
-    writeYamlTests,
-    writeTestIndex
-  ], done);
+  async.series([readYamlTests, writeYamlTests, writeTestIndex], done);
 
   function readYamlTests(done) {
     var testDir = path.join(esDir, 'rest-api-spec/test/');
 
     function readDirectories(dir) {
-      fs.readdirSync(dir).forEach(function (filename) {
+      fs.readdirSync(dir).forEach(function(filename) {
         var filePath = path.join(dir, filename);
         var stat = fs.statSync(filePath);
         if (stat.isDirectory()) {
           readDirectories(filePath);
         } else if (filename.match(/\.yaml$/)) {
-          var file = tests[path.relative(testDir, filePath)] = [];
-          jsYaml.loadAll(fs.readFileSync(filePath, 'utf8'), function (doc) {
+          var file = (tests[path.relative(testDir, filePath)] = []);
+          jsYaml.loadAll(fs.readFileSync(filePath, 'utf8'), function(doc) {
             file.push(doc);
           });
         }
@@ -43,15 +39,21 @@ module.exports = function (branch, done) {
   }
 
   function writeYamlTests(done) {
-    var testFile = fromRoot('test/integration/yaml_suite/yaml_tests_' + utils.snakeCase(branch) + '.json');
+    var testFile = fromRoot(
+      'test/integration/yaml_suite/yaml_tests_' +
+        utils.snakeCase(branch) +
+        '.json'
+    );
     fs.writeFileSync(testFile, JSON.stringify(tests, null, '  '), 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML tests as JSON to', testFile);
     done();
   }
 
   function writeTestIndex(done) {
-    var file = fromRoot('test/integration/yaml_suite/index_' + utils.snakeCase(branch) + '.js');
-    fs.writeFileSync(file, 'require(\'./run\')(\'' + branch + '\');\n', 'utf8');
+    var file = fromRoot(
+      'test/integration/yaml_suite/index_' + utils.snakeCase(branch) + '.js'
+    );
+    fs.writeFileSync(file, "require('./run')('" + branch + "');\n", 'utf8');
     console.log(chalk.white.bold('wrote') + ' YAML index to', file);
     done();
   }

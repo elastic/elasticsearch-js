@@ -4,13 +4,11 @@ module.exports = {
       'src/**/*.js',
       'grunt/**/*.js',
       'test/unit/**/*.js',
-      'Gruntfile.js'
+      'Gruntfile.js',
     ],
-    tasks: [
-      'mochacov:unit'
-    ],
+    tasks: ['mochacov:unit'],
     options: {
-      interrupt: true
-    }
-  }
+      interrupt: true,
+    },
+  },
 };

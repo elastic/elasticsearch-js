@@ -1,6 +1,5 @@
 var utils = require('../utils');
 
-
 /**
  * Patch the transport's connection pool to schedule a sniff after a connection fails.
  * When a connection fails for the first time it will schedule a sniff 1 second in the
@@ -17,22 +16,22 @@ module.exports = function setupSniffOnConnectionFault(transport) {
 
   // do the actual sniff, if the sniff is unable to
   // connect to a node this function will be called again by the connectionPool
-  var work = function () {
+  var work = function() {
     work.timerId = transport._timeout(work.timerId);
     transport.sniff();
   };
 
   // create a function that will count down to a
   // point n milliseconds into the future
-  var countdownTo = function (ms) {
+  var countdownTo = function(ms) {
     var start = utils.now();
-    return function () {
+    return function() {
       return start - ms;
     };
   };
 
   // overwrite the function, but still call it
-  pool._onConnectionDied = function (connection, wasAlreadyDead) {
+  pool._onConnectionDied = function(connection, wasAlreadyDead) {
     var ret = originalOnDied.call(pool, connection, wasAlreadyDead);
 
     // clear the failures if this is the first failure we have seen
@@ -53,7 +52,7 @@ module.exports = function setupSniffOnConnectionFault(transport) {
     return ret;
   };
 
-  pool._onConnectionDied.restore = function () {
+  pool._onConnectionDied.restore = function() {
     pool._onConnectionDied = originalOnDied;
   };
 };

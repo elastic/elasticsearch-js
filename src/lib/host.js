@@ -18,12 +18,19 @@ if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
   btoa = window.btoa;
 }
 
-btoa = btoa || function (data) {
-  return (new Buffer(data, 'utf8')).toString('base64');
-};
+btoa =
+  btoa ||
+  function(data) {
+    return new Buffer(data, 'utf8').toString('base64');
+  };
 
 var urlParseFields = [
-  'protocol', 'hostname', 'pathname', 'port', 'auth', 'query'
+  'protocol',
+  'hostname',
+  'pathname',
+  'port',
+  'auth',
+  'query',
 ];
 
 var simplify = ['host', 'path'];
@@ -36,14 +43,14 @@ var sslDefaults = {
   ca: null,
   ciphers: null,
   rejectUnauthorized: false,
-  secureProtocol: null
+  secureProtocol: null,
 };
 
 // simple reference used when formatting as a url
 // and defines when parsing from a string
 Host.defaultPorts = {
   http: 80,
-  https: 443
+  https: 443,
 };
 
 function Host(config, globalConfig) {
@@ -59,7 +66,12 @@ function Host(config, globalConfig) {
   this.headers = null;
   this.suggestCompression = !!globalConfig.suggestCompression;
 
-  this.ssl = _.defaults({}, config.ssl || {}, globalConfig.ssl || {}, sslDefaults);
+  this.ssl = _.defaults(
+    {},
+    config.ssl || {},
+    globalConfig.ssl || {},
+    sslDefaults
+  );
 
   if (typeof config === 'string') {
     var firstColon = config.indexOf(':');
@@ -67,7 +79,10 @@ function Host(config, globalConfig) {
     var noSlash = firstSlash === -1;
     var portNoPath = firstColon > -1 && noSlash;
     var portWithPath = !portNoPath && firstColon < firstSlash;
-    if ((noSlash || portNoPath || portWithPath) && !startsWithProtocolRE.test(config)) {
+    if (
+      (noSlash || portNoPath || portWithPath) &&
+      !startsWithProtocolRE.test(config)
+    ) {
       config = defaultProto + '//' + config;
     }
     config = _.pick(url.parse(config, false, true), urlParseFields);
@@ -86,7 +101,7 @@ function Host(config, globalConfig) {
 
   if (_.isObject(config)) {
     // move hostname/portname to host/port semi-intelligently.
-    _.each(simplify, function (to) {
+    _.each(simplify, function(to) {
       var from = to + 'name';
       if (config[from] && config[to]) {
         if (config[to].indexOf(config[from]) === 0) {
@@ -102,7 +117,7 @@ function Host(config, globalConfig) {
   }
 
   if (!config.auth && globalConfig.httpAuth) {
-    config.auth = globalConfig.httpAuth
+    config.auth = globalConfig.httpAuth;
   }
 
   if (config.auth) {
@@ -111,9 +126,12 @@ function Host(config, globalConfig) {
     delete config.auth;
   }
 
-  _.forOwn(config, _.bind(function (val, prop) {
-    if (val != null) this[prop] = _.clone(val);
-  }, this));
+  _.forOwn(
+    config,
+    _.bind(function(val, prop) {
+      if (val != null) this[prop] = _.clone(val);
+    }, this)
+  );
 
   // make sure the query string is parsed
   if (this.query === null) {
@@ -143,7 +161,7 @@ function Host(config, globalConfig) {
   }
 }
 
-Host.prototype.makeUrl = function (params) {
+Host.prototype.makeUrl = function(params) {
   params = params || {};
   // build the port
   var port = '';
@@ -164,14 +182,21 @@ Host.prototype.makeUrl = function (params) {
   var query = qs.stringify(this.getQuery(params.query));
 
   if (this.host) {
-    return this.protocol + '://' + this.host + port + path + (query ? '?' + query : '');
+    return (
+      this.protocol +
+      '://' +
+      this.host +
+      port +
+      path +
+      (query ? '?' + query : '')
+    );
   } else {
     return path + (query ? '?' + query : '');
   }
 };
 
 function objectPropertyGetter(prop, preOverride) {
-  return function (overrides) {
+  return function(overrides) {
     if (preOverride) {
       overrides = preOverride.call(this, overrides);
     }
@@ -189,20 +214,22 @@ function objectPropertyGetter(prop, preOverride) {
   };
 }
 
-Host.prototype.getHeaders = objectPropertyGetter('headers', function (overrides) {
+Host.prototype.getHeaders = objectPropertyGetter('headers', function(
+  overrides
+) {
   if (!this.suggestCompression) {
     return overrides;
   }
 
   return _.defaults(overrides || {}, {
-    'Accept-Encoding': 'gzip,deflate'
+    'Accept-Encoding': 'gzip,deflate',
   });
 });
 
-Host.prototype.getQuery = objectPropertyGetter('query', function (query) {
+Host.prototype.getQuery = objectPropertyGetter('query', function(query) {
   return typeof query === 'string' ? qs.parse(query) : query;
 });
 
-Host.prototype.toString = function () {
+Host.prototype.toString = function() {
   return this.makeUrl();
 };

@@ -27,28 +27,39 @@ function padNumToTen(n) {
  * Also, feel free to override this at the logger level.
  * @return {String} - Timestamp in ISO 8601 UTC
  */
-LoggerAbstract.prototype.timestamp = function () {
+LoggerAbstract.prototype.timestamp = function() {
   var d = new Date();
-  return d.getUTCFullYear() + '-' +
-    padNumToTen(d.getUTCMonth() + 1) + '-' +
-    padNumToTen(d.getUTCDate()) + 'T' +
-    padNumToTen(d.getUTCHours()) + ':' +
-    padNumToTen(d.getUTCMinutes()) + ':' +
-    padNumToTen(d.getUTCSeconds()) + 'Z';
+  return (
+    d.getUTCFullYear() +
+    '-' +
+    padNumToTen(d.getUTCMonth() + 1) +
+    '-' +
+    padNumToTen(d.getUTCDate()) +
+    'T' +
+    padNumToTen(d.getUTCHours()) +
+    ':' +
+    padNumToTen(d.getUTCMinutes()) +
+    ':' +
+    padNumToTen(d.getUTCSeconds()) +
+    'Z'
+  );
 };
 
 function indent(text, spaces) {
   var space = utils.repeat(' ', spaces || 2);
-  return (text || '').split(/\r?\n/).map(function (line) {
-    return space + line;
-  }).join('\n');
+  return (text || '')
+    .split(/\r?\n/)
+    .map(function(line) {
+      return space + line;
+    })
+    .join('\n');
 }
 
-LoggerAbstract.prototype.format = function (label, message) {
+LoggerAbstract.prototype.format = function(label, message) {
   return label + ': ' + this.timestamp() + '\n' + indent(message) + '\n\n';
 };
 
-LoggerAbstract.prototype.write = function () {
+LoggerAbstract.prototype.write = function() {
   throw new Error('This should be overwritten by the logger');
 };
 
@@ -60,20 +71,23 @@ LoggerAbstract.prototype.write = function () {
  * @param  {Integer} level - The max log level that this logger should listen to
  * @return {undefined}
  */
-LoggerAbstract.prototype.setupListeners = function (levels) {
+LoggerAbstract.prototype.setupListeners = function(levels) {
   this.cleanUpListeners();
 
   this.listeningLevels = [];
 
-  _.each(levels, _.bind(function (level) {
-    var fnName = 'on' + utils.ucfirst(level);
-    if (this.bound[fnName]) {
-      this.listeningLevels.push(level);
-      this.log.on(level, this.bound[fnName]);
-    } else {
-      throw new Error('Unable to listen for level "' + level + '"');
-    }
-  }, this));
+  _.each(
+    levels,
+    _.bind(function(level) {
+      var fnName = 'on' + utils.ucfirst(level);
+      if (this.bound[fnName]) {
+        this.listeningLevels.push(level);
+        this.log.on(level, this.bound[fnName]);
+      } else {
+        throw new Error('Unable to listen for level "' + level + '"');
+      }
+    }, this)
+  );
 };
 
 /**
@@ -83,10 +97,13 @@ LoggerAbstract.prototype.setupListeners = function (levels) {
  * @private
  * @return {undefined}
  */
-LoggerAbstract.prototype.cleanUpListeners = utils.handler(function () {
-  _.each(this.listeningLevels, _.bind(function (level) {
-    this.log.removeListener(level, this.bound['on' + utils.ucfirst(level)]);
-  }, this));
+LoggerAbstract.prototype.cleanUpListeners = utils.handler(function() {
+  _.each(
+    this.listeningLevels,
+    _.bind(function(level) {
+      this.log.removeListener(level, this.bound['on' + utils.ucfirst(level)]);
+    }, this)
+  );
 });
 
 /**
@@ -97,8 +114,8 @@ LoggerAbstract.prototype.cleanUpListeners = utils.handler(function () {
  * @param  {Error} e - The Error object to log
  * @return {undefined}
  */
-LoggerAbstract.prototype.onError = utils.handler(function (e) {
-  this.write((e.name === 'Error' ? 'ERROR' : e.name), e.stack);
+LoggerAbstract.prototype.onError = utils.handler(function(e) {
+  this.write(e.name === 'Error' ? 'ERROR' : e.name, e.stack);
 });
 
 /**
@@ -109,7 +126,7 @@ LoggerAbstract.prototype.onError = utils.handler(function (e) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onWarning = utils.handler(function (msg) {
+LoggerAbstract.prototype.onWarning = utils.handler(function(msg) {
   this.write('WARNING', msg);
 });
 
@@ -121,7 +138,7 @@ LoggerAbstract.prototype.onWarning = utils.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onInfo = utils.handler(function (msg) {
+LoggerAbstract.prototype.onInfo = utils.handler(function(msg) {
   this.write('INFO', msg);
 });
 
@@ -133,7 +150,7 @@ LoggerAbstract.prototype.onInfo = utils.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onDebug = utils.handler(function (msg) {
+LoggerAbstract.prototype.onDebug = utils.handler(function(msg) {
   this.write('DEBUG', msg);
 });
 
@@ -145,16 +162,25 @@ LoggerAbstract.prototype.onDebug = utils.handler(function (msg) {
  * @param  {String} msg - The message to be logged
  * @return {undefined}
  */
-LoggerAbstract.prototype.onTrace = utils.handler(function (requestDetails) {
+LoggerAbstract.prototype.onTrace = utils.handler(function(requestDetails) {
   this.write('TRACE', this._formatTraceMessage(requestDetails));
 });
 
-LoggerAbstract.prototype._formatTraceMessage = function (req) {
-  return '-> ' + req.method + ' ' + req.url + '\n' +
-    this._prettyJson(req.body) + '\n' +
-    '<- ' + req.status + '\n' +
-    this._prettyJson(req.response);
-/*
+LoggerAbstract.prototype._formatTraceMessage = function(req) {
+  return (
+    '-> ' +
+    req.method +
+    ' ' +
+    req.url +
+    '\n' +
+    this._prettyJson(req.body) +
+    '\n' +
+    '<- ' +
+    req.status +
+    '\n' +
+    this._prettyJson(req.response)
+  );
+  /*
 -> GET https://sldfkjsdlfksjdf:9200/slsdkfjlxckvxhclks?sdlkj=sdlfkje
 {
   asdflksjdf
@@ -167,7 +193,7 @@ LoggerAbstract.prototype._formatTraceMessage = function (req) {
 */
 };
 
-LoggerAbstract.prototype._prettyJson = function (body) {
+LoggerAbstract.prototype._prettyJson = function(body) {
   try {
     if (typeof body === 'string') {
       body = JSON.parse(body);

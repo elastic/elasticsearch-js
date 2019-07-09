@@ -1,6 +1,6 @@
 var _ = require('lodash');
 
-module.exports = function (hosts) {
+module.exports = function(hosts) {
   if (_.isEmpty(hosts)) return false;
 
   var commonProtocol = hosts.shift().protocol;

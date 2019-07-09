@@ -1,5 +1,5 @@
 /* global jQuery */
-(function ($) {
+(function($) {
   process.jquery_build = true;
   var es = require('./elasticsearch');
 
@@ -12,11 +12,10 @@
   }
 
   $.es = $.extend({}, es);
-  $.es.Client = function (config) {
+  $.es.Client = function(config) {
     config = config || {};
     config.defer = defer;
     config.$ = $;
     return new es.Client(config);
   };
-
-}(jQuery));
+})(jQuery);

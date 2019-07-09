@@ -19,7 +19,7 @@ function MockIncommingMessage() {
 
   this.setEncoding = sinon.stub();
   this.headers = {};
-  this._read = function () {};
+  this._read = function() {};
 }
 util.inherits(MockIncommingMessage, Readable);
 

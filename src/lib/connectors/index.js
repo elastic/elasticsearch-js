@@ -1,4 +1,4 @@
 module.exports = {
   http: require('./http'),
-  _default: 'http'
+  _default: 'http',
 };

@@ -1,8 +1,10 @@
-module.exports = function (branch) {
+module.exports = function(branch) {
   var path = require('path');
   var YamlFile = require('./yaml_file');
   var root = require('find-root')(__dirname);
-  var rootReq = function (loc) { return require(path.join(root, loc)); };
+  var rootReq = function(loc) {
+    return require(path.join(root, loc));
+  };
   var _ = require('lodash');
   var utils = rootReq('src/lib/utils');
   var clientManager = require('./client_manager');
@@ -16,23 +18,25 @@ module.exports = function (branch) {
   console.log('  port:', port);
   console.log('  api version:', apiVersion);
 
-  describe('integration', function () {
+  describe('integration', function() {
     this.timeout(30000);
 
     // before running any tests...
-    before(function (done) {
+    before(function(done) {
       this.timeout(5 * 60 * 1000);
       clientManager.create(apiVersion, port, host, done);
     });
 
-    before(function () {
+    before(function() {
       // make sure ES is empty
       return clientManager.get().clearEs();
     });
 
-    _.map(require('./yaml_tests_' + utils.snakeCase(branch) + '.json'), function (docs, filename) {
-      return new YamlFile(filename, docs);
-    });
-
+    _.map(
+      require('./yaml_tests_' + utils.snakeCase(branch) + '.json'),
+      function(docs, filename) {
+        return new YamlFile(filename, docs);
+      }
+    );
   });
 };

@@ -10,7 +10,7 @@ module.exports = HttpConnector;
 
 var handles = {
   http: require('http'),
-  https: require('https')
+  https: require('https'),
 };
 var _ = require('lodash');
 var utils = require('../utils');
@@ -19,7 +19,7 @@ var qs = require('querystring');
 var AgentKeepAlive = require('agentkeepalive');
 var ConnectionAbstract = require('../connection');
 var zlib = require('zlib');
-var INVALID_PATH_REGEX = /[^\u0021-\u00ff]/
+var INVALID_PATH_REGEX = /[^\u0021-\u00ff]/;
 
 /**
  * Connector used to talk to an elasticsearch node via HTTP
@@ -33,8 +33,12 @@ function HttpConnector(host, config) {
 
   this.hand = handles[this.host.protocol];
   if (!this.hand) {
-    throw new TypeError('Invalid protocol "' + this.host.protocol +
-      '", expected one of ' + _.keys(handles).join(', '));
+    throw new TypeError(
+      'Invalid protocol "' +
+        this.host.protocol +
+        '", expected one of ' +
+        _.keys(handles).join(', ')
+    );
   }
 
   this.useSsl = this.host.protocol === 'https';
@@ -44,19 +48,21 @@ function HttpConnector(host, config) {
     keepAlive: true,
     keepAliveInterval: 1000,
     keepAliveMaxFreeSockets: 256,
-    keepAliveFreeSocketTimeout: 60000
+    keepAliveFreeSocketTimeout: 60000,
   });
 
-  this.agent = config.createNodeAgent ? config.createNodeAgent(this, config) : this.createAgent(config);
+  this.agent = config.createNodeAgent
+    ? config.createNodeAgent(this, config)
+    : this.createAgent(config);
 }
 utils.inherits(HttpConnector, ConnectionAbstract);
 
-HttpConnector.prototype.onStatusSet = utils.handler(function (status) {
+HttpConnector.prototype.onStatusSet = utils.handler(function(status) {
   if (status === 'closed') {
     var agent = this.agent;
     var toRemove = [];
-    var collectSockets = function (sockets, host) {
-      _.each(sockets, function (s) {
+    var collectSockets = function(sockets, host) {
+      _.each(sockets, function(s) {
         if (s) toRemove.push([host, s]);
       });
     };
@@ -66,15 +72,16 @@ HttpConnector.prototype.onStatusSet = utils.handler(function (status) {
 
     _.each(agent.sockets, collectSockets);
     _.each(agent.freeSockets, collectSockets);
-    _.each(toRemove, function (args) {
-      var host = args[0], socket = args[1];
+    _.each(toRemove, function(args) {
+      var host = args[0];
+      var socket = args[1];
       agent.removeSocket(socket, parseUrl(host));
       socket.destroy();
     });
   }
 });
 
-HttpConnector.prototype.createAgent = function (config) {
+HttpConnector.prototype.createAgent = function(config) {
   var Agent = this.hand.Agent; // the class
 
   if (config.forever) {
@@ -89,7 +96,7 @@ HttpConnector.prototype.createAgent = function (config) {
   return new Agent(this.makeAgentConfig(config));
 };
 
-HttpConnector.prototype.makeAgentConfig = function (config) {
+HttpConnector.prototype.makeAgentConfig = function(config) {
   var agentConfig = {
     keepAlive: config.keepAlive,
     keepAliveMsecs: config.keepAliveInterval,
@@ -105,7 +112,7 @@ HttpConnector.prototype.makeAgentConfig = function (config) {
   return agentConfig;
 };
 
-HttpConnector.prototype.makeReqParams = function (params) {
+HttpConnector.prototype.makeReqParams = function(params) {
   params = params || {};
   var host = this.host;
 
@@ -116,7 +123,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
     port: host.port,
     path: (host.path || '') + (params.path || ''),
     headers: host.getHeaders(params.headers),
-    agent: this.agent
+    agent: this.agent,
   };
 
   if (!reqParams.path) {
@@ -131,7 +138,7 @@ HttpConnector.prototype.makeReqParams = function (params) {
   return reqParams;
 };
 
-HttpConnector.prototype.request = function (params, cb) {
+HttpConnector.prototype.request = function(params, cb) {
   var incoming;
   var timeoutId;
   var request;
@@ -144,7 +151,7 @@ HttpConnector.prototype.request = function (params, cb) {
 
   // general clean-up procedure to run after the request
   // completes, has an error, or is aborted.
-  var cleanUp = _.bind(function (err) {
+  var cleanUp = _.bind(function(err) {
     clearTimeout(timeoutId);
 
     if (request) {
@@ -155,7 +162,7 @@ HttpConnector.prototype.request = function (params, cb) {
       incoming.removeAllListeners();
     }
 
-    if ((err instanceof Error) === false) {
+    if (err instanceof Error === false) {
       err = void 0;
     }
 
@@ -168,11 +175,11 @@ HttpConnector.prototype.request = function (params, cb) {
   }, this);
 
   if (INVALID_PATH_REGEX.test(reqParams.path) === true) {
-    cb(new TypeError('ERR_UNESCAPED_CHARACTERS: ' + reqParams.path))
-    return function () {}
+    cb(new TypeError('ERR_UNESCAPED_CHARACTERS: ' + reqParams.path));
+    return function() {};
   }
 
-  request = this.hand.request(reqParams, function (_incoming) {
+  request = this.hand.request(reqParams, function(_incoming) {
     incoming = _incoming;
     status = incoming.statusCode;
     headers = incoming.headers;
@@ -184,7 +191,7 @@ HttpConnector.prototype.request = function (params, cb) {
     }
 
     incoming.setEncoding('utf8');
-    incoming.on('data', function (d) {
+    incoming.on('data', function(d) {
       response += d;
     });
 
@@ -205,7 +212,7 @@ HttpConnector.prototype.request = function (params, cb) {
     request.end();
   }
 
-  return function () {
+  return function() {
     request.abort();
   };
 };

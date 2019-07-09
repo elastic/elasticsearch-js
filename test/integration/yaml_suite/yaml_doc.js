@@ -14,7 +14,13 @@ var expect = require('expect.js');
 var clientManager = require('./client_manager');
 var inspect = require('util').inspect;
 
-var implementedFeatures = ['gtelte', 'regex', 'benchmark', 'stash_in_path', 'groovy_scripting'];
+var implementedFeatures = [
+  'gtelte',
+  'regex',
+  'benchmark',
+  'stash_in_path',
+  'groovy_scripting',
+];
 
 /**
  * The version that ES is running, in comparable string form XXX-XXX-XXX, fetched when needed
@@ -41,14 +47,16 @@ var versionRE = new RegExp('^(?:' + versionExp + ')$');
  * Regular Expression to extract a version range from a string
  * @type {RegExp}
  */
-var versionRangeRE = new RegExp('^(?:' + versionExp + ')\\s*\\-\\s*(?:' + versionExp + ')$');
+var versionRangeRE = new RegExp(
+  '^(?:' + versionExp + ')\\s*\\-\\s*(?:' + versionExp + ')$'
+);
 
 /**
  * Fetches the client.info, and parses out the version number to a comparable string
  * @param done {Function} - callback
  */
 function getVersionFromES(done) {
-  clientManager.get().info({}, function (err, resp) {
+  clientManager.get().info({}, function(err, resp) {
     if (err) {
       throw new Error('unable to get info about ES');
     }
@@ -70,9 +78,9 @@ function versionToComparableString(version, def) {
     return def;
   }
 
-  var parts = _.map(version.split('.'), function (part) {
+  var parts = _.map(version.split('.'), function(part) {
     part = '' + _.parseInt(part);
-    return (new Array(Math.max(4 - part.length, 0))).join('0') + part;
+    return new Array(Math.max(4 - part.length, 0)).join('0') + part;
   });
 
   while (parts.length < 3) {
@@ -95,7 +103,7 @@ function rangeMatchesCurrentVersion(rangeString, done) {
   }
 
   if (!ES_VERSION) {
-    getVersionFromES(function () {
+    getVersionFromES(function() {
       rangeMatchesCurrentVersion(rangeString, done);
     });
     return;
@@ -103,7 +111,6 @@ function rangeMatchesCurrentVersion(rangeString, done) {
 
   done(YamlDoc.compareRangeToVersion(rangeString, ES_VERSION));
 }
-
 
 function YamlDoc(doc, file) {
   var self = this;
@@ -114,66 +121,71 @@ function YamlDoc(doc, file) {
   self._last_requests_response = null;
 
   // setup the actions, creating a bound and testable method for each
-  self._actions = _.map(self.flattenTestActions(doc[self.description]), function (action) {
-    // get the method that will do the action
-    var method = self['do_' + action.name];
+  self._actions = _.map(
+    self.flattenTestActions(doc[self.description]),
+    function(action) {
+      // get the method that will do the action
+      var method = self['do_' + action.name];
 
-    // check that it's a function
-    expect(method || 'YamlDoc#' + action.name).to.be.a('function');
+      // check that it's a function
+      expect(method || 'YamlDoc#' + action.name).to.be.a('function');
 
-    if (_.isPlainObject(action.args)) {
-      action.name += '(' + JSON.stringify(action.args) + ')';
-    } else if (action.args) {
-      action.name += '(' + action.args + ')';
-    }
-
-    // wrap in a check for skipping
-    action.bound = _.bind(method, self, action.args);
-
-    // create a function that can be passed to mocha or async
-    action.testable = function (_cb) {
-      function done(err) {
-        process.nextTick(function () {
-          if (err) {
-            err.message += ' in ' + action.name;
-          }
-          _cb(err);
-        });
+      if (_.isPlainObject(action.args)) {
+        action.name += '(' + JSON.stringify(action.args) + ')';
+      } else if (action.args) {
+        action.name += '(' + action.args + ')';
       }
 
-      if (self.skipping || self.file.skipping) {
-        return done();
-      }
-      if (method.length > 1) {
-        action.bound(done);
-      } else {
-        try {
-          action.bound();
-          process.nextTick(done);
-        } catch (err) {
-          done(err);
+      // wrap in a check for skipping
+      action.bound = _.bind(method, self, action.args);
+
+      // create a function that can be passed to mocha or async
+      action.testable = function(_cb) {
+        function done(err) {
+          process.nextTick(function() {
+            if (err) {
+              err.message += ' in ' + action.name;
+            }
+            _cb(err);
+          });
         }
-      }
-    };
 
-    return action;
-  });
+        if (self.skipping || self.file.skipping) {
+          return done();
+        }
+        if (method.length > 1) {
+          action.bound(done);
+        } else {
+          try {
+            action.bound();
+            process.nextTick(done);
+          } catch (err) {
+            done(err);
+          }
+        }
+      };
 
-  self.getActionsRunners = function () {
-    return self._actions.map(function (action) {
-      return function (cb) {
-        clientManager.get().transport.log.debug(
-          '===========================\n' +
-          action.name +
-          '\n==========================='
-        );
+      return action;
+    }
+  );
+
+  self.getActionsRunners = function() {
+    return self._actions.map(function(action) {
+      return function(cb) {
+        clientManager
+          .get()
+          .transport.log.debug(
+            '===========================\n' +
+              action.name +
+              '\n==========================='
+          );
         return action.testable(cb);
       };
     });
   };
 }
 
-YamlDoc.compareRangeToVersion = function (range, version) {
+YamlDoc.compareRangeToVersion = function(range, version) {
   expect(range).to.match(versionRangeRE);
   var rangeMatch = versionRangeRE.exec(range);
 
@@ -184,11 +196,12 @@ YamlDoc.compareRangeToVersion = function (range, version) {
   var max = versionToComparableString(rangeMatch[2], Infinity);
   var comp = versionToComparableString(versionMatch[1], Infinity);
 
-  return (min === -Infinity || min <= comp) && (max === Infinity || max >= comp);
+  return (
+    (min === -Infinity || min <= comp) && (max === Infinity || max >= comp)
+  );
 };
 
 YamlDoc.prototype = {
-
   /**
    * convert tests actions
    *   from: [ {name:args, name:args}, {name:args}, ... ]
@@ -196,20 +209,24 @@ YamlDoc.prototype = {
    * so it's easier to work with
    * @param {ArrayOfObjects} config - Actions to be taken as defined in the yaml specs
    */
-  flattenTestActions: function (config) {
+  flattenTestActions: function(config) {
     // creates [ [ {name:"", args:"" }, ... ], ... ]
     // from [ {name:args, name:args}, {name:args} ]
-    var actionSets = _.map(config, function (set) {
-      return _.map(_.toPairs(set), function (pair) {
+    var actionSets = _.map(config, function(set) {
+      return _.map(_.toPairs(set), function(pair) {
         return { name: pair[0], args: pair[1] };
       });
     });
 
     // do a single level flatten, merge=ing the nested arrays from step one
     // into a master array, creating an array of action objects
-    return _.reduce(actionSets, function (note, set) {
-      return note.concat(set);
-    }, []);
+    return _.reduce(
+      actionSets,
+      function(note, set) {
+        return note.concat(set);
+      },
+      []
+    );
   },
 
   /**
@@ -218,7 +235,7 @@ YamlDoc.prototype = {
    * @param  {Function} ittr - The function to call for each action.
    * @return {undefined}
    */
-  each: function (ittr) {
+  each: function(ittr) {
     for (var i = 0; i < this._actions.length; i++) {
       if (ittr(this._actions[i].testable, this._actions[i].name) === false) {
         break;
@@ -248,16 +265,17 @@ YamlDoc.prototype = {
    * @param  {string} path - The dot-notation path to the value needed.
    * @return {*} - The value requested, or undefined if it was not found
    */
-  get: function (path, from) {
+  get: function(path, from) {
     var self = this;
-    var log = process.env.LOG_GETS && !from ? console.log.bind(console) : function () {};
+    var log =
+      process.env.LOG_GETS && !from ? console.log.bind(console) : function() {};
     var i;
 
     if (path === '$body') {
       // shortcut, the test just wants the whole body
       return self._last_requests_response;
     } else if (path) {
-      path = path.replace(/\.\$([a-zA-Z0-9_]+)/g, function (m, name) {
+      path = path.replace(/\.\$([a-zA-Z0-9_]+)/g, function(m, name) {
         return '.' + self._stash[name];
       });
     }
@@ -273,14 +291,20 @@ YamlDoc.prototype = {
 
     log('getting', path, 'from', from);
 
-    var steps = _.map(path ? path.replace(/\\\./g, '\uffff').split('.') : [], function (step) {
-      return step.replace(/\uffff/g, '.');
-    });
+    var steps = _.map(
+      path ? path.replace(/\\\./g, '\uffff').split('.') : [],
+      function(step) {
+        return step.replace(/\uffff/g, '.');
+      }
+    );
     var remainingSteps;
 
     for (i = 0; from != null && i < steps.length; i++) {
       if (from[steps[i]] === void 0) {
-        remainingSteps = steps.slice(i).join('.').replace(/\\\./g, '.');
+        remainingSteps = steps
+          .slice(i)
+          .join('.')
+          .replace(/\\\./g, '.');
         from = from[remainingSteps];
         break;
       } else {
@@ -299,36 +323,49 @@ YamlDoc.prototype = {
    * @param args
    * @param done
    */
-  do_skip: function (args, done) {
+  do_skip: function(args, done) {
     if (args.version) {
-      return rangeMatchesCurrentVersion(args.version, _.bind(function (match) {
-        if (match) {
-          if (this.description === 'setup') {
-            this.file.skipping = true;
-            // console.log('skipping this file' + (args.reason ? ' because ' + args.reason : ''));
+      return rangeMatchesCurrentVersion(
+        args.version,
+        _.bind(function(match) {
+          if (match) {
+            if (this.description === 'setup') {
+              this.file.skipping = true;
+              // console.log('skipping this file' + (args.reason ? ' because ' + args.reason : ''));
+            } else {
+              this.skipping = true;
+              // console.log('skipping the rest of this doc' + (args.reason ? ' because ' + args.reason : ''));
+            }
           } else {
-            this.skipping = true;
-            // console.log('skipping the rest of this doc' + (args.reason ? ' because ' + args.reason : ''));
+            this.skipping = false;
+            this.file.skipping = false;
           }
-        } else {
-          this.skipping = false;
-          this.file.skipping = false;
-        }
-        done();
-      }, this));
+          done();
+        }, this)
+      );
     }
 
     if (args.features) {
-      var features = Array.isArray(args.features) ? args.features : [args.features];
+      var features = Array.isArray(args.features)
+        ? args.features
+        : [args.features];
       var notImplemented = _.difference(features, implementedFeatures);
 
       if (notImplemented.length) {
         if (this.description === 'setup') {
           this.file.skipping = true;
-          console.log('skipping this file because ' + notImplemented.join(' & ') + ' are not implemented');
+          console.log(
+            'skipping this file because ' +
+              notImplemented.join(' & ') +
+              ' are not implemented'
+          );
         } else {
           this.skipping = true;
-          console.log('skipping the rest of this doc because ' + notImplemented.join(' & ') + ' are not implemented');
+          console.log(
+            'skipping the rest of this doc because ' +
+              notImplemented.join(' & ') +
+              ' are not implemented'
+          );
         }
       }
       return done();
@@ -342,12 +379,12 @@ YamlDoc.prototype = {
    * @param  {Function} done [description]
    * @return {[type]}        [description]
    */
-  do_do: function (args, done) {
+  do_do: function(args, done) {
     var catcher;
 
     if (process.env.LOG_DO) {
       var __done = done;
-      done = function (err, resp) {
+      done = function(err, resp) {
         console.log('doing', clientActionName, 'with', params);
         console.log('got', resp);
         __done(err, resp);
@@ -399,7 +436,11 @@ YamlDoc.prototype = {
     var otherKeys = _.keys(args);
     var action = otherKeys.shift();
     if (otherKeys.length) {
-      return done(new TypeError('Unexpected top-level args to "do": ' + otherKeys.join(', ')));
+      return done(
+        new TypeError(
+          'Unexpected top-level args to "do": ' + otherKeys.join(', ')
+        )
+      );
     }
 
     var client = clientManager.get();
@@ -407,38 +448,47 @@ YamlDoc.prototype = {
     var clientAction = this.get(clientActionName, client);
     _.assign(inputParams, args[action]);
 
-    var params = _.transform(inputParams, _.bind(function (params, val, name) {
-      var camelName = _.camelCase(name);
+    var params = _.transform(
+      inputParams,
+      _.bind(function(params, val, name) {
+        var camelName = _.camelCase(name);
 
-      // search through the params and url peices to find this param name
-      var paramName = name;
-      var spec = clientAction && clientAction.spec;
-      var knownParam = spec && spec.params && spec.params[camelName];
-      var knownUrlParam = spec && !knownParam && !!_.find(spec.url ? [spec.url] : spec.urls, function (url) {
-        if ((url.opt && url.opt[camelName]) || (url.req && url.req[camelName])) {
-          return true;
+        // search through the params and url peices to find this param name
+        var paramName = name;
+        var spec = clientAction && clientAction.spec;
+        var knownParam = spec && spec.params && spec.params[camelName];
+        var knownUrlParam =
+          spec &&
+          !knownParam &&
+          !!_.find(spec.url ? [spec.url] : spec.urls, function(url) {
+            if (
+              (url.opt && url.opt[camelName]) ||
+              (url.req && url.req[camelName])
+            ) {
+              return true;
+            }
+          });
+
+        // if we do know this param name, use the camelCase verison
+        if (knownParam || knownUrlParam) {
+          paramName = camelName;
         }
-      });
 
-      // if we do know this param name, use the camelCase verison
-      if (knownParam || knownUrlParam) {
-        paramName = camelName;
-      }
+        // for ercursively traversing the params to replace '$stashed' vars
+        var transformObject = function(vals, val, i) {
+          if (_.isString(val)) {
+            val = val[0] === '$' ? this.get(val) : val;
+          } else if (_.isPlainObject(val) || _.isArray(val)) {
+            val = _.transform(val, transformObject);
+          }
 
-      // for ercursively traversing the params to replace '$stashed' vars
-      var transformObject = function (vals, val, i) {
-        if (_.isString(val)) {
-          val = (val[0] === '$') ? this.get(val) : val;
-        } else if (_.isPlainObject(val) || _.isArray(val)) {
-          val = _.transform(val, transformObject);
-        }
+          vals[i] = val;
+        }.bind(this);
 
-        vals[i] = val;
-      }.bind(this);
-
-      transformObject(params, val, paramName);
-    }, this), {});
-
+        transformObject(params, val, paramName);
+      }, this),
+      {}
+    );
 
     expect(clientAction || clientActionName).to.be.a('function');
 
@@ -448,7 +498,7 @@ YamlDoc.prototype = {
     }
 
     var timeoutId;
-    var cb = _.bind(function (error, body) {
+    var cb = _.bind(function(error, body) {
       this._last_requests_response = body;
       clearTimeout(timeoutId);
 
@@ -474,13 +524,16 @@ YamlDoc.prototype = {
     }, this);
 
     var req = clientAction.call(client, params, cb);
-    timeoutId = setTimeout(function () {
-      // request timed out, so we will skip the rest of the tests and continue
-      req.abort();
-      this.skipping = true;
-      this._last_requests_response = {};
-      done();
-    }.bind(this), 20000);
+    timeoutId = setTimeout(
+      function() {
+        // request timed out, so we will skip the rest of the tests and continue
+        req.abort();
+        this.skipping = true;
+        this._last_requests_response = {};
+        done();
+      }.bind(this),
+      20000
+    );
   },
 
   /**
@@ -493,10 +546,13 @@ YamlDoc.prototype = {
    * @param  {Object} args - The object set to the "set" key in the test
    * @return {undefined}
    */
-  do_set: function (args) {
-    _.forOwn(args, _.bind(function (name, path) {
-      this._stash[name] = this.get(path);
-    }, this));
+  do_set: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(name, path) {
+        this._stash[name] = this.get(path);
+      }, this)
+    );
   },
 
   /**
@@ -506,7 +562,7 @@ YamlDoc.prototype = {
    * @param  {string} path - Path to the response value to test
    * @return {undefined}
    */
-  do_is_true: function (path) {
+  do_is_true: function(path) {
     var val = this.get(path);
     try {
       expect(Boolean(val)).to.be(true, 'path: ' + path);
@@ -522,12 +578,14 @@ YamlDoc.prototype = {
    * @param  {string} path - Path to the response value to test
    * @return {undefined}
    */
-  do_is_false: function (path) {
+  do_is_false: function(path) {
     var val = this.get(path);
     try {
       expect(Boolean(val)).to.be(false, 'path: ' + path);
     } catch (e) {
-      throw new Error('expected path "' + path + '" to be false but got ' + val);
+      throw new Error(
+        'expected path "' + path + '" to be false but got ' + val
+      );
     }
   },
 
@@ -562,7 +620,7 @@ YamlDoc.prototype = {
    *
    * @return {undefined}
    */
-  do_match: function (args) {
+  do_match: function(args) {
     var self = this;
 
     // recursively replace all $var within args
@@ -572,80 +630,77 @@ YamlDoc.prototype = {
       }
 
       if (_.isString(val)) {
-        lvl[key] = val.replace(/\$[a-zA-Z0-9_]+/g, function (name) {
+        lvl[key] = val.replace(/\$[a-zA-Z0-9_]+/g, function(name) {
           return self.get(name);
         });
       }
     });
 
-    _.forOwn(args, _.bind(function (match, path) {
-      var origMatch = match;
+    _.forOwn(
+      args,
+      _.bind(function(match, path) {
+        var origMatch = match;
 
-      var maybeRE = false;
-      var usedRE = false;
+        var maybeRE = false;
+        var usedRE = false;
 
-      if (_.isString(match)) {
-        // convert the matcher into a compatible string for building a regexp
-        maybeRE = match
-          // replace comments, but allow the # to be escaped like \#
-          .replace(reCommentsRE, function (match, prevChar) {
-            if (prevChar === '\\') {
-              return match;
-            } else {
-              return prevChar + '\n';
-            }
-          })
-          // remove all whitespace from the expression, all meaningful
-          // whitespace is represented with \s
-          .replace(reWhitespaceRE, '');
+        if (_.isString(match)) {
+          // convert the matcher into a compatible string for building a regexp
+          maybeRE = match
+            // replace comments, but allow the # to be escaped like \#
+            .replace(reCommentsRE, function(match, prevChar) {
+              if (prevChar === '\\') {
+                return match;
+              } else {
+                return prevChar + '\n';
+              }
+            })
+            // remove all whitespace from the expression, all meaningful
+            // whitespace is represented with \s
+            .replace(reWhitespaceRE, '');
 
-        var startsWithSlash = maybeRE[0] === '/';
-        var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';
+          var startsWithSlash = maybeRE[0] === '/';
+          var endsWithSlash = maybeRE[maybeRE.length - 1] === '/';
 
-        if (startsWithSlash && endsWithSlash) {
-          usedRE = true;
-          match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
-        }
-      }
-
-      var val = this.get(path);
-      var test = 'eql';
-
-      if (match instanceof RegExp) {
-        test = 'match';
-
-        // convert falsy values to an empty string so that regexp doesn't
-        // cast them to the strings "false", "undefined", etc.
-        val = val || '';
-      }
-
-      try {
-        expect(val).to[test](match);
-      } catch (e) {
-        var msg = [
-          '\nUnable to match',
-          inspect(match),
-          'with the path',
-          inspect(path),
-          'and value',
-          inspect(val)
-        ];
-
-        if (usedRE) {
-          msg.push(
-            'and original matcher',
-            '|' + origMatch
-          );
+          if (startsWithSlash && endsWithSlash) {
+            usedRE = true;
+            match = new RegExp(maybeRE.substr(1, maybeRE.length - 2));
+          }
         }
 
-        msg.push(
-          'original error',
-          e.message
-        );
+        var val = this.get(path);
+        var test = 'eql';
 
-        throw new Error(msg.join('\n'));
-      }
-    }, this));
+        if (match instanceof RegExp) {
+          test = 'match';
+
+          // convert falsy values to an empty string so that regexp doesn't
+          // cast them to the strings "false", "undefined", etc.
+          val = val || '';
+        }
+
+        try {
+          expect(val).to[test](match);
+        } catch (e) {
+          var msg = [
+            '\nUnable to match',
+            inspect(match),
+            'with the path',
+            inspect(path),
+            'and value',
+            inspect(val),
+          ];
+
+          if (usedRE) {
+            msg.push('and original matcher', '|' + origMatch);
+          }
+
+          msg.push('original error', e.message);
+
+          throw new Error(msg.join('\n'));
+        }
+      }, this)
+    );
   },
 
   /**
@@ -654,10 +709,13 @@ YamlDoc.prototype = {
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
-  do_lt: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
-      expect(this.get(path)).to.be.below(num, 'path: ' + path);
-    }, this));
+  do_lt: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(num, path) {
+        expect(this.get(path)).to.be.below(num, 'path: ' + path);
+      }, this)
+    );
   },
 
   /**
@@ -666,10 +724,13 @@ YamlDoc.prototype = {
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
-  do_lte: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
-      expect(this.get(path) <= num).to.be.ok('path: ' + path);
-    }, this));
+  do_lte: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(num, path) {
+        expect(this.get(path) <= num).to.be.ok('path: ' + path);
+      }, this)
+    );
   },
 
   /**
@@ -678,10 +739,13 @@ YamlDoc.prototype = {
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
-  do_gt: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
-      expect(this.get(path)).to.be.above(num, 'path: ' + path);
-    }, this));
+  do_gt: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(num, path) {
+        expect(this.get(path)).to.be.above(num, 'path: ' + path);
+      }, this)
+    );
   },
 
   /**
@@ -690,10 +754,13 @@ YamlDoc.prototype = {
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
-  do_gte: function (args) {
-    _.forOwn(args, _.bind(function (num, path) {
-      expect(this.get(path) >= num).to.be.ok('path: ' + path);
-    }, this));
+  do_gte: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(num, path) {
+        expect(this.get(path) >= num).to.be.ok('path: ' + path);
+      }, this)
+    );
   },
 
   /**
@@ -703,9 +770,12 @@ YamlDoc.prototype = {
    * @param  {Object} args - Hash of fields->values that need to be checked
    * @return {undefined}
    */
-  do_length: function (args) {
-    _.forOwn(args, _.bind(function (len, path) {
-      expect(_.size(this.get(path))).to.eql(len, 'path: ' + path);
-    }, this));
-  }
+  do_length: function(args) {
+    _.forOwn(
+      args,
+      _.bind(function(len, path) {
+        expect(_.size(this.get(path))).to.eql(len, 'path: ' + path);
+      }, this)
+    );
+  },
 };

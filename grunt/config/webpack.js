@@ -3,5 +3,5 @@ module.exports = {
     require('../../webpack_config/browser'),
     require('../../webpack_config/angular'),
     require('../../webpack_config/jquery'),
-  ]
-}
+  ],
+};

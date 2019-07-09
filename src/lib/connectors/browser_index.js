@@ -1,12 +1,12 @@
 var opts = {
   xhr: require('./xhr'),
   jquery: require('./jquery'),
-  angular: require('./angular')
+  angular: require('./angular'),
 };
 var _ = require('lodash');
 
 // remove modules that have been ignored by browserify
-_.each(opts, function (conn, name) {
+_.each(opts, function(conn, name) {
   if (typeof conn !== 'function') {
     delete opts[name];
   }

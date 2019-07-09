@@ -1,10 +1,8 @@
-
 var _ = require('lodash');
 var utils = require('../../../src/lib/utils');
 var gruntUtils = require('../../../grunt/utils');
 var fs = require('fs');
 var path = require('path');
-
 
 /**
  * we want strings in code to use single-quotes, so this will JSON encode vars, but then
@@ -14,18 +12,20 @@ var path = require('path');
  * @return {String}  - our pretty string
  */
 function stringify(thing, pretty) {
-  return (pretty ? JSON.stringify(thing, null, '  ') : JSON.stringify(thing))
-    .replace(/'/g, '\\\'')
-    .replace(/\\?"/g, function (quote) {
-      // replace external (unescaped) double quotes with single quotes
-      return quote === '\\"' ? '"' : '\'';
-    })
-    // inject a space between STRING array parts
-    .replace(/([^\\])','/g, '$1\', \'')
-    // remove quotes around key names that are only made up of letters
-    .replace(/^( +)'([a-zA-Z_]+)':/gm, '$1$2:')
-    // requote "special" key names
-    .replace(/^( +)(default):/gm, '$1\'$2\':');
+  return (
+    (pretty ? JSON.stringify(thing, null, '  ') : JSON.stringify(thing))
+      .replace(/'/g, "\\'")
+      .replace(/\\?"/g, function(quote) {
+        // replace external (unescaped) double quotes with single quotes
+        return quote === '\\"' ? '"' : "'";
+      })
+      // inject a space between STRING array parts
+      .replace(/([^\\])','/g, "$1', '")
+      // remove quotes around key names that are only made up of letters
+      .replace(/^( +)'([a-zA-Z_]+)':/gm, '$1$2:')
+      // requote "special" key names
+      .replace(/^( +)(default):/gm, "$1'$2':")
+  );
 }
 
 /**
@@ -39,28 +39,30 @@ var templates = {};
  * @type {Object}
  */
 var templateGlobals = {
-
   stringify: stringify,
 
   _: _,
   utils: utils,
 
-  indent: function (block, spaces) {
+  indent: function(block, spaces) {
     var indent = utils.repeat(' ', spaces);
-    return block.split('\n').map(function (line) {
-      return indent + line;
-    }).join('\n');
+    return block
+      .split('\n')
+      .map(function(line) {
+        return indent + line;
+      })
+      .join('\n');
   },
 
-  joinParagraphs: function (block) {
+  joinParagraphs: function(block) {
     return block.split('\n\n').join('\n+\n');
   },
 
-  paramType: function (type, paramName) {
+  paramType: function(type, paramName) {
     switch (type && type.toLowerCase ? type.toLowerCase() : 'any') {
       case 'time':
       case 'duration':
-        if (paramName === 'timestamp') return 'Timestamp'
+        if (paramName === 'timestamp') return 'Timestamp';
         return '<<api-param-type-duration-string,`DurationString`>>';
       case 'any':
         return 'anything';
@@ -84,7 +86,7 @@ var templateGlobals = {
     }
   },
 
-  paramWithDefault: function (name, def) {
+  paramWithDefault: function(name, def) {
     if (def) {
       return '[' + name + '=' + def + ']';
     } else {
@@ -94,16 +96,16 @@ var templateGlobals = {
 
   partials: templates,
 
-  gruntUtils: gruntUtils
+  gruntUtils: gruntUtils,
 };
 
-fs.readdirSync(path.resolve(__dirname)).forEach(function (filename) {
+fs.readdirSync(path.resolve(__dirname)).forEach(function(filename) {
   var name = filename.replace(/\..+$/, '');
   if (name !== 'index') {
     templates[name] = _.template(
       fs.readFileSync(path.resolve(__dirname, filename), 'utf8'),
       {
-        imports: templateGlobals
+        imports: templateGlobals,
       }
     );
   }

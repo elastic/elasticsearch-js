@@ -1,8 +1,11 @@
-module.exports = function (done) {
+module.exports = function(done) {
   var _ = require('lodash');
 
   var chalk = require('chalk');
-  var fromRoot = _.partial(require('path').join, require('find-root')(__dirname));
+  var fromRoot = _.partial(
+    require('path').join,
+    require('find-root')(__dirname)
+  );
   var write = require('fs').writeFile;
 
   var outputPath = fromRoot('docs/configuration.asciidoc');

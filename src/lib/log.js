@@ -26,25 +26,29 @@ function Log(config) {
   var outputs;
 
   if (utils.isArrayOfStrings(config.log)) {
-    outputs = [{
-      levels: config.log
-    }];
+    outputs = [
+      {
+        levels: config.log,
+      },
+    ];
   } else {
-    outputs = utils.createArray(config.log, function (val) {
+    outputs = utils.createArray(config.log, function(val) {
       if (_.isPlainObject(val)) {
         return val;
       }
       if (typeof val === 'string') {
         return {
-          level: val
+          level: val,
         };
       }
     });
   }
 
   if (!outputs) {
-    throw new TypeError('Invalid logging output config. Expected either a log level, array of log levels, ' +
-      'a logger config object, or an array of logger config objects.');
+    throw new TypeError(
+      'Invalid logging output config. Expected either a log level, array of log levels, ' +
+        'a logger config object, or an array of logger config objects.'
+    );
   }
 
   for (i = 0; i < outputs.length; i++) {
@@ -55,10 +59,12 @@ utils.inherits(Log, EventEmitter);
 
 Log.loggers = require('./loggers');
 
-Log.prototype.close = function () {
+Log.prototype.close = function() {
   this.emit('closing');
   if (this.listenerCount()) {
-    console.error('Something is still listening for log events, but the logger is closing.'); // eslint-disable-line no-console
+    console.error(
+      'Something is still listening for log events, but the logger is closing.'
+    ); // eslint-disable-line no-console
     this.clearAllListeners();
   }
 };
@@ -67,19 +73,17 @@ if (EventEmitter.prototype.listenerCount) {
   // If the event emitter implements it's own listenerCount method
   // we don't need to (newer nodes do this).
   Log.prototype.listenerCount = EventEmitter.prototype.listenerCount;
-}
-else if (EventEmitter.listenerCount) {
+} else if (EventEmitter.listenerCount) {
   // some versions of node expose EventEmitter::listenerCount
   // which is more efficient the getting all listeners of a
   // specific type
-  Log.prototype.listenerCount = function (event) {
+  Log.prototype.listenerCount = function(event) {
     return EventEmitter.listenerCount(this, event);
   };
-}
-else {
+} else {
   // all other versions of node expose a #listeners() method, which returns
   // and array we have to count
-  Log.prototype.listenerCount = function (event) {
+  Log.prototype.listenerCount = function(event) {
     return this.listeners(event).length;
   };
 }
@@ -135,7 +139,7 @@ Log.levels = [
    * @param {Integer} responseStatus - The status code returned from the response
    * @param {String} responseBody - The body of the response
    */
-  'trace'
+  'trace',
 ];
 
 /**
@@ -149,7 +153,7 @@ Log.levels = [
  *   level, or an array of exact levels
  * @return {Array} -
  */
-Log.parseLevels = function (input) {
+Log.parseLevels = function(input) {
   switch (typeof input) {
     case 'string':
       var i = _.indexOf(Log.levels, input);
@@ -166,8 +170,12 @@ Log.parseLevels = function (input) {
       }
     /* fall through */
     default:
-      throw new TypeError('invalid logging level ' + input + '. Expected zero or more of these options: ' +
-      Log.levels.join(', '));
+      throw new TypeError(
+        'invalid logging level ' +
+          input +
+          '. Expected zero or more of these options: ' +
+          Log.levels.join(', ')
+      );
   }
 };
 
@@ -180,8 +188,8 @@ Log.parseLevels = function (input) {
  * @param  {*} arrayish - An array like object that can be itterated by _.each
  * @return {String} - The final string.
  */
-Log.join = function (arrayish) {
-  return _.map(arrayish, function (item) {
+Log.join = function(arrayish) {
+  return _.map(arrayish, function(item) {
     if (_.isPlainObject(item)) {
       return JSON.stringify(item, null, 2) + '\n';
     } else {
@@ -203,14 +211,19 @@ Log.join = function (arrayish) {
  *   levels will be logged.
  * @return {Logger}
  */
-Log.prototype.addOutput = function (config) {
+Log.prototype.addOutput = function(config) {
   config = config || {};
 
   // force "levels" key
   config.levels = Log.parseLevels(config.levels || config.level || 'warning');
   delete config.level;
 
-  var Logger = utils.funcEnum(config, 'type', Log.loggers, process.browser ? 'console' : 'stdio');
+  var Logger = utils.funcEnum(
+    config,
+    'type',
+    Log.loggers,
+    process.browser ? 'console' : 'stdio'
+  );
   return new Logger(this, config);
 };
 
@@ -221,12 +234,11 @@ Log.prototype.addOutput = function (config) {
  * @param  {Error|String} error  The Error to log
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.error = function (e) {
+Log.prototype.error = function(e) {
   if (this.listenerCount('error')) {
     return this.emit('error', e instanceof Error ? e : new Error(e));
   }
 };
-
 
 /**
  * Log a warning message
@@ -235,12 +247,11 @@ Log.prototype.error = function (e) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.warning = function (/* ...msg */) {
+Log.prototype.warning = function(/* ...msg */) {
   if (this.listenerCount('warning')) {
     return this.emit('warning', Log.join(arguments));
   }
 };
-
 
 /**
  * Log useful info about what's going on
@@ -249,7 +260,7 @@ Log.prototype.warning = function (/* ...msg */) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.info = function (/* ...msg */) {
+Log.prototype.info = function(/* ...msg */) {
   if (this.listenerCount('info')) {
     return this.emit('info', Log.join(arguments));
   }
@@ -262,7 +273,7 @@ Log.prototype.info = function (/* ...msg */) {
  * @param  {*} msg* - Any amount of messages that will be joined before logged
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.debug = function (/* ...msg */) {
+Log.prototype.debug = function(/* ...msg */) {
   if (this.listenerCount('debug')) {
     return this.emit('debug', Log.join(arguments));
   }
@@ -280,13 +291,34 @@ Log.prototype.debug = function (/* ...msg */) {
  * @param {String} responseStatus - HTTP status code
  * @return {Boolean} - True if any outputs accepted the message
  */
-Log.prototype.trace = function (method, requestUrl, body, responseBody, responseStatus) {
+Log.prototype.trace = function(
+  method,
+  requestUrl,
+  body,
+  responseBody,
+  responseStatus
+) {
   if (this.listenerCount('trace')) {
-    return this.emit('trace', Log.normalizeTraceArgs(method, requestUrl, body, responseBody, responseStatus));
+    return this.emit(
+      'trace',
+      Log.normalizeTraceArgs(
+        method,
+        requestUrl,
+        body,
+        responseBody,
+        responseStatus
+      )
+    );
   }
 };
 
-Log.normalizeTraceArgs = function (method, requestUrl, body, responseBody, responseStatus) {
+Log.normalizeTraceArgs = function(
+  method,
+  requestUrl,
+  body,
+  responseBody,
+  responseStatus
+) {
   if (typeof requestUrl === 'string') {
     requestUrl = url.parse(requestUrl, true, true);
   } else {
@@ -306,7 +338,7 @@ Log.normalizeTraceArgs = function (method, requestUrl, body, responseBody, respo
     url: url.format(requestUrl),
     body: body,
     status: responseStatus,
-    response: responseBody
+    response: responseBody,
   };
 };
 

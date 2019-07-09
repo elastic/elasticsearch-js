@@ -33,7 +33,6 @@ var chalk = require('chalk');
 
 function makeJUnitXml(runnerName, testDetails) {
   _.each(testDetails.suites, function serializeSuite(suiteInfo) {
-
     var suite = suites.ele('testsuite', {
       package: 'elasticsearch-js',
       id: suiteCount++,
@@ -43,15 +42,19 @@ function makeJUnitXml(runnerName, testDetails) {
       tests: (suiteInfo.results && suiteInfo.results.length) || 0,
       failures: _.filter(suiteInfo.results, { pass: false }).length,
       errors: 0,
-      time: suiteInfo.time / 1000
+      time: suiteInfo.time / 1000,
     });
 
-    _.each(suiteInfo.results, function (testInfo) {
+    _.each(suiteInfo.results, function(testInfo) {
       var section;
       var integration = false;
 
       if (suiteInfo.name.match(/\/.*\.yaml$/)) {
-        section = suiteInfo.name.split('/').slice(0, -1).join('/').replace(/\./g, '/');
+        section = suiteInfo.name
+          .split('/')
+          .slice(0, -1)
+          .join('/')
+          .replace(/\./g, '/');
       } else {
         section = suiteInfo.name.replace(/\./g, ',');
       }
@@ -64,18 +67,19 @@ function makeJUnitXml(runnerName, testDetails) {
       var testcase = suite.ele('testcase', {
         name: testInfo.name,
         time: (testInfo.time || 0) / 1000,
-        classname: runnerName + (integration ? ' - integration' : '') + '.' + section
+        classname:
+          runnerName + (integration ? ' - integration' : '') + '.' + section,
       });
 
       if (testInfo.errMsg) {
         testcase.ele('failure', {
           message: testInfo.errMsg,
-          type: 'AssertError'
+          type: 'AssertError',
         });
       } else if (!testInfo.pass) {
         testcase.ele('error', {
           message: 'Unknown Error',
-          type: 'TestError'
+          type: 'TestError',
         });
       }
 

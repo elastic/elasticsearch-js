@@ -1,5 +1,5 @@
-const webpack = require('webpack')
-const { jsLoader, ignoreLoader, rel } = require('./lib')
+const webpack = require('webpack');
+const { jsLoader, ignoreLoader, rel } = require('./lib');
 
 module.exports = {
   context: rel('src'),
@@ -23,4 +23,4 @@ module.exports = {
       'process.env.NODE_ENV': '"production"',
     }),
   ],
-}
+};

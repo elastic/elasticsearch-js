@@ -1,4 +1,4 @@
-describe('Logger Abstract', function () {
+describe('Logger Abstract', function() {
   var expect = require('expect.js');
   var Log = require('../../../src/lib/log');
   var LoggerAbstract = require('../../../src/lib/logger');
@@ -7,21 +7,21 @@ describe('Logger Abstract', function () {
 
   function makeLogger(parent, levels) {
     return new LoggerAbstract(parent || parentLog, {
-      levels: Log.parseLevels(levels || [])
+      levels: Log.parseLevels(levels || []),
     });
   }
 
-  beforeEach(function () {
+  beforeEach(function() {
     parentLog = new Log();
   });
 
-  afterEach(function () {
+  afterEach(function() {
     parentLog.close();
   });
 
-  describe('#write', function () {
-    it('requires that it is overwritten', function () {
-      expect(function () {
+  describe('#write', function() {
+    it('requires that it is overwritten', function() {
+      expect(function() {
         var logger = makeLogger();
         logger.write();
       }).to.throwError(/overwritten/);
@@ -29,5 +29,4 @@ describe('Logger Abstract', function () {
   });
 
   require('../generic_logger_tests')(makeLogger);
-
 });

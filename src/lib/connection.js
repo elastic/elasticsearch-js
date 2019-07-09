@@ -41,11 +41,11 @@ utils.inherits(ConnectionAbstract, EventEmitter);
  * @param params.requestTimeout {Integer} - The amount of time in milliseconds that this request should be allowed to run for.
  * @param cb {Function} - A callback to be called once with `cb(err, responseBody, responseStatus)`
  */
-ConnectionAbstract.prototype.request = function () {
+ConnectionAbstract.prototype.request = function() {
   throw new Error('Connection#request must be overwritten by the Connector');
 };
 
-ConnectionAbstract.prototype.ping = function (params, cb) {
+ConnectionAbstract.prototype.ping = function(params, cb) {
   if (typeof params === 'function') {
     cb = params;
     params = null;
@@ -62,33 +62,40 @@ ConnectionAbstract.prototype.ping = function (params, cb) {
     requestTimeout = params.requestTimeout;
   }
 
-  abort = this.request(_.defaults(params || {}, {
-    path: '/',
-    method: 'HEAD'
-  }), function (err) {
-    if (aborted) {
-      return;
+  abort = this.request(
+    _.defaults(params || {}, {
+      path: '/',
+      method: 'HEAD',
+    }),
+    function(err) {
+      if (aborted) {
+        return;
+      }
+      clearTimeout(requestTimeoutId);
+      if (cb) {
+        cb(err);
+      }
     }
-    clearTimeout(requestTimeoutId);
-    if (cb) {
-      cb(err);
-    }
-  });
+  );
 
   if (requestTimeout) {
-    requestTimeoutId = setTimeout(function () {
+    requestTimeoutId = setTimeout(function() {
       if (abort) {
         abort();
       }
       aborted = true;
       if (cb) {
-        cb(new errors.RequestTimeout('Ping Timeout after ' + requestTimeout + 'ms'));
+        cb(
+          new errors.RequestTimeout(
+            'Ping Timeout after ' + requestTimeout + 'ms'
+          )
+        );
       }
     }, requestTimeout);
   }
 };
 
-ConnectionAbstract.prototype.setStatus = function (status) {
+ConnectionAbstract.prototype.setStatus = function(status) {
   var origStatus = this.status;
   this.status = status;
 

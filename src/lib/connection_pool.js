@@ -28,23 +28,41 @@ function ConnectionPool(config) {
   this._config = config;
 
   // get the selector config var
-  this.selector = utils.funcEnum(config, 'selector', ConnectionPool.selectors, ConnectionPool.defaultSelector);
+  this.selector = utils.funcEnum(
+    config,
+    'selector',
+    ConnectionPool.selectors,
+    ConnectionPool.defaultSelector
+  );
 
   // get the connection class
-  this.Connection = utils.funcEnum(config, 'connectionClass', ConnectionPool.connectionClasses,
-    ConnectionPool.defaultConnectionClass);
+  this.Connection = utils.funcEnum(
+    config,
+    'connectionClass',
+    ConnectionPool.connectionClasses,
+    ConnectionPool.defaultConnectionClass
+  );
 
   // time that connections will wait before being revived
-  this.deadTimeout = config.hasOwnProperty('deadTimeout') ? config.deadTimeout : 60000;
-  this.maxDeadTimeout = config.hasOwnProperty('maxDeadTimeout') ? config.maxDeadTimeout : 18e5;
-  this.calcDeadTimeout = utils.funcEnum(config, 'calcDeadTimeout', ConnectionPool.calcDeadTimeoutOptions, 'exponential');
+  this.deadTimeout = config.hasOwnProperty('deadTimeout')
+    ? config.deadTimeout
+    : 60000;
+  this.maxDeadTimeout = config.hasOwnProperty('maxDeadTimeout')
+    ? config.maxDeadTimeout
+    : 18e5;
+  this.calcDeadTimeout = utils.funcEnum(
+    config,
+    'calcDeadTimeout',
+    ConnectionPool.calcDeadTimeoutOptions,
+    'exponential'
+  );
 
   // a map of connections to their "id" property, used when sniffing
   this.index = {};
 
   this._conns = {
     alive: [],
-    dead: []
+    dead: [],
   };
 
   // information about timeouts for dead connections
@@ -57,17 +75,21 @@ ConnectionPool.defaultSelector = 'roundRobin';
 
 // get the connection options
 ConnectionPool.connectionClasses = require('./connectors');
-ConnectionPool.defaultConnectionClass = ConnectionPool.connectionClasses._default;
+ConnectionPool.defaultConnectionClass =
+  ConnectionPool.connectionClasses._default;
 delete ConnectionPool.connectionClasses._default;
 
 // the function that calculates timeouts based on attempts
 ConnectionPool.calcDeadTimeoutOptions = {
-  flat: function (attempt, baseTimeout) {
+  flat: function(attempt, baseTimeout) {
     return baseTimeout;
   },
-  exponential: function (attempt, baseTimeout) {
-    return Math.min(baseTimeout * 2 * Math.pow(2, (attempt * 0.5 - 1)), this.maxDeadTimeout);
-  }
+  exponential: function(attempt, baseTimeout) {
+    return Math.min(
+      baseTimeout * 2 * Math.pow(2, attempt * 0.5 - 1),
+      this.maxDeadTimeout
+    );
+  },
 };
 
 /**
@@ -81,7 +103,7 @@ ConnectionPool.calcDeadTimeoutOptions = {
  * @param  {Function} cb [description]
  * @return {[type]}      [description]
  */
-ConnectionPool.prototype.select = function (cb) {
+ConnectionPool.prototype.select = function(cb) {
   if (this._conns.alive.length) {
     if (this.selector.length > 1) {
       this.selector(this._conns.alive, cb);
@@ -107,13 +129,17 @@ ConnectionPool.prototype.select = function (cb) {
  * @param  {String} oldStatus - the connection's old status
  * @param  {ConnectionAbstract} connection - the connection object itself
  */
-ConnectionPool.prototype.onStatusSet = utils.handler(function (status, oldStatus, connection) {
+ConnectionPool.prototype.onStatusSet = utils.handler(function(
+  status,
+  oldStatus,
+  connection
+) {
   var index;
 
-  var died = (status === 'dead');
-  var wasAlreadyDead = (died && oldStatus === 'dead');
-  var revived = (!died && oldStatus === 'dead');
-  var noChange = (oldStatus === status);
+  var died = status === 'dead';
+  var wasAlreadyDead = died && oldStatus === 'dead';
+  var revived = !died && oldStatus === 'dead';
+  var noChange = oldStatus === status;
   var from = this._conns[oldStatus];
   var to = this._conns[status];
 
@@ -150,7 +176,7 @@ ConnectionPool.prototype.onStatusSet = utils.handler(function (status, oldStatus
  * Handler used to clear the times created when a connection dies
  * @param  {ConnectionAbstract} connection
  */
-ConnectionPool.prototype._onConnectionRevived = function (connection) {
+ConnectionPool.prototype._onConnectionRevived = function(connection) {
   var timeout;
   for (var i = 0; i < this._timeouts.length; i++) {
     if (this._timeouts[i].conn === connection) {
@@ -169,7 +195,10 @@ ConnectionPool.prototype._onConnectionRevived = function (connection) {
  * @param  {ConnectionAbstract} connection
  * @param  {Boolean} alreadyWasDead - If the connection was preivously dead this must be set to true
  */
-ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDead) {
+ConnectionPool.prototype._onConnectionDied = function(
+  connection,
+  alreadyWasDead
+) {
   var timeout;
   if (alreadyWasDead) {
     for (var i = 0; i < this._timeouts.length; i++) {
@@ -182,15 +211,15 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
     timeout = {
       conn: connection,
       attempt: 0,
-      revive: function (cb) {
+      revive: function(cb) {
         timeout.attempt++;
-        connection.ping(function (err) {
+        connection.ping(function(err) {
           connection.setStatus(err ? 'dead' : 'alive');
           if (cb && typeof cb === 'function') {
             cb(err);
           }
         });
-      }
+      },
     };
     this._timeouts.push(timeout);
   }
@@ -204,7 +233,7 @@ ConnectionPool.prototype._onConnectionDied = function (connection, alreadyWasDea
   timeout.runAt = utils.now() + ms;
 };
 
-ConnectionPool.prototype._selectDeadConnection = function (cb) {
+ConnectionPool.prototype._selectDeadConnection = function(cb) {
   var orderedTimeouts = _.sortBy(this._timeouts, 'runAt');
   var log = this.log;
 
@@ -221,7 +250,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
     }
 
     if (timeout.conn.status === 'dead') {
-      timeout.revive(function (err) {
+      timeout.revive(function(err) {
         if (err) {
           log.warning('Unable to revive connection: ' + timeout.conn.id);
           process.nextTick(next);
@@ -247,7 +276,7 @@ ConnectionPool.prototype._selectDeadConnection = function (cb) {
  * @param {string} [status] - optional status of the connection to fetch
  * @param {Number} [limit] - optional limit on the number of connections to return
  */
-ConnectionPool.prototype.getConnections = function (status, limit) {
+ConnectionPool.prototype.getConnections = function(status, limit) {
   var list;
   if (status) {
     list = this._conns[status];
@@ -268,7 +297,7 @@ ConnectionPool.prototype.getConnections = function (status, limit) {
  *
  * @param {ConnectionAbstract} connection - The connection to add
  */
-ConnectionPool.prototype.addConnection = function (connection) {
+ConnectionPool.prototype.addConnection = function(connection) {
   if (!connection.id) {
     connection.id = connection.host.toString();
   }
@@ -286,7 +315,7 @@ ConnectionPool.prototype.addConnection = function (connection) {
  *
  * @param  {ConnectionAbstract} connection - The connection to remove/close
  */
-ConnectionPool.prototype.removeConnection = function (connection) {
+ConnectionPool.prototype.removeConnection = function(connection) {
   if (!connection.id) {
     connection.id = connection.host.toString();
   }
@@ -304,7 +333,7 @@ ConnectionPool.prototype.removeConnection = function (connection) {
  *
  * @param {Host[]} hosts - An array of Host instances.
  */
-ConnectionPool.prototype.setHosts = function (hosts) {
+ConnectionPool.prototype.setHosts = function(hosts) {
   var connection;
   var i;
   var id;
@@ -329,8 +358,8 @@ ConnectionPool.prototype.setHosts = function (hosts) {
   }
 };
 
-ConnectionPool.prototype.getAllHosts = function () {
-  return _.values(this.index).map(function (connection) {
+ConnectionPool.prototype.getAllHosts = function() {
+  return _.values(this.index).map(function(connection) {
     return connection.host;
   });
 };
@@ -338,7 +367,7 @@ ConnectionPool.prototype.getAllHosts = function () {
 /**
  * Close the conncetion pool, as well as all of it's connections
  */
-ConnectionPool.prototype.close = function () {
+ConnectionPool.prototype.close = function() {
   this.setHosts([]);
 };
 ConnectionPool.prototype.empty = ConnectionPool.prototype.close;

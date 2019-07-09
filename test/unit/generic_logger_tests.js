@@ -3,16 +3,16 @@ var Log = require('../../src/lib/log');
 var now = new Date('2013-03-01T00:00:00Z');
 var sinon = require('sinon');
 
-module.exports = function (makeLogger) {
+module.exports = function(makeLogger) {
   var stub = require('../utils/auto_release_stub').make();
   var parent = new Log();
 
-  afterEach(function () {
+  afterEach(function() {
     parent.close();
   });
 
-  describe('Constuctor', function () {
-    it('calls setupListeners, passes its new levels', function () {
+  describe('Constuctor', function() {
+    it('calls setupListeners, passes its new levels', function() {
       var logger = makeLogger(parent);
       stub(logger.constructor.prototype, 'setupListeners');
       parent.close();
@@ -21,21 +21,21 @@ module.exports = function (makeLogger) {
       expect(logger.setupListeners).to.have.property('callCount', 1);
     });
 
-    it('listens for the loggers\' "closing" event', function () {
+    it('listens for the loggers\' "closing" event', function() {
       makeLogger(parent);
       expect(parent.listenerCount('closing')).to.eql(1);
     });
   });
 
-  describe('listening levels', function () {
-    it('calls cleanUpListeners when the listeners are being setup', function () {
+  describe('listening levels', function() {
+    it('calls cleanUpListeners when the listeners are being setup', function() {
       var logger = makeLogger();
       stub(logger, 'cleanUpListeners');
       logger.setupListeners([]);
       expect(logger.cleanUpListeners).to.have.property('callCount', 1);
     });
 
-    it('listens to just error when log is explicitly error', function () {
+    it('listens to just error when log is explicitly error', function() {
       makeLogger(parent, 'error');
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(0);
@@ -44,7 +44,7 @@ module.exports = function (makeLogger) {
       expect(parent.listenerCount('trace')).to.eql(0);
     });
 
-    it('listens for all the events when level is "trace"', function () {
+    it('listens for all the events when level is "trace"', function() {
       makeLogger(parent, 'trace');
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(1);
@@ -53,7 +53,7 @@ module.exports = function (makeLogger) {
       expect(parent.listenerCount('trace')).to.eql(1);
     });
 
-    it('listens for specific events when level is an array', function () {
+    it('listens for specific events when level is an array', function() {
       makeLogger(parent, ['error', 'trace']);
       expect(parent.listenerCount('error')).to.eql(1);
       expect(parent.listenerCount('warning')).to.eql(0);
@@ -62,29 +62,35 @@ module.exports = function (makeLogger) {
       expect(parent.listenerCount('trace')).to.eql(1);
     });
 
-    it('sets the logLevel property to the new levels', function () {
+    it('sets the logLevel property to the new levels', function() {
       var logger = makeLogger();
       var levels = ['error'];
       logger.setupListeners(levels);
-      expect(logger.listeningLevels).to.eql(levels).and.not.be(levels);
+      expect(logger.listeningLevels)
+        .to.eql(levels)
+        .and.not.be(levels);
 
       levels = ['warning', 'trace'];
       logger.setupListeners(levels);
-      expect(logger.listeningLevels).to.eql(levels).and.not.be(levels);
+      expect(logger.listeningLevels)
+        .to.eql(levels)
+        .and.not.be(levels);
 
       levels = ['debug', 'debug'];
       logger.setupListeners(levels);
-      expect(logger.listeningLevels).to.eql(levels).and.not.be(levels);
+      expect(logger.listeningLevels)
+        .to.eql(levels)
+        .and.not.be(levels);
     });
 
-    it('rejects listening levels it can not listen to', function () {
+    it('rejects listening levels it can not listen to', function() {
       var logger = makeLogger();
-      expect(function () {
+      expect(function() {
         logger.setupListeners(['scream']);
       }).to.throwError(/unable to listen/i);
     });
 
-    it('emits events because something is listening', function () {
+    it('emits events because something is listening', function() {
       makeLogger(parent, 'trace');
       stub(parent, 'emit');
 
@@ -105,42 +111,40 @@ module.exports = function (makeLogger) {
     });
   });
 
-  describe('#timestamp', function () {
-    it('returns in the right format', function () {
+  describe('#timestamp', function() {
+    it('returns in the right format', function() {
       stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       expect(logger.timestamp()).to.eql('2013-03-01T00:00:00Z');
     });
   });
 
-  describe('#format', function () {
-    it('returns a single string with the message indented', function () {
+  describe('#format', function() {
+    it('returns a single string with the message indented', function() {
       stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       expect(logger.format('LABEL', 'MSG')).to.eql(
-        'LABEL: 2013-03-01T00:00:00Z\n' +
-        '  MSG\n' +
-        '\n'
+        'LABEL: 2013-03-01T00:00:00Z\n' + '  MSG\n' + '\n'
       );
     });
 
-    it('properly indents multi-line messages', function () {
+    it('properly indents multi-line messages', function() {
       stub.autoRelease(sinon.useFakeTimers(now.getTime()));
       var logger = makeLogger();
       expect(logger.format('LABEL', 'MSG\nwith\nseveral lines')).to.eql(
         'LABEL: 2013-03-01T00:00:00Z\n' +
-        '  MSG\n' +
-        '  with\n' +
-        '  several lines\n' +
-        '\n'
+          '  MSG\n' +
+          '  with\n' +
+          '  several lines\n' +
+          '\n'
       );
     });
   });
 
-  describe('#onError', function () {
-    it('uses the Error name when it is not just "Error"', function () {
+  describe('#onError', function() {
+    it('uses the Error name when it is not just "Error"', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('TypeError');
       });
 
@@ -148,9 +152,9 @@ module.exports = function (makeLogger) {
       expect(logger.write.callCount).to.eql(1);
     });
 
-    it('uses "ERROR" when the error name is "Error"', function () {
+    it('uses "ERROR" when the error name is "Error"', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('ERROR');
       });
 
@@ -159,19 +163,19 @@ module.exports = function (makeLogger) {
     });
   });
 
-  describe('#onWarning', function () {
-    it('uses the "WARNING" label', function () {
+  describe('#onWarning', function() {
+    it('uses the "WARNING" label', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('WARNING');
       });
       logger.onWarning('message');
       expect(logger.write.callCount).to.eql(1);
     });
 
-    it('echos the message', function () {
+    it('echos the message', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function(label, msg) {
         expect(msg).to.eql('message');
       });
 
@@ -180,19 +184,19 @@ module.exports = function (makeLogger) {
     });
   });
 
-  describe('#onInfo', function () {
-    it('uses the "INFO" label', function () {
+  describe('#onInfo', function() {
+    it('uses the "INFO" label', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('INFO');
       });
       logger.onInfo('message');
       expect(logger.write.callCount).to.eql(1);
     });
 
-    it('echos the message', function () {
+    it('echos the message', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function(label, msg) {
         expect(msg).to.eql('message');
       });
 
@@ -201,19 +205,19 @@ module.exports = function (makeLogger) {
     });
   });
 
-  describe('#onDebug', function () {
-    it('uses the "DEBUG" label', function () {
+  describe('#onDebug', function() {
+    it('uses the "DEBUG" label', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('DEBUG');
       });
       logger.onDebug('message');
       expect(logger.write.callCount).to.eql(1);
     });
 
-    it('echos the message', function () {
+    it('echos the message', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label, msg) {
+      stub(logger, 'write', function(label, msg) {
         expect(msg).to.eql('message');
       });
 
@@ -222,13 +226,21 @@ module.exports = function (makeLogger) {
     });
   });
 
-  describe('#onTrace', function () {
-    it('uses the "TRACE" label', function () {
+  describe('#onTrace', function() {
+    it('uses the "TRACE" label', function() {
       var logger = makeLogger();
-      stub(logger, 'write', function (label) {
+      stub(logger, 'write', function(label) {
         expect(label).to.eql('TRACE');
       });
-      logger.onTrace(Log.normalizeTraceArgs('GET', 'http://place/thing?me=true', '{}', '{"ok": true}', 200));
+      logger.onTrace(
+        Log.normalizeTraceArgs(
+          'GET',
+          'http://place/thing?me=true',
+          '{}',
+          '{"ok": true}',
+          200
+        )
+      );
       expect(logger.write.callCount).to.eql(1);
     });
   });

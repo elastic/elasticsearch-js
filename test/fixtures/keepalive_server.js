@@ -5,15 +5,15 @@
 // timeouts aren't being left behind
 
 var express = require('express');
-var app = express().post('/_search', function (req, res) {
+var app = express().post('/_search', function(req, res) {
   res.json(200, { hits: { hits: [] } });
 });
 
 var server = require('http').createServer(app);
-server.listen(function () {
+server.listen(function() {
   var port = server.address().port;
   if (process.connected) {
-    process.send(port)
+    process.send(port);
   } else {
     console.log(port);
   }

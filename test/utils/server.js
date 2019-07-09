@@ -20,20 +20,21 @@ testFiles.unit = _(fs.readdirSync(unitSpecDir))
     'console_logger.js',
     'stream_logger.js',
     'tracer_logger.js',
-    'transport_with_server.js'
+    'transport_with_server.js',
   ])
-  .map(function (file) {
+  .map(function(file) {
     return unitSpecDir + '/' + file;
   })
   .value();
 
-testFiles.build = fs.readdirSync(browserBuildsDir)
-  .map(function (file) {
+testFiles.build = fs
+  .readdirSync(browserBuildsDir)
+  .map(function(file) {
     if (file.substr(-3) === '.js') {
       return browserBuildsDir + '/' + file;
     }
 
-    return null
+    return null;
   })
   .filter(Boolean);
 
@@ -42,27 +43,29 @@ var aliasify = require('aliasify').configure({
   aliases: pkg.browser,
   excludeExtensions: 'json',
   // verbose: false,
-  configDir: root
+  configDir: root,
 });
 
 // queue for bundle requests, two at a time
-var bundleQueue = async.queue(function (task, done) {
+var bundleQueue = async.queue(function(task, done) {
   task(done);
 }, 2);
 
 // create a route that bundles a file list, based on the patterns defined in testFiles
 function bundleTests(name) {
-  return function (req, res, next) {
-    bundleQueue.push(function (_cb) {
-      var done = function (err) {
-        if (err) { return next(err); }
+  return function(req, res, next) {
+    bundleQueue.push(function(_cb) {
+      var done = function(err) {
+        if (err) {
+          return next(err);
+        }
         _cb(err);
       };
 
       res.set('Content-Type', 'application/javascript');
 
       var b = browserify(testFiles[name], {
-        insertGlobals: true
+        insertGlobals: true,
       });
       b.transform(aliasify);
       var str = b.bundle();
@@ -76,7 +79,7 @@ function bundleTests(name) {
 
 // create a route that just rends a specific file (like a symlink or something)
 function sendFile(file) {
-  return function (req, res) {
+  return function(req, res) {
     res.sendfile(file);
   };
 }
@@ -93,25 +96,42 @@ app
   .get('/expect.js', sendFile(root + '/node_modules/expect.js/index.js'))
   .get('/mocha.css', sendFile(root + '/node_modules/mocha/mocha.css'))
   .get('/mocha.js', sendFile(root + '/node_modules/mocha/mocha.js'))
-  .get('/screencast-reporter.css', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.css'))
-  .get('/screencast-reporter.js', sendFile(root + '/node_modules/mocha-screencast-reporter/screencast-reporter.js'))
+  .get(
+    '/screencast-reporter.css',
+    sendFile(
+      root + '/node_modules/mocha-screencast-reporter/screencast-reporter.css'
+    )
+  )
+  .get(
+    '/screencast-reporter.js',
+    sendFile(
+      root + '/node_modules/mocha-screencast-reporter/screencast-reporter.js'
+    )
+  )
 
   // libs
   .get('/angular.js', sendFile(root + '/bower_components/angular/angular.js'))
-  .get('/angular-mocks.js', sendFile(root + '/bower_components/angular-mocks/angular-mocks.js'))
+  .get(
+    '/angular-mocks.js',
+    sendFile(root + '/bower_components/angular-mocks/angular-mocks.js')
+  )
   .get('/jquery.js', sendFile(root + '/node_modules/jquery/dist/jquery.js'))
 
   // builds
   .get('/elasticsearch.js', sendFile(root + '/dist/elasticsearch.js'))
-  .get('/elasticsearch.angular.js', sendFile(root + '/dist/elasticsearch.angular.js'))
-  .get('/elasticsearch.jquery.js', sendFile(root + '/dist/elasticsearch.jquery.js'))
+  .get(
+    '/elasticsearch.angular.js',
+    sendFile(root + '/dist/elasticsearch.angular.js')
+  )
+  .get(
+    '/elasticsearch.jquery.js',
+    sendFile(root + '/dist/elasticsearch.jquery.js')
+  )
 
   // bundles
   .get('/unit_tests.js', bundleTests('unit'))
-  .get('/build_tests.js', bundleTests('build'))
+  .get('/build_tests.js', bundleTests('build'));
 
-  ;
-
-http.createServer(app).listen(8000, function () {
+http.createServer(app).listen(8000, function() {
   console.log('listening on port 8000');
 });

@@ -1,4 +1,3 @@
-
 var _ = require('lodash');
 var utils = require('./utils');
 
@@ -23,8 +22,8 @@ exports.proxyFactory = exports.factory.proxy;
 // export so that we can test this
 exports._resolveUrl = resolveUrl;
 
-exports.ApiNamespace = function () {};
-exports.namespaceFactory = function () {
+exports.ApiNamespace = function() {};
+exports.namespaceFactory = function() {
   function ClientNamespace(transport, client) {
     this.transport = transport;
     this.client = client;
@@ -38,7 +37,7 @@ exports.namespaceFactory = function () {
 function makeFactoryWithModifier(modifier) {
   modifier = modifier || _.identity;
 
-  var factory = function (spec) {
+  var factory = function(spec) {
     spec = modifier(spec);
 
     if (!_.isPlainObject(spec.params)) {
@@ -76,8 +75,8 @@ function makeFactoryWithModifier(modifier) {
     return action;
   };
 
-  factory.proxy = function (fn, spec) {
-    return function (params, cb) {
+  factory.proxy = function(fn, spec) {
+    return function(params, cb) {
       if (typeof params === 'function') {
         cb = params;
         params = {};
@@ -98,15 +97,17 @@ function makeFactoryWithModifier(modifier) {
 }
 
 var castType = {
-  'enum': function validSelection(param, val, name) {
+  enum: function validSelection(param, val, name) {
     if (_.isString(val) && val.indexOf(',') > -1) {
       val = commaSepList(val);
     }
 
     if (_.isArray(val)) {
-      return val.map(function (v) {
-        return validSelection(param, v, name);
-      }).join(',');
+      return val
+        .map(function(v) {
+          return validSelection(param, v, name);
+        })
+        .join(',');
     }
 
     for (var i = 0; i < param.options.length; i++) {
@@ -114,23 +115,28 @@ var castType = {
         return param.options[i];
       }
     }
-    throw new TypeError('Invalid ' + name + ': expected ' + (
-      param.options.length > 1
-      ? 'one of ' + param.options.join(',')
-      : param.options[0]
-    ));
+    throw new TypeError(
+      'Invalid ' +
+        name +
+        ': expected ' +
+        (param.options.length > 1
+          ? 'one of ' + param.options.join(',')
+          : param.options[0])
+    );
   },
-  duration: function (param, val, name) {
+  duration: function(param, val, name) {
     if (utils.isNumeric(val) || utils.isInterval(val)) {
       return val;
     } else {
       throw new TypeError(
-        'Invalid ' + name + ': expected a number or interval ' +
-        '(an integer followed by one of M, w, d, h, m, s, y or ms).'
+        'Invalid ' +
+          name +
+          ': expected a number or interval ' +
+          '(an integer followed by one of M, w, d, h, m, s, y or ms).'
       );
     }
   },
-  list: function (param, val, name) {
+  list: function(param, val, name) {
     switch (typeof val) {
       case 'number':
       case 'boolean':
@@ -144,21 +150,25 @@ var castType = {
         }
       /* falls through */
       default:
-        throw new TypeError('Invalid ' + name + ': expected be a comma separated list, array, number or string.');
+        throw new TypeError(
+          'Invalid ' +
+            name +
+            ': expected be a comma separated list, array, number or string.'
+        );
     }
   },
-  'boolean': function (param, val) {
+  boolean: function(param, val) {
     val = _.isString(val) ? val.toLowerCase() : val;
-    return (val === 'no' || val === 'off') ? false : !!val;
+    return val === 'no' || val === 'off' ? false : !!val;
   },
-  number: function (param, val, name) {
+  number: function(param, val, name) {
     if (utils.isNumeric(val)) {
       return val * 1;
     } else {
       throw new TypeError('Invalid ' + name + ': expected a number.');
     }
   },
-  string: function (param, val, name) {
+  string: function(param, val, name) {
     switch (typeof val) {
       case 'number':
       case 'string':
@@ -167,24 +177,23 @@ var castType = {
         throw new TypeError('Invalid ' + name + ': expected a string.');
     }
   },
-  time: function (param, val, name) {
+  time: function(param, val, name) {
     if (typeof val === 'string') {
       return val;
-    }
-    else if (utils.isNumeric(val)) {
+    } else if (utils.isNumeric(val)) {
       return '' + val;
-    }
-    else if (val instanceof Date) {
+    } else if (val instanceof Date) {
       return '' + val.getTime();
-    }
-    else {
+    } else {
       throw new TypeError('Invalid ' + name + ': expected some sort of time.');
     }
-  }
+  },
 };
 
 function resolveUrl(url, params) {
-  var vars = {}, i, key;
+  var vars = {};
+  var i;
+  var key;
 
   if (url.req) {
     // url has required params
@@ -193,7 +202,7 @@ function resolveUrl(url, params) {
       url.reqParamKeys = _.keys(url.req);
     }
 
-    for (i = 0; i < url.reqParamKeys.length; i ++) {
+    for (i = 0; i < url.reqParamKeys.length; i++) {
       key = url.reqParamKeys[i];
       if (!params.hasOwnProperty(key) || params[key] == null) {
         // missing a required param
@@ -201,7 +210,11 @@ function resolveUrl(url, params) {
       } else {
         // cast of copy required param
         if (castType[url.req[key].type]) {
-          vars[key] = castType[url.req[key].type](url.req[key], params[key], key);
+          vars[key] = castType[url.req[key].type](
+            url.req[key],
+            params[key],
+            key
+          );
         } else {
           vars[key] = params[key];
         }
@@ -215,11 +228,15 @@ function resolveUrl(url, params) {
       url.optParamKeys = _.keys(url.opt);
     }
 
-    for (i = 0; i < url.optParamKeys.length; i ++) {
+    for (i = 0; i < url.optParamKeys.length; i++) {
       key = url.optParamKeys[i];
       if (params[key]) {
         if (castType[url.opt[key].type] || params[key] == null) {
-          vars[key] = castType[url.opt[key].type](url.opt[key], params[key], key);
+          vars[key] = castType[url.opt[key].type](
+            url.opt[key],
+            params[key],
+            key
+          );
         } else {
           vars[key] = params[key];
         }
@@ -234,18 +251,23 @@ function resolveUrl(url, params) {
     url.template = _.template(url.fmt);
   }
 
-  return url.template(_.transform(vars, function (note, val, name) {
-    // encode each value
-    note[name] = encodeURIComponent(val);
-    // remove it from the params so that it isn't sent to the final request
-    delete params[name];
-  }, {}));
+  return url.template(
+    _.transform(
+      vars,
+      function(note, val, name) {
+        // encode each value
+        note[name] = encodeURIComponent(val);
+        // remove it from the params so that it isn't sent to the final request
+        delete params[name];
+      },
+      {}
+    )
+  );
 }
-
 
 function exec(transport, spec, params, cb) {
   var request = {
-    method: spec.method
+    method: spec.method,
   };
   var query = {};
   var i;
@@ -259,7 +281,9 @@ function exec(transport, spec, params, cb) {
     if (typeof spec.paramAsBody === 'object') {
       params.body = {};
       if (spec.paramAsBody.castToArray) {
-        params.body[spec.paramAsBody.body] = [].concat(params[spec.paramAsBody.param]);
+        params.body[spec.paramAsBody.body] = [].concat(
+          params[spec.paramAsBody.param]
+        );
       } else {
         params.body[spec.paramAsBody.body] = params[spec.paramAsBody.param];
       }
@@ -290,7 +314,8 @@ function exec(transport, spec, params, cb) {
     request.path = resolveUrl(spec.url, params);
   } else {
     for (i = 0; i < spec.urls.length; i++) {
-      if (request.path = resolveUrl(spec.urls[i], params)) {
+      request.path = resolveUrl(spec.urls[i], params);
+      if (request.path) {
         break;
       }
     }
@@ -299,18 +324,25 @@ function exec(transport, spec, params, cb) {
   if (!request.path) {
     // there must have been some mimimun requirements that were not met
     var minUrl = spec.url || spec.urls[spec.urls.length - 1];
-    throw new TypeError('Unable to build a path with those params. Supply at least ' + _.keys(minUrl.req).join(', '));
+    throw new TypeError(
+      'Unable to build a path with those params. Supply at least ' +
+        _.keys(minUrl.req).join(', ')
+    );
   }
 
   // build the query string
   if (!spec.paramKeys) {
     // build a key list on demand
     spec.paramKeys = _.keys(spec.params);
-    spec.requireParamKeys = _.transform(spec.params, function (req, param, key) {
-      if (param.required) {
-        req.push(key);
-      }
-    }, []);
+    spec.requireParamKeys = _.transform(
+      spec.params,
+      function(req, param, key) {
+        if (param.required) {
+          req.push(key);
+        }
+      },
+      []
+    );
   }
 
   for (var key in params) {
@@ -331,16 +363,23 @@ function exec(transport, spec, params, cb) {
         default:
           var paramSpec = spec.params[key];
           if (paramSpec) {
-          // param keys don't always match the param name, in those cases it's stored in the param def as "name"
+            // param keys don't always match the param name, in those cases it's stored in the param def as "name"
             paramSpec.name = paramSpec.name || key;
             if (params[key] != null) {
               if (castType[paramSpec.type]) {
-                query[paramSpec.name] = castType[paramSpec.type](paramSpec, params[key], key);
+                query[paramSpec.name] = castType[paramSpec.type](
+                  paramSpec,
+                  params[key],
+                  key
+                );
               } else {
                 query[paramSpec.name] = params[key];
               }
 
-              if (paramSpec['default'] && query[paramSpec.name] === paramSpec['default']) {
+              if (
+                paramSpec['default'] &&
+                query[paramSpec.name] === paramSpec['default']
+              ) {
                 delete query[paramSpec.name];
               }
             }
@@ -351,9 +390,11 @@ function exec(transport, spec, params, cb) {
     }
   }
 
-  for (i = 0; i < spec.requireParamKeys.length; i ++) {
+  for (i = 0; i < spec.requireParamKeys.length; i++) {
     if (!query.hasOwnProperty(spec.requireParamKeys[i])) {
-      throw new TypeError('Missing required parameter ' + spec.requireParamKeys[i]);
+      throw new TypeError(
+        'Missing required parameter ' + spec.requireParamKeys[i]
+      );
     }
   }
 
@@ -363,7 +404,7 @@ function exec(transport, spec, params, cb) {
 }
 
 function commaSepList(str) {
-  return str.split(',').map(function (i) {
+  return str.split(',').map(function(i) {
     return i.trim();
   });
 }

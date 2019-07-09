@@ -19,40 +19,42 @@ var hostDefaults = {
     ca: null,
     ciphers: null,
     rejectUnauthorized: false,
-    secureProtocol: null
-  }
+    secureProtocol: null,
+  },
 };
 
-var base64 = function (str) {
-  var buffer = Buffer.from ? Buffer.from(str, 'utf8') : new Buffer(str, 'utf8')
-  return buffer.toString('base64')
-}
+var base64 = function(str) {
+  var buffer = Buffer.from ? Buffer.from(str, 'utf8') : new Buffer(str, 'utf8');
+  return buffer.toString('base64');
+};
 
-describe('Host class', function () {
-  describe('construction', function () {
-    it('properly sets the defaults', function () {
+describe('Host class', function() {
+  describe('construction', function() {
+    it('properly sets the defaults', function() {
       var host = new Host();
       expect(host).to.eql(hostDefaults);
     });
 
-    it('accepts a string for query', function () {
+    it('accepts a string for query', function() {
       var host = new Host({ query: 'beep=boop' });
 
       expect(host.query).to.eql({
-        beep: 'boop'
+        beep: 'boop',
       });
     });
 
-    it('accepts other generic params', function () {
+    it('accepts other generic params', function() {
       var headers = { 'X-Special-Routing-Header': 'pie' };
       var host = new Host({ headers: headers });
 
       expect(host.headers).to.eql(headers);
     });
 
-    describe('from a string', function () {
-      it('accepts a string for the entire url', function () {
-        var host = new Host('john:dude@pizza.com:420/pizza/cheese?shrooms=true');
+    describe('from a string', function() {
+      it('accepts a string for the entire url', function() {
+        var host = new Host(
+          'john:dude@pizza.com:420/pizza/cheese?shrooms=true'
+        );
 
         expectSubObject(host, {
           protocol: 'http',
@@ -60,12 +62,12 @@ describe('Host class', function () {
           port: 420,
           path: '/pizza/cheese',
           query: {
-            shrooms: 'true'
-          }
+            shrooms: 'true',
+          },
         });
       });
 
-      it('uses the default port based on the protocol', function () {
+      it('uses the default port based on the protocol', function() {
         var host;
 
         host = new Host('https://google.com');
@@ -80,7 +82,7 @@ describe('Host class', function () {
         delete Host.defaultPorts.trift;
       });
 
-      it('parses simple urls properly', function () {
+      it('parses simple urls properly', function() {
         var host;
 
         host = new Host('localhost');
@@ -105,8 +107,8 @@ describe('Host class', function () {
       });
     });
 
-    describe('based on the output from url.parse', function () {
-      it('might cause weird things to happen', function () {
+    describe('based on the output from url.parse', function() {
+      it('might cause weird things to happen', function() {
         var parsedUrl = url.parse('pizza.com:888');
 
         // I imagine most people don't expect
@@ -118,69 +120,80 @@ describe('Host class', function () {
         expect(host.host).to.eql('888');
       });
 
-      it('will cause extra properties', function () {
-        var host = new Host(url.parse('https://joe:diner@pizza.com:888/path?query=yes#section'));
+      it('will cause extra properties', function() {
+        var host = new Host(
+          url.parse('https://joe:diner@pizza.com:888/path?query=yes#section')
+        );
         expect(host.protocol).to.eql('https');
         expect(host.host).to.eql('pizza.com');
         expect(host.port).to.eql(888);
         expect(host.path).to.eql('/path');
-        expect(host.headers).to.eql({ Authorization: 'Basic ' + base64('joe:diner') });
+        expect(host.headers).to.eql({
+          Authorization: 'Basic ' + base64('joe:diner'),
+        });
         expect(host.query).to.eql({
-          query: 'yes'
+          query: 'yes',
         });
 
         expect(host).to.include.keys('slashes', 'hash', 'href', 'search');
       });
     });
 
-    it('ignores anything that\'s not a string or object-y', function () {
+    it("ignores anything that's not a string or object-y", function() {
       var host = new Host(1234);
 
       expect(host).to.eql(hostDefaults);
     });
 
-    it('defaults auth values from the `httpAuth` setting', function () {
+    it('defaults auth values from the `httpAuth` setting', function() {
       var host = new Host('http://localhost:9200', {
-        httpAuth: 'username:password'
+        httpAuth: 'username:password',
       });
 
-      expect(host.headers).to.have.property('Authorization', 'Basic ' + base64('username:password'));
+      expect(host.headers).to.have.property(
+        'Authorization',
+        'Basic ' + base64('username:password')
+      );
     });
   });
 
-  describe('#makeUrl', function () {
-    it('merges parameters', function () {
+  describe('#makeUrl', function() {
+    it('merges parameters', function() {
       var host = new Host({
         path: '/prefix',
         query: {
-          user_id: 123
-        }
+          user_id: 123,
+        },
       });
 
-      expect(host.makeUrl({
-        path: '/this and that',
-        query: {
-          param: 1
-        }
-      })).to.be('http://localhost:9200/prefix/this and that?user_id=123&param=1');
+      expect(
+        host.makeUrl({
+          path: '/this and that',
+          query: {
+            param: 1,
+          },
+        })
+      ).to.be('http://localhost:9200/prefix/this and that?user_id=123&param=1');
     });
 
-    it('ensures that path starts with a forward-slash', function () {
+    it('ensures that path starts with a forward-slash', function() {
       var host = new Host();
       host.path = 'prefix';
 
-      expect(host.makeUrl({ path: '/this and that' }))
-        .to.be('http://localhost:9200/prefix/this and that');
+      expect(host.makeUrl({ path: '/this and that' })).to.be(
+        'http://localhost:9200/prefix/this and that'
+      );
     });
 
-    it('does not try to prevent double forward-slashes', function () {
+    it('does not try to prevent double forward-slashes', function() {
       var host = new Host({ path: 'prefix/' });
 
-      expect(host.makeUrl({ path: '/this and that' }))
-        .to.be('http://localhost:9200/prefix//this and that');
+      expect(host.makeUrl({ path: '/this and that' })).to.be(
+        'http://localhost:9200/prefix//this and that'
+      );
     });
 
-    it('creates proper url without any params', function () {
+    it('creates proper url without any params', function() {
       var host = new Host({});
       expect(host.makeUrl()).to.be('http://localhost:9200/');
 
@@ -191,58 +204,61 @@ describe('Host class', function () {
       expect(host.makeUrl()).to.be('http://italy:9200/pie');
     });
 
-    it('outputs valid relative urls when the host is empty', function () {
+    it('outputs valid relative urls when the host is empty', function() {
       var host = new Host({
         host: false,
         path: '/path',
-        query: { this: 'that' }
+        query: { this: 'that' },
       });
 
       expect(host + '').to.be('/path?this=that');
     });
   });
 
-  describe('#toString', function () {
-    it('produces the same output as makeUrl when it is called without params', function () {
+  describe('#toString', function() {
+    it('produces the same output as makeUrl when it is called without params', function() {
       var host = new Host({
         path: '/pasta',
-        host: 'google.com'
+        host: 'google.com',
       });
 
       expect(host.toString()).to.eql(host.makeUrl());
     });
   });
 
-  describe('#getHeaders', function () {
-    it('merges the passed in headers with the default headers', function () {
+  describe('#getHeaders', function() {
+    it('merges the passed in headers with the default headers', function() {
       var host = new Host({ headers: { 'Joe-Smith': 'present' } });
 
-      expect(host.getHeaders({
-        'John-Smith': 'present'
-      })).to.eql({
+      expect(
+        host.getHeaders({
+          'John-Smith': 'present',
+        })
+      ).to.eql({
         'John-Smith': 'present',
-        'Joe-Smith': 'present'
+        'Joe-Smith': 'present',
       });
     });
 
-    it('overrides the default headers with the passed in headers', function () {
+    it('overrides the default headers with the passed in headers', function() {
       var host = new Host({ headers: { 'Joe-Smith': 'present' } });
 
-      expect(host.getHeaders({
+      expect(
+        host.getHeaders({
+          'John-Smith': 'present',
+          'Joe-Smith': 'absent',
+        })
+      ).to.eql({
         'John-Smith': 'present',
-        'Joe-Smith': 'absent'
-      })).to.eql({
-        'John-Smith': 'present',
-        'Joe-Smith': 'absent'
+        'Joe-Smith': 'absent',
       });
     });
 
-    it('adds Accept-Encoding header when the suggestCompression setting is true', function () {
+    it('adds Accept-Encoding header when the suggestCompression setting is true', function() {
       var host = new Host({ suggestCompression: true });
       expect(host.getHeaders()).to.eql({
-        'Accept-Encoding': 'gzip,deflate'
+        'Accept-Encoding': 'gzip,deflate',
       });
     });
   });
-
 });
