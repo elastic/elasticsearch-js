@@ -84,16 +84,8 @@ class TestRunner {
     }
 
     try {
-      const { body: repositories } = await this.client.snapshot.getRepository()
-      for (const repository of Object.keys(repositories)) {
-        const { body: snapshots } = await this.client.snapshot.get({ repository, snapshot: '_all' })
-        await helper.runInParallel(
-          this.client, 'snapshot.delete',
-          Object.keys(snapshots).map(snapshot => ({ snapshot, repository })),
-          { ignore: [404] }
-        )
-        await this.client.snapshot.deleteRepository({ repository }, { ignore: [404] })
-      }
+      await this.client.snapshot.delete({ repository: '*', snapshot: '*' }, { ignore: 404 })
+      await this.client.snapshot.deleteRepository({ repository: '*' }, { ignore: 404 })
     } catch (err) {
       this.tap.error(err, 'should not error: snapshot.delete / snapshot.deleteRepository')
     }
