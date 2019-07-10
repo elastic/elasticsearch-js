@@ -88,8 +88,7 @@
     "split": "~0.3.2",
     "through2": "~0.6.3",
     "through2-map": "~1.4.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack": "^3.10.0"
   },
   "license": "Apache-2.0",
   "dependencies": {
