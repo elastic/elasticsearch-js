@@ -7,6 +7,8 @@ var unstable = pkg.config.unstable_es_branches;
 var branches = [].concat(stable, unstable);
 
 var gruntUtils = {
+  REPO_ROOT: root,
+
   branchSuffix: function(branch) {
     return branch === gruntUtils.branches._default
       ? ''

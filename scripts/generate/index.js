@@ -12,10 +12,6 @@ var argv = require('optimist').options({
     default: true,
     boolean: true,
   },
-  tests: {
-    default: true,
-    boolean: true,
-  },
   update: {
     default: true,
     boolean: true,
@@ -262,10 +258,7 @@ function createArchive(branch) {
 function generateStep(branch) {
   return function(done) {
     async.parallel(
-      [
-        argv.api && async.apply(require('./js_api'), branch),
-        argv.tests && async.apply(require('./yaml_tests'), branch),
-      ].filter(Boolean),
+      [argv.api && async.apply(require('./js_api'), branch)].filter(Boolean),
       done
     );
   };

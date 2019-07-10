@@ -4,35 +4,7 @@ module.exports = function(grunt) {
   var readFile = Promise.promisify(require('fs').readFile);
   var writeFile = Promise.promisify(require('fs').writeFile);
 
-  // Default task runs the build process.
-  grunt.registerTask('default', ['test']);
-
-  grunt.registerTask('test', function(branch) {
-    var tasks = [
-      branch ? 'run:generate_' + branch : 'run:generate',
-      'mochacov:unit',
-    ];
-
-    var branches = branch ? [branch] : gruntUtils.branches;
-
-    process.env.ES_PORT = process.env.ES_PORT || 9400;
-    process.env.ES_HOST = process.env.ES_HOST || 'localhost';
-    branches.forEach(function(branch) {
-      tasks.push(
-        'esvm:' + branch,
-        'mocha_integration:' + branch,
-        'esvm_shutdown:' + branch
-      );
-    });
-
-    grunt.task.run(tasks);
-  });
-
-  grunt.registerTask('unit_test', 'mochacov:unit');
-  grunt.registerTask('coverage', [
-    'mochacov:make_coverage_html',
-    'open:coverage',
-  ]);
+  grunt.registerTask('test', ['run:mocha']);
 
   grunt.registerTask('version', function(nextVersion) {
     var root = require('path').join.bind(null, __dirname, '..');

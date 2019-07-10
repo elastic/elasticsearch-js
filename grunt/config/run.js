@@ -1,18 +1,10 @@
-var gruntUtils = require('../utils');
+const { REPO_ROOT, branches } = require('../utils');
 
-var config = {
+module.exports = {
   generate: {
     exec: 'node ./scripts/generate/index.js',
     options: {
       passArgs: ['verbose'],
-    },
-  },
-  browser_test_server: {
-    exec: 'node ./test/utils/server',
-    options: {
-      wait: false,
-      quiet: false,
-      ready: /listening/,
     },
   },
   clone_bower_repo: {
@@ -24,6 +16,7 @@ var config = {
       quiet: true,
     },
   },
+
   checkout_bower_repo_master: {
     exec: 'git checkout master',
     options: {
@@ -31,6 +24,7 @@ var config = {
       quiet: true,
     },
   },
+
   checkout_bower_repo_prerelease: {
     exec: 'git checkout prerelease',
     options: {
@@ -38,6 +32,7 @@ var config = {
       quiet: true,
     },
   },
+
   push_prerelease_branch: {
     exec:
       'git add -A && git commit -m "prerelease build" && git push origin prerelease',
@@ -46,15 +41,20 @@ var config = {
       quite: true,
     },
   },
+
   release_bower_tag: {
     exec: 'node ./scripts/release/bower',
   },
+
+  mocha: {
+    cmd: process.execPath,
+    args: ['scripts/mocha'],
+    cwd: REPO_ROOT,
+  },
 };
 
-gruntUtils.branches.forEach(function(branch) {
-  config['generate_' + branch] = {
+branches.forEach(function(branch) {
+  module.exports['generate_' + branch] = {
     exec: 'node ./scripts/generate/index.js --branch=' + branch,
   };
 });
-
-module.exports = config;

@@ -12,44 +12,17 @@ Please write test cases to exercise your changes.
 
 ### 3. When you are ready, run the test suite
 
-1. Install dev dependencies.
+1. Install dependencies.
 
   ```sh
-  npm install
+  yarn
   ```
 
-2. Install Grunt.
+2. Run the unit tests.
 
   ```sh
-  npm install -g grunt-cli
+  yarn grunt test
   ```
-
-3. Run the tests. Testing the code will lint the project, run the unit tests, install local versions of elasticsearch, and run the integration tests using those installations.
-
-  ```sh
-  grunt test
-  ```
-
-  Or to skip the integration tests:
-
-  ```sh
-  grunt unit_test
-  ```
-4. Optionally, run the browser tests. While this step is automated and simple, it can take several minutes for the tests to complete. Unless you are making changes to browser specific portions of the code you can probably let Travis run the browser tests for you.
-
-  Quick Option: Run them locally in your browser
-  ```sh
-  grunt browser_clients:build
-  node ./test/utils/server
-  # open http://127.0.0.1:8000/unit.html
-  # open http://127.0.0.1:8000/builds.html
-  ```
-
-  Run them on Sauce Labs across several browsers, operating systems, and browser versions
-  ```sh
-  grunt browser_clients:test
-  ```
-
 
 ### 4. Submit a pull request
 

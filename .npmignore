@@ -3,14 +3,11 @@ bower_components
 npm-debug.log
 node_modules
 scripts/scratch*
-test/integration/yaml_suite/log
 .aws-config.json
 .idea
 esvm
 
 ## generated files
-test/integration/yaml_suite/yaml_tests*.json
-test/integration/yaml_suite/index*.js
 src/_elasticsearch*/
 src/bower*/
 junit-*.xml

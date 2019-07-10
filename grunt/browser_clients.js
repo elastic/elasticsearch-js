@@ -1,14 +1,11 @@
+const Fs = require('fs');
+const { resolve } = require('path');
+const readline = require('readline');
+
+const chalk = require('chalk');
+const AWS = require('aws-sdk');
+
 module.exports = function(grunt) {
-  grunt.registerTask('browser_clients:dev', [
-    'run:browser_test_server:keepalive',
-  ]);
-
-  grunt.registerTask('browser_clients:test', [
-    'browser_clients:build',
-    'run:browser_test_server',
-    'saucelabs-mocha:all',
-  ]);
-
   grunt.registerTask('browser_clients:build', function() {
     // prevent this from running more than once accidentally
     grunt.task.renameTask('browser_clients:build', 'browser_clients:rebuild');
@@ -31,8 +28,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('browser_clients:release', [
-    'prompt:confirm_release',
-    '_check_for_confirmation',
+    'prompt_confirm_release',
     'browser_clients:build',
     '_upload_archive:release',
     'run:clone_bower_repo',
@@ -56,15 +52,68 @@ module.exports = function(grunt) {
       'copy:dist_to_named_dir',
       'compress:' + type + '_zip',
       'compress:' + type + '_tarball',
-      'aws_s3:upload_archives',
+      'upload_to_s3',
     ]);
   });
 
-  grunt.registerTask('_check_for_confirmation', function() {
-    if (grunt.config.get('confirm.release')) {
-      grunt.log.verbose.writeln('release confirmed');
-    } else {
-      throw new Error('Aborting release');
-    }
+  grunt.registerTask('prompt_confirm_release', function() {
+    const done = this.async();
+    const version = grunt.config.get('package.version');
+
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl.question(
+      `Are you sure you want to ${chalk.bold(
+        'overwrite/release'
+      )} version ${chalk.bold(version)} of elasticsearch-js [Yn]: `,
+      resp => {
+        const answer = resp.trim().toLowerCase();
+        const confirm = answer === '' || answer === 'y' || answer === 'yes';
+
+        if (!confirm) {
+          grunt.fatal(new Error('Aborting release'));
+        }
+
+        rl.close();
+        done();
+      }
+    );
+  });
+
+  grunt.registerTask('upload_to_s3', function() {
+    const done = this.async();
+
+    Promise.resolve()
+      .then(async () => {
+        const s3 = new AWS.S3({
+          accessKeyId: process.env.AWS_KEY,
+          secretAccessKey: process.env.AWS_SECRET,
+        });
+
+        const archivesDir = resolve(grunt.config.get('distDir'), 'archives');
+        const bucket = 'download.elasticsearch.org';
+
+        for (const name of Fs.readdirSync(archivesDir)) {
+          grunt.log.writeln(`Uploading ${name} to ${bucket}`);
+          await s3
+            .putObject({
+              ACL: 'public-read',
+              Body: Fs.createReadStream(resolve(archivesDir, name)),
+              Bucket: bucket,
+              Key: `elasticsearch/elasticsearch-js/${name}`,
+              ContentDisposition: 'attachment',
+            })
+            .promise();
+          grunt.log.ok(`${name} complete`);
+        }
+
+        done();
+      })
+      .catch(error => {
+        grunt.fatal(error);
+      });
   });
 };
