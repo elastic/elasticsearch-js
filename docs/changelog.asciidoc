@@ -1,6 +1,10 @@
 [[changelog]]
 == Changelog
 
+=== 16.2.0 (Jul 3 2019)
+  * apiVersion `"7.2"` is now the default
+  * Dropped support for old `6.7` version
+
 === 16.1.1 (Jun 4 2019)
   * Updated readme
 
