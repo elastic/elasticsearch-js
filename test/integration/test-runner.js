@@ -111,7 +111,7 @@ class TestRunner {
       const { body } = await this.client.xpack.security.getRole()
       const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
       await helper.runInParallel(
-        this.client, 'security.xpack.deleteRole',
+        this.client, 'xpack.security.deleteRole',
         roles.map(r => ({ name: r }))
       )
     } catch (err) {
@@ -239,12 +239,12 @@ class TestRunner {
       // Some xpack test requires this user
       this.tap.comment('Creating x-pack user')
       try {
-        await this.client.security.putUser({
+        await this.client.xpack.security.putUser({
           username: 'x_pack_rest_user',
           body: { password: 'x-pack-test-password', roles: ['superuser'] }
         })
       } catch (err) {
-        this.tap.error(err, 'should not error: security.putUser')
+        this.tap.error(err, 'should not error: xpack.security.putUser')
       }
     }
 
