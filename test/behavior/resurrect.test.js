@@ -98,10 +98,9 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
 
   var count = 0
   function handler (req, res) {
-    res.statusCode = count < 2 ? 502 : 200
+    res.statusCode = count++ < 2 ? 502 : 200
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
-    count++
   }
 
   buildCluster({ handler, numberOfNodes: 2 }, ({ nodes, shutdown }) => {
@@ -123,7 +122,7 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
       t.strictEqual(meta.connection.id, 'node0')
       t.strictEqual(meta.name, 'elasticsearch-js')
       t.deepEqual(meta.request, { id: idCount++ })
-      if (count < 3) {
+      if (count < 4) {
         t.false(meta.isAlive)
       } else {
         t.true(meta.isAlive)
