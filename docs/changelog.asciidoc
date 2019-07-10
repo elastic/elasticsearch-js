@@ -1,6 +1,10 @@
 [[changelog]]
 == Changelog
 
+=== 16.3.0 (Jul 10 2019)
+  * Removed many development dependencies
+  * Switched to standard + prettier linting config. Testing indicates that this doesn't have any effect on the external API but it produces thousands of changes so releasing as a minor version bump just to be safe.
+
 === 16.2.0 (Jul 3 2019)
   * apiVersion `"7.2"` is now the default
   * Dropped support for old `6.7` version

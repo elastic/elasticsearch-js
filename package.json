@@ -7,7 +7,7 @@
   "description": "The official low-level Elasticsearch client for Node.js and the browser.",
   "main": "src/elasticsearch.js",
   "homepage": "https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/16.x/index.html",
-  "version": "16.2.0",
+  "version": "16.3.0",
   "keywords": [
     "elasticsearch",
     "mapping",
