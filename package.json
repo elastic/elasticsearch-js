@@ -19,7 +19,8 @@
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
     "test:unit": "tap test/unit/*.test.js -t 300 --no-coverage",
     "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
-    "test:integration": "tap test/integration/index.js -T --harmony --no-esm --no-coverage",
+    "test:integration": "tap test/integration/index.js -T --no-coverage",
+    "test:integration:report": "npm run test:integration | tap-mocha-reporter xunit > $WORKSPACE/test-report-junit.xml",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:coverage": "nyc npm run test:unit && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
@@ -56,6 +57,7 @@
     "standard": "^12.0.1",
     "stoppable": "^1.1.0",
     "tap": "^13.0.1",
+    "tap-mocha-reporter": "^4.0.1",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },

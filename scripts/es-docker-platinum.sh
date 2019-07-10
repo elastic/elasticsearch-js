@@ -9,6 +9,11 @@ testnodecrt="/.ci/certs/testnode.crt"
 testnodekey="/.ci/certs/testnode.key"
 cacrt="/.ci/certs/ca.crt"
 
+# pass `--clean` to reemove the old snapshot
+if [ "$1" != "" ]; then
+  docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '8.0.0-SNAPSHOT')
+fi
+
 exec docker run \
   --rm \
   -e "node.attr.testattr=test" \

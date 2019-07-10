@@ -19,32 +19,32 @@
 
 'use strict'
 
-const assert = require('assert')
 const { readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const Git = require('simple-git')
-const ora = require('ora')
 const tap = require('tap')
 const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
+const { sleep } = require('./helper')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
-const customSkips = [
+
+const ossSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
-  'indices.split/30_copy_settings.yml',
+  'indices.split/30_copy_settings.yml': ['*'],
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
-  'nodes.stats/30_discovery.yml',
+  'nodes.stats/30_discovery.yml': ['*'],
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
-  'search.aggregation/240_max_buckets.yml'
-]
-const platinumBlackList = {
+  'search.aggregation/240_max_buckets.yml': ['*']
+}
+const xPackBlackList = {
   // file path: test name
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
@@ -81,278 +81,276 @@ const platinumBlackList = {
   'xpack/15_basic.yml': ['*']
 }
 
-function Runner (opts) {
-  if (!(this instanceof Runner)) {
-    return new Runner(opts)
-  }
-  opts = opts || {}
-
-  assert(opts.node, 'Missing base node')
-  this.bailout = opts.bailout
-  const options = { node: opts.node }
-  if (opts.isPlatinum) {
-    options.ssl = {
-      // NOTE: this path works only if we run
-      // the suite with npm scripts
-      ca: readFileSync('.ci/certs/ca.crt', 'utf8'),
-      rejectUnauthorized: false
-    }
-  }
-  this.client = new Client(options)
-  this.log = ora('Loading yaml suite').start()
-}
-
-Runner.prototype.waitCluster = function (callback, times = 0) {
-  this.log.text = 'Waiting for ElasticSearch'
-  this.client.cluster.health(
-    { waitForStatus: 'green', timeout: '50s' },
-    (err, res) => {
-      if (err && ++times < 10) {
-        setTimeout(() => {
-          this.waitCluster(callback, times)
-        }, 5000)
-      } else {
-        callback(err)
+class Runner {
+  constructor (opts = {}) {
+    const options = { node: opts.node }
+    if (opts.isXPack) {
+      options.ssl = {
+        ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
+        rejectUnauthorized: false
       }
     }
-  )
-}
+    this.client = new Client(options)
+    console.log('Loading yaml suite')
+  }
 
-/**
- * Runs the test suite
- */
-Runner.prototype.start = function (opts) {
-  const parse = this.parse.bind(this)
-  const client = this.client
-
-  // client.on('response', (err, meta) => {
-  //   console.log('Request', meta.request)
-  //   if (err) {
-  //     console.log('Error', err)
-  //   } else {
-  //     console.log('Response', JSON.stringify(meta.response, null, 2))
-  //   }
-  //   console.log()
-  // })
-
-  this.waitCluster(err => {
-    if (err) {
-      this.log.fail(err.message)
+  async waitCluster (client, times = 0) {
+    try {
+      await client.cluster.health({ waitForStatus: 'green', timeout: '50s' })
+    } catch (err) {
+      if (++times < 10) {
+        await sleep(5000)
+        return this.waitCluster(client, times)
+      }
+      console.error(err)
       process.exit(1)
     }
-    // Get the build hash of Elasticsearch
-    client.info((err, { body }) => {
-      if (err) {
-        this.log.fail(err.message)
-        process.exit(1)
-      }
-      const { number: version, build_hash: sha } = body.version
+  }
 
-      // Set the repository to the given sha and run the test suite
-      this.withSHA(sha, () => {
-        this.log.succeed(`Testing ${opts.isPlatinum ? 'platinum' : 'oss'} api...`)
-        runTest.call(this, version)
-      })
-    })
-  })
+  async start ({ isXPack }) {
+    const { client } = this
+    const parse = this.parse.bind(this)
 
-  function runTest (version) {
-    const files = []
+    console.log('Waiting for Elasticsearch')
+    await this.waitCluster(client)
+
+    const { body } = await client.info()
+    const { number: version, build_hash: sha } = body.version
+
+    console.log(`Checking out sha ${sha}...`)
+    await this.withSHA(sha)
+
+    console.log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
+
+    const folders = []
       .concat(getAllFiles(yamlFolder))
-      .concat(opts.isPlatinum ? getAllFiles(xPackYamlFolder) : [])
+      .concat(isXPack ? getAllFiles(xPackYamlFolder) : [])
       .filter(t => !/(README|TODO)/g.test(t))
+      // we cluster the array based on the folder names,
+      // to provide a better test log output
+      .reduce((arr, file) => {
+        const path = file.slice(file.indexOf('/rest-api-spec/test'), file.lastIndexOf('/'))
+        var inserted = false
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i][0].includes(path)) {
+            inserted = true
+            arr[i].push(file)
+            break
+          }
+        }
+        if (!inserted) arr.push([file])
+        return arr
+      }, [])
 
-    files.forEach(runTestFile.bind(this))
-    function runTestFile (file) {
-      for (var i = 0; i < customSkips.length; i++) {
-        if (file.endsWith(customSkips[i])) return
-      }
-      // create a subtest for the specific folder
-      tap.test(file.slice(file.indexOf(`${sep}elasticsearch${sep}`)), { jobs: 1 }, tap1 => {
-        // read the yaml file
-        const data = readFileSync(file, 'utf8')
-        // get the test yaml (as object), some file has multiple yaml documents inside,
-        // every document is separated by '---', so we split on the separator
-        // and then we remove the empty strings, finally we parse them
-        const tests = data
-          .split('\n---\n')
-          .map(s => s.trim())
-          .filter(Boolean)
-          .map(parse)
+    for (const folder of folders) {
+      // pretty name
+      const apiName = folder[0].slice(
+        folder[0].indexOf(`${sep}rest-api-spec${sep}test`) + 19,
+        folder[0].lastIndexOf(sep)
+      )
 
+      tap.test(`Testing ${apiName}`, { bail: true, timeout: 0 }, t => {
+        for (const file of folder) {
+          const data = readFileSync(file, 'utf8')
+          // get the test yaml (as object), some file has multiple yaml documents inside,
+          // every document is separated by '---', so we split on the separator
+          // and then we remove the empty strings, finally we parse them
+          const tests = data
+            .split('\n---\n')
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(parse)
+
+          t.test(
+            file.slice(file.lastIndexOf(apiName)),
+            testFile(file, tests)
+          )
+        }
+        t.end()
+      })
+    }
+
+    function testFile (file, tests) {
+      return t => {
         // get setup and teardown if present
         var setupTest = null
         var teardownTest = null
-        tests.forEach(test => {
+        for (const test of tests) {
           if (test.setup) setupTest = test.setup
           if (test.teardown) teardownTest = test.teardown
-        })
+        }
 
-        // run the tests
         tests.forEach(test => {
           const name = Object.keys(test)[0]
           if (name === 'setup' || name === 'teardown') return
-          // should skip the test inside `platinumBlackList`
-          // if we are testing the platinum apis
-          if (opts.isPlatinum) {
-            const list = Object.keys(platinumBlackList)
-            for (i = 0; i < list.length; i++) {
-              const platTest = platinumBlackList[list[i]]
-              for (var j = 0; j < platTest.length; j++) {
-                if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
-                  const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-                  tap.skip(`Skipping test ${testName} because is blacklisted in the platinum test`)
-                  return
-                }
-              }
-            }
-          }
+          if (shouldSkip(t, isXPack, file, name)) return
+
           // create a subtest for the specific folder + test file + test name
-          tap1.test(name, { jobs: 1, bail: this.bailout }, tap2 => {
-            const testRunner = TestRunner({
+          t.test(name, async t => {
+            const testRunner = new TestRunner({
               client,
               version,
-              tap: tap2,
-              isPlatinum: file.includes('x-pack')
+              tap: t,
+              isXPack: file.includes('x-pack')
             })
-            testRunner.run(setupTest, test[name], teardownTest, () => tap2.end())
+            await testRunner.run(setupTest, test[name], teardownTest)
           })
         })
-
-        tap1.end()
-      })
+        t.end()
+      }
     }
   }
-}
 
-/**
- * Parses a given yaml document
- * @param {string} yaml document
- * @returns {object}
- */
-Runner.prototype.parse = function (data) {
-  try {
-    var doc = yaml.safeLoad(data)
-  } catch (err) {
-    this.log.fail(err.message)
-    return
-  }
-  return doc
-}
-
-/**
- * Returns the filtered content of a given folder
- * @param {string} folder
- * @returns {Array} The content of the given folder
- */
-Runner.prototype.getTest = function (folder) {
-  const tests = readdirSync(folder)
-  return tests.filter(t => !/(README|TODO)/g.test(t))
-}
-
-/**
- * Sets the elasticsearch repository to the given sha.
- * If the repository is not present in `esFolder` it will
- * clone the repository and the checkout the sha.
- * If the repository is already present but it cannot checkout to
- * the given sha, it will perform a pull and then try again.
- * @param {string} sha
- * @param {function} callback
- */
-Runner.prototype.withSHA = function (sha, callback) {
-  var fresh = false
-  var retry = 0
-  var log = this.log
-
-  if (!this.pathExist(esFolder)) {
-    if (!this.createFolder(esFolder)) {
-      log.fail('Failed folder creation')
+  parse (data) {
+    try {
+      var doc = yaml.safeLoad(data)
+    } catch (err) {
+      console.error(err)
       return
     }
-    fresh = true
+    return doc
   }
 
-  const git = Git(esFolder)
-
-  if (fresh) {
-    clone(checkout)
-  } else {
-    checkout()
+  getTest (folder) {
+    const tests = readdirSync(folder)
+    return tests.filter(t => !/(README|TODO)/g.test(t))
   }
 
-  function checkout () {
-    log.text = `Checking out sha '${sha}'`
-    git.checkout(sha, err => {
-      if (err) {
-        if (retry++ > 0) {
-          log.fail(`Cannot checkout sha '${sha}'`)
-          return
+  /**
+   * Sets the elasticsearch repository to the given sha.
+   * If the repository is not present in `esFolder` it will
+   * clone the repository and the checkout the sha.
+   * If the repository is already present but it cannot checkout to
+   * the given sha, it will perform a pull and then try again.
+   * @param {string} sha
+   * @param {function} callback
+   */
+  withSHA (sha) {
+    return new Promise((resolve, reject) => {
+      _withSHA.call(this, err => err ? reject(err) : resolve())
+    })
+
+    function _withSHA (callback) {
+      var fresh = false
+      var retry = 0
+
+      if (!this.pathExist(esFolder)) {
+        if (!this.createFolder(esFolder)) {
+          return callback(new Error('Failed folder creation'))
         }
-        return pull(checkout)
+        fresh = true
       }
-      callback()
-    })
-  }
 
-  function pull (cb) {
-    log.text = 'Pulling elasticsearch repository...'
-    git.pull(err => {
-      if (err) {
-        log.fail(err.message)
-        return
+      const git = Git(esFolder)
+
+      if (fresh) {
+        clone(checkout)
+      } else {
+        checkout()
       }
-      cb()
-    })
-  }
 
-  function clone (cb) {
-    log.text = 'Cloning elasticsearch repository...'
-    git.clone(esRepo, esFolder, err => {
-      if (err) {
-        log.fail(err.message)
-        return
+      function checkout () {
+        console.log(`Checking out sha '${sha}'`)
+        git.checkout(sha, err => {
+          if (err) {
+            if (retry++ > 0) {
+              return callback(err)
+            }
+            return pull(checkout)
+          }
+          callback()
+        })
       }
-      cb()
-    })
-  }
-}
 
-/**
- * Checks if the given path exists
- * @param {string} path
- * @returns {boolean} true if exists, false if not
- */
-Runner.prototype.pathExist = function (path) {
-  try {
-    accessSync(path)
-    return true
-  } catch (err) {
-    return false
-  }
-}
+      function pull (cb) {
+        console.log('Pulling elasticsearch repository...')
+        git.pull(err => {
+          if (err) {
+            return callback(err)
+          }
+          cb()
+        })
+      }
 
-/**
- * Creates the given folder
- * @param {string} name
- * @returns {boolean} true on success, false on failure
- */
-Runner.prototype.createFolder = function (name) {
-  try {
-    mkdirSync(name)
-    return true
-  } catch (err) {
-    return false
+      function clone (cb) {
+        console.log('Cloning elasticsearch repository...')
+        git.clone(esRepo, esFolder, err => {
+          if (err) {
+            return callback(err)
+          }
+          cb()
+        })
+      }
+    }
+  }
+
+  /**
+   * Checks if the given path exists
+   * @param {string} path
+   * @returns {boolean} true if exists, false if not
+   */
+  pathExist (path) {
+    try {
+      accessSync(path)
+      return true
+    } catch (err) {
+      return false
+    }
+  }
+
+  /**
+   * Creates the given folder
+   * @param {string} name
+   * @returns {boolean} true on success, false on failure
+   */
+  createFolder (name) {
+    try {
+      mkdirSync(name)
+      return true
+    } catch (err) {
+      return false
+    }
   }
 }
 
 if (require.main === module) {
-  const url = process.env.TEST_ES_SERVER || 'http://localhost:9200'
+  const node = process.env.TEST_ES_SERVER || 'http://localhost:9200'
   const opts = {
-    node: url,
-    isPlatinum: url.indexOf('@') > -1
+    node,
+    isXPack: node.indexOf('@') > -1
   }
-  const runner = Runner(opts)
-  runner.start(opts)
+  const runner = new Runner(opts)
+  runner.start(opts).catch(console.log)
+}
+
+const shouldSkip = (t, isXPack, file, name) => {
+  var list = Object.keys(ossSkips)
+  for (var i = 0; i < list.length; i++) {
+    const ossTest = ossSkips[list[i]]
+    for (var j = 0; j < ossTest.length; j++) {
+      if (file.endsWith(list[i]) && (name === ossTest[j] || ossTest[j] === '*')) {
+        const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
+        t.comment(`Skipping test ${testName} because is blacklisted in the oss test`)
+        return true
+      }
+    }
+  }
+
+  if (file.includes('x-pack') || isXPack) {
+    list = Object.keys(xPackBlackList)
+    for (i = 0; i < list.length; i++) {
+      const platTest = xPackBlackList[list[i]]
+      for (j = 0; j < platTest.length; j++) {
+        if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
+          const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
+          t.comment(`Skipping test ${testName} because is blacklisted in the XPack test`)
+          return true
+        }
+      }
+    }
+  }
+
+  return false
 }
 
 const getAllFiles = dir =>

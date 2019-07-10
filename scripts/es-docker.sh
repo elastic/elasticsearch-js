@@ -4,6 +4,11 @@
 # to delete an old image and download again
 # the latest snapshot.
 
+# pass `--clean` to reemove the old snapshot
+if [ "$1" != "" ]; then
+  docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '8.0.0-SNAPSHOT')
+fi
+
 exec docker run \
   --rm \
   -e "node.attr.testattr=test" \
