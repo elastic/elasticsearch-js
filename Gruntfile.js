@@ -3,6 +3,7 @@ const { resolve } = require('path');
 module.exports = function(grunt) {
   // load plugins
   grunt.config.init({
+    package: require('./package.json'),
     distDir: resolve(__dirname, 'dist'),
     bowerSubmodule: resolve(__dirname, 'src/bower_es_js'),
     meta: {
