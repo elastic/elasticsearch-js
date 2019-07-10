@@ -58,11 +58,11 @@ const esDefaultUsers = [
   'remote_monitoring_user'
 ]
 
-function runInParallel (client, operation, options) {
+function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()
   const operations = options.map(opts => {
     const api = delve(client, operation).bind(client)
-    return api(opts)
+    return api(opts, clientOptions)
   })
 
   return Promise.all(operations)
@@ -82,4 +82,10 @@ function delve (obj, key, def, p) {
   return (obj === undefined || p < key.length) ? def : obj
 }
 
-module.exports = { runInParallel, esDefaultRoles, esDefaultUsers, delve }
+function to (promise) {
+  return promise.then(data => [null, data], err => [err, undefined])
+}
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+module.exports = { runInParallel, esDefaultRoles, esDefaultUsers, delve, to, sleep }
