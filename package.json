@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.41",
     "@babel/preset-env": "^7.0.0-beta.41",
+    "acorn": "^6.2.0",
     "aliasify": "^2.1.0",
     "async": "~0.8.0",
     "aws-sdk": "2.489.0",
