@@ -757,7 +757,7 @@ link:{ref}/cat-thread-pool.html[Reference]
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-scroll.html[Reference]
+link:{ref}/search-request-body.html#search-request-scroll[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1976,7 +1976,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-link:{ref}/indices-synced-flush.html[Reference]
+link:{ref}/indices-flush.html#indices-synced-flush[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3305,7 +3305,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 ----
 client.scroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-scroll.html[Reference]
+link:{ref}/search-request-body.html#search-request-scroll[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
