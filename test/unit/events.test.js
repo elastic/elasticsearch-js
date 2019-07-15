@@ -88,7 +88,7 @@ test('Should emit a response event in case of a successful response', t => {
       statusCode: 200,
       headers: {
         'content-type': 'application/json;utf=8',
-        'connection': 'keep-alive'
+        connection: 'keep-alive'
       },
       warnings: null,
       meta: {
