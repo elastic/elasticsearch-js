@@ -30,7 +30,6 @@ interface ConnectionOptions {
   url: URL;
   ssl?: TlsConnectionOptions;
   id?: string;
-  auth?: any;
   headers?: any;
   agent?: AgentOptions | agentFn;
   status?: string;
