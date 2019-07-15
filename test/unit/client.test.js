@@ -199,83 +199,22 @@ test('Configure host', t => {
 })
 
 test('Authentication', t => {
-  t.test('Node with auth data in the url', t => {
-    t.plan(3)
+  t.test('Basic', t => {
+    t.test('Node with basic auth data in the url', t => {
+      t.plan(3)
 
-    function handler (req, res) {
-      t.match(req.headers, {
-        authorization: 'Basic Zm9vOmJhcg=='
-      })
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
 
-    buildServer(handler, ({ port }, server) => {
-      const client = new Client({
-        node: `http://foo:bar@localhost:${port}`
-      })
-
-      client.info((err, { body }) => {
-        t.error(err)
-        t.deepEqual(body, { hello: 'world' })
-        server.stop()
-      })
-    })
-  })
-
-  t.test('Node with auth data in the options', t => {
-    t.plan(3)
-
-    function handler (req, res) {
-      t.match(req.headers, {
-        authorization: 'Basic Zm9vOmJhcg=='
-      })
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
-
-    buildServer(handler, ({ port }, server) => {
-      const client = new Client({
-        node: `http://localhost:${port}`,
-        auth: {
-          username: 'foo',
-          password: 'bar'
-        }
-      })
-
-      client.info((err, { body }) => {
-        t.error(err)
-        t.deepEqual(body, { hello: 'world' })
-        server.stop()
-      })
-    })
-  })
-
-  t.test('Custom authentication per request', t => {
-    t.plan(6)
-
-    var first = true
-    function handler (req, res) {
-      t.match(req.headers, {
-        authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
-      })
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
-
-    buildServer(handler, ({ port }, server) => {
-      const client = new Client({
-        node: `http://foo:bar@localhost:${port}`
-      })
-
-      client.info({}, {
-        headers: {
-          authorization: 'hello'
-        }
-      }, (err, { body }) => {
-        t.error(err)
-        t.deepEqual(body, { hello: 'world' })
-        first = false
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://foo:bar@localhost:${port}`
+        })
 
         client.info((err, { body }) => {
           t.error(err)
@@ -284,37 +223,26 @@ test('Authentication', t => {
         })
       })
     })
-  })
 
-  t.test('Override default authentication per request', t => {
-    t.plan(6)
+    t.test('Node with basic auth data in the options', t => {
+      t.plan(3)
 
-    var first = true
-    function handler (req, res) {
-      t.match(req.headers, {
-        authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
-      })
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
 
-    buildServer(handler, ({ port }, server) => {
-      const client = new Client({
-        node: `http://localhost:${port}`,
-        auth: {
-          username: 'foo',
-          password: 'bar'
-        }
-      })
-
-      client.info({}, {
-        headers: {
-          authorization: 'hello'
-        }
-      }, (err, { body }) => {
-        t.error(err)
-        t.deepEqual(body, { hello: 'world' })
-        first = false
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            username: 'foo',
+            password: 'bar'
+          }
+        })
 
         client.info((err, { body }) => {
           t.error(err)
@@ -323,6 +251,188 @@ test('Authentication', t => {
         })
       })
     })
+
+    t.test('Custom basic authentication per request', t => {
+      t.plan(6)
+
+      var first = true
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://foo:bar@localhost:${port}`
+        })
+
+        client.info({}, {
+          headers: {
+            authorization: 'hello'
+          }
+        }, (err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          first = false
+
+          client.info((err, { body }) => {
+            t.error(err)
+            t.deepEqual(body, { hello: 'world' })
+            server.stop()
+          })
+        })
+      })
+    })
+
+    t.test('Override default basic authentication per request', t => {
+      t.plan(6)
+
+      var first = true
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            username: 'foo',
+            password: 'bar'
+          }
+        })
+
+        client.info({}, {
+          headers: {
+            authorization: 'hello'
+          }
+        }, (err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          first = false
+
+          client.info((err, { body }) => {
+            t.error(err)
+            t.deepEqual(body, { hello: 'world' })
+            server.stop()
+          })
+        })
+      })
+    })
+
+    t.end()
+  })
+
+  t.test('ApiKey', t => {
+    t.test('Node with ApiKey auth data in the options', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            id: 'foo',
+            apiKey: 'bar'
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
+    t.test('Custom ApiKey authentication per request', t => {
+      t.plan(6)
+
+      var first = true
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: first ? 'ApiKey Zm9vOmJhcg==' : 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://foo:bar@localhost:${port}`
+        })
+
+        client.info({}, {
+          headers: {
+            authorization: 'ApiKey Zm9vOmJhcg=='
+          }
+        }, (err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          first = false
+
+          client.info((err, { body }) => {
+            t.error(err)
+            t.deepEqual(body, { hello: 'world' })
+            server.stop()
+          })
+        })
+      })
+    })
+
+    t.test('Override default ApiKey authentication per request', t => {
+      t.plan(6)
+
+      var first = true
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: first ? 'hello' : 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            id: 'foo',
+            apiKey: 'bar'
+          }
+        })
+
+        client.info({}, {
+          headers: {
+            authorization: 'hello'
+          }
+        }, (err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          first = false
+
+          client.info((err, { body }) => {
+            t.error(err)
+            t.deepEqual(body, { hello: 'world' })
+            server.stop()
+          })
+        })
+      })
+    })
+
+    t.end()
   })
 
   t.end()

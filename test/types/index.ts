@@ -50,6 +50,16 @@ const nodeOpts: NodeOptions = {
 
 const client2 = new Client({ node: nodeOpts })
 
+const clientBasicAuth = new Client({
+  node: 'http://localhost:9200',
+  auth: { username: 'foo', password: 'bar' }
+})
+
+const clientApiKey = new Client({
+  node: 'http://localhost:9200',
+  auth: { id: 'foo', apiKey: 'bar' }
+})
+
 client.on(events.RESPONSE, (err: errors.ElasticsearchClientError | null, request: RequestEvent) => {
   if (err) console.log(err)
   const { body, statusCode } = request
