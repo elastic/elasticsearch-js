@@ -41,7 +41,7 @@
     "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^4.0.0",
     "dezalgo": "^1.0.3",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
