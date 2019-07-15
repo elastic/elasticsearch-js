@@ -198,55 +198,22 @@ test('Configure host', t => {
   t.end()
 })
 
-test('Node with auth data in the url', t => {
-  t.plan(3)
+test('Authentication', t => {
+  t.test('Node with auth data in the url', t => {
+    t.plan(3)
 
-  function handler (req, res) {
-    t.match(req.headers, {
-      authorization: 'Basic Zm9vOmJhcg=='
-    })
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
-  }
+    function handler (req, res) {
+      t.match(req.headers, {
+        authorization: 'Basic Zm9vOmJhcg=='
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
 
-  buildServer(handler, ({ port }, server) => {
-    const client = new Client({
-      node: `http://foo:bar@localhost:${port}`
-    })
-
-    client.info((err, { body }) => {
-      t.error(err)
-      t.deepEqual(body, { hello: 'world' })
-      server.stop()
-    })
-  })
-})
-
-test('Custom authentication per request', t => {
-  t.plan(6)
-
-  var first = true
-  function handler (req, res) {
-    t.match(req.headers, {
-      authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
-    })
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
-  }
-
-  buildServer(handler, ({ port }, server) => {
-    const client = new Client({
-      node: `http://foo:bar@localhost:${port}`
-    })
-
-    client.info({}, {
-      headers: {
-        authorization: 'hello'
-      }
-    }, (err, { body }) => {
-      t.error(err)
-      t.deepEqual(body, { hello: 'world' })
-      first = false
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://foo:bar@localhost:${port}`
+      })
 
       client.info((err, { body }) => {
         t.error(err)
@@ -255,6 +222,110 @@ test('Custom authentication per request', t => {
       })
     })
   })
+
+  t.test('Node with auth data in the options', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.match(req.headers, {
+        authorization: 'Basic Zm9vOmJhcg=='
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`,
+        auth: {
+          username: 'foo',
+          password: 'bar'
+        }
+      })
+
+      client.info((err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('Custom authentication per request', t => {
+    t.plan(6)
+
+    var first = true
+    function handler (req, res) {
+      t.match(req.headers, {
+        authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://foo:bar@localhost:${port}`
+      })
+
+      client.info({}, {
+        headers: {
+          authorization: 'hello'
+        }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        first = false
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+  })
+
+  t.test('Override default authentication per request', t => {
+    t.plan(6)
+
+    var first = true
+    function handler (req, res) {
+      t.match(req.headers, {
+        authorization: first ? 'hello' : 'Basic Zm9vOmJhcg=='
+      })
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`,
+        auth: {
+          username: 'foo',
+          password: 'bar'
+        }
+      })
+
+      client.info({}, {
+        headers: {
+          authorization: 'hello'
+        }
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        first = false
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+  })
+
+  t.end()
 })
 
 test('Custom headers per request', t => {
@@ -554,6 +625,45 @@ test('Elastic cloud config', t => {
     t.match(pool.connections.get('https://abcd.localhost/'), {
       url: new URL('https://elastic:changeme@abcd.localhost'),
       id: 'https://abcd.localhost/',
+      headers: {
+        authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
+      },
+      ssl: { secureProtocol: 'TLSv1_2_method' },
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+  })
+
+  t.test('Auth as separate option', t => {
+    t.plan(4)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
+      },
+      auth: {
+        username: 'elastic',
+        password: 'changeme'
+      }
+    })
+
+    const pool = client.connectionPool
+    t.match(pool.connections.get('https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      headers: {
+        authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
+      },
       ssl: { secureProtocol: 'TLSv1_2_method' },
       deadCount: 0,
       resurrectTimeout: 0,
