@@ -47,7 +47,7 @@ class Client extends EventEmitter {
 
       // TODO: remove username and password here in 8
       if (username && password) {
-        opts.auth = { username, password }
+        opts.auth = Object.assign({}, opts.auth, { username, password })
       }
       opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
 
@@ -69,7 +69,7 @@ class Client extends EventEmitter {
 
     const checkAuth = getAuth(opts.node || opts.nodes)
     if (checkAuth && checkAuth.username && checkAuth.password) {
-      opts.auth = { username: checkAuth.username, password: checkAuth.password }
+      opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
     }
 
     const options = Object.assign({}, {
