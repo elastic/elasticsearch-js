@@ -37,7 +37,7 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
-    "@types/node": "^11.13.7",
+    "@types/node": "^12.6.2",
     "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
