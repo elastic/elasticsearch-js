@@ -30,8 +30,8 @@ class MockConnection extends Connection {
     stream.statusCode = setStatusCode(params.path)
     stream.headers = {
       'content-type': 'application/json;utf=8',
-      'date': new Date().toISOString(),
-      'connection': 'keep-alive',
+      date: new Date().toISOString(),
+      connection: 'keep-alive',
       'content-length': '17'
     }
     process.nextTick(() => {
@@ -96,8 +96,8 @@ class MockConnectionSniff extends Connection {
     stream.statusCode = setStatusCode(params.path)
     stream.headers = {
       'content-type': 'application/json;utf=8',
-      'date': new Date().toISOString(),
-      'connection': 'keep-alive',
+      date: new Date().toISOString(),
+      connection: 'keep-alive',
       'content-length': '205'
     }
     process.nextTick(() => {
