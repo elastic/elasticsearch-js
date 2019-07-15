@@ -1976,7 +1976,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-link:{ref}/indices-flush.html#indices-synced-flush[Reference]
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
