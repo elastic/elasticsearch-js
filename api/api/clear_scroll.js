@@ -26,7 +26,7 @@ function buildClearScroll (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [clear_scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
+   * Perform a [clear_scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#search-request-scroll) request
    *
    * @param {list} scroll_id - A comma-separated list of scroll IDs to clear
    * @param {object} body - A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
