@@ -224,6 +224,30 @@ test('Authentication', t => {
       })
     })
 
+    t.test('Node with basic auth data in the url (array of nodes)', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'Basic Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          nodes: [`http://foo:bar@localhost:${port}`]
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
     t.test('Node with basic auth data in the options', t => {
       t.plan(3)
 
