@@ -37,11 +37,11 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
-    "@types/node": "^11.13.7",
+    "@types/node": "^12.6.2",
     "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^4.0.0",
     "dezalgo": "^1.0.3",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
@@ -54,9 +54,9 @@
     "simple-git": "^1.110.0",
     "simple-statistics": "^7.0.2",
     "split2": "^3.1.1",
-    "standard": "^12.0.1",
+    "standard": "^13.0.2",
     "stoppable": "^1.1.0",
-    "tap": "^13.0.1",
+    "tap": "^14.4.1",
     "tap-mocha-reporter": "^4.0.1",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
