@@ -26,6 +26,7 @@ import { nodeFilterFn, nodeSelectorFn } from './Transport';
 interface ConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
+  auth?: any;
   pingTimeout?: number;
   Connection: typeof Connection;
   resurrectStrategy?: string;
@@ -66,6 +67,7 @@ export default class ConnectionPool {
   resurrectTimeout: number;
   resurrectTimeoutCutoff: number;
   pingTimeout: number;
+  auth: any;
   Connection: typeof Connection;
   resurrectStrategy: number;
   constructor(opts?: ConnectionPoolOptions);

@@ -111,8 +111,13 @@ interface ClientOptions {
   headers?: anyObject;
   generateRequestId?: generateRequestIdFn;
   name?: string;
+  auth?: {
+    username: string;
+    password: string;
+  }
   cloud?: {
     id: string;
+    // TODO: remove username and password here in 8
     username: string;
     password: string;
   }
