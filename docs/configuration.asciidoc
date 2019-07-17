@@ -60,8 +60,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-
 [source,js]
 ----
 auth: {
-  id: 'VuaCfGcBCdbkQm-e5aOx',
-  apiKey: 'ui2lp2axTNmsyakw9tvNnw'
+  apiKey: 'base64EncodedKey'
 }
 ----
 
