@@ -21,7 +21,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool, Transport } = require('../../index')
+const { Client, ConnectionPool, Transport, generateApiKey } = require('../../index')
 const { buildServer } = require('../utils')
 
 test('Configure host', t => {
@@ -369,8 +369,7 @@ test('Authentication', t => {
         const client = new Client({
           node: `http://localhost:${port}`,
           auth: {
-            id: 'foo',
-            apiKey: 'bar'
+            apiKey: generateApiKey('foo', 'bar')
           }
         })
 
@@ -433,8 +432,7 @@ test('Authentication', t => {
         const client = new Client({
           node: `http://localhost:${port}`,
           auth: {
-            id: 'foo',
-            apiKey: 'bar'
+            apiKey: generateApiKey('foo', 'bar')
           }
         })
 
