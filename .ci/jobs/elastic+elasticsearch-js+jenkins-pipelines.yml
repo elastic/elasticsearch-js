@@ -1,5 +1,8 @@
 ---
 - job:
+    name: elastic+elasticsearch-js+jenkins-pipelines
+    display-name: 'elastic / elasticsearch-js # jenkins-pipelines'
+    description: Testing the elasticsearch-js jenkins-pipelines branch.
     project-type: multibranch
     logrotate:
       daysToKeep: 30
