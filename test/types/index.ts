@@ -128,7 +128,7 @@ const searchParams: RequestParams.Search<SearchBody> = {
   }
 }
 
-// Dewfine the interface of the search response
+// Define the interface of the search response
 interface SearchResponse<T> {
   hits: {
     hits: Array<{
@@ -137,7 +137,7 @@ interface SearchResponse<T> {
   }
 }
 
-// Define the intefrace of the source object
+// Define the interface of the source object
 interface Source {
   foo: string
 }
