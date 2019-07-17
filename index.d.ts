@@ -44,7 +44,7 @@ declare type anyObject = {
 
 declare type callbackFn<T> = (err: Error | null, result: ApiResponse<T>) => void;
 
-declare type generateApiKey = (id: string, token: string) => string;
+declare type encodeApiKey = (id: string, token: string) => string;
 
 interface ApiMethod<TParams, TBody = any> {
   // Promise API
@@ -653,5 +653,5 @@ export {
   ClientOptions,
   NodeOptions,
   ClientExtendsCallbackOptions,
-  generateApiKey
+  encodeApiKey
 };

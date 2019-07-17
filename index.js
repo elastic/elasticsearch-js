@@ -257,7 +257,7 @@ function getAuth (node) {
   }
 }
 
-function generateApiKey (id, token) {
+function encodeApiKey (id, token) {
   return Buffer.from(`${id}:${token}`).toString('base64')
 }
 
@@ -276,5 +276,5 @@ module.exports = {
   Serializer,
   events,
   errors,
-  generateApiKey
+  encodeApiKey
 }
