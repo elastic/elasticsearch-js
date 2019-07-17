@@ -20,6 +20,10 @@ npm install @elastic/elasticsearch
 
 === Compatibility
 
+The minimum supported version of Node.js is `v8`.
+
+The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
+
 [%header,cols=2*] 
 |===
 |Elasticsearch Version
@@ -57,7 +61,7 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 ----
 
-You can use both the callback-style API and the promise-style API, both behaves in the same way.
+You can use both the callback-style API and the promise-style API, both behave the same way.
 [source,js]
 ----
 // promise API
@@ -171,7 +175,7 @@ And your `package.json` will look like the following:
 }
 ----
 
-And finally, you will require the packages from your code by using the alias you have defined.
+You will require the packages from your code by using the alias you have defined.
 
 [source,js]
 ----
