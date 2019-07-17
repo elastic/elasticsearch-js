@@ -174,7 +174,7 @@ And your `package.json` will look like the following:
   "es7": "npm:@elastic/elasticsearch@^7.0.0"
 }
 ```
-And finally, you will require the packages from your code by using the alias you have defined.
+You will require the packages from your code by using the alias you have defined.
 ```js
 const { Client: Client6 } = require('es6')
 const { Client: Client7 } = require('es7')
