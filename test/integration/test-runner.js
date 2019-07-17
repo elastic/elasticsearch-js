@@ -36,7 +36,8 @@ const supportedFeatures = [
   'groovy_scripting',
   'headers',
   'transform_and_set',
-  'catch_unauthorized'
+  'catch_unauthorized',
+  'arbitrary_key'
 ]
 
 class TestRunner {
@@ -429,7 +430,20 @@ class TestRunner {
    * @returns {TestRunner}
    */
   set (key, name) {
-    this.stash.set(name, delve(this.response, key))
+    if (key.includes('_arbitrary_key_')) {
+      var currentVisit = null
+      for (const path of key.split('.')) {
+        if (path === '_arbitrary_key_') {
+          const keys = Object.keys(currentVisit)
+          const arbitraryKey = keys[getRandomInt(0, keys.length)]
+          this.stash.set(name, arbitraryKey)
+        } else {
+          currentVisit = delve(this.response, path)
+        }
+      }
+    } else {
+      this.stash.set(name, delve(this.response, key))
+    }
     return this
   }
 
@@ -881,6 +895,10 @@ function getNumbers (val1, val2) {
     throw new TypeError(`val2 is not a valid number: ${val2}`)
   }
   return [val1Numeric, val2Numeric]
+}
+
+function getRandomInt (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min
 }
 
 module.exports = TestRunner
