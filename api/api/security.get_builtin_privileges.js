@@ -22,29 +22,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameGetDataFrameTransform (opts) {
+function buildSecurityGetBuiltinPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [data_frame.get_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html) request
+   * Perform a [security.get_builtin_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html) request
    *
-   * @param {string} transform_id - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-   * @param {int} from - skips a number of transform configs, defaults to 0
-   * @param {int} size - specifies a max number of transforms to get, defaults to 100
-   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
    */
 
   const acceptedQuerystring = [
-    'from',
-    'size',
-    'allow_no_match'
+
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
+
   }
 
-  return function dataFrameGetDataFrameTransform (params, options, callback) {
+  return function securityGetBuiltinPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -69,7 +63,7 @@ function buildDataFrameGetDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -83,11 +77,7 @@ function buildDataFrameGetDataFrameTransform (opts) {
 
     var path = ''
 
-    if ((transform_id || transformId) != null) {
-      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
-    } else {
-      path = '/' + '_data_frame' + '/' + 'transforms'
-    }
+    path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
 
     // build request object
     const request = {
@@ -102,4 +92,4 @@ function buildDataFrameGetDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameGetDataFrameTransform
+module.exports = buildSecurityGetBuiltinPrivileges
