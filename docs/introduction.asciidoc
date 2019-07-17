@@ -8,7 +8,8 @@ The official Node.js client for Elasticsearch.
 * Generalized, pluggable architecture.
 * Configurable, automatic discovery of cluster nodes.
 * Persistent, Keep-Alive connections.
-* Load balancing (with pluggable selection strategy) across all available nodes.
+* Load balancing across all available nodes.
+* Child client support.
 * TypeScript support out of the box.
 
 === Install
@@ -18,18 +19,133 @@ npm install @elastic/elasticsearch
 ----
 
 === Compatibility
+
 The minimum supported version of Node.js is `v8`.
 
-The library is compatible with all Elasticsearch versions since 5.x, but you should use the same major version of the Elasticsearch instance that you are using.
+The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
+
+[%header,cols=2*] 
+|===
+|Elasticsearch Version
+|Client Version
+
+|`master`
+|`master`
+
+|`7.x`
+|`7.x`
+
+|`6.x`
+|`6.x`
+
+|`5.x`
+|`5.x`
+|===
+
+To install a specific major of the client, run the following command:
 ----
-# Elasticsearch 7.x
-@elastic/elasticsearch@7
+npm install @elastic/elasticsearch@<major>
+----
 
-# Elasticsearch 6.x
-@elastic/elasticsearch@6
+==== Browser
 
-# Elasticsearch 5.x
-@elastic/elasticsearch@5
+WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
+We recommend that you write a lightweight proxy that uses this client instead.
+
+=== Quick start
+
+First of all, require the client and initialize it:
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+----
+
+You can use both the callback-style API and the promise-style API, both behave the same way.
+[source,js]
+----
+// promise API
+const result = await client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+})
+
+// callback API
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----
+The returned value of **every** API call is formed as follows:
+[source,ts]
+----
+{
+  body: object | boolean
+  statusCode: number
+  headers: object
+  warnings: [string]
+  meta: object
+}
+----
+
+Let's see a complete example!
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  // Let's start by indexing some data
+  await client.index({
+    index: 'game-of-thrones',
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
+    body: {
+      character: 'Ned Stark',
+      quote: 'Winter is coming.'
+    }
+  })
+
+  await client.index({
+    index: 'game-of-thrones',
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
+    body: {
+      character: 'Daenerys Targaryen',
+      quote: 'I am the blood of the dragon.'
+    }
+  })
+
+  await client.index({
+    index: 'game-of-thrones',
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
+    body: {
+      character: 'Tyrion Lannister',
+      quote: 'A mind needs books like a sword needs a whetstone.'
+    }
+  })
+
+  // here we are forcing an index refresh, otherwise we will not
+  // get any result in the consequent search
+  await client.indices.refresh({ index: 'game-of-thrones' })
+
+  // Let's search!
+  const { body } = await client.search({
+    index: 'game-of-thrones',
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
+    body: {
+      query: {
+        match: { quote: 'winter' }
+      }
+    }
+  })
+
+  console.log(body.hits.hits)
+}
+
+run().catch(console.log)
 ----
 
 ==== Install multiple versions
@@ -59,7 +175,7 @@ And your `package.json` will look like the following:
 }
 ----
 
-And finally, you will require the packages from your code by using the alias you have defined.
+You will require the packages from your code by using the alias you have defined.
 
 [source,js]
 ----
