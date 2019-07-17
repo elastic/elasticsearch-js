@@ -26,7 +26,7 @@ import { nodeFilterFn, nodeSelectorFn } from './Transport';
 interface ConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
-  auth?: { username: string; password: string; } | { apiKey: string };
+  auth?: { username: string; password: string; } | { apiKey: ApiKeyAuth | string };
   pingTimeout?: number;
   Connection: typeof Connection;
   resurrectStrategy?: string;
@@ -35,6 +35,11 @@ interface ConnectionPoolOptions {
 export interface getConnectionOptions {
   filter?: nodeFilterFn;
   selector?: nodeSelectorFn;
+}
+
+export interface ApiKeyAuth {
+  id: string;
+  api_key: string;
 }
 
 export interface resurrectOptions {
@@ -67,7 +72,7 @@ export default class ConnectionPool {
   resurrectTimeout: number;
   resurrectTimeoutCutoff: number;
   pingTimeout: number;
-  auth: { username: string; password: string; } | { apiKey: string };
+  auth: { username: string; password: string; } | { apiKey: ApiKeyAuth | string };
   Connection: typeof Connection;
   resurrectStrategy: number;
   constructor(opts?: ConnectionPoolOptions);

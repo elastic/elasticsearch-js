@@ -21,7 +21,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool, Transport, encodeApiKey } = require('../../index')
+const { Client, ConnectionPool, Transport } = require('../../index')
 const { buildServer } = require('../utils')
 
 test('Configure host', t => {
@@ -354,7 +354,7 @@ test('Authentication', t => {
   })
 
   t.test('ApiKey', t => {
-    t.test('Node with ApiKey auth data in the options', t => {
+    t.test('Node with ApiKey auth data in the options as string', t => {
       t.plan(3)
 
       function handler (req, res) {
@@ -369,7 +369,34 @@ test('Authentication', t => {
         const client = new Client({
           node: `http://localhost:${port}`,
           auth: {
-            apiKey: encodeApiKey('foo', 'bar')
+            apiKey: 'Zm9vOmJhcg=='
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
+    t.test('Node with ApiKey auth data in the options as object', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            apiKey: { id: 'foo', api_key: 'bar' }
           }
         })
 
@@ -432,7 +459,7 @@ test('Authentication', t => {
         const client = new Client({
           node: `http://localhost:${port}`,
           auth: {
-            apiKey: encodeApiKey('foo', 'bar')
+            apiKey: 'Zm9vOmJhcg=='
           }
         })
 

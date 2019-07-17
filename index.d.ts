@@ -33,7 +33,7 @@ import Transport, {
 } from './lib/Transport';
 import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
-import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
+import ConnectionPool, { ResurrectEvent, ApiKeyAuth } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
@@ -43,8 +43,6 @@ declare type anyObject = {
 };
 
 declare type callbackFn<T> = (err: Error | null, result: ApiResponse<T>) => void;
-
-declare type encodeApiKey = (id: string, token: string) => string;
 
 interface ApiMethod<TParams, TBody = any> {
   // Promise API
@@ -113,7 +111,7 @@ interface ClientOptions {
   headers?: anyObject;
   generateRequestId?: generateRequestIdFn;
   name?: string;
-  auth?: { username: string; password: string; } | { apiKey: string };
+  auth?: { username: string; password: string; } | { apiKey: ApiKeyAuth | string };
   cloud?: {
     id: string;
     // TODO: remove username and password here in 8
@@ -652,6 +650,5 @@ export {
   RequestParams,
   ClientOptions,
   NodeOptions,
-  ClientExtendsCallbackOptions,
-  encodeApiKey
+  ClientExtendsCallbackOptions
 };

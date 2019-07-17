@@ -58,15 +58,29 @@ const client = new Client({
 === ApiKey authentication
 
 You can use the https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] authentication by passing the `apiKey` parameter via the `auth` option. +
-The `apiKey` parameter is a base64 encoded string that you can obtain from the https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[create api key endpoint]. Be aware that the endpoint will return you two distinct values, `id` and  `api_key`, that you should join with a colon and base64 encode. To help you with this task, the client offers a `encodeApiKey` utility.
+The `apiKey` parameter can be either a base64 encoded string or an object with the values that you can obtain from the https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[create api key endpoint].
 
 [source,js]
 ----
-const { Client, encodeApiKey } = require('@elastic/elasticsearch')
+const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
   node: 'https://localhost:9200',
   auth: {
-    apiKey: encodeApiKey('id', 'api_key')
+    apiKey: 'base64EncodedKey'
+  }
+})
+----
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    apiKey: {
+      id: 'foo',
+      api_key: 'bar'
+    }
   }
 })
 ----
