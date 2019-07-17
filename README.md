@@ -71,7 +71,7 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 ```
 
-You can use both the callback-style API and the promise-style API, both behaves in the same way.
+You can use both the callback-style API and the promise-style API, both behave the same way.
 ```js
 // promise API
 const result = await client.search({
