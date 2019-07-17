@@ -1,4 +1,4 @@
-= @elastic/elasticsearch
+= Elasticsearch Node.js client
 
 :branch: 7.x
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
