@@ -57,7 +57,7 @@ const clientBasicAuth = new Client({
 
 const clientApiKey = new Client({
   node: 'http://localhost:9200',
-  auth: { id: 'foo', apiKey: 'bar' }
+  auth: { apiKey: 'foobar' }
 })
 
 client.on(events.RESPONSE, (err: errors.ElasticsearchClientError | null, request: RequestEvent) => {
