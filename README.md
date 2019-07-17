@@ -8,7 +8,7 @@ The official Node.js client for Elasticsearch.
 
 ---
 
-**Note:** In the past months we have worked on the new Elasticsearch Node.js client, and can use it by following the instructions below, while if you're going to use the legacy one or report an issue, please check out [elastic/elasticsearch-js-legacy](https://github.com/elastic/elasticsearch-js-legacy).
+**Note:** In the past months we have worked on the new Elasticsearch Node.js client and you can use it by following the instructions below. If you're going to use the legacy one or report an issue, however, please check out [elastic/elasticsearch-js-legacy](https://github.com/elastic/elasticsearch-js-legacy).
 
 ---
 
