@@ -22,6 +22,7 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const { Client, ConnectionPool, Transport } = require('../../index')
+const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
 
 test('Configure host', t => {
@@ -30,7 +31,7 @@ test('Configure host', t => {
       node: 'http://localhost:9200'
     })
     const pool = client.connectionPool
-    t.match(pool.connections.get('http://localhost:9200/'), {
+    t.match(pool.connections.find(c => c.id === 'http://localhost:9200/'), {
       url: new URL('http://localhost:9200'),
       id: 'http://localhost:9200/',
       ssl: null,
@@ -51,7 +52,7 @@ test('Configure host', t => {
       nodes: ['http://localhost:9200', 'http://localhost:9201']
     })
     const pool = client.connectionPool
-    t.match(pool.connections.get('http://localhost:9200/'), {
+    t.match(pool.connections.find(c => c.id === 'http://localhost:9200/'), {
       url: new URL('http://localhost:9200'),
       id: 'http://localhost:9200/',
       ssl: null,
@@ -64,7 +65,7 @@ test('Configure host', t => {
         ml: false
       }
     })
-    t.match(pool.connections.get('http://localhost:9201/'), {
+    t.match(pool.connections.find(c => c.id === 'http://localhost:9201/'), {
       url: new URL('http://localhost:9201'),
       id: 'http://localhost:9201/',
       ssl: null,
@@ -95,7 +96,7 @@ test('Configure host', t => {
       }
     })
     const pool = client.connectionPool
-    t.match(pool.connections.get('node'), {
+    t.match(pool.connections.find(c => c.id === 'node'), {
       url: new URL('http://localhost:9200'),
       id: 'node',
       ssl: 'ssl',
@@ -103,7 +104,7 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.get('node').roles, {
+    t.deepEqual(pool.connections.find(c => c.id === 'node').roles, {
       master: true,
       data: false,
       ingest: false,
@@ -136,7 +137,7 @@ test('Configure host', t => {
       }]
     })
     const pool = client.connectionPool
-    t.match(pool.connections.get('node1'), {
+    t.match(pool.connections.find(c => c.id === 'node1'), {
       url: new URL('http://localhost:9200'),
       id: 'node1',
       ssl: 'ssl',
@@ -144,14 +145,14 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.get('node1').roles, {
+    t.deepEqual(pool.connections.find(c => c.id === 'node1').roles, {
       master: true,
       data: false,
       ingest: false,
       ml: false
     })
 
-    t.match(pool.connections.get('node2'), {
+    t.match(pool.connections.find(c => c.id === 'node2'), {
       url: new URL('http://localhost:9200'),
       id: 'node2',
       ssl: 'ssl',
@@ -159,7 +160,7 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.get('node2').roles, {
+    t.deepEqual(pool.connections.find(c => c.id === 'node2').roles, {
       master: false,
       data: true,
       ingest: false,
@@ -178,7 +179,7 @@ test('Configure host', t => {
       }
     })
     const pool = client.connectionPool
-    t.match(pool.connections.get('node'), {
+    t.match(pool.connections.find(c => c.id === 'node'), {
       url: new URL('http://localhost:9200'),
       headers: { 'x-foo': 'bar' }
     })
@@ -770,7 +771,7 @@ test('Extend client APIs', t => {
 
 test('Elastic cloud config', t => {
   t.test('Basic', t => {
-    t.plan(4)
+    t.plan(5)
     const client = new Client({
       cloud: {
         // 'localhost$abcd$efgh'
@@ -781,7 +782,8 @@ test('Elastic cloud config', t => {
     })
 
     const pool = client.connectionPool
-    t.match(pool.connections.get('https://abcd.localhost/'), {
+    t.ok(pool instanceof CloudConnectionPool)
+    t.match(pool.connections.find(c => c.id === 'https://abcd.localhost/'), {
       url: new URL('https://elastic:changeme@abcd.localhost'),
       id: 'https://abcd.localhost/',
       headers: {
@@ -804,7 +806,7 @@ test('Elastic cloud config', t => {
   })
 
   t.test('Auth as separate option', t => {
-    t.plan(4)
+    t.plan(5)
     const client = new Client({
       cloud: {
         // 'localhost$abcd$efgh'
@@ -817,7 +819,8 @@ test('Elastic cloud config', t => {
     })
 
     const pool = client.connectionPool
-    t.match(pool.connections.get('https://abcd.localhost/'), {
+    t.ok(pool instanceof CloudConnectionPool)
+    t.match(pool.connections.find(c => c.id === 'https://abcd.localhost/'), {
       url: new URL('https://elastic:changeme@abcd.localhost'),
       id: 'https://abcd.localhost/',
       headers: {
@@ -840,7 +843,7 @@ test('Elastic cloud config', t => {
   })
 
   t.test('Override default options', t => {
-    t.plan(3)
+    t.plan(4)
     const client = new Client({
       cloud: {
         // 'localhost$abcd$efgh'
@@ -855,6 +858,7 @@ test('Elastic cloud config', t => {
       }
     })
 
+    t.ok(client.connectionPool instanceof CloudConnectionPool)
     t.strictEqual(client.transport.compression, false)
     t.strictEqual(client.transport.suggestCompression, false)
     t.deepEqual(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
