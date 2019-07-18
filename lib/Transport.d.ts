@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import ConnectionPool from './ConnectionPool';
+import { ConnectionPool, CloudConnectionPool } from './pool';
 import Connection from './Connection';
 import Serializer from './Serializer';
 
@@ -38,7 +38,7 @@ declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
 
 interface TransportOptions {
   emit: emitFn & noopFn;
-  connectionPool: ConnectionPool;
+  connectionPool: ConnectionPool | CloudConnectionPool;
   serializer: Serializer;
   maxRetries: number;
   requestTimeout: number | string;
@@ -128,7 +128,7 @@ export default class Transport {
     DEFAULT: string;
   };
   emit: emitFn & noopFn;
-  connectionPool: ConnectionPool;
+  connectionPool: ConnectionPool | CloudConnectionPool;
   serializer: Serializer;
   maxRetries: number;
   requestTimeout: number;
