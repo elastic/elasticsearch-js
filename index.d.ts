@@ -33,7 +33,7 @@ import Transport, {
 } from './lib/Transport';
 import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
-import ConnectionPool, { ResurrectEvent } from './lib/ConnectionPool';
+import ConnectionPool, { ResurrectEvent, BasicAuth, ApiKeyAuth } from './lib/ConnectionPool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
@@ -111,8 +111,10 @@ interface ClientOptions {
   headers?: anyObject;
   generateRequestId?: generateRequestIdFn;
   name?: string;
+  auth?: BasicAuth | ApiKeyAuth;
   cloud?: {
     id: string;
+    // TODO: remove username and password here in 8
     username: string;
     password: string;
   }

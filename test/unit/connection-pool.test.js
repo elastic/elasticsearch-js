@@ -50,25 +50,6 @@ test('API', t => {
     t.end()
   })
 
-  t.test('addConnection (should store the auth data)', t => {
-    const pool = new ConnectionPool({ Connection })
-    const href = 'http://localhost:9200/'
-    pool.addConnection('http://foo:bar@localhost:9200')
-
-    t.ok(pool.connections.get(href) instanceof Connection)
-    t.strictEqual(pool.connections.get(href).status, Connection.statuses.ALIVE)
-    t.deepEqual(pool.dead, [])
-    t.deepEqual(pool._auth, { username: 'foo', password: 'bar' })
-
-    pool.addConnection('http://localhost:9201')
-    const conn = pool.connections.get('http://localhost:9201/')
-    t.strictEqual(conn.url.username, 'foo')
-    t.strictEqual(conn.url.password, 'bar')
-    t.strictEqual(conn.auth.username, 'foo')
-    t.strictEqual(conn.auth.password, 'bar')
-    t.end()
-  })
-
   t.test('addConnection should handle not-friendly url parameters for user and password', t => {
     const pool = new ConnectionPool({ Connection })
     const href = 'http://us"er:p@assword@localhost:9200/'
@@ -76,8 +57,9 @@ test('API', t => {
     const conn = pool.getConnection()
     t.strictEqual(conn.url.username, 'us%22er')
     t.strictEqual(conn.url.password, 'p%40assword')
-    t.strictEqual(conn.auth.username, 'us"er')
-    t.strictEqual(conn.auth.password, 'p@assword')
+    t.match(conn.headers, {
+      authorization: 'Basic ' + Buffer.from('us"er:p@assword').toString('base64')
+    })
     t.end()
   })
 
