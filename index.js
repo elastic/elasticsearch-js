@@ -24,7 +24,7 @@ const { URL } = require('url')
 const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
-const ConnectionPool = require('./lib/ConnectionPool')
+const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
@@ -74,9 +74,9 @@ class Client extends EventEmitter {
 
     const options = Object.assign({}, {
       Connection,
-      ConnectionPool,
       Transport,
       Serializer,
+      ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
       maxRetries: 3,
       requestTimeout: 30000,
       pingTimeout: 3000,
