@@ -811,6 +811,53 @@ test('Port handling', t => {
   t.end()
 })
 
+test('Authorization header', t => {
+  t.test('None', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200')
+    })
+
+    t.deepEqual(connection.headers, {})
+
+    t.end()
+  })
+
+  t.test('Basic', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { username: 'foo', password: 'bar' }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'Basic Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.test('ApiKey (string)', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { apiKey: 'Zm9vOmJhcg==' }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.test('ApiKey (object)', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { apiKey: { id: 'foo', api_key: 'bar' } }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.end()
+})
+
 test('Should not add agent and ssl to the serialized connection', t => {
   const connection = new Connection({
     url: new URL('http://localhost:9200')
@@ -818,7 +865,7 @@ test('Should not add agent and ssl to the serialized connection', t => {
 
   t.strictEqual(
     JSON.stringify(connection),
-    '{"url":"http://localhost:9200/","id":"http://localhost:9200/","headers":null,"deadCount":0,"resurrectTimeout":0,"_openRequests":0,"status":"alive","roles":{"master":true,"data":true,"ingest":true,"ml":false}}'
+    '{"url":"http://localhost:9200/","id":"http://localhost:9200/","headers":{},"deadCount":0,"resurrectTimeout":0,"_openRequests":0,"status":"alive","roles":{"master":true,"data":true,"ingest":true,"ml":false}}'
   )
 
   t.end()
