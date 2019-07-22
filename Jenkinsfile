@@ -8,26 +8,26 @@ pipeline {
   stages {
     stage('System info') {
       steps {
-        node --version
-        npm --version
+        sh 'node --version'
+        sh 'npm --version'
       }
     }
 
     stage('Install dependencies') {
       steps {
-        npm install
+        sh 'npm install'
       }
     }
 
     stage('License check') {
       steps {
-        npm run license-checker
+        sh 'npm run license-checker'
       }
     }
 
     stage('Linter') {
       steps {
-        npm run lint
+        sh 'npm run lint'
       }
     }
 
