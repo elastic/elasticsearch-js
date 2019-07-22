@@ -50,6 +50,26 @@ const nodeOpts: NodeOptions = {
 
 const client2 = new Client({ node: nodeOpts })
 
+const clientBasicAuth = new Client({
+  node: 'http://localhost:9200',
+  auth: { username: 'foo', password: 'bar' }
+})
+
+const clientApiKeyString = new Client({
+  node: 'http://localhost:9200',
+  auth: { apiKey: 'foobar' }
+})
+
+const clientApiKeyObject = new Client({
+  node: 'http://localhost:9200',
+  auth: {
+    apiKey: {
+      id: 'foo',
+      api_key: 'bar'
+    }
+  }
+})
+
 client.on(events.RESPONSE, (err: errors.ElasticsearchClientError | null, request: RequestEvent) => {
   if (err) console.log(err)
   const { body, statusCode } = request
@@ -128,7 +148,7 @@ const searchParams: RequestParams.Search<SearchBody> = {
   }
 }
 
-// Dewfine the interface of the search response
+// Define the interface of the search response
 interface SearchResponse<T> {
   hits: {
     hits: Array<{
@@ -137,7 +157,7 @@ interface SearchResponse<T> {
   }
 }
 
-// Define the intefrace of the source object
+// Define the interface of the source object
 interface Source {
   foo: string
 }

@@ -43,6 +43,28 @@ node: {
 }
 ----
 
+|`auth`
+a|Your authentication data. You can use both Basic authentication and https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey]. +
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] for more details. +
+_Default:_ `null`
+
+Basic authentication:
+[source,js]
+----
+auth: {
+  username: 'elastic',
+  password: 'changeme'
+}
+----
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] authentication:
+[source,js]
+----
+auth: {
+  apiKey: 'base64EncodedKey'
+}
+----
+
+
 |`maxRetries`
 |`number` - Max number of retries for each request. +
 _Default:_ `3`
@@ -163,7 +185,9 @@ _Cloud configuration example:_
 ----
 const client = new Client({
   cloud: {
-    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
+  }, 
+  auth: {
     username: 'elastic',
     password: 'changeme'
   }

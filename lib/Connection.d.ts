@@ -21,6 +21,7 @@
 
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util';
+import { ApiKeyAuth, BasicAuth } from './ConnectionPool'
 import * as http from 'http';
 import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 
@@ -34,6 +35,7 @@ interface ConnectionOptions {
   agent?: AgentOptions | agentFn;
   status?: string;
   roles?: any;
+  auth?: BasicAuth | ApiKeyAuth;
 }
 
 interface RequestOptions extends http.ClientRequestArgs {
