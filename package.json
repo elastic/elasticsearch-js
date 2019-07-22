@@ -22,7 +22,7 @@
     "test:integration": "tap test/integration/index.js -T --no-coverage",
     "test:integration:report": "npm run test:integration | tap-mocha-reporter xunit > $WORKSPACE/test-report-junit.xml",
     "test:types": "tsc --project ./test/types/tsconfig.json",
-    "test:coverage": "nyc npm run test:unit && nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "ci": "npm run license-checker && npm test && npm run test:integration && npm run test:coverage",
