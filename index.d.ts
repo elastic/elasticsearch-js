@@ -97,7 +97,7 @@ interface ClientOptions {
   maxRetries?: number;
   requestTimeout?: number;
   pingTimeout?: number;
-  sniffInterval?: number;
+  sniffInterval?: number | boolean;
   sniffOnStart?: boolean;
   sniffEndpoint?: string;
   sniffOnConnectionFault?: boolean;
