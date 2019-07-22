@@ -1,6 +1,6 @@
 ---
 ELASTICSEARCH_VERSION:
-  - 6.8.2
+  - 6.8.1
 
 NODE_JS_VERSION:
   - 12
