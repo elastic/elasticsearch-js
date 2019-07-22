@@ -1,6 +1,10 @@
 = Elasticsearch Node.js client
 
+<<<<<<< HEAD
 :branch: 7.x
+=======
+:branch: master
+>>>>>>> master
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]

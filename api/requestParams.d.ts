@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 export interface Generic {
   method?: string;
@@ -30,6 +15,8 @@ export interface Generic {
 export interface Bulk<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   wait_for_active_shards?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
@@ -385,7 +372,8 @@ export interface Delete extends Generic {
 
 export interface DeleteByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -402,7 +390,10 @@ export interface DeleteByQuery<T = any> extends Generic {
   scroll?: string;
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
+<<<<<<< HEAD
   size?: number;
+=======
+>>>>>>> master
   max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
@@ -437,6 +428,8 @@ export interface Exists extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -453,6 +446,11 @@ export interface ExistsSource extends Generic {
   id: string;
   index: string;
   type?: string;
+<<<<<<< HEAD
+=======
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> master
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -468,6 +466,8 @@ export interface Explain<T = any> extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyze_wildcard?: boolean;
   analyzer?: string;
   default_operator?: 'AND' | 'OR';
@@ -496,6 +496,8 @@ export interface Get extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -517,6 +519,11 @@ export interface GetSource extends Generic {
   id: string;
   index: string;
   type?: string;
+<<<<<<< HEAD
+=======
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+>>>>>>> master
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -830,7 +837,6 @@ export interface IndicesShardStores extends Generic {
 export interface IndicesShrink<T = any> extends Generic {
   index: string;
   target: string;
-  copy_settings?: boolean;
   timeout?: string;
   master_timeout?: string;
   wait_for_active_shards?: string;
@@ -840,7 +846,6 @@ export interface IndicesShrink<T = any> extends Generic {
 export interface IndicesSplit<T = any> extends Generic {
   index: string;
   target: string;
-  copy_settings?: boolean;
   timeout?: string;
   master_timeout?: string;
   wait_for_active_shards?: string;
@@ -928,6 +933,8 @@ export interface IngestSimulate<T = any> extends Generic {
 export interface Mget<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -941,7 +948,6 @@ export interface Mget<T = any> extends Generic {
 
 export interface Msearch<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   max_concurrent_searches?: number;
   typed_keys?: boolean;
@@ -954,7 +960,6 @@ export interface Msearch<T = any> extends Generic {
 
 export interface MsearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
   typed_keys?: boolean;
   max_concurrent_searches?: number;
@@ -965,7 +970,6 @@ export interface MsearchTemplate<T = any> extends Generic {
 
 export interface Mtermvectors<T = any> extends Generic {
   index?: string;
-  type?: string;
   ids?: string | string[];
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1077,7 +1081,8 @@ export interface Scroll<T = any> extends Generic {
 
 export interface Search<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   ccs_minimize_roundtrips?: boolean;
@@ -1135,7 +1140,6 @@ export interface SearchShards extends Generic {
 
 export interface SearchTemplate<T = any> extends Generic {
   index?: string | string[];
-  type?: string | string[];
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
@@ -1240,7 +1244,6 @@ export interface TasksList extends Generic {
 
 export interface Termvectors<T = any> extends Generic {
   index: string;
-  type?: string;
   id?: string;
   term_statistics?: boolean;
   field_statistics?: boolean;
@@ -1260,6 +1263,8 @@ export interface Update<T = any> extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   wait_for_active_shards?: string;
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -1276,7 +1281,8 @@ export interface Update<T = any> extends Generic {
 
 export interface UpdateByQuery<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -1294,7 +1300,10 @@ export interface UpdateByQuery<T = any> extends Generic {
   scroll?: string;
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
+<<<<<<< HEAD
   size?: number;
+=======
+>>>>>>> master
   max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];

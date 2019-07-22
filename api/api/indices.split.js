@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
@@ -30,7 +15,6 @@ function buildIndicesSplit (opts) {
    *
    * @param {string} index - The name of the source index to split
    * @param {string} target - The name of the target index to split into
-   * @param {boolean} copy_settings - whether or not to copy settings from the source index (defaults to false)
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the shrunken index before the operation returns.
@@ -38,7 +22,6 @@ function buildIndicesSplit (opts) {
    */
 
   const acceptedQuerystring = [
-    'copy_settings',
     'timeout',
     'master_timeout',
     'wait_for_active_shards',
@@ -50,7 +33,6 @@ function buildIndicesSplit (opts) {
   ]
 
   const snakeCase = {
-    copySettings: 'copy_settings',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',
     errorTrace: 'error_trace',
