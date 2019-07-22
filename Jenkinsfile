@@ -1,22 +1,33 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:10-alpine'
+    }
+  }
 
   stages {
+    stage('System info') {
+      steps {
+        node --version
+        npm --version
+      }
+    }
+
     stage('Install dependencies') {
       steps {
-        echo 'Install dependencies'
+        npm install
       }
     }
 
     stage('License check') {
       steps {
-        echo 'License check'
+        npm run license-checker
       }
     }
 
     stage('Linter') {
       steps {
-        echo 'Linter'
+        npm run lint
       }
     }
 
