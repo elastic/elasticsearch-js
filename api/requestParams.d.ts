@@ -505,8 +505,6 @@ export interface Get extends Generic {
   _source?: string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte' | 'force';
 }
