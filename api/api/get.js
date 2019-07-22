@@ -36,13 +36,7 @@ function buildGet (opts) {
     'routing',
     '_source',
     '_source_excludes',
-<<<<<<< HEAD
     '_source_includes',
-=======
-    '_source_exclude',
-    '_source_includes',
-    '_source_include',
->>>>>>> master
     'version',
     'version_type',
     'pretty',
@@ -55,13 +49,7 @@ function buildGet (opts) {
   const snakeCase = {
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
-<<<<<<< HEAD
     _sourceIncludes: '_source_includes',
-=======
-    _sourceExclude: '_source_exclude',
-    _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
->>>>>>> master
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'

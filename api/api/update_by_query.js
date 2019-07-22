@@ -14,6 +14,7 @@ function buildUpdateByQuery (opts) {
    * Perform a [update_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
    * @param {string} analyzer - The analyzer to use for the query string
    * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
    * @param {enum} default_operator - The default operator for query string query (AND or OR)
@@ -31,10 +32,7 @@ function buildUpdateByQuery (opts) {
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
    * @param {enum} search_type - Search operation type
    * @param {time} search_timeout - Explicit timeout for each search request. Defaults to no timeout.
-<<<<<<< HEAD
    * @param {number} size - Deprecated, please use `max_docs` instead
-=======
->>>>>>> master
    * @param {number} max_docs - Maximum number of documents to process (default: all documents)
    * @param {list} sort - A comma-separated list of <field>:<direction> pairs
    * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
@@ -73,17 +71,12 @@ function buildUpdateByQuery (opts) {
     'scroll',
     'search_type',
     'search_timeout',
-<<<<<<< HEAD
     'size',
-=======
->>>>>>> master
     'max_docs',
     'sort',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'terminate_after',
     'stats',
     'version',
@@ -113,9 +106,7 @@ function buildUpdateByQuery (opts) {
     searchTimeout: 'search_timeout',
     maxDocs: 'max_docs',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     terminateAfter: 'terminate_after',
     versionType: 'version_type',
     requestCache: 'request_cache',
@@ -145,6 +136,12 @@ function buildUpdateByQuery (opts) {
       return handleError(err, callback)
     }
 
+    // check required url components
+    if (params['type'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -152,11 +149,7 @@ function buildUpdateByQuery (opts) {
     }
 
     var warnings = []
-<<<<<<< HEAD
     var { method, body, index, type, ...querystring } = params
-=======
-    var { method, body, index, ...querystring } = params
->>>>>>> master
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
@@ -170,7 +163,11 @@ function buildUpdateByQuery (opts) {
 
     var path = ''
 
-    path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
+    if ((index) != null && (type) != null) {
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_update_by_query'
+    } else {
+      path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
+    }
 
     // build request object
     const request = {

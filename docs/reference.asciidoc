@@ -757,7 +757,7 @@ link:{ref}/cat-thread-pool.html[Reference]
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-scroll.html[Reference]
+link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1154,6 +1154,9 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+
 |`analyzer`
 |`string` - The analyzer to use for the query string
 
@@ -1205,12 +1208,9 @@ _Default:_ `open`
 |`search_timeout` or `searchTimeout`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
-<<<<<<< HEAD
 |`size`
 |`number` - Deprecated, please use `max_docs` instead
 
-=======
->>>>>>> master
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
 
@@ -1982,7 +1982,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-link:{ref}/indices-synced-flush.html[Reference]
+link:{ref}/indices-flush.html#synced-flush-api[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2567,6 +2567,9 @@ link:{ref}/indices-shrink-index.html[Reference]
 |`target`
 |`string` - The name of the target index to shrink into
 
+|`copy_settings` or `copySettings`
+|`boolean` - whether or not to copy settings from the source index (defaults to false)
+
 |`timeout`
 |`string` - Explicit operation timeout
 
@@ -2594,6 +2597,9 @@ link:{ref}/indices-split-index.html[Reference]
 
 |`target`
 |`string` - The name of the target index to split into
+
+|`copy_settings` or `copySettings`
+|`boolean` - whether or not to copy settings from the source index (defaults to false)
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -2909,6 +2915,9 @@ link:{ref}/search-multi-search.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to use as default
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to use as default
+
 |`search_type` or `searchType`
 |`'query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch'` - Search operation type
 
@@ -2949,6 +2958,9 @@ link:{ref}/search-multi-search.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to use as default
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to use as default
+
 |`search_type` or `searchType`
 |`'query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch'` - Search operation type
 
@@ -2980,6 +2992,9 @@ link:{ref}/docs-multi-termvectors.html[Reference]
 |===
 |`index`
 |`string` - The index in which the document resides.
+
+|`type`
+|`string` - The type of the document.
 
 |`ids`
 |`string, string[]` - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
@@ -3311,7 +3326,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 ----
 client.scroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-scroll.html[Reference]
+link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -3341,6 +3356,9 @@ link:{ref}/search-search.html[Reference]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -3523,6 +3541,9 @@ link:{ref}/search-template.html[Reference]
 |===
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3852,6 +3873,9 @@ link:{ref}/docs-termvectors.html[Reference]
 |`index`
 |`string` - The index in which the document resides.
 
+|`type`
+|`string` - The type of the document.
+
 |`id`
 |`string` - The id of the document, when not specified a doc param should be supplied.
 
@@ -3963,6 +3987,9 @@ link:{ref}/docs-update-by-query.html[Reference]
 |`index`
 |`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
+|`type`
+|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+
 |`analyzer`
 |`string` - The analyzer to use for the query string
 
@@ -4017,12 +4044,9 @@ _Default:_ `open`
 |`search_timeout` or `searchTimeout`
 |`string` - Explicit timeout for each search request. Defaults to no timeout.
 
-<<<<<<< HEAD
 |`size`
 |`number` - Deprecated, please use `max_docs` instead
 
-=======
->>>>>>> master
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
 
@@ -4278,7 +4302,6 @@ link:{ref}/get-data-frame-transform.html[Reference]
 
 |`from`
 |`number` - skips a number of transform configs, defaults to 0
-<<<<<<< HEAD
 
 |`size`
 |`number` - specifies a max number of transforms to get, defaults to 100
@@ -4286,25 +4309,12 @@ link:{ref}/get-data-frame-transform.html[Reference]
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
 
-=======
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
->>>>>>> master
 |===
 
 === dataFrame.getDataFrameTransformStats
 [source,js]
 ----
 client.dataFrame.getDataFrameTransformStats([params] [, options] [, callback])
-<<<<<<< HEAD
-----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
-=======
 ----
 link:{ref}/get-data-frame-transform-stats.html[Reference]
 [cols=2*]
@@ -4352,164 +4362,6 @@ link:{ref}/put-data-frame-transform.html[Reference]
 
 |===
 
-=== dataFrame.startDataFrameTransform
-[source,js]
-----
-client.dataFrame.startDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/start-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrame.stopDataFrameTransform
-[source,js]
-----
-client.dataFrame.stopDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/stop-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== graph.explore
-[source,js]
-----
-client.graph.explore([params] [, options] [, callback])
-----
-link:{ref}/graph-explore-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
-=== ilm.deleteLifecycle
-[source,js]
-----
-client.ilm.deleteLifecycle([params] [, options] [, callback])
-----
-link:{ref}/ilm-delete-lifecycle.html[Reference]
->>>>>>> master
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform stats, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transform stats to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-<<<<<<< HEAD
-=== dataFrame.previewDataFrameTransform
-[source,js]
-----
-client.dataFrame.previewDataFrameTransform([params] [, options] [, callback])
-----
-link:{ref}/preview-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the data_frame transform to preview
-
-|===
-
-=== dataFrame.putDataFrameTransform
-=======
-=== ilm.explainLifecycle
-[source,js]
-----
-client.ilm.explainLifecycle([params] [, options] [, callback])
-----
-link:{ref}/ilm-explain-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to explain
-
-|===
-
-=== ilm.getLifecycle
-[source,js]
-----
-client.ilm.getLifecycle([params] [, options] [, callback])
-----
-link:{ref}/ilm-get-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-
-=== ilm.getStatus
-[source,js]
-----
-client.ilm.getStatus([params] [, options] [, callback])
-----
-link:{ref}/ilm-get-status.html[Reference]
-
-
-=== ilm.moveToStep
->>>>>>> master
-[source,js]
-----
-client.dataFrame.putDataFrameTransform([params] [, options] [, callback])
-----
-<<<<<<< HEAD
-link:{ref}/put-data-frame-transform.html[Reference]
-=======
-link:{ref}/ilm-move-to-step.html[Reference]
->>>>>>> master
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`body`
-|`object` - The data frame transform definition
-
-|===
-
-<<<<<<< HEAD
 === dataFrame.startDataFrameTransform
 [source,js]
 ----
@@ -4636,8 +4488,6 @@ link:{ref}/ilm-move-to-step.html[Reference]
 
 |===
 
-=======
->>>>>>> master
 === ilm.putLifecycle
 [source,js]
 ----
