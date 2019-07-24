@@ -554,16 +554,6 @@ declare class Client extends EventEmitter {
     put_user: ApiMethod<RequestParams.SecurityPutUser>
     putUser: ApiMethod<RequestParams.SecurityPutUser>
   }
-  slm: {
-    delete_lifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
-    deleteLifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
-    execute_lifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
-    executeLifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
-    get_lifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
-    getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
-    put_lifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
-    putLifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
-  }
   snapshot: {
     create: ApiMethod<RequestParams.SnapshotCreate>
     create_repository: ApiMethod<RequestParams.SnapshotCreateRepository>
