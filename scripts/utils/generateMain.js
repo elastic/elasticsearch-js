@@ -73,7 +73,13 @@ function genFactory (folder) {
 
   // serialize the type object
   const typesStr = Object.keys(types)
-    .map(key => `${key}: ${JSON.stringify(types[key], null, 2)}`)
+    .map(key => {
+      const line = `  ${key}: ${JSON.stringify(types[key], null, 4)}`
+      if (line.slice(-1) === '}') {
+        return line.slice(0, -1) + '  }'
+      }
+      return line
+    })
     .join('\n')
     // remove useless quotes and commas
     .replace(/"/g, '')
