@@ -87,7 +87,6 @@ function start (opts) {
       )
 
       log.succeed('Done!')
-      console.log('Remember to copy the generated types into the index.d.ts file')
     })
   })
 
