@@ -1365,6 +1365,7 @@ export interface CcrUnfollow extends Generic {
 
 export interface DataFrameDeleteDataFrameTransform extends Generic {
   transform_id: string;
+  force?: boolean;
 }
 
 export interface DataFrameGetDataFrameTransform extends Generic {
@@ -1387,6 +1388,7 @@ export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
 
 export interface DataFramePutDataFrameTransform<T = any> extends Generic {
   transform_id: string;
+  defer_validation?: boolean;
   body: T;
 }
 
@@ -2024,6 +2026,23 @@ export interface SecurityPutUser<T = any> extends Generic {
   username: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
+}
+
+export interface SlmDeleteLifecycle extends Generic {
+  policy?: string;
+}
+
+export interface SlmExecuteLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmGetLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmPutLifecycle<T = any> extends Generic {
+  policy_id?: string;
+  body?: T;
 }
 
 export interface SqlClearCursor<T = any> extends Generic {

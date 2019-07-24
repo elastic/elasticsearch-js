@@ -7,38 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildScroll (opts) {
+function buildSlmExecuteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll) request
+   * Perform a [slm.execute_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api.html) request
    *
-   * @param {string} scroll_id - The scroll ID
-   * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
-   * @param {string} scroll_id - The scroll ID for scrolled search
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {object} body - The scroll ID if not passed by URL or query parameter.
+   * @param {string} policy_id - The id of the snapshot lifecycle policy to be executed
    */
 
   const acceptedQuerystring = [
-    'scroll',
-    'scroll_id',
-    'rest_total_hits_as_int',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    scrollId: 'scroll_id',
-    restTotalHitsAsInt: 'rest_total_hits_as_int',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
-  return function scroll (params, options, callback) {
+  return function slmExecuteLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -50,6 +36,12 @@ function buildScroll (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -57,11 +49,11 @@ function buildScroll (opts) {
     }
 
     var warnings = []
-    var { method, body, scrollId, scroll_id, ...querystring } = params
+    var { method, body, policyId, policy_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = body == null ? 'GET' : 'POST'
+      method = 'PUT'
     }
 
     var ignore = options.ignore
@@ -71,17 +63,13 @@ function buildScroll (opts) {
 
     var path = ''
 
-    if ((scroll_id || scrollId) != null) {
-      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)
-    } else {
-      path = '/' + '_search' + '/' + 'scroll'
-    }
+    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/' + '_execute'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: '',
       querystring
     }
 
@@ -90,4 +78,4 @@ function buildScroll (opts) {
   }
 }
 
-module.exports = buildScroll
+module.exports = buildSlmExecuteLifecycle
