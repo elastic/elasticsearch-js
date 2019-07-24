@@ -37,17 +37,17 @@ link:{ref}/common-options.html[Reference]
 [source,ts]
 ----
 client.bulk({
-  index: string
-  type: string
-  wait_for_active_shards: string
-  refresh: 'true' | 'false' | 'wait_for'
-  routing: string
-  timeout: string
-  type: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  pipeline: string
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  refresh: 'true' | 'false' | 'wait_for',
+  routing: string,
+  timeout: string,
+  type: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  pipeline: string,
   body: object
 })
 ----
@@ -96,13 +96,13 @@ link:{ref}/docs-bulk.html[Reference]
 [source,ts]
 ----
 client.cat.aliases({
-  name: string | string[]
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  name: string | string[],
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -139,14 +139,14 @@ link:{ref}/cat-alias.html[Reference]
 [source,ts]
 ----
 client.cat.allocation({
-  node_id: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  node_id: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -186,13 +186,13 @@ link:{ref}/cat-allocation.html[Reference]
 [source,ts]
 ----
 client.cat.count({
-  index: string | string[]
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  index: string | string[],
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -229,15 +229,15 @@ link:{ref}/cat-count.html[Reference]
 [source,ts]
 ----
 client.cat.fielddata({
-  fields: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
-  v: boolean
+  fields: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  v: boolean,
   fields: string | string[]
 })
 ----
@@ -280,13 +280,13 @@ link:{ref}/cat-fielddata.html[Reference]
 [source,ts]
 ----
 client.cat.health({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
-  ts: boolean
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  ts: boolean,
   v: boolean
 })
 ----
@@ -324,7 +324,7 @@ _Default:_ `true`
 [source,ts]
 ----
 client.cat.help({
-  help: boolean
+  help: boolean,
   s: string | string[]
 })
 ----
@@ -343,17 +343,17 @@ link:{ref}/cat.html[Reference]
 [source,ts]
 ----
 client.cat.indices({
-  index: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'm' | 'g'
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  health: 'green' | 'yellow' | 'red'
-  help: boolean
-  pri: boolean
-  s: string | string[]
-  v: boolean
+  index: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'm' | 'g',
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  health: 'green' | 'yellow' | 'red',
+  help: boolean,
+  pri: boolean,
+  s: string | string[],
+  v: boolean,
   include_unloaded_segments: boolean
 })
 ----
@@ -402,12 +402,12 @@ link:{ref}/cat-indices.html[Reference]
 [source,ts]
 ----
 client.cat.master({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -441,12 +441,12 @@ link:{ref}/cat-master.html[Reference]
 [source,ts]
 ----
 client.cat.nodeattrs({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -480,13 +480,13 @@ link:{ref}/cat-nodeattrs.html[Reference]
 [source,ts]
 ----
 client.cat.nodes({
-  format: string
-  full_id: boolean
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  full_id: boolean,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -523,12 +523,12 @@ link:{ref}/cat-nodes.html[Reference]
 [source,ts]
 ----
 client.cat.pendingTasks({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -562,12 +562,12 @@ link:{ref}/cat-pending-tasks.html[Reference]
 [source,ts]
 ----
 client.cat.plugins({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -601,13 +601,13 @@ link:{ref}/cat-plugins.html[Reference]
 [source,ts]
 ----
 client.cat.recovery({
-  index: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  index: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -644,12 +644,12 @@ link:{ref}/cat-recovery.html[Reference]
 [source,ts]
 ----
 client.cat.repositories({
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -683,12 +683,12 @@ link:{ref}/cat-repositories.html[Reference]
 [source,ts]
 ----
 client.cat.segments({
-  index: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  index: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -722,14 +722,14 @@ link:{ref}/cat-segments.html[Reference]
 [source,ts]
 ----
 client.cat.shards({
-  index: string | string[]
-  format: string
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  index: string | string[],
+  format: string,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -769,13 +769,13 @@ link:{ref}/cat-shards.html[Reference]
 [source,ts]
 ----
 client.cat.snapshots({
-  repository: string | string[]
-  format: string
-  ignore_unavailable: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  repository: string | string[],
+  format: string,
+  ignore_unavailable: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -812,14 +812,14 @@ link:{ref}/cat-snapshots.html[Reference]
 [source,ts]
 ----
 client.cat.tasks({
-  format: string
-  node_id: string | string[]
-  actions: string | string[]
-  detailed: boolean
-  parent_task: number
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  format: string,
+  node_id: string | string[],
+  actions: string | string[],
+  detailed: boolean,
+  parent_task: number,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -859,13 +859,13 @@ link:{ref}/tasks.html[Reference]
 [source,ts]
 ----
 client.cat.templates({
-  name: string
-  format: string
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  name: string,
+  format: string,
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -902,14 +902,14 @@ link:{ref}/cat-templates.html[Reference]
 [source,ts]
 ----
 client.cat.threadPool({
-  thread_pool_patterns: string | string[]
-  format: string
-  size: '' | 'k' | 'm' | 'g' | 't' | 'p'
-  local: boolean
-  master_timeout: string
-  h: string | string[]
-  help: boolean
-  s: string | string[]
+  thread_pool_patterns: string | string[],
+  format: string,
+  size: '' | 'k' | 'm' | 'g' | 't' | 'p',
+  local: boolean,
+  master_timeout: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
   v: boolean
 })
 ----
@@ -949,7 +949,7 @@ link:{ref}/cat-thread-pool.html[Reference]
 [source,ts]
 ----
 client.clearScroll({
-  scroll_id: string | string[]
+  scroll_id: string | string[],
   body: object
 })
 ----
@@ -968,8 +968,8 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 [source,ts]
 ----
 client.cluster.allocationExplain({
-  include_yes_decisions: boolean
-  include_disk_info: boolean
+  include_yes_decisions: boolean,
+  include_disk_info: boolean,
   body: object
 })
 ----
@@ -991,9 +991,9 @@ link:{ref}/cluster-allocation-explain.html[Reference]
 [source,ts]
 ----
 client.cluster.getSettings({
-  flat_settings: boolean
-  master_timeout: string
-  timeout: string
+  flat_settings: boolean,
+  master_timeout: string,
+  timeout: string,
   include_defaults: boolean
 })
 ----
@@ -1018,17 +1018,17 @@ link:{ref}/cluster-update-settings.html[Reference]
 [source,ts]
 ----
 client.cluster.health({
-  index: string | string[]
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  level: 'cluster' | 'indices' | 'shards'
-  local: boolean
-  master_timeout: string
-  timeout: string
-  wait_for_active_shards: string
-  wait_for_nodes: string
-  wait_for_events: 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid'
-  wait_for_no_relocating_shards: boolean
-  wait_for_no_initializing_shards: boolean
+  index: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  level: 'cluster' | 'indices' | 'shards',
+  local: boolean,
+  master_timeout: string,
+  timeout: string,
+  wait_for_active_shards: string,
+  wait_for_nodes: string,
+  wait_for_events: 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid',
+  wait_for_no_relocating_shards: boolean,
+  wait_for_no_initializing_shards: boolean,
   wait_for_status: 'green' | 'yellow' | 'red'
 })
 ----
@@ -1079,7 +1079,7 @@ _Default:_ `cluster`
 [source,ts]
 ----
 client.cluster.pendingTasks({
-  local: boolean
+  local: boolean,
   master_timeout: string
 })
 ----
@@ -1098,9 +1098,9 @@ link:{ref}/cluster-pending.html[Reference]
 [source,ts]
 ----
 client.cluster.putSettings({
-  flat_settings: boolean
-  master_timeout: string
-  timeout: string
+  flat_settings: boolean,
+  master_timeout: string,
+  timeout: string,
   body: object
 })
 ----
@@ -1124,9 +1124,7 @@ link:{ref}/cluster-update-settings.html[Reference]
 === cluster.remoteInfo
 [source,ts]
 ----
-client.cluster.remoteInfo({
-  
-})
+client.cluster.remoteInfo()
 ----
 link:{ref}/cluster-remote-info.html[Reference]
 
@@ -1135,12 +1133,12 @@ link:{ref}/cluster-remote-info.html[Reference]
 [source,ts]
 ----
 client.cluster.reroute({
-  dry_run: boolean
-  explain: boolean
-  retry_failed: boolean
-  metric: string | string[]
-  master_timeout: string
-  timeout: string
+  dry_run: boolean,
+  explain: boolean,
+  retry_failed: boolean,
+  metric: string | string[],
+  master_timeout: string,
+  timeout: string,
   body: object
 })
 ----
@@ -1174,15 +1172,15 @@ link:{ref}/cluster-reroute.html[Reference]
 [source,ts]
 ----
 client.cluster.state({
-  index: string | string[]
-  metric: string | string[]
-  local: boolean
-  master_timeout: string
-  flat_settings: boolean
-  wait_for_metadata_version: number
-  wait_for_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  metric: string | string[],
+  local: boolean,
+  master_timeout: string,
+  flat_settings: boolean,
+  wait_for_metadata_version: number,
+  wait_for_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -1226,8 +1224,8 @@ _Default:_ `open`
 [source,ts]
 ----
 client.cluster.stats({
-  node_id: string | string[]
-  flat_settings: boolean
+  node_id: string | string[],
+  flat_settings: boolean,
   timeout: string
 })
 ----
@@ -1249,22 +1247,22 @@ link:{ref}/cluster-stats.html[Reference]
 [source,ts]
 ----
 client.count({
-  index: string | string[]
-  type: string | string[]
-  ignore_unavailable: boolean
-  ignore_throttled: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  min_score: number
-  preference: string
-  routing: string | string[]
-  q: string
-  analyzer: string
-  analyze_wildcard: boolean
-  default_operator: 'AND' | 'OR'
-  df: string
-  lenient: boolean
-  terminate_after: number
+  index: string | string[],
+  type: string | string[],
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  min_score: number,
+  preference: string,
+  routing: string | string[],
+  q: string,
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  lenient: boolean,
+  terminate_after: number,
   body: object
 })
 ----
@@ -1330,16 +1328,16 @@ _Default:_ `OR`
 [source,ts]
 ----
 client.create({
-  id: string
-  index: string
-  type: string
-  wait_for_active_shards: string
-  refresh: 'true' | 'false' | 'wait_for'
-  routing: string
-  timeout: string
-  version: number
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
-  pipeline: string
+  id: string,
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  refresh: 'true' | 'false' | 'wait_for',
+  routing: string,
+  timeout: string,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  pipeline: string,
   body: object
 })
 ----
@@ -1385,16 +1383,16 @@ link:{ref}/docs-index_.html[Reference]
 [source,ts]
 ----
 client.delete({
-  id: string
-  index: string
-  type: string
-  wait_for_active_shards: string
-  refresh: 'true' | 'false' | 'wait_for'
-  routing: string
-  timeout: string
-  if_seq_no: number
-  if_primary_term: number
-  version: number
+  id: string,
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  refresh: 'true' | 'false' | 'wait_for',
+  routing: string,
+  timeout: string,
+  if_seq_no: number,
+  if_primary_term: number,
+  version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
 ----
@@ -1440,39 +1438,39 @@ link:{ref}/docs-delete.html[Reference]
 [source,ts]
 ----
 client.deleteByQuery({
-  index: string | string[]
-  analyzer: string
-  analyze_wildcard: boolean
-  default_operator: 'AND' | 'OR'
-  df: string
-  from: number
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  conflicts: 'abort' | 'proceed'
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  lenient: boolean
-  preference: string
-  q: string
-  routing: string | string[]
-  scroll: string
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch'
-  search_timeout: string
-  max_docs: number
-  sort: string | string[]
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  terminate_after: number
-  stats: string | string[]
-  version: boolean
-  request_cache: boolean
-  refresh: boolean
-  timeout: string
-  wait_for_active_shards: string
-  scroll_size: number
-  wait_for_completion: boolean
-  requests_per_second: number
-  slices: number
+  index: string | string[],
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  from: number,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  conflicts: 'abort' | 'proceed',
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  search_timeout: string,
+  max_docs: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  version: boolean,
+  request_cache: boolean,
+  refresh: boolean,
+  timeout: string,
+  wait_for_active_shards: string,
+  scroll_size: number,
+  wait_for_completion: boolean,
+  requests_per_second: number,
+  slices: number,
   body: object
 })
 ----
@@ -1593,7 +1591,7 @@ _Default:_ `1`
 [source,ts]
 ----
 client.deleteByQueryRethrottle({
-  task_id: string
+  task_id: string,
   requests_per_second: number
 })
 ----
@@ -1612,8 +1610,8 @@ link:{ref}/docs-delete-by-query.html[Reference]
 [source,ts]
 ----
 client.deleteScript({
-  id: string
-  timeout: string
+  id: string,
+  timeout: string,
   master_timeout: string
 })
 ----
@@ -1635,18 +1633,18 @@ link:{ref}/modules-scripting.html[Reference]
 [source,ts]
 ----
 client.exists({
-  id: string
-  index: string
-  type: string
-  stored_fields: string | string[]
-  preference: string
-  realtime: boolean
-  refresh: boolean
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  version: number
+  id: string,
+  index: string,
+  type: string,
+  stored_fields: string | string[],
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
 ----
@@ -1698,17 +1696,17 @@ link:{ref}/docs-get.html[Reference]
 [source,ts]
 ----
 client.existsSource({
-  id: string
-  index: string
-  type: string
-  preference: string
-  realtime: boolean
-  refresh: boolean
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  version: number
+  id: string,
+  index: string,
+  type: string,
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
 ----
@@ -1757,21 +1755,21 @@ link:{ref}/docs-get.html[Reference]
 [source,ts]
 ----
 client.explain({
-  id: string
-  index: string
-  type: string
-  analyze_wildcard: boolean
-  analyzer: string
-  default_operator: 'AND' | 'OR'
-  df: string
-  stored_fields: string | string[]
-  lenient: boolean
-  preference: string
-  q: string
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
+  id: string,
+  index: string,
+  type: string,
+  analyze_wildcard: boolean,
+  analyzer: string,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  stored_fields: string | string[],
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
   body: object
 })
 ----
@@ -1833,11 +1831,11 @@ _Default:_ `OR`
 [source,ts]
 ----
 client.fieldCaps({
-  index: string | string[]
-  fields: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  fields: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   include_unmapped: boolean
 })
 ----
@@ -1869,18 +1867,18 @@ _Default:_ `open`
 [source,ts]
 ----
 client.get({
-  id: string
-  index: string
-  type: string
-  stored_fields: string | string[]
-  preference: string
-  realtime: boolean
-  refresh: boolean
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  version: number
+  id: string,
+  index: string,
+  type: string,
+  stored_fields: string | string[],
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
 ----
@@ -1932,7 +1930,7 @@ link:{ref}/docs-get.html[Reference]
 [source,ts]
 ----
 client.getScript({
-  id: string
+  id: string,
   master_timeout: string
 })
 ----
@@ -1951,17 +1949,17 @@ link:{ref}/modules-scripting.html[Reference]
 [source,ts]
 ----
 client.getSource({
-  id: string
-  index: string
-  type: string
-  preference: string
-  realtime: boolean
-  refresh: boolean
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  version: number
+  id: string,
+  index: string,
+  type: string,
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
 ----
@@ -2010,19 +2008,19 @@ link:{ref}/docs-get.html[Reference]
 [source,ts]
 ----
 client.index({
-  id: string
-  index: string
-  type: string
-  wait_for_active_shards: string
-  op_type: 'index' | 'create'
-  refresh: 'true' | 'false' | 'wait_for'
-  routing: string
-  timeout: string
-  version: number
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
-  if_seq_no: number
-  if_primary_term: number
-  pipeline: string
+  id: string,
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  op_type: 'index' | 'create',
+  refresh: 'true' | 'false' | 'wait_for',
+  routing: string,
+  timeout: string,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  if_seq_no: number,
+  if_primary_term: number,
+  pipeline: string,
   body: object
 })
 ----
@@ -2078,8 +2076,8 @@ _Default:_ `index`
 [source,ts]
 ----
 client.indices.analyze({
-  index: string
-  index: string
+  index: string,
+  index: string,
   body: object
 })
 ----
@@ -2101,14 +2099,14 @@ link:{ref}/indices-analyze.html[Reference]
 [source,ts]
 ----
 client.indices.clearCache({
-  index: string | string[]
-  fielddata: boolean
-  fields: string | string[]
-  query: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  index: string | string[]
+  index: string | string[],
+  fielddata: boolean,
+  fields: string | string[],
+  query: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  index: string | string[],
   request: boolean
 })
 ----
@@ -2149,12 +2147,12 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.close({
-  index: string | string[]
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -2189,11 +2187,11 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.create({
-  index: string
-  include_type_name: boolean
-  wait_for_active_shards: string
-  timeout: string
-  master_timeout: string
+  index: string,
+  include_type_name: boolean,
+  wait_for_active_shards: string,
+  timeout: string,
+  master_timeout: string,
   body: object
 })
 ----
@@ -2224,11 +2222,11 @@ link:{ref}/indices-create-index.html[Reference]
 [source,ts]
 ----
 client.indices.delete({
-  index: string | string[]
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -2260,9 +2258,9 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.deleteAlias({
-  index: string | string[]
-  name: string | string[]
-  timeout: string
+  index: string | string[],
+  name: string | string[],
+  timeout: string,
   master_timeout: string
 })
 ----
@@ -2287,8 +2285,8 @@ link:{ref}/indices-aliases.html[Reference]
 [source,ts]
 ----
 client.indices.deleteTemplate({
-  name: string
-  timeout: string
+  name: string,
+  timeout: string,
   master_timeout: string
 })
 ----
@@ -2310,12 +2308,12 @@ link:{ref}/indices-templates.html[Reference]
 [source,ts]
 ----
 client.indices.exists({
-  index: string | string[]
-  local: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  flat_settings: boolean
+  index: string | string[],
+  local: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  flat_settings: boolean,
   include_defaults: boolean
 })
 ----
@@ -2350,11 +2348,11 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.existsAlias({
-  index: string | string[]
-  name: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  name: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2386,9 +2384,9 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.existsTemplate({
-  name: string | string[]
-  flat_settings: boolean
-  master_timeout: string
+  name: string | string[],
+  flat_settings: boolean,
+  master_timeout: string,
   local: boolean
 })
 ----
@@ -2413,11 +2411,11 @@ link:{ref}/indices-templates.html[Reference]
 [source,ts]
 ----
 client.indices.existsType({
-  index: string | string[]
-  type: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  type: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2449,11 +2447,11 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.flush({
-  index: string | string[]
-  force: boolean
-  wait_if_ongoing: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  force: boolean,
+  wait_if_ongoing: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -2485,9 +2483,9 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.flushSynced({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -2513,12 +2511,12 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.forcemerge({
-  index: string | string[]
-  flush: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  max_num_segments: number
+  index: string | string[],
+  flush: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  max_num_segments: number,
   only_expunge_deletes: boolean
 })
 ----
@@ -2553,14 +2551,14 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.get({
-  index: string | string[]
-  include_type_name: boolean
-  local: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  flat_settings: boolean
-  include_defaults: boolean
+  index: string | string[],
+  include_type_name: boolean,
+  local: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  flat_settings: boolean,
+  include_defaults: boolean,
   master_timeout: string
 })
 ----
@@ -2601,11 +2599,11 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.getAlias({
-  index: string | string[]
-  name: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  name: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2637,14 +2635,14 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getFieldMapping({
-  index: string | string[]
-  type: string | string[]
-  fields: string | string[]
-  include_type_name: boolean
-  include_defaults: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  type: string | string[],
+  fields: string | string[],
+  include_type_name: boolean,
+  include_defaults: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2685,13 +2683,13 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.getMapping({
-  index: string | string[]
-  type: string | string[]
-  include_type_name: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  master_timeout: string
+  index: string | string[],
+  type: string | string[],
+  include_type_name: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  master_timeout: string,
   local: boolean
 })
 ----
@@ -2729,14 +2727,14 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.getSettings({
-  index: string | string[]
-  name: string | string[]
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  flat_settings: boolean
-  local: boolean
+  index: string | string[],
+  name: string | string[],
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  flat_settings: boolean,
+  local: boolean,
   include_defaults: boolean
 })
 ----
@@ -2777,10 +2775,10 @@ _Default:_ `open,closed`
 [source,ts]
 ----
 client.indices.getTemplate({
-  name: string | string[]
-  include_type_name: boolean
-  flat_settings: boolean
-  master_timeout: string
+  name: string | string[],
+  include_type_name: boolean,
+  flat_settings: boolean,
+  master_timeout: string,
   local: boolean
 })
 ----
@@ -2808,9 +2806,9 @@ link:{ref}/indices-templates.html[Reference]
 [source,ts]
 ----
 client.indices.getUpgrade({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -2836,12 +2834,12 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.open({
-  index: string | string[]
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -2876,10 +2874,10 @@ _Default:_ `closed`
 [source,ts]
 ----
 client.indices.putAlias({
-  index: string | string[]
-  name: string
-  timeout: string
-  master_timeout: string
+  index: string | string[],
+  name: string,
+  timeout: string,
+  master_timeout: string,
   body: object
 })
 ----
@@ -2907,14 +2905,14 @@ link:{ref}/indices-aliases.html[Reference]
 [source,ts]
 ----
 client.indices.putMapping({
-  index: string | string[]
-  type: string
-  include_type_name: boolean
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  type: string,
+  include_type_name: boolean,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   body: object
 })
 ----
@@ -2955,14 +2953,14 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.putSettings({
-  index: string | string[]
-  master_timeout: string
-  timeout: string
-  preserve_existing: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  flat_settings: boolean
+  index: string | string[],
+  master_timeout: string,
+  timeout: string,
+  preserve_existing: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  flat_settings: boolean,
   body: object
 })
 ----
@@ -3003,13 +3001,13 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.putTemplate({
-  name: string
-  include_type_name: boolean
-  order: number
-  create: boolean
-  timeout: string
-  master_timeout: string
-  flat_settings: boolean
+  name: string,
+  include_type_name: boolean,
+  order: number,
+  create: boolean,
+  timeout: string,
+  master_timeout: string,
+  flat_settings: boolean,
   body: object
 })
 ----
@@ -3046,8 +3044,8 @@ link:{ref}/indices-templates.html[Reference]
 [source,ts]
 ----
 client.indices.recovery({
-  index: string | string[]
-  detailed: boolean
+  index: string | string[],
+  detailed: boolean,
   active_only: boolean
 })
 ----
@@ -3069,9 +3067,9 @@ link:{ref}/indices-recovery.html[Reference]
 [source,ts]
 ----
 client.indices.refresh({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -3097,13 +3095,13 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.rollover({
-  alias: string
-  new_index: string
-  include_type_name: boolean
-  timeout: string
-  dry_run: boolean
-  master_timeout: string
-  wait_for_active_shards: string
+  alias: string,
+  new_index: string,
+  include_type_name: boolean,
+  timeout: string,
+  dry_run: boolean,
+  master_timeout: string,
+  wait_for_active_shards: string,
   body: object
 })
 ----
@@ -3140,10 +3138,10 @@ link:{ref}/indices-rollover-index.html[Reference]
 [source,ts]
 ----
 client.indices.segments({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   verbose: boolean
 })
 ----
@@ -3172,10 +3170,10 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.shardStores({
-  index: string | string[]
-  status: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  status: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -3204,11 +3202,11 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.shrink({
-  index: string
-  target: string
-  timeout: string
-  master_timeout: string
-  wait_for_active_shards: string
+  index: string,
+  target: string,
+  timeout: string,
+  master_timeout: string,
+  wait_for_active_shards: string,
   body: object
 })
 ----
@@ -3239,11 +3237,11 @@ link:{ref}/indices-shrink-index.html[Reference]
 [source,ts]
 ----
 client.indices.split({
-  index: string
-  target: string
-  timeout: string
-  master_timeout: string
-  wait_for_active_shards: string
+  index: string,
+  target: string,
+  timeout: string,
+  master_timeout: string,
+  wait_for_active_shards: string,
   body: object
 })
 ----
@@ -3274,17 +3272,17 @@ link:{ref}/indices-split-index.html[Reference]
 [source,ts]
 ----
 client.indices.stats({
-  index: string | string[]
-  metric: string | string[]
-  completion_fields: string | string[]
-  fielddata_fields: string | string[]
-  fields: string | string[]
-  groups: string | string[]
-  level: 'cluster' | 'indices' | 'shards'
-  types: string | string[]
-  include_segment_file_sizes: boolean
-  include_unloaded_segments: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  metric: string | string[],
+  completion_fields: string | string[],
+  fielddata_fields: string | string[],
+  fields: string | string[],
+  groups: string | string[],
+  level: 'cluster' | 'indices' | 'shards',
+  types: string | string[],
+  include_segment_file_sizes: boolean,
+  include_unloaded_segments: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   forbid_closed_indices: boolean
 })
 ----
@@ -3336,8 +3334,8 @@ _Default:_ `true`
 [source,ts]
 ----
 client.indices.updateAliases({
-  timeout: string
-  master_timeout: string
+  timeout: string,
+  master_timeout: string,
   body: object
 })
 ----
@@ -3359,11 +3357,11 @@ link:{ref}/indices-aliases.html[Reference]
 [source,ts]
 ----
 client.indices.upgrade({
-  index: string | string[]
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  ignore_unavailable: boolean
-  wait_for_completion: boolean
+  index: string | string[],
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  ignore_unavailable: boolean,
+  wait_for_completion: boolean,
   only_ancient_segments: boolean
 })
 ----
@@ -3395,20 +3393,20 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.validateQuery({
-  index: string | string[]
-  type: string | string[]
-  explain: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  q: string
-  analyzer: string
-  analyze_wildcard: boolean
-  default_operator: 'AND' | 'OR'
-  df: string
-  lenient: boolean
-  rewrite: boolean
-  all_shards: boolean
+  index: string | string[],
+  type: string | string[],
+  explain: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  q: string,
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  lenient: boolean,
+  rewrite: boolean,
+  all_shards: boolean,
   body: object
 })
 ----
@@ -3467,9 +3465,7 @@ _Default:_ `OR`
 === info
 [source,ts]
 ----
-client.info({
-  
-})
+client.info()
 ----
 link:http://www.elastic.co/guide/[Reference]
 
@@ -3478,8 +3474,8 @@ link:http://www.elastic.co/guide/[Reference]
 [source,ts]
 ----
 client.ingest.deletePipeline({
-  id: string
-  master_timeout: string
+  id: string,
+  master_timeout: string,
   timeout: string
 })
 ----
@@ -3501,7 +3497,7 @@ link:{ref}/delete-pipeline-api.html[Reference]
 [source,ts]
 ----
 client.ingest.getPipeline({
-  id: string
+  id: string,
   master_timeout: string
 })
 ----
@@ -3519,9 +3515,7 @@ link:{ref}/get-pipeline-api.html[Reference]
 === ingest.processorGrok
 [source,ts]
 ----
-client.ingest.processorGrok({
-  
-})
+client.ingest.processorGrok()
 ----
 link:{ref}/grok-processor.html#grok-processor-rest-get[Reference]
 
@@ -3530,9 +3524,9 @@ link:{ref}/grok-processor.html#grok-processor-rest-get[Reference]
 [source,ts]
 ----
 client.ingest.putPipeline({
-  id: string
-  master_timeout: string
-  timeout: string
+  id: string,
+  master_timeout: string,
+  timeout: string,
   body: object
 })
 ----
@@ -3557,8 +3551,8 @@ link:{ref}/put-pipeline-api.html[Reference]
 [source,ts]
 ----
 client.ingest.simulate({
-  id: string
-  verbose: boolean
+  id: string,
+  verbose: boolean,
   body: object
 })
 ----
@@ -3580,16 +3574,16 @@ link:{ref}/simulate-pipeline-api.html[Reference]
 [source,ts]
 ----
 client.mget({
-  index: string
-  type: string
-  stored_fields: string | string[]
-  preference: string
-  realtime: boolean
-  refresh: boolean
-  routing: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
+  index: string,
+  type: string,
+  stored_fields: string | string[],
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
   body: object
 })
 ----
@@ -3635,14 +3629,14 @@ link:{ref}/docs-multi-get.html[Reference]
 [source,ts]
 ----
 client.msearch({
-  index: string | string[]
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch'
-  max_concurrent_searches: number
-  typed_keys: boolean
-  pre_filter_shard_size: number
-  max_concurrent_shard_requests: number
-  rest_total_hits_as_int: boolean
-  ccs_minimize_roundtrips: boolean
+  index: string | string[],
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  max_concurrent_searches: number,
+  typed_keys: boolean,
+  pre_filter_shard_size: number,
+  max_concurrent_shard_requests: number,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3685,12 +3679,12 @@ _Default:_ `true`
 [source,ts]
 ----
 client.msearchTemplate({
-  index: string | string[]
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch'
-  typed_keys: boolean
-  max_concurrent_searches: number
-  rest_total_hits_as_int: boolean
-  ccs_minimize_roundtrips: boolean
+  index: string | string[],
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  typed_keys: boolean,
+  max_concurrent_searches: number,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3725,19 +3719,19 @@ _Default:_ `true`
 [source,ts]
 ----
 client.mtermvectors({
-  index: string
-  ids: string | string[]
-  term_statistics: boolean
-  field_statistics: boolean
-  fields: string | string[]
-  offsets: boolean
-  positions: boolean
-  payloads: boolean
-  preference: string
-  routing: string
-  realtime: boolean
-  version: number
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  index: string,
+  ids: string | string[],
+  term_statistics: boolean,
+  field_statistics: boolean,
+  fields: string | string[],
+  offsets: boolean,
+  positions: boolean,
+  payloads: boolean,
+  preference: string,
+  routing: string,
+  realtime: boolean,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
   body: object
 })
 ----
@@ -3796,12 +3790,12 @@ _Default:_ `true`
 [source,ts]
 ----
 client.nodes.hotThreads({
-  node_id: string | string[]
-  interval: string
-  snapshots: number
-  threads: number
-  ignore_idle_threads: boolean
-  type: 'cpu' | 'wait' | 'block'
+  node_id: string | string[],
+  interval: string,
+  snapshots: number,
+  threads: number,
+  ignore_idle_threads: boolean,
+  type: 'cpu' | 'wait' | 'block',
   timeout: string
 })
 ----
@@ -3835,9 +3829,9 @@ link:{ref}/cluster-nodes-hot-threads.html[Reference]
 [source,ts]
 ----
 client.nodes.info({
-  node_id: string | string[]
-  metric: string | string[]
-  flat_settings: boolean
+  node_id: string | string[],
+  metric: string | string[],
+  flat_settings: boolean,
   timeout: string
 })
 ----
@@ -3862,7 +3856,7 @@ link:{ref}/cluster-nodes-info.html[Reference]
 [source,ts]
 ----
 client.nodes.reloadSecureSettings({
-  node_id: string | string[]
+  node_id: string | string[],
   timeout: string
 })
 ----
@@ -3881,16 +3875,16 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
 [source,ts]
 ----
 client.nodes.stats({
-  metric: string | string[]
-  index_metric: string | string[]
-  node_id: string | string[]
-  completion_fields: string | string[]
-  fielddata_fields: string | string[]
-  fields: string | string[]
-  groups: boolean
-  level: 'indices' | 'node' | 'shards'
-  types: string | string[]
-  timeout: string
+  metric: string | string[],
+  index_metric: string | string[],
+  node_id: string | string[],
+  completion_fields: string | string[],
+  fielddata_fields: string | string[],
+  fields: string | string[],
+  groups: boolean,
+  level: 'indices' | 'node' | 'shards',
+  types: string | string[],
+  timeout: string,
   include_segment_file_sizes: boolean
 })
 ----
@@ -3937,8 +3931,8 @@ _Default:_ `node`
 [source,ts]
 ----
 client.nodes.usage({
-  metric: string | string[]
-  node_id: string | string[]
+  metric: string | string[],
+  node_id: string | string[],
   timeout: string
 })
 ----
@@ -3959,9 +3953,7 @@ link:{ref}/cluster-nodes-usage.html[Reference]
 === ping
 [source,ts]
 ----
-client.ping({
-  
-})
+client.ping()
 ----
 link:http://www.elastic.co/guide/[Reference]
 
@@ -3970,11 +3962,11 @@ link:http://www.elastic.co/guide/[Reference]
 [source,ts]
 ----
 client.putScript({
-  id: string
-  context: string
-  timeout: string
-  master_timeout: string
-  context: string
+  id: string,
+  context: string,
+  timeout: string,
+  master_timeout: string,
+  context: string,
   body: object
 })
 ----
@@ -4005,10 +3997,10 @@ link:{ref}/modules-scripting.html[Reference]
 [source,ts]
 ----
 client.rankEval({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   body: object
 })
 ----
@@ -4037,14 +4029,14 @@ _Default:_ `open`
 [source,ts]
 ----
 client.reindex({
-  refresh: boolean
-  timeout: string
-  wait_for_active_shards: string
-  wait_for_completion: boolean
-  requests_per_second: number
-  scroll: string
-  slices: number
-  max_docs: number
+  refresh: boolean,
+  timeout: string,
+  wait_for_active_shards: string,
+  wait_for_completion: boolean,
+  requests_per_second: number,
+  scroll: string,
+  slices: number,
+  max_docs: number,
   body: object
 })
 ----
@@ -4088,7 +4080,7 @@ _Default:_ `1`
 [source,ts]
 ----
 client.reindexRethrottle({
-  task_id: string
+  task_id: string,
   requests_per_second: number
 })
 ----
@@ -4107,7 +4099,7 @@ link:{ref}/docs-reindex.html[Reference]
 [source,ts]
 ----
 client.renderSearchTemplate({
-  id: string
+  id: string,
   body: object
 })
 ----
@@ -4141,10 +4133,10 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 [source,ts]
 ----
 client.scroll({
-  scroll_id: string
-  scroll: string
-  scroll_id: string
-  rest_total_hits_as_int: boolean
+  scroll_id: string,
+  scroll: string,
+  scroll_id: string,
+  rest_total_hits_as_int: boolean,
   body: object
 })
 ----
@@ -4172,49 +4164,49 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 [source,ts]
 ----
 client.search({
-  index: string | string[]
-  analyzer: string
-  analyze_wildcard: boolean
-  ccs_minimize_roundtrips: boolean
-  default_operator: 'AND' | 'OR'
-  df: string
-  explain: boolean
-  stored_fields: string | string[]
-  docvalue_fields: string | string[]
-  from: number
-  ignore_unavailable: boolean
-  ignore_throttled: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  lenient: boolean
-  preference: string
-  q: string
-  routing: string | string[]
-  scroll: string
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch'
-  size: number
-  sort: string | string[]
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  terminate_after: number
-  stats: string | string[]
-  suggest_field: string
-  suggest_mode: 'missing' | 'popular' | 'always'
-  suggest_size: number
-  suggest_text: string
-  timeout: string
-  track_scores: boolean
-  track_total_hits: boolean
-  allow_partial_search_results: boolean
-  typed_keys: boolean
-  version: boolean
-  seq_no_primary_term: boolean
-  request_cache: boolean
-  batched_reduce_size: number
-  max_concurrent_shard_requests: number
-  pre_filter_shard_size: number
-  rest_total_hits_as_int: boolean
+  index: string | string[],
+  analyzer: string,
+  analyze_wildcard: boolean,
+  ccs_minimize_roundtrips: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  explain: boolean,
+  stored_fields: string | string[],
+  docvalue_fields: string | string[],
+  from: number,
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  size: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  suggest_field: string,
+  suggest_mode: 'missing' | 'popular' | 'always',
+  suggest_size: number,
+  suggest_text: string,
+  timeout: string,
+  track_scores: boolean,
+  track_total_hits: boolean,
+  allow_partial_search_results: boolean,
+  typed_keys: boolean,
+  version: boolean,
+  seq_no_primary_term: boolean,
+  request_cache: boolean,
+  batched_reduce_size: number,
+  max_concurrent_shard_requests: number,
+  pre_filter_shard_size: number,
+  rest_total_hits_as_int: boolean,
   body: object
 })
 ----
@@ -4367,12 +4359,12 @@ _Default:_ `128`
 [source,ts]
 ----
 client.searchShards({
-  index: string | string[]
-  preference: string
-  routing: string
-  local: boolean
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  preference: string,
+  routing: string,
+  local: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -4407,20 +4399,20 @@ _Default:_ `open`
 [source,ts]
 ----
 client.searchTemplate({
-  index: string | string[]
-  ignore_unavailable: boolean
-  ignore_throttled: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  preference: string
-  routing: string | string[]
-  scroll: string
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch'
-  explain: boolean
-  profile: boolean
-  typed_keys: boolean
-  rest_total_hits_as_int: boolean
-  ccs_minimize_roundtrips: boolean
+  index: string | string[],
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  preference: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  explain: boolean,
+  profile: boolean,
+  typed_keys: boolean,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -4480,10 +4472,10 @@ _Default:_ `true`
 [source,ts]
 ----
 client.snapshot.create({
-  repository: string
-  snapshot: string
-  master_timeout: string
-  wait_for_completion: boolean
+  repository: string,
+  snapshot: string,
+  master_timeout: string,
+  wait_for_completion: boolean,
   body: object
 })
 ----
@@ -4511,10 +4503,10 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.createRepository({
-  repository: string
-  master_timeout: string
-  timeout: string
-  verify: boolean
+  repository: string,
+  master_timeout: string,
+  timeout: string,
+  verify: boolean,
   body: object
 })
 ----
@@ -4542,8 +4534,8 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.delete({
-  repository: string
-  snapshot: string
+  repository: string,
+  snapshot: string,
   master_timeout: string
 })
 ----
@@ -4565,8 +4557,8 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.deleteRepository({
-  repository: string | string[]
-  master_timeout: string
+  repository: string | string[],
+  master_timeout: string,
   timeout: string
 })
 ----
@@ -4588,10 +4580,10 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.get({
-  repository: string
-  snapshot: string | string[]
-  master_timeout: string
-  ignore_unavailable: boolean
+  repository: string,
+  snapshot: string | string[],
+  master_timeout: string,
+  ignore_unavailable: boolean,
   verbose: boolean
 })
 ----
@@ -4619,8 +4611,8 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.getRepository({
-  repository: string | string[]
-  master_timeout: string
+  repository: string | string[],
+  master_timeout: string,
   local: boolean
 })
 ----
@@ -4642,10 +4634,10 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.restore({
-  repository: string
-  snapshot: string
-  master_timeout: string
-  wait_for_completion: boolean
+  repository: string,
+  snapshot: string,
+  master_timeout: string,
+  wait_for_completion: boolean,
   body: object
 })
 ----
@@ -4673,9 +4665,9 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.status({
-  repository: string
-  snapshot: string | string[]
-  master_timeout: string
+  repository: string,
+  snapshot: string | string[],
+  master_timeout: string,
   ignore_unavailable: boolean
 })
 ----
@@ -4700,8 +4692,8 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.snapshot.verifyRepository({
-  repository: string
-  master_timeout: string
+  repository: string,
+  master_timeout: string,
   timeout: string
 })
 ----
@@ -4723,9 +4715,9 @@ link:{ref}/modules-snapshots.html[Reference]
 [source,ts]
 ----
 client.tasks.cancel({
-  task_id: string
-  nodes: string | string[]
-  actions: string | string[]
+  task_id: string,
+  nodes: string | string[],
+  actions: string | string[],
   parent_task_id: string
 })
 ----
@@ -4750,8 +4742,8 @@ link:{ref}/tasks.html[Reference]
 [source,ts]
 ----
 client.tasks.get({
-  task_id: string
-  wait_for_completion: boolean
+  task_id: string,
+  wait_for_completion: boolean,
   timeout: string
 })
 ----
@@ -4773,12 +4765,12 @@ link:{ref}/tasks.html[Reference]
 [source,ts]
 ----
 client.tasks.list({
-  nodes: string | string[]
-  actions: string | string[]
-  detailed: boolean
-  parent_task_id: string
-  wait_for_completion: boolean
-  group_by: 'nodes' | 'parents' | 'none'
+  nodes: string | string[],
+  actions: string | string[],
+  detailed: boolean,
+  parent_task_id: string,
+  wait_for_completion: boolean,
+  group_by: 'nodes' | 'parents' | 'none',
   timeout: string
 })
 ----
@@ -4813,19 +4805,19 @@ _Default:_ `nodes`
 [source,ts]
 ----
 client.termvectors({
-  index: string
-  id: string
-  term_statistics: boolean
-  field_statistics: boolean
-  fields: string | string[]
-  offsets: boolean
-  positions: boolean
-  payloads: boolean
-  preference: string
-  routing: string
-  realtime: boolean
-  version: number
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  index: string,
+  id: string,
+  term_statistics: boolean,
+  field_statistics: boolean,
+  fields: string | string[],
+  offsets: boolean,
+  positions: boolean,
+  payloads: boolean,
+  preference: string,
+  routing: string,
+  realtime: boolean,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
   body: object
 })
 ----
@@ -4884,20 +4876,20 @@ _Default:_ `true`
 [source,ts]
 ----
 client.update({
-  id: string
-  index: string
-  type: string
-  wait_for_active_shards: string
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  lang: string
-  refresh: 'true' | 'false' | 'wait_for'
-  retry_on_conflict: number
-  routing: string
-  timeout: string
-  if_seq_no: number
-  if_primary_term: number
+  id: string,
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  lang: string,
+  refresh: 'true' | 'false' | 'wait_for',
+  retry_on_conflict: number,
+  routing: string,
+  timeout: string,
+  if_seq_no: number,
+  if_primary_term: number,
   body: object
 })
 ----
@@ -4955,41 +4947,41 @@ link:{ref}/docs-update.html[Reference]
 [source,ts]
 ----
 client.updateByQuery({
-  index: string | string[]
-  analyzer: string
-  analyze_wildcard: boolean
-  default_operator: 'AND' | 'OR'
-  df: string
-  from: number
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  conflicts: 'abort' | 'proceed'
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-  lenient: boolean
-  pipeline: string
-  preference: string
-  q: string
-  routing: string | string[]
-  scroll: string
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch'
-  search_timeout: string
-  max_docs: number
-  sort: string | string[]
-  _source: string | string[]
-  _source_excludes: string | string[]
-  _source_includes: string | string[]
-  terminate_after: number
-  stats: string | string[]
-  version: boolean
-  version_type: boolean
-  request_cache: boolean
-  refresh: boolean
-  timeout: string
-  wait_for_active_shards: string
-  scroll_size: number
-  wait_for_completion: boolean
-  requests_per_second: number
-  slices: number
+  index: string | string[],
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  from: number,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  conflicts: 'abort' | 'proceed',
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  lenient: boolean,
+  pipeline: string,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  search_timeout: string,
+  max_docs: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  version: boolean,
+  version_type: boolean,
+  request_cache: boolean,
+  refresh: boolean,
+  timeout: string,
+  wait_for_active_shards: string,
+  scroll_size: number,
+  wait_for_completion: boolean,
+  requests_per_second: number,
+  slices: number,
   body: object
 })
 ----
@@ -5116,7 +5108,7 @@ _Default:_ `1`
 [source,ts]
 ----
 client.updateByQueryRethrottle({
-  task_id: string
+  task_id: string,
   requests_per_second: number
 })
 ----
@@ -5150,8 +5142,8 @@ link:{ref}/ccr-delete-auto-follow-pattern.html[Reference]
 [source,ts]
 ----
 client.ccr.follow({
-  index: string
-  wait_for_active_shards: string
+  index: string,
+  wait_for_active_shards: string,
   body: object
 })
 ----
@@ -5204,7 +5196,7 @@ link:{ref}/ccr-get-follow-stats.html[Reference]
 [source,ts]
 ----
 client.ccr.forgetFollower({
-  index: string
+  index: string,
   body: object
 })
 ----
@@ -5253,7 +5245,7 @@ link:{ref}/ccr-post-pause-follow.html[Reference]
 [source,ts]
 ----
 client.ccr.putAutoFollowPattern({
-  name: string
+  name: string,
   body: object
 })
 ----
@@ -5272,7 +5264,7 @@ link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
 [source,ts]
 ----
 client.ccr.resumeFollow({
-  index: string
+  index: string,
   body: object
 })
 ----
@@ -5290,9 +5282,7 @@ link:{ref}/ccr-post-resume-follow.html[Reference]
 === ccr.stats
 [source,ts]
 ----
-client.ccr.stats({
-  
-})
+client.ccr.stats()
 ----
 link:{ref}/ccr-get-stats.html[Reference]
 
@@ -5316,7 +5306,7 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [source,ts]
 ----
 client.dataFrame.deleteDataFrameTransform({
-  transform_id: string
+  transform_id: string,
   force: boolean
 })
 ----
@@ -5335,9 +5325,9 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.dataFrame.getDataFrameTransform({
-  transform_id: string
-  from: number
-  size: number
+  transform_id: string,
+  from: number,
+  size: number,
   allow_no_match: boolean
 })
 ----
@@ -5362,9 +5352,9 @@ link:{ref}/get-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.dataFrame.getDataFrameTransformStats({
-  transform_id: string
-  from: number
-  size: number
+  transform_id: string,
+  from: number,
+  size: number,
   allow_no_match: boolean
 })
 ----
@@ -5404,8 +5394,8 @@ link:{ref}/preview-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.dataFrame.putDataFrameTransform({
-  transform_id: string
-  defer_validation: boolean
+  transform_id: string,
+  defer_validation: boolean,
   body: object
 })
 ----
@@ -5427,7 +5417,7 @@ link:{ref}/put-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.dataFrame.startDataFrameTransform({
-  transform_id: string
+  transform_id: string,
   timeout: string
 })
 ----
@@ -5446,9 +5436,9 @@ link:{ref}/start-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.dataFrame.stopDataFrameTransform({
-  transform_id: string
-  wait_for_completion: boolean
-  timeout: string
+  transform_id: string,
+  wait_for_completion: boolean,
+  timeout: string,
   allow_no_match: boolean
 })
 ----
@@ -5473,10 +5463,10 @@ link:{ref}/stop-data-frame-transform.html[Reference]
 [source,ts]
 ----
 client.graph.explore({
-  index: string | string[]
-  type: string | string[]
-  routing: string
-  timeout: string
+  index: string | string[],
+  type: string | string[],
+  routing: string,
+  timeout: string,
   body: object
 })
 ----
@@ -5548,9 +5538,7 @@ link:{ref}/ilm-get-lifecycle.html[Reference]
 === ilm.getStatus
 [source,ts]
 ----
-client.ilm.getStatus({
-  
-})
+client.ilm.getStatus()
 ----
 link:{ref}/ilm-get-status.html[Reference]
 
@@ -5559,7 +5547,7 @@ link:{ref}/ilm-get-status.html[Reference]
 [source,ts]
 ----
 client.ilm.moveToStep({
-  index: string
+  index: string,
   body: object
 })
 ----
@@ -5578,7 +5566,7 @@ link:{ref}/ilm-move-to-step.html[Reference]
 [source,ts]
 ----
 client.ilm.putLifecycle({
-  policy: string
+  policy: string,
   body: object
 })
 ----
@@ -5626,9 +5614,7 @@ link:{ref}/ilm-retry-policy.html[Reference]
 === ilm.start
 [source,ts]
 ----
-client.ilm.start({
-  
-})
+client.ilm.start()
 ----
 link:{ref}/ilm-start.html[Reference]
 
@@ -5636,9 +5622,7 @@ link:{ref}/ilm-start.html[Reference]
 === ilm.stop
 [source,ts]
 ----
-client.ilm.stop({
-  
-})
+client.ilm.stop()
 ----
 link:{ref}/ilm-stop.html[Reference]
 
@@ -5647,12 +5631,12 @@ link:{ref}/ilm-stop.html[Reference]
 [source,ts]
 ----
 client.indices.freeze({
-  index: string
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -5687,9 +5671,9 @@ _Default:_ `closed`
 [source,ts]
 ----
 client.indices.reloadSearchAnalyzers({
-  index: string | string[]
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
@@ -5715,12 +5699,12 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.unfreeze({
-  index: string
-  timeout: string
-  master_timeout: string
-  ignore_unavailable: boolean
-  allow_no_indices: boolean
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  index: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -5754,9 +5738,7 @@ _Default:_ `closed`
 === license.delete
 [source,ts]
 ----
-client.license.delete({
-  
-})
+client.license.delete()
 ----
 link:{ref}/delete-license.html[Reference]
 
@@ -5779,9 +5761,7 @@ link:{ref}/get-license.html[Reference]
 === license.getBasicStatus
 [source,ts]
 ----
-client.license.getBasicStatus({
-  
-})
+client.license.getBasicStatus()
 ----
 link:{ref}/get-basic-status.html[Reference]
 
@@ -5789,9 +5769,7 @@ link:{ref}/get-basic-status.html[Reference]
 === license.getTrialStatus
 [source,ts]
 ----
-client.license.getTrialStatus({
-  
-})
+client.license.getTrialStatus()
 ----
 link:{ref}/get-trial-status.html[Reference]
 
@@ -5800,7 +5778,7 @@ link:{ref}/get-trial-status.html[Reference]
 [source,ts]
 ----
 client.license.post({
-  acknowledge: boolean
+  acknowledge: boolean,
   body: object
 })
 ----
@@ -5834,7 +5812,7 @@ link:{ref}/start-basic.html[Reference]
 [source,ts]
 ----
 client.license.postStartTrial({
-  type: string
+  type: string,
   acknowledge: boolean
 })
 ----
@@ -5868,10 +5846,10 @@ link:{ref}/migration-api-deprecation.html[Reference]
 [source,ts]
 ----
 client.ml.closeJob({
-  job_id: string
-  allow_no_jobs: boolean
-  force: boolean
-  timeout: string
+  job_id: string,
+  allow_no_jobs: boolean,
+  force: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -5913,7 +5891,7 @@ client.ml.deleteCalendar({
 [source,ts]
 ----
 client.ml.deleteCalendarEvent({
-  calendar_id: string
+  calendar_id: string,
   event_id: string
 })
 ----
@@ -5931,7 +5909,7 @@ client.ml.deleteCalendarEvent({
 [source,ts]
 ----
 client.ml.deleteCalendarJob({
-  calendar_id: string
+  calendar_id: string,
   job_id: string
 })
 ----
@@ -5964,7 +5942,7 @@ link:{ref}/delete-dfanalytics.html[Reference]
 [source,ts]
 ----
 client.ml.deleteDatafeed({
-  datafeed_id: string
+  datafeed_id: string,
   force: boolean
 })
 ----
@@ -5982,9 +5960,7 @@ link:{ref}/ml-delete-datafeed.html[Reference]
 === ml.deleteExpiredData
 [source,ts]
 ----
-client.ml.deleteExpiredData({
-  
-})
+client.ml.deleteExpiredData()
 ----
 
 
@@ -6006,9 +5982,9 @@ client.ml.deleteFilter({
 [source,ts]
 ----
 client.ml.deleteForecast({
-  job_id: string
-  forecast_id: string
-  allow_no_forecasts: boolean
+  job_id: string,
+  forecast_id: string,
+  allow_no_forecasts: boolean,
   timeout: string
 })
 ----
@@ -6033,8 +6009,8 @@ link:{ref}/ml-delete-forecast.html[Reference]
 [source,ts]
 ----
 client.ml.deleteJob({
-  job_id: string
-  force: boolean
+  job_id: string,
+  force: boolean,
   wait_for_completion: boolean
 })
 ----
@@ -6057,7 +6033,7 @@ _Default:_ `true`
 [source,ts]
 ----
 client.ml.deleteModelSnapshot({
-  job_id: string
+  job_id: string,
   snapshot_id: string
 })
 ----
@@ -6091,20 +6067,20 @@ link:{ref}/evaluate-dfanalytics.html[Reference]
 [source,ts]
 ----
 client.ml.findFileStructure({
-  lines_to_sample: number
-  line_merge_size_limit: number
-  timeout: string
-  charset: string
-  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text'
-  has_header_row: boolean
-  column_names: string | string[]
-  delimiter: string
-  quote: string
-  should_trim_fields: boolean
-  grok_pattern: string
-  timestamp_field: string
-  timestamp_format: string
-  explain: boolean
+  lines_to_sample: number,
+  line_merge_size_limit: number,
+  timeout: string,
+  charset: string,
+  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
+  has_header_row: boolean,
+  column_names: string | string[],
+  delimiter: string,
+  quote: string,
+  should_trim_fields: boolean,
+  grok_pattern: string,
+  timestamp_field: string,
+  timestamp_format: string,
+  explain: boolean,
   body: object
 })
 ----
@@ -6165,12 +6141,12 @@ _Default:_ `25s`
 [source,ts]
 ----
 client.ml.flushJob({
-  job_id: string
-  calc_interim: boolean
-  start: string
-  end: string
-  advance_time: string
-  skip_time: string
+  job_id: string,
+  calc_interim: boolean,
+  start: string,
+  end: string,
+  advance_time: string,
+  skip_time: string,
   body: object
 })
 ----
@@ -6204,8 +6180,8 @@ link:{ref}/ml-flush-job.html[Reference]
 [source,ts]
 ----
 client.ml.forecast({
-  job_id: string
-  duration: string
+  job_id: string,
+  duration: string,
   expires_in: string
 })
 ----
@@ -6226,17 +6202,17 @@ client.ml.forecast({
 [source,ts]
 ----
 client.ml.getBuckets({
-  job_id: string
-  timestamp: string
-  expand: boolean
-  exclude_interim: boolean
-  from: number
-  size: number
-  start: string
-  end: string
-  anomaly_score: number
-  sort: string
-  desc: boolean
+  job_id: string,
+  timestamp: string,
+  expand: boolean,
+  exclude_interim: boolean,
+  from: number,
+  size: number,
+  start: string,
+  end: string,
+  anomaly_score: number,
+  sort: string,
+  desc: boolean,
   body: object
 })
 ----
@@ -6285,11 +6261,11 @@ link:{ref}/ml-get-bucket.html[Reference]
 [source,ts]
 ----
 client.ml.getCalendarEvents({
-  calendar_id: string
-  job_id: string
-  start: string
-  end: string
-  from: number
+  calendar_id: string,
+  job_id: string,
+  start: string,
+  end: string,
+  from: number,
   size: number
 })
 ----
@@ -6319,9 +6295,9 @@ client.ml.getCalendarEvents({
 [source,ts]
 ----
 client.ml.getCalendars({
-  calendar_id: string
-  from: number
-  size: number
+  calendar_id: string,
+  from: number,
+  size: number,
   body: object
 })
 ----
@@ -6345,10 +6321,10 @@ client.ml.getCalendars({
 [source,ts]
 ----
 client.ml.getCategories({
-  job_id: string
-  category_id: number
-  from: number
-  size: number
+  job_id: string,
+  category_id: number,
+  from: number,
+  size: number,
   body: object
 })
 ----
@@ -6376,9 +6352,9 @@ link:{ref}/ml-get-category.html[Reference]
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics({
-  id: string
-  allow_no_match: boolean
-  from: number
+  id: string,
+  allow_no_match: boolean,
+  from: number,
   size: number
 })
 ----
@@ -6405,9 +6381,9 @@ _Default:_ `100`
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats({
-  id: string
-  allow_no_match: boolean
-  from: number
+  id: string,
+  allow_no_match: boolean,
+  from: number,
   size: number
 })
 ----
@@ -6434,7 +6410,7 @@ _Default:_ `100`
 [source,ts]
 ----
 client.ml.getDatafeedStats({
-  datafeed_id: string
+  datafeed_id: string,
   allow_no_datafeeds: boolean
 })
 ----
@@ -6453,7 +6429,7 @@ link:{ref}/ml-get-datafeed-stats.html[Reference]
 [source,ts]
 ----
 client.ml.getDatafeeds({
-  datafeed_id: string
+  datafeed_id: string,
   allow_no_datafeeds: boolean
 })
 ----
@@ -6472,8 +6448,8 @@ link:{ref}/ml-get-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.getFilters({
-  filter_id: string
-  from: number
+  filter_id: string,
+  from: number,
   size: number
 })
 ----
@@ -6494,15 +6470,15 @@ client.ml.getFilters({
 [source,ts]
 ----
 client.ml.getInfluencers({
-  job_id: string
-  exclude_interim: boolean
-  from: number
-  size: number
-  start: string
-  end: string
-  influencer_score: number
-  sort: string
-  desc: boolean
+  job_id: string,
+  exclude_interim: boolean,
+  from: number,
+  size: number,
+  start: string,
+  end: string,
+  influencer_score: number,
+  sort: string,
+  desc: boolean,
   body: object
 })
 ----
@@ -6545,7 +6521,7 @@ link:{ref}/ml-get-influencer.html[Reference]
 [source,ts]
 ----
 client.ml.getJobStats({
-  job_id: string
+  job_id: string,
   allow_no_jobs: boolean
 })
 ----
@@ -6564,7 +6540,7 @@ link:{ref}/ml-get-job-stats.html[Reference]
 [source,ts]
 ----
 client.ml.getJobs({
-  job_id: string
+  job_id: string,
   allow_no_jobs: boolean
 })
 ----
@@ -6583,14 +6559,14 @@ link:{ref}/ml-get-job.html[Reference]
 [source,ts]
 ----
 client.ml.getModelSnapshots({
-  job_id: string
-  snapshot_id: string
-  from: number
-  size: number
-  start: string
-  end: string
-  sort: string
-  desc: boolean
+  job_id: string,
+  snapshot_id: string,
+  from: number,
+  size: number,
+  start: string,
+  end: string,
+  sort: string,
+  desc: boolean,
   body: object
 })
 ----
@@ -6630,14 +6606,14 @@ link:{ref}/ml-get-snapshot.html[Reference]
 [source,ts]
 ----
 client.ml.getOverallBuckets({
-  job_id: string
-  top_n: number
-  bucket_span: string
-  overall_score: number
-  exclude_interim: boolean
-  start: string
-  end: string
-  allow_no_jobs: boolean
+  job_id: string,
+  top_n: number,
+  bucket_span: string,
+  overall_score: number,
+  exclude_interim: boolean,
+  start: string,
+  end: string,
+  allow_no_jobs: boolean,
   body: object
 })
 ----
@@ -6677,15 +6653,15 @@ link:{ref}/ml-get-overall-buckets.html[Reference]
 [source,ts]
 ----
 client.ml.getRecords({
-  job_id: string
-  exclude_interim: boolean
-  from: number
-  size: number
-  start: string
-  end: string
-  record_score: number
-  sort: string
-  desc: boolean
+  job_id: string,
+  exclude_interim: boolean,
+  from: number,
+  size: number,
+  start: string,
+  end: string,
+  record_score: number,
+  sort: string,
+  desc: boolean,
   body: object
 })
 ----
@@ -6727,9 +6703,7 @@ link:{ref}/ml-get-record.html[Reference]
 === ml.info
 [source,ts]
 ----
-client.ml.info({
-  
-})
+client.ml.info()
 ----
 
 
@@ -6737,8 +6711,8 @@ client.ml.info({
 [source,ts]
 ----
 client.ml.openJob({
-  job_id: string
-  ignore_downtime: boolean
+  job_id: string,
+  ignore_downtime: boolean,
   timeout: string
 })
 ----
@@ -6760,7 +6734,7 @@ link:{ref}/ml-open-job.html[Reference]
 [source,ts]
 ----
 client.ml.postCalendarEvents({
-  calendar_id: string
+  calendar_id: string,
   body: object
 })
 ----
@@ -6778,9 +6752,9 @@ client.ml.postCalendarEvents({
 [source,ts]
 ----
 client.ml.postData({
-  job_id: string
-  reset_start: string
-  reset_end: string
+  job_id: string,
+  reset_start: string,
+  reset_end: string,
   body: object
 })
 ----
@@ -6820,7 +6794,7 @@ link:{ref}/ml-preview-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.putCalendar({
-  calendar_id: string
+  calendar_id: string,
   body: object
 })
 ----
@@ -6838,7 +6812,7 @@ client.ml.putCalendar({
 [source,ts]
 ----
 client.ml.putCalendarJob({
-  calendar_id: string
+  calendar_id: string,
   job_id: string
 })
 ----
@@ -6856,7 +6830,7 @@ client.ml.putCalendarJob({
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics({
-  id: string
+  id: string,
   body: object
 })
 ----
@@ -6875,7 +6849,7 @@ link:{ref}/put-dfanalytics.html[Reference]
 [source,ts]
 ----
 client.ml.putDatafeed({
-  datafeed_id: string
+  datafeed_id: string,
   body: object
 })
 ----
@@ -6894,7 +6868,7 @@ link:{ref}/ml-put-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.putFilter({
-  filter_id: string
+  filter_id: string,
   body: object
 })
 ----
@@ -6912,7 +6886,7 @@ client.ml.putFilter({
 [source,ts]
 ----
 client.ml.putJob({
-  job_id: string
+  job_id: string,
   body: object
 })
 ----
@@ -6931,9 +6905,9 @@ link:{ref}/ml-put-job.html[Reference]
 [source,ts]
 ----
 client.ml.revertModelSnapshot({
-  job_id: string
-  snapshot_id: string
-  delete_intervening_results: boolean
+  job_id: string,
+  snapshot_id: string,
+  delete_intervening_results: boolean,
   body: object
 })
 ----
@@ -6958,7 +6932,7 @@ link:{ref}/ml-revert-snapshot.html[Reference]
 [source,ts]
 ----
 client.ml.setUpgradeMode({
-  enabled: boolean
+  enabled: boolean,
   timeout: string
 })
 ----
@@ -6977,8 +6951,8 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics({
-  id: string
-  timeout: string
+  id: string,
+  timeout: string,
   body: object
 })
 ----
@@ -7000,10 +6974,10 @@ link:{ref}/start-dfanalytics.html[Reference]
 [source,ts]
 ----
 client.ml.startDatafeed({
-  datafeed_id: string
-  start: string
-  end: string
-  timeout: string
+  datafeed_id: string,
+  start: string,
+  end: string,
+  timeout: string,
   body: object
 })
 ----
@@ -7031,10 +7005,10 @@ link:{ref}/ml-start-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics({
-  id: string
-  allow_no_match: boolean
-  force: boolean
-  timeout: string
+  id: string,
+  allow_no_match: boolean,
+  force: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -7062,9 +7036,9 @@ link:{ref}/stop-dfanalytics.html[Reference]
 [source,ts]
 ----
 client.ml.stopDatafeed({
-  datafeed_id: string
-  allow_no_datafeeds: boolean
-  force: boolean
+  datafeed_id: string,
+  allow_no_datafeeds: boolean,
+  force: boolean,
   timeout: string
 })
 ----
@@ -7089,7 +7063,7 @@ link:{ref}/ml-stop-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.updateDatafeed({
-  datafeed_id: string
+  datafeed_id: string,
   body: object
 })
 ----
@@ -7108,7 +7082,7 @@ link:{ref}/ml-update-datafeed.html[Reference]
 [source,ts]
 ----
 client.ml.updateFilter({
-  filter_id: string
+  filter_id: string,
   body: object
 })
 ----
@@ -7126,7 +7100,7 @@ client.ml.updateFilter({
 [source,ts]
 ----
 client.ml.updateJob({
-  job_id: string
+  job_id: string,
   body: object
 })
 ----
@@ -7145,8 +7119,8 @@ link:{ref}/ml-update-job.html[Reference]
 [source,ts]
 ----
 client.ml.updateModelSnapshot({
-  job_id: string
-  snapshot_id: string
+  job_id: string,
+  snapshot_id: string,
   body: object
 })
 ----
@@ -7196,10 +7170,10 @@ client.ml.validateDetector({
 [source,ts]
 ----
 client.monitoring.bulk({
-  type: string
-  system_id: string
-  system_api_version: string
-  interval: string
+  type: string,
+  system_id: string,
+  system_api_version: string,
+  interval: string,
   body: object
 })
 ----
@@ -7283,7 +7257,7 @@ client.rollup.getRollupIndexCaps({
 [source,ts]
 ----
 client.rollup.putJob({
-  id: string
+  id: string,
   body: object
 })
 ----
@@ -7301,10 +7275,10 @@ client.rollup.putJob({
 [source,ts]
 ----
 client.rollup.rollupSearch({
-  index: string | string[]
-  type: string
-  typed_keys: boolean
-  rest_total_hits_as_int: boolean
+  index: string | string[],
+  type: string,
+  typed_keys: boolean,
+  rest_total_hits_as_int: boolean,
   body: object
 })
 ----
@@ -7345,8 +7319,8 @@ client.rollup.startJob({
 [source,ts]
 ----
 client.rollup.stopJob({
-  id: string
-  wait_for_completion: boolean
+  id: string,
+  wait_for_completion: boolean,
   timeout: string
 })
 ----
@@ -7366,9 +7340,7 @@ client.rollup.stopJob({
 === security.authenticate
 [source,ts]
 ----
-client.security.authenticate({
-  
-})
+client.security.authenticate()
 ----
 link:{ref}/security-api-authenticate.html[Reference]
 
@@ -7377,8 +7349,8 @@ link:{ref}/security-api-authenticate.html[Reference]
 [source,ts]
 ----
 client.security.changePassword({
-  username: string
-  refresh: 'true' | 'false' | 'wait_for'
+  username: string,
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7400,7 +7372,7 @@ link:{ref}/security-api-change-password.html[Reference]
 [source,ts]
 ----
 client.security.clearCachedRealms({
-  realms: string | string[]
+  realms: string | string[],
   usernames: string | string[]
 })
 ----
@@ -7434,7 +7406,7 @@ link:{ref}/security-api-clear-role-cache.html[Reference]
 [source,ts]
 ----
 client.security.createApiKey({
-  refresh: 'true' | 'false' | 'wait_for'
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7453,8 +7425,8 @@ link:{ref}/security-api-create-api-key.html[Reference]
 [source,ts]
 ----
 client.security.deletePrivileges({
-  application: string
-  name: string
+  application: string,
+  name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7476,7 +7448,7 @@ link:TODO[Reference]
 [source,ts]
 ----
 client.security.deleteRole({
-  name: string
+  name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7495,7 +7467,7 @@ link:{ref}/security-api-delete-role.html[Reference]
 [source,ts]
 ----
 client.security.deleteRoleMapping({
-  name: string
+  name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7514,7 +7486,7 @@ link:{ref}/security-api-delete-role-mapping.html[Reference]
 [source,ts]
 ----
 client.security.deleteUser({
-  username: string
+  username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7533,7 +7505,7 @@ link:{ref}/security-api-delete-user.html[Reference]
 [source,ts]
 ----
 client.security.disableUser({
-  username: string
+  username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7552,7 +7524,7 @@ link:{ref}/security-api-disable-user.html[Reference]
 [source,ts]
 ----
 client.security.enableUser({
-  username: string
+  username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
@@ -7571,9 +7543,9 @@ link:{ref}/security-api-enable-user.html[Reference]
 [source,ts]
 ----
 client.security.getApiKey({
-  id: string
-  name: string
-  username: string
+  id: string,
+  name: string,
+  username: string,
   realm_name: string
 })
 ----
@@ -7597,9 +7569,7 @@ link:{ref}/security-api-get-api-key.html[Reference]
 === security.getBuiltinPrivileges
 [source,ts]
 ----
-client.security.getBuiltinPrivileges({
-  
-})
+client.security.getBuiltinPrivileges()
 ----
 link:{ref}/security-api-get-builtin-privileges.html[Reference]
 
@@ -7608,7 +7578,7 @@ link:{ref}/security-api-get-builtin-privileges.html[Reference]
 [source,ts]
 ----
 client.security.getPrivileges({
-  application: string
+  application: string,
   name: string
 })
 ----
@@ -7686,9 +7656,7 @@ link:{ref}/security-api-get-user.html[Reference]
 === security.getUserPrivileges
 [source,ts]
 ----
-client.security.getUserPrivileges({
-  
-})
+client.security.getUserPrivileges()
 ----
 link:{ref}/security-api-get-privileges.html[Reference]
 
@@ -7697,7 +7665,7 @@ link:{ref}/security-api-get-privileges.html[Reference]
 [source,ts]
 ----
 client.security.hasPrivileges({
-  user: string
+  user: string,
   body: object
 })
 ----
@@ -7746,7 +7714,7 @@ link:{ref}/security-api-invalidate-token.html[Reference]
 [source,ts]
 ----
 client.security.putPrivileges({
-  refresh: 'true' | 'false' | 'wait_for'
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7765,8 +7733,8 @@ link:TODO[Reference]
 [source,ts]
 ----
 client.security.putRole({
-  name: string
-  refresh: 'true' | 'false' | 'wait_for'
+  name: string,
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7788,8 +7756,8 @@ link:{ref}/security-api-put-role.html[Reference]
 [source,ts]
 ----
 client.security.putRoleMapping({
-  name: string
-  refresh: 'true' | 'false' | 'wait_for'
+  name: string,
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7811,8 +7779,8 @@ link:{ref}/security-api-put-role-mapping.html[Reference]
 [source,ts]
 ----
 client.security.putUser({
-  username: string
-  refresh: 'true' | 'false' | 'wait_for'
+  username: string,
+  refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
 ----
@@ -7849,7 +7817,7 @@ link:Clear SQL cursor[Reference]
 [source,ts]
 ----
 client.sql.query({
-  format: string
+  format: string,
   body: object
 })
 ----
@@ -7882,9 +7850,7 @@ link:Translate SQL into Elasticsearch queries[Reference]
 === ssl.certificates
 [source,ts]
 ----
-client.ssl.certificates({
-  
-})
+client.ssl.certificates()
 ----
 link:{ref}/security-api-ssl.html[Reference]
 
@@ -7893,7 +7859,7 @@ link:{ref}/security-api-ssl.html[Reference]
 [source,ts]
 ----
 client.watcher.ackWatch({
-  watch_id: string
+  watch_id: string,
   action_id: string | string[]
 })
 ----
@@ -7957,8 +7923,8 @@ link:{ref}/watcher-api-delete-watch.html[Reference]
 [source,ts]
 ----
 client.watcher.executeWatch({
-  id: string
-  debug: boolean
+  id: string,
+  debug: boolean,
   body: object
 })
 ----
@@ -7995,11 +7961,11 @@ link:{ref}/watcher-api-get-watch.html[Reference]
 [source,ts]
 ----
 client.watcher.putWatch({
-  id: string
-  active: boolean
-  version: number
-  if_seq_no: number
-  if_primary_term: number
+  id: string,
+  active: boolean,
+  version: number,
+  if_seq_no: number,
+  if_primary_term: number,
   body: object
 })
 ----
@@ -8029,9 +7995,7 @@ link:{ref}/watcher-api-put-watch.html[Reference]
 === watcher.start
 [source,ts]
 ----
-client.watcher.start({
-  
-})
+client.watcher.start()
 ----
 link:{ref}/watcher-api-start.html[Reference]
 
@@ -8040,8 +8004,8 @@ link:{ref}/watcher-api-start.html[Reference]
 [source,ts]
 ----
 client.watcher.stats({
-  metric: string | string[]
-  metric: string | string[]
+  metric: string | string[],
+  metric: string | string[],
   emit_stacktraces: boolean
 })
 ----
@@ -8062,9 +8026,7 @@ link:{ref}/watcher-api-stats.html[Reference]
 === watcher.stop
 [source,ts]
 ----
-client.watcher.stop({
-  
-})
+client.watcher.stop()
 ----
 link:{ref}/watcher-api-stop.html[Reference]
 

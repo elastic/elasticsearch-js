@@ -96,21 +96,23 @@ function generateApiDoc (spec) {
     })
   }
 
-  const codeParameters = params.reduce((acc, val) => {
-    var code = `${val.name}: ${val.type}`
-    acc += acc === ''
-      ? code
-      : '\n    ' + code
-    return acc
-  }, '')
+  const codeParameters = params
+    .reduce((acc, val) => {
+      var code = `${val.name}: ${val.type},`
+      acc += acc === ''
+        ? code
+        : '\n    ' + code
+
+      return acc
+    }, '')
+    // remove last comma
+    .slice(0, -1)
 
   var doc = dedent`
   === ${camelify(name)}
   [source,ts]
   ----
-  client.${camelify(name)}({
-    ${codeParameters}
-  })
+  client.${camelify(name)}(${codeParameters.length > 0 ? `{\n    ${codeParameters}\n}` : ''})
   ----\n`
   if (documentationUrl) {
     doc += `link:${documentationUrl}[Reference]\n`
