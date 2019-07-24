@@ -457,16 +457,6 @@ function ESAPI (opts) {
       put_user: lazyLoad('security.put_user', opts),
       putUser: lazyLoad('security.put_user', opts)
     },
-    slm: {
-      delete_lifecycle: lazyLoad('slm.delete_lifecycle', opts),
-      deleteLifecycle: lazyLoad('slm.delete_lifecycle', opts),
-      execute_lifecycle: lazyLoad('slm.execute_lifecycle', opts),
-      executeLifecycle: lazyLoad('slm.execute_lifecycle', opts),
-      get_lifecycle: lazyLoad('slm.get_lifecycle', opts),
-      getLifecycle: lazyLoad('slm.get_lifecycle', opts),
-      put_lifecycle: lazyLoad('slm.put_lifecycle', opts),
-      putLifecycle: lazyLoad('slm.put_lifecycle', opts)
-    },
     snapshot: {
       create: lazyLoad('snapshot.create', opts),
       create_repository: lazyLoad('snapshot.create_repository', opts),

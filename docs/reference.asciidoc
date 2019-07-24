@@ -757,7 +757,7 @@ link:{ref}/cat-thread-pool.html[Reference]
 ----
 client.clearScroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1976,7 +1976,7 @@ _Default:_ `open`
 ----
 client.indices.flushSynced([params] [, options] [, callback])
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3305,7 +3305,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 ----
 client.scroll([params] [, options] [, callback])
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4251,9 +4251,6 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 |`transform_id` or `transformId`
 |`string` - The id of the transform to delete
 
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
 |===
 
 === dataFrame.getDataFrameTransform
@@ -4323,9 +4320,6 @@ link:{ref}/put-data-frame-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
 
 |`body`
 |`object` - The data frame transform definition
@@ -6313,61 +6307,6 @@ link:{ref}/security-api-put-user.html[Reference]
 
 |`body`
 |`object` - The user to add
-
-|===
-
-=== slm.deleteLifecycle
-[source,js]
-----
-client.slm.deleteLifecycle([params] [, options] [, callback])
-----
-link:{ref}/slm-api.html[Reference]
-[cols=2*]
-|===
-|`policy`
-|`string` - The id of the snapshot lifecycle policy to remove
-
-|===
-
-=== slm.executeLifecycle
-[source,js]
-----
-client.slm.executeLifecycle([params] [, options] [, callback])
-----
-link:{ref}/slm-api.html[Reference]
-[cols=2*]
-|===
-|`policy_id` or `policyId`
-|`string` - The id of the snapshot lifecycle policy to be executed
-
-|===
-
-=== slm.getLifecycle
-[source,js]
-----
-client.slm.getLifecycle([params] [, options] [, callback])
-----
-link:{ref}/slm-api.html[Reference]
-[cols=2*]
-|===
-|`policy_id` or `policyId`
-|`string` - Comma-separated list of snapshot lifecycle policies to retrieve
-
-|===
-
-=== slm.putLifecycle
-[source,js]
-----
-client.slm.putLifecycle([params] [, options] [, callback])
-----
-link:{ref}/slm-api.html[Reference]
-[cols=2*]
-|===
-|`policy_id` or `policyId`
-|`string` - The id of the snapshot lifecycle policy
-
-|`body`
-|`object` - The snapshot lifecycle policy definition to register
 
 |===
 

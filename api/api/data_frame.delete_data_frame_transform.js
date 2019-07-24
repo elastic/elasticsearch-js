@@ -14,11 +14,10 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
    * Perform a [data_frame.delete_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html) request
    *
    * @param {string} transform_id - The id of the transform to delete
-   * @param {boolean} force - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
    */
 
   const acceptedQuerystring = [
-    'force'
+
   ]
 
   const snakeCase = {

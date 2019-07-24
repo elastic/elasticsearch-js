@@ -11,7 +11,7 @@ function buildScroll (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll) request
+   * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#search-request-scroll) request
    *
    * @param {string} scroll_id - The scroll ID
    * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
