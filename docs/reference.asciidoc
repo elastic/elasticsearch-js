@@ -953,7 +953,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1439,6 +1439,7 @@ link:{ref}/docs-delete.html[Reference]
 ----
 client.deleteByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -1455,7 +1456,7 @@ client.deleteByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
@@ -1481,7 +1482,7 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -2492,7 +2493,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3207,6 +3208,7 @@ _Default:_ `open`
 client.indices.shrink({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3245,6 +3247,7 @@ link:{ref}/indices-shrink-index.html[Reference]
 client.indices.split({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3639,6 +3642,7 @@ link:{ref}/docs-multi-get.html[Reference]
 ----
 client.msearch({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   max_concurrent_searches: number,
   typed_keys: boolean,
@@ -3656,7 +3660,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3692,6 +3696,7 @@ _Default:_ `true`
 ----
 client.msearchTemplate({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
@@ -3707,7 +3712,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3735,6 +3740,7 @@ _Default:_ `true`
 ----
 client.mtermvectors({
   index: string,
+  type: string,
   ids: string | string[],
   term_statistics: boolean,
   field_statistics: boolean,
@@ -4054,7 +4060,6 @@ client.reindex({
   requests_per_second: number,
   scroll: string,
   slices: number,
-  max_docs: number,
   body: object
 })
 ----
@@ -4130,9 +4135,11 @@ link:{ref}/search-template.html[Reference]
 |===
 
 === scriptsPainlessContext
-[source,js]
+[source,ts]
 ----
-client.scriptsPainlessContext([params] [, options] [, callback])
+client.scriptsPainlessContext({
+  context: string
+})
 ----
 [cols=2*]
 |===
@@ -4167,7 +4174,7 @@ client.scroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4192,6 +4199,7 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 ----
 client.search({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   ccs_minimize_roundtrips: boolean,
@@ -4244,7 +4252,7 @@ link:{ref}/search-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -4430,6 +4438,7 @@ _Default:_ `open`
 ----
 client.searchTemplate({
   index: string | string[],
+  type: string | string[],
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
@@ -4453,7 +4462,7 @@ link:{ref}/search-template.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4839,6 +4848,7 @@ _Default:_ `nodes`
 ----
 client.termvectors({
   index: string,
+  type: string,
   id: string,
   term_statistics: boolean,
   field_statistics: boolean,
@@ -4984,6 +4994,7 @@ link:{ref}/docs-update.html[Reference]
 ----
 client.updateByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -5001,7 +5012,7 @@ client.updateByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
@@ -5028,7 +5039,7 @@ link:{ref}/docs-update-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -5345,8 +5356,7 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [source,ts]
 ----
 client.dataFrame.deleteDataFrameTransform({
-  transform_id: string,
-  force: boolean
+  transform_id: string
 })
 ----
 link:{ref}/delete-data-frame-transform.html[Reference]
@@ -5354,9 +5364,6 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
 
 |===
 
@@ -5366,8 +5373,7 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 client.dataFrame.getDataFrameTransform({
   transform_id: string,
   from: number,
-  size: number,
-  allow_no_match: boolean
+  size: number
 })
 ----
 link:{ref}/get-data-frame-transform.html[Reference]
@@ -5390,8 +5396,7 @@ link:{ref}/get-data-frame-transform.html[Reference]
 client.dataFrame.getDataFrameTransformStats({
   transform_id: string,
   from: number,
-  size: number,
-  allow_no_match: boolean
+  size: number
 })
 ----
 link:{ref}/get-data-frame-transform-stats.html[Reference]
@@ -5428,7 +5433,6 @@ link:{ref}/preview-data-frame-transform.html[Reference]
 ----
 client.dataFrame.putDataFrameTransform({
   transform_id: string,
-  defer_validation: boolean,
   body: object
 })
 ----
@@ -5437,9 +5441,6 @@ link:{ref}/put-data-frame-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
 
 |`body`
 |`object` - The data frame transform definition
@@ -5471,8 +5472,7 @@ link:{ref}/start-data-frame-transform.html[Reference]
 client.dataFrame.stopDataFrameTransform({
   transform_id: string,
   wait_for_completion: boolean,
-  timeout: string,
-  allow_no_match: boolean
+  timeout: string
 })
 ----
 link:{ref}/stop-data-frame-transform.html[Reference]
@@ -5697,37 +5697,6 @@ _Default:_ `closed`
 
 |===
 
-<<<<<<< HEAD
-=======
-=== indices.reloadSearchAnalyzers
-[source,ts]
-----
-client.indices.reloadSearchAnalyzers({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-})
-----
-link:{ref}/indices-reload-analyzers.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to reload analyzers for
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === indices.unfreeze
 [source,ts]
 ----
@@ -5956,24 +5925,6 @@ client.ml.deleteCalendarJob({
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.deleteDataFrameAnalytics
-[source,ts]
-----
-client.ml.deleteDataFrameAnalytics({
-  id: string
-})
-----
-link:{ref}/delete-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to delete
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.deleteDatafeed
 [source,ts]
 ----
@@ -6084,30 +6035,11 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.evaluateDataFrame
-[source,ts]
-----
-client.ml.evaluateDataFrame({
-  body: object
-})
-----
-link:{ref}/evaluate-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The evaluation definition
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.findFileStructure
 [source,ts]
 ----
 client.ml.findFileStructure({
   lines_to_sample: number,
-  line_merge_size_limit: number,
   timeout: string,
   charset: string,
   format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
@@ -6383,67 +6315,6 @@ link:{ref}/ml-get-category.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.getDataFrameAnalytics
-[source,ts]
-----
-client.ml.getDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
-=== ml.getDataFrameAnalyticsStats
-[source,ts]
-----
-client.ml.getDataFrameAnalyticsStats({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics-stats.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.getDatafeedStats
 [source,ts]
 ----
@@ -6864,28 +6735,6 @@ client.ml.putCalendarJob({
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.putDataFrameAnalytics
-[source,ts]
-----
-client.ml.putDataFrameAnalytics({
-  id: string,
-  body: object
-})
-----
-link:{ref}/put-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to create
-
-|`body`
-|`object` - The data frame analytics configuration
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.putDatafeed
 [source,ts]
 ----
@@ -6988,32 +6837,6 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.startDataFrameAnalytics
-[source,ts]
-----
-client.ml.startDataFrameAnalytics({
-  id: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/start-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to start
-
-|`timeout`
-|`string` - Controls the time to wait until the task has started. Defaults to 20 seconds
-
-|`body`
-|`object` - The start data frame analytics parameters
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.startDatafeed
 [source,ts]
 ----
@@ -7045,40 +6868,6 @@ link:{ref}/ml-start-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== ml.stopDataFrameAnalytics
-[source,ts]
-----
-client.ml.stopDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  force: boolean,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/stop-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to stop
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-
-|`force`
-|`boolean` - True if the data frame analytics should be forcefully stopped
-
-|`timeout`
-|`string` - Controls the time to wait until the task has stopped. Defaults to 20 seconds
-
-|`body`
-|`object` - The stop data frame analytics parameters
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ml.stopDatafeed
 [source,ts]
 ----
@@ -7613,17 +7402,6 @@ link:{ref}/security-api-get-api-key.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== security.getBuiltinPrivileges
-[source,ts]
-----
-client.security.getBuiltinPrivileges()
-----
-link:{ref}/security-api-get-builtin-privileges.html[Reference]
-
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === security.getPrivileges
 [source,ts]
 ----
