@@ -126,6 +126,7 @@ declare class Client extends EventEmitter {
   extend: ClientExtends;
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
+  /* GENERATED */
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
     aliases: ApiMethod<RequestParams.CatAliases>
@@ -609,6 +610,7 @@ declare class Client extends EventEmitter {
     info: ApiMethod<RequestParams.XpackInfo>
     usage: ApiMethod<RequestParams.XpackUsage>
   }
+  /* /GENERATED */
 }
 
 declare const events: {
