@@ -11,7 +11,7 @@ function buildIndicesShardStores (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.shard_stores](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html) request
+   * Perform a [indices.shard_stores](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} status - A comma-separated list of statuses used to filter on shards to get store information for

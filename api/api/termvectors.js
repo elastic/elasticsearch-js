@@ -11,7 +11,7 @@ function buildTermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [termvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
+   * Perform a [termvectors](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
    *
    * @param {string} index - The index in which the document resides.
    * @param {string} id - The id of the document, when not specified a doc param should be supplied.

@@ -11,7 +11,7 @@ function buildPing (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [ping](http://www.elastic.co/guide/) request
+   * Perform a [ping](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html) request
    *
    */
 

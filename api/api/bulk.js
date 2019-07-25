@@ -11,7 +11,7 @@ function buildBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
+   * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
    *
    * @param {string} index - Default index for items which don't provide one
    * @param {string} type - Default document type for items which don't provide one

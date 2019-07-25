@@ -11,7 +11,7 @@ function buildIndicesCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
+   * Perform a [indices.create](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
    *
    * @param {string} index - The name of the index
    * @param {boolean} include_type_name - Whether a type should be expected in the body of the mappings.

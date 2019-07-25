@@ -11,7 +11,7 @@ function buildIndicesPutAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.put_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
+   * Perform a [indices.put_alias](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
    *
    * @param {list} index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
    * @param {string} name - The name of the alias to be created or updated

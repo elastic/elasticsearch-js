@@ -11,7 +11,7 @@ function buildIndicesPutSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.put_settings](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html) request
+   * Perform a [indices.put_settings](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {time} master_timeout - Specify timeout for connection to master

@@ -11,7 +11,7 @@ function buildCatTemplates (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.templates](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html) request
+   * Perform a [cat.templates](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html) request
    *
    * @param {string} name - A pattern that returned template names must match
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

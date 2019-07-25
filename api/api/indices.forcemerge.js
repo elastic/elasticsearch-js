@@ -11,7 +11,7 @@ function buildIndicesForcemerge (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.forcemerge](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html) request
+   * Perform a [indices.forcemerge](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {boolean} flush - Specify whether the index should be flushed after performing the operation (default: true)

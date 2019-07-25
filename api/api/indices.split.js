@@ -11,7 +11,7 @@ function buildIndicesSplit (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.split](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html) request
+   * Perform a [indices.split](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html) request
    *
    * @param {string} index - The name of the source index to split
    * @param {string} target - The name of the target index to split into

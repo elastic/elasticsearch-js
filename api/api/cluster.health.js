@@ -11,7 +11,7 @@ function buildClusterHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cluster.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
+   * Perform a [cluster.health](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
    *
    * @param {list} index - Limit the information returned to a specific index
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.

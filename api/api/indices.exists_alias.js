@@ -11,7 +11,7 @@ function buildIndicesExistsAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.exists_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
+   * Perform a [indices.exists_alias](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
    *
    * @param {list} index - A comma-separated list of index names to filter aliases
    * @param {list} name - A comma-separated list of alias names to return

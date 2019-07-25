@@ -11,7 +11,7 @@ function buildCount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [count](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html) request
+   * Perform a [count](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html) request
    *
    * @param {list} index - A comma-separated list of indices to restrict the results
    * @param {list} type - A comma-separated list of types to restrict the results

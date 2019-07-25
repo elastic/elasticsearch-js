@@ -11,7 +11,7 @@ function buildIndicesExists (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.exists](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html) request
+   * Perform a [indices.exists](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html) request
    *
    * @param {list} index - A comma-separated list of index names
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)

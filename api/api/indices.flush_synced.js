@@ -11,7 +11,7 @@ function buildIndicesFlushSynced (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.flush_synced](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush.html) request
+   * Perform a [indices.flush_synced](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html#synced-flush-api) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string for all indices
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)

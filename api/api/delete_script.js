@@ -11,7 +11,7 @@ function buildDeleteScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [delete_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+   * Perform a [delete_script](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
    *
    * @param {string} id - Script ID
    * @param {time} timeout - Explicit operation timeout

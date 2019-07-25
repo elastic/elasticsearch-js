@@ -11,7 +11,7 @@ function buildIndicesSegments (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html) request
+   * Perform a [indices.segments](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)

@@ -11,7 +11,7 @@ function buildCatThreadPool (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.thread_pool](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
+   * Perform a [cat.thread_pool](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
    *
    * @param {list} thread_pool_patterns - A comma-separated list of regular-expressions to filter the thread pools in the output
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

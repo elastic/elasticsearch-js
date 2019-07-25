@@ -11,7 +11,7 @@ function buildUpdate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [update](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html) request
+   * Perform a [update](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html) request
    *
    * @param {string} id - Document ID
    * @param {string} index - The name of the index

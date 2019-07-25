@@ -11,7 +11,7 @@ function buildSnapshotCreateRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [snapshot.create_repository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+   * Perform a [snapshot.create_repository](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
    * @param {string} repository - A repository name
    * @param {time} master_timeout - Explicit operation timeout for connection to master node

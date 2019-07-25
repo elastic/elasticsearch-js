@@ -11,7 +11,7 @@ function buildSearchShards (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [search_shards](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html) request
+   * Perform a [search_shards](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
