@@ -44,6 +44,7 @@ client.bulk({
   routing: string,
   timeout: string,
   type: string,
+  fields: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
   _source_includes: string | string[],
@@ -76,7 +77,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - Default document type for items which don't provide one
 
 |`fields`
-|`string, string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
+|`string \| string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
 
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
@@ -356,8 +357,7 @@ client.cat.indices({
   help: boolean,
   pri: boolean,
   s: string | string[],
-  v: boolean,
-  include_unloaded_segments: boolean
+  v: boolean
 })
 ----
 link:{ref}/cat-indices.html[Reference]
@@ -953,7 +953,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1019,7 +1019,6 @@ link:{ref}/cluster-update-settings.html[Reference]
 ----
 client.cluster.health({
   index: string | string[],
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   level: 'cluster' | 'indices' | 'shards',
   local: boolean,
   master_timeout: string,
@@ -1038,13 +1037,6 @@ link:{ref}/cluster-health.html[Reference]
 |`index`
 |`string \| string[]` - Limit the information returned to a specific index
 
-<<<<<<< HEAD
-=======
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `all`
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 |`level`
 |`'cluster' \| 'indices' \| 'shards'` - Specify the level of detail for returned information +
 _Default:_ `cluster`
@@ -1335,6 +1327,7 @@ client.create({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
@@ -1393,6 +1386,7 @@ client.delete({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
@@ -1448,6 +1442,7 @@ link:{ref}/docs-delete.html[Reference]
 ----
 client.deleteByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -1464,7 +1459,7 @@ client.deleteByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
@@ -1490,7 +1485,7 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -1649,6 +1644,7 @@ client.exists({
   index: string,
   type: string,
   stored_fields: string | string[],
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
@@ -1714,6 +1710,7 @@ client.existsSource({
   id: string,
   index: string,
   type: string,
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
@@ -1782,6 +1779,7 @@ client.explain({
   df: string,
   stored_fields: string | string[],
   lenient: boolean,
+  parent: string,
   preference: string,
   q: string,
   routing: string,
@@ -1857,7 +1855,7 @@ client.fieldCaps({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  include_unmapped: boolean
+  body: object
 })
 ----
 link:{ref}/search-field-caps.html[Reference]
@@ -1892,6 +1890,7 @@ client.get({
   index: string,
   type: string,
   stored_fields: string | string[],
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
@@ -1899,6 +1898,8 @@ client.get({
   _source: string | string[],
   _source_excludes: string | string[],
   _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -1943,10 +1944,10 @@ link:{ref}/docs-get.html[Reference]
 |`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
+|`string \| string[]` - A list of fields to exclude from the returned _source field
 
 |`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
+|`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`version`
 |`number` - Explicit version number for concurrency control
@@ -1982,6 +1983,7 @@ client.getSource({
   id: string,
   index: string,
   type: string,
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
@@ -2046,6 +2048,7 @@ client.index({
   type: string,
   wait_for_active_shards: string,
   op_type: 'index' | 'create',
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
@@ -2136,6 +2139,7 @@ link:{ref}/indices-analyze.html[Reference]
 ----
 client.indices.clearCache({
   index: string | string[],
+  field_data: boolean,
   fielddata: boolean,
   fields: string | string[],
   query: boolean,
@@ -2143,6 +2147,7 @@ client.indices.clearCache({
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   index: string | string[],
+  request_cache: boolean,
   request: boolean
 })
 ----
@@ -2194,8 +2199,7 @@ client.indices.close({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  wait_for_active_shards: string
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-open-close.html[Reference]
@@ -2231,6 +2235,7 @@ client.indices.create({
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
+  update_all_types: boolean,
   body: object
 })
 ----
@@ -2531,7 +2536,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2955,6 +2960,7 @@ client.indices.putMapping({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  update_all_types: boolean,
   body: object
 })
 ----
@@ -3249,6 +3255,7 @@ _Default:_ `open`
 client.indices.shrink({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3287,6 +3294,7 @@ link:{ref}/indices-shrink-index.html[Reference]
 client.indices.split({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3331,10 +3339,7 @@ client.indices.stats({
   groups: string | string[],
   level: 'cluster' | 'indices' | 'shards',
   types: string | string[],
-  include_segment_file_sizes: boolean,
-  include_unloaded_segments: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  forbid_closed_indices: boolean
+  include_segment_file_sizes: boolean
 })
 ----
 link:{ref}/indices-stats.html[Reference]
@@ -3368,20 +3373,6 @@ _Default:_ `indices`
 |`include_segment_file_sizes` or `includeSegmentFileSizes`
 |`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
 
-<<<<<<< HEAD
-=======
-|`include_unloaded_segments` or `includeUnloadedSegments`
-|`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`forbid_closed_indices` or `forbidClosedIndices`
-|`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
-_Default:_ `true`
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 |===
 
 === indices.updateAliases
@@ -3684,13 +3675,13 @@ link:{ref}/docs-multi-get.html[Reference]
 ----
 client.msearch({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   max_concurrent_searches: number,
   typed_keys: boolean,
   pre_filter_shard_size: number,
   max_concurrent_shard_requests: number,
   rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3701,7 +3692,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3733,11 +3724,11 @@ _Default:_ `The default grows with the number of nodes in the cluster but is at 
 ----
 client.msearchTemplate({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
   rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3748,7 +3739,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3772,6 +3763,7 @@ link:{ref}/search-multi-search.html[Reference]
 ----
 client.mtermvectors({
   index: string,
+  type: string,
   ids: string | string[],
   term_statistics: boolean,
   field_statistics: boolean,
@@ -3781,6 +3773,7 @@ client.mtermvectors({
   payloads: boolean,
   preference: string,
   routing: string,
+  parent: string,
   realtime: boolean,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
@@ -4092,9 +4085,7 @@ client.reindex({
   wait_for_active_shards: string,
   wait_for_completion: boolean,
   requests_per_second: number,
-  scroll: string,
   slices: number,
-  max_docs: number,
   body: object
 })
 ----
@@ -4191,7 +4182,7 @@ client.scroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4216,9 +4207,9 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 ----
 client.search({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
-  ccs_minimize_roundtrips: boolean,
   default_operator: 'AND' | 'OR',
   df: string,
   explain: boolean,
@@ -4268,7 +4259,7 @@ link:{ref}/search-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -4450,6 +4441,7 @@ _Default:_ `open`
 ----
 client.searchTemplate({
   index: string | string[],
+  type: string | string[],
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
@@ -4462,7 +4454,6 @@ client.searchTemplate({
   profile: boolean,
   typed_keys: boolean,
   rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -4473,7 +4464,7 @@ link:{ref}/search-template.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4855,6 +4846,7 @@ _Default:_ `nodes`
 ----
 client.termvectors({
   index: string,
+  type: string,
   id: string,
   term_statistics: boolean,
   field_statistics: boolean,
@@ -4864,6 +4856,7 @@ client.termvectors({
   payloads: boolean,
   preference: string,
   routing: string,
+  parent: string,
   realtime: boolean,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
@@ -4935,16 +4928,20 @@ client.update({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  fields: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
   _source_includes: string | string[],
   lang: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   retry_on_conflict: number,
   routing: string,
   timeout: string,
   if_seq_no: number,
   if_primary_term: number,
+  version: number,
+  version_type: 'internal' | 'force',
   body: object
 })
 ----
@@ -4964,7 +4961,7 @@ link:{ref}/docs-update.html[Reference]
 |`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`fields`
-|`string, string[]` - A comma-separated list of fields to return in the response
+|`string \| string[]` - A comma-separated list of fields to return in the response
 
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
@@ -5003,7 +5000,7 @@ link:{ref}/docs-update.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal', 'force'` - Specific version type
+|`'internal' \| 'force'` - Specific version type
 
 |`body`
 |`object` - The request definition requires either `script` or partial `doc`
@@ -5015,6 +5012,7 @@ link:{ref}/docs-update.html[Reference]
 ----
 client.updateByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -5032,7 +5030,7 @@ client.updateByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
@@ -5059,7 +5057,7 @@ link:{ref}/docs-update-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -5372,197 +5370,6 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== dataFrame.deleteDataFrameTransform
-[source,ts]
-----
-client.dataFrame.deleteDataFrameTransform({
-  transform_id: string,
-  force: boolean
-})
-----
-link:{ref}/delete-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
-|===
-
-=== dataFrame.getDataFrameTransform
-[source,ts]
-----
-client.dataFrame.getDataFrameTransform({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.getDataFrameTransformStats
-[source,ts]
-----
-client.dataFrame.getDataFrameTransformStats({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform stats, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transform stats to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.previewDataFrameTransform
-[source,ts]
-----
-client.dataFrame.previewDataFrameTransform({
-  body: object
-})
-----
-link:{ref}/preview-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the data_frame transform to preview
-
-|===
-
-=== dataFrame.putDataFrameTransform
-[source,ts]
-----
-client.dataFrame.putDataFrameTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/put-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
-
-|`body`
-|`object` - The data frame transform definition
-
-|===
-
-=== dataFrame.startDataFrameTransform
-[source,ts]
-----
-client.dataFrame.startDataFrameTransform({
-  transform_id: string,
-  timeout: string
-})
-----
-link:{ref}/start-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrame.stopDataFrameTransform
-[source,ts]
-----
-client.dataFrame.stopDataFrameTransform({
-  transform_id: string,
-  wait_for_completion: boolean,
-  timeout: string,
-  allow_no_match: boolean
-})
-----
-link:{ref}/stop-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== graph.explore
-[source,ts]
-----
-client.graph.explore({
-  index: string | string[],
-  type: string | string[],
-  routing: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/graph-explore-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === ilm.deleteLifecycle
 [source,ts]
 ----
@@ -5582,7 +5389,8 @@ link:{ref}/ilm-delete-lifecycle.html[Reference]
 [source,ts]
 ----
 client.ilm.explainLifecycle({
-  index: string
+  index: string,
+  human: boolean
 })
 ----
 link:{ref}/ilm-explain-lifecycle.html[Reference]
@@ -5744,37 +5552,6 @@ _Default:_ `closed`
 
 |===
 
-<<<<<<< HEAD
-=======
-=== indices.reloadSearchAnalyzers
-[source,ts]
-----
-client.indices.reloadSearchAnalyzers({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-})
-----
-link:{ref}/indices-reload-analyzers.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to reload analyzers for
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === indices.unfreeze
 [source,ts]
 ----
@@ -5815,50 +5592,34 @@ _Default:_ `closed`
 
 |===
 
-<<<<<<< HEAD
 === security.createApiKey
-[source,js]
-----
-client.security.createApiKey([params] [, options] [, callback])
-=======
-=== license.delete
 [source,ts]
 ----
-client.license.delete()
-----
-link:{ref}/delete-license.html[Reference]
-
-
-=== license.get
-[source,ts]
-----
-client.license.get({
-  local: boolean
+client.security.createApiKey({
+  refresh: 'true' | 'false' | 'wait_for',
+  body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-create-api-key.html[Reference]
 [cols=2*]
 |===
 |`refresh`
-|`'true', 'false', 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 |`body`
 |`object` - The api key request to create an API key
 
 |===
 
-<<<<<<< HEAD
 === security.getApiKey
-[source,js]
-----
-client.security.getApiKey([params] [, options] [, callback])
-=======
-=== license.getBasicStatus
 [source,ts]
 ----
-client.license.getBasicStatus()
->>>>>>> dd8491d7... Better reference code examples (#920)
+client.security.getApiKey({
+  id: string,
+  name: string,
+  username: string,
+  realm_name: string
+})
 ----
 link:{ref}/security-api-get-api-key.html[Reference]
 [cols=2*]
@@ -5869,37 +5630,20 @@ link:{ref}/security-api-get-api-key.html[Reference]
 |`name`
 |`string` - API key name of the API key to be retrieved
 
-<<<<<<< HEAD
 |`username`
 |`string` - user name of the user who created this API key to be retrieved
-=======
-=== license.getTrialStatus
-[source,ts]
-----
-client.license.getTrialStatus()
-----
-link:{ref}/get-trial-status.html[Reference]
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`realm_name` or `realmName`
 |`string` - realm name of the user who created this API key to be retrieved
 
 |===
 
-<<<<<<< HEAD
 === security.invalidateApiKey
-[source,js]
-----
-client.security.invalidateApiKey([params] [, options] [, callback])
-=======
-=== license.post
 [source,ts]
 ----
-client.license.post({
-  acknowledge: boolean,
+client.security.invalidateApiKey({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-invalidate-api-key.html[Reference]
 [cols=2*]
@@ -5909,28 +5653,25 @@ link:{ref}/security-api-invalidate-api-key.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.graph.explore
-[source,js]
-----
-client.xpack.graph.explore([params] [, options] [, callback])
-=======
-=== license.postStartBasic
 [source,ts]
 ----
-client.license.postStartBasic({
-  acknowledge: boolean
+client.xpack.graph.explore({
+  index: string | string[],
+  type: string | string[],
+  routing: string,
+  timeout: string,
+  body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/graph-explore-api.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`routing`
 |`string` - Specific routing value
@@ -5941,34 +5682,37 @@ link:{ref}/graph-explore-api.html[Reference]
 |`body`
 |`object` - Graph Query DSL
 
-<<<<<<< HEAD
 |===
 
 === xpack.info
-[source,js]
+[source,ts]
 ----
-client.xpack.info([params] [, options] [, callback])
+client.xpack.info({
+  categories: string | string[]
+})
 ----
 link:{ref}/info-api.html[Reference]
 [cols=2*]
 |===
 |`categories`
-|`string, string[]` - Comma-separated list of info categories. Can be any of: build, license, features
+|`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
 
 |===
 
 === xpack.license.delete
-[source,js]
+[source,ts]
 ----
-client.xpack.license.delete([params] [, options] [, callback])
+client.xpack.license.delete()
 ----
 link:{ref}/delete-license.html[Reference]
 
 
 === xpack.license.get
-[source,js]
+[source,ts]
 ----
-client.xpack.license.get([params] [, options] [, callback])
+client.xpack.license.get({
+  local: boolean
+})
 ----
 link:{ref}/get-license.html[Reference]
 [cols=2*]
@@ -5979,25 +5723,28 @@ link:{ref}/get-license.html[Reference]
 |===
 
 === xpack.license.getBasicStatus
-[source,js]
+[source,ts]
 ----
-client.xpack.license.getBasicStatus([params] [, options] [, callback])
+client.xpack.license.getBasicStatus()
 ----
 link:{ref}/get-basic-status.html[Reference]
 
 
 === xpack.license.getTrialStatus
-[source,js]
+[source,ts]
 ----
-client.xpack.license.getTrialStatus([params] [, options] [, callback])
+client.xpack.license.getTrialStatus()
 ----
 link:{ref}/get-trial-status.html[Reference]
 
 
 === xpack.license.post
-[source,js]
+[source,ts]
 ----
-client.xpack.license.post([params] [, options] [, callback])
+client.xpack.license.post({
+  acknowledge: boolean,
+  body: object
+})
 ----
 link:{ref}/update-license.html[Reference]
 [cols=2*]
@@ -6011,9 +5758,11 @@ link:{ref}/update-license.html[Reference]
 |===
 
 === xpack.license.postStartBasic
-[source,js]
+[source,ts]
 ----
-client.xpack.license.postStartBasic([params] [, options] [, callback])
+client.xpack.license.postStartBasic({
+  acknowledge: boolean
+})
 ----
 link:{ref}/start-basic.html[Reference]
 [cols=2*]
@@ -6024,18 +5773,12 @@ link:{ref}/start-basic.html[Reference]
 |===
 
 === xpack.license.postStartTrial
-[source,js]
-----
-client.xpack.license.postStartTrial([params] [, options] [, callback])
-=======
-=== license.postStartTrial
 [source,ts]
 ----
-client.license.postStartTrial({
+client.xpack.license.postStartTrial({
   type: string,
   acknowledge: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/start-trial.html[Reference]
 [cols=2*]
@@ -6048,19 +5791,12 @@ link:{ref}/start-trial.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.migration.deprecations
-[source,js]
-----
-client.xpack.migration.deprecations([params] [, options] [, callback])
-=======
-=== migration.deprecations
 [source,ts]
 ----
-client.migration.deprecations({
+client.xpack.migration.deprecations({
   index: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/migration-api-deprecation.html[Reference]
 [cols=2*]
@@ -6070,23 +5806,27 @@ link:{ref}/migration-api-deprecation.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.migration.getAssistance
-[source,js]
+[source,ts]
 ----
-client.xpack.migration.getAssistance([params] [, options] [, callback])
+client.xpack.migration.getAssistance({
+  index: string | string[],
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  ignore_unavailable: boolean
+})
 ----
 link:{ref}/migration-api-assistance.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 |`allow_no_indices` or `allowNoIndices`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`ignore_unavailable` or `ignoreUnavailable`
@@ -6095,9 +5835,12 @@ _Default:_ `open`
 |===
 
 === xpack.migration.upgrade
-[source,js]
+[source,ts]
 ----
-client.xpack.migration.upgrade([params] [, options] [, callback])
+client.xpack.migration.upgrade({
+  index: string,
+  wait_for_completion: boolean
+})
 ----
 link:{ref}/migration-api-upgrade.html[Reference]
 [cols=2*]
@@ -6112,21 +5855,15 @@ _Default:_ `true`
 |===
 
 === xpack.ml.closeJob
-[source,js]
-----
-client.xpack.ml.closeJob([params] [, options] [, callback])
-=======
-=== ml.closeJob
 [source,ts]
 ----
-client.ml.closeJob({
+client.xpack.ml.closeJob({
   job_id: string,
   allow_no_jobs: boolean,
   force: boolean,
   timeout: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-close-job.html[Reference]
 [cols=2*]
@@ -6148,19 +5885,12 @@ link:{ref}/ml-close-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteCalendar
-[source,js]
-----
-client.xpack.ml.deleteCalendar([params] [, options] [, callback])
-=======
-=== ml.deleteCalendar
 [source,ts]
 ----
-client.ml.deleteCalendar({
+client.xpack.ml.deleteCalendar({
   calendar_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6169,20 +5899,13 @@ client.ml.deleteCalendar({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteCalendarEvent
-[source,js]
-----
-client.xpack.ml.deleteCalendarEvent([params] [, options] [, callback])
-=======
-=== ml.deleteCalendarEvent
 [source,ts]
 ----
-client.ml.deleteCalendarEvent({
+client.xpack.ml.deleteCalendarEvent({
   calendar_id: string,
   event_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6194,20 +5917,13 @@ client.ml.deleteCalendarEvent({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteCalendarJob
-[source,js]
-----
-client.xpack.ml.deleteCalendarJob([params] [, options] [, callback])
-=======
-=== ml.deleteCalendarJob
 [source,ts]
 ----
-client.ml.deleteCalendarJob({
+client.xpack.ml.deleteCalendarJob({
   calendar_id: string,
   job_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6219,35 +5935,13 @@ client.ml.deleteCalendarJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteDatafeed
-[source,js]
-----
-client.xpack.ml.deleteDatafeed([params] [, options] [, callback])
-=======
-=== ml.deleteDataFrameAnalytics
 [source,ts]
 ----
-client.ml.deleteDataFrameAnalytics({
-  id: string
-})
-----
-link:{ref}/delete-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to delete
-
-|===
-
-=== ml.deleteDatafeed
-[source,ts]
-----
-client.ml.deleteDatafeed({
+client.xpack.ml.deleteDatafeed({
   datafeed_id: string,
   force: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-delete-datafeed.html[Reference]
 [cols=2*]
@@ -6260,33 +5954,19 @@ link:{ref}/ml-delete-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteExpiredData
-[source,js]
+[source,ts]
 ----
-client.xpack.ml.deleteExpiredData([params] [, options] [, callback])
+client.xpack.ml.deleteExpiredData()
 ----
 
 
 === xpack.ml.deleteFilter
-[source,js]
-----
-client.xpack.ml.deleteFilter([params] [, options] [, callback])
-=======
-=== ml.deleteExpiredData
 [source,ts]
 ----
-client.ml.deleteExpiredData()
-----
-
-
-=== ml.deleteFilter
-[source,ts]
-----
-client.ml.deleteFilter({
+client.xpack.ml.deleteFilter({
   filter_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6295,22 +5975,15 @@ client.ml.deleteFilter({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteForecast
-[source,js]
-----
-client.xpack.ml.deleteForecast([params] [, options] [, callback])
-=======
-=== ml.deleteForecast
 [source,ts]
 ----
-client.ml.deleteForecast({
+client.xpack.ml.deleteForecast({
   job_id: string,
   forecast_id: string,
   allow_no_forecasts: boolean,
   timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-delete-forecast.html[Reference]
 [cols=2*]
@@ -6329,21 +6002,14 @@ link:{ref}/ml-delete-forecast.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteJob
-[source,js]
-----
-client.xpack.ml.deleteJob([params] [, options] [, callback])
-=======
-=== ml.deleteJob
 [source,ts]
 ----
-client.ml.deleteJob({
+client.xpack.ml.deleteJob({
   job_id: string,
   force: boolean,
   wait_for_completion: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-delete-job.html[Reference]
 [cols=2*]
@@ -6360,20 +6026,13 @@ _Default:_ `true`
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.deleteModelSnapshot
-[source,js]
-----
-client.xpack.ml.deleteModelSnapshot([params] [, options] [, callback])
-=======
-=== ml.deleteModelSnapshot
 [source,ts]
 ----
-client.ml.deleteModelSnapshot({
+client.xpack.ml.deleteModelSnapshot({
   job_id: string,
   snapshot_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-delete-snapshot.html[Reference]
 [cols=2*]
@@ -6386,33 +6045,11 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.findFileStructure
-[source,js]
-----
-client.xpack.ml.findFileStructure([params] [, options] [, callback])
-=======
-=== ml.evaluateDataFrame
 [source,ts]
 ----
-client.ml.evaluateDataFrame({
-  body: object
-})
-----
-link:{ref}/evaluate-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The evaluation definition
-
-|===
-
-=== ml.findFileStructure
-[source,ts]
-----
-client.ml.findFileStructure({
+client.xpack.ml.findFileStructure({
   lines_to_sample: number,
-  line_merge_size_limit: number,
   timeout: string,
   charset: string,
   format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
@@ -6427,7 +6064,6 @@ client.ml.findFileStructure({
   explain: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-find-file-structure.html[Reference]
 [cols=2*]
@@ -6478,16 +6114,10 @@ _Default:_ `25s`
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.flushJob
-[source,js]
-----
-client.xpack.ml.flushJob([params] [, options] [, callback])
-=======
-=== ml.flushJob
 [source,ts]
 ----
-client.ml.flushJob({
+client.xpack.ml.flushJob({
   job_id: string,
   calc_interim: boolean,
   start: string,
@@ -6496,7 +6126,6 @@ client.ml.flushJob({
   skip_time: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-flush-job.html[Reference]
 [cols=2*]
@@ -6524,21 +6153,14 @@ link:{ref}/ml-flush-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.forecast
-[source,js]
-----
-client.xpack.ml.forecast([params] [, options] [, callback])
-=======
-=== ml.forecast
 [source,ts]
 ----
-client.ml.forecast({
+client.xpack.ml.forecast({
   job_id: string,
   duration: string,
   expires_in: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6553,16 +6175,10 @@ client.ml.forecast({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getBuckets
-[source,js]
-----
-client.xpack.ml.getBuckets([params] [, options] [, callback])
-=======
-=== ml.getBuckets
 [source,ts]
 ----
-client.ml.getBuckets({
+client.xpack.ml.getBuckets({
   job_id: string,
   timestamp: string,
   expand: boolean,
@@ -6576,7 +6192,6 @@ client.ml.getBuckets({
   desc: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-bucket.html[Reference]
 [cols=2*]
@@ -6619,16 +6234,10 @@ link:{ref}/ml-get-bucket.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getCalendarEvents
-[source,js]
-----
-client.xpack.ml.getCalendarEvents([params] [, options] [, callback])
-=======
-=== ml.getCalendarEvents
 [source,ts]
 ----
-client.ml.getCalendarEvents({
+client.xpack.ml.getCalendarEvents({
   calendar_id: string,
   job_id: string,
   start: string,
@@ -6636,7 +6245,6 @@ client.ml.getCalendarEvents({
   from: number,
   size: number
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6660,22 +6268,14 @@ client.ml.getCalendarEvents({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getCalendars
-[source,js]
-----
-client.xpack.ml.getCalendars([params] [, options] [, callback])
-=======
-=== ml.getCalendars
 [source,ts]
 ----
-client.ml.getCalendars({
+client.xpack.ml.getCalendars({
   calendar_id: string,
   from: number,
-  size: number,
-  body: object
+  size: number
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6690,23 +6290,16 @@ client.ml.getCalendars({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getCategories
-[source,js]
-----
-client.xpack.ml.getCategories([params] [, options] [, callback])
-=======
-=== ml.getCategories
 [source,ts]
 ----
-client.ml.getCategories({
+client.xpack.ml.getCategories({
   job_id: string,
   category_id: number,
   from: number,
   size: number,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-category.html[Reference]
 [cols=2*]
@@ -6728,78 +6321,13 @@ link:{ref}/ml-get-category.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getDatafeedStats
-[source,js]
-----
-client.xpack.ml.getDatafeedStats([params] [, options] [, callback])
-=======
-=== ml.getDataFrameAnalytics
 [source,ts]
 ----
-client.ml.getDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
-=== ml.getDataFrameAnalyticsStats
-[source,ts]
-----
-client.ml.getDataFrameAnalyticsStats({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics-stats.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
-=== ml.getDatafeedStats
-[source,ts]
-----
-client.ml.getDatafeedStats({
+client.xpack.ml.getDatafeedStats({
   datafeed_id: string,
   allow_no_datafeeds: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-datafeed-stats.html[Reference]
 [cols=2*]
@@ -6812,20 +6340,13 @@ link:{ref}/ml-get-datafeed-stats.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getDatafeeds
-[source,js]
-----
-client.xpack.ml.getDatafeeds([params] [, options] [, callback])
-=======
-=== ml.getDatafeeds
 [source,ts]
 ----
-client.ml.getDatafeeds({
+client.xpack.ml.getDatafeeds({
   datafeed_id: string,
   allow_no_datafeeds: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-datafeed.html[Reference]
 [cols=2*]
@@ -6838,21 +6359,14 @@ link:{ref}/ml-get-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getFilters
-[source,js]
-----
-client.xpack.ml.getFilters([params] [, options] [, callback])
-=======
-=== ml.getFilters
 [source,ts]
 ----
-client.ml.getFilters({
+client.xpack.ml.getFilters({
   filter_id: string,
   from: number,
   size: number
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -6867,16 +6381,10 @@ client.ml.getFilters({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getInfluencers
-[source,js]
-----
-client.xpack.ml.getInfluencers([params] [, options] [, callback])
-=======
-=== ml.getInfluencers
 [source,ts]
 ----
-client.ml.getInfluencers({
+client.xpack.ml.getInfluencers({
   job_id: string,
   exclude_interim: boolean,
   from: number,
@@ -6888,7 +6396,6 @@ client.ml.getInfluencers({
   desc: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-influencer.html[Reference]
 [cols=2*]
@@ -6925,20 +6432,13 @@ link:{ref}/ml-get-influencer.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getJobStats
-[source,js]
-----
-client.xpack.ml.getJobStats([params] [, options] [, callback])
-=======
-=== ml.getJobStats
 [source,ts]
 ----
-client.ml.getJobStats({
+client.xpack.ml.getJobStats({
   job_id: string,
   allow_no_jobs: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-job-stats.html[Reference]
 [cols=2*]
@@ -6951,20 +6451,13 @@ link:{ref}/ml-get-job-stats.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getJobs
-[source,js]
-----
-client.xpack.ml.getJobs([params] [, options] [, callback])
-=======
-=== ml.getJobs
 [source,ts]
 ----
-client.ml.getJobs({
+client.xpack.ml.getJobs({
   job_id: string,
   allow_no_jobs: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-job.html[Reference]
 [cols=2*]
@@ -6977,16 +6470,10 @@ link:{ref}/ml-get-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getModelSnapshots
-[source,js]
-----
-client.xpack.ml.getModelSnapshots([params] [, options] [, callback])
-=======
-=== ml.getModelSnapshots
 [source,ts]
 ----
-client.ml.getModelSnapshots({
+client.xpack.ml.getModelSnapshots({
   job_id: string,
   snapshot_id: string,
   from: number,
@@ -6997,7 +6484,6 @@ client.ml.getModelSnapshots({
   desc: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-snapshot.html[Reference]
 [cols=2*]
@@ -7031,16 +6517,10 @@ link:{ref}/ml-get-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getOverallBuckets
-[source,js]
-----
-client.xpack.ml.getOverallBuckets([params] [, options] [, callback])
-=======
-=== ml.getOverallBuckets
 [source,ts]
 ----
-client.ml.getOverallBuckets({
+client.xpack.ml.getOverallBuckets({
   job_id: string,
   top_n: number,
   bucket_span: string,
@@ -7051,7 +6531,6 @@ client.ml.getOverallBuckets({
   allow_no_jobs: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-overall-buckets.html[Reference]
 [cols=2*]
@@ -7085,16 +6564,10 @@ link:{ref}/ml-get-overall-buckets.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.getRecords
-[source,js]
-----
-client.xpack.ml.getRecords([params] [, options] [, callback])
-=======
-=== ml.getRecords
 [source,ts]
 ----
-client.ml.getRecords({
+client.xpack.ml.getRecords({
   job_id: string,
   exclude_interim: boolean,
   from: number,
@@ -7106,7 +6579,6 @@ client.ml.getRecords({
   desc: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-get-record.html[Reference]
 [cols=2*]
@@ -7143,35 +6615,21 @@ link:{ref}/ml-get-record.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.info
-[source,js]
+[source,ts]
 ----
-client.xpack.ml.info([params] [, options] [, callback])
+client.xpack.ml.info()
 ----
 
 
 === xpack.ml.openJob
-[source,js]
-----
-client.xpack.ml.openJob([params] [, options] [, callback])
-=======
-=== ml.info
 [source,ts]
 ----
-client.ml.info()
-----
-
-
-=== ml.openJob
-[source,ts]
-----
-client.ml.openJob({
+client.xpack.ml.openJob({
   job_id: string,
   ignore_downtime: boolean,
   timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-open-job.html[Reference]
 [cols=2*]
@@ -7187,20 +6645,13 @@ link:{ref}/ml-open-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.postCalendarEvents
-[source,js]
-----
-client.xpack.ml.postCalendarEvents([params] [, options] [, callback])
-=======
-=== ml.postCalendarEvents
 [source,ts]
 ----
-client.ml.postCalendarEvents({
+client.xpack.ml.postCalendarEvents({
   calendar_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7212,22 +6663,15 @@ client.ml.postCalendarEvents({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.postData
-[source,js]
-----
-client.xpack.ml.postData([params] [, options] [, callback])
-=======
-=== ml.postData
 [source,ts]
 ----
-client.ml.postData({
+client.xpack.ml.postData({
   job_id: string,
   reset_start: string,
   reset_end: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-post-data.html[Reference]
 [cols=2*]
@@ -7246,19 +6690,12 @@ link:{ref}/ml-post-data.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.previewDatafeed
-[source,js]
-----
-client.xpack.ml.previewDatafeed([params] [, options] [, callback])
-=======
-=== ml.previewDatafeed
 [source,ts]
 ----
-client.ml.previewDatafeed({
+client.xpack.ml.previewDatafeed({
   datafeed_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-preview-datafeed.html[Reference]
 [cols=2*]
@@ -7268,20 +6705,13 @@ link:{ref}/ml-preview-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.putCalendar
-[source,js]
-----
-client.xpack.ml.putCalendar([params] [, options] [, callback])
-=======
-=== ml.putCalendar
 [source,ts]
 ----
-client.ml.putCalendar({
+client.xpack.ml.putCalendar({
   calendar_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7293,20 +6723,13 @@ client.ml.putCalendar({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.putCalendarJob
-[source,js]
-----
-client.xpack.ml.putCalendarJob([params] [, options] [, callback])
-=======
-=== ml.putCalendarJob
 [source,ts]
 ----
-client.ml.putCalendarJob({
+client.xpack.ml.putCalendarJob({
   calendar_id: string,
   job_id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7318,39 +6741,13 @@ client.ml.putCalendarJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.putDatafeed
-[source,js]
-----
-client.xpack.ml.putDatafeed([params] [, options] [, callback])
-=======
-=== ml.putDataFrameAnalytics
 [source,ts]
 ----
-client.ml.putDataFrameAnalytics({
-  id: string,
-  body: object
-})
-----
-link:{ref}/put-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to create
-
-|`body`
-|`object` - The data frame analytics configuration
-
-|===
-
-=== ml.putDatafeed
-[source,ts]
-----
-client.ml.putDatafeed({
+client.xpack.ml.putDatafeed({
   datafeed_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-put-datafeed.html[Reference]
 [cols=2*]
@@ -7363,20 +6760,13 @@ link:{ref}/ml-put-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.putFilter
-[source,js]
-----
-client.xpack.ml.putFilter([params] [, options] [, callback])
-=======
-=== ml.putFilter
 [source,ts]
 ----
-client.ml.putFilter({
+client.xpack.ml.putFilter({
   filter_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7388,20 +6778,13 @@ client.ml.putFilter({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.putJob
-[source,js]
-----
-client.xpack.ml.putJob([params] [, options] [, callback])
-=======
-=== ml.putJob
 [source,ts]
 ----
-client.ml.putJob({
+client.xpack.ml.putJob({
   job_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-put-job.html[Reference]
 [cols=2*]
@@ -7414,22 +6797,15 @@ link:{ref}/ml-put-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.revertModelSnapshot
-[source,js]
-----
-client.xpack.ml.revertModelSnapshot([params] [, options] [, callback])
-=======
-=== ml.revertModelSnapshot
 [source,ts]
 ----
-client.ml.revertModelSnapshot({
+client.xpack.ml.revertModelSnapshot({
   job_id: string,
   snapshot_id: string,
   delete_intervening_results: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-revert-snapshot.html[Reference]
 [cols=2*]
@@ -7448,20 +6824,13 @@ link:{ref}/ml-revert-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.setUpgradeMode
-[source,js]
-----
-client.xpack.ml.setUpgradeMode([params] [, options] [, callback])
-=======
-=== ml.setUpgradeMode
 [source,ts]
 ----
-client.ml.setUpgradeMode({
+client.xpack.ml.setUpgradeMode({
   enabled: boolean,
   timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-set-upgrade-mode.html[Reference]
 [cols=2*]
@@ -7474,46 +6843,16 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.startDatafeed
-[source,js]
-----
-client.xpack.ml.startDatafeed([params] [, options] [, callback])
-=======
-=== ml.startDataFrameAnalytics
 [source,ts]
 ----
-client.ml.startDataFrameAnalytics({
-  id: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/start-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to start
-
-|`timeout`
-|`string` - Controls the time to wait until the task has started. Defaults to 20 seconds
-
-|`body`
-|`object` - The start data frame analytics parameters
-
-|===
-
-=== ml.startDatafeed
-[source,ts]
-----
-client.ml.startDatafeed({
+client.xpack.ml.startDatafeed({
   datafeed_id: string,
   start: string,
   end: string,
   timeout: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-start-datafeed.html[Reference]
 [cols=2*]
@@ -7535,53 +6874,15 @@ link:{ref}/ml-start-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.stopDatafeed
-[source,js]
-----
-client.xpack.ml.stopDatafeed([params] [, options] [, callback])
-=======
-=== ml.stopDataFrameAnalytics
 [source,ts]
 ----
-client.ml.stopDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  force: boolean,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/stop-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to stop
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-
-|`force`
-|`boolean` - True if the data frame analytics should be forcefully stopped
-
-|`timeout`
-|`string` - Controls the time to wait until the task has stopped. Defaults to 20 seconds
-
-|`body`
-|`object` - The stop data frame analytics parameters
-
-|===
-
-=== ml.stopDatafeed
-[source,ts]
-----
-client.ml.stopDatafeed({
+client.xpack.ml.stopDatafeed({
   datafeed_id: string,
   allow_no_datafeeds: boolean,
   force: boolean,
   timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-stop-datafeed.html[Reference]
 [cols=2*]
@@ -7600,20 +6901,13 @@ link:{ref}/ml-stop-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.updateDatafeed
-[source,js]
-----
-client.xpack.ml.updateDatafeed([params] [, options] [, callback])
-=======
-=== ml.updateDatafeed
 [source,ts]
 ----
-client.ml.updateDatafeed({
+client.xpack.ml.updateDatafeed({
   datafeed_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-update-datafeed.html[Reference]
 [cols=2*]
@@ -7626,20 +6920,13 @@ link:{ref}/ml-update-datafeed.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.updateFilter
-[source,js]
-----
-client.xpack.ml.updateFilter([params] [, options] [, callback])
-=======
-=== ml.updateFilter
 [source,ts]
 ----
-client.ml.updateFilter({
+client.xpack.ml.updateFilter({
   filter_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7651,20 +6938,13 @@ client.ml.updateFilter({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.updateJob
-[source,js]
-----
-client.xpack.ml.updateJob([params] [, options] [, callback])
-=======
-=== ml.updateJob
 [source,ts]
 ----
-client.ml.updateJob({
+client.xpack.ml.updateJob({
   job_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-update-job.html[Reference]
 [cols=2*]
@@ -7677,21 +6957,14 @@ link:{ref}/ml-update-job.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.updateModelSnapshot
-[source,js]
-----
-client.xpack.ml.updateModelSnapshot([params] [, options] [, callback])
-=======
-=== ml.updateModelSnapshot
 [source,ts]
 ----
-client.ml.updateModelSnapshot({
+client.xpack.ml.updateModelSnapshot({
   job_id: string,
   snapshot_id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/ml-update-snapshot.html[Reference]
 [cols=2*]
@@ -7707,19 +6980,12 @@ link:{ref}/ml-update-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.validate
-[source,js]
-----
-client.xpack.ml.validate([params] [, options] [, callback])
-=======
-=== ml.validate
 [source,ts]
 ----
-client.ml.validate({
+client.xpack.ml.validate({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7728,19 +6994,12 @@ client.ml.validate({
 
 |===
 
-<<<<<<< HEAD
 === xpack.ml.validateDetector
-[source,js]
-----
-client.xpack.ml.validateDetector([params] [, options] [, callback])
-=======
-=== ml.validateDetector
 [source,ts]
 ----
-client.ml.validateDetector({
+client.xpack.ml.validateDetector({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7749,23 +7008,16 @@ client.ml.validateDetector({
 
 |===
 
-<<<<<<< HEAD
 === xpack.monitoring.bulk
-[source,js]
-----
-client.xpack.monitoring.bulk([params] [, options] [, callback])
-=======
-=== monitoring.bulk
 [source,ts]
 ----
-client.monitoring.bulk({
+client.xpack.monitoring.bulk({
   type: string,
   system_id: string,
   system_api_version: string,
   interval: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/es-monitoring.html[Reference]
 [cols=2*]
@@ -7787,19 +7039,12 @@ link:{ref}/es-monitoring.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.deleteJob
-[source,js]
-----
-client.xpack.rollup.deleteJob([params] [, options] [, callback])
-=======
-=== rollup.deleteJob
 [source,ts]
 ----
-client.rollup.deleteJob({
+client.xpack.rollup.deleteJob({
   id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7808,19 +7053,12 @@ client.rollup.deleteJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.getJobs
-[source,js]
-----
-client.xpack.rollup.getJobs([params] [, options] [, callback])
-=======
-=== rollup.getJobs
 [source,ts]
 ----
-client.rollup.getJobs({
+client.xpack.rollup.getJobs({
   id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7829,19 +7067,12 @@ client.rollup.getJobs({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.getRollupCaps
-[source,js]
-----
-client.xpack.rollup.getRollupCaps([params] [, options] [, callback])
-=======
-=== rollup.getRollupCaps
 [source,ts]
 ----
-client.rollup.getRollupCaps({
+client.xpack.rollup.getRollupCaps({
   id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7850,19 +7081,12 @@ client.rollup.getRollupCaps({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.getRollupIndexCaps
-[source,js]
-----
-client.xpack.rollup.getRollupIndexCaps([params] [, options] [, callback])
-=======
-=== rollup.getRollupIndexCaps
 [source,ts]
 ----
-client.rollup.getRollupIndexCaps({
+client.xpack.rollup.getRollupIndexCaps({
   index: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7871,20 +7095,13 @@ client.rollup.getRollupIndexCaps({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.putJob
-[source,js]
-----
-client.xpack.rollup.putJob([params] [, options] [, callback])
-=======
-=== rollup.putJob
 [source,ts]
 ----
-client.rollup.putJob({
+client.xpack.rollup.putJob({
   id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7896,32 +7113,20 @@ client.rollup.putJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.rollupSearch
-[source,js]
-----
-client.xpack.rollup.rollupSearch([params] [, options] [, callback])
-=======
-=== rollup.rollupSearch
 [source,ts]
 ----
-client.rollup.rollupSearch({
-  index: string | string[],
+client.xpack.rollup.rollupSearch({
+  index: string,
   type: string,
   typed_keys: boolean,
-  rest_total_hits_as_int: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
 |`index`
-<<<<<<< HEAD
 |`string` - The index or index-pattern (containing rollup or regular data) that should be searched
-=======
-|`string \| string[]` - The indices or index-pattern(s) (containing rollup or regular data) that should be searched
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`type`
 |`string` - The doc type inside the index
@@ -7934,19 +7139,12 @@ client.rollup.rollupSearch({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.startJob
-[source,js]
-----
-client.xpack.rollup.startJob([params] [, options] [, callback])
-=======
-=== rollup.startJob
 [source,ts]
 ----
-client.rollup.startJob({
+client.xpack.rollup.startJob({
   id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7955,21 +7153,14 @@ client.rollup.startJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.rollup.stopJob
-[source,js]
-----
-client.xpack.rollup.stopJob([params] [, options] [, callback])
-=======
-=== rollup.stopJob
 [source,ts]
 ----
-client.rollup.stopJob({
+client.xpack.rollup.stopJob({
   id: string,
   wait_for_completion: boolean,
   timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 [cols=2*]
 |===
@@ -7984,36 +7175,22 @@ client.rollup.stopJob({
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.authenticate
-[source,js]
-----
-client.xpack.security.authenticate([params] [, options] [, callback])
-=======
-=== security.authenticate
 [source,ts]
 ----
-client.security.authenticate()
->>>>>>> dd8491d7... Better reference code examples (#920)
+client.xpack.security.authenticate()
 ----
 link:{ref}/security-api-authenticate.html[Reference]
 
 
-<<<<<<< HEAD
 === xpack.security.changePassword
-[source,js]
-----
-client.xpack.security.changePassword([params] [, options] [, callback])
-=======
-=== security.changePassword
 [source,ts]
 ----
-client.security.changePassword({
+client.xpack.security.changePassword({
   username: string,
   refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-change-password.html[Reference]
 [cols=2*]
@@ -8029,20 +7206,13 @@ link:{ref}/security-api-change-password.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.clearCachedRealms
-[source,js]
-----
-client.xpack.security.clearCachedRealms([params] [, options] [, callback])
-=======
-=== security.clearCachedRealms
 [source,ts]
 ----
-client.security.clearCachedRealms({
+client.xpack.security.clearCachedRealms({
   realms: string | string[],
   usernames: string | string[]
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-clear-cache.html[Reference]
 [cols=2*]
@@ -8055,19 +7225,12 @@ link:{ref}/security-api-clear-cache.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.clearCachedRoles
-[source,js]
-----
-client.xpack.security.clearCachedRoles([params] [, options] [, callback])
-=======
-=== security.clearCachedRoles
 [source,ts]
 ----
-client.security.clearCachedRoles({
+client.xpack.security.clearCachedRoles({
   name: string | string[]
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-clear-role-cache.html[Reference]
 [cols=2*]
@@ -8077,40 +7240,14 @@ link:{ref}/security-api-clear-role-cache.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.deletePrivileges
-[source,js]
-----
-client.xpack.security.deletePrivileges([params] [, options] [, callback])
-=======
-=== security.createApiKey
 [source,ts]
 ----
-client.security.createApiKey({
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-create-api-key.html[Reference]
-[cols=2*]
-|===
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The api key request to create an API key
-
-|===
-
-=== security.deletePrivileges
-[source,ts]
-----
-client.security.deletePrivileges({
+client.xpack.security.deletePrivileges({
   application: string,
   name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:TODO[Reference]
 [cols=2*]
@@ -8126,20 +7263,13 @@ link:TODO[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.deleteRole
-[source,js]
-----
-client.xpack.security.deleteRole([params] [, options] [, callback])
-=======
-=== security.deleteRole
 [source,ts]
 ----
-client.security.deleteRole({
+client.xpack.security.deleteRole({
   name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-delete-role.html[Reference]
 [cols=2*]
@@ -8152,20 +7282,13 @@ link:{ref}/security-api-delete-role.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.deleteRoleMapping
-[source,js]
-----
-client.xpack.security.deleteRoleMapping([params] [, options] [, callback])
-=======
-=== security.deleteRoleMapping
 [source,ts]
 ----
-client.security.deleteRoleMapping({
+client.xpack.security.deleteRoleMapping({
   name: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-delete-role-mapping.html[Reference]
 [cols=2*]
@@ -8178,20 +7301,13 @@ link:{ref}/security-api-delete-role-mapping.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.deleteUser
-[source,js]
-----
-client.xpack.security.deleteUser([params] [, options] [, callback])
-=======
-=== security.deleteUser
 [source,ts]
 ----
-client.security.deleteUser({
+client.xpack.security.deleteUser({
   username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-delete-user.html[Reference]
 [cols=2*]
@@ -8204,20 +7320,13 @@ link:{ref}/security-api-delete-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.disableUser
-[source,js]
-----
-client.xpack.security.disableUser([params] [, options] [, callback])
-=======
-=== security.disableUser
 [source,ts]
 ----
-client.security.disableUser({
+client.xpack.security.disableUser({
   username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-disable-user.html[Reference]
 [cols=2*]
@@ -8230,20 +7339,13 @@ link:{ref}/security-api-disable-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.enableUser
-[source,js]
-----
-client.xpack.security.enableUser([params] [, options] [, callback])
-=======
-=== security.enableUser
 [source,ts]
 ----
-client.security.enableUser({
+client.xpack.security.enableUser({
   username: string,
   refresh: 'true' | 'false' | 'wait_for'
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-enable-user.html[Reference]
 [cols=2*]
@@ -8256,55 +7358,13 @@ link:{ref}/security-api-enable-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getPrivileges
-[source,js]
-----
-client.xpack.security.getPrivileges([params] [, options] [, callback])
-=======
-=== security.getApiKey
 [source,ts]
 ----
-client.security.getApiKey({
-  id: string,
-  name: string,
-  username: string,
-  realm_name: string
-})
-----
-link:{ref}/security-api-get-api-key.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - API key id of the API key to be retrieved
-
-|`name`
-|`string` - API key name of the API key to be retrieved
-
-|`username`
-|`string` - user name of the user who created this API key to be retrieved
-
-|`realm_name` or `realmName`
-|`string` - realm name of the user who created this API key to be retrieved
-
-|===
-
-=== security.getBuiltinPrivileges
-[source,ts]
-----
-client.security.getBuiltinPrivileges()
-----
-link:{ref}/security-api-get-builtin-privileges.html[Reference]
-
-
-=== security.getPrivileges
-[source,ts]
-----
-client.security.getPrivileges({
+client.xpack.security.getPrivileges({
   application: string,
   name: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:TODO[Reference]
 [cols=2*]
@@ -8317,19 +7377,12 @@ link:TODO[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getRole
-[source,js]
-----
-client.xpack.security.getRole([params] [, options] [, callback])
-=======
-=== security.getRole
 [source,ts]
 ----
-client.security.getRole({
+client.xpack.security.getRole({
   name: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-get-role.html[Reference]
 [cols=2*]
@@ -8339,19 +7392,12 @@ link:{ref}/security-api-get-role.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getRoleMapping
-[source,js]
-----
-client.xpack.security.getRoleMapping([params] [, options] [, callback])
-=======
-=== security.getRoleMapping
 [source,ts]
 ----
-client.security.getRoleMapping({
+client.xpack.security.getRoleMapping({
   name: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-get-role-mapping.html[Reference]
 [cols=2*]
@@ -8361,19 +7407,12 @@ link:{ref}/security-api-get-role-mapping.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getToken
-[source,js]
-----
-client.xpack.security.getToken([params] [, options] [, callback])
-=======
-=== security.getToken
 [source,ts]
 ----
-client.security.getToken({
+client.xpack.security.getToken({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-get-token.html[Reference]
 [cols=2*]
@@ -8383,19 +7422,12 @@ link:{ref}/security-api-get-token.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getUser
-[source,js]
-----
-client.xpack.security.getUser([params] [, options] [, callback])
-=======
-=== security.getUser
 [source,ts]
 ----
-client.security.getUser({
+client.xpack.security.getUser({
   username: string | string[]
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-get-user.html[Reference]
 [cols=2*]
@@ -8405,35 +7437,21 @@ link:{ref}/security-api-get-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.getUserPrivileges
-[source,js]
-----
-client.xpack.security.getUserPrivileges([params] [, options] [, callback])
-=======
-=== security.getUserPrivileges
 [source,ts]
 ----
-client.security.getUserPrivileges()
->>>>>>> dd8491d7... Better reference code examples (#920)
+client.xpack.security.getUserPrivileges()
 ----
 link:{ref}/security-api-get-privileges.html[Reference]
 
 
-<<<<<<< HEAD
 === xpack.security.hasPrivileges
-[source,js]
-----
-client.xpack.security.hasPrivileges([params] [, options] [, callback])
-=======
-=== security.hasPrivileges
 [source,ts]
 ----
-client.security.hasPrivileges({
+client.xpack.security.hasPrivileges({
   user: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-has-privileges.html[Reference]
 [cols=2*]
@@ -8446,34 +7464,12 @@ link:{ref}/security-api-has-privileges.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.invalidateToken
-[source,js]
-----
-client.xpack.security.invalidateToken([params] [, options] [, callback])
-=======
-=== security.invalidateApiKey
 [source,ts]
 ----
-client.security.invalidateApiKey({
+client.xpack.security.invalidateToken({
   body: object
 })
-----
-link:{ref}/security-api-invalidate-api-key.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The api key request to invalidate API key(s)
-
-|===
-
-=== security.invalidateToken
-[source,ts]
-----
-client.security.invalidateToken({
-  body: object
-})
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-invalidate-token.html[Reference]
 [cols=2*]
@@ -8483,20 +7479,13 @@ link:{ref}/security-api-invalidate-token.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.putPrivileges
-[source,js]
-----
-client.xpack.security.putPrivileges([params] [, options] [, callback])
-=======
-=== security.putPrivileges
 [source,ts]
 ----
-client.security.putPrivileges({
+client.xpack.security.putPrivileges({
   refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:TODO[Reference]
 [cols=2*]
@@ -8509,21 +7498,14 @@ link:TODO[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.putRole
-[source,js]
-----
-client.xpack.security.putRole([params] [, options] [, callback])
-=======
-=== security.putRole
 [source,ts]
 ----
-client.security.putRole({
+client.xpack.security.putRole({
   name: string,
   refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-put-role.html[Reference]
 [cols=2*]
@@ -8539,21 +7521,14 @@ link:{ref}/security-api-put-role.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.putRoleMapping
-[source,js]
-----
-client.xpack.security.putRoleMapping([params] [, options] [, callback])
-=======
-=== security.putRoleMapping
 [source,ts]
 ----
-client.security.putRoleMapping({
+client.xpack.security.putRoleMapping({
   name: string,
   refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-put-role-mapping.html[Reference]
 [cols=2*]
@@ -8569,21 +7544,14 @@ link:{ref}/security-api-put-role-mapping.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.security.putUser
-[source,js]
-----
-client.xpack.security.putUser([params] [, options] [, callback])
-=======
-=== security.putUser
 [source,ts]
 ----
-client.security.putUser({
+client.xpack.security.putUser({
   username: string,
   refresh: 'true' | 'false' | 'wait_for',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/security-api-put-user.html[Reference]
 [cols=2*]
@@ -8599,19 +7567,12 @@ link:{ref}/security-api-put-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.sql.clearCursor
-[source,js]
-----
-client.xpack.sql.clearCursor([params] [, options] [, callback])
-=======
-=== sql.clearCursor
 [source,ts]
 ----
-client.sql.clearCursor({
+client.xpack.sql.clearCursor({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:Clear SQL cursor[Reference]
 [cols=2*]
@@ -8621,20 +7582,13 @@ link:Clear SQL cursor[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.sql.query
-[source,js]
-----
-client.xpack.sql.query([params] [, options] [, callback])
-=======
-=== sql.query
 [source,ts]
 ----
-client.sql.query({
+client.xpack.sql.query({
   format: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:Execute SQL[Reference]
 [cols=2*]
@@ -8647,19 +7601,12 @@ link:Execute SQL[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.sql.translate
-[source,js]
-----
-client.xpack.sql.translate([params] [, options] [, callback])
-=======
-=== sql.translate
 [source,ts]
 ----
-client.sql.translate({
+client.xpack.sql.translate({
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:Translate SQL into Elasticsearch queries[Reference]
 [cols=2*]
@@ -8669,26 +7616,20 @@ link:Translate SQL into Elasticsearch queries[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.ssl.certificates
-[source,js]
-----
-client.xpack.ssl.certificates([params] [, options] [, callback])
-=======
-=== ssl.certificates
 [source,ts]
 ----
-client.ssl.certificates()
->>>>>>> dd8491d7... Better reference code examples (#920)
+client.xpack.ssl.certificates()
 ----
 link:{ref}/security-api-ssl.html[Reference]
 
 
-<<<<<<< HEAD
 === xpack.usage
-[source,js]
+[source,ts]
 ----
-client.xpack.usage([params] [, options] [, callback])
+client.xpack.usage({
+  master_timeout: string
+})
 ----
 link:Retrieve information about xpack features usage[Reference]
 [cols=2*]
@@ -8699,18 +7640,13 @@ link:Retrieve information about xpack features usage[Reference]
 |===
 
 === xpack.watcher.ackWatch
-[source,js]
-----
-client.xpack.watcher.ackWatch([params] [, options] [, callback])
-=======
-=== watcher.ackWatch
 [source,ts]
 ----
-client.watcher.ackWatch({
+client.xpack.watcher.ackWatch({
   watch_id: string,
-  action_id: string | string[]
+  action_id: string | string[],
+  master_timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-ack-watch.html[Reference]
 [cols=2*]
@@ -8726,19 +7662,13 @@ link:{ref}/watcher-api-ack-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.activateWatch
-[source,js]
-----
-client.xpack.watcher.activateWatch([params] [, options] [, callback])
-=======
-=== watcher.activateWatch
 [source,ts]
 ----
-client.watcher.activateWatch({
-  watch_id: string
+client.xpack.watcher.activateWatch({
+  watch_id: string,
+  master_timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-activate-watch.html[Reference]
 [cols=2*]
@@ -8751,19 +7681,13 @@ link:{ref}/watcher-api-activate-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.deactivateWatch
-[source,js]
-----
-client.xpack.watcher.deactivateWatch([params] [, options] [, callback])
-=======
-=== watcher.deactivateWatch
 [source,ts]
 ----
-client.watcher.deactivateWatch({
-  watch_id: string
+client.xpack.watcher.deactivateWatch({
+  watch_id: string,
+  master_timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-deactivate-watch.html[Reference]
 [cols=2*]
@@ -8776,19 +7700,13 @@ link:{ref}/watcher-api-deactivate-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.deleteWatch
-[source,js]
-----
-client.xpack.watcher.deleteWatch([params] [, options] [, callback])
-=======
-=== watcher.deleteWatch
 [source,ts]
 ----
-client.watcher.deleteWatch({
-  id: string
+client.xpack.watcher.deleteWatch({
+  id: string,
+  master_timeout: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-delete-watch.html[Reference]
 [cols=2*]
@@ -8801,21 +7719,14 @@ link:{ref}/watcher-api-delete-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.executeWatch
-[source,js]
-----
-client.xpack.watcher.executeWatch([params] [, options] [, callback])
-=======
-=== watcher.executeWatch
 [source,ts]
 ----
-client.watcher.executeWatch({
+client.xpack.watcher.executeWatch({
   id: string,
   debug: boolean,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-execute-watch.html[Reference]
 [cols=2*]
@@ -8831,19 +7742,12 @@ link:{ref}/watcher-api-execute-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.getWatch
-[source,js]
-----
-client.xpack.watcher.getWatch([params] [, options] [, callback])
-=======
-=== watcher.getWatch
 [source,ts]
 ----
-client.watcher.getWatch({
+client.xpack.watcher.getWatch({
   id: string
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-get-watch.html[Reference]
 [cols=2*]
@@ -8853,24 +7757,18 @@ link:{ref}/watcher-api-get-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.putWatch
-[source,js]
-----
-client.xpack.watcher.putWatch([params] [, options] [, callback])
-=======
-=== watcher.putWatch
 [source,ts]
 ----
-client.watcher.putWatch({
+client.xpack.watcher.putWatch({
   id: string,
+  master_timeout: string,
   active: boolean,
   version: number,
   if_seq_no: number,
   if_primary_term: number,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-put-watch.html[Reference]
 [cols=2*]
@@ -8898,110 +7796,49 @@ link:{ref}/watcher-api-put-watch.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.restart
-[source,js]
+[source,ts]
 ----
-client.xpack.watcher.restart([params] [, options] [, callback])
+client.xpack.watcher.restart()
 ----
 link:{ref}/watcher-api-restart.html[Reference]
 
 
 === xpack.watcher.start
-[source,js]
-----
-client.xpack.watcher.start([params] [, options] [, callback])
-=======
-=== watcher.start
 [source,ts]
 ----
-client.watcher.start()
->>>>>>> dd8491d7... Better reference code examples (#920)
+client.xpack.watcher.start()
 ----
 link:{ref}/watcher-api-start.html[Reference]
 
 
-<<<<<<< HEAD
 === xpack.watcher.stats
-[source,js]
-----
-client.xpack.watcher.stats([params] [, options] [, callback])
-=======
-=== watcher.stats
 [source,ts]
 ----
-client.watcher.stats({
-  metric: string | string[],
-  metric: string | string[],
+client.xpack.watcher.stats({
+  metric: '_all' | 'queued_watches' | 'current_watches' | 'pending_watches',
+  metric: '_all' | 'queued_watches' | 'current_watches' | 'pending_watches',
   emit_stacktraces: boolean
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/watcher-api-stats.html[Reference]
 [cols=2*]
 |===
 |`metric`
-<<<<<<< HEAD
-|`'_all', 'queued_watches', 'current_watches', 'pending_watches'` - Controls what additional stat metrics should be include in the response
+|`'_all' \| 'queued_watches' \| 'current_watches' \| 'pending_watches'` - Controls what additional stat metrics should be include in the response
 
 |`metric`
-|`'_all', 'queued_watches', 'current_watches', 'pending_watches'` - Controls what additional stat metrics should be include in the response
-=======
-|`string \| string[]` - Controls what additional stat metrics should be include in the response
-
-|`metric`
-|`string \| string[]` - Controls what additional stat metrics should be include in the response
->>>>>>> dd8491d7... Better reference code examples (#920)
+|`'_all' \| 'queued_watches' \| 'current_watches' \| 'pending_watches'` - Controls what additional stat metrics should be include in the response
 
 |`emit_stacktraces` or `emitStacktraces`
 |`boolean` - Emits stack traces of currently running watches
 
 |===
 
-<<<<<<< HEAD
 === xpack.watcher.stop
-[source,js]
+[source,ts]
 ----
-client.xpack.watcher.stop([params] [, options] [, callback])
+client.xpack.watcher.stop()
 ----
 link:{ref}/watcher-api-stop.html[Reference]
 
-=======
-=== watcher.stop
-[source,ts]
-----
-client.watcher.stop()
-----
-link:{ref}/watcher-api-stop.html[Reference]
-
-
-=== xpack.info
-[source,ts]
-----
-client.xpack.info({
-  categories: string | string[]
-})
-----
-link:{ref}/info-api.html[Reference]
-[cols=2*]
-|===
-|`categories`
-|`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-
-=== xpack.usage
-[source,ts]
-----
-client.xpack.usage({
-  master_timeout: string
-})
-----
-link:Retrieve information about xpack features usage[Reference]
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for watch write operation
-
-|===
->>>>>>> dd8491d7... Better reference code examples (#920)
