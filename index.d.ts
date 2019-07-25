@@ -111,6 +111,7 @@ declare class Client extends EventEmitter {
   extend: ClientExtends;
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
+  /* GENERATED */
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
     aliases: ApiMethod<RequestParams.CatAliases>
@@ -305,6 +306,7 @@ declare class Client extends EventEmitter {
   update: ApiMethod<RequestParams.Update>
   update_by_query: ApiMethod<RequestParams.UpdateByQuery>
   updateByQuery: ApiMethod<RequestParams.UpdateByQuery>
+  /* /GENERATED */
 }
 
 declare const events: {
