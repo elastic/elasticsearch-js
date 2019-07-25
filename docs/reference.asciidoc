@@ -44,9 +44,10 @@ client.bulk({
   routing: string,
   timeout: string,
   type: string,
+  fields: string | string[],
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   pipeline: string,
   body: object
 })
@@ -76,24 +77,16 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - Default document type for items which don't provide one
 
 |`fields`
-|`string, string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
+|`string \| string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
 
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
@@ -364,8 +357,7 @@ client.cat.indices({
   help: boolean,
   pri: boolean,
   s: string | string[],
-  v: boolean,
-  include_unloaded_segments: boolean
+  v: boolean
 })
 ----
 link:{ref}/cat-indices.html[Reference]
@@ -824,6 +816,7 @@ client.cat.tasks({
   node_id: string | string[],
   actions: string | string[],
   detailed: boolean,
+  parent_node: string,
   parent_task: number,
   h: string | string[],
   help: boolean,
@@ -964,7 +957,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1030,7 +1023,6 @@ link:{ref}/cluster-update-settings.html[Reference]
 ----
 client.cluster.health({
   index: string | string[],
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   level: 'cluster' | 'indices' | 'shards',
   local: boolean,
   master_timeout: string,
@@ -1039,7 +1031,6 @@ client.cluster.health({
   wait_for_nodes: string,
   wait_for_events: 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid',
   wait_for_no_relocating_shards: boolean,
-  wait_for_no_initializing_shards: boolean,
   wait_for_status: 'green' | 'yellow' | 'red'
 })
 ----
@@ -1049,13 +1040,6 @@ link:{ref}/cluster-health.html[Reference]
 |`index`
 |`string \| string[]` - Limit the information returned to a specific index
 
-<<<<<<< HEAD
-=======
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `all`
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 |`level`
 |`'cluster' \| 'indices' \| 'shards'` - Specify the level of detail for returned information +
 _Default:_ `cluster`
@@ -1188,8 +1172,6 @@ client.cluster.state({
   local: boolean,
   master_timeout: string,
   flat_settings: boolean,
-  wait_for_metadata_version: number,
-  wait_for_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
@@ -1255,7 +1237,6 @@ client.count({
   index: string | string[],
   type: string | string[],
   ignore_unavailable: boolean,
-  ignore_throttled: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   min_score: number,
@@ -1327,9 +1308,23 @@ _Default:_ `OR`
 |===
 
 === countPercolate
-[source,js]
+[source,ts]
 ----
-client.countPercolate([params] [, options] [, callback])
+client.countPercolate({
+  index: string,
+  type: string,
+  id: string,
+  routing: string | string[],
+  preference: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  percolate_index: string,
+  percolate_type: string,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  body: object
+})
 ----
 link:{ref}/search-percolate.html[Reference]
 [cols=2*]
@@ -1344,7 +1339,7 @@ link:{ref}/search-percolate.html[Reference]
 |`string` - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 
 |`routing`
-|`string, string[]` - A comma-separated list of specific routing values
+|`string \| string[]` - A comma-separated list of specific routing values
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -1356,7 +1351,7 @@ link:{ref}/search-percolate.html[Reference]
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`percolate_index` or `percolateIndex`
@@ -1369,7 +1364,7 @@ _Default:_ `open`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal', 'external', 'external_gte', 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
 
 |`body`
 |`object` - The count percolator request definition using the percolate DSL
@@ -1384,9 +1379,12 @@ client.create({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
+  timestamp: string,
+  ttl: string,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
   pipeline: string,
@@ -1448,11 +1446,10 @@ client.delete({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
-  if_seq_no: number,
-  if_primary_term: number,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -1497,6 +1494,7 @@ link:{ref}/docs-delete.html[Reference]
 ----
 client.deleteByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -1513,11 +1511,11 @@ client.deleteByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -1539,7 +1537,7 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -1564,11 +1562,7 @@ _Default:_ `OR`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`conflicts`
-<<<<<<< HEAD
-|`'abort', 'proceed'` - What to do when the delete-by-query hits version conflicts? +
-=======
-|`'abort' \| 'proceed'` - What to do when the delete by query hits version conflicts? +
->>>>>>> dd8491d7... Better reference code examples (#920)
+|`'abort' \| 'proceed'` - What to do when the delete-by-query hits version conflicts? +
 _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
@@ -1605,19 +1599,11 @@ _Default:_ `open`
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
@@ -1660,33 +1646,12 @@ _Default:_ `1`
 
 |===
 
-<<<<<<< HEAD
-=======
-=== deleteByQueryRethrottle
-[source,ts]
-----
-client.deleteByQueryRethrottle({
-  task_id: string,
-  requests_per_second: number
-})
-----
-link:{ref}/docs-delete-by-query.html[Reference]
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === deleteScript
 [source,ts]
 ----
 client.deleteScript({
   id: string,
+  lang: string,
   timeout: string,
   master_timeout: string
 })
@@ -1709,9 +1674,11 @@ link:{ref}/modules-scripting.html[Reference]
 |===
 
 === deleteTemplate
-[source,js]
+[source,ts]
 ----
-client.deleteTemplate([params] [, options] [, callback])
+client.deleteTemplate({
+  id: string
+})
 ----
 link:{ref}/search-template.html[Reference]
 [cols=2*]
@@ -1729,13 +1696,14 @@ client.exists({
   index: string,
   type: string,
   stored_fields: string | string[],
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -1773,19 +1741,11 @@ link:{ref}/docs-get.html[Reference]
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`version`
 |`number` - Explicit version number for concurrency control
@@ -1802,13 +1762,14 @@ client.existsSource({
   id: string,
   index: string,
   type: string,
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -1843,19 +1804,11 @@ link:{ref}/docs-get.html[Reference]
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`version`
 |`number` - Explicit version number for concurrency control
@@ -1878,12 +1831,13 @@ client.explain({
   df: string,
   stored_fields: string | string[],
   lenient: boolean,
+  parent: string,
   preference: string,
   q: string,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   body: object
 })
 ----
@@ -1933,19 +1887,11 @@ _Default:_ `OR`
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`body`
 |`object` - The query definition using the Query DSL
@@ -1961,7 +1907,7 @@ client.fieldCaps({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  include_unmapped: boolean
+  body: object
 })
 ----
 link:{ref}/search-field-caps.html[Reference]
@@ -1989,21 +1935,29 @@ _Default:_ `open`
 |===
 
 === fieldStats
-[source,js]
+[source,ts]
 ----
-client.fieldStats([params] [, options] [, callback])
+client.fieldStats({
+  index: string | string[],
+  fields: string | string[],
+  level: 'indices' | 'cluster',
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  body: object
+})
 ----
 link:{ref}/search-field-stats.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 |`fields`
-|`string, string[]` - A comma-separated list of fields for to get field statistics for (min value, max value, and more)
+|`string \| string[]` - A comma-separated list of fields for to get field statistics for (min value, max value, and more)
 
 |`level`
-|`'indices', 'cluster'` - Defines if field stats should be returned on a per index level or on a cluster wide level +
+|`'indices' \| 'cluster'` - Defines if field stats should be returned on a per index level or on a cluster wide level +
 _Default:_ `cluster`
 
 |`ignore_unavailable` or `ignoreUnavailable`
@@ -2013,7 +1967,7 @@ _Default:_ `cluster`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`body`
@@ -2029,13 +1983,14 @@ client.get({
   index: string,
   type: string,
   stored_fields: string | string[],
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -2073,19 +2028,11 @@ link:{ref}/docs-get.html[Reference]
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`version`
 |`number` - Explicit version number for concurrency control
@@ -2100,7 +2047,7 @@ link:{ref}/docs-get.html[Reference]
 ----
 client.getScript({
   id: string,
-  master_timeout: string
+  lang: string
 })
 ----
 link:{ref}/modules-scripting.html[Reference]
@@ -2121,13 +2068,14 @@ client.getSource({
   id: string,
   index: string,
   type: string,
+  parent: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force'
 })
@@ -2162,19 +2110,11 @@ link:{ref}/docs-get.html[Reference]
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`version`
 |`number` - Explicit version number for concurrency control
@@ -2185,9 +2125,11 @@ link:{ref}/docs-get.html[Reference]
 |===
 
 === getTemplate
-[source,js]
+[source,ts]
 ----
-client.getTemplate([params] [, options] [, callback])
+client.getTemplate({
+  id: string
+})
 ----
 link:{ref}/search-template.html[Reference]
 [cols=2*]
@@ -2206,13 +2148,14 @@ client.index({
   type: string,
   wait_for_active_shards: string,
   op_type: 'index' | 'create',
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
+  timestamp: string,
+  ttl: string,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
-  if_seq_no: number,
-  if_primary_term: number,
   pipeline: string,
   body: object
 })
@@ -2273,7 +2216,17 @@ _Default:_ `index`
 ----
 client.indices.analyze({
   index: string,
+  analyzer: string,
+  char_filter: string | string[],
+  field: string,
+  filter: string | string[],
   index: string,
+  prefer_local: boolean,
+  text: string | string[],
+  tokenizer: string,
+  explain: boolean,
+  attributes: string | string[],
+  format: 'detailed' | 'text',
   body: object
 })
 ----
@@ -2287,13 +2240,13 @@ link:{ref}/indices-analyze.html[Reference]
 |`string` - The name of the analyzer to use
 
 |`char_filter` or `charFilter`
-|`string, string[]` - A comma-separated list of character filters to use for the analysis
+|`string \| string[]` - A comma-separated list of character filters to use for the analysis
 
 |`field`
 |`string` - Use the analyzer configured for this field (instead of passing the analyzer name)
 
 |`filter`
-|`string, string[]` - A comma-separated list of filters to use for the analysis
+|`string \| string[]` - A comma-separated list of filters to use for the analysis
 
 |`index`
 |`string` - The name of the index to scope the operation
@@ -2302,7 +2255,7 @@ link:{ref}/indices-analyze.html[Reference]
 |`boolean` - With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
 
 |`text`
-|`string, string[]` - The text on which the analysis should be performed (when request body is not used)
+|`string \| string[]` - The text on which the analysis should be performed (when request body is not used)
 
 |`tokenizer`
 |`string` - The name of the tokenizer to use for the analysis
@@ -2311,10 +2264,10 @@ link:{ref}/indices-analyze.html[Reference]
 |`boolean` - With `true`, outputs more advanced details. (default: false)
 
 |`attributes`
-|`string, string[]` - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
+|`string \| string[]` - A comma-separated list of token attributes to output, this parameter works only with `explain=true`
 
 |`format`
-|`'detailed', 'text'` - Format of the output +
+|`'detailed' \| 'text'` - Format of the output +
 _Default:_ `detailed`
 
 |`body`
@@ -2327,6 +2280,7 @@ _Default:_ `detailed`
 ----
 client.indices.clearCache({
   index: string | string[],
+  field_data: boolean,
   fielddata: boolean,
   fields: string | string[],
   query: boolean,
@@ -2334,6 +2288,8 @@ client.indices.clearCache({
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   index: string | string[],
+  recycler: boolean,
+  request_cache: boolean,
   request: boolean
 })
 ----
@@ -2350,11 +2306,7 @@ link:{ref}/indices-clearcache.html[Reference]
 |`boolean` - Clear field data
 
 |`fields`
-<<<<<<< HEAD
-|`string, string[]` - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
-=======
-|`string \| string[]` - A comma-separated list of fields to clear when using the `fielddata` parameter (default: all)
->>>>>>> dd8491d7... Better reference code examples (#920)
+|`string \| string[]` - A comma-separated list of fields to clear when using the `field_data` parameter (default: all)
 
 |`query`
 |`boolean` - Clear query caches
@@ -2392,8 +2344,7 @@ client.indices.close({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  wait_for_active_shards: string
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-open-close.html[Reference]
@@ -2425,10 +2376,10 @@ _Default:_ `open`
 ----
 client.indices.create({
   index: string,
-  include_type_name: boolean,
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
+  update_all_types: boolean,
   body: object
 })
 ----
@@ -2461,10 +2412,7 @@ link:{ref}/indices-create-index.html[Reference]
 client.indices.delete({
   index: string | string[],
   timeout: string,
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  master_timeout: string
 })
 ----
 link:{ref}/indices-delete-index.html[Reference]
@@ -2479,19 +2427,6 @@ link:{ref}/indices-delete-index.html[Reference]
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
 
-<<<<<<< HEAD
-=======
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Ignore unavailable indexes (default: false)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
-_Default:_ `open`
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 |===
 
 === indices.deleteAlias
@@ -2729,7 +2664,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2757,7 +2692,9 @@ client.indices.forcemerge({
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   max_num_segments: number,
-  only_expunge_deletes: boolean
+  only_expunge_deletes: boolean,
+  operation_threading: undefined,
+  wait_for_merge: boolean
 })
 ----
 link:{ref}/indices-forcemerge.html[Reference]
@@ -2786,7 +2723,7 @@ _Default:_ `open`
 |`boolean` - Specify whether the operation should only expunge deleted documents
 
 |`operation_threading` or `operationThreading`
-|`undefined` - TODO: ?
+|`` - TODO: ?
 
 |`wait_for_merge` or `waitForMerge`
 |`boolean` - Specify whether the request should block until the merge process is finished (default: true)
@@ -2798,14 +2735,13 @@ _Default:_ `open`
 ----
 client.indices.get({
   index: string | string[],
-  include_type_name: boolean,
+  feature: string | string[],
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   flat_settings: boolean,
-  include_defaults: boolean,
-  master_timeout: string
+  include_defaults: boolean
 })
 ----
 link:{ref}/indices-get-index.html[Reference]
@@ -2815,7 +2751,7 @@ link:{ref}/indices-get-index.html[Reference]
 |`string \| string[]` - A comma-separated list of index names
 
 |`feature`
-|`string, string[]` - A comma-separated list of features
+|`string \| string[]` - A comma-separated list of features
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2881,7 +2817,6 @@ client.indices.getFieldMapping({
   index: string | string[],
   type: string | string[],
   fields: string | string[],
-  include_type_name: boolean,
   include_defaults: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -2925,11 +2860,9 @@ _Default:_ `open`
 client.indices.getMapping({
   index: string | string[],
   type: string | string[],
-  include_type_name: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  master_timeout: string,
   local: boolean
 })
 ----
@@ -2963,7 +2896,6 @@ _Default:_ `open`
 client.indices.getSettings({
   index: string | string[],
   name: string | string[],
-  master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
@@ -3007,7 +2939,6 @@ _Default:_ `open,closed`
 ----
 client.indices.getTemplate({
   name: string | string[],
-  include_type_name: boolean,
   flat_settings: boolean,
   master_timeout: string,
   local: boolean
@@ -3067,8 +2998,7 @@ client.indices.open({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  wait_for_active_shards: string
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-open-close.html[Reference]
@@ -3132,12 +3062,12 @@ link:{ref}/indices-aliases.html[Reference]
 client.indices.putMapping({
   index: string | string[],
   type: string,
-  include_type_name: boolean,
   timeout: string,
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  update_all_types: boolean,
   body: object
 })
 ----
@@ -3180,7 +3110,6 @@ _Default:_ `open`
 client.indices.putSettings({
   index: string | string[],
   master_timeout: string,
-  timeout: string,
   preserve_existing: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -3224,7 +3153,6 @@ _Default:_ `open`
 ----
 client.indices.putTemplate({
   name: string,
-  include_type_name: boolean,
   order: number,
   create: boolean,
   timeout: string,
@@ -3316,7 +3244,6 @@ _Default:_ `open`
 client.indices.rollover({
   alias: string,
   new_index: string,
-  include_type_name: boolean,
   timeout: string,
   dry_run: boolean,
   master_timeout: string,
@@ -3358,6 +3285,7 @@ client.indices.segments({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  operation_threading: undefined,
   verbose: boolean
 })
 ----
@@ -3378,7 +3306,7 @@ link:{ref}/indices-segments.html[Reference]
 _Default:_ `open`
 
 |`operation_threading` or `operationThreading`
-|`undefined` - TODO: ?
+|`` - TODO: ?
 
 |`verbose`
 |`boolean` - Includes detailed memory usage by Lucene.
@@ -3393,7 +3321,8 @@ client.indices.shardStores({
   status: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  operation_threading: undefined
 })
 ----
 link:{ref}/indices-shards-stores.html[Reference]
@@ -3416,7 +3345,7 @@ link:{ref}/indices-shards-stores.html[Reference]
 _Default:_ `open`
 
 |`operation_threading` or `operationThreading`
-|`undefined` - TODO: ?
+|`` - TODO: ?
 
 |===
 
@@ -3455,44 +3384,6 @@ link:{ref}/indices-shrink-index.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== indices.split
-[source,ts]
-----
-client.indices.split({
-  index: string,
-  target: string,
-  timeout: string,
-  master_timeout: string,
-  wait_for_active_shards: string,
-  body: object
-})
-----
-link:{ref}/indices-split-index.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the source index to split
-
-|`target`
-|`string` - The name of the target index to split into
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Set the number of active shards to wait for on the shrunken index before the operation returns.
-
-|`body`
-|`object` - The configuration for the target index (`settings` and `aliases`)
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === indices.stats
 [source,ts]
 ----
@@ -3505,10 +3396,7 @@ client.indices.stats({
   groups: string | string[],
   level: 'cluster' | 'indices' | 'shards',
   types: string | string[],
-  include_segment_file_sizes: boolean,
-  include_unloaded_segments: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  forbid_closed_indices: boolean
+  include_segment_file_sizes: boolean
 })
 ----
 link:{ref}/indices-stats.html[Reference]
@@ -3542,20 +3430,6 @@ _Default:_ `indices`
 |`include_segment_file_sizes` or `includeSegmentFileSizes`
 |`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
 
-<<<<<<< HEAD
-=======
-|`include_unloaded_segments` or `includeUnloadedSegments`
-|`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`forbid_closed_indices` or `forbidClosedIndices`
-|`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
-_Default:_ `true`
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 |===
 
 === indices.updateAliases
@@ -3627,6 +3501,7 @@ client.indices.validateQuery({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  operation_threading: undefined,
   q: string,
   analyzer: string,
   analyze_wildcard: boolean,
@@ -3661,7 +3536,7 @@ link:{ref}/search-validate.html[Reference]
 _Default:_ `open`
 
 |`operation_threading` or `operationThreading`
-|`undefined` - TODO: ?
+|`` - TODO: ?
 
 |`q`
 |`string` - Query in the Lucene query string syntax
@@ -3813,8 +3688,8 @@ client.mget({
   refresh: boolean,
   routing: string,
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   body: object
 })
 ----
@@ -3845,62 +3720,37 @@ link:{ref}/docs-multi-get.html[Reference]
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`body`
 |`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
 
 |===
 
-<<<<<<< HEAD
 === mpercolate
-[source,js]
-----
-client.mpercolate([params] [, options] [, callback])
-=======
-=== msearch
 [source,ts]
 ----
-client.msearch({
-  index: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
-  max_concurrent_searches: number,
-  typed_keys: boolean,
-  pre_filter_shard_size: number,
-  max_concurrent_shard_requests: number,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
+client.mpercolate({
+  index: string,
+  type: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/search-percolate.html[Reference]
 [cols=2*]
 |===
 |`index`
-<<<<<<< HEAD
 |`string` - The index of the document being count percolated to use as default
 
 |`type`
 |`string` - The type of the document being percolated to use as default.
-=======
-|`string \| string[]` - A comma-separated list of index names to use as default
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3909,7 +3759,7 @@ link:{ref}/search-percolate.html[Reference]
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`body`
@@ -3918,21 +3768,29 @@ _Default:_ `open`
 |===
 
 === msearch
-[source,js]
+[source,ts]
 ----
-client.msearch([params] [, options] [, callback])
+client.msearch({
+  index: string | string[],
+  type: string | string[],
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  max_concurrent_searches: number,
+  typed_keys: boolean,
+  pre_filter_shard_size: number,
+  body: object
+})
 ----
 link:{ref}/search-multi-search.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names to use as default
+|`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
-|`'query_then_fetch', 'query_and_fetch', 'dfs_query_then_fetch', 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
 
 |`max_concurrent_searches` or `maxConcurrentSearches`
 |`number` - Controls the maximum number of concurrent searches the multi search api will execute
@@ -3954,11 +3812,10 @@ _Default:_ `128`
 ----
 client.msearchTemplate({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3969,7 +3826,7 @@ link:{ref}/search-template.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3990,6 +3847,7 @@ link:{ref}/search-template.html[Reference]
 ----
 client.mtermvectors({
   index: string,
+  type: string,
   ids: string | string[],
   term_statistics: boolean,
   field_statistics: boolean,
@@ -3999,6 +3857,7 @@ client.mtermvectors({
   payloads: boolean,
   preference: string,
   routing: string,
+  parent: string,
   realtime: boolean,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
@@ -4128,28 +3987,6 @@ link:{ref}/cluster-nodes-info.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== nodes.reloadSecureSettings
-[source,ts]
-----
-client.nodes.reloadSecureSettings({
-  node_id: string | string[],
-  timeout: string
-})
-----
-link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === nodes.stats
 [source,ts]
 ----
@@ -4206,44 +4043,42 @@ _Default:_ `node`
 
 |===
 
-<<<<<<< HEAD
 === percolate
-[source,js]
-----
-client.percolate([params] [, options] [, callback])
-=======
-=== nodes.usage
 [source,ts]
 ----
-client.nodes.usage({
-  metric: string | string[],
-  node_id: string | string[],
-  timeout: string
+client.percolate({
+  index: string,
+  type: string,
+  id: string,
+  routing: string | string[],
+  preference: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  percolate_index: string,
+  percolate_type: string,
+  percolate_routing: string,
+  percolate_preference: string,
+  percolate_format: 'ids',
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/search-percolate.html[Reference]
 [cols=2*]
 |===
-<<<<<<< HEAD
 |`index`
 |`string` - The index of the document being percolated.
 
 |`type`
 |`string` - The type of the document being percolated.
-=======
-|`metric`
-|`string \| string[]` - Limit the information returned to the specified metrics
-
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`id`
 |`string` - Substitute the document in the request body with a document that is known by the specified id. On top of the id, the index and type parameter will be used to retrieve the document from within the cluster.
 
 |`routing`
-|`string, string[]` - A comma-separated list of specific routing values
+|`string \| string[]` - A comma-separated list of specific routing values
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -4255,7 +4090,7 @@ link:{ref}/search-percolate.html[Reference]
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`percolate_index` or `percolateIndex`
@@ -4277,7 +4112,7 @@ _Default:_ `open`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal', 'external', 'external_gte', 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
 
 |`body`
 |`object` - The percolator request definition using the percolate DSL
@@ -4297,10 +4132,9 @@ link:https://www.elastic.co/guide/[Reference]
 ----
 client.putScript({
   id: string,
-  context: string,
+  lang: string,
   timeout: string,
   master_timeout: string,
-  context: string,
   body: object
 })
 ----
@@ -4324,44 +4158,19 @@ link:{ref}/modules-scripting.html[Reference]
 
 |===
 
-<<<<<<< HEAD
 === putTemplate
-[source,js]
-----
-client.putTemplate([params] [, options] [, callback])
-=======
-=== rankEval
 [source,ts]
 ----
-client.rankEval({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+client.putTemplate({
+  id: string,
   body: object
 })
->>>>>>> dd8491d7... Better reference code examples (#920)
 ----
 link:{ref}/search-template.html[Reference]
 [cols=2*]
 |===
-<<<<<<< HEAD
 |`id`
 |`string` - Template ID
-=======
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`body`
 |`object` - The document
@@ -4377,9 +4186,7 @@ client.reindex({
   wait_for_active_shards: string,
   wait_for_completion: boolean,
   requests_per_second: number,
-  scroll: string,
   slices: number,
-  max_docs: number,
   body: object
 })
 ----
@@ -4450,24 +4257,6 @@ link:{ref}/search-template.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
-=== scriptsPainlessExecute
-[source,ts]
-----
-client.scriptsPainlessExecute({
-  body: object
-})
-----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The script to execute
-
-|===
-
->>>>>>> dd8491d7... Better reference code examples (#920)
 === scroll
 [source,ts]
 ----
@@ -4475,11 +4264,10 @@ client.scroll({
   scroll_id: string,
   scroll: string,
   scroll_id: string,
-  rest_total_hits_as_int: boolean,
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-scroll.html[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4501,17 +4289,17 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 ----
 client.search({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
-  ccs_minimize_roundtrips: boolean,
   default_operator: 'AND' | 'OR',
   df: string,
   explain: boolean,
   stored_fields: string | string[],
   docvalue_fields: string | string[],
+  fielddata_fields: string | string[],
   from: number,
   ignore_unavailable: boolean,
-  ignore_throttled: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   lenient: boolean,
@@ -4523,8 +4311,8 @@ client.search({
   size: number,
   sort: string | string[],
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   terminate_after: number,
   stats: string | string[],
   suggest_field: string,
@@ -4533,16 +4321,12 @@ client.search({
   suggest_text: string,
   timeout: string,
   track_scores: boolean,
-  track_total_hits: boolean,
-  allow_partial_search_results: boolean,
   typed_keys: boolean,
   version: boolean,
-  seq_no_primary_term: boolean,
   request_cache: boolean,
   batched_reduce_size: number,
   max_concurrent_shard_requests: number,
   pre_filter_shard_size: number,
-  rest_total_hits_as_int: boolean,
   body: object
 })
 ----
@@ -4553,7 +4337,7 @@ link:{ref}/search-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -4578,7 +4362,7 @@ _Default:_ `OR`
 |`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
 
 |`fielddata_fields` or `fielddataFields`
-|`string, string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
 
 |`from`
 |`number` - Starting offset (default: 0)
@@ -4620,19 +4404,11 @@ _Default:_ `open`
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
@@ -4690,6 +4466,7 @@ _Default:_ `128`
 ----
 client.searchShards({
   index: string | string[],
+  type: string | string[],
   preference: string,
   routing: string,
   local: boolean,
@@ -4705,7 +4482,7 @@ link:{ref}/search-shards.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -4733,8 +4510,8 @@ _Default:_ `open`
 ----
 client.searchTemplate({
   index: string | string[],
+  type: string | string[],
   ignore_unavailable: boolean,
-  ignore_throttled: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
   preference: string,
@@ -4744,8 +4521,6 @@ client.searchTemplate({
   explain: boolean,
   profile: boolean,
   typed_keys: boolean,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -4756,7 +4531,7 @@ link:{ref}/search-template.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -5038,15 +4813,23 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === suggest
-[source,js]
+[source,ts]
 ----
-client.suggest([params] [, options] [, callback])
+client.suggest({
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  preference: string,
+  routing: string,
+  body: object
+})
 ----
 link:{ref}/search-suggesters.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string, string[]` - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+|`string \| string[]` - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -5055,7 +4838,7 @@ link:{ref}/search-suggesters.html[Reference]
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open', 'closed', 'none', 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`preference`
@@ -5076,6 +4859,7 @@ client.tasks.cancel({
   task_id: string,
   nodes: string | string[],
   actions: string | string[],
+  parent_node: string,
   parent_task_id: string
 })
 ----
@@ -5104,8 +4888,7 @@ link:{ref}/tasks.html[Reference]
 ----
 client.tasks.get({
   task_id: string,
-  wait_for_completion: boolean,
-  timeout: string
+  wait_for_completion: boolean
 })
 ----
 link:{ref}/tasks.html[Reference]
@@ -5126,10 +4909,10 @@ client.tasks.list({
   nodes: string | string[],
   actions: string | string[],
   detailed: boolean,
+  parent_node: string,
   parent_task_id: string,
   wait_for_completion: boolean,
-  group_by: 'nodes' | 'parents' | 'none',
-  timeout: string
+  group_by: 'nodes' | 'parents'
 })
 ----
 link:{ref}/tasks.html[Reference]
@@ -5154,11 +4937,7 @@ link:{ref}/tasks.html[Reference]
 |`boolean` - Wait for the matching tasks to complete (default: false)
 
 |`group_by` or `groupBy`
-<<<<<<< HEAD
-|`'nodes', 'parents'` - Group tasks by nodes or parent/child relationships +
-=======
-|`'nodes' \| 'parents' \| 'none'` - Group tasks by nodes or parent/child relationships +
->>>>>>> dd8491d7... Better reference code examples (#920)
+|`'nodes' \| 'parents'` - Group tasks by nodes or parent/child relationships +
 _Default:_ `nodes`
 
 |===
@@ -5168,6 +4947,7 @@ _Default:_ `nodes`
 ----
 client.termvectors({
   index: string,
+  type: string,
   id: string,
   term_statistics: boolean,
   field_statistics: boolean,
@@ -5177,6 +4957,7 @@ client.termvectors({
   payloads: boolean,
   preference: string,
   routing: string,
+  parent: string,
   realtime: boolean,
   version: number,
   version_type: 'internal' | 'external' | 'external_gte' | 'force',
@@ -5248,16 +5029,20 @@ client.update({
   index: string,
   type: string,
   wait_for_active_shards: string,
+  fields: string | string[],
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   lang: string,
+  parent: string,
   refresh: 'true' | 'false' | 'wait_for',
   retry_on_conflict: number,
   routing: string,
   timeout: string,
-  if_seq_no: number,
-  if_primary_term: number,
+  timestamp: string,
+  ttl: string,
+  version: number,
+  version_type: 'internal' | 'force',
   body: object
 })
 ----
@@ -5277,24 +5062,16 @@ link:{ref}/docs-update.html[Reference]
 |`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`fields`
-|`string, string[]` - A comma-separated list of fields to return in the response
+|`string \| string[]` - A comma-separated list of fields to return in the response
 
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`lang`
 |`string` - The script language (default: painless)
@@ -5324,7 +5101,7 @@ link:{ref}/docs-update.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal', 'force'` - Specific version type
+|`'internal' \| 'force'` - Specific version type
 
 |`body`
 |`object` - The request definition using either `script` or partial `doc`
@@ -5336,6 +5113,7 @@ link:{ref}/docs-update.html[Reference]
 ----
 client.updateByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -5353,11 +5131,11 @@ client.updateByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
-  max_docs: number,
+  size: number,
   sort: string | string[],
   _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
+  _source_exclude: string | string[],
+  _source_include: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -5380,7 +5158,7 @@ link:{ref}/docs-update-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -5445,19 +5223,11 @@ _Default:_ `open`
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
 
-<<<<<<< HEAD
 |`_source_exclude` or `_sourceExclude`
-|`string, string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_include` or `_sourceInclude`
-|`string, string[]` - A list of fields to extract and return from the _source field
-=======
-|`_source_excludes` or `_sourceExcludes`
 |`string \| string[]` - A list of fields to exclude from the returned _source field
 
-|`_source_includes` or `_sourceIncludes`
+|`_source_include` or `_sourceInclude`
 |`string \| string[]` - A list of fields to extract and return from the _source field
->>>>>>> dd8491d7... Better reference code examples (#920)
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
@@ -5502,2963 +5272,3 @@ _Default:_ `1`
 |`object` - The search definition using the Query DSL
 
 |===
-<<<<<<< HEAD
-=======
-
-=== updateByQueryRethrottle
-[source,ts]
-----
-client.updateByQueryRethrottle({
-  task_id: string,
-  requests_per_second: number
-})
-----
-link:{ref}/docs-update-by-query.html[Reference]
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
-
-=== ccr.deleteAutoFollowPattern
-[source,ts]
-----
-client.ccr.deleteAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-delete-auto-follow-pattern.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-
-=== ccr.follow
-[source,ts]
-----
-client.ccr.follow({
-  index: string,
-  wait_for_active_shards: string,
-  body: object
-})
-----
-link:{ref}/ccr-put-follow.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
-_Default:_ `0`
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-
-=== ccr.followInfo
-[source,ts]
-----
-client.ccr.followInfo({
-  index: string | string[]
-})
-----
-link:{ref}/ccr-get-follow-info.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-
-=== ccr.followStats
-[source,ts]
-----
-client.ccr.followStats({
-  index: string | string[]
-})
-----
-link:{ref}/ccr-get-follow-stats.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-
-=== ccr.forgetFollower
-[source,ts]
-----
-client.ccr.forgetFollower({
-  index: string,
-  body: object
-})
-----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - the name of the leader index for which specified follower retention leases should be removed
-
-|`body`
-|`object` - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
-
-|===
-
-=== ccr.getAutoFollowPattern
-[source,ts]
-----
-client.ccr.getAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-get-auto-follow-pattern.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-
-=== ccr.pauseFollow
-[source,ts]
-----
-client.ccr.pauseFollow({
-  index: string
-})
-----
-link:{ref}/ccr-post-pause-follow.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should pause following its leader index.
-
-|===
-
-=== ccr.putAutoFollowPattern
-[source,ts]
-----
-client.ccr.putAutoFollowPattern({
-  name: string,
-  body: object
-})
-----
-link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|`body`
-|`object` - The specification of the auto follow pattern
-
-|===
-
-=== ccr.resumeFollow
-[source,ts]
-----
-client.ccr.resumeFollow({
-  index: string,
-  body: object
-})
-----
-link:{ref}/ccr-post-resume-follow.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follow index to resume following.
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-
-=== ccr.stats
-[source,ts]
-----
-client.ccr.stats()
-----
-link:{ref}/ccr-get-stats.html[Reference]
-
-
-=== ccr.unfollow
-[source,ts]
-----
-client.ccr.unfollow({
-  index: string
-})
-----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should be turned into a regular index.
-
-|===
-
-=== dataFrame.deleteDataFrameTransform
-[source,ts]
-----
-client.dataFrame.deleteDataFrameTransform({
-  transform_id: string,
-  force: boolean
-})
-----
-link:{ref}/delete-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
-|===
-
-=== dataFrame.getDataFrameTransform
-[source,ts]
-----
-client.dataFrame.getDataFrameTransform({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.getDataFrameTransformStats
-[source,ts]
-----
-client.dataFrame.getDataFrameTransformStats({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform stats, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transform stats to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.previewDataFrameTransform
-[source,ts]
-----
-client.dataFrame.previewDataFrameTransform({
-  body: object
-})
-----
-link:{ref}/preview-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the data_frame transform to preview
-
-|===
-
-=== dataFrame.putDataFrameTransform
-[source,ts]
-----
-client.dataFrame.putDataFrameTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/put-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
-
-|`body`
-|`object` - The data frame transform definition
-
-|===
-
-=== dataFrame.startDataFrameTransform
-[source,ts]
-----
-client.dataFrame.startDataFrameTransform({
-  transform_id: string,
-  timeout: string
-})
-----
-link:{ref}/start-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrame.stopDataFrameTransform
-[source,ts]
-----
-client.dataFrame.stopDataFrameTransform({
-  transform_id: string,
-  wait_for_completion: boolean,
-  timeout: string,
-  allow_no_match: boolean
-})
-----
-link:{ref}/stop-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== graph.explore
-[source,ts]
-----
-client.graph.explore({
-  index: string | string[],
-  type: string | string[],
-  routing: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/graph-explore-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
-=== ilm.deleteLifecycle
-[source,ts]
-----
-client.ilm.deleteLifecycle({
-  policy: string
-})
-----
-link:{ref}/ilm-delete-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-
-=== ilm.explainLifecycle
-[source,ts]
-----
-client.ilm.explainLifecycle({
-  index: string
-})
-----
-link:{ref}/ilm-explain-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to explain
-
-|===
-
-=== ilm.getLifecycle
-[source,ts]
-----
-client.ilm.getLifecycle({
-  policy: string
-})
-----
-link:{ref}/ilm-get-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-
-=== ilm.getStatus
-[source,ts]
-----
-client.ilm.getStatus()
-----
-link:{ref}/ilm-get-status.html[Reference]
-
-
-=== ilm.moveToStep
-[source,ts]
-----
-client.ilm.moveToStep({
-  index: string,
-  body: object
-})
-----
-link:{ref}/ilm-move-to-step.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index whose lifecycle step is to change
-
-|`body`
-|`object` - The new lifecycle step to move to
-
-|===
-
-=== ilm.putLifecycle
-[source,ts]
-----
-client.ilm.putLifecycle({
-  policy: string,
-  body: object
-})
-----
-link:{ref}/ilm-put-lifecycle.html[Reference]
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|`body`
-|`object` - The lifecycle policy definition to register
-
-|===
-
-=== ilm.removePolicy
-[source,ts]
-----
-client.ilm.removePolicy({
-  index: string
-})
-----
-link:{ref}/ilm-remove-policy.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to remove policy on
-
-|===
-
-=== ilm.retry
-[source,ts]
-----
-client.ilm.retry({
-  index: string
-})
-----
-link:{ref}/ilm-retry-policy.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the indices (comma-separated) whose failed lifecycle step is to be retry
-
-|===
-
-=== ilm.start
-[source,ts]
-----
-client.ilm.start()
-----
-link:{ref}/ilm-start.html[Reference]
-
-
-=== ilm.stop
-[source,ts]
-----
-client.ilm.stop()
-----
-link:{ref}/ilm-stop.html[Reference]
-
-
-=== indices.freeze
-[source,ts]
-----
-client.indices.freeze({
-  index: string,
-  timeout: string,
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  wait_for_active_shards: string
-})
-----
-link:{ref}/freeze-index-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to freeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-
-=== indices.reloadSearchAnalyzers
-[source,ts]
-----
-client.indices.reloadSearchAnalyzers({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-})
-----
-link:{ref}/indices-reload-analyzers.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to reload analyzers for
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
-=== indices.unfreeze
-[source,ts]
-----
-client.indices.unfreeze({
-  index: string,
-  timeout: string,
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  wait_for_active_shards: string
-})
-----
-link:{ref}/freeze-index-api.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to unfreeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-
-=== license.delete
-[source,ts]
-----
-client.license.delete()
-----
-link:{ref}/delete-license.html[Reference]
-
-
-=== license.get
-[source,ts]
-----
-client.license.get({
-  local: boolean
-})
-----
-link:{ref}/get-license.html[Reference]
-[cols=2*]
-|===
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-
-=== license.getBasicStatus
-[source,ts]
-----
-client.license.getBasicStatus()
-----
-link:{ref}/get-basic-status.html[Reference]
-
-
-=== license.getTrialStatus
-[source,ts]
-----
-client.license.getTrialStatus()
-----
-link:{ref}/get-trial-status.html[Reference]
-
-
-=== license.post
-[source,ts]
-----
-client.license.post({
-  acknowledge: boolean,
-  body: object
-})
-----
-link:{ref}/update-license.html[Reference]
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|`body`
-|`object` - licenses to be installed
-
-|===
-
-=== license.postStartBasic
-[source,ts]
-----
-client.license.postStartBasic({
-  acknowledge: boolean
-})
-----
-link:{ref}/start-basic.html[Reference]
-[cols=2*]
-|===
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-
-=== license.postStartTrial
-[source,ts]
-----
-client.license.postStartTrial({
-  type: string,
-  acknowledge: boolean
-})
-----
-link:{ref}/start-trial.html[Reference]
-[cols=2*]
-|===
-|`type`
-|`string` - The type of trial license to generate (default: "trial")
-
-|`acknowledge`
-|`boolean` - whether the user has acknowledged acknowledge messages (default: false)
-
-|===
-
-=== migration.deprecations
-[source,ts]
-----
-client.migration.deprecations({
-  index: string
-})
-----
-link:{ref}/migration-api-deprecation.html[Reference]
-[cols=2*]
-|===
-|`index`
-|`string` - Index pattern
-
-|===
-
-=== ml.closeJob
-[source,ts]
-----
-client.ml.closeJob({
-  job_id: string,
-  allow_no_jobs: boolean,
-  force: boolean,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/ml-close-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to close
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`force`
-|`boolean` - True if the job should be forcefully closed
-
-|`timeout`
-|`string` - Controls the time to wait until a job has closed. Default to 30 minutes
-
-|`body`
-|`object` - The URL params optionally sent in the body
-
-|===
-
-=== ml.deleteCalendar
-[source,ts]
-----
-client.ml.deleteCalendar({
-  calendar_id: string
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to delete
-
-|===
-
-=== ml.deleteCalendarEvent
-[source,ts]
-----
-client.ml.deleteCalendarEvent({
-  calendar_id: string,
-  event_id: string
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`event_id` or `eventId`
-|`string` - The ID of the event to remove from the calendar
-
-|===
-
-=== ml.deleteCalendarJob
-[source,ts]
-----
-client.ml.deleteCalendarJob({
-  calendar_id: string,
-  job_id: string
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to remove from the calendar
-
-|===
-
-=== ml.deleteDataFrameAnalytics
-[source,ts]
-----
-client.ml.deleteDataFrameAnalytics({
-  id: string
-})
-----
-link:{ref}/delete-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to delete
-
-|===
-
-=== ml.deleteDatafeed
-[source,ts]
-----
-client.ml.deleteDatafeed({
-  datafeed_id: string,
-  force: boolean
-})
-----
-link:{ref}/ml-delete-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to delete
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully deleted
-
-|===
-
-=== ml.deleteExpiredData
-[source,ts]
-----
-client.ml.deleteExpiredData()
-----
-
-
-=== ml.deleteFilter
-[source,ts]
-----
-client.ml.deleteFilter({
-  filter_id: string
-})
-----
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to delete
-
-|===
-
-=== ml.deleteForecast
-[source,ts]
-----
-client.ml.deleteForecast({
-  job_id: string,
-  forecast_id: string,
-  allow_no_forecasts: boolean,
-  timeout: string
-})
-----
-link:{ref}/ml-delete-forecast.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job from which to delete forecasts
-
-|`forecast_id` or `forecastId`
-|`string` - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
-
-|`allow_no_forecasts` or `allowNoForecasts`
-|`boolean` - Whether to ignore if `_all` matches no forecasts
-
-|`timeout`
-|`string` - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
-
-|===
-
-=== ml.deleteJob
-[source,ts]
-----
-client.ml.deleteJob({
-  job_id: string,
-  force: boolean,
-  wait_for_completion: boolean
-})
-----
-link:{ref}/ml-delete-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to delete
-
-|`force`
-|`boolean` - True if the job should be forcefully deleted
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should this request wait until the operation has completed before returning +
-_Default:_ `true`
-
-|===
-
-=== ml.deleteModelSnapshot
-[source,ts]
-----
-client.ml.deleteModelSnapshot({
-  job_id: string,
-  snapshot_id: string
-})
-----
-link:{ref}/ml-delete-snapshot.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to delete
-
-|===
-
-=== ml.evaluateDataFrame
-[source,ts]
-----
-client.ml.evaluateDataFrame({
-  body: object
-})
-----
-link:{ref}/evaluate-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The evaluation definition
-
-|===
-
-=== ml.findFileStructure
-[source,ts]
-----
-client.ml.findFileStructure({
-  lines_to_sample: number,
-  line_merge_size_limit: number,
-  timeout: string,
-  charset: string,
-  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
-  has_header_row: boolean,
-  column_names: string | string[],
-  delimiter: string,
-  quote: string,
-  should_trim_fields: boolean,
-  grok_pattern: string,
-  timestamp_field: string,
-  timestamp_format: string,
-  explain: boolean,
-  body: object
-})
-----
-link:{ref}/ml-find-file-structure.html[Reference]
-[cols=2*]
-|===
-|`lines_to_sample` or `linesToSample`
-|`number` - How many lines of the file should be included in the analysis +
-_Default:_ `1000`
-
-|`line_merge_size_limit` or `lineMergeSizeLimit`
-|`number` - Maximum number of characters permitted in a single message when lines are merged to create messages. +
-_Default:_ `10000`
-
-|`timeout`
-|`string` - Timeout after which the analysis will be aborted +
-_Default:_ `25s`
-
-|`charset`
-|`string` - Optional parameter to specify the character set of the file
-
-|`format`
-|`'ndjson' \| 'xml' \| 'delimited' \| 'semi_structured_text'` - Optional parameter to specify the high level file format
-
-|`has_header_row` or `hasHeaderRow`
-|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
-
-|`column_names` or `columnNames`
-|`string \| string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
-
-|`delimiter`
-|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
-
-|`quote`
-|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
-
-|`should_trim_fields` or `shouldTrimFields`
-|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
-
-|`grok_pattern` or `grokPattern`
-|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
-
-|`timestamp_field` or `timestampField`
-|`string` - Optional parameter to specify the timestamp field in the file
-
-|`timestamp_format` or `timestampFormat`
-|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
-
-|`explain`
-|`boolean` - Whether to include a commentary on how the structure was derived
-
-|`body`
-|`object` - The contents of the file to be analyzed
-
-|===
-
-=== ml.flushJob
-[source,ts]
-----
-client.ml.flushJob({
-  job_id: string,
-  calc_interim: boolean,
-  start: string,
-  end: string,
-  advance_time: string,
-  skip_time: string,
-  body: object
-})
-----
-link:{ref}/ml-flush-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job to flush
-
-|`calc_interim` or `calcInterim`
-|`boolean` - Calculates interim results for the most recent bucket or all buckets within the latency period
-
-|`start`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`end`
-|`string` - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-
-|`advance_time` or `advanceTime`
-|`string` - Advances time to the given value generating results and updating the model for the advanced interval
-
-|`skip_time` or `skipTime`
-|`string` - Skips time to the given value without generating results or updating the model for the skipped interval
-
-|`body`
-|`object` - Flush parameters
-
-|===
-
-=== ml.forecast
-[source,ts]
-----
-client.ml.forecast({
-  job_id: string,
-  duration: string,
-  expires_in: string
-})
-----
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to forecast for
-
-|`duration`
-|`string` - The duration of the forecast
-
-|`expires_in` or `expiresIn`
-|`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-
-|===
-
-=== ml.getBuckets
-[source,ts]
-----
-client.ml.getBuckets({
-  job_id: string,
-  timestamp: string,
-  expand: boolean,
-  exclude_interim: boolean,
-  from: number,
-  size: number,
-  start: string,
-  end: string,
-  anomaly_score: number,
-  sort: string,
-  desc: boolean,
-  body: object
-})
-----
-link:{ref}/ml-get-bucket.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - ID of the job to get bucket results from
-
-|`timestamp`
-|`string` - The timestamp of the desired single bucket result
-
-|`expand`
-|`boolean` - Include anomaly records
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of buckets
-
-|`size`
-|`number` - specifies a max number of buckets to get
-
-|`start`
-|`string` - Start time filter for buckets
-
-|`end`
-|`string` - End time filter for buckets
-
-|`anomaly_score` or `anomalyScore`
-|`number` - Filter for the most anomalous buckets
-
-|`sort`
-|`string` - Sort buckets by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Bucket selection details if not provided in URI
-
-|===
-
-=== ml.getCalendarEvents
-[source,ts]
-----
-client.ml.getCalendarEvents({
-  calendar_id: string,
-  job_id: string,
-  start: string,
-  end: string,
-  from: number,
-  size: number
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar containing the events
-
-|`job_id` or `jobId`
-|`string` - Get events for the job. When this option is used calendar_id must be '_all'
-
-|`start`
-|`string` - Get events after this time
-
-|`end`
-|`string` - Get events before this time
-
-|`from`
-|`number` - Skips a number of events
-
-|`size`
-|`number` - Specifies a max number of events to get
-
-|===
-
-=== ml.getCalendars
-[source,ts]
-----
-client.ml.getCalendars({
-  calendar_id: string,
-  from: number,
-  size: number,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to fetch
-
-|`from`
-|`number` - skips a number of calendars
-
-|`size`
-|`number` - specifies a max number of calendars to get
-
-|`body`
-|`object` - The from and size parameters optionally sent in the body
-
-|===
-
-=== ml.getCategories
-[source,ts]
-----
-client.ml.getCategories({
-  job_id: string,
-  category_id: number,
-  from: number,
-  size: number,
-  body: object
-})
-----
-link:{ref}/ml-get-category.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job
-
-|`category_id` or `categoryId`
-|`number` - The identifier of the category definition of interest
-
-|`from`
-|`number` - skips a number of categories
-
-|`size`
-|`number` - specifies a max number of categories to get
-
-|`body`
-|`object` - Category selection details if not provided in URI
-
-|===
-
-=== ml.getDataFrameAnalytics
-[source,ts]
-----
-client.ml.getDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
-=== ml.getDataFrameAnalyticsStats
-[source,ts]
-----
-client.ml.getDataFrameAnalyticsStats({
-  id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number
-})
-----
-link:{ref}/get-dfanalytics-stats.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of analytics
-
-|`size`
-|`number` - specifies a max number of analytics to get +
-_Default:_ `100`
-
-|===
-
-=== ml.getDatafeedStats
-[source,ts]
-----
-client.ml.getDatafeedStats({
-  datafeed_id: string,
-  allow_no_datafeeds: boolean
-})
-----
-link:{ref}/ml-get-datafeed-stats.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds stats to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-
-=== ml.getDatafeeds
-[source,ts]
-----
-client.ml.getDatafeeds({
-  datafeed_id: string,
-  allow_no_datafeeds: boolean
-})
-----
-link:{ref}/ml-get-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds to fetch
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|===
-
-=== ml.getFilters
-[source,ts]
-----
-client.ml.getFilters({
-  filter_id: string,
-  from: number,
-  size: number
-})
-----
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to fetch
-
-|`from`
-|`number` - skips a number of filters
-
-|`size`
-|`number` - specifies a max number of filters to get
-
-|===
-
-=== ml.getInfluencers
-[source,ts]
-----
-client.ml.getInfluencers({
-  job_id: string,
-  exclude_interim: boolean,
-  from: number,
-  size: number,
-  start: string,
-  end: string,
-  influencer_score: number,
-  sort: string,
-  desc: boolean,
-  body: object
-})
-----
-link:{ref}/ml-get-influencer.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of influencers
-
-|`size`
-|`number` - specifies a max number of influencers to get
-
-|`start`
-|`string` - start timestamp for the requested influencers
-
-|`end`
-|`string` - end timestamp for the requested influencers
-
-|`influencer_score` or `influencerScore`
-|`number` - influencer score threshold for the requested influencers
-
-|`sort`
-|`string` - sort field for the requested influencers
-
-|`desc`
-|`boolean` - whether the results should be sorted in decending order
-
-|`body`
-|`object` - Influencer selection criteria
-
-|===
-
-=== ml.getJobStats
-[source,ts]
-----
-client.ml.getJobStats({
-  job_id: string,
-  allow_no_jobs: boolean
-})
-----
-link:{ref}/ml-get-job-stats.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs stats to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-
-=== ml.getJobs
-[source,ts]
-----
-client.ml.getJobs({
-  job_id: string,
-  allow_no_jobs: boolean
-})
-----
-link:{ref}/ml-get-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs to fetch
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|===
-
-=== ml.getModelSnapshots
-[source,ts]
-----
-client.ml.getModelSnapshots({
-  job_id: string,
-  snapshot_id: string,
-  from: number,
-  size: number,
-  start: string,
-  end: string,
-  sort: string,
-  desc: boolean,
-  body: object
-})
-----
-link:{ref}/ml-get-snapshot.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to fetch
-
-|`from`
-|`number` - Skips a number of documents
-
-|`size`
-|`number` - The default number of documents returned in queries as a string.
-
-|`start`
-|`string` - The filter 'start' query parameter
-
-|`end`
-|`string` - The filter 'end' query parameter
-
-|`sort`
-|`string` - Name of the field to sort on
-
-|`desc`
-|`boolean` - True if the results should be sorted in descending order
-
-|`body`
-|`object` - Model snapshot selection criteria
-
-|===
-
-=== ml.getOverallBuckets
-[source,ts]
-----
-client.ml.getOverallBuckets({
-  job_id: string,
-  top_n: number,
-  bucket_span: string,
-  overall_score: number,
-  exclude_interim: boolean,
-  start: string,
-  end: string,
-  allow_no_jobs: boolean,
-  body: object
-})
-----
-link:{ref}/ml-get-overall-buckets.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The job IDs for which to calculate overall bucket results
-
-|`top_n` or `topN`
-|`number` - The number of top job bucket scores to be used in the overall_score calculation
-
-|`bucket_span` or `bucketSpan`
-|`string` - The span of the overall buckets. Defaults to the longest job bucket_span
-
-|`overall_score` or `overallScore`
-|`number` - Returns overall buckets with overall scores higher than this value
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - If true overall buckets that include interim buckets will be excluded
-
-|`start`
-|`string` - Returns overall buckets with timestamps after this time
-
-|`end`
-|`string` - Returns overall buckets with timestamps earlier than this time
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`body`
-|`object` - Overall bucket selection details if not provided in URI
-
-|===
-
-=== ml.getRecords
-[source,ts]
-----
-client.ml.getRecords({
-  job_id: string,
-  exclude_interim: boolean,
-  from: number,
-  size: number,
-  start: string,
-  end: string,
-  record_score: number,
-  sort: string,
-  desc: boolean,
-  body: object
-})
-----
-link:{ref}/ml-get-record.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - undefined
-
-|`exclude_interim` or `excludeInterim`
-|`boolean` - Exclude interim results
-
-|`from`
-|`number` - skips a number of records
-
-|`size`
-|`number` - specifies a max number of records to get
-
-|`start`
-|`string` - Start time filter for records
-
-|`end`
-|`string` - End time filter for records
-
-|`record_score` or `recordScore`
-|`number` - undefined
-
-|`sort`
-|`string` - Sort records by a particular field
-
-|`desc`
-|`boolean` - Set the sort direction
-
-|`body`
-|`object` - Record selection criteria
-
-|===
-
-=== ml.info
-[source,ts]
-----
-client.ml.info()
-----
-
-
-=== ml.openJob
-[source,ts]
-----
-client.ml.openJob({
-  job_id: string,
-  ignore_downtime: boolean,
-  timeout: string
-})
-----
-link:{ref}/ml-open-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to open
-
-|`ignore_downtime` or `ignoreDowntime`
-|`boolean` - Controls if gaps in data are treated as anomalous or as a maintenance window after a job re-start
-
-|`timeout`
-|`string` - Controls the time to wait until a job has opened. Default to 30 minutes
-
-|===
-
-=== ml.postCalendarEvents
-[source,ts]
-----
-client.ml.postCalendarEvents({
-  calendar_id: string,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`body`
-|`object` - A list of events
-
-|===
-
-=== ml.postData
-[source,ts]
-----
-client.ml.postData({
-  job_id: string,
-  reset_start: string,
-  reset_end: string,
-  body: object
-})
-----
-link:{ref}/ml-post-data.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The name of the job receiving the data
-
-|`reset_start` or `resetStart`
-|`string` - Optional parameter to specify the start of the bucket resetting range
-
-|`reset_end` or `resetEnd`
-|`string` - Optional parameter to specify the end of the bucket resetting range
-
-|`body`
-|`object` - The data to process
-
-|===
-
-=== ml.previewDatafeed
-[source,ts]
-----
-client.ml.previewDatafeed({
-  datafeed_id: string
-})
-----
-link:{ref}/ml-preview-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to preview
-
-|===
-
-=== ml.putCalendar
-[source,ts]
-----
-client.ml.putCalendar({
-  calendar_id: string,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to create
-
-|`body`
-|`object` - The calendar details
-
-|===
-
-=== ml.putCalendarJob
-[source,ts]
-----
-client.ml.putCalendarJob({
-  calendar_id: string,
-  job_id: string
-})
-----
-[cols=2*]
-|===
-|`calendar_id` or `calendarId`
-|`string` - The ID of the calendar to modify
-
-|`job_id` or `jobId`
-|`string` - The ID of the job to add to the calendar
-
-|===
-
-=== ml.putDataFrameAnalytics
-[source,ts]
-----
-client.ml.putDataFrameAnalytics({
-  id: string,
-  body: object
-})
-----
-link:{ref}/put-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to create
-
-|`body`
-|`object` - The data frame analytics configuration
-
-|===
-
-=== ml.putDatafeed
-[source,ts]
-----
-client.ml.putDatafeed({
-  datafeed_id: string,
-  body: object
-})
-----
-link:{ref}/ml-put-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to create
-
-|`body`
-|`object` - The datafeed config
-
-|===
-
-=== ml.putFilter
-[source,ts]
-----
-client.ml.putFilter({
-  filter_id: string,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to create
-
-|`body`
-|`object` - The filter details
-
-|===
-
-=== ml.putJob
-[source,ts]
-----
-client.ml.putJob({
-  job_id: string,
-  body: object
-})
-----
-link:{ref}/ml-put-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job
-
-|===
-
-=== ml.revertModelSnapshot
-[source,ts]
-----
-client.ml.revertModelSnapshot({
-  job_id: string,
-  snapshot_id: string,
-  delete_intervening_results: boolean,
-  body: object
-})
-----
-link:{ref}/ml-revert-snapshot.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to revert to
-
-|`delete_intervening_results` or `deleteInterveningResults`
-|`boolean` - Should we reset the results back to the time of the snapshot?
-
-|`body`
-|`object` - Reversion options
-
-|===
-
-=== ml.setUpgradeMode
-[source,ts]
-----
-client.ml.setUpgradeMode({
-  enabled: boolean,
-  timeout: string
-})
-----
-link:{ref}/ml-set-upgrade-mode.html[Reference]
-[cols=2*]
-|===
-|`enabled`
-|`boolean` - Whether to enable upgrade_mode ML setting or not. Defaults to false.
-
-|`timeout`
-|`string` - Controls the time to wait before action times out. Defaults to 30 seconds
-
-|===
-
-=== ml.startDataFrameAnalytics
-[source,ts]
-----
-client.ml.startDataFrameAnalytics({
-  id: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/start-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to start
-
-|`timeout`
-|`string` - Controls the time to wait until the task has started. Defaults to 20 seconds
-
-|`body`
-|`object` - The start data frame analytics parameters
-
-|===
-
-=== ml.startDatafeed
-[source,ts]
-----
-client.ml.startDatafeed({
-  datafeed_id: string,
-  start: string,
-  end: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/ml-start-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to start
-
-|`start`
-|`string` - The start time from where the datafeed should begin
-
-|`end`
-|`string` - The end time when the datafeed should stop. When not set, the datafeed continues in real time
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has started. Default to 20 seconds
-
-|`body`
-|`object` - The start datafeed parameters
-
-|===
-
-=== ml.stopDataFrameAnalytics
-[source,ts]
-----
-client.ml.stopDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  force: boolean,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/stop-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to stop
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-
-|`force`
-|`boolean` - True if the data frame analytics should be forcefully stopped
-
-|`timeout`
-|`string` - Controls the time to wait until the task has stopped. Defaults to 20 seconds
-
-|`body`
-|`object` - The stop data frame analytics parameters
-
-|===
-
-=== ml.stopDatafeed
-[source,ts]
-----
-client.ml.stopDatafeed({
-  datafeed_id: string,
-  allow_no_datafeeds: boolean,
-  force: boolean,
-  timeout: string
-})
-----
-link:{ref}/ml-stop-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to stop
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|`force`
-|`boolean` - True if the datafeed should be forcefully stopped.
-
-|`timeout`
-|`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
-
-|===
-
-=== ml.updateDatafeed
-[source,ts]
-----
-client.ml.updateDatafeed({
-  datafeed_id: string,
-  body: object
-})
-----
-link:{ref}/ml-update-datafeed.html[Reference]
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeed to update
-
-|`body`
-|`object` - The datafeed update settings
-
-|===
-
-=== ml.updateFilter
-[source,ts]
-----
-client.ml.updateFilter({
-  filter_id: string,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`filter_id` or `filterId`
-|`string` - The ID of the filter to update
-
-|`body`
-|`object` - The filter update
-
-|===
-
-=== ml.updateJob
-[source,ts]
-----
-client.ml.updateJob({
-  job_id: string,
-  body: object
-})
-----
-link:{ref}/ml-update-job.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job update settings
-
-|===
-
-=== ml.updateModelSnapshot
-[source,ts]
-----
-client.ml.updateModelSnapshot({
-  job_id: string,
-  snapshot_id: string,
-  body: object
-})
-----
-link:{ref}/ml-update-snapshot.html[Reference]
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the job to fetch
-
-|`snapshot_id` or `snapshotId`
-|`string` - The ID of the snapshot to update
-
-|`body`
-|`object` - The model snapshot properties to update
-
-|===
-
-=== ml.validate
-[source,ts]
-----
-client.ml.validate({
-  body: object
-})
-----
-[cols=2*]
-|===
-|`body`
-|`object` - The job config
-
-|===
-
-=== ml.validateDetector
-[source,ts]
-----
-client.ml.validateDetector({
-  body: object
-})
-----
-[cols=2*]
-|===
-|`body`
-|`object` - The detector
-
-|===
-
-=== monitoring.bulk
-[source,ts]
-----
-client.monitoring.bulk({
-  type: string,
-  system_id: string,
-  system_api_version: string,
-  interval: string,
-  body: object
-})
-----
-link:{ref}/es-monitoring.html[Reference]
-[cols=2*]
-|===
-|`type`
-|`string` - Default document type for items which don't provide one
-
-|`system_id` or `systemId`
-|`string` - Identifier of the monitored system
-
-|`system_api_version` or `systemApiVersion`
-|`string` - API Version of the monitored system
-
-|`interval`
-|`string` - Collection interval (e.g., '10s' or '10000ms') of the payload
-
-|`body`
-|`object` - The operation definition and data (action-data pairs), separated by newlines
-
-|===
-
-=== rollup.deleteJob
-[source,ts]
-----
-client.rollup.deleteJob({
-  id: string
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to delete
-
-|===
-
-=== rollup.getJobs
-[source,ts]
-----
-client.rollup.getJobs({
-  id: string
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
-
-|===
-
-=== rollup.getRollupCaps
-[source,ts]
-----
-client.rollup.getRollupCaps({
-  id: string
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the index to check rollup capabilities on, or left blank for all jobs
-
-|===
-
-=== rollup.getRollupIndexCaps
-[source,ts]
-----
-client.rollup.getRollupIndexCaps({
-  index: string
-})
-----
-[cols=2*]
-|===
-|`index`
-|`string` - The rollup index or index pattern to obtain rollup capabilities from.
-
-|===
-
-=== rollup.putJob
-[source,ts]
-----
-client.rollup.putJob({
-  id: string,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to create
-
-|`body`
-|`object` - The job configuration
-
-|===
-
-=== rollup.rollupSearch
-[source,ts]
-----
-client.rollup.rollupSearch({
-  index: string | string[],
-  type: string,
-  typed_keys: boolean,
-  rest_total_hits_as_int: boolean,
-  body: object
-})
-----
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - The indices or index-pattern(s) (containing rollup or regular data) that should be searched
-
-|`type`
-|`string` - The doc type inside the index
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`body`
-|`object` - The search request body
-
-|===
-
-=== rollup.startJob
-[source,ts]
-----
-client.rollup.startJob({
-  id: string
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to start
-
-|===
-
-=== rollup.stopJob
-[source,ts]
-----
-client.rollup.stopJob({
-  id: string,
-  wait_for_completion: boolean,
-  timeout: string
-})
-----
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the job to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-
-|`timeout`
-|`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-
-|===
-
-=== security.authenticate
-[source,ts]
-----
-client.security.authenticate()
-----
-link:{ref}/security-api-authenticate.html[Reference]
-
-
-=== security.changePassword
-[source,ts]
-----
-client.security.changePassword({
-  username: string,
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-change-password.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to change the password for
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - the new password for the user
-
-|===
-
-=== security.clearCachedRealms
-[source,ts]
-----
-client.security.clearCachedRealms({
-  realms: string | string[],
-  usernames: string | string[]
-})
-----
-link:{ref}/security-api-clear-cache.html[Reference]
-[cols=2*]
-|===
-|`realms`
-|`string \| string[]` - Comma-separated list of realms to clear
-
-|`usernames`
-|`string \| string[]` - Comma-separated list of usernames to clear from the cache
-
-|===
-
-=== security.clearCachedRoles
-[source,ts]
-----
-client.security.clearCachedRoles({
-  name: string | string[]
-})
-----
-link:{ref}/security-api-clear-role-cache.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - Role name
-
-|===
-
-=== security.createApiKey
-[source,ts]
-----
-client.security.createApiKey({
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-create-api-key.html[Reference]
-[cols=2*]
-|===
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The api key request to create an API key
-
-|===
-
-=== security.deletePrivileges
-[source,ts]
-----
-client.security.deletePrivileges({
-  application: string,
-  name: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:TODO[Reference]
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.deleteRole
-[source,ts]
-----
-client.security.deleteRole({
-  name: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:{ref}/security-api-delete-role.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.deleteRoleMapping
-[source,ts]
-----
-client.security.deleteRoleMapping({
-  name: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:{ref}/security-api-delete-role-mapping.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.deleteUser
-[source,ts]
-----
-client.security.deleteUser({
-  username: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:{ref}/security-api-delete-user.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string` - username
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.disableUser
-[source,ts]
-----
-client.security.disableUser({
-  username: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:{ref}/security-api-disable-user.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to disable
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.enableUser
-[source,ts]
-----
-client.security.enableUser({
-  username: string,
-  refresh: 'true' | 'false' | 'wait_for'
-})
-----
-link:{ref}/security-api-enable-user.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the user to enable
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|===
-
-=== security.getApiKey
-[source,ts]
-----
-client.security.getApiKey({
-  id: string,
-  name: string,
-  username: string,
-  realm_name: string
-})
-----
-link:{ref}/security-api-get-api-key.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - API key id of the API key to be retrieved
-
-|`name`
-|`string` - API key name of the API key to be retrieved
-
-|`username`
-|`string` - user name of the user who created this API key to be retrieved
-
-|`realm_name` or `realmName`
-|`string` - realm name of the user who created this API key to be retrieved
-
-|===
-
-=== security.getBuiltinPrivileges
-[source,ts]
-----
-client.security.getBuiltinPrivileges()
-----
-link:{ref}/security-api-get-builtin-privileges.html[Reference]
-
-
-=== security.getPrivileges
-[source,ts]
-----
-client.security.getPrivileges({
-  application: string,
-  name: string
-})
-----
-link:{ref}/security-api-get-privileges.html[Reference]
-[cols=2*]
-|===
-|`application`
-|`string` - Application name
-
-|`name`
-|`string` - Privilege name
-
-|===
-
-=== security.getRole
-[source,ts]
-----
-client.security.getRole({
-  name: string
-})
-----
-link:{ref}/security-api-get-role.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|===
-
-=== security.getRoleMapping
-[source,ts]
-----
-client.security.getRoleMapping({
-  name: string
-})
-----
-link:{ref}/security-api-get-role-mapping.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role-Mapping name
-
-|===
-
-=== security.getToken
-[source,ts]
-----
-client.security.getToken({
-  body: object
-})
-----
-link:{ref}/security-api-get-token.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The token request to get
-
-|===
-
-=== security.getUser
-[source,ts]
-----
-client.security.getUser({
-  username: string | string[]
-})
-----
-link:{ref}/security-api-get-user.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string \| string[]` - A comma-separated list of usernames
-
-|===
-
-=== security.getUserPrivileges
-[source,ts]
-----
-client.security.getUserPrivileges()
-----
-link:{ref}/security-api-get-privileges.html[Reference]
-
-
-=== security.hasPrivileges
-[source,ts]
-----
-client.security.hasPrivileges({
-  user: string,
-  body: object
-})
-----
-link:{ref}/security-api-has-privileges.html[Reference]
-[cols=2*]
-|===
-|`user`
-|`string` - Username
-
-|`body`
-|`object` - The privileges to test
-
-|===
-
-=== security.invalidateApiKey
-[source,ts]
-----
-client.security.invalidateApiKey({
-  body: object
-})
-----
-link:{ref}/security-api-invalidate-api-key.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The api key request to invalidate API key(s)
-
-|===
-
-=== security.invalidateToken
-[source,ts]
-----
-client.security.invalidateToken({
-  body: object
-})
-----
-link:{ref}/security-api-invalidate-token.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The token to invalidate
-
-|===
-
-=== security.putPrivileges
-[source,ts]
-----
-client.security.putPrivileges({
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:TODO[Reference]
-[cols=2*]
-|===
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The privilege(s) to add
-
-|===
-
-=== security.putRole
-[source,ts]
-----
-client.security.putRole({
-  name: string,
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-put-role.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role name
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role to add
-
-|===
-
-=== security.putRoleMapping
-[source,ts]
-----
-client.security.putRoleMapping({
-  name: string,
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-put-role-mapping.html[Reference]
-[cols=2*]
-|===
-|`name`
-|`string` - Role-mapping name
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The role mapping to add
-
-|===
-
-=== security.putUser
-[source,ts]
-----
-client.security.putUser({
-  username: string,
-  refresh: 'true' | 'false' | 'wait_for',
-  body: object
-})
-----
-link:{ref}/security-api-put-user.html[Reference]
-[cols=2*]
-|===
-|`username`
-|`string` - The username of the User
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-
-|`body`
-|`object` - The user to add
-
-|===
-
-=== sql.clearCursor
-[source,ts]
-----
-client.sql.clearCursor({
-  body: object
-})
-----
-link:Clear SQL cursor[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - Specify the cursor value in the `cursor` element to clean the cursor.
-
-|===
-
-=== sql.query
-[source,ts]
-----
-client.sql.query({
-  format: string,
-  body: object
-})
-----
-link:Execute SQL[Reference]
-[cols=2*]
-|===
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`body`
-|`object` - Use the `query` element to start a query. Use the `cursor` element to continue a query.
-
-|===
-
-=== sql.translate
-[source,ts]
-----
-client.sql.translate({
-  body: object
-})
-----
-link:Translate SQL into Elasticsearch queries[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - Specify the query in the `query` element.
-
-|===
-
-=== ssl.certificates
-[source,ts]
-----
-client.ssl.certificates()
-----
-link:{ref}/security-api-ssl.html[Reference]
-
-
-=== watcher.ackWatch
-[source,ts]
-----
-client.watcher.ackWatch({
-  watch_id: string,
-  action_id: string | string[]
-})
-----
-link:{ref}/watcher-api-ack-watch.html[Reference]
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|`action_id` or `actionId`
-|`string \| string[]` - A comma-separated list of the action ids to be acked
-
-|===
-
-=== watcher.activateWatch
-[source,ts]
-----
-client.watcher.activateWatch({
-  watch_id: string
-})
-----
-link:{ref}/watcher-api-activate-watch.html[Reference]
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|===
-
-=== watcher.deactivateWatch
-[source,ts]
-----
-client.watcher.deactivateWatch({
-  watch_id: string
-})
-----
-link:{ref}/watcher-api-deactivate-watch.html[Reference]
-[cols=2*]
-|===
-|`watch_id` or `watchId`
-|`string` - Watch ID
-
-|===
-
-=== watcher.deleteWatch
-[source,ts]
-----
-client.watcher.deleteWatch({
-  id: string
-})
-----
-link:{ref}/watcher-api-delete-watch.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|===
-
-=== watcher.executeWatch
-[source,ts]
-----
-client.watcher.executeWatch({
-  id: string,
-  debug: boolean,
-  body: object
-})
-----
-link:{ref}/watcher-api-execute-watch.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|`debug`
-|`boolean` - indicates whether the watch should execute in debug mode
-
-|`body`
-|`object` - Execution control
-
-|===
-
-=== watcher.getWatch
-[source,ts]
-----
-client.watcher.getWatch({
-  id: string
-})
-----
-link:{ref}/watcher-api-get-watch.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|===
-
-=== watcher.putWatch
-[source,ts]
-----
-client.watcher.putWatch({
-  id: string,
-  active: boolean,
-  version: number,
-  if_seq_no: number,
-  if_primary_term: number,
-  body: object
-})
-----
-link:{ref}/watcher-api-put-watch.html[Reference]
-[cols=2*]
-|===
-|`id`
-|`string` - Watch ID
-
-|`active`
-|`boolean` - Specify whether the watch is in/active by default
-
-|`version`
-|`number` - Explicit version number for concurrency control
-
-|`if_seq_no` or `ifSeqNo`
-|`number` - only update the watch if the last operation that has changed the watch has the specified sequence number
-
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only update the watch if the last operation that has changed the watch has the specified primary term
-
-|`body`
-|`object` - The watch
-
-|===
-
-=== watcher.start
-[source,ts]
-----
-client.watcher.start()
-----
-link:{ref}/watcher-api-start.html[Reference]
-
-
-=== watcher.stats
-[source,ts]
-----
-client.watcher.stats({
-  metric: string | string[],
-  metric: string | string[],
-  emit_stacktraces: boolean
-})
-----
-link:{ref}/watcher-api-stats.html[Reference]
-[cols=2*]
-|===
-|`metric`
-|`string \| string[]` - Controls what additional stat metrics should be include in the response
-
-|`metric`
-|`string \| string[]` - Controls what additional stat metrics should be include in the response
-
-|`emit_stacktraces` or `emitStacktraces`
-|`boolean` - Emits stack traces of currently running watches
-
-|===
-
-=== watcher.stop
-[source,ts]
-----
-client.watcher.stop()
-----
-link:{ref}/watcher-api-stop.html[Reference]
-
-
-=== xpack.info
-[source,ts]
-----
-client.xpack.info({
-  categories: string | string[]
-})
-----
-link:{ref}/info-api.html[Reference]
-[cols=2*]
-|===
-|`categories`
-|`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
-
-|===
-
-=== xpack.usage
-[source,ts]
-----
-client.xpack.usage({
-  master_timeout: string
-})
-----
-link:Retrieve information about xpack features usage[Reference]
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for watch write operation
-
-|===
->>>>>>> dd8491d7... Better reference code examples (#920)
