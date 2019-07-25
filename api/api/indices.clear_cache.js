@@ -11,7 +11,7 @@ function buildIndicesClearCache (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.clear_cache](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html) request
+   * Perform a [indices.clear_cache](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html) request
    *
    * @param {list} index - A comma-separated list of index name to limit the operation
    * @param {boolean} fielddata - Clear field data

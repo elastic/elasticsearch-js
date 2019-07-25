@@ -11,7 +11,7 @@ function buildClusterState (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cluster.state](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html) request
+   * Perform a [cluster.state](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} metric - Limit the information returned to the specified metrics

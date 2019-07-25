@@ -11,7 +11,7 @@ function buildIndicesGetFieldMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.get_field_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html) request
+   * Perform a [indices.get_field_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html) request
    *
    * @param {list} index - A comma-separated list of index names
    * @param {list} type - A comma-separated list of document types

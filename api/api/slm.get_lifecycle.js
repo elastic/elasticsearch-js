@@ -7,33 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSnapshotDelete (opts) {
+function buildSlmGetLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [snapshot.delete](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+   * Perform a [slm.get_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api.html) request
    *
-   * @param {string} repository - A repository name
-   * @param {string} snapshot - A snapshot name
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
+   * @param {string} policy_id - Comma-separated list of snapshot lifecycle policies to retrieve
    */
 
   const acceptedQuerystring = [
-    'master_timeout',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
-  return function snapshotDelete (params, options, callback) {
+  return function slmGetLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -46,22 +37,8 @@ function buildSnapshotDelete (opts) {
     }
 
     // check required parameters
-    if (params['repository'] == null) {
-      const err = new ConfigurationError('Missing required parameter: repository')
-      return handleError(err, callback)
-    }
-    if (params['snapshot'] == null) {
-      const err = new ConfigurationError('Missing required parameter: snapshot')
-      return handleError(err, callback)
-    }
     if (params.body != null) {
       const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
-    // check required url components
-    if (params['snapshot'] != null && (params['repository'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: repository')
       return handleError(err, callback)
     }
 
@@ -72,11 +49,11 @@ function buildSnapshotDelete (opts) {
     }
 
     var warnings = []
-    var { method, body, repository, snapshot, ...querystring } = params
+    var { method, body, policyId, policy_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'DELETE'
+      method = 'GET'
     }
 
     var ignore = options.ignore
@@ -86,13 +63,17 @@ function buildSnapshotDelete (opts) {
 
     var path = ''
 
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
+    if ((policy_id || policyId) != null) {
+      path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    } else {
+      path = '/' + '_slm' + '/' + 'policy'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: null,
       querystring
     }
 
@@ -101,4 +82,4 @@ function buildSnapshotDelete (opts) {
   }
 }
 
-module.exports = buildSnapshotDelete
+module.exports = buildSlmGetLifecycle

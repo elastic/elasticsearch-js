@@ -11,7 +11,7 @@ function buildFieldCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [field_caps](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html) request
+   * Perform a [field_caps](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} fields - A comma-separated list of field names

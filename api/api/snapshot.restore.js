@@ -11,7 +11,7 @@ function buildSnapshotRestore (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [snapshot.restore](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
+   * Perform a [snapshot.restore](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
    * @param {string} repository - A repository name
    * @param {string} snapshot - A snapshot name

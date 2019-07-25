@@ -11,7 +11,7 @@ function buildRenderSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
+   * Perform a [render_search_template](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates) request
    *
    * @param {string} id - The id of the stored search template
    * @param {object} body - The search definition template and its params

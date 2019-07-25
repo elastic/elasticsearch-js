@@ -11,7 +11,7 @@ function buildCatSnapshots (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html) request
+   * Perform a [cat.snapshots](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html) request
    *
    * @param {list} repository - Name of repository from which to fetch the snapshot information
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

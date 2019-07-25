@@ -11,7 +11,7 @@ function buildIndicesValidateQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.validate_query](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html) request
+   * Perform a [indices.validate_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html) request
    *
    * @param {list} index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
    * @param {list} type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types

@@ -11,7 +11,7 @@ function buildIndicesPutMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.put_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
+   * Perform a [indices.put_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
    *
    * @param {list} index - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
    * @param {string} type - The name of the document type

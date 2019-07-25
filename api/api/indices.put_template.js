@@ -11,7 +11,7 @@ function buildIndicesPutTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.put_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
+   * Perform a [indices.put_template](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
    *
    * @param {string} name - The name of the template
    * @param {boolean} include_type_name - Whether a type should be returned in the body of the mappings.

@@ -11,7 +11,7 @@ function buildIndicesClose (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.close](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
+   * Perform a [indices.close](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
    *
    * @param {list} index - A comma separated list of indices to close
    * @param {time} timeout - Explicit operation timeout

@@ -11,7 +11,7 @@ function buildTasksList (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+   * Perform a [tasks.list](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
    * @param {list} nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {list} actions - A comma-separated list of actions that should be returned. Leave empty to return all.
