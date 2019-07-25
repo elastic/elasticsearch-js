@@ -4,6 +4,8 @@
     display-name: 'elastic / elasticsearch-js # jenkins-pipelines'
     description: Testing the elasticsearch-js jenkins-pipelines branch.
     project-type: multibranch
+    properties: []
+    triggers: []
     logrotate:
       daysToKeep: 30
       numToKeep: 100
