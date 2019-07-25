@@ -122,12 +122,15 @@ function generateApiDoc (spec) {
     doc += dedent`[cols=2*]
     |===\n`
     doc += params.reduce((acc, val) => {
+      const type = typeof val.type === 'string'
+        ? val.type.replace(/\|/g, '\\|')
+        : ''
       const name = isSnakeCased(val.name) && val.name !== camelify(val.name)
         ? '`' + val.name + '` or `' + camelify(val.name) + '`'
         : '`' + val.name + '`'
       acc += dedent`
       |${name}
-      |${'`' + val.type.replace(/\|/g, '\\|') + '`'} - ${val.description}`
+      |${'`' + type + '`'} - ${val.description}`
       if (val.default) {
         acc += ` +\n_Default:_ ${'`' + val.default + '`'}`
       }
