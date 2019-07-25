@@ -5,7 +5,7 @@
 'use strict'
 
 const { join } = require('path')
-const { readdirSync, writeFileSync } = require('fs')
+const { readdirSync, readFileSync, writeFileSync } = require('fs')
 const minimist = require('minimist')
 const semver = require('semver')
 const ora = require('ora')
@@ -32,7 +32,7 @@ function start (opts) {
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
-  const typesOutputFile = join(packageFolder, 'generated.d.ts')
+  const typeDefFile = join(__dirname, '..', 'index.d.ts')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
   const allSpec = []
@@ -64,9 +64,14 @@ function start (opts) {
       factory,
       { encoding: 'utf8' }
     )
+
+    const oldTypeDefString = readFileSync(typeDefFile, 'utf8')
+    const start = oldTypeDefString.indexOf('/* GENERATED */')
+    const end = oldTypeDefString.indexOf('/* /GENERATED */')
+    const newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
     writeFileSync(
-      typesOutputFile,
-      types,
+      typeDefFile,
+      newTypeDefString,
       { encoding: 'utf8' }
     )
 
@@ -82,7 +87,6 @@ function start (opts) {
       )
 
       log.succeed('Done!')
-      console.log('Remember to copy the generated types into the index.d.ts file')
     })
   })
 
