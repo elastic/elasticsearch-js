@@ -11,7 +11,7 @@ function buildExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html) request
+   * Perform a [explain](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html) request
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index

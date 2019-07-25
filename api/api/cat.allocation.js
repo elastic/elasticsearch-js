@@ -11,7 +11,7 @@ function buildCatAllocation (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.allocation](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html) request
+   * Perform a [cat.allocation](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html) request
    *
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

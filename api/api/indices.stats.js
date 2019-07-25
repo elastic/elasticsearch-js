@@ -11,7 +11,7 @@ function buildIndicesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html) request
+   * Perform a [indices.stats](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
    * @param {list} metric - Limit the information returned the specific metrics.

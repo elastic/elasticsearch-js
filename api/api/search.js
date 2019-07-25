@@ -11,7 +11,7 @@ function buildSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [search](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html) request
+   * Perform a [search](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html) request
    *
    * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
    * @param {string} analyzer - The analyzer to use for the query string

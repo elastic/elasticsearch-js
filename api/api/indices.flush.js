@@ -11,7 +11,7 @@ function buildIndicesFlush (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.flush](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html) request
+   * Perform a [indices.flush](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html) request
    *
    * @param {list} index - A comma-separated list of index names; use `_all` or empty string for all indices
    * @param {boolean} force - Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)

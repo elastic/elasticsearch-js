@@ -953,7 +953,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-body.html#_clear_scroll_api[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -3467,7 +3467,7 @@ _Default:_ `OR`
 ----
 client.info()
 ----
-link:http://www.elastic.co/guide/[Reference]
+link:{ref}/index.html[Reference]
 
 
 === ingest.deletePipeline
@@ -3955,7 +3955,7 @@ link:{ref}/cluster-nodes-usage.html[Reference]
 ----
 client.ping()
 ----
-link:http://www.elastic.co/guide/[Reference]
+link:{ref}/index.html[Reference]
 
 
 === putScript
@@ -4103,7 +4103,7 @@ client.renderSearchTemplate({
   body: object
 })
 ----
-link:{ref}/search-template.html[Reference]
+link:{ref}/search-template.html#_validating_templates[Reference]
 [cols=2*]
 |===
 |`id`
@@ -7795,6 +7795,70 @@ link:{ref}/security-api-put-user.html[Reference]
 
 |`body`
 |`object` - The user to add
+
+|===
+
+=== slm.deleteLifecycle
+[source,ts]
+----
+client.slm.deleteLifecycle({
+  policy_id: string
+})
+----
+link:{ref}/slm-api-delete.html[Reference]
+[cols=2*]
+|===
+|`policy_id`
+|`string` - The id of the snapshot lifecycle policy to remove
+
+|===
+
+=== slm.executeLifecycle
+[source,ts]
+----
+client.slm.executeLifecycle({
+  policy_id: string
+})
+----
+link:{ref}/slm-api-execute.html[Reference]
+[cols=2*]
+|===
+|`policy_id` or `policyId`
+|`string` - The id of the snapshot lifecycle policy to be executed
+
+|===
+
+=== slm.getLifecycle
+[source,ts]
+----
+client.slm.getLifecycle({
+  policy_id: string
+})
+----
+link:{ref}/slm-api-get.html[Reference]
+[cols=2*]
+|===
+|`policy_id` or `policyId`
+|`string` - Comma-separated list of snapshot lifecycle policies to retrieve
+
+|===
+
+=== slm.putLifecycle
+[source,ts]
+----
+client.slm.putLifecycle({
+  policy_id: string,
+  body: object
+})
+----
+link:{ref}/slm-api-put.html[Reference]
+[cols=2*]
+|===
+|`policy_id` or `policyId`
+|`string` - The id of the snapshot lifecycle policy
+
+|`body`
+|`object` - The snapshot lifecycle policy definition to register
 
 |===
 

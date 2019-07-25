@@ -11,7 +11,7 @@ function buildIndicesDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
+   * Perform a [indices.delete](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
    *
    * @param {list} index - A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
    * @param {time} timeout - Explicit operation timeout

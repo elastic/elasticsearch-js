@@ -11,7 +11,7 @@ function buildClusterRemoteInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cluster.remote_info](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html) request
+   * Perform a [cluster.remote_info](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html) request
    *
    */
 

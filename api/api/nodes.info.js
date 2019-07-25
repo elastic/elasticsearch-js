@@ -11,7 +11,7 @@ function buildNodesInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [nodes.info](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html) request
+   * Perform a [nodes.info](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html) request
    *
    * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
    * @param {list} metric - A comma-separated list of metrics you wish returned. Leave empty to return all.

@@ -11,7 +11,7 @@ function buildCatCount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.count](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html) request
+   * Perform a [cat.count](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html) request
    *
    * @param {list} index - A comma-separated list of index names to limit the returned information
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

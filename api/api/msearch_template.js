@@ -11,7 +11,7 @@ function buildMsearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [msearch_template](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) request
+   * Perform a [msearch_template](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) request
    *
    * @param {list} index - A comma-separated list of index names to use as default
    * @param {enum} search_type - Search operation type

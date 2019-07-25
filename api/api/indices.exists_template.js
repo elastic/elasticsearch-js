@@ -11,7 +11,7 @@ function buildIndicesExistsTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.exists_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
+   * Perform a [indices.exists_template](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
    *
    * @param {list} name - The comma separated names of the index templates
    * @param {boolean} flat_settings - Return settings in flat format (default: false)

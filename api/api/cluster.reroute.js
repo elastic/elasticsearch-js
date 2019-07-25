@@ -11,7 +11,7 @@ function buildClusterReroute (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cluster.reroute](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html) request
+   * Perform a [cluster.reroute](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html) request
    *
    * @param {boolean} dry_run - Simulate the operation only and return the resulting state
    * @param {boolean} explain - Return an explanation of why the commands can or cannot be executed

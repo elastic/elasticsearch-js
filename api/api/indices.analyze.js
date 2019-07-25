@@ -11,7 +11,7 @@ function buildIndicesAnalyze (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.analyze](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
+   * Perform a [indices.analyze](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
    *
    * @param {string} index - The name of the index to scope the operation
    * @param {string} index - The name of the index to scope the operation

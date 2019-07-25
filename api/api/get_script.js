@@ -11,7 +11,7 @@ function buildGetScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [get_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+   * Perform a [get_script](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
    *
    * @param {string} id - Script ID
    * @param {time} master_timeout - Specify timeout for connection to master

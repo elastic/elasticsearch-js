@@ -11,7 +11,7 @@ function buildCatAliases (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.aliases](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html) request
+   * Perform a [cat.aliases](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html) request
    *
    * @param {list} name - A comma-separated list of alias names to return
    * @param {string} format - a short version of the Accept header, e.g. json, yaml

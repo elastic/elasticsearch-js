@@ -11,7 +11,7 @@ function buildTasksCancel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [tasks.cancel](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+   * Perform a [tasks.cancel](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
    * @param {string} task_id - Cancel the task with specified task id (node_id:task_number)
    * @param {list} nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes

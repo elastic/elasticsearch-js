@@ -11,7 +11,7 @@ function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [put_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
+   * Perform a [put_script](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
    *
    * @param {string} id - Script ID
    * @param {string} context - Script context

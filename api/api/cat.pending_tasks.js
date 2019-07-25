@@ -11,7 +11,7 @@ function buildCatPendingTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [cat.pending_tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html) request
+   * Perform a [cat.pending_tasks](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html) request
    *
    * @param {string} format - a short version of the Accept header, e.g. json, yaml
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)

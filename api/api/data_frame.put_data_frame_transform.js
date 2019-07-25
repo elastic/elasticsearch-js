@@ -14,15 +14,16 @@ function buildDataFramePutDataFrameTransform (opts) {
    * Perform a [data_frame.put_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html) request
    *
    * @param {string} transform_id - The id of the new transform.
+   * @param {boolean} defer_validation - If validations should be deferred until data frame transform starts, defaults to false.
    * @param {object} body - The data frame transform definition
    */
 
   const acceptedQuerystring = [
-
+    'defer_validation'
   ]
 
   const snakeCase = {
-
+    deferValidation: 'defer_validation'
   }
 
   return function dataFramePutDataFrameTransform (params, options, callback) {

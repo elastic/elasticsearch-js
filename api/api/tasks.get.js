@@ -11,7 +11,7 @@ function buildTasksGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [tasks.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
+   * Perform a [tasks.get](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
    * @param {string} task_id - Return the task with specified id (node_id:task_number)
    * @param {boolean} wait_for_completion - Wait for the matching tasks to complete (default: false)

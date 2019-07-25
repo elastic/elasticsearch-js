@@ -11,7 +11,7 @@ function buildIndicesRollover (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.rollover](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
+   * Perform a [indices.rollover](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
    *
    * @param {string} alias - The name of the alias to rollover
    * @param {string} new_index - The name of the rollover index

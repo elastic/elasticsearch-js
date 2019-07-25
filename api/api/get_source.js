@@ -11,7 +11,7 @@ function buildGetSource (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [get_source](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
+   * Perform a [get_source](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
    *
    * @param {string} id - The document ID
    * @param {string} index - The name of the index

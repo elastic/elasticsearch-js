@@ -11,7 +11,7 @@ function buildMtermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [mtermvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
+   * Perform a [mtermvectors](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
    *
    * @param {string} index - The index in which the document resides.
    * @param {list} ids - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body

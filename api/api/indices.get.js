@@ -11,7 +11,7 @@ function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
+   * Perform a [indices.get](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
    *
    * @param {list} index - A comma-separated list of index names
    * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)

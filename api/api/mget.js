@@ -11,7 +11,7 @@ function buildMget (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [mget](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html) request
+   * Perform a [mget](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html) request
    *
    * @param {string} index - The name of the index
    * @param {string} type - The type of the document

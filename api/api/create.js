@@ -11,7 +11,7 @@ function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
+   * Perform a [create](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
    * @param {string} id - Document ID
    * @param {string} index - The name of the index
