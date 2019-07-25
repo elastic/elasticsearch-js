@@ -1439,6 +1439,7 @@ link:{ref}/docs-delete.html[Reference]
 ----
 client.deleteByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -1455,6 +1456,7 @@ client.deleteByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
+  size: number,
   max_docs: number,
   sort: string | string[],
   _source: string | string[],
@@ -1481,7 +1483,7 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -3210,6 +3212,7 @@ _Default:_ `open`
 client.indices.shrink({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3248,6 +3251,7 @@ link:{ref}/indices-shrink-index.html[Reference]
 client.indices.split({
   index: string,
   target: string,
+  copy_settings: boolean,
   timeout: string,
   master_timeout: string,
   wait_for_active_shards: string,
@@ -3642,6 +3646,7 @@ link:{ref}/docs-multi-get.html[Reference]
 ----
 client.msearch({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   max_concurrent_searches: number,
   typed_keys: boolean,
@@ -3659,7 +3664,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3695,6 +3700,7 @@ _Default:_ `true`
 ----
 client.msearchTemplate({
   index: string | string[],
+  type: string | string[],
   search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
@@ -3710,7 +3716,7 @@ link:{ref}/search-multi-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to use as default
+|`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
 |`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
@@ -3738,6 +3744,7 @@ _Default:_ `true`
 ----
 client.mtermvectors({
   index: string,
+  type: string,
   ids: string | string[],
   term_statistics: boolean,
   field_statistics: boolean,
@@ -4186,6 +4193,7 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 ----
 client.search({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   ccs_minimize_roundtrips: boolean,
@@ -4238,7 +4246,7 @@ link:{ref}/search-search.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -4424,6 +4432,7 @@ _Default:_ `open`
 ----
 client.searchTemplate({
   index: string | string[],
+  type: string | string[],
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
@@ -4447,7 +4456,7 @@ link:{ref}/search-template.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4833,6 +4842,7 @@ _Default:_ `nodes`
 ----
 client.termvectors({
   index: string,
+  type: string,
   id: string,
   term_statistics: boolean,
   field_statistics: boolean,
@@ -4978,6 +4988,7 @@ link:{ref}/docs-update.html[Reference]
 ----
 client.updateByQuery({
   index: string | string[],
+  type: string | string[],
   analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
@@ -4995,6 +5006,7 @@ client.updateByQuery({
   scroll: string,
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   search_timeout: string,
+  size: number,
   max_docs: number,
   sort: string | string[],
   _source: string | string[],
@@ -5022,7 +5034,7 @@ link:{ref}/docs-update-by-query.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string, string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
 
 |`analyzer`
 |`string` - The analyzer to use for the query string
@@ -5342,8 +5354,7 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [source,ts]
 ----
 client.dataFrame.deleteDataFrameTransform({
-  transform_id: string,
-  force: boolean
+  transform_id: string
 })
 ----
 link:{ref}/delete-data-frame-transform.html[Reference]
@@ -5351,9 +5362,6 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
 
 |===
 
@@ -5431,7 +5439,6 @@ link:{ref}/preview-data-frame-transform.html[Reference]
 ----
 client.dataFrame.putDataFrameTransform({
   transform_id: string,
-  defer_validation: boolean,
   body: object
 })
 ----
@@ -5440,9 +5447,6 @@ link:{ref}/put-data-frame-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
 
 |`body`
 |`object` - The data frame transform definition
