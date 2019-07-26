@@ -1,33 +1,58 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:10-alpine'
-    }
+  agent { 
+    label 'linux && immutable'
   }
 
   stages {
-    stage('System info') {
-      steps {
-        sh 'node --version'
-        sh 'npm --version'
-      }
-    }
-
     stage('Install dependencies') {
       steps {
-        sh 'npm install'
+        script {
+          docker.image('node:10-alpine').inside(){
+            withEnv([
+              /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+              'npm_config_cache=npm-cache',
+              /* set home to our current directory because other bower
+              * nonsense breaks with HOME=/, e.g.:
+              * EACCES: permission denied, mkdir '/.config'
+              */
+              'HOME=.',
+              ]) {
+              sh '''node --version
+                    npm --version'''
+              sh 'npm install'
+            }
+          }
+        }
       }
     }
 
     stage('License check') {
       steps {
-        sh 'npm run license-checker'
+        script {
+          docker.image('node:10-alpine').inside(){
+            sh 'npm run license-checker'
+          }
+        }
       }
     }
 
     stage('Linter') {
       steps {
-        sh 'npm run lint'
+        script {
+          docker.image('node:10-alpine').inside(){
+            withEnv([
+              /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+              'npm_config_cache=npm-cache',
+              /* set home to our current directory because other bower
+              * nonsense breaks with HOME=/, e.g.:
+              * EACCES: permission denied, mkdir '/.config'
+              */
+              'HOME=.',
+              ]) {
+              sh 'npm run lint'
+            }
+          }
+        }
       }
     }
 
