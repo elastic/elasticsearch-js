@@ -6,7 +6,7 @@
 
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util';
-import { ApiKeyAuth, BasicAuth } from './ConnectionPool'
+import { ApiKeyAuth, BasicAuth } from './pool'
 import * as http from 'http';
 import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 
