@@ -62,6 +62,7 @@ pipeline {
               sh '''node --version
                     npm --version'''
               sh 'npm install'
+              sh 'ls'
               stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
             }
           }
