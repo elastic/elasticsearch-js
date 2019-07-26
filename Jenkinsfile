@@ -4,17 +4,12 @@ pipeline {
   }
 
   stages {
-    stage('System info') {
-      steps {
-        sh 'node --version'
-        sh 'npm --version'
-      }
-    }
-
     stage('Install dependencies') {
       steps {
         script {
           docker.image('node:10-alpine').inside(){
+            sh '''node --version
+                  npm --version'''
             sh 'npm install'
           }
         }
