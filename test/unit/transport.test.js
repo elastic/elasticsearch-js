@@ -6,6 +6,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
+const lolex = require('lolex')
 const { createGunzip } = require('zlib')
 const os = require('os')
 const intoStream = require('into-stream')
@@ -23,7 +24,7 @@ const {
   ConfigurationError
 } = require('../../lib/errors')
 
-const ConnectionPool = require('../../lib/ConnectionPool')
+const ConnectionPool = require('../../lib/pool/ConnectionPool')
 const Connection = require('../../lib/Connection')
 const Serializer = require('../../lib/Serializer')
 const Transport = require('../../lib/Transport')
@@ -878,148 +879,95 @@ test('Override requestTimeout', t => {
 
 test('sniff', t => {
   t.test('sniffOnStart', t => {
-    t.plan(3)
+    t.plan(1)
 
-    class CustomConnectionPool extends ConnectionPool {
-      update () {
-        t.ok('called')
-        return this
-      }
-
-      nodesToHost (nodes) {
-        t.ok('called')
-        return []
+    class MyTransport extends Transport {
+      sniff (opts) {
+        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_ON_START)
       }
     }
 
-    function handler (req, res) {
-      t.strictEqual(req.url, '/sniff')
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({ Connection })
-      pool.addConnection(`http://localhost:${port}`)
-
-      // eslint-disable-next-line
-      new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 30000,
-        sniffInterval: false,
-        sniffOnStart: true,
-        sniffEndpoint: '/sniff'
-      })
-
-      setTimeout(() => server.stop(), 100)
+    // eslint-disable-next-line
+    new MyTransport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: true,
+      sniffEndpoint: '/sniff'
     })
   })
 
   t.test('sniffOnConnectionFault', t => {
-    t.plan(3)
+    t.plan(2)
 
-    class CustomConnectionPool extends ConnectionPool {
-      update () {
-        t.ok('called')
-        return this
-      }
-
-      nodesToHost (nodes) {
-        t.ok('called')
-        return []
+    class MyTransport extends Transport {
+      sniff (opts) {
+        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
       }
     }
 
-    function handler (req, res) {
-      if (req.url === '/other/sniff') {
-        res.setHeader('Content-Type', 'application/json;utf=8')
-        res.end(JSON.stringify({ hello: 'world' }))
-      } else {
-        setTimeout(() => res.end(), 1000)
-      }
-    }
+    const pool = new ConnectionPool({ Connection: MockConnectionTimeout })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({ Connection })
-      pool.addConnection(`http://localhost:${port}`)
-      pool.addConnection(`http://localhost:${port}/other`)
+    const transport = new MyTransport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 0,
+      requestTimeout: 500,
+      sniffInterval: false,
+      sniffOnConnectionFault: true,
+      sniffEndpoint: '/sniff'
+    })
 
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 0,
-        requestTimeout: 500,
-        sniffInterval: false,
-        sniffOnConnectionFault: true,
-        sniffEndpoint: '/sniff'
-      })
-
-      transport.request({
-        method: 'GET',
-        path: '/'
-      }, (err, { body }) => {
-        t.ok(err instanceof TimeoutError)
-      })
-
-      setTimeout(() => server.stop(), 1100)
+    transport.request({
+      method: 'GET',
+      path: '/'
+    }, (err, { body }) => {
+      t.ok(err instanceof TimeoutError)
     })
   })
 
   t.test('sniffInterval', t => {
-    t.plan(9)
+    t.plan(6)
 
-    class CustomConnectionPool extends ConnectionPool {
-      update () {
-        return this
-      }
+    const clock = lolex.install({ toFake: ['Date'] })
+    t.teardown(() => clock.uninstall())
 
-      nodesToHost (nodes) {
-        return []
+    class MyTransport extends Transport {
+      sniff (opts) {
+        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_INTERVAL)
       }
     }
 
-    function handler (req, res) {
-      // this should be called 6 times
-      t.ok('called')
-      res.setHeader('Content-Type', 'application/json;utf=8')
-      res.end(JSON.stringify({ hello: 'world' }))
-    }
+    const pool = new ConnectionPool({ Connection: MockConnection })
+    pool.addConnection('http://localhost:9200')
 
-    buildServer(handler, ({ port }, server) => {
-      const pool = new CustomConnectionPool({ Connection })
-      pool.addConnection(`http://localhost:${port}`)
-
-      const transport = new Transport({
-        emit: () => {},
-        connectionPool: pool,
-        serializer: new Serializer(),
-        maxRetries: 3,
-        requestTimeout: 3000,
-        sniffInterval: 1,
-        sniffEndpoint: '/sniff'
-      })
-
-      const params = { method: 'GET', path: '/' }
-      setTimeout(() => {
-        transport.request(params, t.error)
-      }, 100)
-
-      setTimeout(() => {
-        transport.request(params, t.error)
-      }, 200)
-
-      setTimeout(() => {
-        transport.request(params, t.error)
-      }, 300)
-
-      setTimeout(() => {
-        server.stop()
-      }, 400)
+    const transport = new MyTransport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 3000,
+      sniffInterval: 1,
+      sniffEndpoint: '/sniff'
     })
+
+    const params = { method: 'GET', path: '/' }
+    clock.tick(100)
+    transport.request(params, t.error)
+
+    clock.tick(200)
+    transport.request(params, t.error)
+
+    clock.tick(300)
+    transport.request(params, t.error)
   })
 
   t.test('errored', t => {

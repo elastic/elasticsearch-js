@@ -5,24 +5,34 @@
 /// <reference types="node" />
 
 import { SecureContextOptions } from 'tls';
-import Connection, { AgentOptions } from './Connection';
-import { nodeFilterFn, nodeSelectorFn } from './Transport';
+import Connection, { AgentOptions } from '../Connection';
+import { nodeFilterFn, nodeSelectorFn } from '../Transport';
 
-interface ConnectionPoolOptions {
+interface BaseConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
-  auth: BasicAuth | ApiKeyAuth;
+  auth?: BasicAuth | ApiKeyAuth;
+  emit: (event: string | symbol, ...args: any[]) => boolean;
   pingTimeout?: number;
   Connection: typeof Connection;
   resurrectStrategy?: string;
 }
 
-export interface getConnectionOptions {
-  filter?: nodeFilterFn;
-  selector?: nodeSelectorFn;
+interface ConnectionPoolOptions extends BaseConnectionPoolOptions {
+  pingTimeout?: number;
+  resurrectStrategy?: string;
+  sniffEnabled?: boolean;
 }
 
-export interface ApiKeyAuth {
+interface getConnectionOptions {
+  filter?: nodeFilterFn;
+  selector?: nodeSelectorFn;
+  requestId?: string | number;
+  name?: string;
+  now?: number;
+}
+
+interface ApiKeyAuth {
   apiKey:
     | string
     | {
@@ -31,18 +41,18 @@ export interface ApiKeyAuth {
       }
 }
 
-export interface BasicAuth {
+interface BasicAuth {
   username: string;
   password: string;
 }
 
-export interface resurrectOptions {
+interface resurrectOptions {
   now?: number;
   requestId: string;
   name: string;
 }
 
-export interface ResurrectEvent {
+interface ResurrectEvent {
   strategy: string;
   isAlive: boolean;
   connection: Connection;
@@ -52,24 +62,14 @@ export interface ResurrectEvent {
   };
 }
 
-export default class ConnectionPool {
-  static resurrectStrategies: {
-    none: number;
-    ping: number;
-    optimistic: number;
-  };
-  connections: any;
-  dead: string[];
+
+declare class BaseConnectionPool {
+  connections: Connection[];
   _ssl: SecureContextOptions | null;
   _agent: AgentOptions | null;
-  _sniffEnabled: boolean;
-  resurrectTimeout: number;
-  resurrectTimeoutCutoff: number;
-  pingTimeout: number;
   auth: BasicAuth | ApiKeyAuth;
   Connection: typeof Connection;
-  resurrectStrategy: number;
-  constructor(opts?: ConnectionPoolOptions);
+  constructor(opts?: BaseConnectionPoolOptions);
   /**
    * Marks a connection as 'alive'.
    * If needed removes the connection from the dead list
@@ -77,7 +77,7 @@ export default class ConnectionPool {
    *
    * @param {object} connection
    */
-  markAlive(connection: Connection): void;
+  markAlive(connection: Connection): this;
   /**
    * Marks a connection as 'dead'.
    * If needed adds the connection to the dead list
@@ -85,15 +85,7 @@ export default class ConnectionPool {
    *
    * @param {object} connection
    */
-  markDead(connection: Connection): void;
-  /**
-   * If enabled, tries to resurrect a connection with the given
-   * resurrect strategy ('ping', 'optimistic', 'none').
-   *
-   * @param {object} { now, requestId, name }
-   * @param {function} callback (isAlive, connection)
-   */
-  resurrect(opts: resurrectOptions, callback?: (isAlive: boolean | null, connection: Connection | null) => void): void;
+  markDead(connection: Connection): this;
   /**
    * Returns an alive connection if present,
    * otherwise returns null.
@@ -111,27 +103,27 @@ export default class ConnectionPool {
    * @param {object|string} host
    * @returns {ConnectionPool}
    */
-  addConnection(opts: any): Connection | void;
+  addConnection(opts: any): Connection;
   /**
    * Removes a new connection to the pool.
    *
    * @param {object} connection
    * @returns {ConnectionPool}
    */
-  removeConnection(connection: Connection): ConnectionPool;
+  removeConnection(connection: Connection): this;
   /**
    * Empties the connection pool.
    *
    * @returns {ConnectionPool}
    */
-  empty(): ConnectionPool;
+  empty(): this;
   /**
    * Update the ConnectionPool with new connections.
    *
    * @param {array} array of connections
    * @returns {ConnectionPool}
    */
-  update(connections: Connection[]): ConnectionPool;
+  update(connections: any[]): this;
   /**
    * Transforms the nodes objects to a host object.
    *
@@ -148,14 +140,57 @@ export default class ConnectionPool {
   urlToHost(url: string): any;
 }
 
+declare class ConnectionPool extends BaseConnectionPool {
+  static resurrectStrategies: {
+    none: number;
+    ping: number;
+    optimistic: number;
+  };
+  dead: string[];
+  _sniffEnabled: boolean;
+  resurrectTimeout: number;
+  resurrectTimeoutCutoff: number;
+  pingTimeout: number;
+  resurrectStrategy: number;
+  constructor(opts?: ConnectionPoolOptions);
+
+  /**
+   * If enabled, tries to resurrect a connection with the given
+   * resurrect strategy ('ping', 'optimistic', 'none').
+   *
+   * @param {object} { now, requestId, name }
+   * @param {function} callback (isAlive, connection)
+   */
+  resurrect(opts: resurrectOptions, callback?: (isAlive: boolean | null, connection: Connection | null) => void): void;
+}
+
+declare class CloudConnectionPool extends BaseConnectionPool {
+  cloudConnection: Connection | null
+  constructor(opts?: BaseConnectionPoolOptions);
+  getConnection(): Connection;
+}
+
 declare function defaultNodeFilter(node: Connection): boolean;
 declare function roundRobinSelector(): (connections: Connection[]) => Connection;
 declare function randomSelector(connections: Connection[]): Connection;
 
-export declare const internals: {
+declare const internals: {
   defaultNodeFilter: typeof defaultNodeFilter;
   roundRobinSelector: typeof roundRobinSelector;
   randomSelector: typeof randomSelector;
 };
 
-export {};
+export {
+  // Interfaces
+  ConnectionPoolOptions,
+  getConnectionOptions,
+  ApiKeyAuth,
+  BasicAuth,
+  internals,
+  resurrectOptions,
+  ResurrectEvent,
+  // Classes
+  BaseConnectionPool,
+  ConnectionPool,
+  CloudConnectionPool
+};

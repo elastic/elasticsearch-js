@@ -18,7 +18,7 @@ import Transport, {
 } from './lib/Transport';
 import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
-import ConnectionPool, { ResurrectEvent, BasicAuth, ApiKeyAuth } from './lib/ConnectionPool';
+import { ConnectionPool, ResurrectEvent, BasicAuth, ApiKeyAuth } from './lib/pool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
