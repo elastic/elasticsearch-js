@@ -58,6 +58,7 @@ pipeline {
               */
               'HOME=.',
               ]) {
+              sh 'ls'
               sh '''node --version
                     npm --version'''
               sh 'npm install'
@@ -85,6 +86,7 @@ pipeline {
               */
               'HOME=.',
               ]) {
+              sh 'ls'
               sh 'npm run license-checker'
             }
           }
