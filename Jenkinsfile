@@ -44,7 +44,7 @@ pipeline {
       options { skipDefaultCheckout() }
       environment {
         HOME = "${env.WORKSPACE}"
-        npm_config_cache = "npm-cache"
+        npm_config_cache = 'npm-cache'
       }
       steps {
         deleteDir()
@@ -66,7 +66,7 @@ pipeline {
       options { skipDefaultCheckout() }
       environment {
         HOME = "${env.WORKSPACE}"
-        npm_config_cache = "npm-cache"
+        npm_config_cache = 'npm-cache'
       }
       steps {
         deleteDir()
@@ -85,7 +85,7 @@ pipeline {
       options { skipDefaultCheckout() }
       environment {
         HOME = "${env.WORKSPACE}"
-        npm_config_cache = "npm-cache"
+        npm_config_cache = 'npm-cache'
       }
       steps {
         deleteDir()
@@ -104,7 +104,7 @@ pipeline {
       options { skipDefaultCheckout() }
       environment {
         HOME = "${env.WORKSPACE}"
-        npm_config_cache = "npm-cache"
+        npm_config_cache = 'npm-cache'
       }
       steps {
         deleteDir()
@@ -123,8 +123,23 @@ pipeline {
 
     stage('OSS integration test') {
       options { skipDefaultCheckout() }
+      environment {
+        HOME = "${env.WORKSPACE}"
+        npm_config_cache = 'npm-cache'
+      }
       steps {
-        echo 'OSS integration test'
+        deleteDir()
+        unstash 'source-dependencies'
+        dir("${BASE_DIR}"){
+          sh './scripts/es-docker.sh --detach'
+        }
+        script {
+          docker.image('node:10-alpine').inside(){
+            dir("${BASE_DIR}"){
+              sh 'npm run test:integration'
+            }
+          }
+        }
       }
     }
 
