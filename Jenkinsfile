@@ -36,8 +36,7 @@ pipeline {
       options { skipDefaultCheckout() }
       steps {
         deleteDir()
-        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: true)
-        sh 'ls'
+        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
@@ -60,11 +59,9 @@ pipeline {
                 */
                 'HOME=.',
                 ]) {
-                sh 'ls'
                 sh '''node --version
                       npm --version'''
                 sh 'npm install'
-                sh 'ls'
                 stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
               }
             }
@@ -91,7 +88,6 @@ pipeline {
                 */
                 'HOME=.',
                 ]) {
-                sh 'ls'
                 sh 'npm run license-checker'
               }
             }
@@ -130,7 +126,27 @@ pipeline {
       agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
       steps {
-        echo 'Unit test'
+        deleteDir()
+        unstash 'source-dependencies'
+        script {
+          docker.image('node:10-alpine').inside(){
+            dir("${BASE_DIR}"){
+              withEnv([
+                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+                'npm_config_cache=npm-cache',
+                /* set home to our current directory because other bower
+                * nonsense breaks with HOME=/, e.g.:
+                * EACCES: permission denied, mkdir '/.config'
+                */
+                'HOME=.',
+                ]) {
+                sh 'npm run test:unit'
+                sh 'npm run test:behavior'
+                sh 'npm run test:types'
+              }
+            }
+          }
+        }
       }
     }
 
