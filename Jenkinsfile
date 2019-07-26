@@ -9,7 +9,7 @@ retriever: modernSCM(
 
 pipeline {
   agent {
-    label 'linux && immutable'
+    label 'docker && immutable'
   }
 
   environment {
@@ -32,7 +32,6 @@ pipeline {
 
   stages {
     stage('Checkout') {
-      agent { label 'master || immutable' }
       options { skipDefaultCheckout() }
       steps {
         deleteDir()
@@ -42,28 +41,21 @@ pipeline {
     }
 
     stage('Install dependencies') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
+      environment {
+        HOME = "${env.WORKSPACE}"
+        npm_config_cache = "npm-cache"
+      }
       steps {
         deleteDir()
         unstash 'source'
         script {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              withEnv([
-                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-                'npm_config_cache=npm-cache',
-                /* set home to our current directory because other bower
-                * nonsense breaks with HOME=/, e.g.:
-                * EACCES: permission denied, mkdir '/.config'
-                */
-                'HOME=.',
-                ]) {
-                sh '''node --version
-                      npm --version'''
-                sh 'npm install'
-                stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
-              }
+              sh '''node --version
+                    npm --version'''
+              sh 'npm install'
+              stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
             }
           }
         }
@@ -71,25 +63,18 @@ pipeline {
     }
 
     stage('License check') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
+      environment {
+        HOME = "${env.WORKSPACE}"
+        npm_config_cache = "npm-cache"
+      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
         script {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              withEnv([
-                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-                'npm_config_cache=npm-cache',
-                /* set home to our current directory because other bower
-                * nonsense breaks with HOME=/, e.g.:
-                * EACCES: permission denied, mkdir '/.config'
-                */
-                'HOME=.',
-                ]) {
-                sh 'npm run license-checker'
-              }
+              sh 'npm run license-checker'
             }
           }
         }
@@ -97,25 +82,18 @@ pipeline {
     }
 
     stage('Linter') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
+      environment {
+        HOME = "${env.WORKSPACE}"
+        npm_config_cache = "npm-cache"
+      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
         script {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              withEnv([
-                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-                'npm_config_cache=npm-cache',
-                /* set home to our current directory because other bower
-                * nonsense breaks with HOME=/, e.g.:
-                * EACCES: permission denied, mkdir '/.config'
-                */
-                'HOME=.',
-                ]) {
-                sh 'npm run lint'
-              }
+              sh 'npm run lint'
             }
           }
         }
@@ -123,27 +101,20 @@ pipeline {
     }
 
     stage('Unit test') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
+      environment {
+        HOME = "${env.WORKSPACE}"
+        npm_config_cache = "npm-cache"
+      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
         script {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              withEnv([
-                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-                'npm_config_cache=npm-cache',
-                /* set home to our current directory because other bower
-                * nonsense breaks with HOME=/, e.g.:
-                * EACCES: permission denied, mkdir '/.config'
-                */
-                'HOME=.',
-                ]) {
-                sh 'npm run test:unit'
-                sh 'npm run test:behavior'
-                sh 'npm run test:types'
-              }
+              sh 'npm run test:unit'
+              sh 'npm run test:behavior'
+              sh 'npm run test:types'
             }
           }
         }
@@ -151,7 +122,6 @@ pipeline {
     }
 
     stage('OSS integration test') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
       steps {
         echo 'OSS integration test'
@@ -159,7 +129,6 @@ pipeline {
     }
 
     stage('xPack integration test') {
-      agent { label 'docker && immutable' }
       options { skipDefaultCheckout() }
       steps {
         echo 'xPack integration test'
