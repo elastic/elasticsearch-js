@@ -130,13 +130,12 @@ pipeline {
       steps {
         deleteDir()
         unstash 'source-dependencies'
-        dir("${BASE_DIR}"){
-          sh './scripts/es-docker.sh --detach'
-        }
         script {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              sh 'npm run test:integration'
+              sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
+              sh(label: 'Integration test', script: 'npm run test:integration')
+              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
             }
           }
         }
