@@ -1,11 +1,47 @@
+#!/usr/bin/env groovy
+
+library identifier: 'apm@current',
+retriever: modernSCM(
+  [$class: 'GitSCMSource',
+  credentialsId: 'f94e9298-83ae-417e-ba91-85c279771570',
+  id: '37cf2c00-2cc7-482e-8c62-7bbffef475e2',
+  remote: 'git@github.com:elastic/apm-pipeline-library.git'])
+
 pipeline {
-  agent { 
+  agent {
     label 'linux && immutable'
   }
 
+  options {
+    timeout(time: 1, unit: 'HOURS')
+    buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20', daysToKeepStr: '30'))
+    timestamps()
+    ansiColor('xterm')
+    disableResume()
+    durabilityHint('PERFORMANCE_OPTIMIZED')
+  }
+
+  triggers {
+    issueCommentTrigger('(?i).*(?:jenkins\\W+)?run\\W+(?:the\\W+)?tests(?:\\W+please)?.*')
+  }
+
   stages {
-    stage('Install dependencies') {
+    stage('Checkout') {
+      agent { label 'master || immutable' }
+      options { skipDefaultCheckout() }
       steps {
+        deleteDir()
+        gitCheckout(basedir: "src/github.com/elastic/elasticsearch-js", githubNotifyFirstTimeContributor: true)
+        stash allowEmpty: true, name: 'source', useDefaultExcludes: false
+      }
+    }
+
+    stage('Install dependencies') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
+      steps {
+        deleteDir()
+        unstash 'source'
         script {
           docker.image('node:10-alpine').inside(){
             withEnv([
@@ -27,7 +63,11 @@ pipeline {
     }
 
     stage('License check') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
       steps {
+        deleteDir()
+        unstash 'source'
         script {
           docker.image('node:10-alpine').inside(){
             sh 'npm run license-checker'
@@ -37,7 +77,11 @@ pipeline {
     }
 
     stage('Linter') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
       steps {
+        deleteDir()
+        unstash 'source'
         script {
           docker.image('node:10-alpine').inside(){
             withEnv([
@@ -57,18 +101,24 @@ pipeline {
     }
 
     stage('Unit test') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
       steps {
         echo 'Unit test'
       }
     }
 
     stage('OSS integration test') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
       steps {
         echo 'OSS integration test'
       }
     }
 
     stage('xPack integration test') {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
       steps {
         echo 'xPack integration test'
       }
