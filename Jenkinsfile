@@ -1,8 +1,6 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:10-alpine'
-    }
+  agent { 
+    label 'linux'
   }
 
   stages {
@@ -15,19 +13,31 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'npm install'
+        script {
+          docker.image('node:10-alpine').inside(){
+            sh 'npm install'
+          }
+        }
       }
     }
 
     stage('License check') {
       steps {
-        sh 'npm run license-checker'
+        script {
+          docker.image('node:10-alpine').inside(){
+            sh 'npm run license-checker'
+          }
+        }
       }
     }
 
     stage('Linter') {
       steps {
-        sh 'npm run lint'
+        script {
+          docker.image('node:10-alpine').inside(){
+            sh 'npm run lint'
+          }
+        }
       }
     }
 
