@@ -37,6 +37,7 @@ pipeline {
       steps {
         deleteDir()
         gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: true)
+        sh 'ls'
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
@@ -48,22 +49,24 @@ pipeline {
         deleteDir()
         unstash 'source'
         script {
-          docker.image('node:10-alpine').inside("-v ${WORKSPACE}/${BASE_DIR}:/app"){
-            withEnv([
-              /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-              'npm_config_cache=npm-cache',
-              /* set home to our current directory because other bower
-              * nonsense breaks with HOME=/, e.g.:
-              * EACCES: permission denied, mkdir '/.config'
-              */
-              'HOME=.',
-              ]) {
-              sh 'ls'
-              sh '''node --version
-                    npm --version'''
-              sh 'npm install'
-              sh 'ls'
-              stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
+          docker.image('node:10-alpine').inside(){
+            dir("${BASE_DIR}"){
+              withEnv([
+                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+                'npm_config_cache=npm-cache',
+                /* set home to our current directory because other bower
+                * nonsense breaks with HOME=/, e.g.:
+                * EACCES: permission denied, mkdir '/.config'
+                */
+                'HOME=.',
+                ]) {
+                sh 'ls'
+                sh '''node --version
+                      npm --version'''
+                sh 'npm install'
+                sh 'ls'
+                stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
+              }
             }
           }
         }
@@ -77,18 +80,20 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image('node:10-alpine').inside("-v ${WORKSPACE}/${BASE_DIR}:/app"){
-            withEnv([
-              /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-              'npm_config_cache=npm-cache',
-              /* set home to our current directory because other bower
-              * nonsense breaks with HOME=/, e.g.:
-              * EACCES: permission denied, mkdir '/.config'
-              */
-              'HOME=.',
-              ]) {
-              sh 'ls'
-              sh 'npm run license-checker'
+          docker.image('node:10-alpine').inside(){
+            dir("${BASE_DIR}"){
+              withEnv([
+                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+                'npm_config_cache=npm-cache',
+                /* set home to our current directory because other bower
+                * nonsense breaks with HOME=/, e.g.:
+                * EACCES: permission denied, mkdir '/.config'
+                */
+                'HOME=.',
+                ]) {
+                sh 'ls'
+                sh 'npm run license-checker'
+              }
             }
           }
         }
@@ -102,17 +107,19 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image('node:10-alpine').inside("-v ${WORKSPACE}/${BASE_DIR}:/app"){
-            withEnv([
-              /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-              'npm_config_cache=npm-cache',
-              /* set home to our current directory because other bower
-              * nonsense breaks with HOME=/, e.g.:
-              * EACCES: permission denied, mkdir '/.config'
-              */
-              'HOME=.',
-              ]) {
-              sh 'npm run lint'
+          docker.image('node:10-alpine').inside(){
+            dir("${BASE_DIR}"){
+              withEnv([
+                /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+                'npm_config_cache=npm-cache',
+                /* set home to our current directory because other bower
+                * nonsense breaks with HOME=/, e.g.:
+                * EACCES: permission denied, mkdir '/.config'
+                */
+                'HOME=.',
+                ]) {
+                sh 'npm run lint'
+              }
             }
           }
         }
