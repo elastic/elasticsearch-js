@@ -55,10 +55,10 @@ pipeline {
               sh '''node --version
                     npm --version'''
               sh 'npm install'
-              stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
             }
           }
         }
+        stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
       }
     }
 
