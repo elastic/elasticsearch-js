@@ -1,26 +1,11 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
 const { join } = require('path')
-const { readdirSync, writeFileSync } = require('fs')
+const { readdirSync, readFileSync, writeFileSync } = require('fs')
 const minimist = require('minimist')
 const semver = require('semver')
 const ora = require('ora')
@@ -47,7 +32,7 @@ function start (opts) {
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
-  const typesOutputFile = join(packageFolder, 'generated.d.ts')
+  const typeDefFile = join(__dirname, '..', 'index.d.ts')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
   const allSpec = []
@@ -79,9 +64,14 @@ function start (opts) {
       factory,
       { encoding: 'utf8' }
     )
+
+    const oldTypeDefString = readFileSync(typeDefFile, 'utf8')
+    const start = oldTypeDefString.indexOf('/* GENERATED */')
+    const end = oldTypeDefString.indexOf('/* /GENERATED */')
+    const newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
     writeFileSync(
-      typesOutputFile,
-      types,
+      typeDefFile,
+      newTypeDefString,
       { encoding: 'utf8' }
     )
 
@@ -97,7 +87,6 @@ function start (opts) {
       )
 
       log.succeed('Done!')
-      console.log('Remember to copy the generated types into the index.d.ts file')
     })
   })
 

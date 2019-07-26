@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 export interface Generic {
   method?: string;
@@ -1380,6 +1365,7 @@ export interface CcrUnfollow extends Generic {
 
 export interface DataFrameDeleteDataFrameTransform extends Generic {
   transform_id: string;
+  force?: boolean;
 }
 
 export interface DataFrameGetDataFrameTransform extends Generic {
@@ -1402,6 +1388,7 @@ export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
 
 export interface DataFramePutDataFrameTransform<T = any> extends Generic {
   transform_id: string;
+  defer_validation?: boolean;
   body: T;
 }
 
@@ -2039,6 +2026,23 @@ export interface SecurityPutUser<T = any> extends Generic {
   username: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
+}
+
+export interface SlmDeleteLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmExecuteLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmGetLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmPutLifecycle<T = any> extends Generic {
+  policy_id?: string;
+  body?: T;
 }
 
 export interface SqlClearCursor<T = any> extends Generic {
