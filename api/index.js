@@ -159,6 +159,7 @@ function ESAPI (opts) {
       analyze: lazyLoad('indices.analyze', opts),
       clear_cache: lazyLoad('indices.clear_cache', opts),
       clearCache: lazyLoad('indices.clear_cache', opts),
+      clone: lazyLoad('indices.clone', opts),
       close: lazyLoad('indices.close', opts),
       create: lazyLoad('indices.create', opts),
       delete: lazyLoad('indices.delete', opts),

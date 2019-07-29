@@ -2143,6 +2143,41 @@ _Default:_ `open`
 
 |===
 
+=== indices.clone
+[source,ts]
+----
+client.indices.clone({
+  index: string,
+  target: string,
+  timeout: string,
+  master_timeout: string,
+  wait_for_active_shards: string,
+  body: object
+})
+----
+link:{ref}/indices-clone-index.html[Reference]
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the source index to clone
+
+|`target`
+|`string` - The name of the target index to clone into
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Set the number of active shards to wait for on the cloned index before the operation returns.
+
+|`body`
+|`object` - The configuration for the target index (`settings` and `aliases`)
+
+|===
+
 === indices.close
 [source,ts]
 ----
@@ -5509,7 +5544,9 @@ link:{ref}/ilm-delete-lifecycle.html[Reference]
 [source,ts]
 ----
 client.ilm.explainLifecycle({
-  index: string
+  index: string,
+  only_managed: boolean,
+  only_errors: boolean
 })
 ----
 link:{ref}/ilm-explain-lifecycle.html[Reference]
@@ -5517,6 +5554,12 @@ link:{ref}/ilm-explain-lifecycle.html[Reference]
 |===
 |`index`
 |`string` - The name of the index to explain
+
+|`only_managed` or `onlyManaged`
+|`boolean` - filters the indices included in the response to ones managed by ILM
+
+|`only_errors` or `onlyErrors`
+|`boolean` - filters the indices included in the response to ones in an ILM error state, implies only_managed
 
 |===
 

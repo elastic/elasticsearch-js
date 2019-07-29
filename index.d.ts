@@ -257,6 +257,7 @@ declare class Client extends EventEmitter {
     analyze: ApiMethod<RequestParams.IndicesAnalyze>
     clear_cache: ApiMethod<RequestParams.IndicesClearCache>
     clearCache: ApiMethod<RequestParams.IndicesClearCache>
+    clone: ApiMethod<RequestParams.IndicesClone>
     close: ApiMethod<RequestParams.IndicesClose>
     create: ApiMethod<RequestParams.IndicesCreate>
     delete: ApiMethod<RequestParams.IndicesDelete>
