@@ -126,21 +126,20 @@ pipeline {
       environment {
         HOME = "${env.WORKSPACE}"
         npm_config_cache = 'npm-cache'
+        TEST_ES_SERVER='http://elasticsearch:9200'
       }
       steps {
         deleteDir()
         unstash 'source-dependencies'
+        sh(label: 'Start Elasticsearch', script: "npm run elasticsearch -- --detach")
         script {
-          docker.image('node:10-alpine').inside("-v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock"){
+          docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
-              sh(label: 'check folder', script: 'pwd && ls -la && ls -la scripts')
-              sh(label: 'debug checks', script: 'cd scripts && cat es-docker.sh')
-              sh(label: 'Start Elasticsearch', script: "npm run elasticsearch -- --detach")
               sh(label: 'Integration test', script: 'npm run test:integration')
-              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
             }
           }
         }
+        sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
       }
     }
 
