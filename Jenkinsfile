@@ -131,7 +131,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image('node:10-alpine').inside(){
+          docker.image('node:10-alpine').inside("-v \$(which docker):\$(which docker) -v /var/run/docker.sock:/var/run/docker.sock"){
             dir("${BASE_DIR}"){
               sh(label: 'check folder', script: 'pwd && ls -la && ls -la scripts')
               sh(label: 'debug checks', script: 'cd scripts && cat es-docker.sh')
