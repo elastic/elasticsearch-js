@@ -134,7 +134,8 @@ pipeline {
           docker.image('node:10-alpine').inside(){
             dir("${BASE_DIR}"){
               sh(label: 'check folder', script: 'pwd && ls -la && ls -la scripts')
-              sh(label: 'Start Elasticsearch', script: "${BASE_DIR}/scripts/es-docker.sh --detach")
+              sh(label: 'debug checks', script: 'cd scripts && cat es-docker.sh')
+              sh(label: 'Start Elasticsearch', script: "npm run elasticsearch -- --detach")
               sh(label: 'Integration test', script: 'npm run test:integration')
               sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
             }
