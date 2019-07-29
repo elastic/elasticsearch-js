@@ -26,7 +26,9 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "ci": "npm run license-checker && npm test && npm run test:integration && npm run test:coverage",
-    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
+    "elasticsearch": "./scripts/es-docker.sh",
+    "elasticsearch:xpack": "./scripts/es-docker-platinum.sh"
   },
   "author": {
     "name": "Tomas Della Vedova",
