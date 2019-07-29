@@ -138,6 +138,7 @@ pipeline {
         script {
           docker.image('node:10-alpine').inside('--network=elastic --user=root'){
             dir("${BASE_DIR}"){
+              sh('Installing git', script: 'apk --no-cache add git')
               sh(label: 'Integration test', script: 'npm run test:integration')
             }
           }
