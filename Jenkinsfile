@@ -121,31 +121,30 @@ pipeline {
       }
     }
 
-    stage('OSS integration test') {
-      options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        npm_config_cache = 'npm-cache'
-        TEST_ES_SERVER='http://elasticsearch:9200'
-      }
-      steps {
-        deleteDir()
-        unstash 'source-dependencies'
-        dir("${BASE_DIR}"){
-          sh(label: 'check folder', script: 'pwd && ls -la && ls -la scripts')
-          sh(label: 'Start Elasticsearch', script: "./scripts/es-docker.sh --detach")
-        }
-        script {
-          docker.image('node:10-alpine').inside('--network=elastic --user=root'){
-            dir("${BASE_DIR}"){
-              sh(label: 'Installing git', script: 'apk --no-cache add git')
-              sh(label: 'Integration test', script: 'npm run test:integration')
-            }
-          }
-        }
-        sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-      }
-    }
+    // stage('OSS integration test') {
+    //   options { skipDefaultCheckout() }
+    //   environment {
+    //     HOME = "${env.WORKSPACE}"
+    //     npm_config_cache = 'npm-cache'
+    //     TEST_ES_SERVER='http://elasticsearch:9200'
+    //   }
+    //   steps {
+    //     deleteDir()
+    //     unstash 'source-dependencies'
+    //     dir("${BASE_DIR}"){
+    //       sh(label: 'Start Elasticsearch', script: "./scripts/es-docker.sh --detach")
+    //     }
+    //     script {
+    //       docker.image('node:10-alpine').inside('--network=elastic --user=root'){
+    //         dir("${BASE_DIR}"){
+    //           sh(label: 'Installing git', script: 'apk --no-cache add git')
+    //           sh(label: 'Integration test', script: 'npm run test:integration')
+    //         }
+    //       }
+    //     }
+    //     sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+    //   }
+    // }
 
     stage('xPack integration test') {
       options { skipDefaultCheckout() }
