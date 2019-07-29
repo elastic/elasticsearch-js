@@ -136,7 +136,7 @@ pipeline {
           sh(label: 'Start Elasticsearch', script: "./scripts/es-docker.sh --detach")
         }
         script {
-          docker.image('node:10-alpine').inside(){
+          docker.image('node:10-alpine').inside('--network=elastic'){
             dir("${BASE_DIR}"){
               sh(label: 'Integration test', script: 'npm run test:integration')
             }
