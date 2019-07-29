@@ -22,7 +22,7 @@ if [ "$1" == "--detach" ]; then
     -p 9200:9200 \
     --detach \
     --network=elastic \
-    --name=elasticsearch
+    --name=elasticsearch \
     docker.elastic.co/elasticsearch/elasticsearch:8.0.0-SNAPSHOT
 else
   exec docker run \
@@ -33,6 +33,6 @@ else
     -e "discovery.type=single-node" \
     -p 9200:9200 \
     --network=elastic \
-    --name=elasticsearch
+    --name=elasticsearch \
     docker.elastic.co/elasticsearch/elasticsearch:8.0.0-SNAPSHOT
 fi

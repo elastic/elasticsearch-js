@@ -133,7 +133,7 @@ pipeline {
         unstash 'source-dependencies'
         dir("${BASE_DIR}"){
           sh(label: 'check folder', script: 'pwd && ls -la && ls -la scripts')
-          sh(label: 'Start Elasticsearch', script: "npm run elasticsearch -- --detach")
+          sh(label: 'Start Elasticsearch', script: "./scripts/es-docker.sh --detach")
         }
         script {
           docker.image('node:10-alpine').inside(){
