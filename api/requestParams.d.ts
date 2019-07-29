@@ -558,6 +558,15 @@ export interface IndicesClearCache extends Generic {
   request?: boolean;
 }
 
+export interface IndicesClone<T = any> extends Generic {
+  index: string;
+  target: string;
+  timeout?: string;
+  master_timeout?: string;
+  wait_for_active_shards?: string;
+  body?: T;
+}
+
 export interface IndicesClose extends Generic {
   index: string | string[];
   timeout?: string;
@@ -1418,6 +1427,8 @@ export interface IlmDeleteLifecycle extends Generic {
 
 export interface IlmExplainLifecycle extends Generic {
   index?: string;
+  only_managed?: boolean;
+  only_errors?: boolean;
 }
 
 export interface IlmGetLifecycle extends Generic {

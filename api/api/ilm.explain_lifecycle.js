@@ -14,14 +14,18 @@ function buildIlmExplainLifecycle (opts) {
    * Perform a [ilm.explain_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html) request
    *
    * @param {string} index - The name of the index to explain
+   * @param {boolean} only_managed - filters the indices included in the response to ones managed by ILM
+   * @param {boolean} only_errors - filters the indices included in the response to ones in an ILM error state, implies only_managed
    */
 
   const acceptedQuerystring = [
-
+    'only_managed',
+    'only_errors'
   ]
 
   const snakeCase = {
-
+    onlyManaged: 'only_managed',
+    onlyErrors: 'only_errors'
   }
 
   return function ilmExplainLifecycle (params, options, callback) {
