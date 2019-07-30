@@ -172,7 +172,7 @@ pipeline {
 }
 
 def nodejs(Closure body){
-  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=10 ${BASE_DIR}/.ci/PipelineDockerfile")
+  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=10 ${BASE_DIR}/.ci/docker")
   nodejsDocker.inside('--network=elastic'){
     body()
   }
