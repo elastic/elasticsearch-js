@@ -107,6 +107,8 @@ pipeline {
       options { skipDefaultCheckout() }
       parallel{
         stage('Node.js v8') {
+          agent { label 'docker && immutable' }
+          options { skipDefaultCheckout() }
           environment {
             HOME = "${env.WORKSPACE}"
             npm_config_cache = 'npm-cache'
@@ -128,6 +130,8 @@ pipeline {
         }
 
         stage('Node.js v10') {
+          agent { label 'docker && immutable' }
+          options { skipDefaultCheckout() }
           environment {
             HOME = "${env.WORKSPACE}"
             npm_config_cache = 'npm-cache'
@@ -149,6 +153,8 @@ pipeline {
         }
 
         stage('Node.js v12') {
+          agent { label 'docker && immutable' }
+          options { skipDefaultCheckout() }
           environment {
             HOME = "${env.WORKSPACE}"
             npm_config_cache = 'npm-cache'
