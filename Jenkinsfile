@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def nodejsDefaultVersion = '10'
+
 library identifier: 'apm@current',
 retriever: modernSCM(
   [$class: 'GitSCMSource',
@@ -50,7 +52,7 @@ pipeline {
         deleteDir()
         unstash 'source'
         script {
-          docker.image('node:10-alpine').inside(){
+          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh '''node --version
                     npm --version'''
@@ -72,7 +74,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image('node:10-alpine').inside(){
+          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run license-checker'
             }
@@ -91,7 +93,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image('node:10-alpine').inside(){
+          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run lint'
             }
@@ -172,7 +174,7 @@ pipeline {
 }
 
 def nodejs(Closure body){
-  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=10 ${BASE_DIR}/.ci/docker")
+  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${nodejsDefaultVersion} ${BASE_DIR}/.ci/docker")
   nodejsDocker.inside('--network=elastic'){
     body()
   }
