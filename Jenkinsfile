@@ -150,7 +150,7 @@ pipeline {
       environment {
         HOME = "${env.WORKSPACE}"
         npm_config_cache = 'npm-cache'
-        TEST_ES_SERVER = 'https://elastic:changeme@localhost:9200'
+        TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
       }
       steps {
         deleteDir()
