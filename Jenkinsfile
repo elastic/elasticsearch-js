@@ -103,20 +103,68 @@ pipeline {
     }
 
     stage('Unit test') {
+      failFast true
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        npm_config_cache = 'npm-cache'
-      }
-      steps {
-        deleteDir()
-        unstash 'source-dependencies'
-        script {
-          docker.image('node:10-alpine').inside(){
-            dir("${BASE_DIR}"){
-              sh 'npm run test:unit'
-              sh 'npm run test:behavior'
-              sh 'npm run test:types'
+      parallel{
+        stage('Node.js v8') {
+          environment {
+            HOME = "${env.WORKSPACE}"
+            npm_config_cache = 'npm-cache'
+          }
+          steps {
+            deleteDir()
+            unstash 'source'
+            script {
+              docker.image('node:8-alpine').inside(){
+                dir("${BASE_DIR}"){
+                  sh 'npm install'
+                  sh 'npm run test:unit'
+                  sh 'npm run test:behavior'
+                  sh 'npm run test:types'
+                }
+              }
+            }
+          }
+        }
+
+        stage('Node.js v10') {
+          environment {
+            HOME = "${env.WORKSPACE}"
+            npm_config_cache = 'npm-cache'
+          }
+          steps {
+            deleteDir()
+            unstash 'source'
+            script {
+              docker.image('node:10-alpine').inside(){
+                dir("${BASE_DIR}"){
+                  sh 'npm install'
+                  sh 'npm run test:unit'
+                  sh 'npm run test:behavior'
+                  sh 'npm run test:types'
+                }
+              }
+            }
+          }
+        }
+
+        stage('Node.js v12') {
+          environment {
+            HOME = "${env.WORKSPACE}"
+            npm_config_cache = 'npm-cache'
+          }
+          steps {
+            deleteDir()
+            unstash 'source'
+            script {
+              docker.image('node:12-alpine').inside(){
+                dir("${BASE_DIR}"){
+                  sh 'npm install'
+                  sh 'npm run test:unit'
+                  sh 'npm run test:behavior'
+                  sh 'npm run test:types'
+                }
+              }
             }
           }
         }
