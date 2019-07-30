@@ -9,7 +9,7 @@ if [ "$1" == "--clean" ]; then
   docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '8.0.0-SNAPSHOT')
 fi
 
-# Create the 'elasticì network if doesn't exist
+# Create the 'elastic' network if doesn't exist
 exec docker network ls | grep elastic > /dev/null || docker network create elastic > /dev/null
 
 if [ "$1" == "--detach" ]; then
