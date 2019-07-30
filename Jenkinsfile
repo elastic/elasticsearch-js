@@ -135,9 +135,8 @@ pipeline {
           sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
         }
         script {
-          docker.image('node:10-alpine').inside('--network=elastic --user=root'){
+          nodejs() {
             dir("${BASE_DIR}"){
-              sh(label: 'Installing git', script: 'apk --no-cache add git')
               sh(label: 'Integration test', script: 'npm run test:integration')
             }
           }
@@ -160,9 +159,8 @@ pipeline {
           sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
         }
         script {
-          docker.image('node:10-alpine').inside('--network=elastic --user=root'){
+          nodejs() {
             dir("${BASE_DIR}"){
-              sh(label: 'Installing git', script: 'apk --no-cache add git')
               sh(label: 'Integration test', script: 'npm run test:integration')
             }
           }
@@ -170,5 +168,12 @@ pipeline {
         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
       }
     }
+  }
+}
+
+def nodejs(Closure body){
+  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=10 ${BASE_DIR}/.ci/PipelineDockerfile")
+  nodejsDocker.inside('--network=elastic'){
+    body()
   }
 }
