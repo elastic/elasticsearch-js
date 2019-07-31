@@ -15,7 +15,7 @@ pipeline {
   environment {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
-    NODE_JS_DEFAULT_VERSION = '10
+    NODE_JS_DEFAULT_VERSION = '10'
   }
 
   options {
