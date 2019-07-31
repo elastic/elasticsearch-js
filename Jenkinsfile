@@ -136,7 +136,7 @@ pipeline {
               }
             }
             sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
+            xunit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/xunit-*.xml")
           }
         }
 
@@ -165,7 +165,7 @@ pipeline {
               }
             }
             sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
+            xunit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/xunit-*.xml")
           }
         }
       }
@@ -203,7 +203,7 @@ def buildUnitTest(args) {
           }
         }
       }
-      junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
+      xunit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/xunit-*.xml")
     }
   }
 }
