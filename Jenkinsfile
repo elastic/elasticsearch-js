@@ -176,61 +176,61 @@ pipeline {
       }
     }
 
-    stage('Integration test') {
-      failFast true
-      options { skipDefaultCheckout() }
-      parallel {
-        stage('OSS') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
-            TEST_ES_SERVER = 'http://elasticsearch:9200'
-          }
-          steps {
-            deleteDir()
-            unstash 'source-dependencies'
-            dir("${BASE_DIR}"){
-              sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
-            }
-            script {
-              nodejs() {
-                dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration')
-                }
-              }
-            }
-            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-          }
-        }
+    // stage('Integration test') {
+    //   failFast true
+    //   options { skipDefaultCheckout() }
+    //   parallel {
+    //     stage('OSS') {
+    //       agent { label 'docker && immutable' }
+    //       options { skipDefaultCheckout() }
+    //       environment {
+    //         HOME = "${env.WORKSPACE}"
+    //         npm_config_cache = 'npm-cache'
+    //         TEST_ES_SERVER = 'http://elasticsearch:9200'
+    //       }
+    //       steps {
+    //         deleteDir()
+    //         unstash 'source-dependencies'
+    //         dir("${BASE_DIR}"){
+    //           sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
+    //         }
+    //         script {
+    //           nodejs() {
+    //             dir("${BASE_DIR}"){
+    //               sh(label: 'Integration test', script: 'npm run test:integration')
+    //             }
+    //           }
+    //         }
+    //         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+    //       }
+    //     }
 
-        stage('xPack') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
-            TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
-          }
-          steps {
-            deleteDir()
-            unstash 'source-dependencies'
-            dir("${BASE_DIR}"){
-              sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
-            }
-            script {
-              nodejs() {
-                dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration')
-                }
-              }
-            }
-            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-          }
-        }
-      }
-    }
+    //     stage('xPack') {
+    //       agent { label 'docker && immutable' }
+    //       options { skipDefaultCheckout() }
+    //       environment {
+    //         HOME = "${env.WORKSPACE}"
+    //         npm_config_cache = 'npm-cache'
+    //         TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
+    //       }
+    //       steps {
+    //         deleteDir()
+    //         unstash 'source-dependencies'
+    //         dir("${BASE_DIR}"){
+    //           sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
+    //         }
+    //         script {
+    //           nodejs() {
+    //             dir("${BASE_DIR}"){
+    //               sh(label: 'Integration test', script: 'npm run test:integration')
+    //             }
+    //           }
+    //         }
+    //         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+    //       }
+    //     }
+    //   }
+    // }
   }
 }
 
