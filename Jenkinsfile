@@ -237,9 +237,10 @@ pipeline {
 def nodejs(Closure body){
   // Sometimes the docker registry fails and has random timeouts
   // this block will retry a doker image 3 times before to fail.
+  def nodejsDocker
   retry(3) {
     sleep randomNumber(min: 5, max: 10)
-    def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
+    nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
   }
   nodejsDocker.inside('--network=elastic'){
     body()
@@ -249,9 +250,10 @@ def nodejs(Closure body){
 // Sometimes the docker registry fails and has random timeouts
 // this function will retry a doker image 3 times before to fail.
 def buildDockerImage(args) {
+  def image
   retry(3) {
     sleep randomNumber(min: 5, max: 10)
-    def image = docker.image(args.image)
+    image = docker.image(args.image)
   }
   return image
 }
