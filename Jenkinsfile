@@ -131,11 +131,12 @@ pipeline {
             script {
               buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
                 dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration')
+                  sh(label: 'Integration test', script: 'npm run test:integration:report')
                 }
               }
             }
             sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
           }
         }
 
@@ -159,11 +160,12 @@ pipeline {
             script {
               buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
                 dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration')
+                  sh(label: 'Integration test', script: 'npm run test:integration:report')
                 }
               }
             }
             sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
           }
         }
       }
@@ -195,12 +197,13 @@ def buildUnitTest(args) {
         buildDockerImage(image: "node:${args.version}-alpine").inside(){
           dir("${BASE_DIR}"){
             sh(label: 'Install dependencies', script: 'npm install')
-            sh(label: 'Run unit test', script: 'npm run test:unit')
-            sh(label: 'Run behavior test', script: 'npm run test:behavior')
+            sh(label: 'Run unit test', script: 'npm run test:unit:report')
+            sh(label: 'Run behavior test', script: 'npm run test:behavior:report')
             sh(label: 'Run types test', script: 'npm run test:types')
           }
         }
       }
+      junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
     }
   }
 }

@@ -18,9 +18,11 @@
   "scripts": {
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
     "test:unit": "tap test/unit/*.test.js -t 300 --no-coverage",
+    "test:unit:report": "tap test/unit/*.test.js -t 300 --no-coverage | tap-junit > junit-unit-report.xml",
     "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
+    "test:behavior:report": "tap test/behavior/*.test.js -t 300 --no-coverage | tap-junit > junit-behavior-report.xml",
     "test:integration": "tap test/integration/index.js -T --no-coverage",
-    "test:integration:report": "npm run test:integration | tap-mocha-reporter xunit > $WORKSPACE/test-report-junit.xml",
+    "test:integration:report": "npm run test:integration | tap-junit > junit-integration-report.xml",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
@@ -59,7 +61,7 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
-    "tap-mocha-reporter": "^4.0.1",
+    "tap-junit": "^3.1.0",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },
