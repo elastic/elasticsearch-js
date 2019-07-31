@@ -16,6 +16,8 @@ pipeline {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
     NODE_JS_DEFAULT_VERSION = '10'
+    HOME = "${env.WORKSPACE}"
+    npm_config_cache = 'npm-cache'
   }
 
   options {
@@ -43,10 +45,6 @@ pipeline {
 
     stage('Install dependencies') {
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        npm_config_cache = 'npm-cache'
-      }
       steps {
         deleteDir()
         unstash 'source'
@@ -65,10 +63,6 @@ pipeline {
 
     stage('License check') {
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        npm_config_cache = 'npm-cache'
-      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
@@ -84,10 +78,6 @@ pipeline {
 
     stage('Linter') {
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        npm_config_cache = 'npm-cache'
-      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
@@ -108,10 +98,6 @@ pipeline {
         stage('Node.js v8') {
           agent { label 'docker && immutable' }
           options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
-          }
           steps {
             deleteDir()
             unstash 'source'
@@ -131,10 +117,6 @@ pipeline {
         stage('Node.js v10') {
           agent { label 'docker && immutable' }
           options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
-          }
           steps {
             deleteDir()
             unstash 'source'
@@ -154,10 +136,6 @@ pipeline {
         stage('Node.js v12') {
           agent { label 'docker && immutable' }
           options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
-          }
           steps {
             deleteDir()
             unstash 'source'
@@ -184,8 +162,6 @@ pipeline {
           agent { label 'docker && immutable' }
           options { skipDefaultCheckout() }
           environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
             TEST_ES_SERVER = 'http://elasticsearch:9200'
           }
           steps {
@@ -212,8 +188,6 @@ pipeline {
           agent { label 'docker && immutable' }
           options { skipDefaultCheckout() }
           environment {
-            HOME = "${env.WORKSPACE}"
-            npm_config_cache = 'npm-cache'
             TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
           }
           steps {
