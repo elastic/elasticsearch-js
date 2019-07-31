@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-def nodejsDefaultVersion = '10'
-
 library identifier: 'apm@current',
 retriever: modernSCM(
   [$class: 'GitSCMSource',
@@ -17,6 +15,7 @@ pipeline {
   environment {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
+    NODE_JS_DEFAULT_VERSION = '10
   }
 
   options {
@@ -52,7 +51,7 @@ pipeline {
         deleteDir()
         unstash 'source'
         script {
-          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
+          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh '''node --version
                     npm --version'''
@@ -74,7 +73,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
+          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run license-checker'
             }
@@ -93,7 +92,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image("node:${nodejsDefaultVersion}-alpine").inside(){
+          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run lint'
             }
@@ -228,7 +227,7 @@ pipeline {
 }
 
 def nodejs(Closure body){
-  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${nodejsDefaultVersion} ${BASE_DIR}/.ci/docker")
+  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
   nodejsDocker.inside('--network=elastic'){
     body()
   }
