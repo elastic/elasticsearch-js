@@ -16,6 +16,7 @@ pipeline {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
     NODE_JS_DEFAULT_VERSION = '10'
+    NODE_JS_VERSIONS = '8,10,12'
     HOME = "${env.WORKSPACE}"
     npm_config_cache = 'npm-cache'
   }
@@ -51,9 +52,9 @@ pipeline {
         script {
           buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
-              sh '''node --version
-                    npm --version'''
-              sh 'npm install'
+              sh(label: 'System info', script: '''node --version
+                    npm --version''')
+              sh(label: 'Install dependencies', script: 'npm install')
             }
           }
         }
@@ -69,7 +70,7 @@ pipeline {
         script {
           buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
-              sh 'npm run license-checker'
+              sh(label: 'Check production dependencies licenses', script: 'npm run license-checker')
             }
           }
         }
@@ -84,7 +85,7 @@ pipeline {
         script {
           buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
-              sh 'npm run lint'
+              sh(label: 'Lint code with standardjs', script: 'npm run lint')
             }
           }
         }
@@ -94,62 +95,14 @@ pipeline {
     stage('Unit test') {
       failFast true
       options { skipDefaultCheckout() }
-      parallel {
-        stage('Node.js v8') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          steps {
-            deleteDir()
-            unstash 'source'
-            script {
-              buildDockerImage(image: 'node:8-alpine').inside(){
-                dir("${BASE_DIR}"){
-                  sh 'npm install'
-                  sh 'npm run test:unit'
-                  sh 'npm run test:behavior'
-                  sh 'npm run test:types'
-                }
-              }
-            }
+      steps {
+        script {
+          def versions = env.NODE_JS_VERSIONS.split(',')
+          def parallelTasks = [:]
+          versions.each{ version ->
+            parallelTasks["Node.js v${version}"] = buildUniTestStage(version: version)
           }
-        }
-
-        stage('Node.js v10') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          steps {
-            deleteDir()
-            unstash 'source'
-            script {
-              buildDockerImage(image: 'node:10-alpine').inside(){
-                dir("${BASE_DIR}"){
-                  sh 'npm install'
-                  sh 'npm run test:unit'
-                  sh 'npm run test:behavior'
-                  sh 'npm run test:types'
-                }
-              }
-            }
-          }
-        }
-
-        stage('Node.js v12') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          steps {
-            deleteDir()
-            unstash 'source'
-            script {
-              buildDockerImage(image: 'node:12-alpine').inside(){
-                dir("${BASE_DIR}"){
-                  sh 'npm install'
-                  sh 'npm run test:unit'
-                  sh 'npm run test:behavior'
-                  sh 'npm run test:types'
-                }
-              }
-            }
-          }
+          parallel(parallelTasks)
         }
       }
     }
@@ -231,4 +184,27 @@ def buildDockerImage(args) {
     }
   }
   return image
+}
+
+def buildUniTestStage(args) {
+  return {
+    stage("Node.js v${args.version}") {
+      agent { label 'docker && immutable' }
+      options { skipDefaultCheckout() }
+      steps {
+        deleteDir()
+        unstash 'source'
+        script {
+          buildDockerImage(image: "node:${args.version}-alpine").inside(){
+            dir("${BASE_DIR}"){
+              sh(label: 'Install dependencies', script: 'npm install')
+              sh(label: 'Run unit test', script: 'npm run test:unit')
+              sh(label: 'Run behavior test', script: 'npm run test:behavior')
+              sh(label: 'Run types test', script: 'npm run test:types')
+            }
+          }
+        }
+      }
+    }
+  }
 }
