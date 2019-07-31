@@ -51,7 +51,7 @@ pipeline {
         deleteDir()
         unstash 'source'
         script {
-          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh '''node --version
                     npm --version'''
@@ -73,7 +73,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run license-checker'
             }
@@ -92,7 +92,7 @@ pipeline {
         deleteDir()
         unstash 'source-dependencies'
         script {
-          docker.image("node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
             dir("${BASE_DIR}"){
               sh 'npm run lint'
             }
@@ -116,7 +116,7 @@ pipeline {
             deleteDir()
             unstash 'source'
             script {
-              docker.image('node:8-alpine').inside(){
+              buildDockerImage(image: 'node:8-alpine').inside(){
                 dir("${BASE_DIR}"){
                   sh 'npm install'
                   sh 'npm run test:unit'
@@ -139,7 +139,7 @@ pipeline {
             deleteDir()
             unstash 'source'
             script {
-              docker.image('node:10-alpine').inside(){
+              buildDockerImage(image: 'node:10-alpine').inside(){
                 dir("${BASE_DIR}"){
                   sh 'npm install'
                   sh 'npm run test:unit'
@@ -162,7 +162,7 @@ pipeline {
             deleteDir()
             unstash 'source'
             script {
-              docker.image('node:12-alpine').inside(){
+              buildDockerImage(image: 'node:12-alpine').inside(){
                 dir("${BASE_DIR}"){
                   sh 'npm install'
                   sh 'npm run test:unit'
@@ -176,67 +176,82 @@ pipeline {
       }
     }
 
-    // stage('Integration test') {
-    //   failFast true
-    //   options { skipDefaultCheckout() }
-    //   parallel {
-    //     stage('OSS') {
-    //       agent { label 'docker && immutable' }
-    //       options { skipDefaultCheckout() }
-    //       environment {
-    //         HOME = "${env.WORKSPACE}"
-    //         npm_config_cache = 'npm-cache'
-    //         TEST_ES_SERVER = 'http://elasticsearch:9200'
-    //       }
-    //       steps {
-    //         deleteDir()
-    //         unstash 'source-dependencies'
-    //         dir("${BASE_DIR}"){
-    //           sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
-    //         }
-    //         script {
-    //           nodejs() {
-    //             dir("${BASE_DIR}"){
-    //               sh(label: 'Integration test', script: 'npm run test:integration')
-    //             }
-    //           }
-    //         }
-    //         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-    //       }
-    //     }
+    stage('Integration test') {
+      failFast true
+      options { skipDefaultCheckout() }
+      parallel {
+        stage('OSS') {
+          agent { label 'docker && immutable' }
+          options { skipDefaultCheckout() }
+          environment {
+            HOME = "${env.WORKSPACE}"
+            npm_config_cache = 'npm-cache'
+            TEST_ES_SERVER = 'http://elasticsearch:9200'
+          }
+          steps {
+            deleteDir()
+            unstash 'source-dependencies'
+            dir("${BASE_DIR}"){
+              sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
+            }
+            script {
+              nodejs() {
+                dir("${BASE_DIR}"){
+                  sh(label: 'Integration test', script: 'npm run test:integration')
+                }
+              }
+            }
+            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+          }
+        }
 
-    //     stage('xPack') {
-    //       agent { label 'docker && immutable' }
-    //       options { skipDefaultCheckout() }
-    //       environment {
-    //         HOME = "${env.WORKSPACE}"
-    //         npm_config_cache = 'npm-cache'
-    //         TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
-    //       }
-    //       steps {
-    //         deleteDir()
-    //         unstash 'source-dependencies'
-    //         dir("${BASE_DIR}"){
-    //           sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
-    //         }
-    //         script {
-    //           nodejs() {
-    //             dir("${BASE_DIR}"){
-    //               sh(label: 'Integration test', script: 'npm run test:integration')
-    //             }
-    //           }
-    //         }
-    //         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-    //       }
-    //     }
-    //   }
-    // }
+        stage('xPack') {
+          agent { label 'docker && immutable' }
+          options { skipDefaultCheckout() }
+          environment {
+            HOME = "${env.WORKSPACE}"
+            npm_config_cache = 'npm-cache'
+            TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
+          }
+          steps {
+            deleteDir()
+            unstash 'source-dependencies'
+            dir("${BASE_DIR}"){
+              sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
+            }
+            script {
+              nodejs() {
+                dir("${BASE_DIR}"){
+                  sh(label: 'Integration test', script: 'npm run test:integration')
+                }
+              }
+            }
+            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+          }
+        }
+      }
+    }
   }
 }
 
 def nodejs(Closure body){
-  def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
+  // Sometimes the docker registry fails and has random timeouts
+  // this block will retry a doker image 3 times before to fail.
+  retry(3) {
+    sleep randomNumber(min: 5, max: 10)
+    def nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
+  }
   nodejsDocker.inside('--network=elastic'){
     body()
   }
+}
+
+// Sometimes the docker registry fails and has random timeouts
+// this function will retry a doker image 3 times before to fail.
+def buildDockerImage(args) {
+  retry(3) {
+    sleep randomNumber(min: 5, max: 10)
+    def image = docker.image(args.image)
+  }
+  return image
 }
