@@ -168,13 +168,15 @@ pipeline {
             deleteDir()
             unstash 'source-dependencies'
             dir("${BASE_DIR}"){
+              // Sometimes the docker registry fails and has random timeouts
+              // this block will retry a doker image 3 times before to fail.
               retry(3) {
                 sleep randomNumber(min: 5, max: 10)
                 sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
               }
             }
             script {
-              nodejs() {
+              buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
                 dir("${BASE_DIR}"){
                   sh(label: 'Integration test', script: 'npm run test:integration')
                 }
@@ -194,13 +196,15 @@ pipeline {
             deleteDir()
             unstash 'source-dependencies'
             dir("${BASE_DIR}"){
+              // Sometimes the docker registry fails and has random timeouts
+              // this block will retry a doker image 3 times before to fail.
               retry(3) {
                 sleep randomNumber(min: 5, max: 10)
                 sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
               }
             }
             script {
-              nodejs() {
+              buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
                 dir("${BASE_DIR}"){
                   sh(label: 'Integration test', script: 'npm run test:integration')
                 }
@@ -214,26 +218,17 @@ pipeline {
   }
 }
 
-def nodejs(Closure body){
-  // Sometimes the docker registry fails and has random timeouts
-  // this block will retry a doker image 3 times before to fail.
-  def nodejsDocker
-  retry(3) {
-    sleep randomNumber(min: 5, max: 10)
-    nodejsDocker = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
-  }
-  nodejsDocker.inside('--network=elastic'){
-    body()
-  }
-}
-
 // Sometimes the docker registry fails and has random timeouts
 // this function will retry a doker image 3 times before to fail.
 def buildDockerImage(args) {
   def image
   retry(3) {
     sleep randomNumber(min: 5, max: 10)
-    image = docker.image(args.image)
+    if (args.fromDockerfile == true) {
+      image = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
+    } else {
+      image = docker.image(args.image)
+    }
   }
   return image
 }
