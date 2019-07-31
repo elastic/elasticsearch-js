@@ -100,7 +100,7 @@ pipeline {
           def versions = env.NODE_JS_VERSIONS.split(',')
           def parallelTasks = [:]
           versions.each{ version ->
-            parallelTasks["Node.js v${version}"] = buildUniTestStage(version: version)
+            parallelTasks["Node.js v${version}"] = buildUnitTest(version: version)
           }
           parallel(parallelTasks)
         }
@@ -186,22 +186,18 @@ def buildDockerImage(args) {
   return image
 }
 
-def buildUniTestStage(args) {
+def buildUnitTest(args) {
   return {
-    stage("Node.js v${args.version}") {
-      agent { label 'docker && immutable' }
-      options { skipDefaultCheckout() }
-      steps {
-        deleteDir()
-        unstash 'source'
-        script {
-          buildDockerImage(image: "node:${args.version}-alpine").inside(){
-            dir("${BASE_DIR}"){
-              sh(label: 'Install dependencies', script: 'npm install')
-              sh(label: 'Run unit test', script: 'npm run test:unit')
-              sh(label: 'Run behavior test', script: 'npm run test:behavior')
-              sh(label: 'Run types test', script: 'npm run test:types')
-            }
+    node('docker && immutable') {
+      deleteDir()
+      unstash 'source'
+      script {
+        buildDockerImage(image: "node:${args.version}-alpine").inside(){
+          dir("${BASE_DIR}"){
+            sh(label: 'Install dependencies', script: 'npm install')
+            sh(label: 'Run unit test', script: 'npm run test:unit')
+            sh(label: 'Run behavior test', script: 'npm run test:behavior')
+            sh(label: 'Run types test', script: 'npm run test:types')
           }
         }
       }
