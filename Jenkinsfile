@@ -192,7 +192,10 @@ pipeline {
             deleteDir()
             unstash 'source-dependencies'
             dir("${BASE_DIR}"){
-              sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
+              retry(3) {
+                sleep randomNumber(min: 5, max: 10)
+                sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
+              }
             }
             script {
               nodejs() {
@@ -217,7 +220,10 @@ pipeline {
             deleteDir()
             unstash 'source-dependencies'
             dir("${BASE_DIR}"){
-              sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
+              retry(3) {
+                sleep randomNumber(min: 5, max: 10)
+                sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
+              }
             }
             script {
               nodejs() {
