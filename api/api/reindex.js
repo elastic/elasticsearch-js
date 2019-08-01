@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
@@ -35,6 +20,7 @@ function buildReindex (opts) {
    * @param {number} requests_per_second - The throttle to set on this request in sub-requests per second. -1 means no throttle.
    * @param {time} scroll - Control how long to keep the search context alive
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+   * @param {number} max_docs - Maximum number of documents to process (default: all documents)
    * @param {object} body - The search definition using the Query DSL and the prototype for the index request.
    */
 
@@ -46,6 +32,7 @@ function buildReindex (opts) {
     'requests_per_second',
     'scroll',
     'slices',
+    'max_docs',
     'pretty',
     'human',
     'error_trace',
@@ -57,6 +44,7 @@ function buildReindex (opts) {
     waitForActiveShards: 'wait_for_active_shards',
     waitForCompletion: 'wait_for_completion',
     requestsPerSecond: 'requests_per_second',
+    maxDocs: 'max_docs',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

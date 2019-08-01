@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
@@ -29,6 +14,7 @@ function buildMlFindFileStructure (opts) {
    * Perform a [ml.find_file_structure](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html) request
    *
    * @param {int} lines_to_sample - How many lines of the file should be included in the analysis
+   * @param {int} line_merge_size_limit - Maximum number of characters permitted in a single message when lines are merged to create messages.
    * @param {time} timeout - Timeout after which the analysis will be aborted
    * @param {string} charset - Optional parameter to specify the character set of the file
    * @param {enum} format - Optional parameter to specify the high level file format
@@ -46,6 +32,7 @@ function buildMlFindFileStructure (opts) {
 
   const acceptedQuerystring = [
     'lines_to_sample',
+    'line_merge_size_limit',
     'timeout',
     'charset',
     'format',
@@ -62,6 +49,7 @@ function buildMlFindFileStructure (opts) {
 
   const snakeCase = {
     linesToSample: 'lines_to_sample',
+    lineMergeSizeLimit: 'line_merge_size_limit',
     hasHeaderRow: 'has_header_row',
     columnNames: 'column_names',
     shouldTrimFields: 'should_trim_fields',

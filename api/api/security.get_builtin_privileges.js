@@ -1,51 +1,29 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildScriptsPainlessContext (opts) {
+function buildSecurityGetBuiltinPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [scripts_painless_context](undefined) request
+   * Perform a [security.get_builtin_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html) request
    *
-   * @param {string} context - Select a specific context to retrieve API information about
    */
 
   const acceptedQuerystring = [
-    'context',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
-  return function scriptsPainlessContext (params, options, callback) {
+  return function securityGetBuiltinPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,6 +33,12 @@ function buildScriptsPainlessContext (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // check required parameters
+    if (params.body != null) {
+      const err = new ConfigurationError('This API does not require a body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -78,7 +62,7 @@ function buildScriptsPainlessContext (opts) {
 
     var path = ''
 
-    path = '/' + '_scripts' + '/' + 'painless' + '/' + '_context'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
 
     // build request object
     const request = {
@@ -93,4 +77,4 @@ function buildScriptsPainlessContext (opts) {
   }
 }
 
-module.exports = buildScriptsPainlessContext
+module.exports = buildSecurityGetBuiltinPrivileges

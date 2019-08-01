@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Images are cached locally, it may be needed
+# to delete an old image and download again
+# the latest snapshot.
+
 repo=$(pwd)
 testnodecrt="/.ci/certs/testnode.crt"
 testnodekey="/.ci/certs/testnode.key"

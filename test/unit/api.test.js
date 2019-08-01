@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
@@ -38,7 +23,6 @@ test('Basic (callback)', t => {
 
     client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
@@ -64,7 +48,6 @@ test('Basic (promises)', t => {
     client
       .search({
         index: 'test',
-        type: 'doc',
         q: 'foo:bar'
       })
       .then(({ body }) => {
@@ -91,7 +74,6 @@ test('Error (callback)', t => {
 
     client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar'
     }, (err, { body }) => {
       t.ok(err)
@@ -117,7 +99,6 @@ test('Error (promises)', t => {
     client
       .search({
         index: 'test',
-        type: 'doc',
         q: 'foo:bar'
       })
       .then(t.fail)
@@ -143,7 +124,6 @@ test('Abort method (callback)', t => {
 
     const request = client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
@@ -170,7 +150,6 @@ test('Abort is not supported in promises', t => {
 
     const request = client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar'
     })
 
@@ -200,7 +179,6 @@ test('Basic (options and callback)', t => {
 
     client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar'
     }, {
       requestTimeout: 10000
@@ -228,7 +206,6 @@ test('Basic (options and promises)', t => {
     client
       .search({
         index: 'test',
-        type: 'doc',
         q: 'foo:bar'
       }, {
         requestTimeout: 10000
@@ -245,7 +222,7 @@ test('Pass unknown parameters as query parameters (and get a warning)', t => {
   t.plan(4)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/test/doc/_search?q=foo%3Abar&winter=is%20coming')
+    t.strictEqual(req.url, '/test/_search?q=foo%3Abar&winter=is%20coming')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -257,7 +234,6 @@ test('Pass unknown parameters as query parameters (and get a warning)', t => {
 
     client.search({
       index: 'test',
-      type: 'doc',
       q: 'foo:bar',
       winter: 'is coming'
     }, (err, { body, warnings }) => {
@@ -273,7 +249,7 @@ test('If the API uses the same key for both url and query parameter, the url sho
   t.plan(2)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/index/type/_bulk')
+    t.strictEqual(req.url, '/index/_bulk')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -286,7 +262,6 @@ test('If the API uses the same key for both url and query parameter, the url sho
     // bulk has two `type` parameters
     client.bulk({
       index: 'index',
-      type: 'type',
       body: []
     }, (err, { body, warnings }) => {
       t.error(err)

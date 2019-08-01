@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
@@ -748,7 +733,7 @@ test('Util.inspect Connection class should hide agent, ssl and auth', t => {
   resurrectTimeout: 0,
   _openRequests: 0,
   status: 'alive',
-  roles: { master: true, data: true, ingest: true, ml: false } }`)
+  roles: { master: true, data: true, ingest: true, ml: false }}`)
   )
 })
 
@@ -811,6 +796,53 @@ test('Port handling', t => {
   t.end()
 })
 
+test('Authorization header', t => {
+  t.test('None', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200')
+    })
+
+    t.deepEqual(connection.headers, {})
+
+    t.end()
+  })
+
+  t.test('Basic', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { username: 'foo', password: 'bar' }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'Basic Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.test('ApiKey (string)', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { apiKey: 'Zm9vOmJhcg==' }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.test('ApiKey (object)', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { apiKey: { id: 'foo', api_key: 'bar' } }
+    })
+
+    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+
+    t.end()
+  })
+
+  t.end()
+})
+
 test('Should not add agent and ssl to the serialized connection', t => {
   const connection = new Connection({
     url: new URL('http://localhost:9200')
@@ -818,7 +850,7 @@ test('Should not add agent and ssl to the serialized connection', t => {
 
   t.strictEqual(
     JSON.stringify(connection),
-    '{"url":"http://localhost:9200/","id":"http://localhost:9200/","headers":null,"deadCount":0,"resurrectTimeout":0,"_openRequests":0,"status":"alive","roles":{"master":true,"data":true,"ingest":true,"ml":false}}'
+    '{"url":"http://localhost:9200/","id":"http://localhost:9200/","headers":{},"deadCount":0,"resurrectTimeout":0,"_openRequests":0,"status":"alive","roles":{"master":true,"data":true,"ingest":true,"ml":false}}'
   )
 
   t.end()

@@ -1,29 +1,15 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 'use strict'
 
 const { EventEmitter } = require('events')
+const { URL } = require('url')
 const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
-const ConnectionPool = require('./lib/ConnectionPool')
+const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
@@ -43,7 +29,12 @@ class Client extends EventEmitter {
       // the url is a string divided by two '$', the first is the cloud url
       // the second the elasticsearch instance, the third the kibana instance
       const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
-      opts.node = `https://${username}:${password}@${cloudUrls[1]}.${cloudUrls[0]}`
+
+      // TODO: remove username and password here in 8
+      if (username && password) {
+        opts.auth = Object.assign({}, opts.auth, { username, password })
+      }
+      opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
 
       // Cloud has better performances with compression enabled
       // see https://github.com/elastic/elasticsearch-py/pull/704.
@@ -61,11 +52,16 @@ class Client extends EventEmitter {
       throw new ConfigurationError('Missing node(s) option')
     }
 
+    const checkAuth = getAuth(opts.node || opts.nodes)
+    if (checkAuth && checkAuth.username && checkAuth.password) {
+      opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
+    }
+
     const options = Object.assign({}, {
       Connection,
-      ConnectionPool,
       Transport,
       Serializer,
+      ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
       maxRetries: 3,
       requestTimeout: 30000,
       pingTimeout: 3000,
@@ -82,7 +78,8 @@ class Client extends EventEmitter {
       nodeFilter: null,
       nodeSelector: 'round-robin',
       generateRequestId: null,
-      name: 'elasticsearch-js'
+      name: 'elasticsearch-js',
+      auth: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -96,6 +93,7 @@ class Client extends EventEmitter {
       ssl: options.ssl,
       agent: options.agent,
       Connection: options.Connection,
+      auth: options.auth,
       emit: this.emit.bind(this),
       sniffEnabled: options.sniffInterval !== false ||
                     options.sniffOnStart !== false ||
@@ -206,6 +204,41 @@ class Client extends EventEmitter {
     }
     debug('Closing the client')
     this.connectionPool.empty(callback)
+  }
+}
+
+function getAuth (node) {
+  if (Array.isArray(node)) {
+    for (const url of node) {
+      const auth = getUsernameAndPassword(url)
+      if (auth.username !== '' && auth.password !== '') {
+        return auth
+      }
+    }
+
+    return null
+  }
+
+  const auth = getUsernameAndPassword(node)
+  if (auth.username !== '' && auth.password !== '') {
+    return auth
+  }
+
+  return null
+
+  function getUsernameAndPassword (node) {
+    if (typeof node === 'string') {
+      const { username, password } = new URL(node)
+      return {
+        username: decodeURIComponent(username),
+        password: decodeURIComponent(password)
+      }
+    } else if (node.url instanceof URL) {
+      return {
+        username: decodeURIComponent(node.url.username),
+        password: decodeURIComponent(node.url.password)
+      }
+    }
   }
 }
 

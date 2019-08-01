@@ -9,6 +9,7 @@ exemptLabels:
   - "discussion"
   - "feature request"
   - "bug"
+  - "todo"
 
 # Label to use when marking an issue as stale
 staleLabel: stale

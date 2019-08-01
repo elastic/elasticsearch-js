@@ -1,21 +1,6 @@
-/*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
 
 export interface Generic {
   method?: string;
@@ -407,6 +392,7 @@ export interface DeleteByQuery<T = any> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
   size?: number;
+  max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -1065,6 +1051,7 @@ export interface Reindex<T = any> extends Generic {
   requests_per_second?: number;
   scroll?: string;
   slices?: number;
+  max_docs?: number;
   body: T;
 }
 
@@ -1076,10 +1063,6 @@ export interface ReindexRethrottle extends Generic {
 export interface RenderSearchTemplate<T = any> extends Generic {
   id?: string;
   body?: T;
-}
-
-export interface ScriptsPainlessContext extends Generic {
-  context?: string;
 }
 
 export interface ScriptsPainlessExecute<T = any> extends Generic {
@@ -1319,6 +1302,7 @@ export interface UpdateByQuery<T = any> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   search_timeout?: string;
   size?: number;
+  max_docs?: number;
   sort?: string | string[];
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -1399,12 +1383,14 @@ export interface DataFrameGetDataFrameTransform extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
+  allow_no_match?: boolean;
 }
 
 export interface DataFrameGetDataFrameTransformStats extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
+  allow_no_match?: boolean;
 }
 
 export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
@@ -1425,6 +1411,7 @@ export interface DataFrameStopDataFrameTransform extends Generic {
   transform_id: string;
   wait_for_completion?: boolean;
   timeout?: string;
+  allow_no_match?: boolean;
 }
 
 export interface GraphExplore<T = any> extends Generic {
@@ -1482,6 +1469,13 @@ export interface IndicesFreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface IndicesReloadSearchAnalyzers extends Generic {
+  index?: string | string[];
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
 }
 
 export interface IndicesUnfreeze extends Generic {
@@ -1547,6 +1541,10 @@ export interface MlDeleteCalendarJob extends Generic {
   job_id: string;
 }
 
+export interface MlDeleteDataFrameAnalytics extends Generic {
+  id: string;
+}
+
 export interface MlDeleteDatafeed extends Generic {
   datafeed_id: string;
   force?: boolean;
@@ -1577,8 +1575,13 @@ export interface MlDeleteModelSnapshot extends Generic {
   snapshot_id: string;
 }
 
+export interface MlEvaluateDataFrame<T = any> extends Generic {
+  body: T;
+}
+
 export interface MlFindFileStructure<T = any> extends Generic {
   lines_to_sample?: number;
+  line_merge_size_limit?: number;
   timeout?: string;
   charset?: string;
   format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
@@ -1647,6 +1650,20 @@ export interface MlGetCategories<T = any> extends Generic {
   from?: number;
   size?: number;
   body?: T;
+}
+
+export interface MlGetDataFrameAnalytics extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
+}
+
+export interface MlGetDataFrameAnalyticsStats extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
 }
 
 export interface MlGetDatafeedStats extends Generic {
@@ -1760,6 +1777,11 @@ export interface MlPutCalendarJob extends Generic {
   job_id: string;
 }
 
+export interface MlPutDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  body: T;
+}
+
 export interface MlPutDatafeed<T = any> extends Generic {
   datafeed_id: string;
   body: T;
@@ -1787,10 +1809,24 @@ export interface MlSetUpgradeMode extends Generic {
   timeout?: string;
 }
 
+export interface MlStartDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  timeout?: string;
+  body?: T;
+}
+
 export interface MlStartDatafeed<T = any> extends Generic {
   datafeed_id: string;
   start?: string;
   end?: string;
+  timeout?: string;
+  body?: T;
+}
+
+export interface MlStopDataFrameAnalytics<T = any> extends Generic {
+  id: string;
+  allow_no_match?: boolean;
+  force?: boolean;
   timeout?: string;
   body?: T;
 }
@@ -1937,6 +1973,9 @@ export interface SecurityGetApiKey extends Generic {
   name?: string;
   username?: string;
   realm_name?: string;
+}
+
+export interface SecurityGetBuiltinPrivileges extends Generic {
 }
 
 export interface SecurityGetPrivileges extends Generic {
