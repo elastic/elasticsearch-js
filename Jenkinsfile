@@ -185,6 +185,8 @@ def buildDockerImage(args) {
       image = docker.build('nodejs-image', "--build-arg NODE_JS_VERSION=${env.NODE_JS_DEFAULT_VERSION} ${BASE_DIR}/.ci/docker")
     } else {
       image = docker.image(args.image)
+      // make sure we have the latest available from Docker Hub
+      image.pull()
     }
   }
   return image
