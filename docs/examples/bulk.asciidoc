@@ -51,7 +51,7 @@ async function run () {
     date: new Date()
   }, {
     id: 5, // change this value to a string to see the bulk response with errors
-    text: 'A girl is Arya Stark of #Winterfell. And I\'m going home.',
+    text: 'A girl is Arya Stark of Winterfell. And I\'m going home.',
     user: 'arya',
     date: new Date()
   }]
