@@ -38,39 +38,45 @@ pipeline {
     stage('Checkout') {
       options { skipDefaultCheckout() }
       steps {
-        deleteDir()
-        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
-        stash allowEmpty: true, name: 'source', useDefaultExcludes: false
+        withGithubNotify(context: 'Checkout') {
+          deleteDir()
+          gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
+          stash allowEmpty: true, name: 'source', useDefaultExcludes: false
+        }
       }
     }
 
     stage('Install dependencies') {
       options { skipDefaultCheckout() }
       steps {
-        deleteDir()
-        unstash 'source'
-        script {
-          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
-            dir("${BASE_DIR}"){
-              sh(label: 'System info', script: '''node --version
-                    npm --version''')
-              sh(label: 'Install dependencies', script: 'npm install')
+        withGithubNotify(context: 'Install dependencies') {
+          deleteDir()
+          unstash 'source'
+          script {
+            buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+              dir("${BASE_DIR}"){
+                sh(label: 'System info', script: '''node --version
+                      npm --version''')
+                sh(label: 'Install dependencies', script: 'npm install')
+              }
             }
           }
+          stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
         }
-        stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
       }
     }
 
     stage('License check') {
       options { skipDefaultCheckout() }
       steps {
-        deleteDir()
-        unstash 'source-dependencies'
-        script {
-          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
-            dir("${BASE_DIR}"){
-              sh(label: 'Check production dependencies licenses', script: 'npm run license-checker')
+        withGithubNotify(context: 'License check') {
+          deleteDir()
+          unstash 'source-dependencies'
+          script {
+            buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+              dir("${BASE_DIR}"){
+                sh(label: 'Check production dependencies licenses', script: 'npm run license-checker')
+              }
             }
           }
         }
@@ -80,12 +86,14 @@ pipeline {
     stage('Linter') {
       options { skipDefaultCheckout() }
       steps {
-        deleteDir()
-        unstash 'source-dependencies'
-        script {
-          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
-            dir("${BASE_DIR}"){
-              sh(label: 'Lint code with standardjs', script: 'npm run lint')
+        withGithubNotify(context: 'Linter') {
+          deleteDir()
+          unstash 'source-dependencies'
+          script {
+            buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+              dir("${BASE_DIR}"){
+                sh(label: 'Lint code with standardjs', script: 'npm run lint')
+              }
             }
           }
         }
@@ -96,13 +104,15 @@ pipeline {
       failFast true
       options { skipDefaultCheckout() }
       steps {
-        script {
-          def versions = env.NODE_JS_VERSIONS.split(',')
-          def parallelTasks = [:]
-          versions.each{ version ->
-            parallelTasks["Node.js v${version}"] = buildUnitTest(version: version)
+        withGithubNotify(context: 'Unit test') {
+          script {
+            def versions = env.NODE_JS_VERSIONS.split(',')
+            def parallelTasks = [:]
+            versions.each{ version ->
+              parallelTasks["Node.js v${version}"] = buildUnitTest(version: version)
+            }
+            parallel(parallelTasks)
           }
-          parallel(parallelTasks)
         }
       }
     }
@@ -118,26 +128,28 @@ pipeline {
             TEST_ES_SERVER = 'http://elasticsearch:9200'
           }
           steps {
-            deleteDir()
-            unstash 'source-dependencies'
-            dir("${BASE_DIR}"){
-              // Sometimes the docker registry fails and has random timeouts
-              // this block will retry a doker image 3 times before to fail.
-              retry(3) {
-                sleep randomNumber(min: 5, max: 10)
-                sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
-              }
-            }
-            script {
-              buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
-                dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
-                  sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
+            withGithubNotify(context: 'Integration test') {
+              deleteDir()
+              unstash 'source-dependencies'
+              dir("${BASE_DIR}"){
+                // Sometimes the docker registry fails and has random timeouts
+                // this block will retry a doker image 3 times before to fail.
+                retry(3) {
+                  sleep randomNumber(min: 5, max: 10)
+                  sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
                 }
               }
+              script {
+                buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
+                  dir("${BASE_DIR}"){
+                    sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
+                    sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
+                  }
+                }
+              }
+              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
             }
-            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
           }
         }
 
@@ -148,26 +160,28 @@ pipeline {
             TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
           }
           steps {
-            deleteDir()
-            unstash 'source-dependencies'
-            dir("${BASE_DIR}"){
-              // Sometimes the docker registry fails and has random timeouts
-              // this block will retry a doker image 3 times before to fail.
-              retry(3) {
-                sleep randomNumber(min: 5, max: 10)
-                sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
-              }
-            }
-            script {
-              buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
-                dir("${BASE_DIR}"){
-                  sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
-                  sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
+            withGithubNotify(context: 'Integration test') {
+              deleteDir()
+              unstash 'source-dependencies'
+              dir("${BASE_DIR}"){
+                // Sometimes the docker registry fails and has random timeouts
+                // this block will retry a doker image 3 times before to fail.
+                retry(3) {
+                  sleep randomNumber(min: 5, max: 10)
+                  sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
                 }
               }
+              script {
+                buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
+                  dir("${BASE_DIR}"){
+                    sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
+                    sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
+                  }
+                }
+              }
+              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
             }
-            sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-            junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
           }
         }
       }
