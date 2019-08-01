@@ -4142,20 +4142,6 @@ link:{ref}/search-template.html[Reference]
 
 |===
 
-=== scriptsPainlessContext
-[source,ts]
-----
-client.scriptsPainlessContext({
-  context: string
-})
-----
-[cols=2*]
-|===
-|`context`
-|`string` - Select a specific context to retrieve API information about
-
-|===
-
 === scriptsPainlessExecute
 [source,ts]
 ----
@@ -5387,7 +5373,6 @@ client.dataFrame.getDataFrameTransform({
   from: number,
   size: number,
   allow_no_match: boolean
-  size: number
 })
 ----
 link:{ref}/get-data-frame-transform.html[Reference]
@@ -5415,7 +5400,6 @@ client.dataFrame.getDataFrameTransformStats({
   from: number,
   size: number,
   allow_no_match: boolean
-  size: number
 })
 ----
 link:{ref}/get-data-frame-transform-stats.html[Reference]
@@ -5496,7 +5480,6 @@ client.dataFrame.stopDataFrameTransform({
   wait_for_completion: boolean,
   timeout: string,
   allow_no_match: boolean
-  timeout: string
 })
 ----
 link:{ref}/stop-data-frame-transform.html[Reference]
