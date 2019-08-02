@@ -4161,7 +4161,6 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 [source,ts]
 ----
 client.scroll({
-  scroll_id: string,
   scroll: string,
   scroll_id: string,
   rest_total_hits_as_int: boolean,
