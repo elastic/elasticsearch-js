@@ -629,6 +629,7 @@ declare class Client extends EventEmitter {
 
 declare const events: {
   RESPONSE: string;
+  PREPARE_REQUEST: string;
   REQUEST: string;
   SNIFF: string;
   RESURRECT: string;

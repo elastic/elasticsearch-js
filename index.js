@@ -244,6 +244,7 @@ function getAuth (node) {
 
 const events = {
   RESPONSE: 'response',
+  PREPARE_REQUEST: 'prepare-request',
   REQUEST: 'request',
   SNIFF: 'sniff',
   RESURRECT: 'resurrect'
