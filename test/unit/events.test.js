@@ -9,6 +9,49 @@ const { Client, events } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
 const { connection: { MockConnection, MockConnectionTimeout } } = require('../utils')
 
+test('Should emit a prepare-request event when starting a request', t => {
+  t.plan(3)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on(events.PREPARE_REQUEST, (err, request) => {
+    t.error(err)
+    t.match(request, {
+      meta: {
+        context: null,
+        name: 'elasticsearch-js',
+        request: {
+          params: null,
+          options: null,
+          id: 1
+        },
+        connection: null,
+        attempts: 0,
+        aborted: false
+      },
+      params: {
+        path: '/test/_search',
+        querystring: {
+          q: 'foo:bar'
+        },
+        method: 'GET',
+        body: ''
+      },
+      options: {}
+    })
+  })
+
+  client.search({
+    index: 'test',
+    q: 'foo:bar'
+  }, (err, result) => {
+    t.error(err)
+  })
+})
+
 test('Should emit a request event when a request is performed', t => {
   t.plan(3)
 
