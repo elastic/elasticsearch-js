@@ -7,6 +7,9 @@ retriever: modernSCM(
   id: '37cf2c00-2cc7-482e-8c62-7bbffef475e2',
   remote: 'git@github.com:elastic/apm-pipeline-library.git'])
 
+def NODE_JS_VERSIONS = [8,10,12]
+def nodeJsVersion = NODE_JS_VERSIONS[randomNumber(min: 0, max:2)]
+
 pipeline {
   agent {
     label 'docker && immutable'
@@ -15,8 +18,8 @@ pipeline {
   environment {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
-    NODE_JS_DEFAULT_VERSION = '10'
-    NODE_JS_VERSIONS = '8,10,12'
+    NODE_JS_DEFAULT_VERSION = nodeJsVersion
+    NODE_JS_VERSIONS = NODE_JS_VERSIONS.join(',')
     HOME = "${env.WORKSPACE}"
     npm_config_cache = 'npm-cache'
   }
