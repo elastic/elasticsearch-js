@@ -24,7 +24,7 @@ test('Request id', t => {
   })
 
   t.test('Custom generateRequestId', t => {
-    t.plan(7)
+    t.plan(9)
 
     const options = { context: { winter: 'is coming' } }
 
@@ -36,6 +36,11 @@ test('Request id', t => {
         t.match(requestOptions, options)
         return 'custom-id'
       }
+    })
+
+    client.on('prepare-request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.request.id, 'custom-id')
     })
 
     client.on('request', (err, { meta }) => {
@@ -52,11 +57,16 @@ test('Request id', t => {
   })
 
   t.test('Custom request id in method options', t => {
-    t.plan(5)
+    t.plan(7)
 
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection
+    })
+
+    client.on('prepare-request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.request.id, 'custom-id')
     })
 
     client.on('request', (err, { meta }) => {
@@ -89,13 +99,17 @@ test('Request id', t => {
     })
 
     t.test('sniffOnConnectionFault - should use the request id', t => {
-      t.plan(5)
+      t.plan(7)
 
       const client = new Client({
         nodes: ['http://localhost:9200', 'http://localhost:9201'],
         Connection: MockConnectionSniff,
         sniffOnConnectionFault: true,
         maxRetries: 0
+      })
+
+      client.on('prepare-request', (e, { meta }) => {
+        t.strictEqual(meta.request.id, 'custom')
       })
 
       client.on('request', (e, { meta }) => {
@@ -151,11 +165,16 @@ test('Request id', t => {
 
 test('Request context', t => {
   t.test('no value', t => {
-    t.plan(5)
+    t.plan(7)
 
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection
+    })
+
+    client.on('prepare-request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.context, null)
     })
 
     client.on('request', (err, { meta }) => {
@@ -172,11 +191,16 @@ test('Request context', t => {
   })
 
   t.test('custom value', t => {
-    t.plan(5)
+    t.plan(7)
 
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection
+    })
+
+    client.on('prepare-request', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'is coming' })
     })
 
     client.on('request', (err, { meta }) => {
@@ -206,11 +230,16 @@ test('Client name', t => {
   })
 
   t.test('Is present in the event metadata', t => {
-    t.plan(6)
+    t.plan(8)
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection,
       name: 'cluster'
+    })
+
+    client.on('prepare-request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.name, 'cluster')
     })
 
     client.on('request', (err, { meta }) => {
@@ -246,13 +275,17 @@ test('Client name', t => {
     })
 
     t.test('sniffOnConnectionFault', t => {
-      t.plan(5)
+      t.plan(7)
 
       const client = new Client({
         nodes: ['http://localhost:9200', 'http://localhost:9201'],
         Connection: MockConnectionSniff,
         sniffOnConnectionFault: true,
         maxRetries: 0
+      })
+
+      client.on('prepare-request', (e, { meta }) => {
+        t.strictEqual(meta.name, 'elasticsearch-js')
       })
 
       client.on('request', (e, { meta }) => {
