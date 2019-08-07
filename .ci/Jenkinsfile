@@ -35,6 +35,7 @@ pipeline {
 
   triggers {
     issueCommentTrigger('(?i).*(?:jenkins\\W+)?run\\W+(?:the\\W+)?tests(?:\\W+please)?.*')
+    cron(changeRequest() ? '' : '@daily')
   }
 
   stages {
