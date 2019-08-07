@@ -37,6 +37,15 @@ client.on('response', (err, result) => {
 The client emits the following events:
 [cols=2*]
 |===
+|`prepare-request`
+a|Emitted once the user invokes any API.
+[source,js]
+----
+client.on('prepare-request', (err, result) => {
+  console.log(err, result)
+})
+----
+
 |`request`
 a|Emitted before sending the actual request to Elasticsearch _(emitted multiple times in case of retries)_.
 [source,js]
@@ -86,11 +95,34 @@ meta: {
   context: any;
   name: string;
   request: {
-    params: TransportRequestParams;
-    options: TransportRequestOptions;
+    params: TransportRequestParams; // serialized by the client
+    options: TransportRequestOptions; // serialized by the client
     id: any;
   };
   connection: Connection;
+  attempts: number;
+  aborted: boolean;
+  sniff?: {
+    hosts: any[];
+    reason: string;
+  };
+};
+----
+
+`result` value in `prepare-request` will be:
+[source,ts]
+----
+params: TransportRequestParams; // as provided by the user
+options: TransportRequestOptions; // as provided by the user
+meta: {
+  context: any;
+  name: string;
+  request: {
+    params: null;
+    options: null;
+    id: any;
+  };
+  connection: null;
   attempts: number;
   aborted: boolean;
   sniff?: {
