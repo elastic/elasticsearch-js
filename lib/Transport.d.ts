@@ -63,6 +63,27 @@ export interface RequestEvent<T = any, C = any> {
   };
 }
 
+export interface PrepareRequestEvent<C = any> {
+  params: TransportRequestParams;
+  options: TransportRequestOptions;
+  meta: {
+    context: C;
+    name: string;
+    request: {
+      params: null;
+      options: null;
+      id: any;
+    };
+    connection: null;
+    attempts: number;
+    aborted: boolean;
+    sniff?: {
+      hosts: any[];
+      reason: string;
+    };
+  };
+}
+
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
 export interface ApiResponse<T = any, C = any> extends RequestEvent<T, C> {}

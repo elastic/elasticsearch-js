@@ -9,6 +9,7 @@ import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 import Transport, {
   ApiResponse,
   RequestEvent,
+  PrepareRequestEvent,
   TransportRequestParams,
   TransportRequestOptions,
   nodeFilterFn,
@@ -645,6 +646,7 @@ export {
   errors,
   ApiResponse,
   RequestEvent,
+  PrepareRequestEvent,
   ResurrectEvent,
   RequestParams,
   ClientOptions,
