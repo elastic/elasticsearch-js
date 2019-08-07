@@ -18,8 +18,8 @@ pipeline {
   environment {
     REPO = 'elasticsearch-js'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
-    NODE_JS_DEFAULT_VERSION = nodeJsVersion
-    NODE_JS_VERSIONS = NODE_JS_VERSIONS.join(',')
+    NODE_JS_DEFAULT_VERSION = "${nodeJsVersion}"
+    NODE_JS_VERSIONS = "${NODE_JS_VERSIONS.join(',')}"
     HOME = "${env.WORKSPACE}"
     npm_config_cache = 'npm-cache'
   }
