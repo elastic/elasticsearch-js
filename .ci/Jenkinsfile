@@ -1,11 +1,6 @@
 #!/usr/bin/env groovy
 
-library identifier: 'apm@current',
-retriever: modernSCM(
-  [$class: 'GitSCMSource',
-  credentialsId: 'f94e9298-83ae-417e-ba91-85c279771570',
-  id: '37cf2c00-2cc7-482e-8c62-7bbffef475e2',
-  remote: 'git@github.com:elastic/apm-pipeline-library.git'])
+@Library('apm@current') _
 
 def NODE_JS_VERSIONS = [8,10,12]
 def nodeJsVersion = NODE_JS_VERSIONS[randomNumber(min: 0, max:2)]
