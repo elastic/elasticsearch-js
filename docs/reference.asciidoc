@@ -2106,7 +2106,6 @@ client.indices.clearCache({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  index: string | string[],
   request: boolean
 })
 ----
@@ -2134,9 +2133,6 @@ link:{ref}/indices-clearcache.html[Reference]
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
-
-|`index`
-|`string \| string[]` - A comma-separated list of index name to limit the operation
 
 |`request`
 |`boolean` - Clear request cache
