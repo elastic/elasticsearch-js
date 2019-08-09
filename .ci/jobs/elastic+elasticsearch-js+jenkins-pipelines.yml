@@ -1,26 +1,25 @@
 ---
 - job:
-    name: elastic+elasticsearch-js+jenkins-pipelines
-    display-name: 'elastic / elasticsearch-js # jenkins-pipelines'
-    description: Testing the elasticsearch-js jenkins-pipelines branch.
+    name: elastic+elasticsearch-js+mbp
+    display-name: 'elastic / elasticsearch-js'
+    description: Testing elasticsearch-js.
     project-type: multibranch
     properties: []
     triggers: []
     logrotate:
       daysToKeep: 30
-      numToKeep: 100
     number-to-keep: '5'
     days-to-keep: '1'
     concurrent: true
     node: linux
-    script-path: Jenkinsfile
+    script-path: .ci/Jenkinsfile
     scm:
     - github:
-        branch-discovery: all
+        branch-discovery: no-pr
         discover-pr-forks-strategy: merge-current
         discover-pr-forks-trust: permission
         discover-pr-origin: merge-current
-        discover-tags: true
+        discover-tags: false
         repo: elasticsearch-js
         repo-owner: elastic
         credentials-id: 2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken
