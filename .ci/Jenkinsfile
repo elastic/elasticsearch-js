@@ -114,71 +114,32 @@ pipeline {
     }
 
     stage('Integration test') {
-      failFast true
       options { skipDefaultCheckout() }
-      parallel {
-        stage('OSS') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          environment {
-            TEST_ES_SERVER = 'http://elasticsearch:9200'
-          }
-          steps {
-            withGithubNotify(context: 'Integration test OSS') {
-              deleteDir()
-              unstash 'source-dependencies'
-              dir("${BASE_DIR}"){
-                // Sometimes the docker registry fails and has random timeouts
-                // this block will retry a doker image 3 times before to fail.
-                retry(3) {
-                  sleep randomNumber(min: 5, max: 10)
-                  sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
-                }
-              }
-              script {
-                buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
-                  dir("${BASE_DIR}"){
-                    sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
-                    sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
-                  }
-                }
-              }
-              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
+      environment {
+        TEST_ES_SERVER = 'http://elasticsearch:9200'
+      }
+      steps {
+        withGithubNotify(context: 'Integration test OSS') {
+          deleteDir()
+          unstash 'source-dependencies'
+          dir("${BASE_DIR}"){
+            // Sometimes the docker registry fails and has random timeouts
+            // this block will retry a doker image 3 times before to fail.
+            retry(3) {
+              sleep randomNumber(min: 5, max: 10)
+              sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
             }
           }
-        }
-
-        stage('xPack') {
-          agent { label 'docker && immutable' }
-          options { skipDefaultCheckout() }
-          environment {
-            TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
-          }
-          steps {
-            withGithubNotify(context: 'Integration test xPack') {
-              deleteDir()
-              unstash 'source-dependencies'
+          script {
+            buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
               dir("${BASE_DIR}"){
-                // Sometimes the docker registry fails and has random timeouts
-                // this block will retry a doker image 3 times before to fail.
-                retry(3) {
-                  sleep randomNumber(min: 5, max: 10)
-                  sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
-                }
+                sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
+                sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
               }
-              script {
-                buildDockerImage(fromDockerfile: true).inside('--network=elastic'){
-                  dir("${BASE_DIR}"){
-                    sh(label: 'Integration test', script: 'npm run test:integration | tee test-integration.tap')
-                    sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-integration.tap > junit-integration.xml')
-                  }
-                }
-              }
-              sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
             }
           }
+          sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+          junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/**/junit-*.xml")
         }
       }
     }
