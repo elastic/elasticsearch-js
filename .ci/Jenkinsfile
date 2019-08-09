@@ -39,31 +39,26 @@ pipeline {
     stage('Checkout') {
       options { skipDefaultCheckout() }
       steps {
-        withGithubNotify(context: 'Checkout') {
-          deleteDir()
-          gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
-          stash allowEmpty: true, name: 'source', useDefaultExcludes: false
-        }
+        deleteDir()
+        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
+        stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
 
     stage('Install dependencies') {
       options { skipDefaultCheckout() }
       steps {
-        withGithubNotify(context: 'Install dependencies') {
-          deleteDir()
-          unstash 'source'
-          script {
-            buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
-              dir("${BASE_DIR}"){
-                sh(label: 'System info', script: '''node --version
-                      npm --version''')
-                sh(label: 'Install dependencies', script: 'npm install')
-              }
+        deleteDir()
+        unstash 'source'
+        script {
+          buildDockerImage(image: "node:${env.NODE_JS_DEFAULT_VERSION}-alpine").inside(){
+            dir("${BASE_DIR}"){
+              sh(label: 'System info', script: 'node --version; npm --version')
+              sh(label: 'Install dependencies', script: 'npm install')
             }
           }
-          stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
         }
+        stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
       }
     }
 
@@ -129,7 +124,7 @@ pipeline {
             TEST_ES_SERVER = 'http://elasticsearch:9200'
           }
           steps {
-            withGithubNotify(context: 'Integration test') {
+            withGithubNotify(context: 'Integration test OSS') {
               deleteDir()
               unstash 'source-dependencies'
               dir("${BASE_DIR}"){
@@ -161,7 +156,7 @@ pipeline {
             TEST_ES_SERVER = 'https://elastic:changeme@elasticsearch:9200'
           }
           steps {
-            withGithubNotify(context: 'Integration test') {
+            withGithubNotify(context: 'Integration test xPack') {
               deleteDir()
               unstash 'source-dependencies'
               dir("${BASE_DIR}"){
@@ -219,8 +214,7 @@ def buildUnitTest(args) {
             sh(label: 'Run unit test', script: 'npm run test:unit | tee test-unit.tap')
             sh(label: 'Run behavior test', script: 'npm run test:behavior | tee test-behavior.tap')
             sh(label: 'Run types test', script: 'npm run test:types')
-            sh(label: 'Generating test reporting', script: '''./node_modules/.bin/tap-mocha-reporter xunit < test-unit.tap > junit-unit.xml
-./node_modules/.bin/tap-mocha-reporter xunit < test-behavior.tap > junit-behavior.xml''')
+            sh(label: 'Generating test reporting', script: './node_modules/.bin/tap-mocha-reporter xunit < test-unit.tap > junit-unit.xml; ./node_modules/.bin/tap-mocha-reporter xunit < test-behavior.tap > junit-behavior.xml')
           }
         }
       }
