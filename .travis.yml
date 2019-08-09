@@ -17,7 +17,9 @@ install:
 
 script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then npm run license-checker; fi
-  - npm run test
+  - npm run lint
+  - npm run test:coverage
+  - npm run test:types
 
 notifications:
   email:
