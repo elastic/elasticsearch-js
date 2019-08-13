@@ -30,9 +30,9 @@ pipeline {
 
   triggers {
     issueCommentTrigger('(?i).*(?:jenkins\\W+)?run\\W+(?:the\\W+)?tests(?:\\W+please)?.*')
-    // changeRequest() will return true in case of a commit or a pr
-    // we will have a daily cron job only ofr branches that don't have an active pr
-    cron(changeRequest() ? '' : '@daily')
+    // env.CHANGE_ID as a value in case of a commit or a pr, which means
+    // that we will have a daily cron job only for branches that don't have an active pr
+    cron(env.CHANGE_ID ? '' : '@daily')
   }
 
   stages {
