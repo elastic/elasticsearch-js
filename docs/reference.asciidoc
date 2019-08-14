@@ -5494,6 +5494,29 @@ link:{ref}/stop-data-frame-transform.html[Reference]
 
 |===
 
+=== dataFrame.updateDataFrameTransform
+[source,ts]
+----
+client.dataFrame.updateDataFrameTransform({
+  transform_id: string,
+  defer_validation: boolean,
+  body: object
+})
+----
+link:{ref}/update-data-frame-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
+
+|`body`
+|`object` - The update data frame transform definition
+
+|===
+
 === graph.explore
 [source,ts]
 ----
@@ -6088,6 +6111,21 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |`snapshot_id` or `snapshotId`
 |`string` - The ID of the snapshot to delete
+
+|===
+
+=== ml.estimateMemoryUsage
+[source,ts]
+----
+client.ml.estimateMemoryUsage({
+  body: object
+})
+----
+link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
+[cols=2*]
+|===
+|`body`
+|`object` - Memory usage estimation definition
 
 |===
 
@@ -7851,7 +7889,7 @@ client.slm.deleteLifecycle({
 link:{ref}/slm-api-delete.html[Reference]
 [cols=2*]
 |===
-|`policy_id`
+|`policy_id` or `policyId`
 |`string` - The id of the snapshot lifecycle policy to remove
 
 |===

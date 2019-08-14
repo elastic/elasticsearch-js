@@ -1413,6 +1413,12 @@ export interface DataFrameStopDataFrameTransform extends Generic {
   allow_no_match?: boolean;
 }
 
+export interface DataFrameUpdateDataFrameTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
 export interface GraphExplore<T = any> extends Generic {
   index?: string | string[];
   type?: string | string[];
@@ -1574,6 +1580,10 @@ export interface MlDeleteJob extends Generic {
 export interface MlDeleteModelSnapshot extends Generic {
   job_id: string;
   snapshot_id: string;
+}
+
+export interface MlEstimateMemoryUsage<T = any> extends Generic {
+  body: T;
 }
 
 export interface MlEvaluateDataFrame<T = any> extends Generic {

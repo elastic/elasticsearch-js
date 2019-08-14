@@ -195,6 +195,8 @@ declare class Client extends EventEmitter {
     startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
     stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
     stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    update_data_frame_transform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
+    updateDataFrameTransform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
   }
   dataFrame: {
     delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
@@ -211,6 +213,8 @@ declare class Client extends EventEmitter {
     startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
     stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
     stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
+    update_data_frame_transform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
+    updateDataFrameTransform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
   }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
@@ -369,6 +373,8 @@ declare class Client extends EventEmitter {
     deleteJob: ApiMethod<RequestParams.MlDeleteJob>
     delete_model_snapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
     deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
+    estimate_memory_usage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
+    estimateMemoryUsage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
     evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     evaluateDataFrame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     find_file_structure: ApiMethod<RequestParams.MlFindFileStructure>

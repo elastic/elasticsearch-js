@@ -7,25 +7,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmPutLifecycle (opts) {
+function buildDataFrameUpdateDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [slm.put_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put.html) request
+   * Perform a [data_frame.update_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/update-data-frame-transform.html) request
    *
-   * @param {string} policy_id - The id of the snapshot lifecycle policy
-   * @param {object} body - The snapshot lifecycle policy definition to register
+   * @param {string} transform_id - The id of the transform.
+   * @param {boolean} defer_validation - If validations should be deferred until data frame transform starts, defaults to false.
+   * @param {object} body - The update data frame transform definition
    */
 
   const acceptedQuerystring = [
-
+    'defer_validation'
   ]
 
   const snakeCase = {
-
+    deferValidation: 'defer_validation'
   }
 
-  return function slmPutLifecycle (params, options, callback) {
+  return function dataFrameUpdateDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,6 +38,16 @@ function buildSlmPutLifecycle (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -44,11 +55,11 @@ function buildSlmPutLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore
@@ -58,7 +69,7 @@ function buildSlmPutLifecycle (opts) {
 
     var path = ''
 
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update'
 
     // build request object
     const request = {
@@ -73,4 +84,4 @@ function buildSlmPutLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmPutLifecycle
+module.exports = buildDataFrameUpdateDataFrameTransform

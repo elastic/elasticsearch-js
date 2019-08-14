@@ -11,9 +11,9 @@ function buildSlmDeleteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [slm.delete_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api.html) request
+   * Perform a [slm.delete_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete.html) request
    *
-   * @param {string} policy - The id of the snapshot lifecycle policy to remove
+   * @param {string} policy_id - The id of the snapshot lifecycle policy to remove
    */
 
   const acceptedQuerystring = [
@@ -49,7 +49,7 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policy_id, policyId, ...querystring } = params
+    var { method, body, policyId, policy_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {

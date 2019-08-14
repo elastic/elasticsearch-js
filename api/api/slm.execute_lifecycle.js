@@ -11,7 +11,7 @@ function buildSlmExecuteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [slm.execute_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api.html) request
+   * Perform a [slm.execute_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute.html) request
    *
    * @param {string} policy_id - The id of the snapshot lifecycle policy to be executed
    */

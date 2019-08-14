@@ -7,14 +7,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmPutLifecycle (opts) {
+function buildMlEstimateMemoryUsage (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
   /**
-   * Perform a [slm.put_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put.html) request
+   * Perform a [ml.estimate_memory_usage](http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html) request
    *
-   * @param {string} policy_id - The id of the snapshot lifecycle policy
-   * @param {object} body - The snapshot lifecycle policy definition to register
+   * @param {object} body - Memory usage estimation definition
    */
 
   const acceptedQuerystring = [
@@ -25,7 +24,7 @@ function buildSlmPutLifecycle (opts) {
 
   }
 
-  return function slmPutLifecycle (params, options, callback) {
+  return function mlEstimateMemoryUsage (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,6 +36,12 @@ function buildSlmPutLifecycle (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -44,11 +49,11 @@ function buildSlmPutLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     if (method == null) {
-      method = 'PUT'
+      method = 'POST'
     }
 
     var ignore = options.ignore
@@ -58,7 +63,7 @@ function buildSlmPutLifecycle (opts) {
 
     var path = ''
 
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
 
     // build request object
     const request = {
@@ -73,4 +78,4 @@ function buildSlmPutLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmPutLifecycle
+module.exports = buildMlEstimateMemoryUsage

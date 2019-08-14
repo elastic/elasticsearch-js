@@ -96,7 +96,9 @@ function ESAPI (opts) {
       start_data_frame_transform: lazyLoad('data_frame.start_data_frame_transform', opts),
       startDataFrameTransform: lazyLoad('data_frame.start_data_frame_transform', opts),
       stop_data_frame_transform: lazyLoad('data_frame.stop_data_frame_transform', opts),
-      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts)
+      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts),
+      update_data_frame_transform: lazyLoad('data_frame.update_data_frame_transform', opts),
+      updateDataFrameTransform: lazyLoad('data_frame.update_data_frame_transform', opts)
     },
     dataFrame: {
       delete_data_frame_transform: lazyLoad('data_frame.delete_data_frame_transform', opts),
@@ -112,7 +114,9 @@ function ESAPI (opts) {
       start_data_frame_transform: lazyLoad('data_frame.start_data_frame_transform', opts),
       startDataFrameTransform: lazyLoad('data_frame.start_data_frame_transform', opts),
       stop_data_frame_transform: lazyLoad('data_frame.stop_data_frame_transform', opts),
-      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts)
+      stopDataFrameTransform: lazyLoad('data_frame.stop_data_frame_transform', opts),
+      update_data_frame_transform: lazyLoad('data_frame.update_data_frame_transform', opts),
+      updateDataFrameTransform: lazyLoad('data_frame.update_data_frame_transform', opts)
     },
     delete: lazyLoad('delete', opts),
     delete_by_query: lazyLoad('delete_by_query', opts),
@@ -271,6 +275,8 @@ function ESAPI (opts) {
       deleteJob: lazyLoad('ml.delete_job', opts),
       delete_model_snapshot: lazyLoad('ml.delete_model_snapshot', opts),
       deleteModelSnapshot: lazyLoad('ml.delete_model_snapshot', opts),
+      estimate_memory_usage: lazyLoad('ml.estimate_memory_usage', opts),
+      estimateMemoryUsage: lazyLoad('ml.estimate_memory_usage', opts),
       evaluate_data_frame: lazyLoad('ml.evaluate_data_frame', opts),
       evaluateDataFrame: lazyLoad('ml.evaluate_data_frame', opts),
       find_file_structure: lazyLoad('ml.find_file_structure', opts),
