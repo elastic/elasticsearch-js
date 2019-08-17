@@ -2087,9 +2087,6 @@ link:{ref}/indices-analyze.html[Reference]
 |`index`
 |`string` - The name of the index to scope the operation
 
-|`index`
-|`string` - The name of the index to scope the operation
-
 |`body`
 |`object` - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
 
