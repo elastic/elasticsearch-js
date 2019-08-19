@@ -21,6 +21,10 @@ function buildCluster (options, callback) {
   const nodes = {}
   const sniffResult = { nodes: {} }
 
+  // to simulate the 1st node of ES Cluster is down, the sniff result will return
+  // the nodes except the 1st
+  const clusterPartiallySeparated = options.clusterPartiallySeparated || false
+
   options.numberOfNodes = options.numberOfNodes || 4
   for (var i = 0; i < options.numberOfNodes; i++) {
     q.add(bootNode, { id: `node${i}` })
@@ -30,7 +34,16 @@ function buildCluster (options, callback) {
     function handler (req, res) {
       res.setHeader('content-type', 'application/json')
       if (req.url === '/_nodes/_all/http') {
-        res.end(JSON.stringify(sniffResult))
+        if (clusterPartiallySeparated) {
+          const partialSniffResult = JSON.parse(JSON.stringify(sniffResult))
+          delete partialSniffResult.nodes[Object.keys(sniffResult.nodes)[0]]
+          res.end(JSON.stringify(partialSniffResult))
+        } else {
+          res.end(JSON.stringify(sniffResult))
+        }
+      } else if (req.url === '/err-index/_search') {
+        res.statusCode = 502
+        res.end(JSON.stringify({ error: '502' }))
       } else {
         res.end(JSON.stringify({ hello: 'world' }))
       }

@@ -10,6 +10,116 @@ const { buildCluster } = require('../utils')
 const { Client, Connection, Transport, events, errors } = require('../../index')
 
 /**
+ * The aims to verify the dead connection has been marked correctly.
+ * Dead connection might be detected after the connectionPool has been updated.
+ * 1. ES Client sends requests by one node in the given node list
+ * 2. ES Client sniffs by using another connection connected to another node
+ * 3. 1st node return internal error
+ * 4. Sniff function returns the updated nodes without the problematic node (1st node)
+ * 5. Search request fails
+ *
+ * The dead connection has already been removed in sniff result, we MUST not mark it again
+  */
+
+test('Should mark the dead connections', t => {
+  t.plan(7)
+
+  buildCluster({ clusterPartiallySeparated: true }, ({ nodes, shutdown, kill, spawn }) => {
+    const client = new Client({
+      node: nodes[Object.keys(nodes)[0]].url,
+      sniffOnStart: false,
+      sniffOnConnectionFault: false,
+      sniffInterval: false,
+      maxRetries: 0 // should not retry in this test case
+    })
+
+    client.transport.sniff((err, hosts) => {
+      t.error(err)
+      t.strictEqual(hosts.length, 3)
+      t.strictEqual(client.connectionPool.size, 3)
+
+      client.search({
+        index: 'err-index',
+        body: { foo: 'bar' }
+      }, (err, result) => {
+        t.ok(err instanceof errors.ResponseError)
+        t.strictEqual(result.statusCode, 502)
+      })
+    })
+
+    client.search({
+      index: 'err-index',
+      body: { foo: 'bar' }
+    }, (err, result) => {
+      t.ok(err instanceof errors.ResponseError)
+      t.strictEqual(result.statusCode, 502)
+    })
+
+    t.teardown(shutdown)
+  })
+})
+
+/**
+ * The aims to verify the following situation.
+ * 1. ES Client sends requests with the node option provided in the client initialization
+ * 2. The responses return errors before sniffing the cluster
+ * 3. The client sniffs the cluster and updates the connection pool
+ * 4. Client requests again
+ */
+
+test('Should update the connection pool when # of dead connections > 1', t => {
+  t.plan(8)
+
+  buildCluster(({ nodes, shutdown }) => {
+    const client = new Client({
+      node: Object.keys(nodes).map(nodeid => nodes[nodeid].url),
+      sniffOnStart: false,
+      sniffOnConnectionFault: false,
+      sniffInterval: false,
+      maxRetries: 0 // should not retry in this test case
+    })
+
+    const requested = new Promise((resolve, reject) => {
+      const CLIENT_REQUESTS_COUNT = 2
+
+      let count = CLIENT_REQUESTS_COUNT
+
+      for (let i = 0; i < CLIENT_REQUESTS_COUNT; ++i) {
+        client.search({
+          index: 'err-index',
+          body: { foo: 'bar' }
+        }, (err, result) => {
+          t.ok(err instanceof errors.ResponseError)
+          t.strictEqual(result.statusCode, 502)
+          if (--count === 0) {
+            resolve('error response received before sniffing')
+          }
+        })
+      }
+    })
+
+    // run the sniffer after the previous requests return
+    requested.then(value => {
+      client.transport.sniff((err, hosts) => {
+        t.error(err)
+        t.strictEqual(hosts.length, 4)
+        t.strictEqual(client.connectionPool.size, 4)
+
+        // client requests again
+        client.search({
+          index: 'ok-index',
+          body: { foo: 'bar' }
+        }, (err, result) => {
+          t.error(err)
+        })
+      })
+    })
+
+    t.teardown(shutdown)
+  })
+})
+
+/**
  * The aim of this test is to verify how the sniffer behaves
  * in a multi node situation.
  * The `buildCluster` utility can boot an arbitrary number
