@@ -23,6 +23,8 @@ interface ConnectionOptions {
 
 interface RequestOptions extends http.ClientRequestArgs {
   asStream?: boolean;
+  body?: any;
+  querystring?: string;
 }
 
 export interface AgentOptions {
