@@ -10,24 +10,6 @@
 function buildIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [index](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
-   *
-   * @param {string} id - Document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {enum} op_type - Explicit operation type
-   * @param {enum} refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-   * @param {string} routing - Specific routing value
-   * @param {time} timeout - Explicit operation timeout
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   * @param {number} if_seq_no - only perform the index operation if the last operation that has changed the document has the specified sequence number
-   * @param {number} if_primary_term - only perform the index operation if the last operation that has changed the document has the specified primary term
-   * @param {string} pipeline - The pipeline id to preprocess incoming documents with
-   * @param {object} body - The document
-   */
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -57,6 +39,11 @@ function buildIndex (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a index request
+   * Creates or updates a document in an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+   */
   return function _index (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -89,10 +76,6 @@ function buildIndex (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -101,12 +84,16 @@ function buildIndex (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else if ((index) != null && (id) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc'
     }
 

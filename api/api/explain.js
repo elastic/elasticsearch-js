@@ -10,26 +10,6 @@
 function buildExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [explain](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html) request
-   *
-   * @param {string} id - The document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document
-   * @param {boolean} analyze_wildcard - Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
-   * @param {string} analyzer - The analyzer for the query string query
-   * @param {enum} default_operator - The default operator for query string query (AND or OR)
-   * @param {string} df - The default field for query string query (default: _all)
-   * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {string} q - Query in the Lucene query string syntax
-   * @param {string} routing - Specific routing value
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {object} body - The query definition using the Query DSL
-   */
 
   const acceptedQuerystring = [
     'analyze_wildcard',
@@ -65,6 +45,11 @@ function buildExplain (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a explain request
+   * Returns information about why a specific matches (or doesn't match) a query.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
+   */
   return function explain (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -97,10 +82,6 @@ function buildExplain (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -109,8 +90,10 @@ function buildExplain (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_explain'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id)
     }
 

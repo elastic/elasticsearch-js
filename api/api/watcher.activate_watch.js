@@ -10,11 +10,6 @@
 function buildWatcherActivateWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.activate_watch](https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html) request
-   *
-   * @param {string} watch_id - Watch ID
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildWatcherActivateWatch (opts) {
 
   }
 
+  /**
+   * Perform a watcher.activate_watch request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
+   */
   return function watcherActivateWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,10 +40,6 @@ function buildWatcherActivateWatch (opts) {
       const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -56,10 +51,6 @@ function buildWatcherActivateWatch (opts) {
     var { method, body, watchId, watch_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,13 +58,14 @@ function buildWatcherActivateWatch (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

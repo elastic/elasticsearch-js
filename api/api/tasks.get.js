@@ -10,13 +10,6 @@
 function buildTasksGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [tasks.get](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
-   *
-   * @param {string} task_id - Return the task with specified id (node_id:task_number)
-   * @param {boolean} wait_for_completion - Wait for the matching tasks to complete (default: false)
-   * @param {time} timeout - Explicit operation timeout
-   */
 
   const acceptedQuerystring = [
     'wait_for_completion',
@@ -34,6 +27,11 @@ function buildTasksGet (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a tasks.get request
+   * Returns information about a task.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   */
   return function tasksGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,10 +49,6 @@ function buildTasksGet (opts) {
       const err = new ConfigurationError('Missing required parameter: task_id or taskId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -66,10 +60,6 @@ function buildTasksGet (opts) {
     var { method, body, taskId, task_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -77,6 +67,7 @@ function buildTasksGet (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId)
 
     // build request object

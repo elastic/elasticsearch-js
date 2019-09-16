@@ -10,21 +10,6 @@
 function buildDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [delete](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html) request
-   *
-   * @param {string} id - The document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-   * @param {string} routing - Specific routing value
-   * @param {time} timeout - Explicit operation timeout
-   * @param {number} if_seq_no - only perform the delete operation if the last operation that has changed the document has the specified sequence number
-   * @param {number} if_primary_term - only perform the delete operation if the last operation that has changed the document has the specified primary term
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   */
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -51,6 +36,11 @@ function buildDelete (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a delete request
+   * Removes a document from the index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html
+   */
   return function _delete (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -72,10 +62,6 @@ function buildDelete (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -87,10 +73,6 @@ function buildDelete (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -99,8 +81,10 @@ function buildDelete (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'DELETE'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = 'DELETE'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     }
 
@@ -108,7 +92,7 @@ function buildDelete (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

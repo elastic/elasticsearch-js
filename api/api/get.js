@@ -10,23 +10,6 @@
 function buildGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [get](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
-   *
-   * @param {string} id - The document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
-   * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
-   * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
-   * @param {string} routing - Specific routing value
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   */
 
   const acceptedQuerystring = [
     'stored_fields',
@@ -59,6 +42,11 @@ function buildGet (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a get request
+   * Returns a document.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   */
   return function get (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,10 +68,6 @@ function buildGet (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -95,10 +79,6 @@ function buildGet (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -107,8 +87,10 @@ function buildGet (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     }
 

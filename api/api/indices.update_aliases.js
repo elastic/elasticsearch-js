@@ -10,13 +10,6 @@
 function buildIndicesUpdateAliases (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.update_aliases](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {time} timeout - Request timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {object} body - The definition of `actions` to perform
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -34,6 +27,11 @@ function buildIndicesUpdateAliases (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.update_aliases request
+   * Updates index aliases.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+   */
   return function indicesUpdateAliases (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -62,10 +60,6 @@ function buildIndicesUpdateAliases (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -73,6 +67,7 @@ function buildIndicesUpdateAliases (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_aliases'
 
     // build request object

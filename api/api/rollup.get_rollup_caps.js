@@ -10,11 +10,6 @@
 function buildRollupGetRollupCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [rollup.get_rollup_caps]() request
-   *
-   * @param {string} id - The ID of the index to check rollup capabilities on, or left blank for all jobs
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,9 @@ function buildRollupGetRollupCaps (opts) {
 
   }
 
+  /**
+   * Perform a rollup.get_rollup_caps request
+   */
   return function rollupGetRollupCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,10 +44,6 @@ function buildRollupGetRollupCaps (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -58,8 +52,10 @@ function buildRollupGetRollupCaps (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_rollup' + '/' + 'data'
     }
 

@@ -10,12 +10,6 @@
 function buildSecurityGetPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.get_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html) request
-   *
-   * @param {string} application - Application name
-   * @param {string} name - Privilege name
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildSecurityGetPrivileges (opts) {
 
   }
 
+  /**
+   * Perform a security.get_privileges request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
+   */
   return function securityGetPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -35,12 +33,6 @@ function buildSecurityGetPrivileges (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
     }
 
     // check required url components
@@ -59,10 +51,6 @@ function buildSecurityGetPrivileges (opts) {
     var { method, body, application, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -71,10 +59,13 @@ function buildSecurityGetPrivileges (opts) {
     var path = ''
 
     if ((application) != null && (name) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
     } else if ((application) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_security' + '/' + 'privilege'
     }
 

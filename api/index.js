@@ -471,10 +471,14 @@ function ESAPI (opts) {
       executeLifecycle: lazyLoad('slm.execute_lifecycle', opts),
       get_lifecycle: lazyLoad('slm.get_lifecycle', opts),
       getLifecycle: lazyLoad('slm.get_lifecycle', opts),
+      get_stats: lazyLoad('slm.get_stats', opts),
+      getStats: lazyLoad('slm.get_stats', opts),
       put_lifecycle: lazyLoad('slm.put_lifecycle', opts),
       putLifecycle: lazyLoad('slm.put_lifecycle', opts)
     },
     snapshot: {
+      cleanup_repository: lazyLoad('snapshot.cleanup_repository', opts),
+      cleanupRepository: lazyLoad('snapshot.cleanup_repository', opts),
       create: lazyLoad('snapshot.create', opts),
       create_repository: lazyLoad('snapshot.create_repository', opts),
       createRepository: lazyLoad('snapshot.create_repository', opts),

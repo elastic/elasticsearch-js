@@ -10,11 +10,6 @@
 function buildCcrUnfollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.unfollow](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
-   *
-   * @param {string} index - The name of the follower index that should be turned into a regular index.
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildCcrUnfollow (opts) {
 
   }
 
+  /**
+   * Perform a ccr.unfollow request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current
+   */
   return function ccrUnfollow (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildCcrUnfollow (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildCcrUnfollow (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'unfollow'
 
     // build request object

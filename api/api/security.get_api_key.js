@@ -10,14 +10,6 @@
 function buildSecurityGetApiKey (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.get_api_key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html) request
-   *
-   * @param {string} id - API key id of the API key to be retrieved
-   * @param {string} name - API key name of the API key to be retrieved
-   * @param {string} username - user name of the user who created this API key to be retrieved
-   * @param {string} realm_name - realm name of the user who created this API key to be retrieved
-   */
 
   const acceptedQuerystring = [
     'id',
@@ -30,6 +22,10 @@ function buildSecurityGetApiKey (opts) {
     realmName: 'realm_name'
   }
 
+  /**
+   * Perform a security.get_api_key request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+   */
   return function securityGetApiKey (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,12 +38,6 @@ function buildSecurityGetApiKey (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -58,10 +48,6 @@ function buildSecurityGetApiKey (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +55,7 @@ function buildSecurityGetApiKey (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'api_key'
 
     // build request object

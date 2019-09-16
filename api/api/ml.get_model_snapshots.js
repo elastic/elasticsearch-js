@@ -10,19 +10,6 @@
 function buildMlGetModelSnapshots (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_model_snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html) request
-   *
-   * @param {string} job_id - The ID of the job to fetch
-   * @param {string} snapshot_id - The ID of the snapshot to fetch
-   * @param {int} from - Skips a number of documents
-   * @param {int} size - The default number of documents returned in queries as a string.
-   * @param {date} start - The filter 'start' query parameter
-   * @param {date} end - The filter 'end' query parameter
-   * @param {string} sort - Name of the field to sort on
-   * @param {boolean} desc - True if the results should be sorted in descending order
-   * @param {object} body - Model snapshot selection criteria
-   */
 
   const acceptedQuerystring = [
     'from',
@@ -37,6 +24,10 @@ function buildMlGetModelSnapshots (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_model_snapshots request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+   */
   return function mlGetModelSnapshots (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -71,10 +62,6 @@ function buildMlGetModelSnapshots (opts) {
     var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -83,8 +70,10 @@ function buildMlGetModelSnapshots (opts) {
     var path = ''
 
     if ((job_id || jobId) != null && (snapshot_id || snapshotId) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots'
     }
 

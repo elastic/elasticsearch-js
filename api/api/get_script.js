@@ -10,12 +10,6 @@
 function buildGetScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [get_script](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
-   *
-   * @param {string} id - Script ID
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -32,6 +26,11 @@ function buildGetScript (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a get_script request
+   * Returns a script.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+   */
   return function getScript (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -49,10 +48,6 @@ function buildGetScript (opts) {
       const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -64,10 +59,6 @@ function buildGetScript (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -75,6 +66,7 @@ function buildGetScript (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_scripts' + '/' + encodeURIComponent(id)
 
     // build request object

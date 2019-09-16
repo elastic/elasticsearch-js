@@ -10,21 +10,6 @@
 function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [create](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
-   *
-   * @param {string} id - Document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {enum} refresh - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-   * @param {string} routing - Specific routing value
-   * @param {time} timeout - Explicit operation timeout
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   * @param {string} pipeline - The pipeline id to preprocess incoming documents with
-   * @param {object} body - The document
-   */
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -48,6 +33,13 @@ function buildCreate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a create request
+   * Creates a new document in the index.
+
+Returns a 409 response when a document with a same ID already exists in the index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+   */
   return function create (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -84,10 +76,6 @@ function buildCreate (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -96,8 +84,10 @@ function buildCreate (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
     }
 

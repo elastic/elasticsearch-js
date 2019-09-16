@@ -10,14 +10,6 @@
 function buildClusterGetSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.get_settings](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html) request
-   *
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {boolean} include_defaults - Whether to return all default clusters setting.
-   */
 
   const acceptedQuerystring = [
     'flat_settings',
@@ -39,6 +31,11 @@ function buildClusterGetSettings (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.get_settings request
+   * Returns cluster settings.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+   */
   return function clusterGetSettings (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,12 +48,6 @@ function buildClusterGetSettings (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -67,10 +58,6 @@ function buildClusterGetSettings (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,6 +65,7 @@ function buildClusterGetSettings (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_cluster' + '/' + 'settings'
 
     // build request object

@@ -10,16 +10,6 @@
 function buildWatcherPutWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.put_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html) request
-   *
-   * @param {string} id - Watch ID
-   * @param {boolean} active - Specify whether the watch is in/active by default
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {number} if_seq_no - only update the watch if the last operation that has changed the watch has the specified sequence number
-   * @param {number} if_primary_term - only update the watch if the last operation that has changed the watch has the specified primary term
-   * @param {object} body - The watch
-   */
 
   const acceptedQuerystring = [
     'active',
@@ -33,6 +23,10 @@ function buildWatcherPutWatch (opts) {
     ifPrimaryTerm: 'if_primary_term'
   }
 
+  /**
+   * Perform a watcher.put_watch request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
+   */
   return function watcherPutWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -61,10 +55,6 @@ function buildWatcherPutWatch (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,6 +62,7 @@ function buildWatcherPutWatch (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object

@@ -10,22 +10,6 @@
 function buildBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [bulk](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
-   *
-   * @param {string} index - Default index for items which don't provide one
-   * @param {string} type - Default document type for items which don't provide one
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {enum} refresh - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-   * @param {string} routing - Specific routing value
-   * @param {time} timeout - Explicit operation timeout
-   * @param {string} type - Default document type for items which don't provide one
-   * @param {list} _source - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
-   * @param {list} _source_excludes - Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
-   * @param {list} _source_includes - Default list of fields to extract and return from the _source field, can be overridden on each sub-request
-   * @param {string} pipeline - The pipeline id to preprocess incoming documents with
-   * @param {object} body - The operation definition and data (action-data pairs), separated by newlines
-   */
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -56,6 +40,11 @@ function buildBulk (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a bulk request
+   * Allows to perform multiple index/update/delete operations in a single request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+   */
   return function bulk (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -90,10 +79,6 @@ function buildBulk (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -102,10 +87,13 @@ function buildBulk (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_bulk'
     } else if ((index) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_bulk'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_bulk'
     }
 

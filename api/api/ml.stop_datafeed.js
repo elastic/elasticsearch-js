@@ -10,14 +10,6 @@
 function buildMlStopDatafeed (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.stop_datafeed](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html) request
-   *
-   * @param {string} datafeed_id - The ID of the datafeed to stop
-   * @param {boolean} allow_no_datafeeds - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-   * @param {boolean} force - True if the datafeed should be forcefully stopped.
-   * @param {time} timeout - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
-   */
 
   const acceptedQuerystring = [
     'allow_no_datafeeds',
@@ -30,6 +22,10 @@ function buildMlStopDatafeed (opts) {
 
   }
 
+  /**
+   * Perform a ml.stop_datafeed request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+   */
   return function mlStopDatafeed (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,10 +54,6 @@ function buildMlStopDatafeed (opts) {
     var { method, body, datafeedId, datafeed_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +61,7 @@ function buildMlStopDatafeed (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stop'
 
     // build request object

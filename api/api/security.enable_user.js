@@ -10,12 +10,6 @@
 function buildSecurityEnableUser (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.enable_user](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html) request
-   *
-   * @param {string} username - The username of the user to enable
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   */
 
   const acceptedQuerystring = [
     'refresh'
@@ -25,6 +19,10 @@ function buildSecurityEnableUser (opts) {
 
   }
 
+  /**
+   * Perform a security.enable_user request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
+   */
   return function securityEnableUser (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,10 +40,6 @@ function buildSecurityEnableUser (opts) {
       const err = new ConfigurationError('Missing required parameter: username')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -57,10 +51,6 @@ function buildSecurityEnableUser (opts) {
     var { method, body, username, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,13 +58,14 @@ function buildSecurityEnableUser (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_enable'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

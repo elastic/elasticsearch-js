@@ -10,12 +10,6 @@
 function buildMlPutDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.put_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html) request
-   *
-   * @param {string} id - The ID of the data frame analytics to create
-   * @param {object} body - The data frame analytics configuration
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildMlPutDataFrameAnalytics (opts) {
 
   }
 
+  /**
+   * Perform a ml.put_data_frame_analytics request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
+   */
   return function mlPutDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +55,6 @@ function buildMlPutDataFrameAnalytics (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +62,7 @@ function buildMlPutDataFrameAnalytics (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
 
     // build request object

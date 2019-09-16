@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlUpdateFilter (opts) {
+function buildSlmGetStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,9 +20,10 @@ function buildMlUpdateFilter (opts) {
   }
 
   /**
-   * Perform a ml.update_filter request
+   * Perform a slm.get_stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api.html
    */
-  return function mlUpdateFilter (params, options, callback) {
+  return function slmGetStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -34,16 +35,6 @@ function buildMlUpdateFilter (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['filter_id'] == null && params['filterId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -51,7 +42,7 @@ function buildMlUpdateFilter (opts) {
     }
 
     var warnings = []
-    var { method, body, filterId, filter_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -61,14 +52,14 @@ function buildMlUpdateFilter (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId) + '/' + '_update'
+    if (method == null) method = 'GET'
+    path = '/' + '_slm' + '/' + 'stats'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -77,4 +68,4 @@ function buildMlUpdateFilter (opts) {
   }
 }
 
-module.exports = buildMlUpdateFilter
+module.exports = buildSlmGetStats

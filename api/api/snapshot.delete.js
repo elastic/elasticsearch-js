@@ -10,13 +10,6 @@
 function buildSnapshotDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [snapshot.delete](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {string} repository - A repository name
-   * @param {string} snapshot - A snapshot name
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -33,6 +26,11 @@ function buildSnapshotDelete (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.delete request
+   * Deletes a snapshot.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotDelete (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,10 +52,6 @@ function buildSnapshotDelete (opts) {
       const err = new ConfigurationError('Missing required parameter: snapshot')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if (params['snapshot'] != null && (params['repository'] == null)) {
@@ -75,10 +69,6 @@ function buildSnapshotDelete (opts) {
     var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,13 +76,14 @@ function buildSnapshotDelete (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

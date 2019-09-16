@@ -10,11 +10,6 @@
 function buildCcrPauseFollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.pause_follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html) request
-   *
-   * @param {string} index - The name of the follower index that should pause following its leader index.
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildCcrPauseFollow (opts) {
 
   }
 
+  /**
+   * Perform a ccr.pause_follow request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
+   */
   return function ccrPauseFollow (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildCcrPauseFollow (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildCcrPauseFollow (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'pause_follow'
 
     // build request object

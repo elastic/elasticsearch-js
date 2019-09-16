@@ -10,14 +10,6 @@
 function buildMlPostData (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.post_data](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html) request
-   *
-   * @param {string} job_id - The name of the job receiving the data
-   * @param {string} reset_start - Optional parameter to specify the start of the bucket resetting range
-   * @param {string} reset_end - Optional parameter to specify the end of the bucket resetting range
-   * @param {object} body - The data to process
-   */
 
   const acceptedQuerystring = [
     'reset_start',
@@ -29,6 +21,10 @@ function buildMlPostData (opts) {
     resetEnd: 'reset_end'
   }
 
+  /**
+   * Perform a ml.post_data request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+   */
   return function mlPostData (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -61,10 +57,6 @@ function buildMlPostData (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,6 +64,7 @@ function buildMlPostData (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_data'
 
     // build request object

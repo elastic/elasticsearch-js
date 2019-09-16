@@ -10,12 +10,6 @@
 function buildCcrForgetFollower (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.forget_follower](http://www.elastic.co/guide/en/elasticsearch/reference/current) request
-   *
-   * @param {string} index - the name of the leader index for which specified follower retention leases should be removed
-   * @param {object} body - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildCcrForgetFollower (opts) {
 
   }
 
+  /**
+   * Perform a ccr.forget_follower request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current
+   */
   return function ccrForgetFollower (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +55,6 @@ function buildCcrForgetFollower (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +62,7 @@ function buildCcrForgetFollower (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
 
     // build request object

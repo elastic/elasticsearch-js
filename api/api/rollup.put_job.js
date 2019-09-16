@@ -10,12 +10,6 @@
 function buildRollupPutJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [rollup.put_job]() request
-   *
-   * @param {string} id - The ID of the job to create
-   * @param {object} body - The job configuration
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,9 @@ function buildRollupPutJob (opts) {
 
   }
 
+  /**
+   * Perform a rollup.put_job request
+   */
   return function rollupPutJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +54,6 @@ function buildRollupPutJob (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +61,7 @@ function buildRollupPutJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
     // build request object

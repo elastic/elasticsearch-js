@@ -10,24 +10,6 @@
 function buildMtermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [mtermvectors](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
-   *
-   * @param {string} index - The index in which the document resides.
-   * @param {list} ids - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
-   * @param {boolean} term_statistics - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {boolean} field_statistics - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {list} fields - A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {boolean} offsets - Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {boolean} positions - Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {boolean} payloads - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {string} routing - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-   * @param {boolean} realtime - Specifies if requests are real-time as opposed to near-real-time (default: true).
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   * @param {object} body - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
-   */
 
   const acceptedQuerystring = [
     'ids',
@@ -57,6 +39,11 @@ function buildMtermvectors (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a mtermvectors request
+   * Returns multiple termvectors in one request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+   */
   return function mtermvectors (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -79,10 +66,6 @@ function buildMtermvectors (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -91,8 +74,10 @@ function buildMtermvectors (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_mtermvectors'
     }
 

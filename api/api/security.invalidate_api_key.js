@@ -10,11 +10,6 @@
 function buildSecurityInvalidateApiKey (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.invalidate_api_key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html) request
-   *
-   * @param {object} body - The api key request to invalidate API key(s)
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildSecurityInvalidateApiKey (opts) {
 
   }
 
+  /**
+   * Perform a security.invalidate_api_key request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
+   */
   return function securityInvalidateApiKey (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildSecurityInvalidateApiKey (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildSecurityInvalidateApiKey (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_security' + '/' + 'api_key'
 
     // build request object

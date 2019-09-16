@@ -10,11 +10,6 @@
 function buildRollupDeleteJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [rollup.delete_job]() request
-   *
-   * @param {string} id - The ID of the job to delete
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,9 @@ function buildRollupDeleteJob (opts) {
 
   }
 
+  /**
+   * Perform a rollup.delete_job request
+   */
   return function rollupDeleteJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +50,6 @@ function buildRollupDeleteJob (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +57,7 @@ function buildRollupDeleteJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
     // build request object

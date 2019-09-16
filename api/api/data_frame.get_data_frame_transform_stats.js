@@ -10,14 +10,6 @@
 function buildDataFrameGetDataFrameTransformStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.get_data_frame_transform_stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html) request
-   *
-   * @param {string} transform_id - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-   * @param {number} from - skips a number of transform stats, defaults to 0
-   * @param {number} size - specifies a max number of transform stats to get, defaults to 100
-   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-   */
 
   const acceptedQuerystring = [
     'from',
@@ -29,6 +21,10 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
     allowNoMatch: 'allow_no_match'
   }
 
+  /**
+   * Perform a data_frame.get_data_frame_transform_stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
+   */
   return function dataFrameGetDataFrameTransformStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,8 +38,8 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
 
@@ -57,10 +53,6 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
     var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +60,7 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stats'
 
     // build request object

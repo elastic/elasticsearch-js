@@ -10,11 +10,6 @@
 function buildSlmDeleteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [slm.delete_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete.html) request
-   *
-   * @param {string} policy_id - The id of the snapshot lifecycle policy to remove
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildSlmDeleteLifecycle (opts) {
 
   }
 
+  /**
+   * Perform a slm.delete_lifecycle request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete.html
+   */
   return function slmDeleteLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,8 +36,8 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['policy_id'] == null && params['policyId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
       return handleError(err, callback)
     }
 
@@ -52,10 +51,6 @@ function buildSlmDeleteLifecycle (opts) {
     var { method, body, policyId, policy_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,13 +58,14 @@ function buildSlmDeleteLifecycle (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

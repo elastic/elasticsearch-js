@@ -10,12 +10,6 @@
 function buildNodesReloadSecureSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [nodes.reload_secure_settings](https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings) request
-   *
-   * @param {list} node_id - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-   * @param {time} timeout - Explicit operation timeout
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -31,6 +25,11 @@ function buildNodesReloadSecureSettings (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a nodes.reload_secure_settings request
+   * Reloads secure settings.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings
+   */
   return function nodesReloadSecureSettings (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -43,12 +42,6 @@ function buildNodesReloadSecureSettings (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -59,10 +52,6 @@ function buildNodesReloadSecureSettings (opts) {
     var { method, body, nodeId, node_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -71,8 +60,10 @@ function buildNodesReloadSecureSettings (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null) {
+      if (method == null) method = 'POST'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'reload_secure_settings'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_nodes' + '/' + 'reload_secure_settings'
     }
 
@@ -80,7 +71,7 @@ function buildNodesReloadSecureSettings (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,11 +10,6 @@
 function buildCcrFollowInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.follow_info](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html) request
-   *
-   * @param {list} index - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildCcrFollowInfo (opts) {
 
   }
 
+  /**
+   * Perform a ccr.follow_info request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+   */
   return function ccrFollowInfo (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,6 +35,12 @@ function buildCcrFollowInfo (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -46,10 +51,6 @@ function buildCcrFollowInfo (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -57,6 +58,7 @@ function buildCcrFollowInfo (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'info'
 
     // build request object

@@ -10,19 +10,6 @@
 function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.get](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -52,6 +39,11 @@ function buildIndicesGet (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get request
+   * Returns information about one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
+   */
   return function indicesGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -69,10 +61,6 @@ function buildIndicesGet (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -84,10 +72,6 @@ function buildIndicesGet (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -95,6 +79,7 @@ function buildIndicesGet (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index)
 
     // build request object

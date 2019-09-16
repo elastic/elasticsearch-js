@@ -10,17 +10,6 @@
 function buildMlFlushJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.flush_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html) request
-   *
-   * @param {string} job_id - The name of the job to flush
-   * @param {boolean} calc_interim - Calculates interim results for the most recent bucket or all buckets within the latency period
-   * @param {string} start - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-   * @param {string} end - When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-   * @param {string} advance_time - Advances time to the given value generating results and updating the model for the advanced interval
-   * @param {string} skip_time - Skips time to the given value without generating results or updating the model for the skipped interval
-   * @param {object} body - Flush parameters
-   */
 
   const acceptedQuerystring = [
     'calc_interim',
@@ -36,6 +25,10 @@ function buildMlFlushJob (opts) {
     skipTime: 'skip_time'
   }
 
+  /**
+   * Perform a ml.flush_job request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
+   */
   return function mlFlushJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -64,10 +57,6 @@ function buildMlFlushJob (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -75,6 +64,7 @@ function buildMlFlushJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_flush'
 
     // build request object

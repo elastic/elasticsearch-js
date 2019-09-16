@@ -10,18 +10,6 @@
 function buildIndicesGetMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.get_mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {list} type - A comma-separated list of document types
-   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -47,6 +35,11 @@ function buildIndicesGetMapping (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get_mapping request
+   * Returns mappings for one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+   */
   return function indicesGetMapping (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -59,12 +52,6 @@ function buildIndicesGetMapping (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -75,10 +62,6 @@ function buildIndicesGetMapping (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -87,12 +70,16 @@ function buildIndicesGetMapping (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
     } else if ((type) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_mapping'
     }
 
