@@ -40,7 +40,7 @@ function generateDocs (common, spec) {
   }, {
     ignore: [404],
     maxRetries: 3
-  }, (err, { body }) => {
+  }, (err, result) => {
     if (err) console.log(err)
   })
   ----
