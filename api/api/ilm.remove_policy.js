@@ -10,11 +10,6 @@
 function buildIlmRemovePolicy (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ilm.remove_policy](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html) request
-   *
-   * @param {string} index - The name of the index to remove policy on
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildIlmRemovePolicy (opts) {
 
   }
 
+  /**
+   * Perform a ilm.remove_policy request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
+   */
   return function ilmRemovePolicy (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,8 +36,8 @@ function buildIlmRemovePolicy (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
@@ -52,10 +51,6 @@ function buildIlmRemovePolicy (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,13 +58,14 @@ function buildIlmRemovePolicy (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'remove'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

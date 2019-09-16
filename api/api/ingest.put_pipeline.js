@@ -10,14 +10,6 @@
 function buildIngestPutPipeline (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ingest.put_pipeline](https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html) request
-   *
-   * @param {string} id - Pipeline ID
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {object} body - The ingest definition
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -35,6 +27,11 @@ function buildIngestPutPipeline (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a ingest.put_pipeline request
+   * Creates or updates a pipeline.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html
+   */
   return function ingestPutPipeline (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -67,10 +64,6 @@ function buildIngestPutPipeline (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,6 +71,7 @@ function buildIngestPutPipeline (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
 
     // build request object

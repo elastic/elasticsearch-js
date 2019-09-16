@@ -10,13 +10,6 @@
 function buildSecurityChangePassword (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.change_password](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html) request
-   *
-   * @param {string} username - The username of the user to change the password for
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - the new password for the user
-   */
 
   const acceptedQuerystring = [
     'refresh'
@@ -26,6 +19,10 @@ function buildSecurityChangePassword (opts) {
 
   }
 
+  /**
+   * Perform a security.change_password request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+   */
   return function securityChangePassword (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,10 +51,6 @@ function buildSecurityChangePassword (opts) {
     var { method, body, username, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -66,8 +59,10 @@ function buildSecurityChangePassword (opts) {
     var path = ''
 
     if ((username) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_password'
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + '_security' + '/' + 'user' + '/' + '_password'
     }
 

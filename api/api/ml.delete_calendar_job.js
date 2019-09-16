@@ -10,12 +10,6 @@
 function buildMlDeleteCalendarJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_calendar_job](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar to modify
-   * @param {string} job_id - The ID of the job to remove from the calendar
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,9 @@ function buildMlDeleteCalendarJob (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_calendar_job request
+   */
   return function mlDeleteCalendarJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,10 +43,6 @@ function buildMlDeleteCalendarJob (opts) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
@@ -67,10 +60,6 @@ function buildMlDeleteCalendarJob (opts) {
     var { method, body, calendarId, calendar_id, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,13 +67,14 @@ function buildMlDeleteCalendarJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'jobs' + '/' + encodeURIComponent(job_id || jobId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

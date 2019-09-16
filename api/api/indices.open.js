@@ -10,17 +10,6 @@
 function buildIndicesOpen (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.open](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
-   *
-   * @param {list} index - A comma separated list of indices to open
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -46,6 +35,11 @@ function buildIndicesOpen (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.open request
+   * Opens an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+   */
   return function indicesOpen (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -63,10 +57,6 @@ function buildIndicesOpen (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -78,10 +68,6 @@ function buildIndicesOpen (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -89,13 +75,14 @@ function buildIndicesOpen (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_open'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

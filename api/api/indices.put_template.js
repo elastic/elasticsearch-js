@@ -10,18 +10,6 @@
 function buildIndicesPutTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.put_template](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
-   *
-   * @param {string} name - The name of the template
-   * @param {boolean} include_type_name - Whether a type should be returned in the body of the mappings.
-   * @param {number} order - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-   * @param {boolean} create - Whether the index template should only be added if new or can also replace an existing one
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {object} body - The template definition
-   */
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -45,6 +33,11 @@ function buildIndicesPutTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.put_template request
+   * Creates or updates an index template.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   */
   return function indicesPutTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -77,10 +70,6 @@ function buildIndicesPutTemplate (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -88,6 +77,7 @@ function buildIndicesPutTemplate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_template' + '/' + encodeURIComponent(name)
 
     // build request object

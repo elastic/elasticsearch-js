@@ -10,13 +10,6 @@
 function buildDataFramePutDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.put_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html) request
-   *
-   * @param {string} transform_id - The id of the new transform.
-   * @param {boolean} defer_validation - If validations should be deferred until data frame transform starts, defaults to false.
-   * @param {object} body - The data frame transform definition
-   */
 
   const acceptedQuerystring = [
     'defer_validation'
@@ -26,6 +19,10 @@ function buildDataFramePutDataFrameTransform (opts) {
     deferValidation: 'defer_validation'
   }
 
+  /**
+   * Perform a data_frame.put_data_frame_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
+   */
   return function dataFramePutDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,10 +55,6 @@ function buildDataFramePutDataFrameTransform (opts) {
     var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +62,7 @@ function buildDataFramePutDataFrameTransform (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object

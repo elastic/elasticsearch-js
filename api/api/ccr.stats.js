@@ -10,10 +10,6 @@
 function buildCcrStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html) request
-   *
-   */
 
   const acceptedQuerystring = [
 
@@ -23,6 +19,10 @@ function buildCcrStats (opts) {
 
   }
 
+  /**
+   * Perform a ccr.stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
+   */
   return function ccrStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -45,10 +45,6 @@ function buildCcrStats (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -56,6 +52,7 @@ function buildCcrStats (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_ccr' + '/' + 'stats'
 
     // build request object

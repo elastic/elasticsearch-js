@@ -10,12 +10,6 @@
 function buildSqlQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [sql.query](Execute SQL) request
-   *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {object} body - Use the `query` element to start a query. Use the `cursor` element to continue a query.
-   */
 
   const acceptedQuerystring = [
     'format'
@@ -25,6 +19,10 @@ function buildSqlQuery (opts) {
 
   }
 
+  /**
+   * Perform a sql.query request
+   * Execute SQL
+   */
   return function sqlQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,10 +51,6 @@ function buildSqlQuery (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,6 +58,7 @@ function buildSqlQuery (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_sql'
 
     // build request object

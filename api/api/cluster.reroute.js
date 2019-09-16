@@ -10,17 +10,6 @@
 function buildClusterReroute (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.reroute](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html) request
-   *
-   * @param {boolean} dry_run - Simulate the operation only and return the resulting state
-   * @param {boolean} explain - Return an explanation of why the commands can or cannot be executed
-   * @param {boolean} retry_failed - Retries allocation of shards that are blocked due to too many subsequent allocation failures
-   * @param {list} metric - Limit the information returned to the specified metrics. Defaults to all but metadata
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {object} body - The definition of `commands` to perform (`move`, `cancel`, `allocate`)
-   */
 
   const acceptedQuerystring = [
     'dry_run',
@@ -44,6 +33,11 @@ function buildClusterReroute (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.reroute request
+   * Allows to manually change the allocation of individual shards in the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
+   */
   return function clusterReroute (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -66,10 +60,6 @@ function buildClusterReroute (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -77,6 +67,7 @@ function buildClusterReroute (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_cluster' + '/' + 'reroute'
 
     // build request object

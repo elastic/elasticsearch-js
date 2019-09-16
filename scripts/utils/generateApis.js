@@ -60,21 +60,39 @@ function generate (version, spec, common) {
     .replace(/\.([a-z])/g, k => k[1].toUpperCase())
     .replace(/_([a-z])/g, k => k[1].toUpperCase())
 
-  const methods = spec[api].methods
-  const { paths, deprecated_paths, parts, params } = spec[api].url
+  const { paths } = spec[api].url
+  const { params } = spec[api]
   const acceptedQuerystring = []
   const required = []
 
-  if (deprecated_paths) {
-    for (const p of deprecated_paths) {
-      paths.push(p.path)
+  const methods = paths.reduce((acc, val) => {
+    for (const method of val.methods) {
+      if (!acc.includes(method)) acc.push(method)
+    }
+    return acc
+  }, [])
+  const parts = paths.reduce((acc, val) => {
+    if (!val.parts) return acc
+    for (const part of Object.keys(val.parts)) {
+      if (!acc.includes(part)) acc.push(part)
+    }
+    return acc
+  }, [])
+
+  // get the required parts from the url
+  // if the url has at least one static path,
+  // then there are not required parts of the url
+  var allParts = []
+  for (const path of paths) {
+    if (path.parts) {
+      allParts.push(Object.keys(path.parts))
+    } else {
+      allParts = []
+      break
     }
   }
-
-  for (const key in parts) {
-    if (parts[key].required) {
-      required.push(key)
-    }
+  if (allParts.length > 0) {
+    intersect(...allParts).forEach(r => required.push(r))
   }
 
   for (const key in params) {
@@ -127,10 +145,6 @@ function generate (version, spec, common) {
     var { ${genQueryBlacklist(false)}, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      ${generatePickMethod(methods)}
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -166,7 +180,6 @@ function generate (version, spec, common) {
   function build${name[0].toUpperCase() + name.slice(1)} (opts) {
     // eslint-disable-next-line no-unused-vars
     const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-    ${generateDocumentation(spec[api], api)}
 
     const acceptedQuerystring = [
       ${acceptedQuerystring.map(q => `'${q}'`).join(',\n')}
@@ -176,6 +189,7 @@ function generate (version, spec, common) {
       ${genSnakeCaseMap()}
     }
 
+    ${generateDocumentation(spec[api], api)}
     return ${code}
   }
 
@@ -258,13 +272,11 @@ function generate (version, spec, common) {
     }
 
     const blacklist = ['method', 'body']
-    if (typeof parts === 'object' && parts !== null) {
-      Object.keys(parts).forEach(p => {
-        const camelStr = toCamelCase(p)
-        if (camelStr !== p) blacklist.push(`${camelStr}`)
-        blacklist.push(`${p}`)
-      })
-    }
+    parts.forEach(p => {
+      const camelStr = toCamelCase(p)
+      if (camelStr !== p) blacklist.push(`${camelStr}`)
+      blacklist.push(`${p}`)
+    })
     return addQuotes ? blacklist.map(q => `'${q}'`) : blacklist
   }
 
@@ -300,44 +312,88 @@ function generate (version, spec, common) {
       return path.length > 0 ? ('\'/\' + ' + path) : '\'/\''
     }
 
-    var code = ''
     var hasStaticPath = false
-    var singlePathComponent = false
-    paths
-      .filter(path => {
-        if (path.indexOf('{') > -1) return true
-        if (hasStaticPath === false) {
+    const sortedPaths = paths
+      // some legacy API have mutliple statis paths
+      // this filter removes them
+      .filter(p => {
+        if (p.path.includes('{')) return true
+        if (hasStaticPath === false && p.deprecated == null) {
           hasStaticPath = true
           return true
         }
         return false
       })
-      .sort((a, b) => (b.split('{').length + b.split('/').length) - (a.split('{').length + a.split('/').length))
-      .forEach((path, index, arr) => {
-        if (arr.length === 1) {
-          singlePathComponent = true
-          code += `
-            path = ${genPath(path)}
-          `
-        } else if (index === 0) {
-          code += `
-            if (${genCheck(path)}) {
-              path = ${genPath(path)}
-          `
-        } else if (index === arr.length - 1) {
-          code += `
-            } else {
-              path = ${genPath(path)}
-          `
-        } else {
-          code += `
-            } else if (${genCheck(path)}) {
-              path = ${genPath(path)}
-          `
-        }
-      })
+      // sort by number of parameters (desc)
+      .sort((a, b) => Object.keys(b.parts || {}).length - Object.keys(a.parts || {}).length)
 
-    code += singlePathComponent ? '' : '}'
+    var code = ''
+    for (var i = 0; i < sortedPaths.length; i++) {
+      const { path, methods } = sortedPaths[i]
+      if (sortedPaths.length === 1) {
+        code += `
+          if (method == null) method = ${generatePickMethod(methods)}
+          path = ${genPath(path)}
+        `
+      } else if (i === 0) {
+        code += `
+          if (${genCheck(path)}) {
+            if (method == null) method = ${generatePickMethod(methods)}
+            path = ${genPath(path)}
+          }
+        `
+      } else if (i === sortedPaths.length - 1) {
+        code += ` else {
+            if (method == null) method = ${generatePickMethod(methods)}
+            path = ${genPath(path)}
+          }
+        `
+      } else {
+        code += ` else if (${genCheck(path)}) {
+            if (method == null) method = ${generatePickMethod(methods)}
+            path = ${genPath(path)}
+          }
+        `
+      }
+    }
+
+    // var hasStaticPath = false
+    // var singlePathComponent = false
+    // paths
+    //   .filter(path => {
+    //     if (path.indexOf('{') > -1) return true
+    //     if (hasStaticPath === false) {
+    //       hasStaticPath = true
+    //       return true
+    //     }
+    //     return false
+    //   })
+    //   .sort((a, b) => (b.split('{').length + b.split('/').length) - (a.split('{').length + a.split('/').length))
+    //   .forEach((path, index, arr) => {
+    //     if (arr.length === 1) {
+    //       singlePathComponent = true
+    //       code += `
+    //         path = ${genPath(path)}
+    //       `
+    //     } else if (index === 0) {
+    //       code += `
+    //         if (${genCheck(path)}) {
+    //           path = ${genPath(path)}
+    //       `
+    //     } else if (index === arr.length - 1) {
+    //       code += `
+    //         } else {
+    //           path = ${genPath(path)}
+    //       `
+    //     } else {
+    //       code += `
+    //         } else if (${genCheck(path)}) {
+    //           path = ${genPath(path)}
+    //       `
+    //     }
+    //   })
+
+    // code += singlePathComponent ? '' : '}'
     return code
   }
 }
@@ -357,20 +413,16 @@ function safeWords (str) {
 
 function generatePickMethod (methods) {
   if (methods.length === 1) {
-    return `method = '${methods[0]}'`
+    return `'${methods[0]}'`
   }
   const bodyMethod = getBodyMethod(methods)
   const noBodyMethod = getNoBodyMethod(methods)
   if (bodyMethod && noBodyMethod) {
-    return `method = body == null ? '${noBodyMethod}' : '${bodyMethod}'`
+    return `body == null ? '${noBodyMethod}' : '${bodyMethod}'`
   } else if (bodyMethod) {
-    return `
-        method = '${bodyMethod}'
-    `.trim()
+    return `'${bodyMethod}'`
   } else {
-    return `
-        method = '${noBodyMethod}'
-    `.trim()
+    return `'${noBodyMethod}'`
   }
 }
 
@@ -407,7 +459,10 @@ function genUrlValidation (paths, api) {
   // then we reverse it. A parameters always require what is
   // at its right in the array.
   const chunks = paths
-    .reduce((a, b) => a.split('/').length > b.split('/').length ? a : b)
+    .sort((a, b) => Object.keys(a.parts || {}).length > Object.keys(b.parts || {}).length ? -1 : 1)
+    .slice(0, 1)
+    .reduce((acc, val) => val.path, '')
+    // .reduce((a, b) => a.path.split('/').length > b.path.split('/').length ? a.path : b.path)
     .split('/')
     .filter(s => s.startsWith('{'))
     .map(s => s.slice(1, -1))
@@ -458,32 +513,20 @@ function genUrlValidation (paths, api) {
   return code.trim()
 }
 
-function generateDocumentation (api, op) {
-  const { parts = {}, params = {} } = api.url
-  const { body } = api
-
+function generateDocumentation ({ documentation }, op) {
   // we use `replace(/\u00A0/g, ' ')` to remove no breaking spaces
   // because some parts of the description fields are using it
 
+  if (documentation == null) return ''
+
   var doc = '/**\n'
-  doc += `     * Perform a [${op}](${api.documentation}) request\n     *\n`
-  Object.keys(parts).forEach(part => {
-    const obj = parts[part]
-    const description = obj.description || ''
-    doc += `     * @param {${obj.type}} ${part} - ${description.replace(/\u00A0/g, ' ')}\n`
-  })
-
-  Object.keys(params).forEach(param => {
-    const obj = params[param]
-    const description = obj.description || ''
-    doc += `     * @param {${obj.type}} ${param} - ${description.replace(/\u00A0/g, ' ')}\n`
-  })
-
-  if (body) {
-    const description = body.description || ''
-    doc += `     * @param {${body.type || 'object'}} body - ${description.replace(/\u00A0/g, ' ')}\n`
+  doc += `     * Perform a ${op} request\n`
+  if (documentation.description) {
+    doc += `     * ${documentation.description.replace(/\u00A0/g, ' ')}\n`
   }
-
+  if (documentation.url) {
+    doc += `     * ${documentation.url}\n`
+  }
   doc += '     */'
 
   return doc
@@ -491,6 +534,12 @@ function generateDocumentation (api, op) {
 
 function needsPathValidation (api) {
   return noPathValidation.indexOf(api) === -1
+}
+
+function intersect (first, ...rest) {
+  return rest.reduce((accum, current) => {
+    return accum.filter(x => current.indexOf(x) !== -1)
+  }, first)
 }
 
 module.exports = generate

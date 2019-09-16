@@ -10,11 +10,6 @@
 function buildMlValidate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.validate](undefined) request
-   *
-   * @param {object} body - The job config
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,9 @@ function buildMlValidate (opts) {
 
   }
 
+  /**
+   * Perform a ml.validate request
+   */
   return function mlValidate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +50,6 @@ function buildMlValidate (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +57,7 @@ function buildMlValidate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_validate'
 
     // build request object

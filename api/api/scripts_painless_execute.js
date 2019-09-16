@@ -10,11 +10,6 @@
 function buildScriptsPainlessExecute (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [scripts_painless_execute](https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html) request
-   *
-   * @param {object} body - The script to execute
-   */
 
   const acceptedQuerystring = [
     'pretty',
@@ -29,6 +24,11 @@ function buildScriptsPainlessExecute (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a scripts_painless_execute request
+   * Allows an arbitrary script to be executed and a result to be returned
+   * https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
+   */
   return function scriptsPainlessExecute (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,10 +51,6 @@ function buildScriptsPainlessExecute (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -62,6 +58,7 @@ function buildScriptsPainlessExecute (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_scripts' + '/' + 'painless' + '/' + '_execute'
 
     // build request object

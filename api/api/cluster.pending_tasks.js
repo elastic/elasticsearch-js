@@ -10,12 +10,6 @@
 function buildClusterPendingTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.pending_tasks](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html) request
-   *
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
 
   const acceptedQuerystring = [
     'local',
@@ -33,6 +27,12 @@ function buildClusterPendingTasks (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.pending_tasks request
+   * Returns a list of any cluster-level changes (e.g. create index, update mapping,
+allocate or fail shard) which have not yet been executed.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html
+   */
   return function clusterPendingTasks (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -45,12 +45,6 @@ function buildClusterPendingTasks (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -61,10 +55,6 @@ function buildClusterPendingTasks (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,6 +62,7 @@ function buildClusterPendingTasks (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_cluster' + '/' + 'pending_tasks'
 
     // build request object

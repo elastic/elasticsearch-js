@@ -10,12 +10,6 @@
 function buildLicensePostStartTrial (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [license.post_start_trial](https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html) request
-   *
-   * @param {string} type - The type of trial license to generate (default: "trial")
-   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
-   */
 
   const acceptedQuerystring = [
     'type',
@@ -26,6 +20,10 @@ function buildLicensePostStartTrial (opts) {
 
   }
 
+  /**
+   * Perform a license.post_start_trial request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html
+   */
   return function licensePostStartTrial (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -38,12 +36,6 @@ function buildLicensePostStartTrial (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -54,10 +46,6 @@ function buildLicensePostStartTrial (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -65,13 +53,14 @@ function buildLicensePostStartTrial (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_license' + '/' + 'start_trial'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,16 +10,6 @@
 function buildIndicesClone (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.clone](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html) request
-   *
-   * @param {string} index - The name of the source index to clone
-   * @param {string} target - The name of the target index to clone into
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the cloned index before the operation returns.
-   * @param {object} body - The configuration for the target index (`settings` and `aliases`)
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -39,6 +29,11 @@ function buildIndicesClone (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.clone request
+   * Clones an index
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html
+   */
   return function indicesClone (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -77,10 +72,6 @@ function buildIndicesClone (opts) {
     var { method, body, index, target, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -88,6 +79,7 @@ function buildIndicesClone (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_clone' + '/' + encodeURIComponent(target)
 
     // build request object

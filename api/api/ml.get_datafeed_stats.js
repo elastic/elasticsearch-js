@@ -10,12 +10,6 @@
 function buildMlGetDatafeedStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_datafeed_stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html) request
-   *
-   * @param {string} datafeed_id - The ID of the datafeeds stats to fetch
-   * @param {boolean} allow_no_datafeeds - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-   */
 
   const acceptedQuerystring = [
     'allow_no_datafeeds'
@@ -25,6 +19,10 @@ function buildMlGetDatafeedStats (opts) {
     allowNoDatafeeds: 'allow_no_datafeeds'
   }
 
+  /**
+   * Perform a ml.get_datafeed_stats request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+   */
   return function mlGetDatafeedStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,12 +35,6 @@ function buildMlGetDatafeedStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -53,10 +45,6 @@ function buildMlGetDatafeedStats (opts) {
     var { method, body, datafeedId, datafeed_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -65,8 +53,10 @@ function buildMlGetDatafeedStats (opts) {
     var path = ''
 
     if ((datafeed_id || datafeedId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stats'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'datafeeds' + '/' + '_stats'
     }
 

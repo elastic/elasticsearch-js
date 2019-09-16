@@ -10,15 +10,6 @@
 function buildMlStartDatafeed (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.start_datafeed](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html) request
-   *
-   * @param {string} datafeed_id - The ID of the datafeed to start
-   * @param {string} start - The start time from where the datafeed should begin
-   * @param {string} end - The end time when the datafeed should stop. When not set, the datafeed continues in real time
-   * @param {time} timeout - Controls the time to wait until a datafeed has started. Default to 20 seconds
-   * @param {object} body - The start datafeed parameters
-   */
 
   const acceptedQuerystring = [
     'start',
@@ -30,6 +21,10 @@ function buildMlStartDatafeed (opts) {
 
   }
 
+  /**
+   * Perform a ml.start_datafeed request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
+   */
   return function mlStartDatafeed (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,10 +53,6 @@ function buildMlStartDatafeed (opts) {
     var { method, body, datafeedId, datafeed_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +60,7 @@ function buildMlStartDatafeed (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_start'
 
     // build request object

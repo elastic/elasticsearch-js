@@ -10,13 +10,6 @@
 function buildIndicesRecovery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.recovery](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-   * @param {boolean} detailed - Whether to display detailed information about shard recovery
-   * @param {boolean} active_only - Display only those recoveries that are currently on-going
-   */
 
   const acceptedQuerystring = [
     'detailed',
@@ -34,6 +27,11 @@ function buildIndicesRecovery (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.recovery request
+   * Returns information about ongoing index shard recoveries.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html
+   */
   return function indicesRecovery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,12 +44,6 @@ function buildIndicesRecovery (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -62,10 +54,6 @@ function buildIndicesRecovery (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -74,8 +62,10 @@ function buildIndicesRecovery (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_recovery'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_recovery'
     }
 

@@ -10,13 +10,6 @@
 function buildWatcherStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html) request
-   *
-   * @param {list} metric - Controls what additional stat metrics should be include in the response
-   * @param {list} metric - Controls what additional stat metrics should be include in the response
-   * @param {boolean} emit_stacktraces - Emits stack traces of currently running watches
-   */
 
   const acceptedQuerystring = [
     'metric',
@@ -27,6 +20,10 @@ function buildWatcherStats (opts) {
     emitStacktraces: 'emit_stacktraces'
   }
 
+  /**
+   * Perform a watcher.stats request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
+   */
   return function watcherStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -39,12 +36,6 @@ function buildWatcherStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -55,10 +46,6 @@ function buildWatcherStats (opts) {
     var { method, body, metric, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,8 +54,10 @@ function buildWatcherStats (opts) {
     var path = ''
 
     if ((metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_watcher' + '/' + 'stats'
     }
 

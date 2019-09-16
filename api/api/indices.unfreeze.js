@@ -10,17 +10,6 @@
 function buildIndicesUnfreeze (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.unfreeze](https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html) request
-   *
-   * @param {string} index - The name of the index to unfreeze
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -39,6 +28,10 @@ function buildIndicesUnfreeze (opts) {
     waitForActiveShards: 'wait_for_active_shards'
   }
 
+  /**
+   * Perform a indices.unfreeze request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
+   */
   return function indicesUnfreeze (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -56,10 +49,6 @@ function buildIndicesUnfreeze (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -71,10 +60,6 @@ function buildIndicesUnfreeze (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -82,13 +67,14 @@ function buildIndicesUnfreeze (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_unfreeze'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,18 +10,6 @@
 function buildIndicesRollover (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.rollover](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html) request
-   *
-   * @param {string} alias - The name of the alias to rollover
-   * @param {string} new_index - The name of the rollover index
-   * @param {boolean} include_type_name - Whether a type should be included in the body of the mappings.
-   * @param {time} timeout - Explicit operation timeout
-   * @param {boolean} dry_run - If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
-   * @param {object} body - The conditions that needs to be met for executing rollover
-   */
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -45,6 +33,12 @@ function buildIndicesRollover (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.rollover request
+   * Updates an alias to point to a new index when the existing index
+is considered to be too large or too old.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html
+   */
   return function indicesRollover (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -79,10 +73,6 @@ function buildIndicesRollover (opts) {
     var { method, body, alias, newIndex, new_index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -91,8 +81,10 @@ function buildIndicesRollover (opts) {
     var path = ''
 
     if ((alias) != null && (new_index || newIndex) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(alias) + '/' + '_rollover' + '/' + encodeURIComponent(new_index || newIndex)
     } else {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(alias) + '/' + '_rollover'
     }
 

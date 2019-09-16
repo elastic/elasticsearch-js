@@ -10,22 +10,6 @@
 function buildClusterHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.health](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
-   *
-   * @param {list} index - Limit the information returned to a specific index
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {enum} level - Specify the level of detail for returned information
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {string} wait_for_active_shards - Wait until the specified number of shards is active
-   * @param {string} wait_for_nodes - Wait until the specified number of nodes is available
-   * @param {enum} wait_for_events - Wait until all currently queued events with the given priority are processed
-   * @param {boolean} wait_for_no_relocating_shards - Whether to wait until there are no relocating shards in the cluster
-   * @param {boolean} wait_for_no_initializing_shards - Whether to wait until there are no initializing shards in the cluster
-   * @param {enum} wait_for_status - Wait until cluster is in a specific state
-   */
 
   const acceptedQuerystring = [
     'expand_wildcards',
@@ -59,6 +43,11 @@ function buildClusterHealth (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.health request
+   * Returns basic information about the health of the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html
+   */
   return function clusterHealth (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -71,12 +60,6 @@ function buildClusterHealth (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -87,10 +70,6 @@ function buildClusterHealth (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -99,8 +78,10 @@ function buildClusterHealth (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(index)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'health'
     }
 
