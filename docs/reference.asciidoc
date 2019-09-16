@@ -8218,7 +8218,7 @@ link:{ref}/slm-api-get.html[Reference]
 ----
 client.slm.getStats()
 ----
-link:{ref}/slm-api.html[Reference]
+link:{ref}/slm-get-stats.html[Reference]
 
 
 === slm.putLifecycle
