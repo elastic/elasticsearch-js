@@ -10,6 +10,7 @@
 function buildIndicesForcemerge (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.forcemerge](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html) request
    *
@@ -21,6 +22,8 @@ function buildIndicesForcemerge (opts) {
    * @param {number} max_num_segments - The number of segments the index should be merged into (default: dynamic)
    * @param {boolean} only_expunge_deletes - Specify whether the operation should only expunge deleted documents
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'flush',
@@ -46,6 +49,11 @@ function buildIndicesForcemerge (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.forcemerge request
+   * Performs the force merge operation on one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
+   */
   return function indicesForcemerge (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,12 +66,6 @@ function buildIndicesForcemerge (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -74,10 +76,6 @@ function buildIndicesForcemerge (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,8 +84,10 @@ function buildIndicesForcemerge (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_forcemerge'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_forcemerge'
     }
 
@@ -95,7 +95,7 @@ function buildIndicesForcemerge (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

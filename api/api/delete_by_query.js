@@ -10,6 +10,7 @@
 function buildDeleteByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html) request
    *
@@ -50,6 +51,8 @@ function buildDeleteByQuery (opts) {
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'analyzer',
@@ -117,6 +120,11 @@ function buildDeleteByQuery (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a delete_by_query request
+   * Deletes documents matching the provided query.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html
+   */
   return function deleteByQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -155,10 +163,6 @@ function buildDeleteByQuery (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -166,11 +170,16 @@ function buildDeleteByQuery (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_delete_by_query'
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query'
     }
+=======
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query'
+>>>>>>> 69247496... Update code generation (#969)
 
     // build request object
     const request = {

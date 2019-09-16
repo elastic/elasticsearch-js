@@ -10,6 +10,7 @@
 function buildSnapshotGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [snapshot.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -19,6 +20,8 @@ function buildSnapshotGet (opts) {
    * @param {boolean} ignore_unavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
    * @param {boolean} verbose - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -38,6 +41,11 @@ function buildSnapshotGet (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.get request
+   * Returns information about a snapshot.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -59,10 +67,6 @@ function buildSnapshotGet (opts) {
       const err = new ConfigurationError('Missing required parameter: snapshot')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if (params['snapshot'] != null && (params['repository'] == null)) {
@@ -80,10 +84,6 @@ function buildSnapshotGet (opts) {
     var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -91,6 +91,7 @@ function buildSnapshotGet (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
     // build request object

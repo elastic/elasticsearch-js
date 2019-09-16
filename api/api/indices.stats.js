@@ -10,6 +10,7 @@
 function buildIndicesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html) request
    *
@@ -26,6 +27,8 @@ function buildIndicesStats (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {boolean} forbid_closed_indices - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'completion_fields',
@@ -56,6 +59,11 @@ function buildIndicesStats (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.stats request
+   * Provides statistics on operations happening in an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+   */
   return function indicesStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -68,12 +76,6 @@ function buildIndicesStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -81,12 +83,8 @@ function buildIndicesStats (opts) {
     }
 
     var warnings = []
-    var { method, body, index, metric, ...querystring } = params
+    var { method, body, metric, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    if (method == null) {
-      method = 'GET'
-    }
 
     var ignore = options.ignore
     if (typeof ignore === 'number') {
@@ -96,12 +94,16 @@ function buildIndicesStats (opts) {
     var path = ''
 
     if ((index) != null && (metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/' + encodeURIComponent(metric)
     } else if ((metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_stats' + '/' + encodeURIComponent(metric)
     } else if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_stats'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_stats'
     }
 

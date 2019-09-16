@@ -10,12 +10,6 @@
 function buildSecurityHasPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.has_privileges](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html) request
-   *
-   * @param {string} user - Username
-   * @param {object} body - The privileges to test
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildSecurityHasPrivileges (opts) {
 
   }
 
+  /**
+   * Perform a security.has_privileges request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
+   */
   return function securityHasPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,10 +51,6 @@ function buildSecurityHasPrivileges (opts) {
     var { method, body, user, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -65,8 +59,10 @@ function buildSecurityHasPrivileges (opts) {
     var path = ''
 
     if ((user) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(user) + '/' + '_has_privileges'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_security' + '/' + 'user' + '/' + '_has_privileges'
     }
 

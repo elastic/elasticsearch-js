@@ -10,6 +10,7 @@
 function buildCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [create](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
@@ -25,6 +26,8 @@ function buildCreate (opts) {
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The document
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -48,6 +51,13 @@ function buildCreate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a create request
+   * Creates a new document in the index.
+
+Returns a 409 response when a document with a same ID already exists in the index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+   */
   return function create (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -84,10 +94,6 @@ function buildCreate (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -96,8 +102,10 @@ function buildCreate (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
     }
 

@@ -10,6 +10,7 @@
 function buildIndicesUpgrade (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.upgrade](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
    *
@@ -20,6 +21,8 @@ function buildIndicesUpgrade (opts) {
    * @param {boolean} wait_for_completion - Specify whether the request should block until the all segments are upgraded (default: false)
    * @param {boolean} only_ancient_segments - If true, only ancient (an older Lucene major release) segments will be upgraded
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'allow_no_indices',
@@ -44,6 +47,11 @@ function buildIndicesUpgrade (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.upgrade request
+   * The _upgrade API is no longer useful and will be removed.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+   */
   return function indicesUpgrade (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -56,12 +64,6 @@ function buildIndicesUpgrade (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -72,10 +74,6 @@ function buildIndicesUpgrade (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -84,8 +82,10 @@ function buildIndicesUpgrade (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_upgrade'
     }
 
@@ -93,7 +93,7 @@ function buildIndicesUpgrade (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

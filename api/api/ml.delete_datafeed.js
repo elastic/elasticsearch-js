@@ -10,12 +10,6 @@
 function buildMlDeleteDatafeed (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_datafeed](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html) request
-   *
-   * @param {string} datafeed_id - The ID of the datafeed to delete
-   * @param {boolean} force - True if the datafeed should be forcefully deleted
-   */
 
   const acceptedQuerystring = [
     'force'
@@ -25,6 +19,10 @@ function buildMlDeleteDatafeed (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_datafeed request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+   */
   return function mlDeleteDatafeed (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,10 +40,6 @@ function buildMlDeleteDatafeed (opts) {
       const err = new ConfigurationError('Missing required parameter: datafeed_id or datafeedId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -57,10 +51,6 @@ function buildMlDeleteDatafeed (opts) {
     var { method, body, datafeedId, datafeed_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,13 +58,14 @@ function buildMlDeleteDatafeed (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

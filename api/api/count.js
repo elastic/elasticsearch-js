@@ -10,6 +10,7 @@
 function buildCount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [count](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html) request
    *
@@ -31,6 +32,8 @@ function buildCount (opts) {
    * @param {number} terminate_after - The maximum count for each shard, upon reaching which the query execution will terminate early
    * @param {object} body - A query to restrict the results specified with the Query DSL (optional)
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -67,6 +70,11 @@ function buildCount (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a count request
+   * Returns number of documents matching a query.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+   */
   return function count (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -92,12 +100,8 @@ function buildCount (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
 
     var ignore = options.ignore
     if (typeof ignore === 'number') {
@@ -106,11 +110,17 @@ function buildCount (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_count'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_count'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_count'
     }
 

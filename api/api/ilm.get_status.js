@@ -10,10 +10,6 @@
 function buildIlmGetStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ilm.get_status](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html) request
-   *
-   */
 
   const acceptedQuerystring = [
 
@@ -23,6 +19,10 @@ function buildIlmGetStatus (opts) {
 
   }
 
+  /**
+   * Perform a ilm.get_status request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
+   */
   return function ilmGetStatus (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -35,12 +35,6 @@ function buildIlmGetStatus (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -51,10 +45,6 @@ function buildIlmGetStatus (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -62,6 +52,7 @@ function buildIlmGetStatus (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_ilm' + '/' + 'status'
 
     // build request object

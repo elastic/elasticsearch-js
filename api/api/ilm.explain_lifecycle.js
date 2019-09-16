@@ -10,11 +10,14 @@
 function buildIlmExplainLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [ilm.explain_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html) request
    *
    * @param {string} index - The name of the index to explain
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
 
@@ -24,6 +27,10 @@ function buildIlmExplainLifecycle (opts) {
 
   }
 
+  /**
+   * Perform a ilm.explain_lifecycle request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
+   */
   return function ilmExplainLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,8 +44,8 @@ function buildIlmExplainLifecycle (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
@@ -52,10 +59,6 @@ function buildIlmExplainLifecycle (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +66,7 @@ function buildIlmExplainLifecycle (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'explain'
 
     // build request object

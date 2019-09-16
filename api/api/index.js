@@ -10,6 +10,7 @@
 function buildIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [index](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html) request
    *
@@ -28,6 +29,8 @@ function buildIndex (opts) {
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The document
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -57,6 +60,11 @@ function buildIndex (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a index request
+   * Creates or updates a document in an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
+   */
   return function _index (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -89,10 +97,6 @@ function buildIndex (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -101,12 +105,16 @@ function buildIndex (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else if ((index) != null && (id) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc'
     }
 

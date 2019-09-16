@@ -555,7 +555,24 @@ declare class Client extends EventEmitter {
     put_user: ApiMethod<RequestParams.SecurityPutUser>
     putUser: ApiMethod<RequestParams.SecurityPutUser>
   }
+<<<<<<< HEAD
+=======
+  slm: {
+    delete_lifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
+    deleteLifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
+    execute_lifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
+    executeLifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
+    get_lifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
+    getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
+    get_stats: ApiMethod<RequestParams.SlmGetStats>
+    getStats: ApiMethod<RequestParams.SlmGetStats>
+    put_lifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
+    putLifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
+  }
+>>>>>>> 69247496... Update code generation (#969)
   snapshot: {
+    cleanup_repository: ApiMethod<RequestParams.SnapshotCleanupRepository>
+    cleanupRepository: ApiMethod<RequestParams.SnapshotCleanupRepository>
     create: ApiMethod<RequestParams.SnapshotCreate>
     create_repository: ApiMethod<RequestParams.SnapshotCreateRepository>
     createRepository: ApiMethod<RequestParams.SnapshotCreateRepository>

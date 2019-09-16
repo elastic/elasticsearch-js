@@ -10,6 +10,7 @@
 function buildSnapshotGetRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [snapshot.get_repository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -17,6 +18,8 @@ function buildSnapshotGetRepository (opts) {
    * @param {time} master_timeout - Explicit operation timeout for connection to master node
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -34,6 +37,11 @@ function buildSnapshotGetRepository (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.get_repository request
+   * Returns information about a repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotGetRepository (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,12 +54,6 @@ function buildSnapshotGetRepository (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -62,10 +64,6 @@ function buildSnapshotGetRepository (opts) {
     var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -74,8 +72,10 @@ function buildSnapshotGetRepository (opts) {
     var path = ''
 
     if ((repository) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_snapshot'
     }
 

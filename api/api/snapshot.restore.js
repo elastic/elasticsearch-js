@@ -10,6 +10,7 @@
 function buildSnapshotRestore (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [snapshot.restore](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -19,6 +20,8 @@ function buildSnapshotRestore (opts) {
    * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    * @param {object} body - Details of what to restore
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -37,6 +40,11 @@ function buildSnapshotRestore (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.restore request
+   * Restores a snapshot.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotRestore (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -75,10 +83,6 @@ function buildSnapshotRestore (opts) {
     var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,6 +90,7 @@ function buildSnapshotRestore (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_restore'
 
     // build request object

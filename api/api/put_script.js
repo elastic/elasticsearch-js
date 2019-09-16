@@ -10,6 +10,7 @@
 function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [put_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
    *
@@ -20,6 +21,8 @@ function buildPutScript (opts) {
    * @param {string} context - Context name to compile script against
    * @param {object} body - The document
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',
@@ -38,6 +41,11 @@ function buildPutScript (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a put_script request
+   * Creates or updates a script.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+   */
   return function putScript (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -76,10 +84,6 @@ function buildPutScript (opts) {
     var { method, body, id, context, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -88,8 +92,10 @@ function buildPutScript (opts) {
     var path = ''
 
     if ((id) != null && (context) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context)
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + '_scripts' + '/' + encodeURIComponent(id)
     }
 

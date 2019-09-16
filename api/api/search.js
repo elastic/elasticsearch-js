@@ -10,6 +10,7 @@
 function buildSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [search](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html) request
    *
@@ -59,6 +60,8 @@ function buildSearch (opts) {
    * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
    * @param {object} body - The search definition using the Query DSL
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'analyzer',
@@ -146,6 +149,11 @@ function buildSearch (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a search request
+   * Returns results matching a query.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
+   */
   return function search (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -174,10 +182,6 @@ function buildSearch (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -185,11 +189,17 @@ function buildSearch (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_search'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_search'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_search'
     }
 

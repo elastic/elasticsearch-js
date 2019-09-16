@@ -10,6 +10,7 @@
 function buildUpdateByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [update_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
    *
@@ -52,6 +53,8 @@ function buildUpdateByQuery (opts) {
    * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
    * @param {object} body - The search definition using the Query DSL
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'analyzer',
@@ -122,6 +125,12 @@ function buildUpdateByQuery (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a update_by_query request
+   * Performs an update on every document in the index without changing the source,
+for example to pick up a mapping change.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+   */
   return function updateByQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -156,10 +165,6 @@ function buildUpdateByQuery (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -167,11 +172,16 @@ function buildUpdateByQuery (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_update_by_query'
     } else {
       path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
     }
+=======
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
+>>>>>>> 69247496... Update code generation (#969)
 
     // build request object
     const request = {

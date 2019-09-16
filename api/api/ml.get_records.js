@@ -10,20 +10,6 @@
 function buildMlGetRecords (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_records](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html) request
-   *
-   * @param {string} job_id -
-   * @param {boolean} exclude_interim - Exclude interim results
-   * @param {int} from - skips a number of records
-   * @param {int} size - specifies a max number of records to get
-   * @param {string} start - Start time filter for records
-   * @param {string} end - End time filter for records
-   * @param {double} record_score -
-   * @param {string} sort - Sort records by a particular field
-   * @param {boolean} desc - Set the sort direction
-   * @param {object} body - Record selection criteria
-   */
 
   const acceptedQuerystring = [
     'exclude_interim',
@@ -42,6 +28,10 @@ function buildMlGetRecords (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_records request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
+   */
   return function mlGetRecords (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -70,10 +60,6 @@ function buildMlGetRecords (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -81,6 +67,7 @@ function buildMlGetRecords (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'records'
 
     // build request object

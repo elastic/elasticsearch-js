@@ -10,6 +10,7 @@
 function buildIndicesDeleteAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.delete_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
    *
@@ -18,6 +19,8 @@ function buildIndicesDeleteAlias (opts) {
    * @param {time} timeout - Explicit timestamp for the document
    * @param {time} master_timeout - Specify timeout for connection to master
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',
@@ -35,6 +38,11 @@ function buildIndicesDeleteAlias (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.delete_alias request
+   * Deletes an alias.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+   */
   return function indicesDeleteAlias (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -56,10 +64,6 @@ function buildIndicesDeleteAlias (opts) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if (params['name'] != null && (params['index'] == null)) {
@@ -77,10 +81,6 @@ function buildIndicesDeleteAlias (opts) {
     var { method, body, index, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -89,16 +89,18 @@ function buildIndicesDeleteAlias (opts) {
     var path = ''
 
     if ((index) != null && (name) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
-    } else {
+      if (method == null) method = 'DELETE'
       path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'DELETE'
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

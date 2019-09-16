@@ -10,6 +10,7 @@
 function buildMsearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [msearch](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html) request
    *
@@ -24,6 +25,8 @@ function buildMsearch (opts) {
    * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'search_type',
@@ -52,6 +55,11 @@ function buildMsearch (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a msearch request
+   * Allows to execute several search operations in one request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
+   */
   return function msearch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -86,10 +94,6 @@ function buildMsearch (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -97,11 +101,17 @@ function buildMsearch (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_msearch'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_msearch'
     }
 

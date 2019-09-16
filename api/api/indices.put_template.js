@@ -10,6 +10,7 @@
 function buildIndicesPutTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.put_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
    *
@@ -22,6 +23,8 @@ function buildIndicesPutTemplate (opts) {
    * @param {boolean} flat_settings - Return settings in flat format (default: false)
    * @param {object} body - The template definition
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -45,6 +48,11 @@ function buildIndicesPutTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.put_template request
+   * Creates or updates an index template.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   */
   return function indicesPutTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -77,10 +85,6 @@ function buildIndicesPutTemplate (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -88,6 +92,7 @@ function buildIndicesPutTemplate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_template' + '/' + encodeURIComponent(name)
 
     // build request object

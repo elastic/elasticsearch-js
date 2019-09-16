@@ -10,6 +10,7 @@
 function buildNodesHotThreads (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [nodes.hot_threads](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html) request
    *
@@ -21,6 +22,8 @@ function buildNodesHotThreads (opts) {
    * @param {enum} type - The type to sample (default: cpu)
    * @param {time} timeout - Explicit operation timeout
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'interval',
@@ -42,6 +45,11 @@ function buildNodesHotThreads (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a nodes.hot_threads request
+   * Returns information about hot threads on each node in the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
+   */
   return function nodesHotThreads (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,12 +62,6 @@ function buildNodesHotThreads (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -70,10 +72,6 @@ function buildNodesHotThreads (opts) {
     var { method, body, nodeId, node_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -82,14 +80,19 @@ function buildNodesHotThreads (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null) {
-      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
-    } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
     } else if ((node_id || nodeId) != null) {
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
-    } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
+    } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
+    } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'hot_threads'
     }
 

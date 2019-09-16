@@ -10,13 +10,6 @@
 function buildRollupStopJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [rollup.stop_job]() request
-   *
-   * @param {string} id - The ID of the job to stop
-   * @param {boolean} wait_for_completion - True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
-   * @param {time} timeout - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-   */
 
   const acceptedQuerystring = [
     'wait_for_completion',
@@ -28,6 +21,9 @@ function buildRollupStopJob (opts) {
 
   }
 
+  /**
+   * Perform a rollup.stop_job request
+   */
   return function rollupStopJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -56,10 +52,6 @@ function buildRollupStopJob (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,6 +59,7 @@ function buildRollupStopJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_stop'
 
     // build request object

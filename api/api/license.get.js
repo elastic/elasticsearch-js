@@ -10,11 +10,6 @@
 function buildLicenseGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [license.get](https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html) request
-   *
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
 
   const acceptedQuerystring = [
     'local'
@@ -24,6 +19,10 @@ function buildLicenseGet (opts) {
 
   }
 
+  /**
+   * Perform a license.get request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
+   */
   return function licenseGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,12 +35,6 @@ function buildLicenseGet (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -52,10 +45,6 @@ function buildLicenseGet (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +52,7 @@ function buildLicenseGet (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_license'
 
     // build request object

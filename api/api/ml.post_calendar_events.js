@@ -10,12 +10,6 @@
 function buildMlPostCalendarEvents (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.post_calendar_events](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar to modify
-   * @param {object} body - A list of events
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,9 @@ function buildMlPostCalendarEvents (opts) {
 
   }
 
+  /**
+   * Perform a ml.post_calendar_events request
+   */
   return function mlPostCalendarEvents (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +54,6 @@ function buildMlPostCalendarEvents (opts) {
     var { method, body, calendarId, calendar_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +61,7 @@ function buildMlPostCalendarEvents (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
 
     // build request object

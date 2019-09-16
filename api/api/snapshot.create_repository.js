@@ -10,6 +10,7 @@
 function buildSnapshotCreateRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [snapshot.create_repository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -19,6 +20,8 @@ function buildSnapshotCreateRepository (opts) {
    * @param {boolean} verify - Whether to verify the repository after creation
    * @param {object} body - The repository definition
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -37,6 +40,11 @@ function buildSnapshotCreateRepository (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.create_repository request
+   * Creates a repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotCreateRepository (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -69,10 +77,6 @@ function buildSnapshotCreateRepository (opts) {
     var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -80,6 +84,7 @@ function buildSnapshotCreateRepository (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
 
     // build request object

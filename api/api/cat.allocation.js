@@ -10,6 +10,7 @@
 function buildCatAllocation (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cat.allocation](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html) request
    *
@@ -23,6 +24,8 @@ function buildCatAllocation (opts) {
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    * @param {boolean} v - Verbose mode. Display column headers
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',
@@ -46,6 +49,11 @@ function buildCatAllocation (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.allocation request
+   * Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
+   */
   return function catAllocation (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,12 +66,6 @@ function buildCatAllocation (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -74,10 +76,6 @@ function buildCatAllocation (opts) {
     var { method, body, nodeId, node_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,8 +84,10 @@ function buildCatAllocation (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'allocation' + '/' + encodeURIComponent(node_id || nodeId)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'allocation'
     }
 

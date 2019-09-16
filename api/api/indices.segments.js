@@ -10,6 +10,7 @@
 function buildIndicesSegments (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html) request
    *
@@ -19,6 +20,8 @@ function buildIndicesSegments (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {boolean} verbose - Includes detailed memory usage by Lucene.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -40,6 +43,11 @@ function buildIndicesSegments (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.segments request
+   * Provides low-level information about segments in a Lucene index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html
+   */
   return function indicesSegments (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,12 +60,6 @@ function buildIndicesSegments (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -68,10 +70,6 @@ function buildIndicesSegments (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -80,8 +78,10 @@ function buildIndicesSegments (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_segments'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_segments'
     }
 

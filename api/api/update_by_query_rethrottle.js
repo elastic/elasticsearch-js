@@ -10,12 +10,6 @@
 function buildUpdateByQueryRethrottle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [update_by_query_rethrottle](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html) request
-   *
-   * @param {string} task_id - The task id to rethrottle
-   * @param {number} requests_per_second - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-   */
 
   const acceptedQuerystring = [
     'requests_per_second',
@@ -32,6 +26,11 @@ function buildUpdateByQueryRethrottle (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a update_by_query_rethrottle request
+   * Changes the number of requests per second for a particular Update By Query operation.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
+   */
   return function updateByQueryRethrottle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,10 +52,6 @@ function buildUpdateByQueryRethrottle (opts) {
       const err = new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -68,10 +63,6 @@ function buildUpdateByQueryRethrottle (opts) {
     var { method, body, taskId, task_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -79,13 +70,14 @@ function buildUpdateByQueryRethrottle (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_update_by_query' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,6 +10,7 @@
 function buildExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html) request
    *
@@ -30,6 +31,8 @@ function buildExplain (opts) {
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {object} body - The query definition using the Query DSL
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'analyze_wildcard',
@@ -65,6 +68,11 @@ function buildExplain (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a explain request
+   * Returns information about why a specific matches (or doesn't match) a query.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
+   */
   return function explain (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -97,10 +105,6 @@ function buildExplain (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -109,8 +113,10 @@ function buildExplain (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_explain'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id)
     }
 

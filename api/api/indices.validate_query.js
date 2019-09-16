@@ -10,6 +10,7 @@
 function buildIndicesValidateQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.validate_query](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html) request
    *
@@ -29,6 +30,8 @@ function buildIndicesValidateQuery (opts) {
    * @param {boolean} all_shards - Execute validation on all shards instead of one random shard per index
    * @param {object} body - The query definition specified with the Query DSL
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'explain',
@@ -61,6 +64,11 @@ function buildIndicesValidateQuery (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.validate_query request
+   * Allows a user to validate a potentially expensive query without executing it.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+   */
   return function indicesValidateQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -89,10 +97,6 @@ function buildIndicesValidateQuery (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -101,10 +105,13 @@ function buildIndicesValidateQuery (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_validate' + '/' + 'query'
     } else if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_validate' + '/' + 'query'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_validate' + '/' + 'query'
     }
 

@@ -10,6 +10,7 @@
 function buildIndicesCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html) request
    *
@@ -20,6 +21,8 @@ function buildIndicesCreate (opts) {
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {object} body - The configuration for the index (`settings` and `mappings`)
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -41,6 +44,11 @@ function buildIndicesCreate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.create request
+   * Creates an index with optional settings and mappings.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
+   */
   return function indicesCreate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -69,10 +77,6 @@ function buildIndicesCreate (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -80,6 +84,7 @@ function buildIndicesCreate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index)
 
     // build request object

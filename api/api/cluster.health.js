@@ -10,6 +10,7 @@
 function buildClusterHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cluster.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
    *
@@ -26,6 +27,8 @@ function buildClusterHealth (opts) {
    * @param {boolean} wait_for_no_initializing_shards - Whether to wait until there are no initializing shards in the cluster
    * @param {enum} wait_for_status - Wait until cluster is in a specific state
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'expand_wildcards',
@@ -59,6 +62,11 @@ function buildClusterHealth (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.health request
+   * Returns basic information about the health of the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html
+   */
   return function clusterHealth (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -71,12 +79,6 @@ function buildClusterHealth (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -87,10 +89,6 @@ function buildClusterHealth (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -99,8 +97,10 @@ function buildClusterHealth (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(index)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'health'
     }
 

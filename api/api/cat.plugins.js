@@ -10,6 +10,7 @@
 function buildCatPlugins (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cat.plugins](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html) request
    *
@@ -21,6 +22,8 @@ function buildCatPlugins (opts) {
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    * @param {boolean} v - Verbose mode. Display column headers
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',
@@ -43,6 +46,11 @@ function buildCatPlugins (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.plugins request
+   * Returns information about installed plugins across nodes node.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
+   */
   return function catPlugins (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -55,12 +63,6 @@ function buildCatPlugins (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -71,10 +73,6 @@ function buildCatPlugins (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -82,6 +80,7 @@ function buildCatPlugins (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'plugins'
 
     // build request object

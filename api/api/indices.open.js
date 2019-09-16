@@ -10,6 +10,7 @@
 function buildIndicesOpen (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.open](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
    *
@@ -21,6 +22,8 @@ function buildIndicesOpen (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',
@@ -46,6 +49,11 @@ function buildIndicesOpen (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.open request
+   * Opens an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+   */
   return function indicesOpen (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -63,10 +71,6 @@ function buildIndicesOpen (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -78,10 +82,6 @@ function buildIndicesOpen (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -89,13 +89,14 @@ function buildIndicesOpen (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_open'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,6 +10,7 @@
 function buildMget (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [mget](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html) request
    *
@@ -25,6 +26,8 @@ function buildMget (opts) {
    * @param {list} _source_includes - A list of fields to extract and return from the _source field
    * @param {object} body - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'stored_fields',
@@ -54,6 +57,11 @@ function buildMget (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a mget request
+   * Allows to get multiple documents in one request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html
+   */
   return function mget (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -88,10 +96,6 @@ function buildMget (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -100,10 +104,13 @@ function buildMget (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mget'
     } else if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_mget'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_mget'
     }
 

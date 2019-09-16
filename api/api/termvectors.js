@@ -10,6 +10,7 @@
 function buildTermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [termvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
    *
@@ -29,6 +30,8 @@ function buildTermvectors (opts) {
    * @param {enum} version_type - Specific version type
    * @param {object} body - Define parameters and or supply a document to get termvectors for. See documentation.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'term_statistics',
@@ -57,6 +60,11 @@ function buildTermvectors (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a termvectors request
+   * Returns information and statistics about terms in the fields of a particular document.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
+   */
   return function termvectors (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -85,10 +93,6 @@ function buildTermvectors (opts) {
     var { method, body, index, type, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -96,13 +100,19 @@ function buildTermvectors (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null && (id) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
     } else if ((index) != null && (id) != null) {
+=======
+    if ((index) != null && (id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
     } else if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
     }
 

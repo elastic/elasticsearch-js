@@ -10,6 +10,7 @@
 function buildIndicesGetMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.get_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html) request
    *
@@ -22,6 +23,8 @@ function buildIndicesGetMapping (opts) {
    * @param {time} master_timeout - Specify timeout for connection to master
    * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -47,6 +50,11 @@ function buildIndicesGetMapping (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get_mapping request
+   * Returns mappings for one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+   */
   return function indicesGetMapping (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -59,12 +67,6 @@ function buildIndicesGetMapping (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -75,10 +77,6 @@ function buildIndicesGetMapping (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -87,12 +85,16 @@ function buildIndicesGetMapping (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
     } else if ((type) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_mapping'
     }
 

@@ -10,6 +10,7 @@
 function buildIndicesDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
    *
@@ -20,6 +21,8 @@ function buildIndicesDelete (opts) {
    * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
    * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',
@@ -43,6 +46,11 @@ function buildIndicesDelete (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.delete request
+   * Deletes an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
+   */
   return function indicesDelete (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -60,10 +68,6 @@ function buildIndicesDelete (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -75,10 +79,6 @@ function buildIndicesDelete (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,13 +86,14 @@ function buildIndicesDelete (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + encodeURIComponent(index)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

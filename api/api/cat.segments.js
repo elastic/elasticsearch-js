@@ -10,6 +10,7 @@
 function buildCatSegments (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cat.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html) request
    *
@@ -21,6 +22,8 @@ function buildCatSegments (opts) {
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    * @param {boolean} v - Verbose mode. Display column headers
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',
@@ -41,6 +44,11 @@ function buildCatSegments (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.segments request
+   * Provides low-level information about the segments in the shards of an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
+   */
   return function catSegments (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,12 +61,6 @@ function buildCatSegments (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -69,10 +71,6 @@ function buildCatSegments (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -81,8 +79,10 @@ function buildCatSegments (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'segments' + '/' + encodeURIComponent(index)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'segments'
     }
 

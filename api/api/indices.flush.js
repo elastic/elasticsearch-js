@@ -10,6 +10,7 @@
 function buildIndicesFlush (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.flush](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html) request
    *
@@ -20,6 +21,8 @@ function buildIndicesFlush (opts) {
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'force',
@@ -43,6 +46,11 @@ function buildIndicesFlush (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.flush request
+   * Performs the flush operation on one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html
+   */
   return function indicesFlush (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -55,12 +63,6 @@ function buildIndicesFlush (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -71,10 +73,6 @@ function buildIndicesFlush (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -83,8 +81,10 @@ function buildIndicesFlush (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_flush'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_flush'
     }
 
@@ -92,7 +92,7 @@ function buildIndicesFlush (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

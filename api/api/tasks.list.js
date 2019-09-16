@@ -10,6 +10,7 @@
 function buildTasksList (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
@@ -21,6 +22,8 @@ function buildTasksList (opts) {
    * @param {enum} group_by - Group tasks by nodes or parent/child relationships
    * @param {time} timeout - Explicit operation timeout
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'nodes',
@@ -45,6 +48,11 @@ function buildTasksList (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a tasks.list request
+   * Returns a list of tasks.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   */
   return function tasksList (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,12 +65,6 @@ function buildTasksList (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -73,10 +75,6 @@ function buildTasksList (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -84,6 +82,7 @@ function buildTasksList (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_tasks'
 
     // build request object

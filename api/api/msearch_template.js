@@ -10,6 +10,7 @@
 function buildMsearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [msearch_template](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) request
    *
@@ -22,6 +23,8 @@ function buildMsearchTemplate (opts) {
    * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'search_type',
@@ -46,6 +49,11 @@ function buildMsearchTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a msearch_template request
+   * Allows to execute several search template operations in one request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+   */
   return function msearchTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,10 +88,6 @@ function buildMsearchTemplate (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -91,11 +95,17 @@ function buildMsearchTemplate (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch' + '/' + 'template'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_msearch' + '/' + 'template'
     }
 

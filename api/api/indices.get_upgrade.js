@@ -10,6 +10,7 @@
 function buildIndicesGetUpgrade (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.get_upgrade](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
    *
@@ -18,6 +19,8 @@ function buildIndicesGetUpgrade (opts) {
    * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -38,6 +41,11 @@ function buildIndicesGetUpgrade (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get_upgrade request
+   * The _upgrade API is no longer useful and will be removed.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+   */
   return function indicesGetUpgrade (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -50,12 +58,6 @@ function buildIndicesGetUpgrade (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -66,10 +68,6 @@ function buildIndicesGetUpgrade (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,8 +76,10 @@ function buildIndicesGetUpgrade (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_upgrade'
     }
 

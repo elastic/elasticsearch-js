@@ -10,6 +10,7 @@
 function buildBulk (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [bulk](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html) request
    *
@@ -26,6 +27,8 @@ function buildBulk (opts) {
    * @param {string} pipeline - The pipeline id to preprocess incoming documents with
    * @param {object} body - The operation definition and data (action-data pairs), separated by newlines
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -56,6 +59,11 @@ function buildBulk (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a bulk request
+   * Allows to perform multiple index/update/delete operations in a single request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+   */
   return function bulk (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -90,10 +98,6 @@ function buildBulk (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -102,10 +106,13 @@ function buildBulk (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_bulk'
     } else if ((index) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_bulk'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_bulk'
     }
 

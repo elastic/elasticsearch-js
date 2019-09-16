@@ -10,6 +10,7 @@
 function buildMtermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [mtermvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html) request
    *
@@ -29,6 +30,8 @@ function buildMtermvectors (opts) {
    * @param {enum} version_type - Specific version type
    * @param {object} body - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'ids',
@@ -58,6 +61,11 @@ function buildMtermvectors (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a mtermvectors request
+   * Returns multiple termvectors in one request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+   */
   return function mtermvectors (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -86,10 +94,6 @@ function buildMtermvectors (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -97,11 +101,17 @@ function buildMtermvectors (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mtermvectors'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_mtermvectors'
     }
 

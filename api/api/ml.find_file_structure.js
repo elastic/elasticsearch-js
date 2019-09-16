@@ -10,25 +10,6 @@
 function buildMlFindFileStructure (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.find_file_structure](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html) request
-   *
-   * @param {int} lines_to_sample - How many lines of the file should be included in the analysis
-   * @param {int} line_merge_size_limit - Maximum number of characters permitted in a single message when lines are merged to create messages.
-   * @param {time} timeout - Timeout after which the analysis will be aborted
-   * @param {string} charset - Optional parameter to specify the character set of the file
-   * @param {enum} format - Optional parameter to specify the high level file format
-   * @param {boolean} has_header_row - Optional parameter to specify whether a delimited file includes the column names in its first row
-   * @param {list} column_names - Optional parameter containing a comma separated list of the column names for a delimited file
-   * @param {string} delimiter - Optional parameter to specify the delimiter character for a delimited file - must be a single character
-   * @param {string} quote - Optional parameter to specify the quote character for a delimited file - must be a single character
-   * @param {boolean} should_trim_fields - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
-   * @param {string} grok_pattern - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
-   * @param {string} timestamp_field - Optional parameter to specify the timestamp field in the file
-   * @param {string} timestamp_format - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
-   * @param {boolean} explain - Whether to include a commentary on how the structure was derived
-   * @param {object} body - The contents of the file to be analyzed
-   */
 
   const acceptedQuerystring = [
     'lines_to_sample',
@@ -59,6 +40,10 @@ function buildMlFindFileStructure (opts) {
 
   }
 
+  /**
+   * Perform a ml.find_file_structure request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html
+   */
   return function mlFindFileStructure (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -87,10 +72,6 @@ function buildMlFindFileStructure (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -98,6 +79,7 @@ function buildMlFindFileStructure (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'find_file_structure'
 
     // build request object

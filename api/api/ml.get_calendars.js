@@ -10,14 +10,6 @@
 function buildMlGetCalendars (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_calendars](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar to fetch
-   * @param {int} from - skips a number of calendars
-   * @param {int} size - specifies a max number of calendars to get
-   * @param {object} body - The from and size parameters optionally sent in the body
-   */
 
   const acceptedQuerystring = [
     'from',
@@ -28,6 +20,9 @@ function buildMlGetCalendars (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_calendars request
+   */
   return function mlGetCalendars (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -50,10 +45,6 @@ function buildMlGetCalendars (opts) {
     var { method, body, calendarId, calendar_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -62,8 +53,10 @@ function buildMlGetCalendars (opts) {
     var path = ''
 
     if ((calendar_id || calendarId) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ml' + '/' + 'calendars'
     }
 

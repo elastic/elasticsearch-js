@@ -10,10 +10,13 @@
 function buildPing (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [ping](http://www.elastic.co/guide/) request
    *
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'pretty',
@@ -28,6 +31,11 @@ function buildPing (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a ping request
+   * Returns whether the cluster is running.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+   */
   return function ping (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -40,12 +48,6 @@ function buildPing (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -56,10 +58,6 @@ function buildPing (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,6 +65,7 @@ function buildPing (opts) {
 
     var path = ''
 
+    if (method == null) method = 'HEAD'
     path = '/'
 
     // build request object

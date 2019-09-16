@@ -10,12 +10,6 @@
 function buildCcrResumeFollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.resume_follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html) request
-   *
-   * @param {string} index - The name of the follow index to resume following.
-   * @param {object} body - The name of the leader index and other optional ccr related parameters
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildCcrResumeFollow (opts) {
 
   }
 
+  /**
+   * Perform a ccr.resume_follow request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
+   */
   return function ccrResumeFollow (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,10 +51,6 @@ function buildCcrResumeFollow (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,6 +58,7 @@ function buildCcrResumeFollow (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'resume_follow'
 
     // build request object

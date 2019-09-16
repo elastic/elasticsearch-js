@@ -10,6 +10,7 @@
 function buildExists (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [exists](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
    *
@@ -27,6 +28,8 @@ function buildExists (opts) {
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'stored_fields',
@@ -59,6 +62,11 @@ function buildExists (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a exists request
+   * Returns information about whether a document exists in an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   */
   return function exists (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,10 +88,6 @@ function buildExists (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -95,10 +99,6 @@ function buildExists (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -107,8 +107,10 @@ function buildExists (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'HEAD'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = 'HEAD'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     }
 

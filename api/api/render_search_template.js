@@ -10,12 +10,15 @@
 function buildRenderSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
    *
    * @param {string} id - The id of the stored search template
    * @param {object} body - The search definition template and its params
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'pretty',
@@ -30,6 +33,11 @@ function buildRenderSearchTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a render_search_template request
+   * Allows to use the Mustache language to pre-render a search definition.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates
+   */
   return function renderSearchTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +60,6 @@ function buildRenderSearchTemplate (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,8 +68,10 @@ function buildRenderSearchTemplate (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_render' + '/' + 'template' + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_render' + '/' + 'template'
     }
 

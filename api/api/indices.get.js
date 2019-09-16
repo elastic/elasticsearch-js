@@ -10,6 +10,7 @@
 function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
    *
@@ -23,6 +24,8 @@ function buildIndicesGet (opts) {
    * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
    * @param {time} master_timeout - Specify timeout for connection to master
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -52,6 +55,11 @@ function buildIndicesGet (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get request
+   * Returns information about one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
+   */
   return function indicesGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -69,10 +77,6 @@ function buildIndicesGet (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -84,10 +88,6 @@ function buildIndicesGet (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -95,6 +95,7 @@ function buildIndicesGet (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index)
 
     // build request object

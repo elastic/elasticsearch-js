@@ -10,10 +10,6 @@
 function buildIlmStart (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ilm.start](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html) request
-   *
-   */
 
   const acceptedQuerystring = [
 
@@ -23,6 +19,10 @@ function buildIlmStart (opts) {
 
   }
 
+  /**
+   * Perform a ilm.start request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
+   */
   return function ilmStart (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -35,12 +35,6 @@ function buildIlmStart (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -51,10 +45,6 @@ function buildIlmStart (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -62,13 +52,14 @@ function buildIlmStart (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ilm' + '/' + 'start'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

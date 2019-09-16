@@ -10,6 +10,7 @@
 function buildExistsSource (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [exists_source](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
    *
@@ -26,6 +27,8 @@ function buildExistsSource (opts) {
    * @param {number} version - Explicit version number for concurrency control
    * @param {enum} version_type - Specific version type
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'preference',
@@ -56,6 +59,11 @@ function buildExistsSource (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a exists_source request
+   * Returns information about whether a document source exists in an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   */
   return function existsSource (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -75,10 +83,6 @@ function buildExistsSource (opts) {
     }
     if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -101,10 +105,6 @@ function buildExistsSource (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -113,8 +113,10 @@ function buildExistsSource (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'HEAD'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
     } else {
+      if (method == null) method = 'HEAD'
       path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
     }
 

@@ -10,6 +10,7 @@
 function buildCatTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cat.tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
    *
@@ -23,6 +24,8 @@ function buildCatTasks (opts) {
    * @param {list} s - Comma-separated list of column names or column aliases to sort by
    * @param {boolean} v - Verbose mode. Display column headers
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',
@@ -48,6 +51,11 @@ function buildCatTasks (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.tasks request
+   * Returns information about the tasks currently executing on one or more nodes in the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   */
   return function catTasks (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -60,12 +68,6 @@ function buildCatTasks (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -76,10 +78,6 @@ function buildCatTasks (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -87,6 +85,7 @@ function buildCatTasks (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'tasks'
 
     // build request object

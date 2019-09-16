@@ -10,12 +10,6 @@
 function buildSecurityCreateApiKey (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.create_api_key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html) request
-   *
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The api key request to create an API key
-   */
 
   const acceptedQuerystring = [
     'refresh'
@@ -25,6 +19,10 @@ function buildSecurityCreateApiKey (opts) {
 
   }
 
+  /**
+   * Perform a security.create_api_key request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+   */
   return function securityCreateApiKey (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,10 +51,6 @@ function buildSecurityCreateApiKey (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,6 +58,7 @@ function buildSecurityCreateApiKey (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_security' + '/' + 'api_key'
 
     // build request object

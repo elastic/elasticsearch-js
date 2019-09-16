@@ -10,6 +10,7 @@
 function buildClusterAllocationExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [cluster.allocation_explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html) request
    *
@@ -17,6 +18,8 @@ function buildClusterAllocationExplain (opts) {
    * @param {boolean} include_disk_info - Return information about disk usage and shard sizes (default: false)
    * @param {object} body - The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_yes_decisions',
@@ -35,6 +38,11 @@ function buildClusterAllocationExplain (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.allocation_explain request
+   * Provides explanations for shard allocations in the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html
+   */
   return function clusterAllocationExplain (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +65,6 @@ function buildClusterAllocationExplain (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +72,7 @@ function buildClusterAllocationExplain (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_cluster' + '/' + 'allocation' + '/' + 'explain'
 
     // build request object

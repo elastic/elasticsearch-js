@@ -10,6 +10,7 @@
 function buildSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [search_template](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) request
    *
@@ -30,6 +31,8 @@ function buildSearchTemplate (opts) {
    * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
    * @param {object} body - The search definition template and its params
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -65,6 +68,11 @@ function buildSearchTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a search_template request
+   * Allows to use the Mustache language to pre-render a search definition.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
+   */
   return function searchTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -99,10 +107,6 @@ function buildSearchTemplate (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -110,11 +114,17 @@ function buildSearchTemplate (opts) {
 
     var path = ''
 
+<<<<<<< HEAD
     if ((index) != null && (type) != null) {
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_search' + '/' + 'template'
     } else if ((index) != null) {
+=======
+    if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+>>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_search' + '/' + 'template'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_search' + '/' + 'template'
     }
 

@@ -10,6 +10,7 @@
 function buildUpdate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [update](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html) request
    *
@@ -29,6 +30,8 @@ function buildUpdate (opts) {
    * @param {number} if_primary_term - only perform the update operation if the last operation that has changed the document has the specified primary term
    * @param {object} body - The request definition requires either `script` or partial `doc`
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'wait_for_active_shards',
@@ -64,6 +67,11 @@ function buildUpdate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a update request
+   * Updates a document with a script or partial document.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+   */
   return function update (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -100,10 +108,6 @@ function buildUpdate (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -112,8 +116,10 @@ function buildUpdate (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_update'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_update' + '/' + encodeURIComponent(id)
     }
 

@@ -10,12 +10,6 @@
 function buildMlPutJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.put_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html) request
-   *
-   * @param {string} job_id - The ID of the job to create
-   * @param {object} body - The job
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildMlPutJob (opts) {
 
   }
 
+  /**
+   * Perform a ml.put_job request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+   */
   return function mlPutJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,10 +55,6 @@ function buildMlPutJob (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,6 +62,7 @@ function buildMlPutJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
 
     // build request object

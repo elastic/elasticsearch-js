@@ -10,6 +10,7 @@
 function buildIndicesDeleteTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.delete_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
    *
@@ -17,6 +18,8 @@ function buildIndicesDeleteTemplate (opts) {
    * @param {time} timeout - Explicit operation timeout
    * @param {time} master_timeout - Specify timeout for connection to master
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',
@@ -34,6 +37,11 @@ function buildIndicesDeleteTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.delete_template request
+   * Deletes an index template.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   */
   return function indicesDeleteTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,10 +59,6 @@ function buildIndicesDeleteTemplate (opts) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -66,10 +70,6 @@ function buildIndicesDeleteTemplate (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -77,13 +77,14 @@ function buildIndicesDeleteTemplate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_template' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

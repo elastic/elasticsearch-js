@@ -10,11 +10,6 @@
 function buildCcrGetAutoFollowPattern (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.get_auto_follow_pattern](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html) request
-   *
-   * @param {string} name - The name of the auto follow pattern.
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildCcrGetAutoFollowPattern (opts) {
 
   }
 
+  /**
+   * Perform a ccr.get_auto_follow_pattern request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
+   */
   return function ccrGetAutoFollowPattern (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,10 +45,6 @@ function buildCcrGetAutoFollowPattern (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -58,8 +53,10 @@ function buildCcrGetAutoFollowPattern (opts) {
     var path = ''
 
     if ((name) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ccr' + '/' + 'auto_follow'
     }
 

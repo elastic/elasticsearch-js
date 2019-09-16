@@ -10,6 +10,7 @@
 function buildIndicesPutMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [indices.put_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html) request
    *
@@ -23,6 +24,8 @@ function buildIndicesPutMapping (opts) {
    * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
    * @param {object} body - The mapping definition
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',
@@ -48,6 +51,11 @@ function buildIndicesPutMapping (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.put_mapping request
+   * Updates the index mappings.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
+   */
   return function indicesPutMapping (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -76,10 +84,6 @@ function buildIndicesPutMapping (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -88,21 +92,29 @@ function buildIndicesPutMapping (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mapping'
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mappings'
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
-    } else if ((type) != null) {
-      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
-    } else if ((type) != null) {
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else if ((index) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
-    } else {
+    } else if ((type) != null) {
+      if (method == null) method = 'PUT'
+      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
+    } else if ((index) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_mappings'
+    } else {
+      if (method == null) method = 'PUT'
+      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     }
 
     // build request object

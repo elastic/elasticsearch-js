@@ -10,6 +10,7 @@
 function buildSnapshotCreate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+<<<<<<< HEAD
   /**
    * Perform a [snapshot.create](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
    *
@@ -19,6 +20,8 @@ function buildSnapshotCreate (opts) {
    * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
    * @param {object} body - The snapshot definition
    */
+=======
+>>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -37,6 +40,11 @@ function buildSnapshotCreate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.create request
+   * Creates a snapshot in a repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotCreate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -75,10 +83,6 @@ function buildSnapshotCreate (opts) {
     var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,6 +90,7 @@ function buildSnapshotCreate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
     // build request object
