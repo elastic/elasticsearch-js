@@ -10,14 +10,6 @@
 function buildMlDeleteForecast (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_forecast](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html) request
-   *
-   * @param {string} job_id - The ID of the job from which to delete forecasts
-   * @param {string} forecast_id - The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
-   * @param {boolean} allow_no_forecasts - Whether to ignore if `_all` matches no forecasts
-   * @param {time} timeout - Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
-   */
 
   const acceptedQuerystring = [
     'allow_no_forecasts',
@@ -29,6 +21,10 @@ function buildMlDeleteForecast (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_forecast request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+   */
   return function mlDeleteForecast (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,10 +40,6 @@ function buildMlDeleteForecast (opts) {
     // check required parameters
     if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
-      return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -67,10 +59,6 @@ function buildMlDeleteForecast (opts) {
     var { method, body, jobId, job_id, forecastId, forecast_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -79,8 +67,10 @@ function buildMlDeleteForecast (opts) {
     var path = ''
 
     if ((job_id || jobId) != null && (forecast_id || forecastId) != null) {
+      if (method == null) method = 'DELETE'
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/' + encodeURIComponent(forecast_id || forecastId)
     } else {
+      if (method == null) method = 'DELETE'
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
     }
 
@@ -88,7 +78,7 @@ function buildMlDeleteForecast (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

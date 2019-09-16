@@ -7,22 +7,32 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlUpdateFilter (opts) {
+function buildSnapshotCleanupRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'master_timeout',
+    'timeout',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-
+    masterTimeout: 'master_timeout',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a ml.update_filter request
+   * Perform a snapshot.cleanup_repository request
+   * Removes stale data from repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
    */
-  return function mlUpdateFilter (params, options, callback) {
+  return function snapshotCleanupRepository (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +45,8 @@ function buildMlUpdateFilter (opts) {
     }
 
     // check required parameters
-    if (params['filter_id'] == null && params['filterId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['repository'] == null) {
+      const err = new ConfigurationError('Missing required parameter: repository')
       return handleError(err, callback)
     }
 
@@ -51,7 +57,7 @@ function buildMlUpdateFilter (opts) {
     }
 
     var warnings = []
-    var { method, body, filterId, filter_id, ...querystring } = params
+    var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -62,7 +68,7 @@ function buildMlUpdateFilter (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId) + '/' + '_update'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_cleanup'
 
     // build request object
     const request = {
@@ -77,4 +83,4 @@ function buildMlUpdateFilter (opts) {
   }
 }
 
-module.exports = buildMlUpdateFilter
+module.exports = buildSnapshotCleanupRepository

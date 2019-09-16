@@ -10,11 +10,6 @@
 function buildXpackInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [xpack.info](https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html) request
-   *
-   * @param {list} categories - Comma-separated list of info categories. Can be any of: build, license, features
-   */
 
   const acceptedQuerystring = [
     'categories'
@@ -24,6 +19,10 @@ function buildXpackInfo (opts) {
 
   }
 
+  /**
+   * Perform a xpack.info request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+   */
   return function xpackInfo (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,12 +35,6 @@ function buildXpackInfo (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -52,10 +45,6 @@ function buildXpackInfo (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +52,7 @@ function buildXpackInfo (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_xpack'
 
     // build request object

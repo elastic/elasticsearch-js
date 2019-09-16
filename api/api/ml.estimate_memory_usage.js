@@ -10,11 +10,6 @@
 function buildMlEstimateMemoryUsage (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.estimate_memory_usage](http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html) request
-   *
-   * @param {object} body - Memory usage estimation definition
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildMlEstimateMemoryUsage (opts) {
 
   }
 
+  /**
+   * Perform a ml.estimate_memory_usage request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
+   */
   return function mlEstimateMemoryUsage (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildMlEstimateMemoryUsage (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildMlEstimateMemoryUsage (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
 
     // build request object

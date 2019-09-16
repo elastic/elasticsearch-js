@@ -10,21 +10,6 @@
 function buildNodesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [nodes.stats](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html) request
-   *
-   * @param {list} metric - Limit the information returned to the specified metrics
-   * @param {list} index_metric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {list} completion_fields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-   * @param {list} fielddata_fields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-   * @param {list} fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-   * @param {boolean} groups - A comma-separated list of search groups for `search` index metric
-   * @param {enum} level - Return indices stats aggregated at index, node or shard level
-   * @param {list} types - A comma-separated list of document types for the `indexing` index metric
-   * @param {time} timeout - Explicit operation timeout
-   * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
-   */
 
   const acceptedQuerystring = [
     'completion_fields',
@@ -50,6 +35,11 @@ function buildNodesStats (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a nodes.stats request
+   * Returns statistical information about nodes in the cluster.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+   */
   return function nodesStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -62,12 +52,6 @@ function buildNodesStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -75,12 +59,8 @@ function buildNodesStats (opts) {
     }
 
     var warnings = []
-    var { method, body, metric, indexMetric, index_metric, nodeId, node_id, ...querystring } = params
+    var { method, body, nodeId, node_id, metric, indexMetric, index_metric, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    if (method == null) {
-      method = 'GET'
-    }
 
     var ignore = options.ignore
     if (typeof ignore === 'number') {
@@ -90,16 +70,22 @@ function buildNodesStats (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null && (metric) != null && (index_metric || indexMetric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
     } else if ((node_id || nodeId) != null && (metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric)
     } else if ((metric) != null && (index_metric || indexMetric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
     } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats'
     } else if ((metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'stats'
     }
 

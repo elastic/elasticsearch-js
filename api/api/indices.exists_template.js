@@ -10,14 +10,6 @@
 function buildIndicesExistsTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.exists_template](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
-   *
-   * @param {list} name - The comma separated names of the index templates
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
 
   const acceptedQuerystring = [
     'flat_settings',
@@ -37,6 +29,11 @@ function buildIndicesExistsTemplate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.exists_template request
+   * Returns information about whether a particular index template exists.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   */
   return function indicesExistsTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,10 +51,6 @@ function buildIndicesExistsTemplate (opts) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -69,10 +62,6 @@ function buildIndicesExistsTemplate (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -80,6 +69,7 @@ function buildIndicesExistsTemplate (opts) {
 
     var path = ''
 
+    if (method == null) method = 'HEAD'
     path = '/' + '_template' + '/' + encodeURIComponent(name)
 
     // build request object

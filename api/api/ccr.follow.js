@@ -10,13 +10,6 @@
 function buildCcrFollow (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.follow](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html) request
-   *
-   * @param {string} index - The name of the follower index
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {object} body - The name of the leader index and other optional ccr related parameters
-   */
 
   const acceptedQuerystring = [
     'wait_for_active_shards'
@@ -26,6 +19,10 @@ function buildCcrFollow (opts) {
     waitForActiveShards: 'wait_for_active_shards'
   }
 
+  /**
+   * Perform a ccr.follow request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
+   */
   return function ccrFollow (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,10 +55,6 @@ function buildCcrFollow (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +62,7 @@ function buildCcrFollow (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'follow'
 
     // build request object

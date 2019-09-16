@@ -34,6 +34,7 @@ link:{ref}/common-options.html[Reference]
 
 |===
 === bulk
+
 [source,ts]
 ----
 client.bulk({
@@ -43,7 +44,6 @@ client.bulk({
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
-  type: string,
   _source: string | string[],
   _source_excludes: string | string[],
   _source_includes: string | string[],
@@ -72,9 +72,6 @@ link:{ref}/docs-bulk.html[Reference]
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`type`
-|`string` - Default document type for items which don't provide one
-
 |`_source`
 |`string \| string[]` - True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
 
@@ -93,6 +90,7 @@ link:{ref}/docs-bulk.html[Reference]
 |===
 
 === cat.aliases
+
 [source,ts]
 ----
 client.cat.aliases({
@@ -136,6 +134,7 @@ link:{ref}/cat-alias.html[Reference]
 |===
 
 === cat.allocation
+
 [source,ts]
 ----
 client.cat.allocation({
@@ -183,6 +182,7 @@ link:{ref}/cat-allocation.html[Reference]
 |===
 
 === cat.count
+
 [source,ts]
 ----
 client.cat.count({
@@ -226,6 +226,7 @@ link:{ref}/cat-count.html[Reference]
 |===
 
 === cat.fielddata
+
 [source,ts]
 ----
 client.cat.fielddata({
@@ -237,8 +238,7 @@ client.cat.fielddata({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  v: boolean,
-  fields: string | string[]
+  v: boolean
 })
 ----
 link:{ref}/cat-fielddata.html[Reference]
@@ -271,12 +271,10 @@ link:{ref}/cat-fielddata.html[Reference]
 |`v`
 |`boolean` - Verbose mode. Display column headers
 
-|`fields`
-|`string \| string[]` - A comma-separated list of fields to return in the output
-
 |===
 
 === cat.health
+
 [source,ts]
 ----
 client.cat.health({
@@ -321,6 +319,7 @@ _Default:_ `true`
 |===
 
 === cat.help
+
 [source,ts]
 ----
 client.cat.help({
@@ -340,6 +339,7 @@ link:{ref}/cat.html[Reference]
 |===
 
 === cat.indices
+
 [source,ts]
 ----
 client.cat.indices({
@@ -399,6 +399,7 @@ link:{ref}/cat-indices.html[Reference]
 |===
 
 === cat.master
+
 [source,ts]
 ----
 client.cat.master({
@@ -438,6 +439,7 @@ link:{ref}/cat-master.html[Reference]
 |===
 
 === cat.nodeattrs
+
 [source,ts]
 ----
 client.cat.nodeattrs({
@@ -477,6 +479,7 @@ link:{ref}/cat-nodeattrs.html[Reference]
 |===
 
 === cat.nodes
+
 [source,ts]
 ----
 client.cat.nodes({
@@ -520,6 +523,7 @@ link:{ref}/cat-nodes.html[Reference]
 |===
 
 === cat.pendingTasks
+
 [source,ts]
 ----
 client.cat.pendingTasks({
@@ -559,6 +563,7 @@ link:{ref}/cat-pending-tasks.html[Reference]
 |===
 
 === cat.plugins
+
 [source,ts]
 ----
 client.cat.plugins({
@@ -598,6 +603,7 @@ link:{ref}/cat-plugins.html[Reference]
 |===
 
 === cat.recovery
+
 [source,ts]
 ----
 client.cat.recovery({
@@ -641,6 +647,7 @@ link:{ref}/cat-recovery.html[Reference]
 |===
 
 === cat.repositories
+
 [source,ts]
 ----
 client.cat.repositories({
@@ -680,6 +687,7 @@ link:{ref}/cat-repositories.html[Reference]
 |===
 
 === cat.segments
+
 [source,ts]
 ----
 client.cat.segments({
@@ -719,6 +727,7 @@ link:{ref}/cat-segments.html[Reference]
 |===
 
 === cat.shards
+
 [source,ts]
 ----
 client.cat.shards({
@@ -766,6 +775,7 @@ link:{ref}/cat-shards.html[Reference]
 |===
 
 === cat.snapshots
+
 [source,ts]
 ----
 client.cat.snapshots({
@@ -809,6 +819,7 @@ link:{ref}/cat-snapshots.html[Reference]
 |===
 
 === cat.tasks
+
 [source,ts]
 ----
 client.cat.tasks({
@@ -856,6 +867,7 @@ link:{ref}/tasks.html[Reference]
 |===
 
 === cat.templates
+
 [source,ts]
 ----
 client.cat.templates({
@@ -899,6 +911,7 @@ link:{ref}/cat-templates.html[Reference]
 |===
 
 === cat.threadPool
+
 [source,ts]
 ----
 client.cat.threadPool({
@@ -946,6 +959,7 @@ link:{ref}/cat-thread-pool.html[Reference]
 |===
 
 === clearScroll
+
 [source,ts]
 ----
 client.clearScroll({
@@ -957,7 +971,9 @@ link:{ref}/search-request-body.html#_clear_scroll_api[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
-|`string \| string[]` - A comma-separated list of scroll IDs to clear
+|`string \| string[]` - A comma-separated list of scroll IDs to clear +
+
+WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
@@ -965,6 +981,7 @@ link:{ref}/search-request-body.html#_clear_scroll_api[Reference]
 |===
 
 === cluster.allocationExplain
+
 [source,ts]
 ----
 client.cluster.allocationExplain({
@@ -988,6 +1005,7 @@ link:{ref}/cluster-allocation-explain.html[Reference]
 |===
 
 === cluster.getSettings
+
 [source,ts]
 ----
 client.cluster.getSettings({
@@ -1015,6 +1033,7 @@ link:{ref}/cluster-update-settings.html[Reference]
 |===
 
 === cluster.health
+
 [source,ts]
 ----
 client.cluster.health({
@@ -1076,6 +1095,7 @@ _Default:_ `cluster`
 |===
 
 === cluster.pendingTasks
+
 [source,ts]
 ----
 client.cluster.pendingTasks({
@@ -1095,6 +1115,7 @@ link:{ref}/cluster-pending.html[Reference]
 |===
 
 === cluster.putSettings
+
 [source,ts]
 ----
 client.cluster.putSettings({
@@ -1122,6 +1143,7 @@ link:{ref}/cluster-update-settings.html[Reference]
 |===
 
 === cluster.remoteInfo
+
 [source,ts]
 ----
 client.cluster.remoteInfo()
@@ -1130,6 +1152,7 @@ link:{ref}/cluster-remote-info.html[Reference]
 
 
 === cluster.reroute
+
 [source,ts]
 ----
 client.cluster.reroute({
@@ -1169,6 +1192,7 @@ link:{ref}/cluster-reroute.html[Reference]
 |===
 
 === cluster.state
+
 [source,ts]
 ----
 client.cluster.state({
@@ -1221,6 +1245,7 @@ _Default:_ `open`
 |===
 
 === cluster.stats
+
 [source,ts]
 ----
 client.cluster.stats({
@@ -1244,11 +1269,11 @@ link:{ref}/cluster-stats.html[Reference]
 |===
 
 === count
+
 [source,ts]
 ----
 client.count({
   index: string | string[],
-  type: string | string[],
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
@@ -1271,9 +1296,6 @@ link:{ref}/search-count.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of indices to restrict the results
-
-|`type`
-|`string \| string[]` - A comma-separated list of types to restrict the results
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -1325,6 +1347,7 @@ _Default:_ `OR`
 |===
 
 === create
+
 [source,ts]
 ----
 client.create({
@@ -1351,7 +1374,9 @@ link:{ref}/docs-index_.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
@@ -1380,6 +1405,7 @@ link:{ref}/docs-index_.html[Reference]
 |===
 
 === delete
+
 [source,ts]
 ----
 client.delete({
@@ -1406,7 +1432,9 @@ link:{ref}/docs-delete.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
@@ -1435,6 +1463,7 @@ link:{ref}/docs-delete.html[Reference]
 |===
 
 === deleteByQuery
+
 [source,ts]
 ----
 client.deleteByQuery({
@@ -1588,6 +1617,7 @@ _Default:_ `1`
 |===
 
 === deleteByQueryRethrottle
+
 [source,ts]
 ----
 client.deleteByQueryRethrottle({
@@ -1607,6 +1637,7 @@ link:{ref}/docs-delete-by-query.html[Reference]
 |===
 
 === deleteScript
+
 [source,ts]
 ----
 client.deleteScript({
@@ -1630,6 +1661,7 @@ link:{ref}/modules-scripting.html[Reference]
 |===
 
 === exists
+
 [source,ts]
 ----
 client.exists({
@@ -1658,7 +1690,9 @@ link:{ref}/docs-get.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types)
+|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types) +
+
+WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -1693,6 +1727,7 @@ link:{ref}/docs-get.html[Reference]
 |===
 
 === existsSource
+
 [source,ts]
 ----
 client.existsSource({
@@ -1720,7 +1755,9 @@ link:{ref}/docs-get.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; deprecated and optional starting with 7.0
+|`string` - The type of the document; deprecated and optional starting with 7.0 +
+
+WARNING: This parameter has been deprecated.
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -1752,6 +1789,7 @@ link:{ref}/docs-get.html[Reference]
 |===
 
 === explain
+
 [source,ts]
 ----
 client.explain({
@@ -1783,7 +1821,9 @@ link:{ref}/search-explain.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
@@ -1828,6 +1868,7 @@ _Default:_ `OR`
 |===
 
 === fieldCaps
+
 [source,ts]
 ----
 client.fieldCaps({
@@ -1864,6 +1905,7 @@ _Default:_ `open`
 |===
 
 === get
+
 [source,ts]
 ----
 client.get({
@@ -1892,7 +1934,9 @@ link:{ref}/docs-get.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types)
+|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types) +
+
+WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -1927,6 +1971,7 @@ link:{ref}/docs-get.html[Reference]
 |===
 
 === getScript
+
 [source,ts]
 ----
 client.getScript({
@@ -1946,6 +1991,7 @@ link:{ref}/modules-scripting.html[Reference]
 |===
 
 === getSource
+
 [source,ts]
 ----
 client.getSource({
@@ -1973,7 +2019,9 @@ link:{ref}/docs-get.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document; deprecated and optional starting with 7.0
+|`string` - The type of the document; deprecated and optional starting with 7.0 +
+
+WARNING: This parameter has been deprecated.
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -2005,6 +2053,7 @@ link:{ref}/docs-get.html[Reference]
 |===
 
 === index
+
 [source,ts]
 ----
 client.index({
@@ -2034,7 +2083,9 @@ link:{ref}/docs-index_.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
@@ -2073,10 +2124,10 @@ _Default:_ `index`
 |===
 
 === indices.analyze
+
 [source,ts]
 ----
 client.indices.analyze({
-  index: string,
   index: string,
   body: object
 })
@@ -2087,15 +2138,13 @@ link:{ref}/indices-analyze.html[Reference]
 |`index`
 |`string` - The name of the index to scope the operation
 
-|`index`
-|`string` - The name of the index to scope the operation
-
 |`body`
 |`object` - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
 
 |===
 
 === indices.clearCache
+
 [source,ts]
 ----
 client.indices.clearCache({
@@ -2106,7 +2155,6 @@ client.indices.clearCache({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
-  index: string | string[],
   request: boolean
 })
 ----
@@ -2135,15 +2183,13 @@ link:{ref}/indices-clearcache.html[Reference]
 |`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
-|`index`
-|`string \| string[]` - A comma-separated list of index name to limit the operation
-
 |`request`
 |`boolean` - Clear request cache
 
 |===
 
 === indices.clone
+
 [source,ts]
 ----
 client.indices.clone({
@@ -2179,6 +2225,7 @@ link:{ref}/indices-clone-index.html[Reference]
 |===
 
 === indices.close
+
 [source,ts]
 ----
 client.indices.close({
@@ -2219,6 +2266,7 @@ _Default:_ `open`
 |===
 
 === indices.create
+
 [source,ts]
 ----
 client.indices.create({
@@ -2254,6 +2302,7 @@ link:{ref}/indices-create-index.html[Reference]
 |===
 
 === indices.delete
+
 [source,ts]
 ----
 client.indices.delete({
@@ -2290,6 +2339,7 @@ _Default:_ `open`
 |===
 
 === indices.deleteAlias
+
 [source,ts]
 ----
 client.indices.deleteAlias({
@@ -2317,6 +2367,7 @@ link:{ref}/indices-aliases.html[Reference]
 |===
 
 === indices.deleteTemplate
+
 [source,ts]
 ----
 client.indices.deleteTemplate({
@@ -2340,6 +2391,7 @@ link:{ref}/indices-templates.html[Reference]
 |===
 
 === indices.exists
+
 [source,ts]
 ----
 client.indices.exists({
@@ -2380,11 +2432,12 @@ _Default:_ `open`
 |===
 
 === indices.existsAlias
+
 [source,ts]
 ----
 client.indices.existsAlias({
-  index: string | string[],
   name: string | string[],
+  index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
@@ -2394,11 +2447,11 @@ client.indices.existsAlias({
 link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to filter aliases
-
 |`name`
 |`string \| string[]` - A comma-separated list of alias names to return
+
+|`index`
+|`string \| string[]` - A comma-separated list of index names to filter aliases
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2416,6 +2469,7 @@ _Default:_ `all`
 |===
 
 === indices.existsTemplate
+
 [source,ts]
 ----
 client.indices.existsTemplate({
@@ -2443,6 +2497,7 @@ link:{ref}/indices-templates.html[Reference]
 |===
 
 === indices.existsType
+
 [source,ts]
 ----
 client.indices.existsType({
@@ -2479,6 +2534,7 @@ _Default:_ `open`
 |===
 
 === indices.flush
+
 [source,ts]
 ----
 client.indices.flush({
@@ -2515,6 +2571,7 @@ _Default:_ `open`
 |===
 
 === indices.flushSynced
+
 [source,ts]
 ----
 client.indices.flushSynced({
@@ -2543,6 +2600,7 @@ _Default:_ `open`
 |===
 
 === indices.forcemerge
+
 [source,ts]
 ----
 client.indices.forcemerge({
@@ -2583,6 +2641,7 @@ _Default:_ `open`
 |===
 
 === indices.get
+
 [source,ts]
 ----
 client.indices.get({
@@ -2631,11 +2690,12 @@ _Default:_ `open`
 |===
 
 === indices.getAlias
+
 [source,ts]
 ----
 client.indices.getAlias({
-  index: string | string[],
   name: string | string[],
+  index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
@@ -2645,11 +2705,11 @@ client.indices.getAlias({
 link:{ref}/indices-aliases.html[Reference]
 [cols=2*]
 |===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to filter aliases
-
 |`name`
 |`string \| string[]` - A comma-separated list of alias names to return
+
+|`index`
+|`string \| string[]` - A comma-separated list of index names to filter aliases
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -2667,12 +2727,13 @@ _Default:_ `all`
 |===
 
 === indices.getFieldMapping
+
 [source,ts]
 ----
 client.indices.getFieldMapping({
+  fields: string | string[],
   index: string | string[],
   type: string | string[],
-  fields: string | string[],
   include_type_name: boolean,
   include_defaults: boolean,
   ignore_unavailable: boolean,
@@ -2684,14 +2745,16 @@ client.indices.getFieldMapping({
 link:{ref}/indices-get-field-mapping.html[Reference]
 [cols=2*]
 |===
+|`fields`
+|`string \| string[]` - A comma-separated list of fields
+
 |`index`
 |`string \| string[]` - A comma-separated list of index names
 
 |`type`
-|`string \| string[]` - A comma-separated list of document types
+|`string \| string[]` - A comma-separated list of document types +
 
-|`fields`
-|`string \| string[]` - A comma-separated list of fields
+WARNING: This parameter has been deprecated.
 
 |`include_type_name` or `includeTypeName`
 |`boolean` - Whether a type should be returned in the body of the mappings.
@@ -2715,6 +2778,7 @@ _Default:_ `open`
 |===
 
 === indices.getMapping
+
 [source,ts]
 ----
 client.indices.getMapping({
@@ -2735,7 +2799,9 @@ link:{ref}/indices-get-mapping.html[Reference]
 |`string \| string[]` - A comma-separated list of index names
 
 |`type`
-|`string \| string[]` - A comma-separated list of document types
+|`string \| string[]` - A comma-separated list of document types +
+
+WARNING: This parameter has been deprecated.
 
 |`include_type_name` or `includeTypeName`
 |`boolean` - Whether to add the type name to the response (default: false)
@@ -2759,6 +2825,7 @@ _Default:_ `open`
 |===
 
 === indices.getSettings
+
 [source,ts]
 ----
 client.indices.getSettings({
@@ -2807,6 +2874,7 @@ _Default:_ `open,closed`
 |===
 
 === indices.getTemplate
+
 [source,ts]
 ----
 client.indices.getTemplate({
@@ -2838,6 +2906,7 @@ link:{ref}/indices-templates.html[Reference]
 |===
 
 === indices.getUpgrade
+
 [source,ts]
 ----
 client.indices.getUpgrade({
@@ -2866,6 +2935,7 @@ _Default:_ `open`
 |===
 
 === indices.open
+
 [source,ts]
 ----
 client.indices.open({
@@ -2906,6 +2976,7 @@ _Default:_ `closed`
 |===
 
 === indices.putAlias
+
 [source,ts]
 ----
 client.indices.putAlias({
@@ -2937,6 +3008,7 @@ link:{ref}/indices-aliases.html[Reference]
 |===
 
 === indices.putMapping
+
 [source,ts]
 ----
 client.indices.putMapping({
@@ -2958,7 +3030,9 @@ link:{ref}/indices-put-mapping.html[Reference]
 |`string \| string[]` - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
 
 |`type`
-|`string` - The name of the document type
+|`string` - The name of the document type +
+
+WARNING: This parameter has been deprecated.
 
 |`include_type_name` or `includeTypeName`
 |`boolean` - Whether a type should be expected in the body of the mappings.
@@ -2985,6 +3059,7 @@ _Default:_ `open`
 |===
 
 === indices.putSettings
+
 [source,ts]
 ----
 client.indices.putSettings({
@@ -3033,6 +3108,7 @@ _Default:_ `open`
 |===
 
 === indices.putTemplate
+
 [source,ts]
 ----
 client.indices.putTemplate({
@@ -3076,6 +3152,7 @@ link:{ref}/indices-templates.html[Reference]
 |===
 
 === indices.recovery
+
 [source,ts]
 ----
 client.indices.recovery({
@@ -3099,6 +3176,7 @@ link:{ref}/indices-recovery.html[Reference]
 |===
 
 === indices.refresh
+
 [source,ts]
 ----
 client.indices.refresh({
@@ -3127,6 +3205,7 @@ _Default:_ `open`
 |===
 
 === indices.rollover
+
 [source,ts]
 ----
 client.indices.rollover({
@@ -3170,6 +3249,7 @@ link:{ref}/indices-rollover-index.html[Reference]
 |===
 
 === indices.segments
+
 [source,ts]
 ----
 client.indices.segments({
@@ -3202,6 +3282,7 @@ _Default:_ `open`
 |===
 
 === indices.shardStores
+
 [source,ts]
 ----
 client.indices.shardStores({
@@ -3234,6 +3315,7 @@ _Default:_ `open`
 |===
 
 === indices.shrink
+
 [source,ts]
 ----
 client.indices.shrink({
@@ -3269,6 +3351,7 @@ link:{ref}/indices-shrink-index.html[Reference]
 |===
 
 === indices.split
+
 [source,ts]
 ----
 client.indices.split({
@@ -3304,11 +3387,12 @@ link:{ref}/indices-split-index.html[Reference]
 |===
 
 === indices.stats
+
 [source,ts]
 ----
 client.indices.stats({
-  index: string | string[],
   metric: string | string[],
+  index: string | string[],
   completion_fields: string | string[],
   fielddata_fields: string | string[],
   fields: string | string[],
@@ -3324,11 +3408,11 @@ client.indices.stats({
 link:{ref}/indices-stats.html[Reference]
 [cols=2*]
 |===
-|`index`
-|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
 |`metric`
 |`string \| string[]` - Limit the information returned the specific metrics.
+
+|`index`
+|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 |`completion_fields` or `completionFields`
 |`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
@@ -3366,6 +3450,7 @@ _Default:_ `true`
 |===
 
 === indices.updateAliases
+
 [source,ts]
 ----
 client.indices.updateAliases({
@@ -3389,6 +3474,7 @@ link:{ref}/indices-aliases.html[Reference]
 |===
 
 === indices.upgrade
+
 [source,ts]
 ----
 client.indices.upgrade({
@@ -3425,6 +3511,7 @@ _Default:_ `open`
 |===
 
 === indices.validateQuery
+
 [source,ts]
 ----
 client.indices.validateQuery({
@@ -3452,7 +3539,9 @@ link:{ref}/search-validate.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string \| string[]` - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types +
+
+WARNING: This parameter has been deprecated.
 
 |`explain`
 |`boolean` - Return detailed information about the error
@@ -3498,6 +3587,7 @@ _Default:_ `OR`
 |===
 
 === info
+
 [source,ts]
 ----
 client.info()
@@ -3506,6 +3596,7 @@ link:{ref}/index.html[Reference]
 
 
 === ingest.deletePipeline
+
 [source,ts]
 ----
 client.ingest.deletePipeline({
@@ -3529,6 +3620,7 @@ link:{ref}/delete-pipeline-api.html[Reference]
 |===
 
 === ingest.getPipeline
+
 [source,ts]
 ----
 client.ingest.getPipeline({
@@ -3548,6 +3640,7 @@ link:{ref}/get-pipeline-api.html[Reference]
 |===
 
 === ingest.processorGrok
+
 [source,ts]
 ----
 client.ingest.processorGrok()
@@ -3556,6 +3649,7 @@ link:{ref}/grok-processor.html#grok-processor-rest-get[Reference]
 
 
 === ingest.putPipeline
+
 [source,ts]
 ----
 client.ingest.putPipeline({
@@ -3583,6 +3677,7 @@ link:{ref}/put-pipeline-api.html[Reference]
 |===
 
 === ingest.simulate
+
 [source,ts]
 ----
 client.ingest.simulate({
@@ -3606,6 +3701,7 @@ link:{ref}/simulate-pipeline-api.html[Reference]
 |===
 
 === mget
+
 [source,ts]
 ----
 client.mget({
@@ -3629,7 +3725,9 @@ link:{ref}/docs-multi-get.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -3661,6 +3759,7 @@ link:{ref}/docs-multi-get.html[Reference]
 |===
 
 === msearch
+
 [source,ts]
 ----
 client.msearch({
@@ -3711,6 +3810,7 @@ _Default:_ `true`
 |===
 
 === msearchTemplate
+
 [source,ts]
 ----
 client.msearchTemplate({
@@ -3751,6 +3851,7 @@ _Default:_ `true`
 |===
 
 === mtermvectors
+
 [source,ts]
 ----
 client.mtermvectors({
@@ -3822,6 +3923,7 @@ _Default:_ `true`
 |===
 
 === nodes.hotThreads
+
 [source,ts]
 ----
 client.nodes.hotThreads({
@@ -3861,6 +3963,7 @@ link:{ref}/cluster-nodes-hot-threads.html[Reference]
 |===
 
 === nodes.info
+
 [source,ts]
 ----
 client.nodes.info({
@@ -3888,6 +3991,7 @@ link:{ref}/cluster-nodes-info.html[Reference]
 |===
 
 === nodes.reloadSecureSettings
+
 [source,ts]
 ----
 client.nodes.reloadSecureSettings({
@@ -3907,12 +4011,13 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
 |===
 
 === nodes.stats
+
 [source,ts]
 ----
 client.nodes.stats({
+  node_id: string | string[],
   metric: string | string[],
   index_metric: string | string[],
-  node_id: string | string[],
   completion_fields: string | string[],
   fielddata_fields: string | string[],
   fields: string | string[],
@@ -3926,14 +4031,14 @@ client.nodes.stats({
 link:{ref}/cluster-nodes-stats.html[Reference]
 [cols=2*]
 |===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
 |`metric`
 |`string \| string[]` - Limit the information returned to the specified metrics
 
 |`index_metric` or `indexMetric`
 |`string \| string[]` - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
-
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
 |`completion_fields` or `completionFields`
 |`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
@@ -3963,22 +4068,23 @@ _Default:_ `node`
 |===
 
 === nodes.usage
+
 [source,ts]
 ----
 client.nodes.usage({
-  metric: string | string[],
   node_id: string | string[],
+  metric: string | string[],
   timeout: string
 })
 ----
 link:{ref}/cluster-nodes-usage.html[Reference]
 [cols=2*]
 |===
-|`metric`
-|`string \| string[]` - Limit the information returned to the specified metrics
-
 |`node_id` or `nodeId`
 |`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`metric`
+|`string \| string[]` - Limit the information returned to the specified metrics
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -3986,6 +4092,7 @@ link:{ref}/cluster-nodes-usage.html[Reference]
 |===
 
 === ping
+
 [source,ts]
 ----
 client.ping()
@@ -3994,6 +4101,7 @@ link:{ref}/index.html[Reference]
 
 
 === putScript
+
 [source,ts]
 ----
 client.putScript({
@@ -4001,7 +4109,6 @@ client.putScript({
   context: string,
   timeout: string,
   master_timeout: string,
-  context: string,
   body: object
 })
 ----
@@ -4020,15 +4127,13 @@ link:{ref}/modules-scripting.html[Reference]
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
 
-|`context`
-|`string` - Context name to compile script against
-
 |`body`
 |`object` - The document
 
 |===
 
 === rankEval
+*Stability:* experimental
 [source,ts]
 ----
 client.rankEval({
@@ -4061,6 +4166,7 @@ _Default:_ `open`
 |===
 
 === reindex
+
 [source,ts]
 ----
 client.reindex({
@@ -4112,6 +4218,7 @@ _Default:_ `1`
 |===
 
 === reindexRethrottle
+
 [source,ts]
 ----
 client.reindexRethrottle({
@@ -4131,6 +4238,7 @@ link:{ref}/docs-reindex.html[Reference]
 |===
 
 === renderSearchTemplate
+
 [source,ts]
 ----
 client.renderSearchTemplate({
@@ -4150,6 +4258,7 @@ link:{ref}/search-template.html#_validating_templates[Reference]
 |===
 
 === scriptsPainlessExecute
+*Stability:* experimental
 [source,ts]
 ----
 client.scriptsPainlessExecute({
@@ -4165,12 +4274,12 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 |===
 
 === scroll
+
 [source,ts]
 ----
 client.scroll({
   scroll_id: string,
   scroll: string,
-  scroll_id: string,
   rest_total_hits_as_int: boolean,
   body: object
 })
@@ -4179,13 +4288,12 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
-|`string` - The scroll ID
+|`string` - The scroll ID +
+
+WARNING: This parameter has been deprecated.
 
 |`scroll`
 |`string` - Specify how long a consistent view of the index should be maintained for scrolled search
-
-|`scroll_id` or `scrollId`
-|`string` - The scroll ID for scrolled search
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -4196,6 +4304,7 @@ link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
 |===
 
 === search
+
 [source,ts]
 ----
 client.search({
@@ -4391,6 +4500,7 @@ _Default:_ `128`
 |===
 
 === searchShards
+
 [source,ts]
 ----
 client.searchShards({
@@ -4431,6 +4541,7 @@ _Default:_ `open`
 |===
 
 === searchTemplate
+
 [source,ts]
 ----
 client.searchTemplate({
@@ -4503,7 +4614,36 @@ _Default:_ `true`
 
 |===
 
+=== snapshot.cleanupRepository
+
+[source,ts]
+----
+client.snapshot.cleanupRepository({
+  repository: string,
+  master_timeout: string,
+  timeout: string,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Reference]
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`body`
+|`object` - undefined
+
+|===
+
 === snapshot.create
+
 [source,ts]
 ----
 client.snapshot.create({
@@ -4535,6 +4675,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.createRepository
+
 [source,ts]
 ----
 client.snapshot.createRepository({
@@ -4566,6 +4707,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.delete
+
 [source,ts]
 ----
 client.snapshot.delete({
@@ -4589,6 +4731,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.deleteRepository
+
 [source,ts]
 ----
 client.snapshot.deleteRepository({
@@ -4612,6 +4755,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.get
+
 [source,ts]
 ----
 client.snapshot.get({
@@ -4643,6 +4787,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.getRepository
+
 [source,ts]
 ----
 client.snapshot.getRepository({
@@ -4666,6 +4811,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.restore
+
 [source,ts]
 ----
 client.snapshot.restore({
@@ -4697,6 +4843,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.status
+
 [source,ts]
 ----
 client.snapshot.status({
@@ -4724,6 +4871,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === snapshot.verifyRepository
+
 [source,ts]
 ----
 client.snapshot.verifyRepository({
@@ -4747,6 +4895,7 @@ link:{ref}/modules-snapshots.html[Reference]
 |===
 
 === tasks.cancel
+
 [source,ts]
 ----
 client.tasks.cancel({
@@ -4774,6 +4923,7 @@ link:{ref}/tasks.html[Reference]
 |===
 
 === tasks.get
+
 [source,ts]
 ----
 client.tasks.get({
@@ -4797,6 +4947,7 @@ link:{ref}/tasks.html[Reference]
 |===
 
 === tasks.list
+
 [source,ts]
 ----
 client.tasks.list({
@@ -4837,6 +4988,7 @@ _Default:_ `nodes`
 |===
 
 === termvectors
+
 [source,ts]
 ----
 client.termvectors({
@@ -4908,6 +5060,7 @@ _Default:_ `true`
 |===
 
 === update
+
 [source,ts]
 ----
 client.update({
@@ -4938,7 +5091,9 @@ link:{ref}/docs-update.html[Reference]
 |`string` - The name of the index
 
 |`type`
-|`string` - The type of the document
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
@@ -4979,6 +5134,7 @@ link:{ref}/docs-update.html[Reference]
 |===
 
 === updateByQuery
+
 [source,ts]
 ----
 client.updateByQuery({
@@ -5140,6 +5296,7 @@ _Default:_ `1`
 |===
 
 === updateByQueryRethrottle
+
 [source,ts]
 ----
 client.updateByQueryRethrottle({
@@ -5159,6 +5316,7 @@ link:{ref}/docs-update-by-query.html[Reference]
 |===
 
 === ccr.deleteAutoFollowPattern
+
 [source,ts]
 ----
 client.ccr.deleteAutoFollowPattern({
@@ -5174,6 +5332,7 @@ link:{ref}/ccr-delete-auto-follow-pattern.html[Reference]
 |===
 
 === ccr.follow
+
 [source,ts]
 ----
 client.ccr.follow({
@@ -5198,6 +5357,7 @@ _Default:_ `0`
 |===
 
 === ccr.followInfo
+
 [source,ts]
 ----
 client.ccr.followInfo({
@@ -5213,6 +5373,7 @@ link:{ref}/ccr-get-follow-info.html[Reference]
 |===
 
 === ccr.followStats
+
 [source,ts]
 ----
 client.ccr.followStats({
@@ -5228,6 +5389,7 @@ link:{ref}/ccr-get-follow-stats.html[Reference]
 |===
 
 === ccr.forgetFollower
+
 [source,ts]
 ----
 client.ccr.forgetFollower({
@@ -5247,6 +5409,7 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 |===
 
 === ccr.getAutoFollowPattern
+
 [source,ts]
 ----
 client.ccr.getAutoFollowPattern({
@@ -5262,6 +5425,7 @@ link:{ref}/ccr-get-auto-follow-pattern.html[Reference]
 |===
 
 === ccr.pauseFollow
+
 [source,ts]
 ----
 client.ccr.pauseFollow({
@@ -5277,6 +5441,7 @@ link:{ref}/ccr-post-pause-follow.html[Reference]
 |===
 
 === ccr.putAutoFollowPattern
+
 [source,ts]
 ----
 client.ccr.putAutoFollowPattern({
@@ -5296,6 +5461,7 @@ link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
 |===
 
 === ccr.resumeFollow
+
 [source,ts]
 ----
 client.ccr.resumeFollow({
@@ -5315,6 +5481,7 @@ link:{ref}/ccr-post-resume-follow.html[Reference]
 |===
 
 === ccr.stats
+
 [source,ts]
 ----
 client.ccr.stats()
@@ -5323,6 +5490,7 @@ link:{ref}/ccr-get-stats.html[Reference]
 
 
 === ccr.unfollow
+
 [source,ts]
 ----
 client.ccr.unfollow({
@@ -5338,6 +5506,7 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 |===
 
 === dataFrame.deleteDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.deleteDataFrameTransform({
@@ -5357,6 +5526,7 @@ link:{ref}/delete-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.getDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.getDataFrameTransform({
@@ -5384,6 +5554,7 @@ link:{ref}/get-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.getDataFrameTransformStats
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.getDataFrameTransformStats({
@@ -5411,6 +5582,7 @@ link:{ref}/get-data-frame-transform-stats.html[Reference]
 |===
 
 === dataFrame.previewDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.previewDataFrameTransform({
@@ -5426,6 +5598,7 @@ link:{ref}/preview-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.putDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.putDataFrameTransform({
@@ -5449,6 +5622,7 @@ link:{ref}/put-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.startDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.startDataFrameTransform({
@@ -5468,6 +5642,7 @@ link:{ref}/start-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.stopDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.stopDataFrameTransform({
@@ -5495,6 +5670,7 @@ link:{ref}/stop-data-frame-transform.html[Reference]
 |===
 
 === dataFrame.updateDataFrameTransform
+*Stability:* beta
 [source,ts]
 ----
 client.dataFrame.updateDataFrameTransform({
@@ -5518,6 +5694,7 @@ link:{ref}/update-data-frame-transform.html[Reference]
 |===
 
 === graph.explore
+
 [source,ts]
 ----
 client.graph.explore({
@@ -5535,7 +5712,9 @@ link:{ref}/graph-explore-api.html[Reference]
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 |`type`
-|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types +
+
+WARNING: This parameter has been deprecated.
 
 |`routing`
 |`string` - Specific routing value
@@ -5549,6 +5728,7 @@ link:{ref}/graph-explore-api.html[Reference]
 |===
 
 === ilm.deleteLifecycle
+
 [source,ts]
 ----
 client.ilm.deleteLifecycle({
@@ -5564,6 +5744,7 @@ link:{ref}/ilm-delete-lifecycle.html[Reference]
 |===
 
 === ilm.explainLifecycle
+
 [source,ts]
 ----
 client.ilm.explainLifecycle({
@@ -5587,6 +5768,7 @@ link:{ref}/ilm-explain-lifecycle.html[Reference]
 |===
 
 === ilm.getLifecycle
+
 [source,ts]
 ----
 client.ilm.getLifecycle({
@@ -5602,6 +5784,7 @@ link:{ref}/ilm-get-lifecycle.html[Reference]
 |===
 
 === ilm.getStatus
+
 [source,ts]
 ----
 client.ilm.getStatus()
@@ -5610,6 +5793,7 @@ link:{ref}/ilm-get-status.html[Reference]
 
 
 === ilm.moveToStep
+
 [source,ts]
 ----
 client.ilm.moveToStep({
@@ -5629,6 +5813,7 @@ link:{ref}/ilm-move-to-step.html[Reference]
 |===
 
 === ilm.putLifecycle
+
 [source,ts]
 ----
 client.ilm.putLifecycle({
@@ -5648,6 +5833,7 @@ link:{ref}/ilm-put-lifecycle.html[Reference]
 |===
 
 === ilm.removePolicy
+
 [source,ts]
 ----
 client.ilm.removePolicy({
@@ -5663,6 +5849,7 @@ link:{ref}/ilm-remove-policy.html[Reference]
 |===
 
 === ilm.retry
+
 [source,ts]
 ----
 client.ilm.retry({
@@ -5678,6 +5865,7 @@ link:{ref}/ilm-retry-policy.html[Reference]
 |===
 
 === ilm.start
+
 [source,ts]
 ----
 client.ilm.start()
@@ -5686,6 +5874,7 @@ link:{ref}/ilm-start.html[Reference]
 
 
 === ilm.stop
+
 [source,ts]
 ----
 client.ilm.stop()
@@ -5694,6 +5883,7 @@ link:{ref}/ilm-stop.html[Reference]
 
 
 === indices.freeze
+
 [source,ts]
 ----
 client.indices.freeze({
@@ -5734,6 +5924,7 @@ _Default:_ `closed`
 |===
 
 === indices.reloadSearchAnalyzers
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.reloadSearchAnalyzers({
@@ -5762,6 +5953,7 @@ _Default:_ `open`
 |===
 
 === indices.unfreeze
+
 [source,ts]
 ----
 client.indices.unfreeze({
@@ -5802,6 +5994,7 @@ _Default:_ `closed`
 |===
 
 === license.delete
+
 [source,ts]
 ----
 client.license.delete()
@@ -5810,6 +6003,7 @@ link:{ref}/delete-license.html[Reference]
 
 
 === license.get
+
 [source,ts]
 ----
 client.license.get({
@@ -5825,6 +6019,7 @@ link:{ref}/get-license.html[Reference]
 |===
 
 === license.getBasicStatus
+
 [source,ts]
 ----
 client.license.getBasicStatus()
@@ -5833,6 +6028,7 @@ link:{ref}/get-basic-status.html[Reference]
 
 
 === license.getTrialStatus
+
 [source,ts]
 ----
 client.license.getTrialStatus()
@@ -5841,6 +6037,7 @@ link:{ref}/get-trial-status.html[Reference]
 
 
 === license.post
+
 [source,ts]
 ----
 client.license.post({
@@ -5860,6 +6057,7 @@ link:{ref}/update-license.html[Reference]
 |===
 
 === license.postStartBasic
+
 [source,ts]
 ----
 client.license.postStartBasic({
@@ -5875,6 +6073,7 @@ link:{ref}/start-basic.html[Reference]
 |===
 
 === license.postStartTrial
+
 [source,ts]
 ----
 client.license.postStartTrial({
@@ -5894,6 +6093,7 @@ link:{ref}/start-trial.html[Reference]
 |===
 
 === migration.deprecations
+
 [source,ts]
 ----
 client.migration.deprecations({
@@ -5909,6 +6109,7 @@ link:{ref}/migration-api-deprecation.html[Reference]
 |===
 
 === ml.closeJob
+
 [source,ts]
 ----
 client.ml.closeJob({
@@ -5940,6 +6141,7 @@ link:{ref}/ml-close-job.html[Reference]
 |===
 
 === ml.deleteCalendar
+
 [source,ts]
 ----
 client.ml.deleteCalendar({
@@ -5954,6 +6156,7 @@ client.ml.deleteCalendar({
 |===
 
 === ml.deleteCalendarEvent
+
 [source,ts]
 ----
 client.ml.deleteCalendarEvent({
@@ -5972,6 +6175,7 @@ client.ml.deleteCalendarEvent({
 |===
 
 === ml.deleteCalendarJob
+
 [source,ts]
 ----
 client.ml.deleteCalendarJob({
@@ -5990,6 +6194,7 @@ client.ml.deleteCalendarJob({
 |===
 
 === ml.deleteDataFrameAnalytics
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
@@ -6005,6 +6210,7 @@ link:{ref}/delete-dfanalytics.html[Reference]
 |===
 
 === ml.deleteDatafeed
+
 [source,ts]
 ----
 client.ml.deleteDatafeed({
@@ -6024,6 +6230,7 @@ link:{ref}/ml-delete-datafeed.html[Reference]
 |===
 
 === ml.deleteExpiredData
+
 [source,ts]
 ----
 client.ml.deleteExpiredData()
@@ -6031,6 +6238,7 @@ client.ml.deleteExpiredData()
 
 
 === ml.deleteFilter
+
 [source,ts]
 ----
 client.ml.deleteFilter({
@@ -6045,6 +6253,7 @@ client.ml.deleteFilter({
 |===
 
 === ml.deleteForecast
+
 [source,ts]
 ----
 client.ml.deleteForecast({
@@ -6072,6 +6281,7 @@ link:{ref}/ml-delete-forecast.html[Reference]
 |===
 
 === ml.deleteJob
+
 [source,ts]
 ----
 client.ml.deleteJob({
@@ -6096,6 +6306,7 @@ _Default:_ `true`
 |===
 
 === ml.deleteModelSnapshot
+
 [source,ts]
 ----
 client.ml.deleteModelSnapshot({
@@ -6115,6 +6326,7 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 |===
 
 === ml.estimateMemoryUsage
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.estimateMemoryUsage({
@@ -6130,6 +6342,7 @@ link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
 |===
 
 === ml.evaluateDataFrame
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.evaluateDataFrame({
@@ -6145,6 +6358,7 @@ link:{ref}/evaluate-dfanalytics.html[Reference]
 |===
 
 === ml.findFileStructure
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.findFileStructure({
@@ -6219,6 +6433,7 @@ _Default:_ `25s`
 |===
 
 === ml.flushJob
+
 [source,ts]
 ----
 client.ml.flushJob({
@@ -6258,6 +6473,7 @@ link:{ref}/ml-flush-job.html[Reference]
 |===
 
 === ml.forecast
+
 [source,ts]
 ----
 client.ml.forecast({
@@ -6280,6 +6496,7 @@ client.ml.forecast({
 |===
 
 === ml.getBuckets
+
 [source,ts]
 ----
 client.ml.getBuckets({
@@ -6339,6 +6556,7 @@ link:{ref}/ml-get-bucket.html[Reference]
 |===
 
 === ml.getCalendarEvents
+
 [source,ts]
 ----
 client.ml.getCalendarEvents({
@@ -6373,6 +6591,7 @@ client.ml.getCalendarEvents({
 |===
 
 === ml.getCalendars
+
 [source,ts]
 ----
 client.ml.getCalendars({
@@ -6399,6 +6618,7 @@ client.ml.getCalendars({
 |===
 
 === ml.getCategories
+
 [source,ts]
 ----
 client.ml.getCategories({
@@ -6430,6 +6650,7 @@ link:{ref}/ml-get-category.html[Reference]
 |===
 
 === ml.getDataFrameAnalytics
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics({
@@ -6459,6 +6680,7 @@ _Default:_ `100`
 |===
 
 === ml.getDataFrameAnalyticsStats
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats({
@@ -6488,6 +6710,7 @@ _Default:_ `100`
 |===
 
 === ml.getDatafeedStats
+
 [source,ts]
 ----
 client.ml.getDatafeedStats({
@@ -6507,6 +6730,7 @@ link:{ref}/ml-get-datafeed-stats.html[Reference]
 |===
 
 === ml.getDatafeeds
+
 [source,ts]
 ----
 client.ml.getDatafeeds({
@@ -6526,6 +6750,7 @@ link:{ref}/ml-get-datafeed.html[Reference]
 |===
 
 === ml.getFilters
+
 [source,ts]
 ----
 client.ml.getFilters({
@@ -6548,6 +6773,7 @@ client.ml.getFilters({
 |===
 
 === ml.getInfluencers
+
 [source,ts]
 ----
 client.ml.getInfluencers({
@@ -6599,6 +6825,7 @@ link:{ref}/ml-get-influencer.html[Reference]
 |===
 
 === ml.getJobStats
+
 [source,ts]
 ----
 client.ml.getJobStats({
@@ -6618,6 +6845,7 @@ link:{ref}/ml-get-job-stats.html[Reference]
 |===
 
 === ml.getJobs
+
 [source,ts]
 ----
 client.ml.getJobs({
@@ -6637,6 +6865,7 @@ link:{ref}/ml-get-job.html[Reference]
 |===
 
 === ml.getModelSnapshots
+
 [source,ts]
 ----
 client.ml.getModelSnapshots({
@@ -6684,6 +6913,7 @@ link:{ref}/ml-get-snapshot.html[Reference]
 |===
 
 === ml.getOverallBuckets
+
 [source,ts]
 ----
 client.ml.getOverallBuckets({
@@ -6731,6 +6961,7 @@ link:{ref}/ml-get-overall-buckets.html[Reference]
 |===
 
 === ml.getRecords
+
 [source,ts]
 ----
 client.ml.getRecords({
@@ -6782,6 +7013,7 @@ link:{ref}/ml-get-record.html[Reference]
 |===
 
 === ml.info
+
 [source,ts]
 ----
 client.ml.info()
@@ -6789,12 +7021,11 @@ client.ml.info()
 
 
 === ml.openJob
+
 [source,ts]
 ----
 client.ml.openJob({
-  job_id: string,
-  ignore_downtime: boolean,
-  timeout: string
+  job_id: string
 })
 ----
 link:{ref}/ml-open-job.html[Reference]
@@ -6803,15 +7034,10 @@ link:{ref}/ml-open-job.html[Reference]
 |`job_id` or `jobId`
 |`string` - The ID of the job to open
 
-|`ignore_downtime` or `ignoreDowntime`
-|`boolean` - Controls if gaps in data are treated as anomalous or as a maintenance window after a job re-start
-
-|`timeout`
-|`string` - Controls the time to wait until a job has opened. Default to 30 minutes
-
 |===
 
 === ml.postCalendarEvents
+
 [source,ts]
 ----
 client.ml.postCalendarEvents({
@@ -6830,6 +7056,7 @@ client.ml.postCalendarEvents({
 |===
 
 === ml.postData
+
 [source,ts]
 ----
 client.ml.postData({
@@ -6857,6 +7084,7 @@ link:{ref}/ml-post-data.html[Reference]
 |===
 
 === ml.previewDatafeed
+
 [source,ts]
 ----
 client.ml.previewDatafeed({
@@ -6872,6 +7100,7 @@ link:{ref}/ml-preview-datafeed.html[Reference]
 |===
 
 === ml.putCalendar
+
 [source,ts]
 ----
 client.ml.putCalendar({
@@ -6890,6 +7119,7 @@ client.ml.putCalendar({
 |===
 
 === ml.putCalendarJob
+
 [source,ts]
 ----
 client.ml.putCalendarJob({
@@ -6908,6 +7138,7 @@ client.ml.putCalendarJob({
 |===
 
 === ml.putDataFrameAnalytics
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics({
@@ -6927,6 +7158,7 @@ link:{ref}/put-dfanalytics.html[Reference]
 |===
 
 === ml.putDatafeed
+
 [source,ts]
 ----
 client.ml.putDatafeed({
@@ -6946,6 +7178,7 @@ link:{ref}/ml-put-datafeed.html[Reference]
 |===
 
 === ml.putFilter
+
 [source,ts]
 ----
 client.ml.putFilter({
@@ -6964,6 +7197,7 @@ client.ml.putFilter({
 |===
 
 === ml.putJob
+
 [source,ts]
 ----
 client.ml.putJob({
@@ -6983,6 +7217,7 @@ link:{ref}/ml-put-job.html[Reference]
 |===
 
 === ml.revertModelSnapshot
+
 [source,ts]
 ----
 client.ml.revertModelSnapshot({
@@ -7010,6 +7245,7 @@ link:{ref}/ml-revert-snapshot.html[Reference]
 |===
 
 === ml.setUpgradeMode
+
 [source,ts]
 ----
 client.ml.setUpgradeMode({
@@ -7029,6 +7265,7 @@ link:{ref}/ml-set-upgrade-mode.html[Reference]
 |===
 
 === ml.startDataFrameAnalytics
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics({
@@ -7052,6 +7289,7 @@ link:{ref}/start-dfanalytics.html[Reference]
 |===
 
 === ml.startDatafeed
+
 [source,ts]
 ----
 client.ml.startDatafeed({
@@ -7083,6 +7321,7 @@ link:{ref}/ml-start-datafeed.html[Reference]
 |===
 
 === ml.stopDataFrameAnalytics
+*Stability:* experimental
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics({
@@ -7114,6 +7353,7 @@ link:{ref}/stop-dfanalytics.html[Reference]
 |===
 
 === ml.stopDatafeed
+
 [source,ts]
 ----
 client.ml.stopDatafeed({
@@ -7141,6 +7381,7 @@ link:{ref}/ml-stop-datafeed.html[Reference]
 |===
 
 === ml.updateDatafeed
+
 [source,ts]
 ----
 client.ml.updateDatafeed({
@@ -7160,6 +7401,7 @@ link:{ref}/ml-update-datafeed.html[Reference]
 |===
 
 === ml.updateFilter
+
 [source,ts]
 ----
 client.ml.updateFilter({
@@ -7178,6 +7420,7 @@ client.ml.updateFilter({
 |===
 
 === ml.updateJob
+
 [source,ts]
 ----
 client.ml.updateJob({
@@ -7197,6 +7440,7 @@ link:{ref}/ml-update-job.html[Reference]
 |===
 
 === ml.updateModelSnapshot
+
 [source,ts]
 ----
 client.ml.updateModelSnapshot({
@@ -7220,6 +7464,7 @@ link:{ref}/ml-update-snapshot.html[Reference]
 |===
 
 === ml.validate
+
 [source,ts]
 ----
 client.ml.validate({
@@ -7234,6 +7479,7 @@ client.ml.validate({
 |===
 
 === ml.validateDetector
+
 [source,ts]
 ----
 client.ml.validateDetector({
@@ -7248,6 +7494,7 @@ client.ml.validateDetector({
 |===
 
 === monitoring.bulk
+*Stability:* experimental
 [source,ts]
 ----
 client.monitoring.bulk({
@@ -7262,7 +7509,9 @@ link:{ref}/es-monitoring.html[Reference]
 [cols=2*]
 |===
 |`type`
-|`string` - Default document type for items which don't provide one
+|`string` - Default document type for items which don't provide one +
+
+WARNING: This parameter has been deprecated.
 
 |`system_id` or `systemId`
 |`string` - Identifier of the monitored system
@@ -7279,6 +7528,7 @@ link:{ref}/es-monitoring.html[Reference]
 |===
 
 === rollup.deleteJob
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.deleteJob({
@@ -7293,6 +7543,7 @@ client.rollup.deleteJob({
 |===
 
 === rollup.getJobs
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.getJobs({
@@ -7307,6 +7558,7 @@ client.rollup.getJobs({
 |===
 
 === rollup.getRollupCaps
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.getRollupCaps({
@@ -7321,6 +7573,7 @@ client.rollup.getRollupCaps({
 |===
 
 === rollup.getRollupIndexCaps
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.getRollupIndexCaps({
@@ -7335,6 +7588,7 @@ client.rollup.getRollupIndexCaps({
 |===
 
 === rollup.putJob
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.putJob({
@@ -7353,6 +7607,7 @@ client.rollup.putJob({
 |===
 
 === rollup.rollupSearch
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.rollupSearch({
@@ -7369,7 +7624,9 @@ client.rollup.rollupSearch({
 |`string \| string[]` - The indices or index-pattern(s) (containing rollup or regular data) that should be searched
 
 |`type`
-|`string` - The doc type inside the index
+|`string` - The doc type inside the index +
+
+WARNING: This parameter has been deprecated.
 
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -7383,6 +7640,7 @@ client.rollup.rollupSearch({
 |===
 
 === rollup.startJob
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.startJob({
@@ -7397,6 +7655,7 @@ client.rollup.startJob({
 |===
 
 === rollup.stopJob
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.stopJob({
@@ -7419,6 +7678,7 @@ client.rollup.stopJob({
 |===
 
 === security.authenticate
+
 [source,ts]
 ----
 client.security.authenticate()
@@ -7427,6 +7687,7 @@ link:{ref}/security-api-authenticate.html[Reference]
 
 
 === security.changePassword
+
 [source,ts]
 ----
 client.security.changePassword({
@@ -7450,6 +7711,7 @@ link:{ref}/security-api-change-password.html[Reference]
 |===
 
 === security.clearCachedRealms
+
 [source,ts]
 ----
 client.security.clearCachedRealms({
@@ -7469,6 +7731,7 @@ link:{ref}/security-api-clear-cache.html[Reference]
 |===
 
 === security.clearCachedRoles
+
 [source,ts]
 ----
 client.security.clearCachedRoles({
@@ -7484,6 +7747,7 @@ link:{ref}/security-api-clear-role-cache.html[Reference]
 |===
 
 === security.createApiKey
+
 [source,ts]
 ----
 client.security.createApiKey({
@@ -7503,6 +7767,7 @@ link:{ref}/security-api-create-api-key.html[Reference]
 |===
 
 === security.deletePrivileges
+
 [source,ts]
 ----
 client.security.deletePrivileges({
@@ -7526,6 +7791,7 @@ link:TODO[Reference]
 |===
 
 === security.deleteRole
+
 [source,ts]
 ----
 client.security.deleteRole({
@@ -7545,6 +7811,7 @@ link:{ref}/security-api-delete-role.html[Reference]
 |===
 
 === security.deleteRoleMapping
+
 [source,ts]
 ----
 client.security.deleteRoleMapping({
@@ -7564,6 +7831,7 @@ link:{ref}/security-api-delete-role-mapping.html[Reference]
 |===
 
 === security.deleteUser
+
 [source,ts]
 ----
 client.security.deleteUser({
@@ -7583,6 +7851,7 @@ link:{ref}/security-api-delete-user.html[Reference]
 |===
 
 === security.disableUser
+
 [source,ts]
 ----
 client.security.disableUser({
@@ -7602,6 +7871,7 @@ link:{ref}/security-api-disable-user.html[Reference]
 |===
 
 === security.enableUser
+
 [source,ts]
 ----
 client.security.enableUser({
@@ -7621,6 +7891,7 @@ link:{ref}/security-api-enable-user.html[Reference]
 |===
 
 === security.getApiKey
+
 [source,ts]
 ----
 client.security.getApiKey({
@@ -7648,6 +7919,7 @@ link:{ref}/security-api-get-api-key.html[Reference]
 |===
 
 === security.getBuiltinPrivileges
+
 [source,ts]
 ----
 client.security.getBuiltinPrivileges()
@@ -7656,6 +7928,7 @@ link:{ref}/security-api-get-builtin-privileges.html[Reference]
 
 
 === security.getPrivileges
+
 [source,ts]
 ----
 client.security.getPrivileges({
@@ -7675,6 +7948,7 @@ link:{ref}/security-api-get-privileges.html[Reference]
 |===
 
 === security.getRole
+
 [source,ts]
 ----
 client.security.getRole({
@@ -7690,6 +7964,7 @@ link:{ref}/security-api-get-role.html[Reference]
 |===
 
 === security.getRoleMapping
+
 [source,ts]
 ----
 client.security.getRoleMapping({
@@ -7705,6 +7980,7 @@ link:{ref}/security-api-get-role-mapping.html[Reference]
 |===
 
 === security.getToken
+
 [source,ts]
 ----
 client.security.getToken({
@@ -7720,6 +7996,7 @@ link:{ref}/security-api-get-token.html[Reference]
 |===
 
 === security.getUser
+
 [source,ts]
 ----
 client.security.getUser({
@@ -7735,6 +8012,7 @@ link:{ref}/security-api-get-user.html[Reference]
 |===
 
 === security.getUserPrivileges
+
 [source,ts]
 ----
 client.security.getUserPrivileges()
@@ -7743,6 +8021,7 @@ link:{ref}/security-api-get-privileges.html[Reference]
 
 
 === security.hasPrivileges
+
 [source,ts]
 ----
 client.security.hasPrivileges({
@@ -7762,6 +8041,7 @@ link:{ref}/security-api-has-privileges.html[Reference]
 |===
 
 === security.invalidateApiKey
+
 [source,ts]
 ----
 client.security.invalidateApiKey({
@@ -7777,6 +8057,7 @@ link:{ref}/security-api-invalidate-api-key.html[Reference]
 |===
 
 === security.invalidateToken
+
 [source,ts]
 ----
 client.security.invalidateToken({
@@ -7792,6 +8073,7 @@ link:{ref}/security-api-invalidate-token.html[Reference]
 |===
 
 === security.putPrivileges
+
 [source,ts]
 ----
 client.security.putPrivileges({
@@ -7811,6 +8093,7 @@ link:TODO[Reference]
 |===
 
 === security.putRole
+
 [source,ts]
 ----
 client.security.putRole({
@@ -7834,6 +8117,7 @@ link:{ref}/security-api-put-role.html[Reference]
 |===
 
 === security.putRoleMapping
+
 [source,ts]
 ----
 client.security.putRoleMapping({
@@ -7857,6 +8141,7 @@ link:{ref}/security-api-put-role-mapping.html[Reference]
 |===
 
 === security.putUser
+
 [source,ts]
 ----
 client.security.putUser({
@@ -7880,6 +8165,7 @@ link:{ref}/security-api-put-user.html[Reference]
 |===
 
 === slm.deleteLifecycle
+
 [source,ts]
 ----
 client.slm.deleteLifecycle({
@@ -7895,6 +8181,7 @@ link:{ref}/slm-api-delete.html[Reference]
 |===
 
 === slm.executeLifecycle
+
 [source,ts]
 ----
 client.slm.executeLifecycle({
@@ -7910,6 +8197,7 @@ link:{ref}/slm-api-execute.html[Reference]
 |===
 
 === slm.getLifecycle
+
 [source,ts]
 ----
 client.slm.getLifecycle({
@@ -7924,7 +8212,17 @@ link:{ref}/slm-api-get.html[Reference]
 
 |===
 
+=== slm.getStats
+
+[source,ts]
+----
+client.slm.getStats()
+----
+link:{ref}/slm-get-stats.html[Reference]
+
+
 === slm.putLifecycle
+
 [source,ts]
 ----
 client.slm.putLifecycle({
@@ -7944,6 +8242,7 @@ link:{ref}/slm-api-put.html[Reference]
 |===
 
 === sql.clearCursor
+
 [source,ts]
 ----
 client.sql.clearCursor({
@@ -7959,6 +8258,7 @@ link:Clear SQL cursor[Reference]
 |===
 
 === sql.query
+
 [source,ts]
 ----
 client.sql.query({
@@ -7978,6 +8278,7 @@ link:Execute SQL[Reference]
 |===
 
 === sql.translate
+
 [source,ts]
 ----
 client.sql.translate({
@@ -7993,6 +8294,7 @@ link:Translate SQL into Elasticsearch queries[Reference]
 |===
 
 === ssl.certificates
+
 [source,ts]
 ----
 client.ssl.certificates()
@@ -8001,6 +8303,7 @@ link:{ref}/security-api-ssl.html[Reference]
 
 
 === watcher.ackWatch
+
 [source,ts]
 ----
 client.watcher.ackWatch({
@@ -8020,6 +8323,7 @@ link:{ref}/watcher-api-ack-watch.html[Reference]
 |===
 
 === watcher.activateWatch
+
 [source,ts]
 ----
 client.watcher.activateWatch({
@@ -8035,6 +8339,7 @@ link:{ref}/watcher-api-activate-watch.html[Reference]
 |===
 
 === watcher.deactivateWatch
+
 [source,ts]
 ----
 client.watcher.deactivateWatch({
@@ -8050,6 +8355,7 @@ link:{ref}/watcher-api-deactivate-watch.html[Reference]
 |===
 
 === watcher.deleteWatch
+
 [source,ts]
 ----
 client.watcher.deleteWatch({
@@ -8065,6 +8371,7 @@ link:{ref}/watcher-api-delete-watch.html[Reference]
 |===
 
 === watcher.executeWatch
+
 [source,ts]
 ----
 client.watcher.executeWatch({
@@ -8088,6 +8395,7 @@ link:{ref}/watcher-api-execute-watch.html[Reference]
 |===
 
 === watcher.getWatch
+
 [source,ts]
 ----
 client.watcher.getWatch({
@@ -8103,6 +8411,7 @@ link:{ref}/watcher-api-get-watch.html[Reference]
 |===
 
 === watcher.putWatch
+
 [source,ts]
 ----
 client.watcher.putWatch({
@@ -8138,6 +8447,7 @@ link:{ref}/watcher-api-put-watch.html[Reference]
 |===
 
 === watcher.start
+
 [source,ts]
 ----
 client.watcher.start()
@@ -8146,10 +8456,10 @@ link:{ref}/watcher-api-start.html[Reference]
 
 
 === watcher.stats
+
 [source,ts]
 ----
 client.watcher.stats({
-  metric: string | string[],
   metric: string | string[],
   emit_stacktraces: boolean
 })
@@ -8160,15 +8470,13 @@ link:{ref}/watcher-api-stats.html[Reference]
 |`metric`
 |`string \| string[]` - Controls what additional stat metrics should be include in the response
 
-|`metric`
-|`string \| string[]` - Controls what additional stat metrics should be include in the response
-
 |`emit_stacktraces` or `emitStacktraces`
 |`boolean` - Emits stack traces of currently running watches
 
 |===
 
 === watcher.stop
+
 [source,ts]
 ----
 client.watcher.stop()
@@ -8177,6 +8485,7 @@ link:{ref}/watcher-api-stop.html[Reference]
 
 
 === xpack.info
+
 [source,ts]
 ----
 client.xpack.info({
@@ -8192,6 +8501,7 @@ link:{ref}/info-api.html[Reference]
 |===
 
 === xpack.usage
+
 [source,ts]
 ----
 client.xpack.usage({

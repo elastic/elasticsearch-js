@@ -10,12 +10,6 @@
 function buildIngestGetPipeline (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ingest.get_pipeline](https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html) request
-   *
-   * @param {string} id - Comma separated list of pipeline ids. Wildcards supported
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -32,6 +26,11 @@ function buildIngestGetPipeline (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a ingest.get_pipeline request
+   * Returns a pipeline.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html
+   */
   return function ingestGetPipeline (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,12 +43,6 @@ function buildIngestGetPipeline (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -60,10 +53,6 @@ function buildIngestGetPipeline (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,8 +61,10 @@ function buildIngestGetPipeline (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ingest' + '/' + 'pipeline'
     }
 

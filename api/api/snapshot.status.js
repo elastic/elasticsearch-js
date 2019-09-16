@@ -10,14 +10,6 @@
 function buildSnapshotStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [snapshot.status](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {string} repository - A repository name
-   * @param {list} snapshot - A comma-separated list of snapshot names
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {boolean} ignore_unavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -36,6 +28,11 @@ function buildSnapshotStatus (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.status request
+   * Returns information about the status of a snapshot.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotStatus (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,12 +43,6 @@ function buildSnapshotStatus (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
     }
 
     // check required url components
@@ -70,10 +61,6 @@ function buildSnapshotStatus (opts) {
     var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -82,10 +69,13 @@ function buildSnapshotStatus (opts) {
     var path = ''
 
     if ((repository) != null && (snapshot) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_status'
     } else if ((repository) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_status'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_snapshot' + '/' + '_status'
     }
 

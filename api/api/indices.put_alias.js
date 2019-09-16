@@ -10,15 +10,6 @@
 function buildIndicesPutAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.put_alias](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {list} index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
-   * @param {string} name - The name of the alias to be created or updated
-   * @param {time} timeout - Explicit timestamp for the document
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {object} body - The settings for the alias, such as `routing` or `filter`
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -36,6 +27,11 @@ function buildIndicesPutAlias (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.put_alias request
+   * Creates or updates an alias.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+   */
   return function indicesPutAlias (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -74,10 +70,6 @@ function buildIndicesPutAlias (opts) {
     var { method, body, index, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,9 +78,11 @@ function buildIndicesPutAlias (opts) {
     var path = ''
 
     if ((index) != null && (name) != null) {
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
-    } else {
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'PUT'
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
     }
 
     // build request object

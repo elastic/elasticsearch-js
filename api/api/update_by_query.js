@@ -10,46 +10,6 @@
 function buildUpdateByQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [update_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-   * @param {string} analyzer - The analyzer to use for the query string
-   * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
-   * @param {enum} default_operator - The default operator for query string query (AND or OR)
-   * @param {string} df - The field to use as default where no field prefix is given in the query string
-   * @param {number} from - Starting offset (default: 0)
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} conflicts - What to do when the update by query hits version conflicts?
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-   * @param {string} pipeline - Ingest pipeline to set on index requests made by this action. (default: none)
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {string} q - Query in the Lucene query string syntax
-   * @param {list} routing - A comma-separated list of specific routing values
-   * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
-   * @param {enum} search_type - Search operation type
-   * @param {time} search_timeout - Explicit timeout for each search request. Defaults to no timeout.
-   * @param {number} max_docs - Maximum number of documents to process (default: all documents)
-   * @param {list} sort - A comma-separated list of <field>:<direction> pairs
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {number} terminate_after - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-   * @param {list} stats - Specific 'tag' of the request for logging and statistical purposes
-   * @param {boolean} version - Specify whether to return document version as part of a hit
-   * @param {boolean} version_type - Should the document increment the version number (internal) on hit or not (reindex)
-   * @param {boolean} request_cache - Specify if request cache should be used for this request or not, defaults to index level setting
-   * @param {boolean} refresh - Should the effected indexes be refreshed?
-   * @param {time} timeout - Time each individual bulk request should wait for shards that are unavailable.
-   * @param {string} wait_for_active_shards - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-   * @param {number} scroll_size - Size on the scroll request powering the update by query
-   * @param {boolean} wait_for_completion - Should the request should block until the update by query operation is complete.
-   * @param {number} requests_per_second - The throttle to set on this request in sub-requests per second. -1 means no throttle.
-   * @param {number} slices - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
-   * @param {object} body - The search definition using the Query DSL
-   */
 
   const acceptedQuerystring = [
     'analyzer',
@@ -119,6 +79,12 @@ function buildUpdateByQuery (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a update_by_query request
+   * Performs an update on every document in the index without changing the source,
+for example to pick up a mapping change.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+   */
   return function updateByQuery (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -147,10 +113,6 @@ function buildUpdateByQuery (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -158,6 +120,7 @@ function buildUpdateByQuery (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
 
     // build request object

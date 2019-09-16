@@ -10,13 +10,6 @@
 function buildNodesUsage (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [nodes.usage](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html) request
-   *
-   * @param {list} metric - Limit the information returned to the specified metrics
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {time} timeout - Explicit operation timeout
-   */
 
   const acceptedQuerystring = [
     'timeout',
@@ -32,6 +25,11 @@ function buildNodesUsage (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a nodes.usage request
+   * Returns low-level information about REST actions usage on nodes.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html
+   */
   return function nodesUsage (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,12 +42,6 @@ function buildNodesUsage (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -57,12 +49,8 @@ function buildNodesUsage (opts) {
     }
 
     var warnings = []
-    var { method, body, metric, nodeId, node_id, ...querystring } = params
+    var { method, body, nodeId, node_id, metric, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    if (method == null) {
-      method = 'GET'
-    }
 
     var ignore = options.ignore
     if (typeof ignore === 'number') {
@@ -72,12 +60,16 @@ function buildNodesUsage (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null && (metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage' + '/' + encodeURIComponent(metric)
     } else if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage'
     } else if ((metric) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'usage' + '/' + encodeURIComponent(metric)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'usage'
     }
 

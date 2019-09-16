@@ -10,13 +10,6 @@
 function buildMlDeleteJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html) request
-   *
-   * @param {string} job_id - The ID of the job to delete
-   * @param {boolean} force - True if the job should be forcefully deleted
-   * @param {boolean} wait_for_completion - Should this request wait until the operation has completed before returning
-   */
 
   const acceptedQuerystring = [
     'force',
@@ -27,6 +20,10 @@ function buildMlDeleteJob (opts) {
     waitForCompletion: 'wait_for_completion'
   }
 
+  /**
+   * Perform a ml.delete_job request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
+   */
   return function mlDeleteJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,10 +41,6 @@ function buildMlDeleteJob (opts) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -59,10 +52,6 @@ function buildMlDeleteJob (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -70,13 +59,14 @@ function buildMlDeleteJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

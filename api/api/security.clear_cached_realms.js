@@ -10,12 +10,6 @@
 function buildSecurityClearCachedRealms (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.clear_cached_realms](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html) request
-   *
-   * @param {list} realms - Comma-separated list of realms to clear
-   * @param {list} usernames - Comma-separated list of usernames to clear from the cache
-   */
 
   const acceptedQuerystring = [
     'usernames'
@@ -25,6 +19,10 @@ function buildSecurityClearCachedRealms (opts) {
 
   }
 
+  /**
+   * Perform a security.clear_cached_realms request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+   */
   return function securityClearCachedRealms (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,10 +40,6 @@ function buildSecurityClearCachedRealms (opts) {
       const err = new ConfigurationError('Missing required parameter: realms')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -57,10 +51,6 @@ function buildSecurityClearCachedRealms (opts) {
     var { method, body, realms, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,13 +58,14 @@ function buildSecurityClearCachedRealms (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_security' + '/' + 'realm' + '/' + encodeURIComponent(realms) + '/' + '_clear_cache'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

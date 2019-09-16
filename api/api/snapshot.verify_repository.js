@@ -10,13 +10,6 @@
 function buildSnapshotVerifyRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [snapshot.verify_repository](https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {string} repository - A repository name
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   */
 
   const acceptedQuerystring = [
     'master_timeout',
@@ -34,6 +27,11 @@ function buildSnapshotVerifyRepository (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a snapshot.verify_repository request
+   * Verifies a repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   */
   return function snapshotVerifyRepository (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,10 +49,6 @@ function buildSnapshotVerifyRepository (opts) {
       const err = new ConfigurationError('Missing required parameter: repository')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -66,10 +60,6 @@ function buildSnapshotVerifyRepository (opts) {
     var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -77,13 +67,14 @@ function buildSnapshotVerifyRepository (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_verify'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,18 +10,6 @@
 function buildCatHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cat.health](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html) request
-   *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} ts - Set to false to disable timestamping
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
 
   const acceptedQuerystring = [
     'format',
@@ -45,6 +33,11 @@ function buildCatHealth (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.health request
+   * Returns a concise representation of the cluster health.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
+   */
   return function catHealth (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -57,12 +50,6 @@ function buildCatHealth (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -73,10 +60,6 @@ function buildCatHealth (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -84,6 +67,7 @@ function buildCatHealth (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'health'
 
     // build request object

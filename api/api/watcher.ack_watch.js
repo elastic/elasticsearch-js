@@ -10,12 +10,6 @@
 function buildWatcherAckWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.ack_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html) request
-   *
-   * @param {string} watch_id - Watch ID
-   * @param {list} action_id - A comma-separated list of the action ids to be acked
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildWatcherAckWatch (opts) {
 
   }
 
+  /**
+   * Perform a watcher.ack_watch request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+   */
   return function watcherAckWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -40,10 +38,6 @@ function buildWatcherAckWatch (opts) {
     // check required parameters
     if (params['watch_id'] == null && params['watchId'] == null) {
       const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
-      return handleError(err, callback)
-    }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
       return handleError(err, callback)
     }
 
@@ -63,10 +57,6 @@ function buildWatcherAckWatch (opts) {
     var { method, body, watchId, watch_id, actionId, action_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -75,8 +65,10 @@ function buildWatcherAckWatch (opts) {
     var path = ''
 
     if ((watch_id || watchId) != null && (action_id || actionId) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack'
     }
 
@@ -84,7 +76,7 @@ function buildWatcherAckWatch (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

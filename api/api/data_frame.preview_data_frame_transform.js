@@ -10,11 +10,6 @@
 function buildDataFramePreviewDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.preview_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html) request
-   *
-   * @param {object} body - The definition for the data_frame transform to preview
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildDataFramePreviewDataFrameTransform (opts) {
 
   }
 
+  /**
+   * Perform a data_frame.preview_data_frame_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html
+   */
   return function dataFramePreviewDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildDataFramePreviewDataFrameTransform (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildDataFramePreviewDataFrameTransform (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + '_preview'
 
     // build request object

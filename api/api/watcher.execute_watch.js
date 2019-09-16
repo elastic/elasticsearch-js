@@ -10,13 +10,6 @@
 function buildWatcherExecuteWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.execute_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html) request
-   *
-   * @param {string} id - Watch ID
-   * @param {boolean} debug - indicates whether the watch should execute in debug mode
-   * @param {object} body - Execution control
-   */
 
   const acceptedQuerystring = [
     'debug'
@@ -26,6 +19,10 @@ function buildWatcherExecuteWatch (opts) {
 
   }
 
+  /**
+   * Perform a watcher.execute_watch request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
+   */
   return function watcherExecuteWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -48,10 +45,6 @@ function buildWatcherExecuteWatch (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -60,8 +53,10 @@ function buildWatcherExecuteWatch (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = 'PUT'
       path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
     } else {
+      if (method == null) method = 'PUT'
       path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
     }
 

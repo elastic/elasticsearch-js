@@ -10,12 +10,6 @@
 function buildDataFrameDeleteDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.delete_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html) request
-   *
-   * @param {string} transform_id - The id of the transform to delete
-   * @param {boolean} force - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-   */
 
   const acceptedQuerystring = [
     'force'
@@ -25,6 +19,10 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
 
   }
 
+  /**
+   * Perform a data_frame.delete_data_frame_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
+   */
   return function dataFrameDeleteDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,10 +40,6 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
       const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -57,10 +51,6 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
     var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,13 +58,14 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

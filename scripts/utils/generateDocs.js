@@ -57,30 +57,43 @@ function commonParameters (spec) {
 
 function generateApiDoc (spec) {
   const name = Object.keys(spec)[0]
-  const documentationUrl = fixLink(name, spec[name].documentation)
+  const documentationUrl = spec[name].documentation && spec[name].documentation.url
+    ? fixLink(name, spec[name].documentation.url)
+    : ''
   const params = []
   // url params
-  const urlParts = spec[name].url.parts
+  const urlParts = spec[name].url.paths.reduce((acc, path) => {
+    if (!path.parts) return acc
+    for (const part in path.parts) {
+      if (acc[part] != null) continue
+      acc[part] = path.parts[part]
+    }
+    return acc
+  }, {})
   if (urlParts) {
     Object.keys(urlParts).forEach(param => {
       params.push({
         name: param,
         type: getType(urlParts[param].type, urlParts[param].options),
         description: urlParts[param].description,
-        default: urlParts[param].default
+        default: urlParts[param].default,
+        deprecated: !!urlParts[param].deprecated
       })
     })
   }
 
   // query params
-  const urlParams = spec[name].url.params
+  const urlParams = spec[name].params
   if (urlParams) {
     Object.keys(urlParams).forEach(param => {
+      const duplicate = params.find(ele => ele.name === param)
+      if (duplicate) return
       params.push({
         name: param,
         type: getType(urlParams[param].type, urlParams[param].options),
         description: urlParams[param].description,
-        default: urlParams[param].default
+        default: urlParams[param].default,
+        deprecated: !!urlParams[param].deprecated
       })
     })
   }
@@ -92,7 +105,8 @@ function generateApiDoc (spec) {
       name: 'body',
       type: 'object',
       description: body.description,
-      default: body.default
+      default: body.default,
+      deprecated: !!body.deprecated
     })
   }
 
@@ -108,8 +122,13 @@ function generateApiDoc (spec) {
     // remove last comma
     .slice(0, -1)
 
+  const stability = spec[name].stability === 'stable'
+    ? ''
+    : `*Stability:* ${spec[name].stability}`
+
   var doc = dedent`
   === ${camelify(name)}
+  ${stability}
   [source,ts]
   ----
   client.${camelify(name)}(${codeParameters.length > 0 ? `{\n    ${codeParameters}\n}` : ''})
@@ -130,6 +149,9 @@ function generateApiDoc (spec) {
       |${'`' + val.type.replace(/\|/g, '\\|') + '`'} - ${val.description}`
       if (val.default) {
         acc += ` +\n_Default:_ ${'`' + val.default + '`'}`
+      }
+      if (val.deprecated) {
+        acc += ` +\n\nWARNING: This parameter has been deprecated.`
       }
       return acc + '\n\n'
     }, '')

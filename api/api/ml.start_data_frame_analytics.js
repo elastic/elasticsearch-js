@@ -10,13 +10,6 @@
 function buildMlStartDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.start_data_frame_analytics](http://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html) request
-   *
-   * @param {string} id - The ID of the data frame analytics to start
-   * @param {time} timeout - Controls the time to wait until the task has started. Defaults to 20 seconds
-   * @param {object} body - The start data frame analytics parameters
-   */
 
   const acceptedQuerystring = [
     'timeout'
@@ -26,6 +19,10 @@ function buildMlStartDataFrameAnalytics (opts) {
 
   }
 
+  /**
+   * Perform a ml.start_data_frame_analytics request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
+   */
   return function mlStartDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,10 +51,6 @@ function buildMlStartDataFrameAnalytics (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -65,6 +58,7 @@ function buildMlStartDataFrameAnalytics (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_start'
 
     // build request object

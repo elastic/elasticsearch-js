@@ -10,11 +10,6 @@
 function buildSlmGetLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [slm.get_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get.html) request
-   *
-   * @param {string} policy_id - Comma-separated list of snapshot lifecycle policies to retrieve
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildSlmGetLifecycle (opts) {
 
   }
 
+  /**
+   * Perform a slm.get_lifecycle request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get.html
+   */
   return function slmGetLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,12 +35,6 @@ function buildSlmGetLifecycle (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -52,10 +45,6 @@ function buildSlmGetLifecycle (opts) {
     var { method, body, policyId, policy_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,8 +53,10 @@ function buildSlmGetLifecycle (opts) {
     var path = ''
 
     if ((policy_id || policyId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_slm' + '/' + 'policy'
     }
 
