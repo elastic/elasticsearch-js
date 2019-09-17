@@ -474,6 +474,45 @@ test('API', t => {
       t.end()
     })
 
+    t.test('Should map roles', t => {
+      const pool = new ConnectionPool({ Connection })
+      const nodes = {
+        a1: {
+          http: {
+            publish_address: 'example.com:9200'
+          },
+          roles: ['master', 'data', 'ingest', 'ml']
+        },
+        a2: {
+          http: {
+            publish_address: 'example.com:9201'
+          },
+          roles: []
+        }
+      }
+      t.same(pool.nodesToHost(nodes, 'http:'), [{
+        url: new URL('http://example.com:9200'),
+        id: 'a1',
+        roles: {
+          master: true,
+          data: true,
+          ingest: true,
+          ml: true
+        }
+      }, {
+        url: new URL('http://example.com:9201'),
+        id: 'a2',
+        roles: {
+          master: false,
+          data: false,
+          ingest: false,
+          ml: false
+        }
+      }])
+
+      t.end()
+    })
+
     t.end()
   })
 
