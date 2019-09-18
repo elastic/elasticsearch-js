@@ -21,6 +21,7 @@ import Connection, { AgentOptions, agentFn } from './lib/Connection';
 import { ConnectionPool, ResurrectEvent, BasicAuth, ApiKeyAuth } from './lib/pool';
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
+import * as ResponseParams from './api/ResponseTypes';
 import * as errors from './lib/errors';
 
 declare type anyObject = {
@@ -656,6 +657,7 @@ export {
   RequestEvent,
   ResurrectEvent,
   RequestParams,
+  ResponseParams,
   ClientOptions,
   NodeOptions,
   ClientExtendsCallbackOptions
