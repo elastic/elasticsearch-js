@@ -10,14 +10,6 @@
 function buildMlRevertModelSnapshot (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.revert_model_snapshot](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html) request
-   *
-   * @param {string} job_id - The ID of the job to fetch
-   * @param {string} snapshot_id - The ID of the snapshot to revert to
-   * @param {boolean} delete_intervening_results - Should we reset the results back to the time of the snapshot?
-   * @param {object} body - Reversion options
-   */
 
   const acceptedQuerystring = [
     'delete_intervening_results'
@@ -27,6 +19,10 @@ function buildMlRevertModelSnapshot (opts) {
     deleteInterveningResults: 'delete_intervening_results'
   }
 
+  /**
+   * Perform a ml.revert_model_snapshot request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
+   */
   return function mlRevertModelSnapshot (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -65,10 +61,6 @@ function buildMlRevertModelSnapshot (opts) {
     var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -76,6 +68,7 @@ function buildMlRevertModelSnapshot (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_revert'
 
     // build request object

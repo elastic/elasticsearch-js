@@ -10,11 +10,6 @@
 function buildMlDeleteFilter (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_filter](undefined) request
-   *
-   * @param {string} filter_id - The ID of the filter to delete
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,9 @@ function buildMlDeleteFilter (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_filter request
+   */
   return function mlDeleteFilter (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,10 +39,6 @@ function buildMlDeleteFilter (opts) {
       const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -56,10 +50,6 @@ function buildMlDeleteFilter (opts) {
     var { method, body, filterId, filter_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,13 +57,14 @@ function buildMlDeleteFilter (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

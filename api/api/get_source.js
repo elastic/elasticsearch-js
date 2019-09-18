@@ -10,22 +10,6 @@
 function buildGetSource (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [get_source](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
-   *
-   * @param {string} id - The document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document; deprecated and optional starting with 7.0
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
-   * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
-   * @param {string} routing - Specific routing value
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   */
 
   const acceptedQuerystring = [
     'preference',
@@ -56,6 +40,11 @@ function buildGetSource (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a get_source request
+   * Returns the source of a document.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   */
   return function getSource (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -77,10 +66,6 @@ function buildGetSource (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -92,10 +77,6 @@ function buildGetSource (opts) {
     var { method, body, id, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -104,8 +85,10 @@ function buildGetSource (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
     }
 

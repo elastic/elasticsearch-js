@@ -10,16 +10,6 @@
 function buildIndicesGetAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.get_alias](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to filter aliases
-   * @param {list} name - A comma-separated list of alias names to return
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -41,6 +31,11 @@ function buildIndicesGetAlias (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.get_alias request
+   * Returns an alias.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+   */
   return function indicesGetAlias (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -53,12 +48,6 @@ function buildIndicesGetAlias (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -66,12 +55,8 @@ function buildIndicesGetAlias (opts) {
     }
 
     var warnings = []
-    var { method, body, index, name, ...querystring } = params
+    var { method, body, name, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    if (method == null) {
-      method = 'GET'
-    }
 
     var ignore = options.ignore
     if (typeof ignore === 'number') {
@@ -81,12 +66,16 @@ function buildIndicesGetAlias (opts) {
     var path = ''
 
     if ((index) != null && (name) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
     } else if ((name) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_alias' + '/' + encodeURIComponent(name)
     } else if ((index) != null) {
+      if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_alias'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_alias'
     }
 

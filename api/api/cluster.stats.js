@@ -10,13 +10,6 @@
 function buildClusterStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.stats](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html) request
-   *
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {time} timeout - Explicit operation timeout
-   */
 
   const acceptedQuerystring = [
     'flat_settings',
@@ -34,6 +27,11 @@ function buildClusterStats (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.stats request
+   * Returns high-level overview of cluster statistics.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+   */
   return function clusterStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,12 +44,6 @@ function buildClusterStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -62,10 +54,6 @@ function buildClusterStats (opts) {
     var { method, body, nodeId, node_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -74,8 +62,10 @@ function buildClusterStats (opts) {
     var path = ''
 
     if ((node_id || nodeId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'stats' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cluster' + '/' + 'stats'
     }
 

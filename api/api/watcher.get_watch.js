@@ -10,11 +10,6 @@
 function buildWatcherGetWatch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [watcher.get_watch](http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html) request
-   *
-   * @param {string} id - Watch ID
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildWatcherGetWatch (opts) {
 
   }
 
+  /**
+   * Perform a watcher.get_watch request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
+   */
   return function watcherGetWatch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,10 +40,6 @@ function buildWatcherGetWatch (opts) {
       const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -56,10 +51,6 @@ function buildWatcherGetWatch (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,6 +58,7 @@ function buildWatcherGetWatch (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
     // build request object

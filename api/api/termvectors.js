@@ -10,24 +10,6 @@
 function buildTermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [termvectors](https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
-   *
-   * @param {string} index - The index in which the document resides.
-   * @param {string} id - The id of the document, when not specified a doc param should be supplied.
-   * @param {boolean} term_statistics - Specifies if total term frequency and document frequency should be returned.
-   * @param {boolean} field_statistics - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
-   * @param {list} fields - A comma-separated list of fields to return.
-   * @param {boolean} offsets - Specifies if term offsets should be returned.
-   * @param {boolean} positions - Specifies if term positions should be returned.
-   * @param {boolean} payloads - Specifies if term payloads should be returned.
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random).
-   * @param {string} routing - Specific routing value.
-   * @param {boolean} realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   * @param {object} body - Define parameters and or supply a document to get termvectors for. See documentation.
-   */
 
   const acceptedQuerystring = [
     'term_statistics',
@@ -56,6 +38,11 @@ function buildTermvectors (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a termvectors request
+   * Returns information and statistics about terms in the fields of a particular document.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
+   */
   return function termvectors (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -84,10 +71,6 @@ function buildTermvectors (opts) {
     var { method, body, index, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -96,8 +79,10 @@ function buildTermvectors (opts) {
     var path = ''
 
     if ((index) != null && (id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
     }
 

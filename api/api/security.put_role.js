@@ -10,13 +10,6 @@
 function buildSecurityPutRole (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.put_role](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html) request
-   *
-   * @param {string} name - Role name
-   * @param {enum} refresh - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
-   * @param {object} body - The role to add
-   */
 
   const acceptedQuerystring = [
     'refresh'
@@ -26,6 +19,10 @@ function buildSecurityPutRole (opts) {
 
   }
 
+  /**
+   * Perform a security.put_role request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
+   */
   return function securityPutRole (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,10 +55,6 @@ function buildSecurityPutRole (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,6 +62,7 @@ function buildSecurityPutRole (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
 
     // build request object

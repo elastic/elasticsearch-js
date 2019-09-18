@@ -10,11 +10,6 @@
 function buildSqlTranslate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [sql.translate](Translate SQL into Elasticsearch queries) request
-   *
-   * @param {object} body - Specify the query in the `query` element.
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildSqlTranslate (opts) {
 
   }
 
+  /**
+   * Perform a sql.translate request
+   * Translate SQL into Elasticsearch queries
+   */
   return function sqlTranslate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildSqlTranslate (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildSqlTranslate (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_sql' + '/' + 'translate'
 
     // build request object

@@ -10,13 +10,6 @@
 function buildIndicesAnalyze (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.analyze](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
-   *
-   * @param {string} index - The name of the index to scope the operation
-   * @param {string} index - The name of the index to scope the operation
-   * @param {object} body - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
-   */
 
   const acceptedQuerystring = [
     'index',
@@ -32,6 +25,11 @@ function buildIndicesAnalyze (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.analyze request
+   * Performs the analysis process on a text and return the tokens breakdown of the text.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+   */
   return function indicesAnalyze (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -54,10 +52,6 @@ function buildIndicesAnalyze (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -66,8 +60,10 @@ function buildIndicesAnalyze (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_analyze'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_analyze'
     }
 

@@ -10,12 +10,6 @@
 function buildClearScroll (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [clear_scroll](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api) request
-   *
-   * @param {list} scroll_id - A comma-separated list of scroll IDs to clear
-   * @param {object} body - A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
-   */
 
   const acceptedQuerystring = [
     'pretty',
@@ -30,6 +24,11 @@ function buildClearScroll (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a clear_scroll request
+   * Explicitly clears the search context for a scroll.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api
+   */
   return function clearScroll (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildClearScroll (opts) {
     var { method, body, scrollId, scroll_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,8 +59,10 @@ function buildClearScroll (opts) {
     var path = ''
 
     if ((scroll_id || scrollId) != null) {
+      if (method == null) method = 'DELETE'
       path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)
     } else {
+      if (method == null) method = 'DELETE'
       path = '/' + '_search' + '/' + 'scroll'
     }
 

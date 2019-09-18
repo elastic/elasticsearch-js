@@ -10,19 +10,6 @@
 function buildCatThreadPool (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cat.thread_pool](https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
-   *
-   * @param {list} thread_pool_patterns - A comma-separated list of regular-expressions to filter the thread pools in the output
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} size - The multiplier in which to display values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
 
   const acceptedQuerystring = [
     'format',
@@ -46,6 +33,12 @@ function buildCatThreadPool (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cat.thread_pool request
+   * Returns cluster-wide thread pool statistics per node.
+By default the active, queue and rejected statistics are returned for all thread pools.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html
+   */
   return function catThreadPool (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -58,12 +51,6 @@ function buildCatThreadPool (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -74,10 +61,6 @@ function buildCatThreadPool (opts) {
     var { method, body, threadPoolPatterns, thread_pool_patterns, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -86,8 +69,10 @@ function buildCatThreadPool (opts) {
     var path = ''
 
     if ((thread_pool_patterns || threadPoolPatterns) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'thread_pool' + '/' + encodeURIComponent(thread_pool_patterns || threadPoolPatterns)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_cat' + '/' + 'thread_pool'
     }
 

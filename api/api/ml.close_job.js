@@ -10,15 +10,6 @@
 function buildMlCloseJob (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.close_job](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html) request
-   *
-   * @param {string} job_id - The name of the job to close
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {boolean} force - True if the job should be forcefully closed
-   * @param {time} timeout - Controls the time to wait until a job has closed. Default to 30 minutes
-   * @param {object} body - The URL params optionally sent in the body
-   */
 
   const acceptedQuerystring = [
     'allow_no_jobs',
@@ -31,6 +22,10 @@ function buildMlCloseJob (opts) {
 
   }
 
+  /**
+   * Perform a ml.close_job request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+   */
   return function mlCloseJob (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -59,10 +54,6 @@ function buildMlCloseJob (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -70,6 +61,7 @@ function buildMlCloseJob (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
 
     // build request object

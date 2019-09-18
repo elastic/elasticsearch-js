@@ -10,16 +10,6 @@
 function buildFieldCaps (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [field_caps](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-   * @param {list} fields - A comma-separated list of field names
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} include_unmapped - Indicates whether unmapped fields should be included in the response.
-   */
 
   const acceptedQuerystring = [
     'fields',
@@ -43,6 +33,11 @@ function buildFieldCaps (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a field_caps request
+   * Returns the information about the capabilities of fields among multiple indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
+   */
   return function fieldCaps (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -55,12 +50,6 @@ function buildFieldCaps (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -71,10 +60,6 @@ function buildFieldCaps (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -83,8 +68,10 @@ function buildFieldCaps (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_field_caps'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_field_caps'
     }
 
@@ -92,7 +79,7 @@ function buildFieldCaps (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

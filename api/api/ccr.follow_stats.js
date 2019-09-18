@@ -10,11 +10,6 @@
 function buildCcrFollowStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ccr.follow_stats](https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html) request
-   *
-   * @param {list} index - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildCcrFollowStats (opts) {
 
   }
 
+  /**
+   * Perform a ccr.follow_stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
+   */
   return function ccrFollowStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -52,10 +51,6 @@ function buildCcrFollowStats (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,6 +58,7 @@ function buildCcrFollowStats (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'stats'
 
     // build request object

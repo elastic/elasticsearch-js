@@ -10,16 +10,6 @@
 function buildIndicesExistsType (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.exists_type](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` to check the types across all indices
-   * @param {list} type - A comma-separated list of document types to check
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -41,6 +31,11 @@ function buildIndicesExistsType (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.exists_type request
+   * Returns information about whether a particular document type exists. (DEPRECATED)
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html
+   */
   return function indicesExistsType (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -62,10 +57,6 @@ function buildIndicesExistsType (opts) {
       const err = new ConfigurationError('Missing required parameter: type')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if (params['type'] != null && (params['index'] == null)) {
@@ -83,10 +74,6 @@ function buildIndicesExistsType (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -94,6 +81,7 @@ function buildIndicesExistsType (opts) {
 
     var path = ''
 
+    if (method == null) method = 'HEAD'
     path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
 
     // build request object

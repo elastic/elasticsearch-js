@@ -10,14 +10,6 @@
 function buildIndicesRefresh (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.refresh](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   */
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -38,6 +30,11 @@ function buildIndicesRefresh (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.refresh request
+   * Performs the refresh operation in one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html
+   */
   return function indicesRefresh (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -50,12 +47,6 @@ function buildIndicesRefresh (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -66,10 +57,6 @@ function buildIndicesRefresh (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,8 +65,10 @@ function buildIndicesRefresh (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_refresh'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_refresh'
     }
 
@@ -87,7 +76,7 @@ function buildIndicesRefresh (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,14 +10,6 @@
 function buildMlGetDataFrameAnalyticsStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_data_frame_analytics_stats](http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html) request
-   *
-   * @param {string} id - The ID of the data frame analytics stats to fetch
-   * @param {boolean} allow_no_match - Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-   * @param {int} from - skips a number of analytics
-   * @param {int} size - specifies a max number of analytics to get
-   */
 
   const acceptedQuerystring = [
     'allow_no_match',
@@ -30,6 +22,10 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_data_frame_analytics_stats request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
+   */
   return function mlGetDataFrameAnalyticsStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,12 +38,6 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -58,10 +48,6 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -70,8 +56,10 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stats'
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_stats'
     }
 

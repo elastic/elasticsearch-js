@@ -10,12 +10,6 @@
 function buildMlDeleteModelSnapshot (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_model_snapshot](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html) request
-   *
-   * @param {string} job_id - The ID of the job to fetch
-   * @param {string} snapshot_id - The ID of the snapshot to delete
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildMlDeleteModelSnapshot (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_model_snapshot request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+   */
   return function mlDeleteModelSnapshot (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,10 +44,6 @@ function buildMlDeleteModelSnapshot (opts) {
       const err = new ConfigurationError('Missing required parameter: snapshot_id or snapshotId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
@@ -67,10 +61,6 @@ function buildMlDeleteModelSnapshot (opts) {
     var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,13 +68,14 @@ function buildMlDeleteModelSnapshot (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,13 +10,6 @@
 function buildIngestSimulate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ingest.simulate](https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html) request
-   *
-   * @param {string} id - Pipeline ID
-   * @param {boolean} verbose - Verbose mode. Display data output for each processor in executed pipeline
-   * @param {object} body - The simulate definition
-   */
 
   const acceptedQuerystring = [
     'verbose',
@@ -32,6 +25,11 @@ function buildIngestSimulate (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a ingest.simulate request
+   * Allows to simulate a pipeline with example documents.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
+   */
   return function ingestSimulate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -60,10 +58,6 @@ function buildIngestSimulate (opts) {
     var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,8 +66,10 @@ function buildIngestSimulate (opts) {
     var path = ''
 
     if ((id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/' + '_simulate'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_ingest' + '/' + 'pipeline' + '/' + '_simulate'
     }
 

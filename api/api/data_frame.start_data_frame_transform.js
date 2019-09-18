@@ -10,12 +10,6 @@
 function buildDataFrameStartDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.start_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html) request
-   *
-   * @param {string} transform_id - The id of the transform to start
-   * @param {time} timeout - Controls the time to wait for the transform to start
-   */
 
   const acceptedQuerystring = [
     'timeout'
@@ -25,6 +19,10 @@ function buildDataFrameStartDataFrameTransform (opts) {
 
   }
 
+  /**
+   * Perform a data_frame.start_data_frame_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
+   */
   return function dataFrameStartDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -42,10 +40,6 @@ function buildDataFrameStartDataFrameTransform (opts) {
       const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -57,10 +51,6 @@ function buildDataFrameStartDataFrameTransform (opts) {
     var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -68,13 +58,14 @@ function buildDataFrameStartDataFrameTransform (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

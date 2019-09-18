@@ -86,7 +86,7 @@ _Default:_ `false`
 _Default:_ `false`
 
 |`sniffEndpoint`
-|`string` - Max request timeout for each request. +
+|`string` - Endpoint to ping during a sniff. +
 _Default:_ `'_nodes/_all/http'`
 
 |`sniffOnConnectionFault`

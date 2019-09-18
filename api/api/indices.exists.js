@@ -10,17 +10,6 @@
 function buildIndicesExists (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.exists](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
-   */
 
   const acceptedQuerystring = [
     'local',
@@ -46,6 +35,11 @@ function buildIndicesExists (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.exists request
+   * Returns information about whether a particular index exists.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
+   */
   return function indicesExists (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -63,10 +57,6 @@ function buildIndicesExists (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -78,10 +68,6 @@ function buildIndicesExists (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'HEAD'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -89,6 +75,7 @@ function buildIndicesExists (opts) {
 
     var path = ''
 
+    if (method == null) method = 'HEAD'
     path = '/' + encodeURIComponent(index)
 
     // build request object

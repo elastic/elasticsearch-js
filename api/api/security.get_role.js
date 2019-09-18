@@ -10,11 +10,6 @@
 function buildSecurityGetRole (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [security.get_role](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html) request
-   *
-   * @param {string} name - Role name
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildSecurityGetRole (opts) {
 
   }
 
+  /**
+   * Perform a security.get_role request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+   */
   return function securityGetRole (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -36,12 +35,6 @@ function buildSecurityGetRole (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -52,10 +45,6 @@ function buildSecurityGetRole (opts) {
     var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -64,8 +53,10 @@ function buildSecurityGetRole (opts) {
     var path = ''
 
     if ((name) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_security' + '/' + 'role'
     }
 

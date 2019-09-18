@@ -10,12 +10,6 @@
 function buildLicensePost (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [license.post](https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html) request
-   *
-   * @param {boolean} acknowledge - whether the user has acknowledged acknowledge messages (default: false)
-   * @param {object} body - licenses to be installed
-   */
 
   const acceptedQuerystring = [
     'acknowledge'
@@ -25,6 +19,10 @@ function buildLicensePost (opts) {
 
   }
 
+  /**
+   * Perform a license.post request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html
+   */
   return function licensePost (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -47,10 +45,6 @@ function buildLicensePost (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -58,6 +52,7 @@ function buildLicensePost (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_license'
 
     // build request object

@@ -10,14 +10,6 @@
 function buildClusterPutSettings (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [cluster.put_settings](https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html) request
-   *
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {object} body - The settings to be updated. Can be either `transient` or `persistent` (survives cluster restart).
-   */
 
   const acceptedQuerystring = [
     'flat_settings',
@@ -37,6 +29,11 @@ function buildClusterPutSettings (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a cluster.put_settings request
+   * Updates the cluster settings.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+   */
   return function clusterPutSettings (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -65,10 +62,6 @@ function buildClusterPutSettings (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -76,6 +69,7 @@ function buildClusterPutSettings (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_cluster' + '/' + 'settings'
 
     // build request object

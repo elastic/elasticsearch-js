@@ -10,16 +10,6 @@
 function buildIndicesUpgrade (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} wait_for_completion - Specify whether the request should block until the all segments are upgraded (default: false)
-   * @param {boolean} only_ancient_segments - If true, only ancient (an older Lucene major release) segments will be upgraded
-   */
 
   const acceptedQuerystring = [
     'allow_no_indices',
@@ -44,6 +34,11 @@ function buildIndicesUpgrade (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.upgrade request
+   * The _upgrade API is no longer useful and will be removed.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+   */
   return function indicesUpgrade (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -56,12 +51,6 @@ function buildIndicesUpgrade (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -72,10 +61,6 @@ function buildIndicesUpgrade (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -84,8 +69,10 @@ function buildIndicesUpgrade (opts) {
     var path = ''
 
     if ((index) != null) {
+      if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
     } else {
+      if (method == null) method = 'POST'
       path = '/' + '_upgrade'
     }
 
@@ -93,7 +80,7 @@ function buildIndicesUpgrade (opts) {
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

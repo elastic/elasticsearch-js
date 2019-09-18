@@ -10,20 +10,6 @@
 function buildMlGetInfluencers (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_influencers](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html) request
-   *
-   * @param {string} job_id -
-   * @param {boolean} exclude_interim - Exclude interim results
-   * @param {int} from - skips a number of influencers
-   * @param {int} size - specifies a max number of influencers to get
-   * @param {string} start - start timestamp for the requested influencers
-   * @param {string} end - end timestamp for the requested influencers
-   * @param {double} influencer_score - influencer score threshold for the requested influencers
-   * @param {string} sort - sort field for the requested influencers
-   * @param {boolean} desc - whether the results should be sorted in decending order
-   * @param {object} body - Influencer selection criteria
-   */
 
   const acceptedQuerystring = [
     'exclude_interim',
@@ -42,6 +28,10 @@ function buildMlGetInfluencers (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_influencers request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
+   */
   return function mlGetInfluencers (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -70,10 +60,6 @@ function buildMlGetInfluencers (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -81,6 +67,7 @@ function buildMlGetInfluencers (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'influencers'
 
     // build request object
