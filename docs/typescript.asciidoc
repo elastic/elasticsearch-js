@@ -3,7 +3,7 @@
 
 The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
 
-NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
+NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_.
 
 Other than the types for the surface API, the client offers the types for every request method, via the `RequestParams`, if you need the types for a search request for instance, you can access them via `RequestParams.Search`.
 Every API that supports a body, accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the request body, if you don't configure anything, it will default to `any`.
@@ -40,7 +40,7 @@ const searchParams: RequestParams.Search = {
 }
 ----
 
-You can find the type definiton of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
+You can find the type definition of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
 
 [source,ts]
 ----
@@ -141,6 +141,66 @@ async function run (): Promise<void> {
 
   // Craft the final type definition
   const response: ApiResponse<SearchResponse<Source>> = await client.search(searchParams)
+  console.log(response.body)
+}
+
+run().catch(console.log)
+----
+
+=== Response body definitions
+
+Currently, there is no support for all the response definitions, the client offers only a small subset to help the users with the most commonly used APIs.
+
+* `Index`
+* `Create`
+* `Update`
+* `Delete`
+* `Search`
+* `MSearch`
+* `Bulk`
+
+_At the moment, we are not planning on expanding more the types offered out of the box since we are studying a more structured approach that will allow us to generate all the response type definitions automatically._
+
+You can access the response type definitions via the `ResponseParams`.
+Every API that contains a `_source` object accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the `_source` object, if you don't configure anything, it will default to `any`.
+
+The example you saw above can now be rewritten as follows:
+[source,ts]
+----
+import {
+  Client,
+  RequestParams,
+  ResponseParams,
+  ApiResponse,
+} from '@elastic/elasticsearch'
+
+const client = new Client({ node: 'http://localhost:9200' })
+
+// Define the type of the body for the Search request
+interface SearchBody {
+  query: {
+    match: { foo: string }
+  }
+}
+
+// Define the interface of the source object
+interface Source {
+  foo: string
+}
+
+async function run (): Promise<void> {
+  // Define the search parameters
+  const searchParams: RequestParams.Search<SearchBody> = {
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }
+
+  // Craft the final type definition
+  const response: ApiResponse<ResponseParams.Search<Source>> = await client.search(searchParams)
   console.log(response.body)
 }
 
