@@ -39,6 +39,7 @@
     ],
     "unstable_es_branches": [
       "7.3",
+      "7.4",
       "7.x",
       "master"
     ]
