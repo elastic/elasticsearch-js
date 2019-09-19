@@ -211,6 +211,24 @@ function removePrevArchive(branch) {
   return spawnStep('rm', ['-rf', dir], paths.root);
 }
 
+function convertToCommit(branch) {
+  switch (branch) {
+    case '5.6':
+    case '6.8':
+    case '7.0':
+    case '7.1':
+    case '7.2':
+    case '7.3':
+      return branch;
+    case '7.4':
+      return 'c31cddf27e9618582b3cd175e4e0bce320af6a14^1';
+    case '7.x':
+      return 'c31cddf27e9618582b3cd175e4e0bce320af6a14^1';
+    case 'master':
+      return '91663116221052b9aa05cc183d80c1e546073371^1';
+  }
+}
+
 function createArchive(branch) {
   return function(done) {
     var dir = paths.getArchiveDir(branch);
@@ -234,7 +252,7 @@ function createArchive(branch) {
             'tar',
             '--output',
             tarball,
-            branch,
+            convertToCommit(branch),
             specPathInRepo,
           ],
           paths.esSrc
