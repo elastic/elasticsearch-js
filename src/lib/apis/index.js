@@ -6,6 +6,7 @@ module.exports = {
   get '6.8'() { return require('./6_8'); },
   get '5.6'() { return require('./5_6'); },
   get '7.3'() { return require('./7_3'); },
+  get '7.4'() { return require('./7_4'); },
   get '7.x'() { return require('./7_x'); },
   get 'master'() { return require('./master'); },
 };

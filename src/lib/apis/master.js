@@ -1218,7 +1218,7 @@ api.cat.prototype.threadPool = ca({
 });
 
 /**
- * Perform a [clearScroll](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
+ * Perform a [clearScroll](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>>} params.scrollId - A comma-separated list of scroll IDs to clear
@@ -2778,6 +2778,44 @@ api.indices.prototype.clearCache = ca({
 });
 
 /**
+ * Perform a [indices.clone](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html) request
+ *
+ * @param {Object} params - An object with parameters used to carry out this action
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.timeout - Explicit operation timeout
+ * @param {<<api-param-type-duration-string,`DurationString`>>} params.masterTimeout - Specify timeout for connection to master
+ * @param {<<api-param-type-string,`String`>>} params.waitForActiveShards - Set the number of active shards to wait for on the cloned index before the operation returns.
+ * @param {<<api-param-type-string,`String`>>} params.index - The name of the source index to clone
+ * @param {<<api-param-type-string,`String`>>} params.target - The name of the target index to clone into
+ */
+api.indices.prototype.clone = ca({
+  params: {
+    timeout: {
+      type: 'time'
+    },
+    masterTimeout: {
+      type: 'time',
+      name: 'master_timeout'
+    },
+    waitForActiveShards: {
+      type: 'string',
+      name: 'wait_for_active_shards'
+    }
+  },
+  url: {
+    fmt: '/<%=index%>/_clone/<%=target%>',
+    req: {
+      index: {
+        type: 'string'
+      },
+      target: {
+        type: 'string'
+      }
+    }
+  },
+  method: 'POST'
+});
+
+/**
  * Perform a [indices.close](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
@@ -3243,7 +3281,7 @@ api.indices.prototype.flush = ca({
 });
 
 /**
- * Perform a [indices.flushSynced](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush.html) request
+ * Perform a [indices.flushSynced](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html#synced-flush-api) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-boolean,`Boolean`>>} params.ignoreUnavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -4697,7 +4735,7 @@ api.indices.prototype.validateQuery = ca({
 });
 
 /**
- * Perform a [info](http://www.elastic.co/guide/) request
+ * Perform a [info](https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -5535,7 +5573,7 @@ api.nodes.prototype.usage = ca({
 });
 
 /**
- * Perform a [ping](http://www.elastic.co/guide/) request
+ * Perform a [ping](https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  */
@@ -5724,7 +5762,7 @@ api.reindexRethrottle = ca({
 });
 
 /**
- * Perform a [renderSearchTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html) request
+ * Perform a [renderSearchTemplate](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html#_validating_templates) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-string,`String`>>} params.id - The id of the stored search template
@@ -5759,7 +5797,7 @@ api.scriptsPainlessExecute = ca({
 });
 
 /**
- * Perform a [scroll](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-scroll.html) request
+ * Perform a [scroll](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll) request
  *
  * @param {Object} params - An object with parameters used to carry out this action
  * @param {<<api-param-type-duration-string,`DurationString`>>} params.scroll - Specify how long a consistent view of the index should be maintained for scrolled search
