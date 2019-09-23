@@ -10,24 +10,6 @@
 function buildMget (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [mget](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html) request
-   *
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document
-   * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
-   * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
-   * @param {string} routing - Specific routing value
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {object} body - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'stored_fields',
@@ -37,9 +19,7 @@ function buildMget (opts) {
     'routing',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'pretty',
     'human',
     'error_trace',
@@ -50,9 +30,7 @@ function buildMget (opts) {
   const snakeCase = {
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

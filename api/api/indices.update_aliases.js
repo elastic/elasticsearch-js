@@ -10,16 +10,6 @@
 function buildIndicesUpdateAliases (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.update_aliases](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {time} timeout - Request timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {object} body - The definition of `actions` to perform
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

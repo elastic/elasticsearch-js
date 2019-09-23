@@ -10,20 +10,6 @@
 function buildClusterReroute (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cluster.reroute](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html) request
-   *
-   * @param {boolean} dry_run - Simulate the operation only and return the resulting state
-   * @param {boolean} explain - Return an explanation of why the commands can or cannot be executed
-   * @param {boolean} retry_failed - Retries allocation of shards that are blocked due to too many subsequent allocation failures
-   * @param {list} metric - Limit the information returned to the specified metrics. Defaults to all but metadata
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {object} body - The definition of `commands` to perform (`move`, `cancel`, `allocate`)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'dry_run',

@@ -10,16 +10,6 @@
 function buildSnapshotGetRepository (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [snapshot.get_repository](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {list} repository - A comma-separated list of repository names
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',

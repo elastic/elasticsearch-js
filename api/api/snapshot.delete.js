@@ -10,16 +10,6 @@
 function buildSnapshotDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [snapshot.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {string} repository - A repository name
-   * @param {string} snapshot - A snapshot name
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',

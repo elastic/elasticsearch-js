@@ -10,22 +10,6 @@
 function buildCatThreadPool (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.thread_pool](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html) request
-   *
-   * @param {list} thread_pool_patterns - A comma-separated list of regular-expressions to filter the thread pools in the output
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} size - The multiplier in which to display values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

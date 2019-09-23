@@ -10,22 +10,6 @@
 function buildIndicesGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {boolean} include_type_name - Whether to add the type name to the response (default: false)
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',

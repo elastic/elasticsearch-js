@@ -10,25 +10,6 @@
 function buildIndicesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html) request
-   *
-   * @param {list} index - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-   * @param {list} metric - Limit the information returned the specific metrics.
-   * @param {list} completion_fields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-   * @param {list} fielddata_fields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-   * @param {list} fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-   * @param {list} groups - A comma-separated list of search groups for `search` index metric
-   * @param {enum} level - Return stats aggregated at cluster, index or shard level
-   * @param {list} types - A comma-separated list of document types for the `indexing` index metric
-   * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} forbid_closed_indices - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'completion_fields',

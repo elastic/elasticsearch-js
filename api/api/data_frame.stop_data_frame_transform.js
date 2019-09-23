@@ -24,7 +24,7 @@ function buildDataFrameStopDataFrameTransform (opts) {
 
   /**
    * Perform a data_frame.stop_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
    */
   return function dataFrameStopDataFrameTransform (params, options, callback) {
     options = options || {}

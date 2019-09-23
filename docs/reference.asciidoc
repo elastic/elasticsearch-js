@@ -1003,7 +1003,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+link:{ref}/search-request-body.html#_clear_scroll_api[Reference]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1310,6 +1310,7 @@ link:{ref}/cluster-stats.html[Reference]
 ----
 client.count({
   index: string | string[],
+  type: string | string[],
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
@@ -1332,6 +1333,9 @@ link:{ref}/search-count.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of indices to restrict the results
+
+|`type`
+|`string \| string[]` - A comma-separated list of types to restrict the results
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -1505,7 +1509,6 @@ WARNING: This parameter has been deprecated.
 client.deleteByQuery({
   index: string | string[],
   type: string | string[],
-  analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
   df: string,
@@ -1549,9 +1552,6 @@ link:{ref}/docs-delete-by-query.html[Reference]
 
 |`type`
 |`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
-
-|`analyzer`
-|`string` - The analyzer to use for the query string
 
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
@@ -2232,8 +2232,6 @@ _Default:_ `open`
 
 |===
 
-<<<<<<< HEAD
-=======
 === indices.clone
 
 [source,ts]
@@ -2270,7 +2268,6 @@ link:{ref}/indices-clone-index.html[Reference]
 
 |===
 
->>>>>>> 69247496... Update code generation (#969)
 === indices.close
 
 [source,ts]
@@ -2628,7 +2625,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -3647,7 +3644,7 @@ _Default:_ `OR`
 ----
 client.info()
 ----
-link:http://www.elastic.co/guide/[Reference]
+link:{ref}/index.html[Reference]
 
 
 === ingest.deletePipeline
@@ -3879,7 +3876,6 @@ client.msearchTemplate({
   typed_keys: boolean,
   max_concurrent_searches: number,
   rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3903,10 +3899,6 @@ link:{ref}/search-multi-search.html[Reference]
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
 
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
@@ -4164,7 +4156,7 @@ link:{ref}/cluster-nodes-usage.html[Reference]
 ----
 client.ping()
 ----
-link:http://www.elastic.co/guide/[Reference]
+link:{ref}/index.html[Reference]
 
 
 === putScript
@@ -4313,7 +4305,7 @@ client.renderSearchTemplate({
   body: object
 })
 ----
-link:{ref}/search-template.html[Reference]
+link:{ref}/search-template.html#_validating_templates[Reference]
 [cols=2*]
 |===
 |`id`
@@ -4630,7 +4622,6 @@ client.searchTemplate({
   profile: boolean,
   typed_keys: boolean,
   rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -4679,10 +4670,6 @@ _Default:_ `open`
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
 
 |`body`
 |`object` - The search definition template and its params
@@ -5068,8 +5055,8 @@ _Default:_ `nodes`
 ----
 client.termvectors({
   index: string,
-  type: string,
   id: string,
+  type: string,
   term_statistics: boolean,
   field_statistics: boolean,
   fields: string | string[],
@@ -5090,11 +5077,11 @@ link:{ref}/docs-termvectors.html[Reference]
 |`index`
 |`string` - The index in which the document resides.
 
-|`type`
-|`string` - The type of the document.
-
 |`id`
 |`string` - The id of the document, when not specified a doc param should be supplied.
+
+|`type`
+|`string` - The type of the document.
 
 |`term_statistics` or `termStatistics`
 |`boolean` - Specifies if total term frequency and document frequency should be returned.
@@ -5597,14 +5584,18 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 [source,ts]
 ----
 client.dataFrame.deleteDataFrameTransform({
-  transform_id: string
+  transform_id: string,
+  force: boolean
 })
 ----
-link:{ref}/delete-data-frame-transform.html[Reference]
+link:{ref}/delete-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to delete
+
+|`force`
+|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
 
 |===
 
@@ -5619,7 +5610,7 @@ client.dataFrame.getDataFrameTransform({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-data-frame-transform.html[Reference]
+link:{ref}/get-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5647,7 +5638,7 @@ client.dataFrame.getDataFrameTransformStats({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
+link:{ref}/get-transform-stats.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5672,7 +5663,7 @@ client.dataFrame.previewDataFrameTransform({
   body: object
 })
 ----
-link:{ref}/preview-data-frame-transform.html[Reference]
+link:{ref}/preview-transform.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -5686,14 +5677,18 @@ link:{ref}/preview-data-frame-transform.html[Reference]
 ----
 client.dataFrame.putDataFrameTransform({
   transform_id: string,
+  defer_validation: boolean,
   body: object
 })
 ----
-link:{ref}/put-data-frame-transform.html[Reference]
+link:{ref}/put-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the new transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
 
 |`body`
 |`object` - The data frame transform definition
@@ -5709,7 +5704,7 @@ client.dataFrame.startDataFrameTransform({
   timeout: string
 })
 ----
-link:{ref}/start-data-frame-transform.html[Reference]
+link:{ref}/start-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5731,7 +5726,7 @@ client.dataFrame.stopDataFrameTransform({
   allow_no_match: boolean
 })
 ----
-link:{ref}/stop-data-frame-transform.html[Reference]
+link:{ref}/stop-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5748,8 +5743,6 @@ link:{ref}/stop-data-frame-transform.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
 === dataFrame.updateDataFrameTransform
 *Stability:* beta
 [source,ts]
@@ -5760,7 +5753,7 @@ client.dataFrame.updateDataFrameTransform({
   body: object
 })
 ----
-link:{ref}/update-data-frame-transform.html[Reference]
+link:{ref}/update-transform.html[Reference]
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5774,7 +5767,6 @@ link:{ref}/update-data-frame-transform.html[Reference]
 
 |===
 
->>>>>>> 69247496... Update code generation (#969)
 === graph.explore
 
 [source,ts]
@@ -5830,7 +5822,9 @@ link:{ref}/ilm-delete-lifecycle.html[Reference]
 [source,ts]
 ----
 client.ilm.explainLifecycle({
-  index: string
+  index: string,
+  only_managed: boolean,
+  only_errors: boolean
 })
 ----
 link:{ref}/ilm-explain-lifecycle.html[Reference]
@@ -5838,6 +5832,12 @@ link:{ref}/ilm-explain-lifecycle.html[Reference]
 |===
 |`index`
 |`string` - The name of the index to explain
+
+|`only_managed` or `onlyManaged`
+|`boolean` - filters the indices included in the response to ones managed by ILM
+
+|`only_errors` or `onlyErrors`
+|`boolean` - filters the indices included in the response to ones in an ILM error state, implies only_managed
 
 |===
 
@@ -6399,8 +6399,6 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
 === ml.estimateMemoryUsage
 *Stability:* experimental
 [source,ts]
@@ -6417,7 +6415,6 @@ link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
 
 |===
 
->>>>>>> 69247496... Update code generation (#969)
 === ml.evaluateDataFrame
 *Stability:* experimental
 [source,ts]
@@ -8241,8 +8238,6 @@ link:{ref}/security-api-put-user.html[Reference]
 
 |===
 
-<<<<<<< HEAD
-=======
 === slm.deleteLifecycle
 
 [source,ts]
@@ -8291,15 +8286,6 @@ link:{ref}/slm-api-get.html[Reference]
 
 |===
 
-=== slm.getStats
-
-[source,ts]
-----
-client.slm.getStats()
-----
-link:{ref}/slm-get-stats.html[Reference]
-
-
 === slm.putLifecycle
 
 [source,ts]
@@ -8320,7 +8306,6 @@ link:{ref}/slm-api-put.html[Reference]
 
 |===
 
->>>>>>> 69247496... Update code generation (#969)
 === sql.clearCursor
 
 [source,ts]

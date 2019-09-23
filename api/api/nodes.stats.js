@@ -10,24 +10,6 @@
 function buildNodesStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [nodes.stats](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html) request
-   *
-   * @param {list} metric - Limit the information returned to the specified metrics
-   * @param {list} index_metric - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {list} completion_fields - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-   * @param {list} fielddata_fields - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-   * @param {list} fields - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-   * @param {boolean} groups - A comma-separated list of search groups for `search` index metric
-   * @param {enum} level - Return indices stats aggregated at index, node or shard level
-   * @param {list} types - A comma-separated list of document types for the `indexing` index metric
-   * @param {time} timeout - Explicit operation timeout
-   * @param {boolean} include_segment_file_sizes - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'completion_fields',

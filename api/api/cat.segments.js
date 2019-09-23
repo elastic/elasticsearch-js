@@ -10,20 +10,6 @@
 function buildCatSegments (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.segments](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

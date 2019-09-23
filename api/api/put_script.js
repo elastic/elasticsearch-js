@@ -10,19 +10,6 @@
 function buildPutScript (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [put_script](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html) request
-   *
-   * @param {string} id - Script ID
-   * @param {string} context - Script context
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {string} context - Context name to compile script against
-   * @param {object} body - The document
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

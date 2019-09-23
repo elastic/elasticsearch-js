@@ -10,25 +10,6 @@
 function buildClusterHealth (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cluster.health](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html) request
-   *
-   * @param {list} index - Limit the information returned to a specific index
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {enum} level - Specify the level of detail for returned information
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {time} timeout - Explicit operation timeout
-   * @param {string} wait_for_active_shards - Wait until the specified number of shards is active
-   * @param {string} wait_for_nodes - Wait until the specified number of nodes is available
-   * @param {enum} wait_for_events - Wait until all currently queued events with the given priority are processed
-   * @param {boolean} wait_for_no_relocating_shards - Whether to wait until there are no relocating shards in the cluster
-   * @param {boolean} wait_for_no_initializing_shards - Whether to wait until there are no initializing shards in the cluster
-   * @param {enum} wait_for_status - Wait until cluster is in a specific state
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'expand_wildcards',

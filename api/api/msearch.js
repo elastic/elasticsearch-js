@@ -10,23 +10,6 @@
 function buildMsearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [msearch](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to use as default
-   * @param {list} type - A comma-separated list of document types to use as default
-   * @param {enum} search_type - Search operation type
-   * @param {number} max_concurrent_searches - Controls the maximum number of concurrent searches the multi search api will execute
-   * @param {boolean} typed_keys - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-   * @param {number} pre_filter_shard_size - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
-   * @param {number} max_concurrent_shard_requests - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {boolean} ccs_minimize_roundtrips - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-   * @param {object} body - The request definitions (metadata-search request definition pairs), separated by newlines
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'search_type',
@@ -101,14 +84,11 @@ function buildMsearch (opts) {
 
     var path = ''
 
-<<<<<<< HEAD
     if ((index) != null && (type) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch'
     } else if ((index) != null) {
-=======
-    if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
->>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_msearch'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'

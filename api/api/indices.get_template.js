@@ -10,18 +10,6 @@
 function buildIndicesGetTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.get_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
-   *
-   * @param {list} name - The comma separated names of the index templates
-   * @param {boolean} include_type_name - Whether a type should be returned in the body of the mappings.
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',

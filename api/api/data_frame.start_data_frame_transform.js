@@ -21,7 +21,7 @@ function buildDataFrameStartDataFrameTransform (opts) {
 
   /**
    * Perform a data_frame.start_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
    */
   return function dataFrameStartDataFrameTransform (params, options, callback) {
     options = options || {}

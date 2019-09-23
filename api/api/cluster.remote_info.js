@@ -10,13 +10,6 @@
 function buildClusterRemoteInfo (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cluster.remote_info](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html) request
-   *
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'pretty',

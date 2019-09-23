@@ -10,19 +10,6 @@
 function buildIndicesDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.delete](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html) request
-   *
-   * @param {list} index - A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

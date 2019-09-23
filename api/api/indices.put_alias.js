@@ -10,18 +10,6 @@
 function buildIndicesPutAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.put_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {list} index - A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
-   * @param {string} name - The name of the alias to be created or updated
-   * @param {time} timeout - Explicit timestamp for the document
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {object} body - The settings for the alias, such as `routing` or `filter`
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

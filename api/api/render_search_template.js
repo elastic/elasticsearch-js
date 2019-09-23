@@ -10,15 +10,6 @@
 function buildRenderSearchTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [render_search_template](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html) request
-   *
-   * @param {string} id - The id of the stored search template
-   * @param {object} body - The search definition template and its params
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'pretty',

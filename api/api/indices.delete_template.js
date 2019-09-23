@@ -10,16 +10,6 @@
 function buildIndicesDeleteTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.delete_template](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html) request
-   *
-   * @param {string} name - The name of the template
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

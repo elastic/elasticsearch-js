@@ -10,15 +10,6 @@
 function buildClusterPendingTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cluster.pending_tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html) request
-   *
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'local',

@@ -10,17 +10,6 @@
 function buildIndicesDeleteAlias (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.delete_alias](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html) request
-   *
-   * @param {list} index - A comma-separated list of index names (supports wildcards); use `_all` for all indices
-   * @param {list} name - A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
-   * @param {time} timeout - Explicit timestamp for the document
-   * @param {time} master_timeout - Specify timeout for connection to master
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

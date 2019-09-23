@@ -21,7 +21,7 @@ function buildDataFramePreviewDataFrameTransform (opts) {
 
   /**
    * Perform a data_frame.preview_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
   return function dataFramePreviewDataFrameTransform (params, options, callback) {
     options = options || {}

@@ -10,16 +10,6 @@
 function buildTasksGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [tasks.get](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
-   *
-   * @param {string} task_id - Return the task with specified id (node_id:task_number)
-   * @param {boolean} wait_for_completion - Wait for the matching tasks to complete (default: false)
-   * @param {time} timeout - Explicit operation timeout
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'wait_for_completion',

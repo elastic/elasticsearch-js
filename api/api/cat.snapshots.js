@@ -10,21 +10,6 @@
 function buildCatSnapshots (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.snapshots](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html) request
-   *
-   * @param {list} repository - Name of repository from which to fetch the snapshot information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} ignore_unavailable - Set to true to ignore unavailable snapshots
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

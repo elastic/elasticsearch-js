@@ -10,20 +10,6 @@
 function buildIndicesExists (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.exists](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {boolean} ignore_unavailable - Ignore unavailable indexes (default: false)
-   * @param {boolean} allow_no_indices - Ignore if a wildcard expression resolves to no concrete indices (default: false)
-   * @param {enum} expand_wildcards - Whether wildcard expressions should get expanded to open or closed indices (default: open)
-   * @param {boolean} flat_settings - Return settings in flat format (default: false)
-   * @param {boolean} include_defaults - Whether to return all default setting for each of the indices.
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'local',

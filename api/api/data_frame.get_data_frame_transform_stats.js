@@ -23,7 +23,7 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
 
   /**
    * Perform a data_frame.get_data_frame_transform_stats request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-stats.html
    */
   return function dataFrameGetDataFrameTransformStats (params, options, callback) {
     options = options || {}

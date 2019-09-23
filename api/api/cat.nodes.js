@@ -10,21 +10,6 @@
 function buildCatNodes (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.nodes](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html) request
-   *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} full_id - Return the full node ID instead of the shortened version (default: false)
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

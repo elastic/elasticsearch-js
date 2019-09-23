@@ -10,28 +10,6 @@
 function buildIndicesValidateQuery (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.validate_query](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
-   * @param {list} type - A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types
-   * @param {boolean} explain - Return detailed information about the error
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {string} q - Query in the Lucene query string syntax
-   * @param {string} analyzer - The analyzer to use for the query string
-   * @param {boolean} analyze_wildcard - Specify whether wildcard and prefix queries should be analyzed (default: false)
-   * @param {enum} default_operator - The default operator for query string query (AND or OR)
-   * @param {string} df - The field to use as default where no field prefix is given in the query string
-   * @param {boolean} lenient - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-   * @param {boolean} rewrite - Provide a more detailed explanation showing the actual Lucene query that will be executed.
-   * @param {boolean} all_shards - Execute validation on all shards instead of one random shard per index
-   * @param {object} body - The query definition specified with the Query DSL
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'explain',

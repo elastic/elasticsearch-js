@@ -10,20 +10,6 @@
 function buildIndicesOpen (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.open](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html) request
-   *
-   * @param {list} index - A comma separated list of indices to open
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {string} wait_for_active_shards - Sets the number of active shards to wait for before the operation returns.
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'timeout',

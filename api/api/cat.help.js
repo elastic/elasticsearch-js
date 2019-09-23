@@ -10,15 +10,6 @@
 function buildCatHelp (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.help](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html) request
-   *
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'help',

@@ -10,16 +10,6 @@
 function buildClusterAllocationExplain (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cluster.allocation_explain](http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html) request
-   *
-   * @param {boolean} include_yes_decisions - Return 'YES' decisions in explanation (default: false)
-   * @param {boolean} include_disk_info - Return information about disk usage and shard sizes (default: false)
-   * @param {object} body - The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_yes_decisions',

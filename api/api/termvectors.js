@@ -10,28 +10,6 @@
 function buildTermvectors (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [termvectors](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html) request
-   *
-   * @param {string} index - The index in which the document resides.
-   * @param {string} type - The type of the document.
-   * @param {string} id - The id of the document, when not specified a doc param should be supplied.
-   * @param {boolean} term_statistics - Specifies if total term frequency and document frequency should be returned.
-   * @param {boolean} field_statistics - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
-   * @param {list} fields - A comma-separated list of fields to return.
-   * @param {boolean} offsets - Specifies if term offsets should be returned.
-   * @param {boolean} positions - Specifies if term positions should be returned.
-   * @param {boolean} payloads - Specifies if term payloads should be returned.
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random).
-   * @param {string} routing - Specific routing value.
-   * @param {boolean} realtime - Specifies if request is real-time as opposed to near-real-time (default: true).
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   * @param {object} body - Define parameters and or supply a document to get termvectors for. See documentation.
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'term_statistics',
@@ -90,7 +68,7 @@ function buildTermvectors (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, id, ...querystring } = params
+    var { method, body, index, id, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -100,16 +78,14 @@ function buildTermvectors (opts) {
 
     var path = ''
 
-<<<<<<< HEAD
     if ((index) != null && (type) != null && (id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
     } else if ((index) != null && (id) != null) {
-=======
-    if ((index) != null && (id) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
->>>>>>> 69247496... Update code generation (#969)
       path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
     } else if ((index) != null && (type) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'

@@ -21,7 +21,7 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
 
   /**
    * Perform a data_frame.update_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-data-frame-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
    */
   return function dataFrameUpdateDataFrameTransform (params, options, callback) {
     options = options || {}

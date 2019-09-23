@@ -10,22 +10,6 @@
 function buildIndicesGetFieldMapping (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.get_field_mapping](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html) request
-   *
-   * @param {list} index - A comma-separated list of index names
-   * @param {list} type - A comma-separated list of document types
-   * @param {list} fields - A comma-separated list of fields
-   * @param {boolean} include_type_name - Whether a type should be returned in the body of the mappings.
-   * @param {boolean} include_defaults - Whether the default mapping values should be returned as well
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'include_type_name',

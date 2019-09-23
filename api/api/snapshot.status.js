@@ -10,17 +10,6 @@
 function buildSnapshotStatus (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [snapshot.status](http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html) request
-   *
-   * @param {string} repository - A repository name
-   * @param {list} snapshot - A comma-separated list of snapshot names
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {boolean} ignore_unavailable - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'master_timeout',

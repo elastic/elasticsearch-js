@@ -10,16 +10,6 @@
 function buildIndicesAnalyze (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [indices.analyze](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html) request
-   *
-   * @param {string} index - The name of the index to scope the operation
-   * @param {string} index - The name of the index to scope the operation
-   * @param {object} body - Define analyzer/tokenizer parameters and the text on which the analysis should be performed
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'index',

@@ -10,21 +10,6 @@
 function buildCatTemplates (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.templates](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html) request
-   *
-   * @param {string} name - A pattern that returned template names must match
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

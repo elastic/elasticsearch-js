@@ -10,22 +10,6 @@
 function buildCatAllocation (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.allocation](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html) request
-   *
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

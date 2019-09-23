@@ -10,27 +10,18 @@
 function buildDataFramePutDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [data_frame.put_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html) request
-   *
-   * @param {string} transform_id - The id of the new transform.
-   * @param {object} body - The data frame transform definition
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
-
+    'defer_validation'
   ]
 
   const snakeCase = {
-
+    deferValidation: 'defer_validation'
   }
 
   /**
    * Perform a data_frame.put_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
    */
   return function dataFramePutDataFrameTransform (params, options, callback) {
     options = options || {}

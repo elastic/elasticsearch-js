@@ -10,22 +10,6 @@
 function buildCatTasks (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.tasks](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
-   *
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {list} node_id - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {list} actions - A comma-separated list of actions that should be returned. Leave empty to return all.
-   * @param {boolean} detailed - Return detailed task information (default: false)
-   * @param {number} parent_task - Return tasks with specified parent task id. Set to -1 to return all.
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {boolean} help - Return help information
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

@@ -10,26 +10,6 @@
 function buildGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [get](http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html) request
-   *
-   * @param {string} id - The document ID
-   * @param {string} index - The name of the index
-   * @param {string} type - The type of the document (use `_all` to fetch the first document matching the ID across all types)
-   * @param {list} stored_fields - A comma-separated list of stored fields to return in the response
-   * @param {string} preference - Specify the node or shard the operation should be performed on (default: random)
-   * @param {boolean} realtime - Specify whether to perform the operation in realtime or search mode
-   * @param {boolean} refresh - Refresh the shard containing the document before performing the operation
-   * @param {string} routing - Specific routing value
-   * @param {list} _source - True or false to return the _source field or not, or a list of fields to return
-   * @param {list} _source_excludes - A list of fields to exclude from the returned _source field
-   * @param {list} _source_includes - A list of fields to extract and return from the _source field
-   * @param {number} version - Explicit version number for concurrency control
-   * @param {enum} version_type - Specific version type
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'stored_fields',
@@ -39,9 +19,7 @@ function buildGet (opts) {
     'routing',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'version',
     'version_type',
     'pretty',
@@ -54,9 +32,7 @@ function buildGet (opts) {
   const snakeCase = {
     storedFields: 'stored_fields',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'

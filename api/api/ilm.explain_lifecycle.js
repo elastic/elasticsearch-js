@@ -10,21 +10,15 @@
 function buildIlmExplainLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [ilm.explain_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html) request
-   *
-   * @param {string} index - The name of the index to explain
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
-
+    'only_managed',
+    'only_errors'
   ]
 
   const snakeCase = {
-
+    onlyManaged: 'only_managed',
+    onlyErrors: 'only_errors'
   }
 
   /**

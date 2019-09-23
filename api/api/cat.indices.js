@@ -10,25 +10,6 @@
 function buildCatIndices (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [cat.indices](http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to limit the returned information
-   * @param {string} format - a short version of the Accept header, e.g. json, yaml
-   * @param {enum} bytes - The unit in which to display byte values
-   * @param {boolean} local - Return local information, do not retrieve the state from master node (default: false)
-   * @param {time} master_timeout - Explicit operation timeout for connection to master node
-   * @param {list} h - Comma-separated list of column names to display
-   * @param {enum} health - A health status ("green", "yellow", or "red" to filter only indices matching the specified health status
-   * @param {boolean} help - Return help information
-   * @param {boolean} pri - Set to true to return stats only for primary shards
-   * @param {list} s - Comma-separated list of column names or column aliases to sort by
-   * @param {boolean} v - Verbose mode. Display column headers
-   * @param {boolean} include_unloaded_segments - If set to true segment stats will include stats for segments that are not currently loaded into memory
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'format',

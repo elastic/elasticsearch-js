@@ -10,20 +10,6 @@
 function buildTasksList (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-<<<<<<< HEAD
-  /**
-   * Perform a [tasks.list](http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html) request
-   *
-   * @param {list} nodes - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-   * @param {list} actions - A comma-separated list of actions that should be returned. Leave empty to return all.
-   * @param {boolean} detailed - Return detailed task information (default: false)
-   * @param {string} parent_task_id - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
-   * @param {boolean} wait_for_completion - Wait for the matching tasks to complete (default: false)
-   * @param {enum} group_by - Group tasks by nodes or parent/child relationships
-   * @param {time} timeout - Explicit operation timeout
-   */
-=======
->>>>>>> 69247496... Update code generation (#969)
 
   const acceptedQuerystring = [
     'nodes',
