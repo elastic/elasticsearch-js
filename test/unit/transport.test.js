@@ -758,7 +758,7 @@ test('Should return a request aborter utility', t => {
 })
 
 test('Retry mechanism and abort', t => {
-  t.plan(1)
+  t.plan(2)
 
   function handler (req, res) {
     setTimeout(() => {
