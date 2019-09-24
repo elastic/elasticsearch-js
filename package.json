@@ -48,7 +48,7 @@
     "license-checker": "^25.0.1",
     "lolex": "^4.0.1",
     "minimist": "^1.2.0",
-    "ora": "^3.4.0",
+    "ora": "^4.0.1",
     "pretty-hrtime": "^1.0.3",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
