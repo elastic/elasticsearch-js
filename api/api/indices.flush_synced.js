@@ -38,6 +38,11 @@ function buildIndicesFlushSynced (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.flush_synced request
+   * Performs a synced flush operation on one or more indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush-api.html
+   */
   return function indicesFlushSynced (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
