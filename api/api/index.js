@@ -84,10 +84,10 @@ function buildIndex (opts) {
     var path = ''
 
     if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'POST'
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
     } else if ((index) != null && (id) != null) {
-      if (method == null) method = 'POST'
+      if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
     } else if ((index) != null && (type) != null) {
       if (method == null) method = 'POST'

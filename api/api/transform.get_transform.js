@@ -7,23 +7,25 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameDeleteDataFrameTransform (opts) {
+function buildTransformGetTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'force'
+    'from',
+    'size',
+    'allow_no_match'
   ]
 
   const snakeCase = {
-
+    allowNoMatch: 'allow_no_match'
   }
 
   /**
-   * Perform a data_frame.delete_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
+   * Perform a transform.get_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
    */
-  return function dataFrameDeleteDataFrameTransform (params, options, callback) {
+  return function transformGetTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -33,12 +35,6 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params['transform_id'] == null && params['transformId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -58,14 +54,19 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    if ((transform_id || transformId) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_data_frame' + '/' + 'transforms'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -74,4 +75,4 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameDeleteDataFrameTransform
+module.exports = buildTransformGetTransform

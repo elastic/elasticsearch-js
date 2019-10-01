@@ -7,23 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFramePutDataFrameTransform (opts) {
+function buildTransformDeleteTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'defer_validation'
+    'force'
   ]
 
   const snakeCase = {
-    deferValidation: 'defer_validation'
+
   }
 
   /**
-   * Perform a data_frame.put_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
+   * Perform a transform.delete_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
    */
-  return function dataFramePutDataFrameTransform (params, options, callback) {
+  return function transformDeleteTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -38,10 +38,6 @@ function buildDataFramePutDataFrameTransform (opts) {
     // check required parameters
     if (params['transform_id'] == null && params['transformId'] == null) {
       const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -62,7 +58,7 @@ function buildDataFramePutDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'PUT'
+    if (method == null) method = 'DELETE'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
@@ -78,4 +74,4 @@ function buildDataFramePutDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFramePutDataFrameTransform
+module.exports = buildTransformDeleteTransform
