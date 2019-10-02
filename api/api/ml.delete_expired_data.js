@@ -10,10 +10,6 @@
 function buildMlDeleteExpiredData (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_expired_data](undefined) request
-   *
-   */
 
   const acceptedQuerystring = [
 
@@ -23,6 +19,9 @@ function buildMlDeleteExpiredData (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_expired_data request
+   */
   return function mlDeleteExpiredData (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -35,12 +34,6 @@ function buildMlDeleteExpiredData (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -51,10 +44,6 @@ function buildMlDeleteExpiredData (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -62,13 +51,14 @@ function buildMlDeleteExpiredData (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + '_delete_expired_data'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

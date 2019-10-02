@@ -10,17 +10,6 @@
 function buildIndicesShrink (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.shrink](http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html) request
-   *
-   * @param {string} index - The name of the source index to shrink
-   * @param {string} target - The name of the target index to shrink into
-   * @param {boolean} copy_settings - whether or not to copy settings from the source index (defaults to false)
-   * @param {time} timeout - Explicit operation timeout
-   * @param {time} master_timeout - Specify timeout for connection to master
-   * @param {string} wait_for_active_shards - Set the number of active shards to wait for on the shrunken index before the operation returns.
-   * @param {object} body - The configuration for the target index (`settings` and `aliases`)
-   */
 
   const acceptedQuerystring = [
     'copy_settings',
@@ -42,6 +31,11 @@ function buildIndicesShrink (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a indices.shrink request
+   * Allow to shrink an existing index into a new index with fewer primary shards.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html
+   */
   return function indicesShrink (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -80,10 +74,6 @@ function buildIndicesShrink (opts) {
     var { method, body, index, target, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -91,6 +81,7 @@ function buildIndicesShrink (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_shrink' + '/' + encodeURIComponent(target)
 
     // build request object

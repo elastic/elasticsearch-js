@@ -10,19 +10,6 @@
 function buildMlGetOverallBuckets (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_overall_buckets](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html) request
-   *
-   * @param {string} job_id - The job IDs for which to calculate overall bucket results
-   * @param {int} top_n - The number of top job bucket scores to be used in the overall_score calculation
-   * @param {string} bucket_span - The span of the overall buckets. Defaults to the longest job bucket_span
-   * @param {double} overall_score - Returns overall buckets with overall scores higher than this value
-   * @param {boolean} exclude_interim - If true overall buckets that include interim buckets will be excluded
-   * @param {string} start - Returns overall buckets with timestamps after this time
-   * @param {string} end - Returns overall buckets with timestamps earlier than this time
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   * @param {object} body - Overall bucket selection details if not provided in URI
-   */
 
   const acceptedQuerystring = [
     'top_n',
@@ -42,6 +29,10 @@ function buildMlGetOverallBuckets (opts) {
     allowNoJobs: 'allow_no_jobs'
   }
 
+  /**
+   * Perform a ml.get_overall_buckets request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
+   */
   return function mlGetOverallBuckets (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -70,10 +61,6 @@ function buildMlGetOverallBuckets (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -81,6 +68,7 @@ function buildMlGetOverallBuckets (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'overall_buckets'
 
     // build request object

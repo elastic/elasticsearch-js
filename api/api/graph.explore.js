@@ -10,15 +10,6 @@
 function buildGraphExplore (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [graph.explore](https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-   * @param {list} type - A comma-separated list of document types to search; leave empty to perform the operation on all types
-   * @param {string} routing - Specific routing value
-   * @param {time} timeout - Explicit operation timeout
-   * @param {object} body - Graph Query DSL
-   */
 
   const acceptedQuerystring = [
     'routing',
@@ -29,6 +20,10 @@ function buildGraphExplore (opts) {
 
   }
 
+  /**
+   * Perform a graph.explore request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
+   */
   return function graphExplore (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -39,6 +34,12 @@ function buildGraphExplore (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // check required parameters
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
     }
 
     // check required url components
@@ -57,10 +58,6 @@ function buildGraphExplore (opts) {
     var { method, body, index, type, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -69,8 +66,10 @@ function buildGraphExplore (opts) {
     var path = ''
 
     if ((index) != null && (type) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_graph' + '/' + 'explore'
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
     }
 

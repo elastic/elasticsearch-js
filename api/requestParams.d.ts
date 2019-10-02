@@ -375,7 +375,6 @@ export interface DeleteByQuery<T = any> extends Generic {
   type?: string | string[];
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
   df?: string;
@@ -560,6 +559,15 @@ export interface IndicesClearCache extends Generic {
   request?: boolean;
 }
 
+export interface IndicesClone<T = any> extends Generic {
+  index: string;
+  target: string;
+  timeout?: string;
+  master_timeout?: string;
+  wait_for_active_shards?: string;
+  body?: T;
+}
+
 export interface IndicesClose extends Generic {
   index: string | string[];
   timeout?: string;
@@ -612,8 +620,8 @@ export interface IndicesExists extends Generic {
 }
 
 export interface IndicesExistsAlias extends Generic {
-  index?: string | string[];
   name: string | string[];
+  index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -675,8 +683,8 @@ export interface IndicesGet extends Generic {
 }
 
 export interface IndicesGetAlias extends Generic {
-  index?: string | string[];
   name?: string | string[];
+  index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -684,9 +692,9 @@ export interface IndicesGetAlias extends Generic {
 }
 
 export interface IndicesGetFieldMapping extends Generic {
+  fields: string | string[];
   index?: string | string[];
   type?: string | string[];
-  fields: string | string[];
   include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
@@ -847,8 +855,8 @@ export interface IndicesSplit<T = any> extends Generic {
 }
 
 export interface IndicesStats extends Generic {
-  index?: string | string[];
   metric?: string | string[];
+  index?: string | string[];
   completion_fields?: string | string[];
   fielddata_fields?: string | string[];
   fields?: string | string[];
@@ -960,7 +968,6 @@ export interface MsearchTemplate<T = any> extends Generic {
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   body: T;
 }
 
@@ -1005,9 +1012,9 @@ export interface NodesReloadSecureSettings extends Generic {
 }
 
 export interface NodesStats extends Generic {
+  node_id?: string | string[];
   metric?: string | string[];
   index_metric?: string | string[];
-  node_id?: string | string[];
   completion_fields?: string | string[];
   fielddata_fields?: string | string[];
   fields?: string | string[];
@@ -1019,8 +1026,8 @@ export interface NodesStats extends Generic {
 }
 
 export interface NodesUsage extends Generic {
-  metric?: string | string[];
   node_id?: string | string[];
+  metric?: string | string[];
   timeout?: string;
 }
 
@@ -1151,8 +1158,14 @@ export interface SearchTemplate<T = any> extends Generic {
   profile?: boolean;
   typed_keys?: boolean;
   rest_total_hits_as_int?: boolean;
-  ccs_minimize_roundtrips?: boolean;
   body: T;
+}
+
+export interface SnapshotCleanupRepository<T = any> extends Generic {
+  repository: string;
+  master_timeout?: string;
+  timeout?: string;
+  body?: T;
 }
 
 export interface SnapshotCreate<T = any> extends Generic {
@@ -1243,8 +1256,8 @@ export interface TasksList extends Generic {
 
 export interface Termvectors<T = any> extends Generic {
   index: string;
-  type?: string;
   id?: string;
+  type?: string;
   term_statistics?: boolean;
   field_statistics?: boolean;
   fields?: string | string[];
@@ -1338,7 +1351,7 @@ export interface CcrFollow<T = any> extends Generic {
 }
 
 export interface CcrFollowInfo extends Generic {
-  index?: string | string[];
+  index: string | string[];
 }
 
 export interface CcrFollowStats extends Generic {
@@ -1377,6 +1390,7 @@ export interface CcrUnfollow extends Generic {
 
 export interface DataFrameDeleteDataFrameTransform extends Generic {
   transform_id: string;
+  force?: boolean;
 }
 
 export interface DataFrameGetDataFrameTransform extends Generic {
@@ -1387,7 +1401,7 @@ export interface DataFrameGetDataFrameTransform extends Generic {
 }
 
 export interface DataFrameGetDataFrameTransformStats extends Generic {
-  transform_id?: string;
+  transform_id: string;
   from?: number;
   size?: number;
   allow_no_match?: boolean;
@@ -1399,6 +1413,7 @@ export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
 
 export interface DataFramePutDataFrameTransform<T = any> extends Generic {
   transform_id: string;
+  defer_validation?: boolean;
   body: T;
 }
 
@@ -1414,8 +1429,14 @@ export interface DataFrameStopDataFrameTransform extends Generic {
   allow_no_match?: boolean;
 }
 
+export interface DataFrameUpdateDataFrameTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
 export interface GraphExplore<T = any> extends Generic {
-  index?: string | string[];
+  index: string | string[];
   type?: string | string[];
   routing?: string;
   timeout?: string;
@@ -1423,11 +1444,13 @@ export interface GraphExplore<T = any> extends Generic {
 }
 
 export interface IlmDeleteLifecycle extends Generic {
-  policy?: string;
+  policy: string;
 }
 
 export interface IlmExplainLifecycle extends Generic {
-  index?: string;
+  index: string;
+  only_managed?: boolean;
+  only_errors?: boolean;
 }
 
 export interface IlmGetLifecycle extends Generic {
@@ -1438,21 +1461,21 @@ export interface IlmGetStatus extends Generic {
 }
 
 export interface IlmMoveToStep<T = any> extends Generic {
-  index?: string;
+  index: string;
   body?: T;
 }
 
 export interface IlmPutLifecycle<T = any> extends Generic {
-  policy?: string;
+  policy: string;
   body?: T;
 }
 
 export interface IlmRemovePolicy extends Generic {
-  index?: string;
+  index: string;
 }
 
 export interface IlmRetry extends Generic {
-  index?: string;
+  index: string;
 }
 
 export interface IlmStart extends Generic {
@@ -1472,7 +1495,7 @@ export interface IndicesFreeze extends Generic {
 }
 
 export interface IndicesReloadSearchAnalyzers extends Generic {
-  index?: string | string[];
+  index: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -1573,6 +1596,10 @@ export interface MlDeleteJob extends Generic {
 export interface MlDeleteModelSnapshot extends Generic {
   job_id: string;
   snapshot_id: string;
+}
+
+export interface MlEstimateMemoryUsage<T = any> extends Generic {
+  body: T;
 }
 
 export interface MlEvaluateDataFrame<T = any> extends Generic {
@@ -1747,8 +1774,6 @@ export interface MlInfo extends Generic {
 
 export interface MlOpenJob extends Generic {
   job_id: string;
-  ignore_downtime?: boolean;
-  timeout?: string;
 }
 
 export interface MlPostCalendarEvents<T = any> extends Generic {
@@ -2036,6 +2061,23 @@ export interface SecurityPutUser<T = any> extends Generic {
   username: string;
   refresh?: 'true' | 'false' | 'wait_for';
   body: T;
+}
+
+export interface SlmDeleteLifecycle extends Generic {
+  policy_id: string;
+}
+
+export interface SlmExecuteLifecycle extends Generic {
+  policy_id: string;
+}
+
+export interface SlmGetLifecycle extends Generic {
+  policy_id?: string;
+}
+
+export interface SlmPutLifecycle<T = any> extends Generic {
+  policy_id: string;
+  body?: T;
 }
 
 export interface SqlClearCursor<T = any> extends Generic {

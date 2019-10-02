@@ -10,20 +10,19 @@
 function buildDataFrameDeleteDataFrameTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [data_frame.delete_data_frame_transform](https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html) request
-   *
-   * @param {string} transform_id - The id of the transform to delete
-   */
 
   const acceptedQuerystring = [
-
+    'force'
   ]
 
   const snakeCase = {
 
   }
 
+  /**
+   * Perform a data_frame.delete_data_frame_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
+   */
   return function dataFrameDeleteDataFrameTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,10 +40,6 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
       const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -56,10 +51,6 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
     var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,13 +58,14 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

@@ -10,11 +10,6 @@
 function buildIlmDeleteLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ilm.delete_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html) request
-   *
-   * @param {string} policy - The name of the index lifecycle policy
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,10 @@ function buildIlmDeleteLifecycle (opts) {
 
   }
 
+  /**
+   * Perform a ilm.delete_lifecycle request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
+   */
   return function ilmDeleteLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,8 +36,8 @@ function buildIlmDeleteLifecycle (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['policy'] == null) {
+      const err = new ConfigurationError('Missing required parameter: policy')
       return handleError(err, callback)
     }
 
@@ -52,10 +51,6 @@ function buildIlmDeleteLifecycle (opts) {
     var { method, body, policy, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -63,13 +58,14 @@ function buildIlmDeleteLifecycle (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

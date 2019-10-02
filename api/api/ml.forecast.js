@@ -10,13 +10,6 @@
 function buildMlForecast (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.forecast](undefined) request
-   *
-   * @param {string} job_id - The ID of the job to forecast for
-   * @param {time} duration - The duration of the forecast
-   * @param {time} expires_in - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-   */
 
   const acceptedQuerystring = [
     'duration',
@@ -27,6 +20,9 @@ function buildMlForecast (opts) {
     expiresIn: 'expires_in'
   }
 
+  /**
+   * Perform a ml.forecast request
+   */
   return function mlForecast (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,10 +40,6 @@ function buildMlForecast (opts) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -59,10 +51,6 @@ function buildMlForecast (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -70,13 +58,14 @@ function buildMlForecast (opts) {
 
     var path = ''
 
+    if (method == null) method = 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

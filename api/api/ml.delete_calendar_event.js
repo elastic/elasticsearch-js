@@ -10,12 +10,6 @@
 function buildMlDeleteCalendarEvent (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_calendar_event](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar to modify
-   * @param {string} event_id - The ID of the event to remove from the calendar
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,9 @@ function buildMlDeleteCalendarEvent (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_calendar_event request
+   */
   return function mlDeleteCalendarEvent (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -46,10 +43,6 @@ function buildMlDeleteCalendarEvent (opts) {
       const err = new ConfigurationError('Missing required parameter: event_id or eventId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // check required url components
     if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
@@ -67,10 +60,6 @@ function buildMlDeleteCalendarEvent (opts) {
     var { method, body, calendarId, calendar_id, eventId, event_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -78,13 +67,14 @@ function buildMlDeleteCalendarEvent (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events' + '/' + encodeURIComponent(event_id || eventId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

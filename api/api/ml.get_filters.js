@@ -10,13 +10,6 @@
 function buildMlGetFilters (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_filters](undefined) request
-   *
-   * @param {string} filter_id - The ID of the filter to fetch
-   * @param {int} from - skips a number of filters
-   * @param {int} size - specifies a max number of filters to get
-   */
 
   const acceptedQuerystring = [
     'from',
@@ -27,6 +20,9 @@ function buildMlGetFilters (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_filters request
+   */
   return function mlGetFilters (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -39,12 +35,6 @@ function buildMlGetFilters (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -55,10 +45,6 @@ function buildMlGetFilters (opts) {
     var { method, body, filterId, filter_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,8 +53,10 @@ function buildMlGetFilters (opts) {
     var path = ''
 
     if ((filter_id || filterId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'filters'
     }
 

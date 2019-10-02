@@ -10,15 +10,6 @@
 function buildScroll (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll) request
-   *
-   * @param {string} scroll_id - The scroll ID
-   * @param {time} scroll - Specify how long a consistent view of the index should be maintained for scrolled search
-   * @param {string} scroll_id - The scroll ID for scrolled search
-   * @param {boolean} rest_total_hits_as_int - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-   * @param {object} body - The scroll ID if not passed by URL or query parameter.
-   */
 
   const acceptedQuerystring = [
     'scroll',
@@ -38,6 +29,11 @@ function buildScroll (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a scroll request
+   * Allows to retrieve a large numbers of results from a single search request.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll
+   */
   return function scroll (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -60,10 +56,6 @@ function buildScroll (opts) {
     var { method, body, scrollId, scroll_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -72,8 +64,10 @@ function buildScroll (opts) {
     var path = ''
 
     if ((scroll_id || scrollId) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)
     } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
       path = '/' + '_search' + '/' + 'scroll'
     }
 

@@ -10,16 +10,6 @@
 function buildMlGetCalendarEvents (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_calendar_events](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar containing the events
-   * @param {string} job_id - Get events for the job. When this option is used calendar_id must be '_all'
-   * @param {string} start - Get events after this time
-   * @param {date} end - Get events before this time
-   * @param {int} from - Skips a number of events
-   * @param {int} size - Specifies a max number of events to get
-   */
 
   const acceptedQuerystring = [
     'job_id',
@@ -34,6 +24,9 @@ function buildMlGetCalendarEvents (opts) {
 
   }
 
+  /**
+   * Perform a ml.get_calendar_events request
+   */
   return function mlGetCalendarEvents (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -51,10 +44,6 @@ function buildMlGetCalendarEvents (opts) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -66,10 +55,6 @@ function buildMlGetCalendarEvents (opts) {
     var { method, body, calendarId, calendar_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -77,6 +62,7 @@ function buildMlGetCalendarEvents (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
 
     // build request object

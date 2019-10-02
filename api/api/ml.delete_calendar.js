@@ -10,11 +10,6 @@
 function buildMlDeleteCalendar (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.delete_calendar](undefined) request
-   *
-   * @param {string} calendar_id - The ID of the calendar to delete
-   */
 
   const acceptedQuerystring = [
 
@@ -24,6 +19,9 @@ function buildMlDeleteCalendar (opts) {
 
   }
 
+  /**
+   * Perform a ml.delete_calendar request
+   */
   return function mlDeleteCalendar (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -41,10 +39,6 @@ function buildMlDeleteCalendar (opts) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
       return handleError(err, callback)
     }
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
@@ -56,10 +50,6 @@ function buildMlDeleteCalendar (opts) {
     var { method, body, calendarId, calendar_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'DELETE'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,13 +57,14 @@ function buildMlDeleteCalendar (opts) {
 
     var path = ''
 
+    if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

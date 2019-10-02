@@ -10,10 +10,6 @@
 function buildIngestProcessorGrok (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ingest.processor_grok](https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html#grok-processor-rest-get) request
-   *
-   */
 
   const acceptedQuerystring = [
     'pretty',
@@ -28,6 +24,11 @@ function buildIngestProcessorGrok (opts) {
     filterPath: 'filter_path'
   }
 
+  /**
+   * Perform a ingest.processor_grok request
+   * Returns a list of the built-in patterns.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html#grok-processor-rest-get
+   */
   return function ingestProcessorGrok (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -40,12 +41,6 @@ function buildIngestProcessorGrok (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -56,10 +51,6 @@ function buildIngestProcessorGrok (opts) {
     var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -67,6 +58,7 @@ function buildIngestProcessorGrok (opts) {
 
     var path = ''
 
+    if (method == null) method = 'GET'
     path = '/' + '_ingest' + '/' + 'processor' + '/' + 'grok'
 
     // build request object

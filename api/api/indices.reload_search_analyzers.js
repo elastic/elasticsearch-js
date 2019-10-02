@@ -10,14 +10,6 @@
 function buildIndicesReloadSearchAnalyzers (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [indices.reload_search_analyzers](https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-reload-analyzers.html) request
-   *
-   * @param {list} index - A comma-separated list of index names to reload analyzers for
-   * @param {boolean} ignore_unavailable - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-   * @param {boolean} allow_no_indices - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-   * @param {enum} expand_wildcards - Whether to expand wildcard expression to concrete indices that are open, closed or both.
-   */
 
   const acceptedQuerystring = [
     'ignore_unavailable',
@@ -31,6 +23,10 @@ function buildIndicesReloadSearchAnalyzers (opts) {
     expandWildcards: 'expand_wildcards'
   }
 
+  /**
+   * Perform a indices.reload_search_analyzers request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-reload-analyzers.html
+   */
   return function indicesReloadSearchAnalyzers (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -44,8 +40,8 @@ function buildIndicesReloadSearchAnalyzers (opts) {
     }
 
     // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
@@ -59,10 +55,6 @@ function buildIndicesReloadSearchAnalyzers (opts) {
     var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = body == null ? 'GET' : 'POST'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -70,13 +62,14 @@ function buildIndicesReloadSearchAnalyzers (opts) {
 
     var path = ''
 
+    if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers'
 
     // build request object
     const request = {
       method,
       path,
-      body: '',
+      body: body || '',
       querystring
     }
 

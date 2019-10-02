@@ -44,7 +44,7 @@ if [ "$1" == "--detach" ]; then
     --detach \
     --network=elastic \
     --name=elasticsearch \
-    docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+    docker.elastic.co/elasticsearch/elasticsearch:7.4.0
 else
   exec docker run \
     --rm \
@@ -71,5 +71,5 @@ else
     -p 9200:9200 \
     --network=elastic \
     --name=elasticsearch \
-    docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+    docker.elastic.co/elasticsearch/elasticsearch:7.4.0
 fi

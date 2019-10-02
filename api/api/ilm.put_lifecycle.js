@@ -10,12 +10,6 @@
 function buildIlmPutLifecycle (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ilm.put_lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html) request
-   *
-   * @param {string} policy - The name of the index lifecycle policy
-   * @param {object} body - The lifecycle policy definition to register
-   */
 
   const acceptedQuerystring = [
 
@@ -25,6 +19,10 @@ function buildIlmPutLifecycle (opts) {
 
   }
 
+  /**
+   * Perform a ilm.put_lifecycle request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
+   */
   return function ilmPutLifecycle (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,6 +35,12 @@ function buildIlmPutLifecycle (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['policy'] == null) {
+      const err = new ConfigurationError('Missing required parameter: policy')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -47,10 +51,6 @@ function buildIlmPutLifecycle (opts) {
     var { method, body, policy, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'PUT'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -58,6 +58,7 @@ function buildIlmPutLifecycle (opts) {
 
     var path = ''
 
+    if (method == null) method = 'PUT'
     path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
     // build request object

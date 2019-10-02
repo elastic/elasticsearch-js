@@ -10,12 +10,6 @@
 function buildMlGetJobs (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-  /**
-   * Perform a [ml.get_jobs](http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html) request
-   *
-   * @param {string} job_id - The ID of the jobs to fetch
-   * @param {boolean} allow_no_jobs - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-   */
 
   const acceptedQuerystring = [
     'allow_no_jobs'
@@ -25,6 +19,10 @@ function buildMlGetJobs (opts) {
     allowNoJobs: 'allow_no_jobs'
   }
 
+  /**
+   * Perform a ml.get_jobs request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+   */
   return function mlGetJobs (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
@@ -37,12 +35,6 @@ function buildMlGetJobs (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params.body != null) {
-      const err = new ConfigurationError('This API does not require a body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -53,10 +45,6 @@ function buildMlGetJobs (opts) {
     var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
-    if (method == null) {
-      method = 'GET'
-    }
-
     var ignore = options.ignore
     if (typeof ignore === 'number') {
       options.ignore = [ignore]
@@ -65,8 +53,10 @@ function buildMlGetJobs (opts) {
     var path = ''
 
     if ((job_id || jobId) != null) {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
     } else {
+      if (method == null) method = 'GET'
       path = '/' + '_ml' + '/' + 'anomaly_detectors'
     }
 
