@@ -159,7 +159,9 @@ export interface CatPlugins extends Generic {
 export interface CatRecovery extends Generic {
   index?: string | string[];
   format?: string;
+  active_only?: boolean;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  detailed?: boolean;
   master_timeout?: string;
   h?: string | string[];
   help?: boolean;
@@ -422,7 +424,6 @@ export interface DeleteScript extends Generic {
 export interface Exists extends Generic {
   id: string;
   index: string;
-  type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
@@ -457,7 +458,6 @@ export interface ExistsSource extends Generic {
 export interface Explain<T = any> extends Generic {
   id: string;
   index: string;
-  type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   analyze_wildcard?: boolean;
@@ -487,7 +487,6 @@ export interface FieldCaps extends Generic {
 export interface Get extends Generic {
   id: string;
   index: string;
-  type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
@@ -510,7 +509,6 @@ export interface GetScript extends Generic {
 export interface GetSource extends Generic {
   id: string;
   index: string;
-  type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   preference?: string;
@@ -692,7 +690,6 @@ export interface IndicesGetAlias extends Generic {
 export interface IndicesGetFieldMapping extends Generic {
   fields: string | string[];
   index?: string | string[];
-  type?: string | string[];
   include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
@@ -703,8 +700,6 @@ export interface IndicesGetFieldMapping extends Generic {
 
 export interface IndicesGetMapping extends Generic {
   index?: string | string[];
-  type?: string | string[];
-  include_type_name?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
@@ -758,9 +753,7 @@ export interface IndicesPutAlias<T = any> extends Generic {
 }
 
 export interface IndicesPutMapping<T = any> extends Generic {
-  index?: string | string[];
-  type?: string;
-  include_type_name?: boolean;
+  index: string | string[];
   timeout?: string;
   master_timeout?: string;
   ignore_unavailable?: boolean;
@@ -930,7 +923,6 @@ export interface IngestSimulate<T = any> extends Generic {
 
 export interface Mget<T = any> extends Generic {
   index?: string;
-  type?: string;
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   stored_fields?: string | string[];
@@ -1378,56 +1370,8 @@ export interface CcrUnfollow extends Generic {
   index: string;
 }
 
-export interface DataFrameDeleteDataFrameTransform extends Generic {
-  transform_id: string;
-  force?: boolean;
-}
-
-export interface DataFrameGetDataFrameTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-  allow_no_match?: boolean;
-}
-
-export interface DataFrameGetDataFrameTransformStats extends Generic {
-  transform_id: string;
-  from?: number;
-  size?: number;
-  allow_no_match?: boolean;
-}
-
-export interface DataFramePreviewDataFrameTransform<T = any> extends Generic {
-  body: T;
-}
-
-export interface DataFramePutDataFrameTransform<T = any> extends Generic {
-  transform_id: string;
-  defer_validation?: boolean;
-  body: T;
-}
-
-export interface DataFrameStartDataFrameTransform extends Generic {
-  transform_id: string;
-  timeout?: string;
-}
-
-export interface DataFrameStopDataFrameTransform extends Generic {
-  transform_id: string;
-  wait_for_completion?: boolean;
-  timeout?: string;
-  allow_no_match?: boolean;
-}
-
-export interface DataFrameUpdateDataFrameTransform<T = any> extends Generic {
-  transform_id: string;
-  defer_validation?: boolean;
-  body: T;
-}
-
 export interface GraphExplore<T = any> extends Generic {
   index: string | string[];
-  type?: string | string[];
   routing?: string;
   timeout?: string;
   body?: T;
@@ -2087,6 +2031,53 @@ export interface SqlTranslate<T = any> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
+}
+
+export interface TransformDeleteTransform extends Generic {
+  transform_id: string;
+  force?: boolean;
+}
+
+export interface TransformGetTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface TransformGetTransformStats extends Generic {
+  transform_id: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface TransformPreviewTransform<T = any> extends Generic {
+  body: T;
+}
+
+export interface TransformPutTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
+export interface TransformStartTransform extends Generic {
+  transform_id: string;
+  timeout?: string;
+}
+
+export interface TransformStopTransform extends Generic {
+  transform_id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
+  allow_no_match?: boolean;
+}
+
+export interface TransformUpdateTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
 }
 
 export interface WatcherAckWatch extends Generic {

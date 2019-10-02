@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFramePreviewDataFrameTransform (opts) {
+function buildTransformPreviewTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildDataFramePreviewDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.preview_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-data-frame-transform.html
+   * Perform a transform.preview_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
-  return function dataFramePreviewDataFrameTransform (params, options, callback) {
+  return function transformPreviewTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -74,4 +74,4 @@ function buildDataFramePreviewDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFramePreviewDataFrameTransform
+module.exports = buildTransformPreviewTransform

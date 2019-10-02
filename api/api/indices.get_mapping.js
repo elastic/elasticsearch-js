@@ -12,7 +12,6 @@ function buildIndicesGetMapping (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
@@ -26,7 +25,6 @@ function buildIndicesGetMapping (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
@@ -59,7 +57,7 @@ function buildIndicesGetMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -69,15 +67,9 @@ function buildIndicesGetMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
-    } else if ((index) != null) {
+    if ((index) != null) {
       if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping'
-    } else if ((type) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
     } else {
       if (method == null) method = 'GET'
       path = '/' + '_mapping'

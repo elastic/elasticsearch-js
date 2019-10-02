@@ -65,7 +65,7 @@ function buildIndicesGetFieldMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, fields, index, type, ...querystring } = params
+    var { method, body, fields, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -75,15 +75,9 @@ function buildIndicesGetFieldMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (fields) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type) + '/' + 'field' + '/' + encodeURIComponent(fields)
-    } else if ((index) != null && (fields) != null) {
+    if ((index) != null && (fields) != null) {
       if (method == null) method = 'GET'
       path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
-    } else if ((type) != null && (fields) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type) + '/' + 'field' + '/' + encodeURIComponent(fields)
     } else {
       if (method == null) method = 'GET'
       path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)

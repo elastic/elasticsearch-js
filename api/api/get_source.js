@@ -74,7 +74,7 @@ function buildGetSource (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, id, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -84,13 +84,8 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    if (method == null) method = 'GET'
+    path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

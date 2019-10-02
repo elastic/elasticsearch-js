@@ -7,23 +7,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameStartDataFrameTransform (opts) {
+function buildTransformStopTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'timeout'
+    'wait_for_completion',
+    'timeout',
+    'allow_no_match'
   ]
 
   const snakeCase = {
-
+    waitForCompletion: 'wait_for_completion',
+    allowNoMatch: 'allow_no_match'
   }
 
   /**
-   * Perform a data_frame.start_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
+   * Perform a transform.stop_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
    */
-  return function dataFrameStartDataFrameTransform (params, options, callback) {
+  return function transformStopTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -59,7 +62,7 @@ function buildDataFrameStartDataFrameTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
 
     // build request object
     const request = {
@@ -74,4 +77,4 @@ function buildDataFrameStartDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameStartDataFrameTransform
+module.exports = buildTransformStopTransform

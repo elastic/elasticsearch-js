@@ -7,25 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameGetDataFrameTransformStats (opts) {
+function buildTransformStartTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'from',
-    'size',
-    'allow_no_match'
+    'timeout'
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
+
   }
 
   /**
-   * Perform a data_frame.get_data_frame_transform_stats request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
+   * Perform a transform.start_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
    */
-  return function dataFrameGetDataFrameTransformStats (params, options, callback) {
+  return function transformStartTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -60,14 +58,14 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stats'
+    if (method == null) method = 'POST'
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -76,4 +74,4 @@ function buildDataFrameGetDataFrameTransformStats (opts) {
   }
 }
 
-module.exports = buildDataFrameGetDataFrameTransformStats
+module.exports = buildTransformStartTransform
