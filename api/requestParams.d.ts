@@ -15,6 +15,8 @@ export interface Generic {
 export interface Bulk<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   wait_for_active_shards?: string;
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
@@ -371,6 +373,8 @@ export interface Delete extends Generic {
 export interface DeleteByQuery<T = any> extends Generic {
   index: string | string[];
   type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
   df?: string;
@@ -421,6 +425,8 @@ export interface Exists extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -437,6 +443,8 @@ export interface ExistsSource extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -452,6 +460,8 @@ export interface Explain<T = any> extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyze_wildcard?: boolean;
   analyzer?: string;
   default_operator?: 'AND' | 'OR';
@@ -480,6 +490,8 @@ export interface Get extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -501,6 +513,8 @@ export interface GetSource extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -921,6 +935,8 @@ export interface IngestSimulate<T = any> extends Generic {
 export interface Mget<T = any> extends Generic {
   index?: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -1070,6 +1086,8 @@ export interface Scroll<T = any> extends Generic {
 export interface Search<T = any> extends Generic {
   index?: string | string[];
   type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   ccs_minimize_roundtrips?: boolean;
@@ -1258,6 +1276,8 @@ export interface Update<T = any> extends Generic {
   id: string;
   index: string;
   type?: string;
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   wait_for_active_shards?: string;
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -1275,6 +1295,8 @@ export interface Update<T = any> extends Generic {
 export interface UpdateByQuery<T = any> extends Generic {
   index: string | string[];
   type?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
