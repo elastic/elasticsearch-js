@@ -76,7 +76,7 @@ function buildExists (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, id, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -86,13 +86,8 @@ function buildExists (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'HEAD'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else {
-      if (method == null) method = 'HEAD'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    }
+    if (method == null) method = 'HEAD'
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {

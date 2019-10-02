@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameUpdateDataFrameTransform (opts) {
+function buildTransformUpdateTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.update_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-data-frame-transform.html
+   * Perform a transform.update_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
    */
-  return function dataFrameUpdateDataFrameTransform (params, options, callback) {
+  return function transformUpdateTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -78,4 +78,4 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameUpdateDataFrameTransform
+module.exports = buildTransformUpdateTransform

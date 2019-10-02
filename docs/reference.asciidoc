@@ -645,7 +645,9 @@ link:{ref}/cat-plugins.html[Reference]
 client.cat.recovery({
   index: string | string[],
   format: string,
+  active_only: boolean,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  detailed: boolean,
   master_timeout: string,
   h: string | string[],
   help: boolean,
@@ -657,13 +659,19 @@ link:{ref}/cat-recovery.html[Reference]
 [cols=2*]
 |===
 |`index`
-|`string \| string[]` - A comma-separated list of index names to limit the returned information
+|`string \| string[]` - Comma-separated list or wildcard expression of index names to limit the returned information
 
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
+|`active_only` or `activeOnly`
+|`boolean` - If `true`, the response only includes ongoing shard recoveries
+
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`detailed`
+|`boolean` - If `true`, the response includes detailed information about shard recoveries
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -1703,7 +1711,6 @@ link:{ref}/modules-scripting.html[Reference]
 client.exists({
   id: string,
   index: string,
-  type: string,
   stored_fields: string | string[],
   preference: string,
   realtime: boolean,
@@ -1724,11 +1731,6 @@ link:{ref}/docs-get.html[Reference]
 
 |`index`
 |`string` - The name of the index
-
-|`type`
-|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types) +
-
-WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -1831,7 +1833,6 @@ WARNING: This parameter has been deprecated.
 client.explain({
   id: string,
   index: string,
-  type: string,
   analyze_wildcard: boolean,
   analyzer: string,
   default_operator: 'AND' | 'OR',
@@ -1855,11 +1856,6 @@ link:{ref}/search-explain.html[Reference]
 
 |`index`
 |`string` - The name of the index
-
-|`type`
-|`string` - The type of the document +
-
-WARNING: This parameter has been deprecated.
 
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
@@ -1947,7 +1943,6 @@ _Default:_ `open`
 client.get({
   id: string,
   index: string,
-  type: string,
   stored_fields: string | string[],
   preference: string,
   realtime: boolean,
@@ -1968,11 +1963,6 @@ link:{ref}/docs-get.html[Reference]
 
 |`index`
 |`string` - The name of the index
-
-|`type`
-|`string` - The type of the document (use `_all` to fetch the first document matching the ID across all types) +
-
-WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -2033,7 +2023,6 @@ link:{ref}/modules-scripting.html[Reference]
 client.getSource({
   id: string,
   index: string,
-  type: string,
   preference: string,
   realtime: boolean,
   refresh: boolean,
@@ -2053,11 +2042,6 @@ link:{ref}/docs-get.html[Reference]
 
 |`index`
 |`string` - The name of the index
-
-|`type`
-|`string` - The type of the document; deprecated and optional starting with 7.0 +
-
-WARNING: This parameter has been deprecated.
 
 |`preference`
 |`string` - Specify the node or shard the operation should be performed on (default: random)
@@ -2617,7 +2601,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html#synced-flush-api[Reference]
+link:{ref}/indices-synced-flush-api.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -2769,7 +2753,6 @@ _Default:_ `all`
 client.indices.getFieldMapping({
   fields: string | string[],
   index: string | string[],
-  type: string | string[],
   include_type_name: boolean,
   include_defaults: boolean,
   ignore_unavailable: boolean,
@@ -2786,11 +2769,6 @@ link:{ref}/indices-get-field-mapping.html[Reference]
 
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`type`
-|`string \| string[]` - A comma-separated list of document types +
-
-WARNING: This parameter has been deprecated.
 
 |`include_type_name` or `includeTypeName`
 |`boolean` - Whether a type should be returned in the body of the mappings.
@@ -2819,8 +2797,6 @@ _Default:_ `open`
 ----
 client.indices.getMapping({
   index: string | string[],
-  type: string | string[],
-  include_type_name: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
@@ -2833,14 +2809,6 @@ link:{ref}/indices-get-mapping.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`type`
-|`string \| string[]` - A comma-separated list of document types +
-
-WARNING: This parameter has been deprecated.
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether to add the type name to the response (default: false)
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -3049,8 +3017,6 @@ link:{ref}/indices-aliases.html[Reference]
 ----
 client.indices.putMapping({
   index: string | string[],
-  type: string,
-  include_type_name: boolean,
   timeout: string,
   master_timeout: string,
   ignore_unavailable: boolean,
@@ -3064,14 +3030,6 @@ link:{ref}/indices-put-mapping.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
-
-|`type`
-|`string` - The name of the document type +
-
-WARNING: This parameter has been deprecated.
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -3742,7 +3700,6 @@ link:{ref}/simulate-pipeline-api.html[Reference]
 ----
 client.mget({
   index: string,
-  type: string,
   stored_fields: string | string[],
   preference: string,
   realtime: boolean,
@@ -3759,11 +3716,6 @@ link:{ref}/docs-multi-get.html[Reference]
 |===
 |`index`
 |`string` - The name of the index
-
-|`type`
-|`string` - The type of the document +
-
-WARNING: This parameter has been deprecated.
 
 |`stored_fields` or `storedFields`
 |`string \| string[]` - A comma-separated list of stored fields to return in the response
@@ -3790,7 +3742,7 @@ WARNING: This parameter has been deprecated.
 |`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`body`
-|`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
+|`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index is provided in the URL.
 
 |===
 
@@ -5541,201 +5493,12 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 
 |===
 
-=== dataFrame.deleteDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.deleteDataFrameTransform({
-  transform_id: string,
-  force: boolean
-})
-----
-link:{ref}/delete-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
-|===
-
-=== dataFrame.getDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.getDataFrameTransform({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.getDataFrameTransformStats
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.getDataFrameTransformStats({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-data-frame-transform-stats.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform stats, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transform stats to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.previewDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.previewDataFrameTransform({
-  body: object
-})
-----
-link:{ref}/preview-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the data_frame transform to preview
-
-|===
-
-=== dataFrame.putDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.putDataFrameTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/put-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
-
-|`body`
-|`object` - The data frame transform definition
-
-|===
-
-=== dataFrame.startDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.startDataFrameTransform({
-  transform_id: string,
-  timeout: string
-})
-----
-link:{ref}/start-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrame.stopDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.stopDataFrameTransform({
-  transform_id: string,
-  wait_for_completion: boolean,
-  timeout: string,
-  allow_no_match: boolean
-})
-----
-link:{ref}/stop-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no data frame transforms. (This includes `_all` string or when no data frame transforms have been specified)
-
-|===
-
-=== dataFrame.updateDataFrameTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrame.updateDataFrameTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/update-data-frame-transform.html[Reference]
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until data frame transform starts, defaults to false.
-
-|`body`
-|`object` - The update data frame transform definition
-
-|===
-
 === graph.explore
 
 [source,ts]
 ----
 client.graph.explore({
   index: string | string[],
-  type: string | string[],
   routing: string,
   timeout: string,
   body: object
@@ -5746,11 +5509,6 @@ link:{ref}/graph-explore-api.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`type`
-|`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types +
-
-WARNING: This parameter has been deprecated.
 
 |`routing`
 |`string` - Specific routing value
@@ -8337,6 +8095,194 @@ client.ssl.certificates()
 ----
 link:{ref}/security-api-ssl.html[Reference]
 
+
+=== transform.deleteTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.deleteTransform({
+  transform_id: string,
+  force: boolean
+})
+----
+link:{ref}/delete-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to delete
+
+|`force`
+|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
+
+|===
+
+=== transform.getTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.getTransform({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean
+})
+----
+link:{ref}/get-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== transform.getTransformStats
+*Stability:* beta
+[source,ts]
+----
+client.transform.getTransformStats({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean
+})
+----
+link:{ref}/get-transform-stats.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+
+|`from`
+|`number` - skips a number of transform stats, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transform stats to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== transform.previewTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.previewTransform({
+  body: object
+})
+----
+link:{ref}/preview-transform.html[Reference]
+[cols=2*]
+|===
+|`body`
+|`object` - The definition for the transform to preview
+
+|===
+
+=== transform.putTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.putTransform({
+  transform_id: string,
+  defer_validation: boolean,
+  body: object
+})
+----
+link:{ref}/put-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the new transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`body`
+|`object` - The transform definition
+
+|===
+
+=== transform.startTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.startTransform({
+  transform_id: string,
+  timeout: string
+})
+----
+link:{ref}/start-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to start
+
+|`timeout`
+|`string` - Controls the time to wait for the transform to start
+
+|===
+
+=== transform.stopTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.stopTransform({
+  transform_id: string,
+  wait_for_completion: boolean,
+  timeout: string,
+  allow_no_match: boolean
+})
+----
+link:{ref}/stop-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to stop
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
+
+|`timeout`
+|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== transform.updateTransform
+*Stability:* beta
+[source,ts]
+----
+client.transform.updateTransform({
+  transform_id: string,
+  defer_validation: boolean,
+  body: object
+})
+----
+link:{ref}/update-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`body`
+|`object` - The update transform definition
+
+|===
 
 === watcher.ackWatch
 

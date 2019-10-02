@@ -12,7 +12,6 @@ function buildIndicesPutMapping (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'timeout',
     'master_timeout',
     'ignore_unavailable',
@@ -26,7 +25,6 @@ function buildIndicesPutMapping (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
@@ -53,6 +51,10 @@ function buildIndicesPutMapping (opts) {
     }
 
     // check required parameters
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
@@ -65,7 +67,7 @@ function buildIndicesPutMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, index, type, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -75,31 +77,8 @@ function buildIndicesPutMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mapping'
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_mappings'
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_mappings' + '/' + encodeURIComponent(type)
-    } else if ((index) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
-    } else if ((type) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + '_mappings' + '/' + encodeURIComponent(type)
-    } else if ((index) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_mappings'
-    } else {
-      if (method == null) method = 'PUT'
-      path = '/' + '_mapping' + '/' + encodeURIComponent(type)
-    }
+    if (method == null) method = 'PUT'
+    path = '/' + encodeURIComponent(index) + '/' + '_mapping'
 
     // build request object
     const request = {

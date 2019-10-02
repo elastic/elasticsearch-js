@@ -7,25 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameGetDataFrameTransform (opts) {
+function buildTransformPutTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'from',
-    'size',
-    'allow_no_match'
+    'defer_validation'
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
+    deferValidation: 'defer_validation'
   }
 
   /**
-   * Perform a data_frame.get_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html
+   * Perform a transform.put_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
    */
-  return function dataFrameGetDataFrameTransform (params, options, callback) {
+  return function transformPutTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,6 +33,16 @@ function buildDataFrameGetDataFrameTransform (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // check required parameters
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -54,19 +62,14 @@ function buildDataFrameGetDataFrameTransform (opts) {
 
     var path = ''
 
-    if ((transform_id || transformId) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_data_frame' + '/' + 'transforms'
-    }
+    if (method == null) method = 'PUT'
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -75,4 +78,4 @@ function buildDataFrameGetDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameGetDataFrameTransform
+module.exports = buildTransformPutTransform
