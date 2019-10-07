@@ -177,6 +177,12 @@ _Default:_ `null`
 === Error handling
 The client exposes a variety of error objects, that you can use to enhance your error handling. +
 You can find all the error objects inside the `errors` key in the client.
+For example:
+`if (err) return console.log(err.name)
+  client.index({
+    index: 'test',
+    body: { foo: 'bar' }
+  }`
 
 [source,js]
 ----
