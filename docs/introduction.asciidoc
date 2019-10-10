@@ -1,11 +1,9 @@
 [[introduction]]
 == Introduction
 
-The official Node.js client for {es}.
-
+The official Node.js client for Elasticsearch.
 
 === Features
-
 * One-to-one mapping with REST API.
 * Generalized, pluggable architecture.
 * Configurable, automatic discovery of cluster nodes.
@@ -14,27 +12,21 @@ The official Node.js client for {es}.
 * Child client support.
 * TypeScript support out of the box.
 
-
 === Install
-
 [source,sh]
 ----
 npm install @elastic/elasticsearch
 ----
 
-
 === Compatibility
 
 The minimum supported version of Node.js is `v8`.
 
-The library is compatible with all {es} versions since 5.x. We recommend you to 
-use the same major version of the client as the {es} instance that you are 
-using.
-
+The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
 
 [%header,cols=2*] 
 |===
-|{es} Version
+|Elasticsearch Version
 |Client Version
 
 |`master`
@@ -50,33 +42,26 @@ using.
 |`5.x`
 |===
 
-To install a specific major version of the client, run the following command:
-
+To install a specific major of the client, run the following command:
 ----
 npm install @elastic/elasticsearch@<major>
 ----
 
-
 ==== Browser
 
-WARNING: There is no official support for the browser environment. It exposes 
-your {es} instance to everyone, which could lead to security issues. We 
-recommend you to write a lightweight proxy that uses this client instead.
-
+WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
+We recommend that you write a lightweight proxy that uses this client instead.
 
 === Quick start
 
-First of all, require, then initialize the client:
-
+First of all, require the client and initialize it:
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 ----
 
-
-You can use both the callback API and the promise API, both behave the same way.
-
+You can use both the callback-style API and the promise-style API, both behave the same way.
 [source,js]
 ----
 // promise API
@@ -93,10 +78,7 @@ client.search({
   if (err) console.log(err)
 })
 ----
-
-
 The returned value of **every** API call is formed as follows:
-
 [source,ts]
 ----
 {
@@ -108,9 +90,7 @@ The returned value of **every** API call is formed as follows:
 }
 ----
 
-
 Let's see a complete example!
-
 [source,js]
 ----
 'use strict'
@@ -122,7 +102,7 @@ async function run () {
   // Let's start by indexing some data
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       character: 'Ned Stark',
       quote: 'Winter is coming.'
@@ -131,7 +111,7 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       character: 'Daenerys Targaryen',
       quote: 'I am the blood of the dragon.'
@@ -140,21 +120,21 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       character: 'Tyrion Lannister',
       quote: 'A mind needs books like a sword needs a whetstone.'
     }
   })
 
-  // We need to force an index refresh at this point, otherwise we will not
+  // here we are forcing an index refresh, otherwise we will not
   // get any result in the consequent search
   await client.indices.refresh({ index: 'game-of-thrones' })
 
   // Let's search!
   const { body } = await client.search({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
+    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       query: {
         match: { quote: 'winter' }
@@ -168,32 +148,25 @@ async function run () {
 run().catch(console.log)
 ----
 
-
 ==== Install multiple versions
+If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. +
+In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
 
-If you are using multiple versions of {es}, you need to use multiple versions of 
-the client as well. In the past, installing multiple versions of the same 
-package was not possible, but with `npm v6.9`, you can do it via aliasing.
-
-To install different version of the client, run the following command:
+The command you must run to install different version of the client is:
 
 [source,sh]
 ----
 npm install <alias>@npm:@elastic/elasticsearch@<version>
 ----
 
-
-For example, if you need to install `7.x` and `6.x`, run the following commands:
-
+So for example if you need to install `7.x` and `6.x`, you will run
 [source,sh]
 ----
 npm install es6@npm:@elastic/elasticsearch@6
 npm install es7@npm:@elastic/elasticsearch@7
 ----
 
-
-Your `package.json` will look similar to the following example:
-
+And your `package.json` will look like the following:
 [source,json]
 ----
 "dependencies": {
@@ -202,8 +175,7 @@ Your `package.json` will look similar to the following example:
 }
 ----
 
-
-Require the packages from your code by using the alias you have defined.
+You will require the packages from your code by using the alias you have defined.
 
 [source,js]
 ----
@@ -217,13 +189,9 @@ client6.info(console.log)
 client7.info(console.log)
 ----
 
-
-Finally, if you want to install the client for the next version of {es} (the one 
-that lives in the {es} master branch), use the following command:
-
+Finally, if you want to install the client for the next version of Elasticsearch (the one that lives in Elasticsearch's master branch), you can use the following command:
 [source,sh]
 ----
 npm install esmaster@github:elastic/elasticsearch-js
 ----
-WARNING: This command installs the master branch of the client which is not 
-considered stable.
+WARNING: This command will install the master branch of the client, which is not considered stable.
