@@ -183,7 +183,7 @@ npm install <alias>@npm:@elastic/elasticsearch@<version>
 ----
 
 
-For example, if you need to install `7.x` and `6.x`, run the following:
+For example, if you need to install `7.x` and `6.x`, run the following commands:
 
 [source,sh]
 ----
