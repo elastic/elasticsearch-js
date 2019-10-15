@@ -1,7 +1,9 @@
 [[client-usage]]
 == Usage
 
-Use the  client is pretty straightforward, it supports all the public APIs of Elasticsearch, and every method exposes the same signature.
+Using the client is straightforward, it supports all the public APIs of {es}, 
+and every method exposes the same signature.
+
 
 [source,js]
 ----
@@ -36,11 +38,14 @@ The returned value of every API call is formed as follows:
 }
 ----
 
-NOTE: The body will be a boolean value when using `HEAD` APIs.
+NOTE: The body is a boolean value when you use `HEAD` APIs.
 
-The above value will be returned even if there is an error during the execution of the request, this means that you can safely use the https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[destructuring assignment].
+The above value is returned even if there is an error during the execution of 
+the request, this means that you can safely use the 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[destructuring assignment].
 
-The `meta` key contains all the information regarding the request, such as attempt, options, and the connection that has been used.
+The `meta` key contains all the information about the request, such as attempt, 
+options, and the connection that has been used.
 
 [source,js]
 ----
@@ -59,9 +64,12 @@ client.search({
 })
 ----
 
+
 === Aborting a request
 
-When using the callback style API, the function will also return an object that allows you to abort the API request.
+When using the callback style API, the function also returns an object that 
+allows you to abort the API request.
+
 
 [source,js]
 ----
@@ -79,7 +87,8 @@ const request = client.search({
 request.abort()
 ----
 
-Aborting a request with the promise style API is not supported, but you can easily achieve that with convenience wrapper.
+Aborting a request with the promise style API is not supported, but you can 
+achieve that with convenience wrapper.
 
 [source,js]
 ----
@@ -108,8 +117,10 @@ request.abort()
 // access the promise with `request.promise.[method]`
 ----
 
+
 === Request specific options
 If needed you can pass request specific options in a second object:
+
 [source,js]
 ----
 // promise API
@@ -133,6 +144,7 @@ client.search({
 })
 ----
 
+
 The supported request specific options are:
 [cols=2*]
 |===
@@ -154,7 +166,7 @@ _Options:_ `false`, `'gzip'` +
 _Default:_ `false`
 
 |`asStream`
-|`boolean` - Instead of getting the parsed body back, you will get the raw Node.js stream of data. +
+|`boolean` - Instead of getting the parsed body back, you get the raw Node.js stream of data. +
 _Default:_ `false`
 
 |`headers`
@@ -170,13 +182,16 @@ _Default:_ `null`
 _Default:_ `null`
 
 |`context`
-|`any` - Custom object per request. _(you can use it to pass some data to the clients events)_ +
+|`any` - Custom object per request. _(you can use it to pass data to the clients events)_ +
 _Default:_ `null`
 |===
 
+
 === Error handling
-The client exposes a variety of error objects, that you can use to enhance your error handling. +
-You can find all the error objects inside the `errors` key in the client.
+
+The client exposes a variety of error objects that you can use to enhance your 
+error handling. You can find all the error objects inside the `errors` key in 
+the client.
 
 [source,js]
 ----
@@ -184,7 +199,9 @@ const { errors } = require('@elastic/elasticsearch')
 console.log(errors)
 ----
 
-Following you can find the errors exported by the client.
+
+You can find the errors exported by the client in the table below.
+
 [cols=2*]
 |===
 |`ElasticsearchClientErrors`
@@ -194,7 +211,7 @@ Following you can find the errors exported by the client.
 |Generated when a request exceeds the `requestTimeout` option.
 
 |`ConnectionError`
-|Generated when an error occurs during the reequest, it can be a connection error or a malformed stream of data.
+|Generated when an error occurs during the request, it can be a connection error or a malformed stream of data.
 
 |`NoLivingConnectionsError`
 |Generated in case of all connections present in the connection pool are dead.
