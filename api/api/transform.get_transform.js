@@ -56,10 +56,10 @@ function buildTransformGetTransform (opts) {
 
     if ((transform_id || transformId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+      path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_data_frame' + '/' + 'transforms'
+      path = '/' + '_transform'
     }
 
     // build request object

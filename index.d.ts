@@ -151,10 +151,14 @@ declare class Client extends EventEmitter {
     forgetFollower: ApiMethod<RequestParams.CcrForgetFollower>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     getAutoFollowPattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
+    pause_auto_follow_pattern: ApiMethod<RequestParams.CcrPauseAutoFollowPattern>
+    pauseAutoFollowPattern: ApiMethod<RequestParams.CcrPauseAutoFollowPattern>
     pause_follow: ApiMethod<RequestParams.CcrPauseFollow>
     pauseFollow: ApiMethod<RequestParams.CcrPauseFollow>
     put_auto_follow_pattern: ApiMethod<RequestParams.CcrPutAutoFollowPattern>
     putAutoFollowPattern: ApiMethod<RequestParams.CcrPutAutoFollowPattern>
+    resume_auto_follow_pattern: ApiMethod<RequestParams.CcrResumeAutoFollowPattern>
+    resumeAutoFollowPattern: ApiMethod<RequestParams.CcrResumeAutoFollowPattern>
     resume_follow: ApiMethod<RequestParams.CcrResumeFollow>
     resumeFollow: ApiMethod<RequestParams.CcrResumeFollow>
     stats: ApiMethod<RequestParams.CcrStats>
@@ -180,6 +184,42 @@ declare class Client extends EventEmitter {
   }
   count: ApiMethod<RequestParams.Count>
   create: ApiMethod<RequestParams.Create>
+  data_frame_transform_deprecated: {
+    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+  }
+  dataFrameTransformDeprecated: {
+    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+  }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
   deleteByQuery: ApiMethod<RequestParams.DeleteByQuery>
@@ -187,6 +227,17 @@ declare class Client extends EventEmitter {
   deleteByQueryRethrottle: ApiMethod<RequestParams.DeleteByQueryRethrottle>
   delete_script: ApiMethod<RequestParams.DeleteScript>
   deleteScript: ApiMethod<RequestParams.DeleteScript>
+  enrich: {
+    delete_policy: ApiMethod<RequestParams.EnrichDeletePolicy>
+    deletePolicy: ApiMethod<RequestParams.EnrichDeletePolicy>
+    execute_policy: ApiMethod<RequestParams.EnrichExecutePolicy>
+    executePolicy: ApiMethod<RequestParams.EnrichExecutePolicy>
+    get_policy: ApiMethod<RequestParams.EnrichGetPolicy>
+    getPolicy: ApiMethod<RequestParams.EnrichGetPolicy>
+    put_policy: ApiMethod<RequestParams.EnrichPutPolicy>
+    putPolicy: ApiMethod<RequestParams.EnrichPutPolicy>
+    stats: ApiMethod<RequestParams.EnrichStats>
+  }
   exists: ApiMethod<RequestParams.Exists>
   exists_source: ApiMethod<RequestParams.ExistsSource>
   existsSource: ApiMethod<RequestParams.ExistsSource>
@@ -196,6 +247,8 @@ declare class Client extends EventEmitter {
   get: ApiMethod<RequestParams.Get>
   get_script: ApiMethod<RequestParams.GetScript>
   getScript: ApiMethod<RequestParams.GetScript>
+  get_script_context: ApiMethod<RequestParams.GetScriptContext>
+  getScriptContext: ApiMethod<RequestParams.GetScriptContext>
   get_source: ApiMethod<RequestParams.GetSource>
   getSource: ApiMethod<RequestParams.GetSource>
   graph: {
@@ -531,6 +584,8 @@ declare class Client extends EventEmitter {
     deleteLifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
     execute_lifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
     executeLifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
+    execute_retention: ApiMethod<RequestParams.SlmExecuteRetention>
+    executeRetention: ApiMethod<RequestParams.SlmExecuteRetention>
     get_lifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
     getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
     get_stats: ApiMethod<RequestParams.SlmGetStats>

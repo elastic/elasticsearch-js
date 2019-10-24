@@ -7,41 +7,22 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatNodes (opts) {
+function buildEnrichGetPolicy (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'bytes',
-    'format',
-    'full_id',
-    'local',
-    'master_timeout',
-    'h',
-    'help',
-    's',
-    'time',
-    'v',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    fullId: 'full_id',
-    masterTimeout: 'master_timeout',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a cat.nodes request
-   * Returns basic statistics about performance of cluster nodes.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
+   * Perform a enrich.get_policy request
    */
-  return function catNodes (params, options, callback) {
+  return function enrichGetPolicy (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -60,7 +41,7 @@ function buildCatNodes (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -70,8 +51,13 @@ function buildCatNodes (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'nodes'
+    if ((name) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_enrich' + '/' + 'policy'
+    }
 
     // build request object
     const request = {
@@ -86,4 +72,4 @@ function buildCatNodes (opts) {
   }
 }
 
-module.exports = buildCatNodes
+module.exports = buildEnrichGetPolicy

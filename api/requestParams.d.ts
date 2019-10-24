@@ -32,7 +32,6 @@ export interface CatAliases extends Generic {
   name?: string | string[];
   format?: string;
   local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -54,8 +53,6 @@ export interface CatAllocation extends Generic {
 export interface CatCount extends Generic {
   index?: string | string[];
   format?: string;
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -66,8 +63,6 @@ export interface CatFielddata extends Generic {
   fields?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -76,11 +71,10 @@ export interface CatFielddata extends Generic {
 
 export interface CatHealth extends Generic {
   format?: string;
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   ts?: boolean;
   v?: boolean;
 }
@@ -101,6 +95,7 @@ export interface CatIndices extends Generic {
   help?: boolean;
   pri?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
   include_unloaded_segments?: boolean;
 }
@@ -126,6 +121,7 @@ export interface CatNodeattrs extends Generic {
 }
 
 export interface CatNodes extends Generic {
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
   full_id?: boolean;
   local?: boolean;
@@ -133,6 +129,7 @@ export interface CatNodes extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -143,6 +140,7 @@ export interface CatPendingTasks extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -162,10 +160,10 @@ export interface CatRecovery extends Generic {
   active_only?: boolean;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   detailed?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -198,6 +196,7 @@ export interface CatShards extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -209,6 +208,7 @@ export interface CatSnapshots extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -221,6 +221,7 @@ export interface CatTasks extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -352,7 +353,7 @@ export interface Create<T = any> extends Generic {
   routing?: string;
   timeout?: string;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   pipeline?: string;
   body: T;
 }
@@ -506,6 +507,9 @@ export interface GetScript extends Generic {
   master_timeout?: string;
 }
 
+export interface GetScriptContext extends Generic {
+}
+
 export interface GetSource extends Generic {
   id: string;
   index: string;
@@ -525,14 +529,13 @@ export interface GetSource extends Generic {
 export interface Index<T = any> extends Generic {
   id?: string;
   index: string;
-  type?: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
@@ -1349,6 +1352,10 @@ export interface CcrGetAutoFollowPattern extends Generic {
   name?: string;
 }
 
+export interface CcrPauseAutoFollowPattern extends Generic {
+  name: string;
+}
+
 export interface CcrPauseFollow extends Generic {
   index: string;
 }
@@ -1356,6 +1363,10 @@ export interface CcrPauseFollow extends Generic {
 export interface CcrPutAutoFollowPattern<T = any> extends Generic {
   name: string;
   body: T;
+}
+
+export interface CcrResumeAutoFollowPattern extends Generic {
+  name: string;
 }
 
 export interface CcrResumeFollow<T = any> extends Generic {
@@ -1368,6 +1379,74 @@ export interface CcrStats extends Generic {
 
 export interface CcrUnfollow extends Generic {
   index: string;
+}
+
+export interface DataFrameTransformDeprecatedDeleteTransform extends Generic {
+  transform_id: string;
+  force?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedGetTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedGetTransformStats extends Generic {
+  transform_id: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedPreviewTransform<T = any> extends Generic {
+  body: T;
+}
+
+export interface DataFrameTransformDeprecatedPutTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
+export interface DataFrameTransformDeprecatedStartTransform extends Generic {
+  transform_id: string;
+  timeout?: string;
+}
+
+export interface DataFrameTransformDeprecatedStopTransform extends Generic {
+  transform_id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedUpdateTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
+export interface EnrichDeletePolicy extends Generic {
+  name: string;
+}
+
+export interface EnrichExecutePolicy extends Generic {
+  name: string;
+  wait_for_completion?: boolean;
+}
+
+export interface EnrichGetPolicy extends Generic {
+  name?: string;
+}
+
+export interface EnrichPutPolicy<T = any> extends Generic {
+  name: string;
+  body: T;
+}
+
+export interface EnrichStats extends Generic {
 }
 
 export interface GraphExplore<T = any> extends Generic {
@@ -2005,8 +2084,11 @@ export interface SlmExecuteLifecycle extends Generic {
   policy_id: string;
 }
 
+export interface SlmExecuteRetention extends Generic {
+}
+
 export interface SlmGetLifecycle extends Generic {
-  policy_id?: string;
+  policy_id?: string | string[];
 }
 
 export interface SlmGetStats extends Generic {

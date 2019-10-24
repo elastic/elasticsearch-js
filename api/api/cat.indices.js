@@ -21,6 +21,7 @@ function buildCatIndices (opts) {
     'help',
     'pri',
     's',
+    'time',
     'v',
     'include_unloaded_segments',
     'pretty',

@@ -7,41 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatNodes (opts) {
+function buildDataFrameTransformDeprecatedPreviewTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'bytes',
-    'format',
-    'full_id',
-    'local',
-    'master_timeout',
-    'h',
-    'help',
-    's',
-    'time',
-    'v',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    fullId: 'full_id',
-    masterTimeout: 'master_timeout',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a cat.nodes request
-   * Returns basic statistics about performance of cluster nodes.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
+   * Perform a data_frame_transform_deprecated.preview_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
-  return function catNodes (params, options, callback) {
+  return function dataFrameTransformDeprecatedPreviewTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,6 +33,12 @@ function buildCatNodes (opts) {
       callback = params
       params = {}
       options = {}
+    }
+
+    // check required parameters
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
     }
 
     // validate headers object
@@ -70,14 +58,11 @@ function buildCatNodes (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'nodes'
-
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -86,4 +71,4 @@ function buildCatNodes (opts) {
   }
 }
 
-module.exports = buildCatNodes
+module.exports = buildDataFrameTransformDeprecatedPreviewTransform
