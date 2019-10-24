@@ -68,7 +68,6 @@ client.info((err: errors.ElasticsearchClientError | null, result: ApiResponse) =
 
 client.index({
   index: 'test',
-  type: 'test',
   id: 'test',
   body: { hello: 'world' }
 }, (err: errors.ElasticsearchClientError | null, result: ApiResponse) => {})
@@ -76,7 +75,6 @@ client.index({
 // request options
 client.index({
   index: 'test',
-  type: 'test',
   id: 'test',
   body: { hello: 'world' }
 }, {
@@ -96,7 +94,6 @@ client.info()
 
 client.index({
   index: 'test',
-  type: 'test',
   id: 'test',
   body: { hello: 'world' }
 })
@@ -106,7 +103,6 @@ client.index({
 // request options
 client.index({
   index: 'test',
-  type: 'test',
   id: 'test',
   body: { hello: 'world' }
 }, {
