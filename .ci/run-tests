@@ -38,14 +38,20 @@ if [[ $TEST_SUITE != "xpack" ]]; then
   elasticsearch_url="http://${NODE_NAME}:9200"
 fi
 
-ELASTICSEARCH_VERSION="${elasticsearch_image}:${ELASTICSEARCH_VERSION}" \
-  NODE_NAME="${NODE_NAME}" \
-  NETWORK_NAME="esnet" \
-  DETACH=true \
-  SSL_CERT="${repo}${testnodecrt}" \
-  SSL_KEY="${repo}${testnodekey}" \
-  SSL_CA="${repo}${cacrt}" \
-  bash .ci/run-elasticsearch.sh
+docker run \
+  --rm \
+  --env "node.attr.testattr=test" \
+  --env "path.repo=/tmp" \
+  --env "repositories.url.allowed_urls=http://snapshot.*" \
+  --env "discovery.zen.ping.unicast.hosts=${NODE_NAME}"  \
+  --env "xpack.security.enabled=false" \
+  --env "xpack.monitoring.enabled=false" \
+  --env "xpack.ml.enabled=false" \
+  --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
+  --network=esnet \
+  --name=$NODE_NAME \
+  --detach \
+  docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
 
 docker run \
   --network=esnet \
