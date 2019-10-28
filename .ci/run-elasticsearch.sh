@@ -90,8 +90,6 @@ docker network inspect "$NETWORK_NAME" > /dev/null 2>&1 || docker network create
 environment=($(cat <<-END
   --env node.name=$NODE_NAME
   --env cluster.name=$CLUSTER_NAME
-  --env cluster.initial_master_nodes=$MASTER_NODE_NAME
-  --env discovery.seed_hosts=$MASTER_NODE_NAME
   --env cluster.routing.allocation.disk.threshold_enabled=false
   --env bootstrap.memory_lock=true
   --env node.attr.testattr=test
