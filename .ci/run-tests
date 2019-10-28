@@ -38,6 +38,8 @@ if [[ $TEST_SUITE != "xpack" ]]; then
   elasticsearch_url="http://${NODE_NAME}:9200"
 fi
 
+docker network create esnet
+
 docker run \
   --rm \
   --env "node.attr.testattr=test" \
