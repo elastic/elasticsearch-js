@@ -8,6 +8,7 @@
 #
 #   - $ELASTICSEARCH_VERSION
 #   - $NODE_JS_VERSION
+#   - $TEST_SUITE
 #
 
 set -eo pipefail
@@ -18,48 +19,41 @@ export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-j
 unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
 
-function cleanup {
-  docker container rm --force --volumes elasticsearch-oss > /dev/null 2>&1 || true
-  docker container rm --force --volumes elasticsearch-js-oss > /dev/null 2>&1 || true
-  docker network rm esnet-oss > /dev/null
-}
-
-trap cleanup EXIT
-
-# create network and volume
-docker network create esnet-oss
-
-# create client image
 docker build \
   --file .ci/Dockerfile \
   --tag elastic/elasticsearch-js \
   --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
   .
 
-# run elasticsearch oss
-docker run \
-  --rm \
-  --env "node.attr.testattr=test" \
-  --env "path.repo=/tmp" \
-  --env "repositories.url.allowed_urls=http://snapshot.*" \
-  --env "discovery.zen.ping.unicast.hosts=elasticsearch"  \
-  --env "xpack.security.enabled=false" \
-  --env "xpack.monitoring.enabled=false" \
-  --env "xpack.ml.enabled=false" \
-  --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
-  --network=esnet-oss \
-  --name=elasticsearch-oss \
-  --detach \
-  docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
+NODE_NAME="es1"
+repo=$(pwd)
+testnodecrt="/.ci/certs/testnode.crt"
+testnodekey="/.ci/certs/testnode.key"
+cacrt="/.ci/certs/ca.crt"
 
-# run the client unit and oss integration test
+elasticsearch_image="elasticsearch"
+elasticsearch_url="https://elastic:changeme@${NODE_NAME}:9200"
+if [[ $TEST_SUITE != "xpack" ]]; then
+  elasticsearch_image="elasticsearch-oss"
+  elasticsearch_url="http://${NODE_NAME}:9200"
+fi
+
+ELASTICSEARCH_VERSION="${elasticsearch_image}:${ELASTICSEARCH_VERSION}" \
+  NODE_NAME="${NODE_NAME}" \
+  NETWORK_NAME="esnet" \
+  DETACH=true \
+  SSL_CERT="${repo}${testnodecrt}" \
+  SSL_KEY="${repo}${testnodekey}" \
+  SSL_CA="${repo}${cacrt}" \
+  bash .ci/run-elasticsearch.sh
+
 docker run \
-  --network=esnet-oss \
-  --env "TEST_ES_SERVER=http://elasticsearch-oss:9200" \
+  --network=esnet \
+  --env "TEST_ES_SERVER=${elasticsearch_url}" \
   --env "CODECOV_TOKEN" \
   --volume $(pwd):/usr/src/app \
   --volume /usr/src/app/node_modules \
-  --name elasticsearch-js-oss \
+  --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
   npm run ci
