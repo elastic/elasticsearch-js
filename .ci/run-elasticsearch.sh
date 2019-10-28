@@ -88,7 +88,7 @@ echo -e "\033[34;1mINFO:\033[0m Creating network $NETWORK_NAME if it does not ex
 docker network inspect "$NETWORK_NAME" > /dev/null 2>&1 || docker network create "$NETWORK_NAME"
 
 environment=($(cat <<-END
-  --env discovery.zen.ping.unicast.hosts=elasticsearch
+  --env discovery.zen.ping.unicast.hosts=${NODE_NAME}
   --env xpack.security.enabled=false
   --env xpack.monitoring.enabled=false
   --env xpack.ml.enabled=false
