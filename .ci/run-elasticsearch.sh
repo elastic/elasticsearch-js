@@ -88,8 +88,6 @@ echo -e "\033[34;1mINFO:\033[0m Creating network $NETWORK_NAME if it does not ex
 docker network inspect "$NETWORK_NAME" > /dev/null 2>&1 || docker network create "$NETWORK_NAME"
 
 environment=($(cat <<-END
-  --env node.name=$NODE_NAME
-  --env cluster.name=$CLUSTER_NAME
   --env discovery.zen.ping.unicast.hosts=elasticsearch
   --env xpack.security.enabled=false
   --env xpack.monitoring.enabled=false
@@ -107,29 +105,29 @@ volumes=($(cat <<-END
 END
 ))
 
-if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
-  environment+=($(cat <<-END
-    --env ELASTIC_PASSWORD=$ELASTIC_PASSWORD
-    --env xpack.license.self_generated.type=trial
-    --env xpack.security.enabled=true
-    --env xpack.security.http.ssl.enabled=true
-    --env xpack.security.http.ssl.verification_mode=certificate
-    --env xpack.security.http.ssl.key=certs/testnode.key
-    --env xpack.security.http.ssl.certificate=certs/testnode.crt
-    --env xpack.security.http.ssl.certificate_authorities=certs/ca.crt
-    --env xpack.security.transport.ssl.enabled=true
-    --env xpack.security.transport.ssl.key=certs/testnode.key
-    --env xpack.security.transport.ssl.certificate=certs/testnode.crt
-    --env xpack.security.transport.ssl.certificate_authorities=certs/ca.crt
-END
-))
-  volumes+=($(cat <<-END
-    --volume $SSL_CERT:/usr/share/elasticsearch/config/certs/testnode.crt
-    --volume $SSL_KEY:/usr/share/elasticsearch/config/certs/testnode.key
-    --volume $SSL_CA:/usr/share/elasticsearch/config/certs/ca.crt
-END
-))
-fi
+# if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
+#   environment+=($(cat <<-END
+#     --env ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+#     --env xpack.license.self_generated.type=trial
+#     --env xpack.security.enabled=true
+#     --env xpack.security.http.ssl.enabled=true
+#     --env xpack.security.http.ssl.verification_mode=certificate
+#     --env xpack.security.http.ssl.key=certs/testnode.key
+#     --env xpack.security.http.ssl.certificate=certs/testnode.crt
+#     --env xpack.security.http.ssl.certificate_authorities=certs/ca.crt
+#     --env xpack.security.transport.ssl.enabled=true
+#     --env xpack.security.transport.ssl.key=certs/testnode.key
+#     --env xpack.security.transport.ssl.certificate=certs/testnode.crt
+#     --env xpack.security.transport.ssl.certificate_authorities=certs/ca.crt
+# END
+# ))
+#   volumes+=($(cat <<-END
+#     --volume $SSL_CERT:/usr/share/elasticsearch/config/certs/testnode.crt
+#     --volume $SSL_KEY:/usr/share/elasticsearch/config/certs/testnode.key
+#     --volume $SSL_CA:/usr/share/elasticsearch/config/certs/ca.crt
+# END
+# ))
+# fi
 
 url="http://$NODE_NAME"
 if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
