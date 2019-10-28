@@ -34,7 +34,7 @@ cacrt="/.ci/certs/ca.crt"
 elasticsearch_image="elasticsearch"
 elasticsearch_url="https://elastic:changeme@${NODE_NAME}:9200"
 if [[ $TEST_SUITE != "xpack" ]]; then
-  elasticsearch_image="elasticsearch-oss"
+  elasticsearch_image="elasticsearch"
   elasticsearch_url="http://${NODE_NAME}:9200"
 fi
 
