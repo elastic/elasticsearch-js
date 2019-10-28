@@ -7,4 +7,8 @@ NODE_JS_VERSION:
   - 10
   - 8
 
+TEST_SUITE:
+  - oss
+  - xpack
+
 exclude: ~
