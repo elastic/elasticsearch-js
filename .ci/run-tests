@@ -8,6 +8,7 @@
 #
 #   - $ELASTICSEARCH_VERSION
 #   - $NODE_JS_VERSION
+#   - $TEST_SUITE
 #
 
 set -eo pipefail
@@ -18,7 +19,6 @@ export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-j
 unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
 
-# create client image
 docker build \
   --file .ci/Dockerfile \
   --tag elastic/elasticsearch-js \
@@ -45,9 +45,8 @@ ELASTICSEARCH_VERSION="${elasticsearch_image}:${ELASTICSEARCH_VERSION}" \
   SSL_CERT="${repo}${testnodecrt}" \
   SSL_KEY="${repo}${testnodekey}" \
   SSL_CA="${repo}${cacrt}" \
-  bash ./.ci/run-elasticsearch.sh
+  bash .ci/run-elasticsearch.sh
 
-# run the client platinium integration test
 docker run \
   --network=esnet \
   --env "TEST_ES_SERVER=${elasticsearch_url}" \
@@ -56,6 +55,5 @@ docker run \
   --volume /usr/src/app/node_modules \
   --name elasticsearch-js \
   --rm \
-  --tty \
   elastic/elasticsearch-js \
   npm run ci
