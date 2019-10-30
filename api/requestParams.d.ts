@@ -1036,6 +1036,7 @@ export interface RankEval<T = any> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   body: T;
 }
 
@@ -2011,6 +2012,7 @@ export interface SecurityGetApiKey extends Generic {
   name?: string;
   username?: string;
   realm_name?: string;
+  owner?: boolean;
 }
 
 export interface SecurityGetBuiltinPrivileges extends Generic {
@@ -2151,9 +2153,11 @@ export interface TransformStartTransform extends Generic {
 
 export interface TransformStopTransform extends Generic {
   transform_id: string;
+  force?: boolean;
   wait_for_completion?: boolean;
   timeout?: string;
   allow_no_match?: boolean;
+  wait_for_checkpoint?: boolean;
 }
 
 export interface TransformUpdateTransform<T = any> extends Generic {

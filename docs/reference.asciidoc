@@ -4134,6 +4134,7 @@ client.rankEval({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   body: object
 })
 ----
@@ -4152,6 +4153,9 @@ link:{ref}/search-rank-eval.html[Reference]
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`body`
 |`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
@@ -7994,7 +7998,8 @@ client.security.getApiKey({
   id: string,
   name: string,
   username: string,
-  realm_name: string
+  realm_name: string,
+  owner: boolean
 })
 ----
 link:{ref}/security-api-get-api-key.html[Reference]
@@ -8011,6 +8016,9 @@ link:{ref}/security-api-get-api-key.html[Reference]
 
 |`realm_name` or `realmName`
 |`string` - realm name of the user who created this API key to be retrieved
+
+|`owner`
+|`boolean` - flag to query API keys owned by the currently authenticated user
 
 |===
 
@@ -8549,9 +8557,11 @@ link:{ref}/start-transform.html[Reference]
 ----
 client.transform.stopTransform({
   transform_id: string,
+  force: boolean,
   wait_for_completion: boolean,
   timeout: string,
-  allow_no_match: boolean
+  allow_no_match: boolean,
+  wait_for_checkpoint: boolean
 })
 ----
 link:{ref}/stop-transform.html[Reference]
@@ -8559,6 +8569,9 @@ link:{ref}/stop-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to stop
+
+|`force`
+|`boolean` - Whether to force stop a failed transform or not. Default to false
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
@@ -8568,6 +8581,9 @@ link:{ref}/stop-transform.html[Reference]
 
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`wait_for_checkpoint` or `waitForCheckpoint`
+|`boolean` - Whether to wait for the transform to reach a checkpoint before stopping. Default to false
 
 |===
 
