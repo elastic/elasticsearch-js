@@ -291,3 +291,34 @@ class MyConnection extends Connection {
     // your code
   }
 }
+
+const client = new Client({
+  Connection: MyConnection
+})
+----
+
+
+=== `Serializer`
+
+This class is responsible for the serialization of every request, it offers the 
+following methods:
+
+* `serialize(object: any): string;` serializes request objects.
+* `deserialize(json: string): any;` deserializes response strings.
+* `ndserialize(array: any[]): string;` serializes bulk request objects.
+* `qserialize(object: any): string;` serializes request query parameters.
+
+[source,js]
+----
+const { Client, Serializer } = require('@elastic/elasticsearch')
+
+class MySerializer extends Serializer {
+  serialize (object) {
+    // your code
+  }
+}
+
+const client = new Client({
+  Serializer: MySerializer
+})
+----
