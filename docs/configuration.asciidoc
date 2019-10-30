@@ -1,7 +1,9 @@
 [[client-configuration]]
 == Client configuration
 
-The client is designed to be easily configured as you see fit for your needs, following you can see all the possible basic options that you can use to configure it.
+The client is designed to be easily configured for your needs. In the following 
+section, you can see the possible basic options that you can use to configure 
+it.
 
 [source,js]
 ----
@@ -15,7 +17,9 @@ const client = new Client({
 })
 ----
 
+
 === Basic options
+
 [cols=2*]
 |===
 |`node` or `nodes`
@@ -25,7 +29,7 @@ It can be a single string or an array of strings:
 ----
 node: 'http://localhost:9200'
 ----
-Or it can be an object (or an array of objects) that represents the node
+Or it can be an object (or an array of objects) that represents the node:
 [source,js]
 ----
 node: {
@@ -44,8 +48,10 @@ node: {
 ----
 
 |`auth`
-a|Your authentication data. You can use both Basic authentication and https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey]. +
-See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] for more details. +
+a|Your authentication data. You can use both basic authentication and 
+{ref}/security-api-create-api-key.html[ApiKey]. +
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+for more details. +
 _Default:_ `null`
 
 Basic authentication:
@@ -56,7 +62,7 @@ auth: {
   password: 'changeme'
 }
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] authentication:
+{ref}/security-api-create-api-key.html[ApiKey] authentication:
 [source,js]
 ----
 auth: {
@@ -112,7 +118,8 @@ _Default:_ `false`
 _Default:_ `null`
 
 |`agent`
-a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], or a function that returns an actual http agent instance. +
+a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
+or a function that returns an actual http agent instance. +
 _Default:_ `null`
 [source,js]
 ----
@@ -157,7 +164,8 @@ function nodeSelector (connections) {
 ----
 
 |`generateRequestId`
-a|`function` - function to generate the request id for every request, it takes two parameters, the request parameters and options. +
+a|`function` - function to generate the request id for every request, it takes 
+two parameters, the request parameters and options. +
 By default it generates an incremental integer for every request. +
 _Custom function example:_
 [source,js]
@@ -178,7 +186,9 @@ _Default:_ `elasticsearch-js`
 _Default:_ `{}`
 
 |`cloud`
-a|`object` - Custom configuration for connecting to https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] for more details. +
+a|`object` - Custom configuration for connecting to 
+https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+for more details. +
 _Default:_ `null` + 
 _Cloud configuration example:_ 
 [source,js]
@@ -196,17 +206,23 @@ const client = new Client({
 
 |===
 
+
 === Advanced configuration
-If you need to customize the client behavior heavily, you are in the right place! +
-The client allows you to customize the following internals:
+
+If you need to customize the client behavior heavily, you are in the right 
+place! The client allows you to customize the following internals:
 
 * `Transport` class
 * `ConnectionPool` class
 * `Connection` class
 * `Serializer` class
 
+
 === `Transport`
-This class is responsible to perform the request to Elasticsearch and handling errors, it also handle the sniffing.
+
+This class is responsible for performing the request to {es} and handling 
+errors, it also handles the sniffing.
+
 [source,js]
 ----
 const { Client, Transport } = require('@elastic/elasticsearch')
@@ -222,7 +238,9 @@ const client = new Client({
 })
 ----
 
-Sometimes you just need to inject a little snippet of your code and then continue to use the usual client code, in such case, you should call `super.method`.
+Sometimes you need to inject a small snippet of your code and then continue to 
+use the usual client code. In such cases, call `super.method`:
+
 [source,js]
 ----
 class MyTransport extends Transport {
@@ -233,9 +251,13 @@ class MyTransport extends Transport {
 }
 ----
 
+
 === `ConnectionPool`
-This class is responsible for keeping in memory all the Elasticsearch Connection that we are using, there is a single Connection for every node. +
-Moreover, the connection pool will handle the resurrection strategies and the updates of the pool.
+
+This class is responsible for keeping in memory all the {es} Connection that we 
+are using. There is a single Connection for every node. The connection pool 
+handles the resurrection strategies and the updates of the pool.
+
 [source,js]
 ----
 const { Client, ConnectionPool } = require('@elastic/elasticsearch')
@@ -252,8 +274,14 @@ const client = new Client({
 })
 ----
 
+
 === `Connection`
-This class represents a single Node, it holds every information we have on the node, such as roles, id, URL, custom headers and so on. The actual HTTP request is performed here, this means that if you want to swap the default HTTP client (Node.js core), you should override this class `request` method.
+
+This class represents a single node, it holds every information we have on the 
+node, such as roles, id, URL, custom headers and so on. The actual HTTP request 
+is performed here, this means that if you want to swap the default HTTP client 
+(Node.js core), you should override the `request` method of this class.
+
 [source,js]
 ----
 const { Client, Connection } = require('@elastic/elasticsearch')
@@ -269,13 +297,16 @@ const client = new Client({
 })
 ----
 
-=== `Serializer`
-This class is responsible of the serialization of every request, it offers the following methods:
 
-* `serialize(object: any): string;`, serializes request objects
-* `deserialize(json: string): any;`, deserializes response strings
-* `ndserialize(array: any[]): string;`, serializes bulk request objects
-* `qserialize(object: any): string;`, serializes request query parameters
+=== `Serializer`
+
+This class is responsible for the serialization of every request, it offers the 
+following methods:
+
+* `serialize(object: any): string;` serializes request objects.
+* `deserialize(json: string): any;` deserializes response strings.
+* `ndserialize(array: any[]): string;` serializes bulk request objects.
+* `qserialize(object: any): string;` serializes request query parameters.
 
 [source,js]
 ----
