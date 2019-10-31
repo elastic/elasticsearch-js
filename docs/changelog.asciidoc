@@ -1,6 +1,9 @@
 [[changelog]]
 == Changelog
 
+=== 16.5.0(Oct 31 2019)
+  * apiVersion `"7.4"` is now the default
+
 === 16.4.0(Jul 10 2019)
   * apiVersion `"7.3"` is now the default
 
