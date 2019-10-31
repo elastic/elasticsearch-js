@@ -3694,7 +3694,7 @@ client.indices.flushSynced([params, [callback]])
 
 // no description
 
-Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-flush.html#synced-flush-api[the elasticsearch docs] for more information pertaining to this method.
+Check the *<<api-conventions>>* and https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-synced-flush-api.html[the elasticsearch docs] for more information pertaining to this method.
 
 // no examples
 
@@ -3717,7 +3717,7 @@ Options:::
 `index`::
 <<api-param-type-string,`String`>>, <<api-param-type-string-array,`String[]`>>, <<api-param-type-boolean,`Boolean`>> -- A comma-separated list of index names; use `_all` or empty string for all indices
 `body`::
-<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-flush.html#synced-flush-api[the elasticsearch docs] for details about what can be specified here.
+<<api-param-type-object,`Object`>>, <<api-param-type-json,`JSON`>> -- An optional request body, as either JSON or a JSON serializable object. See https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-synced-flush-api.html[the elasticsearch docs] for details about what can be specified here.
 
 link:#[back to top]
 

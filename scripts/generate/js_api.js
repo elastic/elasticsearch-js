@@ -188,9 +188,20 @@ module.exports = function(branch, done) {
     done();
   }
 
+  var patchBadLinks = {
+    'https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-flush.html#synced-flush-api':
+      'https://www.elastic.co/guide/en/elasticsearch/reference/7.4/indices-synced-flush-api.html',
+  };
+
   function writeMethodDocs(done) {
     var filename = fromRoot('docs/api_methods' + branchSuffix + '.asciidoc');
-    fs.writeFile(filename, templates.apiMethods(docVars), function(err) {
+    var content = templates.apiMethods(docVars);
+
+    for (const [bad, good] of Object.entries(patchBadLinks)) {
+      content = content.split(bad).join(good);
+    }
+
+    fs.writeFile(filename, content, function(err) {
       if (!err) {
         console.log(
           chalk.white.bold('wrote'),
