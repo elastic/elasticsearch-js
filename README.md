@@ -1,4 +1,4 @@
-# elasticsearch.js 16.4.0
+# elasticsearch.js 16.5.0
 
 ---
 
