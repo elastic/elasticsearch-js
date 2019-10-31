@@ -222,6 +222,8 @@ function convertToCommit(branch) {
       return branch;
     case '7.4':
       return 'c31cddf27e9618582b3cd175e4e0bce320af6a14^1';
+    case '7.5':
+      return 'c31cddf27e9618582b3cd175e4e0bce320af6a14^1';
     case '7.x':
       return 'c31cddf27e9618582b3cd175e4e0bce320af6a14^1';
     case 'master':

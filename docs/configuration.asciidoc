@@ -52,26 +52,27 @@ Default in Node:::
 +
 WARNING: This default will track the latest version of Elasticsearch, and is only intended to be used during development. It is highly recommended that you set this parameter in all code that is headed to production.
 
-Default ::: `'7.3'`
+Default ::: `'7.4'`
 
 Options in node :::
+  * `'7.4'`
   * `'7.3'`
   * `'7.2'`
   * `'7.1'`
   * `'7.0'`
   * `'6.8'`
   * `'5.6'`
-  * `'7.4'` (unstable)
+  * `'7.5'` (unstable)
   * `'7.x'` (unstable)
   * `'master'` (unstable)
 
 Options in the browser :::
+  * `'7.4'`
   * `'7.3'`
   * `'7.2'`
   * `'7.1'`
   * `'7.0'`
-  * `'6.8'`
-  * `'7.4'` (unstable)
+  * `'7.5'` (unstable)
   * `'7.x'` (unstable)
   * `'master'` (unstable)
 
