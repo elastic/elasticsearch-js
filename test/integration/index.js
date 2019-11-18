@@ -148,6 +148,8 @@ class Runner {
 
           t.test(
             file.slice(file.lastIndexOf(apiName)),
+            // max 3 mins per file
+            { bail: true, timeout: 1000 * 60 * 3 },
             testFile(file, tests)
           )
         }
