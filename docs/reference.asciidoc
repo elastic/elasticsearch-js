@@ -1,12 +1,18 @@
 [[api-reference]]
 == API Reference
 
-This document contains the entire list of the Elasticsearch API supported by the client, both OSS and commercial. The client is entirely licensed under Apache 2.0.
+This document contains the entire list of the {es} API supported by the client, 
+both OSS and commercial. The client is entirely licensed under Apache 2.0.
 
-Elasticsearch exposes an HTTP layer to communicate with, and the client is a library that will help you do this. Because of this reason, you will see HTTP related parameters, such as `body` or `headers`.
+{es} exposes an HTTP layer to communicate with, and the client is a library that 
+helps you do this. Because of this reason, you will see HTTP related parameters, 
+such as `body` or `headers`.
 
-Every API can accept two objects, the first contains all the parameters that will be sent to Elasticsearch, while the second includes the request specific parameters, such as timeouts, headers, and so on.
-In the first object, every parameter but the body will be sent via querystring or url parameter, depending on the API, and every unrecognized parameter will be sent as querystring.
+Every API can accept two objects, the first contains all the parameters that 
+will be sent to {es}, while the second includes the request specific parameters, 
+such as timeouts, headers, and so on. In the first object, every parameter but 
+the body will be sent via querystring or url parameter, depending on the API, 
+and every unrecognized parameter will be sent as querystring.
 
 [source,js]
 ----
@@ -35,7 +41,10 @@ client.search({
 })
 ----
 
-In this document, you will find the reference of every parameter accepted by the querystring or the url. If you also need to send the body, you can find the documentation of its format in the reference link that is present along with every endpoint.
+In this document, you will find the reference of every parameter accepted by the 
+querystring or the url. If you also need to send the body, you can find the 
+documentation of its format in the reference link that is present along with 
+every endpoint.
 
 ////////
 
