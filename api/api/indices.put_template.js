@@ -12,7 +12,6 @@ function buildIndicesPutTemplate (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'order',
     'create',
     'timeout',
@@ -26,7 +25,6 @@ function buildIndicesPutTemplate (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
     flatSettings: 'flat_settings',
     errorTrace: 'error_trace',

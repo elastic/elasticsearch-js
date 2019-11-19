@@ -390,6 +390,8 @@ declare class Client extends EventEmitter {
     deleteJob: ApiMethod<RequestParams.MlDeleteJob>
     delete_model_snapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
     deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
+    delete_trained_model: ApiMethod<RequestParams.MlDeleteTrainedModel>
+    deleteTrainedModel: ApiMethod<RequestParams.MlDeleteTrainedModel>
     estimate_memory_usage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
     estimateMemoryUsage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
     evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
@@ -429,6 +431,10 @@ declare class Client extends EventEmitter {
     getOverallBuckets: ApiMethod<RequestParams.MlGetOverallBuckets>
     get_records: ApiMethod<RequestParams.MlGetRecords>
     getRecords: ApiMethod<RequestParams.MlGetRecords>
+    get_trained_models: ApiMethod<RequestParams.MlGetTrainedModels>
+    getTrainedModels: ApiMethod<RequestParams.MlGetTrainedModels>
+    get_trained_models_stats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
+    getTrainedModelsStats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
     info: ApiMethod<RequestParams.MlInfo>
     open_job: ApiMethod<RequestParams.MlOpenJob>
     openJob: ApiMethod<RequestParams.MlOpenJob>

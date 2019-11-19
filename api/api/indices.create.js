@@ -12,7 +12,6 @@ function buildIndicesCreate (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'wait_for_active_shards',
     'timeout',
     'master_timeout',
@@ -24,7 +23,6 @@ function buildIndicesCreate (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     waitForActiveShards: 'wait_for_active_shards',
     masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
