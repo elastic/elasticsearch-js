@@ -7,38 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesGetFieldMapping (opts) {
+function buildMlDeleteTrainedModel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_defaults',
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'local',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    includeDefaults: 'include_defaults',
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a indices.get_field_mapping request
-   * Returns mapping for one or more fields.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+   * Perform a ml.delete_trained_model request
+   * TODO
    */
-  return function indicesGetFieldMapping (params, options, callback) {
+  return function mlDeleteTrainedModel (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -51,8 +36,8 @@ function buildIndicesGetFieldMapping (opts) {
     }
 
     // check required parameters
-    if (params['fields'] == null) {
-      const err = new ConfigurationError('Missing required parameter: fields')
+    if (params['model_id'] == null && params['modelId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: model_id or modelId')
       return handleError(err, callback)
     }
 
@@ -63,7 +48,7 @@ function buildIndicesGetFieldMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, fields, index, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -73,19 +58,14 @@ function buildIndicesGetFieldMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (fields) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
-    }
+    if (method == null) method = 'DELETE'
+    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -94,4 +74,4 @@ function buildIndicesGetFieldMapping (opts) {
   }
 }
 
-module.exports = buildIndicesGetFieldMapping
+module.exports = buildMlDeleteTrainedModel

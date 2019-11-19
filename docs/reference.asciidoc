@@ -2296,7 +2296,6 @@ _Default:_ `open`
 ----
 client.indices.create({
   index: string,
-  include_type_name: boolean,
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
@@ -2308,9 +2307,6 @@ link:{ref}/indices-create-index.html[Reference]
 |===
 |`index`
 |`string` - The name of the index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for before the operation returns.
@@ -2671,7 +2667,6 @@ _Default:_ `open`
 ----
 client.indices.get({
   index: string | string[],
-  include_type_name: boolean,
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -2686,9 +2681,6 @@ link:{ref}/indices-get-index.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether to add the type name to the response (default: false)
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2758,7 +2750,6 @@ _Default:_ `all`
 client.indices.getFieldMapping({
   fields: string | string[],
   index: string | string[],
-  include_type_name: boolean,
   include_defaults: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -2774,9 +2765,6 @@ link:{ref}/indices-get-field-mapping.html[Reference]
 
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether the default mapping values should be returned as well
@@ -2888,7 +2876,6 @@ _Default:_ `open,closed`
 ----
 client.indices.getTemplate({
   name: string | string[],
-  include_type_name: boolean,
   flat_settings: boolean,
   master_timeout: string,
   local: boolean
@@ -2899,9 +2886,6 @@ link:{ref}/indices-templates.html[Reference]
 |===
 |`name`
 |`string \| string[]` - The comma separated names of the index templates
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -3112,7 +3096,6 @@ _Default:_ `open`
 ----
 client.indices.putTemplate({
   name: string,
-  include_type_name: boolean,
   order: number,
   create: boolean,
   timeout: string,
@@ -3126,9 +3109,6 @@ link:{ref}/indices-templates.html[Reference]
 |===
 |`name`
 |`string` - The name of the template
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`order`
 |`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -3210,7 +3190,6 @@ _Default:_ `open`
 client.indices.rollover({
   alias: string,
   new_index: string,
-  include_type_name: boolean,
   timeout: string,
   dry_run: boolean,
   master_timeout: string,
@@ -3226,9 +3205,6 @@ link:{ref}/indices-rollover-index.html[Reference]
 
 |`new_index` or `newIndex`
 |`string` - The name of the rollover index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be included in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -6425,6 +6401,22 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
+=== ml.deleteTrainedModel
+*Stability:* experimental
+[source,ts]
+----
+client.ml.deleteTrainedModel({
+  model_id: string
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained model to delete
+
+|===
+
 === ml.estimateMemoryUsage
 *Stability:* experimental
 [source,ts]
@@ -7109,6 +7101,70 @@ link:{ref}/ml-get-record.html[Reference]
 
 |`body`
 |`object` - Record selection criteria
+
+|===
+
+=== ml.getTrainedModels
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  include_model_definition: boolean,
+  from: number,
+  size: number
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`include_model_definition` or `includeModelDefinition`
+|`boolean` - Should the full model definition be included in the results. These definitions can be large
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|===
+
+=== ml.getTrainedModelsStats
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModelsStats({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
 
 |===
 

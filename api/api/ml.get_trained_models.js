@@ -7,38 +7,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesGetFieldMapping (opts) {
+function buildMlGetTrainedModels (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_defaults',
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'local',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'allow_no_match',
+    'include_model_definition',
+    'from',
+    'size'
   ]
 
   const snakeCase = {
-    includeDefaults: 'include_defaults',
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    allowNoMatch: 'allow_no_match',
+    includeModelDefinition: 'include_model_definition'
+
   }
 
   /**
-   * Perform a indices.get_field_mapping request
-   * Returns mapping for one or more fields.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+   * Perform a ml.get_trained_models request
+   * TODO
    */
-  return function indicesGetFieldMapping (params, options, callback) {
+  return function mlGetTrainedModels (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -50,12 +40,6 @@ function buildIndicesGetFieldMapping (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['fields'] == null) {
-      const err = new ConfigurationError('Missing required parameter: fields')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -63,7 +47,7 @@ function buildIndicesGetFieldMapping (opts) {
     }
 
     var warnings = []
-    var { method, body, fields, index, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -73,12 +57,12 @@ function buildIndicesGetFieldMapping (opts) {
 
     var path = ''
 
-    if ((index) != null && (fields) != null) {
+    if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
+      path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
+      path = '/' + '_ml' + '/' + 'inference'
     }
 
     // build request object
@@ -94,4 +78,4 @@ function buildIndicesGetFieldMapping (opts) {
   }
 }
 
-module.exports = buildIndicesGetFieldMapping
+module.exports = buildMlGetTrainedModels
