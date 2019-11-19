@@ -12,11 +12,14 @@ const tap = require('tap')
 const { Client } = require('../../index')
 const TestRunner = require('./test-runner')
 const { sleep } = require('./helper')
+const ms = require('ms')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+
+const TIME_LIMIT = 1000 * 60
 
 const ossSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
@@ -95,6 +98,7 @@ class Runner {
   async start ({ isXPack }) {
     const { client } = this
     const parse = this.parse.bind(this)
+    const tooMuchTime = []
 
     console.log('Waiting for Elasticsearch')
     await this.waitCluster(client)
@@ -127,6 +131,17 @@ class Runner {
         return arr
       }, [])
 
+    tap.on('end', () => {
+      if (tooMuchTime.length > 0) {
+        console.log(`Test files that took more than ${ms(TIME_LIMIT)} to execute:`)
+        for (const test of tooMuchTime) {
+          console.log(test.file.slice(test.file.indexOf(`${sep}rest-api-spec${sep}test`) + 19) + ' - ' + ms(test.time))
+        }
+      } else {
+        console.log(`There were no test files that took more than ${ms(TIME_LIMIT)} to execute`)
+      }
+    })
+
     for (const folder of folders) {
       // pretty name
       const apiName = folder[0].slice(
@@ -148,8 +163,6 @@ class Runner {
 
           t.test(
             file.slice(file.lastIndexOf(apiName)),
-            // max 3 mins per file
-            { bail: true, timeout: 1000 * 60 * 3 },
             testFile(file, tests)
           )
         }
@@ -159,6 +172,13 @@ class Runner {
 
     function testFile (file, tests) {
       return t => {
+        var startTime = Date.now()
+        t.teardown(() => {
+          const time = Date.now() - startTime
+          if (time > TIME_LIMIT) {
+            tooMuchTime.push({ file, time })
+          }
+        })
         // get setup and teardown if present
         var setupTest = null
         var teardownTest = null
