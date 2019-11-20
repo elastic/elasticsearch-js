@@ -19,7 +19,7 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 
-const TIME_LIMIT = 1000 * 60
+const TIME_LIMIT = 1000 * 30
 
 const ossSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
