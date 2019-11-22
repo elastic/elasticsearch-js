@@ -6417,22 +6417,6 @@ link:TODO[Reference]
 
 |===
 
-=== ml.estimateMemoryUsage
-*Stability:* experimental
-[source,ts]
-----
-client.ml.estimateMemoryUsage({
-  body: object
-})
-----
-link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
-[cols=2*]
-|===
-|`body`
-|`object` - Memory usage estimation definition
-
-|===
-
 === ml.evaluateDataFrame
 *Stability:* experimental
 [source,ts]
