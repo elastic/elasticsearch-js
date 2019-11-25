@@ -1610,12 +1610,13 @@ export interface MlDeleteTrainedModel extends Generic {
   model_id: string;
 }
 
-export interface MlEstimateMemoryUsage<T = any> extends Generic {
+export interface MlEvaluateDataFrame<T = any> extends Generic {
   body: T;
 }
 
-export interface MlEvaluateDataFrame<T = any> extends Generic {
-  body: T;
+export interface MlExplainDataFrameAnalytics<T = any> extends Generic {
+  id?: string;
+  body?: T;
 }
 
 export interface MlFindFileStructure<T = any> extends Generic {
