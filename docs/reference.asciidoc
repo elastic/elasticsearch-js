@@ -6433,6 +6433,26 @@ link:{ref}/evaluate-dfanalytics.html[Reference]
 
 |===
 
+=== ml.explainDataFrameAnalytics
+*Stability:* experimental
+[source,ts]
+----
+client.ml.explainDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/explain-dfanalytics.html[Reference]
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to explain
+
+|`body`
+|`object` - The data frame analytics config to explain
+
+|===
+
 === ml.findFileStructure
 *Stability:* experimental
 [source,ts]

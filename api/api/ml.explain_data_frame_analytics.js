@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlEstimateMemoryUsage (opts) {
+function buildMlExplainDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 
   /**
-   * Perform a ml.estimate_memory_usage request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
+   * Perform a ml.explain_data_frame_analytics request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
    */
-  return function mlEstimateMemoryUsage (params, options, callback) {
+  return function mlExplainDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +35,6 @@ function buildMlEstimateMemoryUsage (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -48,7 +42,7 @@ function buildMlEstimateMemoryUsage (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,8 +52,13 @@ function buildMlEstimateMemoryUsage (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
+    if ((id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_explain'
+    } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_explain'
+    }
 
     // build request object
     const request = {
@@ -74,4 +73,4 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 }
 
-module.exports = buildMlEstimateMemoryUsage
+module.exports = buildMlExplainDataFrameAnalytics

@@ -392,10 +392,10 @@ declare class Client extends EventEmitter {
     deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
     delete_trained_model: ApiMethod<RequestParams.MlDeleteTrainedModel>
     deleteTrainedModel: ApiMethod<RequestParams.MlDeleteTrainedModel>
-    estimate_memory_usage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
-    estimateMemoryUsage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
     evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     evaluateDataFrame: ApiMethod<RequestParams.MlEvaluateDataFrame>
+    explain_data_frame_analytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
+    explainDataFrameAnalytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
     find_file_structure: ApiMethod<RequestParams.MlFindFileStructure>
     findFileStructure: ApiMethod<RequestParams.MlFindFileStructure>
     flush_job: ApiMethod<RequestParams.MlFlushJob>
