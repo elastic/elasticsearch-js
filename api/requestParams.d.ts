@@ -579,7 +579,6 @@ export interface IndicesClose extends Generic {
 
 export interface IndicesCreate<T = any> extends Generic {
   index: string;
-  include_type_name?: boolean;
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
@@ -671,7 +670,6 @@ export interface IndicesForcemerge extends Generic {
 
 export interface IndicesGet extends Generic {
   index: string | string[];
-  include_type_name?: boolean;
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -693,7 +691,6 @@ export interface IndicesGetAlias extends Generic {
 export interface IndicesGetFieldMapping extends Generic {
   fields: string | string[];
   index?: string | string[];
-  include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -724,7 +721,6 @@ export interface IndicesGetSettings extends Generic {
 
 export interface IndicesGetTemplate extends Generic {
   name?: string | string[];
-  include_type_name?: boolean;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -779,7 +775,6 @@ export interface IndicesPutSettings<T = any> extends Generic {
 
 export interface IndicesPutTemplate<T = any> extends Generic {
   name: string;
-  include_type_name?: boolean;
   order?: number;
   create?: boolean;
   timeout?: string;
@@ -804,7 +799,6 @@ export interface IndicesRefresh extends Generic {
 export interface IndicesRollover<T = any> extends Generic {
   alias: string;
   new_index?: string;
-  include_type_name?: boolean;
   timeout?: string;
   dry_run?: boolean;
   master_timeout?: string;
@@ -1612,6 +1606,10 @@ export interface MlDeleteModelSnapshot extends Generic {
   snapshot_id: string;
 }
 
+export interface MlDeleteTrainedModel extends Generic {
+  model_id: string;
+}
+
 export interface MlEstimateMemoryUsage<T = any> extends Generic {
   body: T;
 }
@@ -1781,6 +1779,21 @@ export interface MlGetRecords<T = any> extends Generic {
   sort?: string;
   desc?: boolean;
   body?: T;
+}
+
+export interface MlGetTrainedModels extends Generic {
+  model_id?: string;
+  allow_no_match?: boolean;
+  include_model_definition?: boolean;
+  from?: number;
+  size?: number;
+}
+
+export interface MlGetTrainedModelsStats extends Generic {
+  model_id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
 }
 
 export interface MlInfo extends Generic {

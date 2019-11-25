@@ -12,7 +12,6 @@ function buildIndicesGetTemplate (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'flat_settings',
     'master_timeout',
     'local',
@@ -24,7 +23,6 @@ function buildIndicesGetTemplate (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     flatSettings: 'flat_settings',
     masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
