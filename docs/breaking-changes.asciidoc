@@ -83,7 +83,7 @@ specific errors (such as `BadRequest` or `NotFound`).
 error, such as `statusCode`, `headers`, `body`, and `message`.
 
 
-* REnamed errors:
+* Renamed errors:
 
 ** `RequestTimeout` (408 statusCode) => `TimeoutError`
 ** `ConnectionFault` => `ConnectionError`
