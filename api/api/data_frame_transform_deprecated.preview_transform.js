@@ -7,12 +7,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameStartDataFrameTransform (opts) {
+function buildDataFrameTransformDeprecatedPreviewTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'timeout'
+
   ]
 
   const snakeCase = {
@@ -20,10 +20,10 @@ function buildDataFrameStartDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.start_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
+   * Perform a data_frame_transform_deprecated.preview_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
-  return function dataFrameStartDataFrameTransform (params, options, callback) {
+  return function dataFrameTransformDeprecatedPreviewTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -36,8 +36,8 @@ function buildDataFrameStartDataFrameTransform (opts) {
     }
 
     // check required parameters
-    if (params['transform_id'] == null && params['transformId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -48,7 +48,7 @@ function buildDataFrameStartDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -57,9 +57,6 @@ function buildDataFrameStartDataFrameTransform (opts) {
     }
 
     var path = ''
-
-    if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
 
     // build request object
     const request = {
@@ -74,4 +71,4 @@ function buildDataFrameStartDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameStartDataFrameTransform
+module.exports = buildDataFrameTransformDeprecatedPreviewTransform

@@ -20,6 +20,7 @@ function buildCatTasks (opts) {
     'h',
     'help',
     's',
+    'time',
     'v',
     'pretty',
     'human',

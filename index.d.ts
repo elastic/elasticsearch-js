@@ -151,10 +151,14 @@ declare class Client extends EventEmitter {
     forgetFollower: ApiMethod<RequestParams.CcrForgetFollower>
     get_auto_follow_pattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
     getAutoFollowPattern: ApiMethod<RequestParams.CcrGetAutoFollowPattern>
+    pause_auto_follow_pattern: ApiMethod<RequestParams.CcrPauseAutoFollowPattern>
+    pauseAutoFollowPattern: ApiMethod<RequestParams.CcrPauseAutoFollowPattern>
     pause_follow: ApiMethod<RequestParams.CcrPauseFollow>
     pauseFollow: ApiMethod<RequestParams.CcrPauseFollow>
     put_auto_follow_pattern: ApiMethod<RequestParams.CcrPutAutoFollowPattern>
     putAutoFollowPattern: ApiMethod<RequestParams.CcrPutAutoFollowPattern>
+    resume_auto_follow_pattern: ApiMethod<RequestParams.CcrResumeAutoFollowPattern>
+    resumeAutoFollowPattern: ApiMethod<RequestParams.CcrResumeAutoFollowPattern>
     resume_follow: ApiMethod<RequestParams.CcrResumeFollow>
     resumeFollow: ApiMethod<RequestParams.CcrResumeFollow>
     stats: ApiMethod<RequestParams.CcrStats>
@@ -180,41 +184,41 @@ declare class Client extends EventEmitter {
   }
   count: ApiMethod<RequestParams.Count>
   create: ApiMethod<RequestParams.Create>
-  data_frame: {
-    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
-    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
-    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
-    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
-    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
-    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
-    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
-    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
-    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
-    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
-    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
-    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
-    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
-    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
-    update_data_frame_transform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
-    updateDataFrameTransform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
+  data_frame_transform_deprecated: {
+    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
   }
-  dataFrame: {
-    delete_data_frame_transform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
-    deleteDataFrameTransform: ApiMethod<RequestParams.DataFrameDeleteDataFrameTransform>
-    get_data_frame_transform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
-    getDataFrameTransform: ApiMethod<RequestParams.DataFrameGetDataFrameTransform>
-    get_data_frame_transform_stats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
-    getDataFrameTransformStats: ApiMethod<RequestParams.DataFrameGetDataFrameTransformStats>
-    preview_data_frame_transform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
-    previewDataFrameTransform: ApiMethod<RequestParams.DataFramePreviewDataFrameTransform>
-    put_data_frame_transform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
-    putDataFrameTransform: ApiMethod<RequestParams.DataFramePutDataFrameTransform>
-    start_data_frame_transform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
-    startDataFrameTransform: ApiMethod<RequestParams.DataFrameStartDataFrameTransform>
-    stop_data_frame_transform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
-    stopDataFrameTransform: ApiMethod<RequestParams.DataFrameStopDataFrameTransform>
-    update_data_frame_transform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
-    updateDataFrameTransform: ApiMethod<RequestParams.DataFrameUpdateDataFrameTransform>
+  dataFrameTransformDeprecated: {
+    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
+    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
+    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
+    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
+    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
+    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
+    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
+    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
+    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
   }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
@@ -223,6 +227,17 @@ declare class Client extends EventEmitter {
   deleteByQueryRethrottle: ApiMethod<RequestParams.DeleteByQueryRethrottle>
   delete_script: ApiMethod<RequestParams.DeleteScript>
   deleteScript: ApiMethod<RequestParams.DeleteScript>
+  enrich: {
+    delete_policy: ApiMethod<RequestParams.EnrichDeletePolicy>
+    deletePolicy: ApiMethod<RequestParams.EnrichDeletePolicy>
+    execute_policy: ApiMethod<RequestParams.EnrichExecutePolicy>
+    executePolicy: ApiMethod<RequestParams.EnrichExecutePolicy>
+    get_policy: ApiMethod<RequestParams.EnrichGetPolicy>
+    getPolicy: ApiMethod<RequestParams.EnrichGetPolicy>
+    put_policy: ApiMethod<RequestParams.EnrichPutPolicy>
+    putPolicy: ApiMethod<RequestParams.EnrichPutPolicy>
+    stats: ApiMethod<RequestParams.EnrichStats>
+  }
   exists: ApiMethod<RequestParams.Exists>
   exists_source: ApiMethod<RequestParams.ExistsSource>
   existsSource: ApiMethod<RequestParams.ExistsSource>
@@ -567,8 +582,12 @@ declare class Client extends EventEmitter {
     deleteLifecycle: ApiMethod<RequestParams.SlmDeleteLifecycle>
     execute_lifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
     executeLifecycle: ApiMethod<RequestParams.SlmExecuteLifecycle>
+    execute_retention: ApiMethod<RequestParams.SlmExecuteRetention>
+    executeRetention: ApiMethod<RequestParams.SlmExecuteRetention>
     get_lifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
     getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
+    get_stats: ApiMethod<RequestParams.SlmGetStats>
+    getStats: ApiMethod<RequestParams.SlmGetStats>
     put_lifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
     putLifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
   }
@@ -604,6 +623,24 @@ declare class Client extends EventEmitter {
     list: ApiMethod<RequestParams.TasksList>
   }
   termvectors: ApiMethod<RequestParams.Termvectors>
+  transform: {
+    delete_transform: ApiMethod<RequestParams.TransformDeleteTransform>
+    deleteTransform: ApiMethod<RequestParams.TransformDeleteTransform>
+    get_transform: ApiMethod<RequestParams.TransformGetTransform>
+    getTransform: ApiMethod<RequestParams.TransformGetTransform>
+    get_transform_stats: ApiMethod<RequestParams.TransformGetTransformStats>
+    getTransformStats: ApiMethod<RequestParams.TransformGetTransformStats>
+    preview_transform: ApiMethod<RequestParams.TransformPreviewTransform>
+    previewTransform: ApiMethod<RequestParams.TransformPreviewTransform>
+    put_transform: ApiMethod<RequestParams.TransformPutTransform>
+    putTransform: ApiMethod<RequestParams.TransformPutTransform>
+    start_transform: ApiMethod<RequestParams.TransformStartTransform>
+    startTransform: ApiMethod<RequestParams.TransformStartTransform>
+    stop_transform: ApiMethod<RequestParams.TransformStopTransform>
+    stopTransform: ApiMethod<RequestParams.TransformStopTransform>
+    update_transform: ApiMethod<RequestParams.TransformUpdateTransform>
+    updateTransform: ApiMethod<RequestParams.TransformUpdateTransform>
+  }
   update: ApiMethod<RequestParams.Update>
   update_by_query: ApiMethod<RequestParams.UpdateByQuery>
   updateByQuery: ApiMethod<RequestParams.UpdateByQuery>

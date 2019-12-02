@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameUpdateDataFrameTransform (opts) {
+function buildTransformPutTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.update_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
+   * Perform a transform.put_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
    */
-  return function dataFrameUpdateDataFrameTransform (params, options, callback) {
+  return function transformPutTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -62,8 +62,8 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update'
+    if (method == null) method = 'PUT'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
@@ -78,4 +78,4 @@ function buildDataFrameUpdateDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameUpdateDataFrameTransform
+module.exports = buildTransformPutTransform

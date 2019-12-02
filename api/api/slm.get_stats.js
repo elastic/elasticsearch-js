@@ -7,23 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFramePutDataFrameTransform (opts) {
+function buildSlmGetStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'defer_validation'
+
   ]
 
   const snakeCase = {
-    deferValidation: 'defer_validation'
+
   }
 
   /**
-   * Perform a data_frame.put_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
+   * Perform a slm.get_stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-get-stats.html
    */
-  return function dataFramePutDataFrameTransform (params, options, callback) {
+  return function slmGetStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,16 +35,6 @@ function buildDataFramePutDataFrameTransform (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['transform_id'] == null && params['transformId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -52,7 +42,7 @@ function buildDataFramePutDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -62,14 +52,14 @@ function buildDataFramePutDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'PUT'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    if (method == null) method = 'GET'
+    path = '/' + '_slm' + '/' + 'stats'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -78,4 +68,4 @@ function buildDataFramePutDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFramePutDataFrameTransform
+module.exports = buildSlmGetStats

@@ -7,23 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFramePreviewDataFrameTransform (opts) {
+function buildDataFrameTransformDeprecatedUpdateTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'defer_validation'
   ]
 
   const snakeCase = {
-
+    deferValidation: 'defer_validation'
   }
 
   /**
-   * Perform a data_frame.preview_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
+   * Perform a data_frame_transform_deprecated.update_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
    */
-  return function dataFramePreviewDataFrameTransform (params, options, callback) {
+  return function dataFrameTransformDeprecatedUpdateTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -36,6 +36,10 @@ function buildDataFramePreviewDataFrameTransform (opts) {
     }
 
     // check required parameters
+    if (params['transform_id'] == null && params['transformId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
+      return handleError(err, callback)
+    }
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
@@ -48,7 +52,7 @@ function buildDataFramePreviewDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -59,7 +63,7 @@ function buildDataFramePreviewDataFrameTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + '_preview'
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update'
 
     // build request object
     const request = {
@@ -74,4 +78,4 @@ function buildDataFramePreviewDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFramePreviewDataFrameTransform
+module.exports = buildDataFrameTransformDeprecatedUpdateTransform

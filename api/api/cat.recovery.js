@@ -13,11 +13,14 @@ function buildCatRecovery (opts) {
 
   const acceptedQuerystring = [
     'format',
+    'active_only',
     'bytes',
-    'master_timeout',
+    'detailed',
     'h',
     'help',
+    'index',
     's',
+    'time',
     'v',
     'pretty',
     'human',
@@ -27,7 +30,7 @@ function buildCatRecovery (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
+    activeOnly: 'active_only',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
