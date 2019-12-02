@@ -60,7 +60,7 @@
     "tap": "^14.4.1",
     "tap-mocha-reporter": "^4.0.1",
     "typescript": "^3.4.5",
-    "workq": "^2.1.0"
+    "workq": "^3.0.0"
   },
   "dependencies": {
     "debug": "^4.1.1",
