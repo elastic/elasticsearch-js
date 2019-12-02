@@ -94,6 +94,7 @@ interface ClientOptions {
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
   headers?: anyObject;
+  opaqueIdPrefix?: string;
   generateRequestId?: generateRequestIdFn;
   name?: string;
   auth?: BasicAuth | ApiKeyAuth;

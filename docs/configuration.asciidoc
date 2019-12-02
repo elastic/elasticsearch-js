@@ -181,6 +181,11 @@ function generateRequestId (params, options) {
 |`string` - The name to identify the client instance in the events. +
 _Default:_ `elasticsearch-js`
 
+|`opaqueIdPrefix`
+|`string` - A string that will be use to prefix any `X-Opaque-Id` header. +
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html#_x-opaque-id_support[`X-Opaque-Id` support] for more details. +
+_Default:_ `null`
+
 |`headers`
 |`object` - A set of custom headers to send in every request. +
 _Default:_ `{}`
