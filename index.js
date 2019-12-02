@@ -79,7 +79,8 @@ class Client extends EventEmitter {
       nodeSelector: 'round-robin',
       generateRequestId: null,
       name: 'elasticsearch-js',
-      auth: null
+      auth: null,
+      opaqueIdPrefix: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -121,7 +122,8 @@ class Client extends EventEmitter {
       nodeFilter: options.nodeFilter,
       nodeSelector: options.nodeSelector,
       generateRequestId: options.generateRequestId,
-      name: options.name
+      name: options.name,
+      opaqueIdPrefix: options.opaqueIdPrefix
     })
 
     const apis = buildApi({
