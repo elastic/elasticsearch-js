@@ -185,42 +185,6 @@ declare class Client extends EventEmitter {
   }
   count: ApiMethod<RequestParams.Count>
   create: ApiMethod<RequestParams.Create>
-  data_frame_transform_deprecated: {
-    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
-    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
-    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
-    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
-    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
-    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
-    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
-    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
-    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
-    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
-    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
-    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
-    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
-    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
-    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
-    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
-  }
-  dataFrameTransformDeprecated: {
-    delete_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
-    deleteTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedDeleteTransform>
-    get_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
-    getTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransform>
-    get_transform_stats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
-    getTransformStats: ApiMethod<RequestParams.DataFrameTransformDeprecatedGetTransformStats>
-    preview_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
-    previewTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPreviewTransform>
-    put_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
-    putTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedPutTransform>
-    start_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
-    startTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStartTransform>
-    stop_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
-    stopTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedStopTransform>
-    update_transform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
-    updateTransform: ApiMethod<RequestParams.DataFrameTransformDeprecatedUpdateTransform>
-  }
   delete: ApiMethod<RequestParams.Delete>
   delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
   deleteByQuery: ApiMethod<RequestParams.DeleteByQuery>
