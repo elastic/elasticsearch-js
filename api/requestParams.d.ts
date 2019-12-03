@@ -369,7 +369,7 @@ export interface Delete extends Generic {
   if_seq_no?: number;
   if_primary_term?: number;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface DeleteByQuery<T = any> extends Generic {
@@ -436,7 +436,7 @@ export interface Exists extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface ExistsSource extends Generic {
@@ -453,7 +453,7 @@ export interface ExistsSource extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface Explain<T = any> extends Generic {
@@ -499,7 +499,7 @@ export interface Get extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface GetScript extends Generic {
@@ -523,7 +523,7 @@ export interface GetSource extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface Index<T = any> extends Generic {
@@ -968,7 +968,7 @@ export interface Mtermvectors<T = any> extends Generic {
   routing?: string;
   realtime?: boolean;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   body?: T;
 }
 
@@ -1250,7 +1250,7 @@ export interface Termvectors<T = any> extends Generic {
   routing?: string;
   realtime?: boolean;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   body?: T;
 }
 
