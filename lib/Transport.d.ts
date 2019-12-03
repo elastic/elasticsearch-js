@@ -38,6 +38,7 @@ interface TransportOptions {
   headers?: anyObject;
   generateRequestId?: generateRequestIdFn;
   name: string;
+  opaqueIdPrefix?: string;
 }
 
 export interface RequestEvent<T = any, C = any> {
@@ -90,6 +91,7 @@ export interface TransportRequestOptions {
   id?: any;
   context?: any;
   warnings?: [string];
+  opaqueId?: string;
 }
 
 export interface TransportRequestCallback {
@@ -121,6 +123,7 @@ export default class Transport {
   compression: 'gzip' | false;
   sniffInterval: number;
   sniffOnConnectionFault: boolean;
+  opaqueIdPrefix: string | null;
   sniffEndpoint: string;
   _sniffEnabled: boolean;
   _nextSniff: number;
