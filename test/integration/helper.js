@@ -30,6 +30,8 @@ const esDefaultRoles = [
   'rollup_user',
   'snapshot_user',
   'superuser',
+  'transform_admin',
+  'transform_user',
   'transport_client',
   'watcher_admin',
   'watcher_user'
