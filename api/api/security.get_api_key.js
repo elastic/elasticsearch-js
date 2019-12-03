@@ -15,11 +15,13 @@ function buildSecurityGetApiKey (opts) {
     'id',
     'name',
     'username',
-    'realm_name'
+    'realm_name',
+    'owner'
   ]
 
   const snakeCase = {
     realmName: 'realm_name'
+
   }
 
   /**

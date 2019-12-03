@@ -14,8 +14,6 @@ function buildCatFielddata (opts) {
   const acceptedQuerystring = [
     'format',
     'bytes',
-    'local',
-    'master_timeout',
     'h',
     'help',
     's',
@@ -29,7 +27,6 @@ function buildCatFielddata (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

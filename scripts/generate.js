@@ -48,6 +48,7 @@ function start (opts) {
 
     const apiFolderContents = readdirSync(apiFolder)
     const xPackFolderContents = readdirSync(xPackFolder)
+      .filter(file => !file.startsWith('data_frame_transform_deprecated'))
 
     apiFolderContents.forEach(generateApiFile(apiFolder, log))
     xPackFolderContents.forEach(generateApiFile(xPackFolder, log))

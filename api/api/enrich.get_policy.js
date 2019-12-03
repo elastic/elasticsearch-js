@@ -7,12 +7,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameStartDataFrameTransform (opts) {
+function buildEnrichGetPolicy (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'timeout'
+
   ]
 
   const snakeCase = {
@@ -20,10 +20,9 @@ function buildDataFrameStartDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.start_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
+   * Perform a enrich.get_policy request
    */
-  return function dataFrameStartDataFrameTransform (params, options, callback) {
+  return function enrichGetPolicy (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +34,6 @@ function buildDataFrameStartDataFrameTransform (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['transform_id'] == null && params['transformId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -48,7 +41,7 @@ function buildDataFrameStartDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,14 +51,19 @@ function buildDataFrameStartDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
+    if ((name) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_enrich' + '/' + 'policy'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -74,4 +72,4 @@ function buildDataFrameStartDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameStartDataFrameTransform
+module.exports = buildEnrichGetPolicy

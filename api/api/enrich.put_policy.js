@@ -7,12 +7,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameDeleteDataFrameTransform (opts) {
+function buildEnrichPutPolicy (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'force'
+
   ]
 
   const snakeCase = {
@@ -20,10 +20,9 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
   }
 
   /**
-   * Perform a data_frame.delete_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
+   * Perform a enrich.put_policy request
    */
-  return function dataFrameDeleteDataFrameTransform (params, options, callback) {
+  return function enrichPutPolicy (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -36,8 +35,12 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
     }
 
     // check required parameters
-    if (params['transform_id'] == null && params['transformId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -48,7 +51,7 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
     }
 
     var warnings = []
-    var { method, body, transformId, transform_id, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,8 +61,8 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    if (method == null) method = 'PUT'
+    path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
@@ -74,4 +77,4 @@ function buildDataFrameDeleteDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameDeleteDataFrameTransform
+module.exports = buildEnrichPutPolicy

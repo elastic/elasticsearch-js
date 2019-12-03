@@ -79,10 +79,10 @@ function buildIndicesDeleteAlias (opts) {
 
     if ((index) != null && (name) != null) {
       if (method == null) method = 'DELETE'
-      path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
     } else {
       if (method == null) method = 'DELETE'
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
     }
 
     // build request object

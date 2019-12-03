@@ -18,6 +18,7 @@ function buildCatSnapshots (opts) {
     'h',
     'help',
     's',
+    'time',
     'v',
     'pretty',
     'human',

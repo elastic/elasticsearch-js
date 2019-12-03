@@ -7,26 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildDataFrameStopDataFrameTransform (opts) {
+function buildTransformDeleteTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion',
-    'timeout',
-    'allow_no_match'
+    'force'
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion',
-    allowNoMatch: 'allow_no_match'
+
   }
 
   /**
-   * Perform a data_frame.stop_data_frame_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
+   * Perform a transform.delete_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
    */
-  return function dataFrameStopDataFrameTransform (params, options, callback) {
+  return function transformDeleteTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -61,8 +58,8 @@ function buildDataFrameStopDataFrameTransform (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
+    if (method == null) method = 'DELETE'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {
@@ -77,4 +74,4 @@ function buildDataFrameStopDataFrameTransform (opts) {
   }
 }
 
-module.exports = buildDataFrameStopDataFrameTransform
+module.exports = buildTransformDeleteTransform
