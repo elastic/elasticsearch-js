@@ -6339,7 +6339,7 @@ client.ml.estimateMemoryUsage({
   body: object
 })
 ----
-link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
+https://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html[Reference]
 [cols=2*]
 |===
 |`body`
