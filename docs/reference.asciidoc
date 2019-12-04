@@ -1,18 +1,12 @@
 [[api-reference]]
 == API Reference
 
-This document contains the entire list of the {es} API supported by the client, 
-both OSS and commercial. The client is entirely licensed under Apache 2.0.
+This document contains the entire list of the Elasticsearch API supported by the client, both OSS and commercial. The client is entirely licensed under Apache 2.0.
 
-{es} exposes an HTTP layer to communicate with, and the client is a library that 
-helps you do this. Because of this reason, you will see HTTP related parameters, 
-such as `body` or `headers`.
+Elasticsearch exposes an HTTP layer to communicate with, and the client is a library that will help you do this. Because of this reason, you will see HTTP related parameters, such as `body` or `headers`.
 
-Every API can accept two objects, the first contains all the parameters that 
-will be sent to {es}, while the second includes the request specific parameters, 
-such as timeouts, headers, and so on. In the first object, every parameter but 
-the body will be sent via querystring or url parameter, depending on the API, 
-and every unrecognized parameter will be sent as querystring.
+Every API can accept two objects, the first contains all the parameters that will be sent to Elasticsearch, while the second includes the request specific parameters, such as timeouts, headers, and so on.
+In the first object, every parameter but the body will be sent via querystring or url parameter, depending on the API, and every unrecognized parameter will be sent as querystring.
 
 [source,js]
 ----
@@ -41,10 +35,7 @@ client.search({
 })
 ----
 
-In this document, you will find the reference of every parameter accepted by the 
-querystring or the url. If you also need to send the body, you can find the 
-documentation of its format in the reference link that is present along with 
-every endpoint.
+In this document, you will find the reference of every parameter accepted by the querystring or the url. If you also need to send the body, you can find the documentation of its format in the reference link that is present along with every endpoint.
 
 ////////
 
@@ -1476,7 +1467,7 @@ client.delete({
   if_seq_no: number,
   if_primary_term: number,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-delete.html[Reference]
@@ -1515,7 +1506,7 @@ WARNING: This parameter has been deprecated.
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1733,7 +1724,7 @@ client.exists({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -1773,7 +1764,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1793,7 +1784,7 @@ client.existsSource({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -1835,7 +1826,7 @@ WARNING: This parameter has been deprecated.
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1965,7 +1956,7 @@ client.get({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -2005,7 +1996,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -2052,7 +2043,7 @@ client.getSource({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -2089,7 +2080,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -3845,7 +3836,7 @@ client.mtermvectors({
   routing: string,
   realtime: boolean,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   body: object
 })
 ----
@@ -3893,7 +3884,7 @@ _Default:_ `true`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`body`
 |`object` - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
@@ -4986,7 +4977,7 @@ client.termvectors({
   routing: string,
   realtime: boolean,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   body: object
 })
 ----
@@ -5034,7 +5025,7 @@ _Default:_ `true`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`body`
 |`object` - Define parameters and or supply a document to get termvectors for. See documentation.
