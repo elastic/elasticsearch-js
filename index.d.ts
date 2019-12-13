@@ -250,6 +250,8 @@ declare class Client extends EventEmitter {
   getScript: ApiMethod<RequestParams.GetScript>
   get_script_context: ApiMethod<RequestParams.GetScriptContext>
   getScriptContext: ApiMethod<RequestParams.GetScriptContext>
+  get_script_languages: ApiMethod<RequestParams.GetScriptLanguages>
+  getScriptLanguages: ApiMethod<RequestParams.GetScriptLanguages>
   get_source: ApiMethod<RequestParams.GetSource>
   getSource: ApiMethod<RequestParams.GetSource>
   graph: {
@@ -597,8 +599,12 @@ declare class Client extends EventEmitter {
     getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
     get_stats: ApiMethod<RequestParams.SlmGetStats>
     getStats: ApiMethod<RequestParams.SlmGetStats>
+    get_status: ApiMethod<RequestParams.SlmGetStatus>
+    getStatus: ApiMethod<RequestParams.SlmGetStatus>
     put_lifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
     putLifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
+    start: ApiMethod<RequestParams.SlmStart>
+    stop: ApiMethod<RequestParams.SlmStop>
   }
   snapshot: {
     cleanup_repository: ApiMethod<RequestParams.SnapshotCleanupRepository>

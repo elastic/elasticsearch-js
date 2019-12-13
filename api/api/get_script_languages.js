@@ -7,24 +7,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildLicenseGet (opts) {
+function buildGetScriptLanguages (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'local',
-    'accept_enterprise'
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a license.get request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
+   * Perform a get_script_languages request
+   * Returns available script types, languages and contexts
    */
-  return function licenseGet (params, options, callback) {
+  return function getScriptLanguages (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +58,7 @@ function buildLicenseGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_license'
+    path = '/' + '_script_language'
 
     // build request object
     const request = {
@@ -69,4 +73,4 @@ function buildLicenseGet (opts) {
   }
 }
 
-module.exports = buildLicenseGet
+module.exports = buildGetScriptLanguages

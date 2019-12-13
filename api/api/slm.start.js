@@ -7,24 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildLicenseGet (opts) {
+function buildSlmStart (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'local',
-    'accept_enterprise'
+
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+
   }
 
   /**
-   * Perform a license.get request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
+   * Perform a slm.start request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-start.html
    */
-  return function licenseGet (params, options, callback) {
+  return function slmStart (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,14 +52,14 @@ function buildLicenseGet (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_license'
+    if (method == null) method = 'POST'
+    path = '/' + '_slm' + '/' + 'start'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -69,4 +68,4 @@ function buildLicenseGet (opts) {
   }
 }
 
-module.exports = buildLicenseGet
+module.exports = buildSlmStart
