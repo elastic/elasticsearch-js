@@ -357,7 +357,7 @@ link:{ref}/cat.html[Reference]
 client.cat.indices({
   index: string | string[],
   format: string,
-  bytes: 'b' | 'k' | 'm' | 'g',
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   local: boolean,
   master_timeout: string,
   h: string | string[],
@@ -380,7 +380,7 @@ link:{ref}/cat-indices.html[Reference]
 |`string` - a short version of the Accept header, e.g. json, yaml
 
 |`bytes`
-|`'b' \| 'k' \| 'm' \| 'g'` - The unit in which to display byte values
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2025,6 +2025,14 @@ link:{ref}/modules-scripting.html[Reference]
 [source,ts]
 ----
 client.getScriptContext()
+----
+
+
+=== getScriptLanguages
+*Stability:* experimental
+[source,ts]
+----
+client.getScriptLanguages()
 ----
 
 
@@ -6083,7 +6091,8 @@ link:{ref}/delete-license.html[Reference]
 [source,ts]
 ----
 client.license.get({
-  local: boolean
+  local: boolean,
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/get-license.html[Reference]
@@ -6091,6 +6100,11 @@ link:{ref}/get-license.html[Reference]
 |===
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - Supported for backwards compatibility with 7.x. If this param is used it must be set to true +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -8394,6 +8408,15 @@ client.slm.getStats()
 link:{ref}/slm-get-stats.html[Reference]
 
 
+=== slm.getStatus
+
+[source,ts]
+----
+client.slm.getStatus()
+----
+link:{ref}/slm-get-status.html[Reference]
+
+
 === slm.putLifecycle
 
 [source,ts]
@@ -8413,6 +8436,24 @@ link:{ref}/slm-api-put.html[Reference]
 |`object` - The snapshot lifecycle policy definition to register
 
 |===
+
+=== slm.start
+
+[source,ts]
+----
+client.slm.start()
+----
+link:{ref}/slm-start.html[Reference]
+
+
+=== slm.stop
+
+[source,ts]
+----
+client.slm.stop()
+----
+link:{ref}/slm-stop.html[Reference]
+
 
 === sql.clearCursor
 

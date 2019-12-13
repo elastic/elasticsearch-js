@@ -87,7 +87,7 @@ export interface CatHelp extends Generic {
 export interface CatIndices extends Generic {
   index?: string | string[];
   format?: string;
-  bytes?: 'b' | 'k' | 'm' | 'g';
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   local?: boolean;
   master_timeout?: string;
   h?: string | string[];
@@ -508,6 +508,9 @@ export interface GetScript extends Generic {
 }
 
 export interface GetScriptContext extends Generic {
+}
+
+export interface GetScriptLanguages extends Generic {
 }
 
 export interface GetSource extends Generic {
@@ -1524,6 +1527,7 @@ export interface LicenseDelete extends Generic {
 
 export interface LicenseGet extends Generic {
   local?: boolean;
+  accept_enterprise?: boolean;
 }
 
 export interface LicenseGetBasicStatus extends Generic {
@@ -2110,9 +2114,18 @@ export interface SlmGetLifecycle extends Generic {
 export interface SlmGetStats extends Generic {
 }
 
+export interface SlmGetStatus extends Generic {
+}
+
 export interface SlmPutLifecycle<T = any> extends Generic {
   policy_id: string;
   body?: T;
+}
+
+export interface SlmStart extends Generic {
+}
+
+export interface SlmStop extends Generic {
 }
 
 export interface SqlClearCursor<T = any> extends Generic {

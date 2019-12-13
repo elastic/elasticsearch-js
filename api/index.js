@@ -151,6 +151,8 @@ function ESAPI (opts) {
     getScript: lazyLoad('get_script', opts),
     get_script_context: lazyLoad('get_script_context', opts),
     getScriptContext: lazyLoad('get_script_context', opts),
+    get_script_languages: lazyLoad('get_script_languages', opts),
+    getScriptLanguages: lazyLoad('get_script_languages', opts),
     get_source: lazyLoad('get_source', opts),
     getSource: lazyLoad('get_source', opts),
     graph: {
@@ -498,8 +500,12 @@ function ESAPI (opts) {
       getLifecycle: lazyLoad('slm.get_lifecycle', opts),
       get_stats: lazyLoad('slm.get_stats', opts),
       getStats: lazyLoad('slm.get_stats', opts),
+      get_status: lazyLoad('slm.get_status', opts),
+      getStatus: lazyLoad('slm.get_status', opts),
       put_lifecycle: lazyLoad('slm.put_lifecycle', opts),
-      putLifecycle: lazyLoad('slm.put_lifecycle', opts)
+      putLifecycle: lazyLoad('slm.put_lifecycle', opts),
+      start: lazyLoad('slm.start', opts),
+      stop: lazyLoad('slm.stop', opts)
     },
     snapshot: {
       cleanup_repository: lazyLoad('snapshot.cleanup_repository', opts),
