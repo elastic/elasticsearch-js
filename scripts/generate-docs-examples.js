@@ -37,7 +37,14 @@ const enabledFiles = [
   'query-dsl.asciidoc',
   'search/request-body.asciidoc',
   'setup/install/check-running.asciidoc',
-  'mapping.asciidoc'
+  'mapping.asciidoc',
+  'query-dsl/query_filter_context.asciidoc',
+  'query-dsl/bool-query.asciidoc',
+  'query-dsl/match-query.asciidoc',
+  'indices/create-index.asciidoc',
+  'docs/index_.asciidoc',
+  'aggregations/bucket/terms-aggregation.asciidoc',
+  'query-dsl/range-query.asciidoc'
 ]
 
 function generate () {
@@ -67,8 +74,6 @@ function generateAsciidoc (source) {
     var serializedApiArguments = Object.keys(apiArguments).length > 0
       ? JSON.stringify(apiArguments, null, 2)
       : ''
-    serializedApiArguments = serializedApiArguments.replace(/"/g, "'")
-
     code += `const response${getResponsePostfix(i)} = await client.${api.replace(/_([a-z])/g, g => g[1].toUpperCase())}(${serializedApiArguments})
 console.log(response${getResponsePostfix(i)})
 \n`
