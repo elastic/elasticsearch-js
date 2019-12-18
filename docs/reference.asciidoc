@@ -43,7 +43,6 @@ client.bulk({
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
-  type: string,
   fields: string | string[],
   _source: string | string[],
   _source_excludes: string | string[],
