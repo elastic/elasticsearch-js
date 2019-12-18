@@ -72,9 +72,6 @@ link:{ref}/docs-bulk.html[Reference]
 |`timeout`
 |`string` - Explicit operation timeout
 
-|`type`
-|`string` - Default document type for items which don't provide one
-
 |`fields`
 |`string \| string[]` - Default comma-separated list of fields to return in the response for updates, can be overridden on each sub-request
 
