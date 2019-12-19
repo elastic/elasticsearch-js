@@ -204,7 +204,7 @@ Sometimes you just need to inject a little snippet of your code and then continu
 class MyTransport extends Transport {
   request (params, options, callback) {
     // your code
-    super.request(params, options, callback)
+    return super.request(params, options, callback)
   }
 }
 ----
