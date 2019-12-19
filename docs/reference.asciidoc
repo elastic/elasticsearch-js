@@ -133,7 +133,6 @@ client.cat.aliases({
   name: string | string[],
   format: string,
   local: boolean,
-  master_timeout: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
@@ -151,9 +150,6 @@ link:{ref}/cat-alias.html[Reference]
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
 
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
@@ -224,8 +220,6 @@ link:{ref}/cat-allocation.html[Reference]
 client.cat.count({
   index: string | string[],
   format: string,
-  local: boolean,
-  master_timeout: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
@@ -240,12 +234,6 @@ link:{ref}/cat-count.html[Reference]
 
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
 
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
@@ -269,8 +257,6 @@ client.cat.fielddata({
   fields: string | string[],
   format: string,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  local: boolean,
-  master_timeout: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
@@ -288,12 +274,6 @@ link:{ref}/cat-fielddata.html[Reference]
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
 
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
@@ -315,11 +295,10 @@ link:{ref}/cat-fielddata.html[Reference]
 ----
 client.cat.health({
   format: string,
-  local: boolean,
-  master_timeout: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   ts: boolean,
   v: boolean
 })
@@ -330,12 +309,6 @@ link:{ref}/cat-health.html[Reference]
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
 
@@ -344,6 +317,9 @@ link:{ref}/cat-health.html[Reference]
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
 
 |`ts`
 |`boolean` - Set to false to disable timestamping +
@@ -381,7 +357,7 @@ link:{ref}/cat.html[Reference]
 client.cat.indices({
   index: string | string[],
   format: string,
-  bytes: 'b' | 'k' | 'm' | 'g',
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   local: boolean,
   master_timeout: string,
   h: string | string[],
@@ -389,6 +365,7 @@ client.cat.indices({
   help: boolean,
   pri: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean,
   include_unloaded_segments: boolean
 })
@@ -403,7 +380,7 @@ link:{ref}/cat-indices.html[Reference]
 |`string` - a short version of the Accept header, e.g. json, yaml
 
 |`bytes`
-|`'b' \| 'k' \| 'm' \| 'g'` - The unit in which to display byte values
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -425,6 +402,9 @@ link:{ref}/cat-indices.html[Reference]
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -519,6 +499,7 @@ link:{ref}/cat-nodeattrs.html[Reference]
 [source,ts]
 ----
 client.cat.nodes({
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   format: string,
   full_id: boolean,
   local: boolean,
@@ -526,12 +507,16 @@ client.cat.nodes({
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
 link:{ref}/cat-nodes.html[Reference]
 [cols=2*]
 |===
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
@@ -553,6 +538,9 @@ link:{ref}/cat-nodes.html[Reference]
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
 |`v`
 |`boolean` - Verbose mode. Display column headers
 
@@ -569,6 +557,7 @@ client.cat.pendingTasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
@@ -592,6 +581,9 @@ link:{ref}/cat-pending-tasks.html[Reference]
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -648,10 +640,10 @@ client.cat.recovery({
   active_only: boolean,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   detailed: boolean,
-  master_timeout: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
@@ -673,9 +665,6 @@ link:{ref}/cat-recovery.html[Reference]
 |`detailed`
 |`boolean` - If `true`, the response includes detailed information about shard recoveries
 
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
 
@@ -684,6 +673,9 @@ link:{ref}/cat-recovery.html[Reference]
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -783,6 +775,7 @@ client.cat.shards({
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
@@ -813,6 +806,9 @@ link:{ref}/cat-shards.html[Reference]
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
 |`v`
 |`boolean` - Verbose mode. Display column headers
 
@@ -830,6 +826,7 @@ client.cat.snapshots({
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
@@ -857,6 +854,9 @@ link:{ref}/cat-snapshots.html[Reference]
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
 |`v`
 |`boolean` - Verbose mode. Display column headers
 
@@ -875,6 +875,7 @@ client.cat.tasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
   v: boolean
 })
 ----
@@ -904,6 +905,9 @@ link:{ref}/tasks.html[Reference]
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -1403,7 +1407,7 @@ client.create({
   routing: string,
   timeout: string,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   pipeline: string,
   body: object
 })
@@ -1438,7 +1442,7 @@ WARNING: This parameter has been deprecated.
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
@@ -1463,7 +1467,7 @@ client.delete({
   if_seq_no: number,
   if_primary_term: number,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-delete.html[Reference]
@@ -1502,7 +1506,7 @@ WARNING: This parameter has been deprecated.
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1720,7 +1724,7 @@ client.exists({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -1760,7 +1764,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1780,7 +1784,7 @@ client.existsSource({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -1822,7 +1826,7 @@ WARNING: This parameter has been deprecated.
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -1952,7 +1956,7 @@ client.get({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -1992,7 +1996,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -2016,6 +2020,22 @@ link:{ref}/modules-scripting.html[Reference]
 
 |===
 
+=== getScriptContext
+*Stability:* experimental
+[source,ts]
+----
+client.getScriptContext()
+----
+
+
+=== getScriptLanguages
+*Stability:* experimental
+[source,ts]
+----
+client.getScriptLanguages()
+----
+
+
 === getSource
 
 [source,ts]
@@ -2031,7 +2051,7 @@ client.getSource({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force'
+  version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
 link:{ref}/docs-get.html[Reference]
@@ -2068,7 +2088,7 @@ link:{ref}/docs-get.html[Reference]
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |===
 
@@ -2079,14 +2099,13 @@ link:{ref}/docs-get.html[Reference]
 client.index({
   id: string,
   index: string,
-  type: string,
   wait_for_active_shards: string,
   op_type: 'index' | 'create',
   refresh: 'true' | 'false' | 'wait_for',
   routing: string,
   timeout: string,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   if_seq_no: number,
   if_primary_term: number,
   pipeline: string,
@@ -2102,17 +2121,11 @@ link:{ref}/docs-index_.html[Reference]
 |`index`
 |`string` - The name of the index
 
-|`type`
-|`string` - The type of the document +
-
-WARNING: This parameter has been deprecated.
-
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`op_type` or `opType`
-|`'index' \| 'create'` - Explicit operation type +
-_Default:_ `index`
+|`'index' \| 'create'` - Explicit operation type. Defaults to `index` for requests with an explicit document ID, and to `create`for requests without an explicit document ID
 
 |`refresh`
 |`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
@@ -2127,7 +2140,7 @@ _Default:_ `index`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`if_seq_no` or `ifSeqNo`
 |`number` - only perform the index operation if the last operation that has changed the document has the specified sequence number
@@ -2291,7 +2304,6 @@ _Default:_ `open`
 ----
 client.indices.create({
   index: string,
-  include_type_name: boolean,
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
@@ -2303,9 +2315,6 @@ link:{ref}/indices-create-index.html[Reference]
 |===
 |`index`
 |`string` - The name of the index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be expected in the body of the mappings.
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for before the operation returns.
@@ -2666,7 +2675,6 @@ _Default:_ `open`
 ----
 client.indices.get({
   index: string | string[],
-  include_type_name: boolean,
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -2681,9 +2689,6 @@ link:{ref}/indices-get-index.html[Reference]
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether to add the type name to the response (default: false)
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2753,7 +2758,6 @@ _Default:_ `all`
 client.indices.getFieldMapping({
   fields: string | string[],
   index: string | string[],
-  include_type_name: boolean,
   include_defaults: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
@@ -2769,9 +2773,6 @@ link:{ref}/indices-get-field-mapping.html[Reference]
 
 |`index`
 |`string \| string[]` - A comma-separated list of index names
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`include_defaults` or `includeDefaults`
 |`boolean` - Whether the default mapping values should be returned as well
@@ -2883,7 +2884,6 @@ _Default:_ `open,closed`
 ----
 client.indices.getTemplate({
   name: string | string[],
-  include_type_name: boolean,
   flat_settings: boolean,
   master_timeout: string,
   local: boolean
@@ -2894,9 +2894,6 @@ link:{ref}/indices-templates.html[Reference]
 |===
 |`name`
 |`string \| string[]` - The comma separated names of the index templates
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -3107,7 +3104,6 @@ _Default:_ `open`
 ----
 client.indices.putTemplate({
   name: string,
-  include_type_name: boolean,
   order: number,
   create: boolean,
   timeout: string,
@@ -3121,9 +3117,6 @@ link:{ref}/indices-templates.html[Reference]
 |===
 |`name`
 |`string` - The name of the template
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be returned in the body of the mappings.
 
 |`order`
 |`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
@@ -3205,7 +3198,6 @@ _Default:_ `open`
 client.indices.rollover({
   alias: string,
   new_index: string,
-  include_type_name: boolean,
   timeout: string,
   dry_run: boolean,
   master_timeout: string,
@@ -3221,9 +3213,6 @@ link:{ref}/indices-rollover-index.html[Reference]
 
 |`new_index` or `newIndex`
 |`string` - The name of the rollover index
-
-|`include_type_name` or `includeTypeName`
-|`boolean` - Whether a type should be included in the body of the mappings.
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -3855,7 +3844,7 @@ client.mtermvectors({
   routing: string,
   realtime: boolean,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   body: object
 })
 ----
@@ -3903,7 +3892,7 @@ _Default:_ `true`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`body`
 |`object` - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
@@ -4129,6 +4118,7 @@ client.rankEval({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   body: object
 })
 ----
@@ -4147,6 +4137,9 @@ link:{ref}/search-rank-eval.html[Reference]
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`body`
 |`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
@@ -4992,7 +4985,7 @@ client.termvectors({
   routing: string,
   realtime: boolean,
   version: number,
-  version_type: 'internal' | 'external' | 'external_gte' | 'force',
+  version_type: 'internal' | 'external' | 'external_gte',
   body: object
 })
 ----
@@ -5040,7 +5033,7 @@ _Default:_ `true`
 |`number` - Explicit version number for concurrency control
 
 |`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte' \| 'force'` - Specific version type
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
 
 |`body`
 |`object` - Define parameters and or supply a document to get termvectors for. See documentation.
@@ -5412,6 +5405,22 @@ link:{ref}/ccr-get-auto-follow-pattern.html[Reference]
 
 |===
 
+=== ccr.pauseAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.pauseAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-pause-auto-follow-pattern.html[Reference]
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern that should pause discovering new indices to follow.
+
+|===
+
 === ccr.pauseFollow
 
 [source,ts]
@@ -5445,6 +5454,22 @@ link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
 
 |`body`
 |`object` - The specification of the auto follow pattern
+
+|===
+
+=== ccr.resumeAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.resumeAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-resume-auto-follow-pattern.html[Reference]
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern to resume discovering new indices to follow.
 
 |===
 
@@ -5492,6 +5517,271 @@ link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
 |`string` - The name of the follower index that should be turned into a regular index.
 
 |===
+
+=== dataFrameTransformDeprecated.deleteTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.deleteTransform({
+  transform_id: string,
+  force: boolean
+})
+----
+link:{ref}/delete-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to delete
+
+|`force`
+|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
+
+|===
+
+=== dataFrameTransformDeprecated.getTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.getTransform({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean
+})
+----
+link:{ref}/get-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== dataFrameTransformDeprecated.getTransformStats
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.getTransformStats({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean
+})
+----
+link:{ref}/get-transform-stats.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+
+|`from`
+|`number` - skips a number of transform stats, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transform stats to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== dataFrameTransformDeprecated.previewTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.previewTransform({
+  body: object
+})
+----
+link:{ref}/preview-transform.html[Reference]
+[cols=2*]
+|===
+|`body`
+|`object` - The definition for the transform to preview
+
+|===
+
+=== dataFrameTransformDeprecated.putTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.putTransform({
+  transform_id: string,
+  defer_validation: boolean,
+  body: object
+})
+----
+link:{ref}/put-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the new transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`body`
+|`object` - The transform definition
+
+|===
+
+=== dataFrameTransformDeprecated.startTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.startTransform({
+  transform_id: string,
+  timeout: string
+})
+----
+link:{ref}/start-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to start
+
+|`timeout`
+|`string` - Controls the time to wait for the transform to start
+
+|===
+
+=== dataFrameTransformDeprecated.stopTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.stopTransform({
+  transform_id: string,
+  wait_for_completion: boolean,
+  timeout: string,
+  allow_no_match: boolean
+})
+----
+link:{ref}/stop-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to stop
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
+
+|`timeout`
+|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|===
+
+=== dataFrameTransformDeprecated.updateTransform
+*Stability:* beta
+[source,ts]
+----
+client.dataFrameTransformDeprecated.updateTransform({
+  transform_id: string,
+  defer_validation: boolean,
+  body: object
+})
+----
+link:{ref}/update-transform.html[Reference]
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform.
+
+|`defer_validation` or `deferValidation`
+|`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`body`
+|`object` - The update transform definition
+
+|===
+
+=== enrich.deletePolicy
+
+[source,ts]
+----
+client.enrich.deletePolicy({
+  name: string
+})
+----
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|===
+
+=== enrich.executePolicy
+
+[source,ts]
+----
+client.enrich.executePolicy({
+  name: string,
+  wait_for_completion: boolean
+})
+----
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request should block until the execution is complete. +
+_Default:_ `true`
+
+|===
+
+=== enrich.getPolicy
+
+[source,ts]
+----
+client.enrich.getPolicy({
+  name: string
+})
+----
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|===
+
+=== enrich.putPolicy
+
+[source,ts]
+----
+client.enrich.putPolicy({
+  name: string,
+  body: object
+})
+----
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|`body`
+|`object` - The enrich policy to register
+
+|===
+
+=== enrich.stats
+
+[source,ts]
+----
+client.enrich.stats()
+----
+
 
 === graph.explore
 
@@ -5801,7 +6091,8 @@ link:{ref}/delete-license.html[Reference]
 [source,ts]
 ----
 client.license.get({
-  local: boolean
+  local: boolean,
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/get-license.html[Reference]
@@ -5809,6 +6100,11 @@ link:{ref}/get-license.html[Reference]
 |===
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - Supported for backwards compatibility with 7.x. If this param is used it must be set to true +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -6119,19 +6415,19 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
-=== ml.estimateMemoryUsage
+=== ml.deleteTrainedModel
 *Stability:* experimental
 [source,ts]
 ----
-client.ml.estimateMemoryUsage({
-  body: object
+client.ml.deleteTrainedModel({
+  model_id: string
 })
 ----
-link:{ref}/estimate-memory-usage-dfanalytics.html[Reference]
+link:TODO[Reference]
 [cols=2*]
 |===
-|`body`
-|`object` - Memory usage estimation definition
+|`model_id` or `modelId`
+|`string` - The ID of the trained model to delete
 
 |===
 
@@ -6148,6 +6444,26 @@ link:{ref}/evaluate-dfanalytics.html[Reference]
 |===
 |`body`
 |`object` - The evaluation definition
+
+|===
+
+=== ml.explainDataFrameAnalytics
+*Stability:* experimental
+[source,ts]
+----
+client.ml.explainDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/explain-dfanalytics.html[Reference]
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to explain
+
+|`body`
+|`object` - The data frame analytics config to explain
 
 |===
 
@@ -6803,6 +7119,70 @@ link:{ref}/ml-get-record.html[Reference]
 
 |`body`
 |`object` - Record selection criteria
+
+|===
+
+=== ml.getTrainedModels
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  include_model_definition: boolean,
+  from: number,
+  size: number
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`include_model_definition` or `includeModelDefinition`
+|`boolean` - Should the full model definition be included in the results. These definitions can be large
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|===
+
+=== ml.getTrainedModelsStats
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModelsStats({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
 
 |===
 
@@ -7692,7 +8072,8 @@ client.security.getApiKey({
   id: string,
   name: string,
   username: string,
-  realm_name: string
+  realm_name: string,
+  owner: boolean
 })
 ----
 link:{ref}/security-api-get-api-key.html[Reference]
@@ -7709,6 +8090,9 @@ link:{ref}/security-api-get-api-key.html[Reference]
 
 |`realm_name` or `realmName`
 |`string` - realm name of the user who created this API key to be retrieved
+
+|`owner`
+|`boolean` - flag to query API keys owned by the currently authenticated user
 
 |===
 
@@ -7990,19 +8374,28 @@ link:{ref}/slm-api-execute.html[Reference]
 
 |===
 
+=== slm.executeRetention
+
+[source,ts]
+----
+client.slm.executeRetention()
+----
+link:{ref}/slm-api-execute-retention.html[Reference]
+
+
 === slm.getLifecycle
 
 [source,ts]
 ----
 client.slm.getLifecycle({
-  policy_id: string
+  policy_id: string | string[]
 })
 ----
 link:{ref}/slm-api-get.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
-|`string` - Comma-separated list of snapshot lifecycle policies to retrieve
+|`string \| string[]` - Comma-separated list of snapshot lifecycle policies to retrieve
 
 |===
 
@@ -8013,6 +8406,15 @@ link:{ref}/slm-api-get.html[Reference]
 client.slm.getStats()
 ----
 link:{ref}/slm-get-stats.html[Reference]
+
+
+=== slm.getStatus
+
+[source,ts]
+----
+client.slm.getStatus()
+----
+link:{ref}/slm-get-status.html[Reference]
 
 
 === slm.putLifecycle
@@ -8034,6 +8436,24 @@ link:{ref}/slm-api-put.html[Reference]
 |`object` - The snapshot lifecycle policy definition to register
 
 |===
+
+=== slm.start
+
+[source,ts]
+----
+client.slm.start()
+----
+link:{ref}/slm-start.html[Reference]
+
+
+=== slm.stop
+
+[source,ts]
+----
+client.slm.stop()
+----
+link:{ref}/slm-stop.html[Reference]
+
 
 === sql.clearCursor
 
@@ -8238,9 +8658,11 @@ link:{ref}/start-transform.html[Reference]
 ----
 client.transform.stopTransform({
   transform_id: string,
+  force: boolean,
   wait_for_completion: boolean,
   timeout: string,
-  allow_no_match: boolean
+  allow_no_match: boolean,
+  wait_for_checkpoint: boolean
 })
 ----
 link:{ref}/stop-transform.html[Reference]
@@ -8248,6 +8670,9 @@ link:{ref}/stop-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to stop
+
+|`force`
+|`boolean` - Whether to force stop a failed transform or not. Default to false
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
@@ -8257,6 +8682,9 @@ link:{ref}/stop-transform.html[Reference]
 
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`wait_for_checkpoint` or `waitForCheckpoint`
+|`boolean` - Whether to wait for the transform to reach a checkpoint before stopping. Default to false
 
 |===
 

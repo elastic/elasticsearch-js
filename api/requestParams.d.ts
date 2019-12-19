@@ -32,7 +32,6 @@ export interface CatAliases extends Generic {
   name?: string | string[];
   format?: string;
   local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -54,8 +53,6 @@ export interface CatAllocation extends Generic {
 export interface CatCount extends Generic {
   index?: string | string[];
   format?: string;
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -66,8 +63,6 @@ export interface CatFielddata extends Generic {
   fields?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -76,11 +71,10 @@ export interface CatFielddata extends Generic {
 
 export interface CatHealth extends Generic {
   format?: string;
-  local?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   ts?: boolean;
   v?: boolean;
 }
@@ -93,7 +87,7 @@ export interface CatHelp extends Generic {
 export interface CatIndices extends Generic {
   index?: string | string[];
   format?: string;
-  bytes?: 'b' | 'k' | 'm' | 'g';
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   local?: boolean;
   master_timeout?: string;
   h?: string | string[];
@@ -101,6 +95,7 @@ export interface CatIndices extends Generic {
   help?: boolean;
   pri?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
   include_unloaded_segments?: boolean;
 }
@@ -126,6 +121,7 @@ export interface CatNodeattrs extends Generic {
 }
 
 export interface CatNodes extends Generic {
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
   full_id?: boolean;
   local?: boolean;
@@ -133,6 +129,7 @@ export interface CatNodes extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -143,6 +140,7 @@ export interface CatPendingTasks extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -162,10 +160,10 @@ export interface CatRecovery extends Generic {
   active_only?: boolean;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   detailed?: boolean;
-  master_timeout?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -198,6 +196,7 @@ export interface CatShards extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -209,6 +208,7 @@ export interface CatSnapshots extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -221,6 +221,7 @@ export interface CatTasks extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
   v?: boolean;
 }
 
@@ -352,7 +353,7 @@ export interface Create<T = any> extends Generic {
   routing?: string;
   timeout?: string;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   pipeline?: string;
   body: T;
 }
@@ -368,7 +369,7 @@ export interface Delete extends Generic {
   if_seq_no?: number;
   if_primary_term?: number;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface DeleteByQuery<T = any> extends Generic {
@@ -435,7 +436,7 @@ export interface Exists extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface ExistsSource extends Generic {
@@ -452,7 +453,7 @@ export interface ExistsSource extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface Explain<T = any> extends Generic {
@@ -498,12 +499,18 @@ export interface Get extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface GetScript extends Generic {
   id: string;
   master_timeout?: string;
+}
+
+export interface GetScriptContext extends Generic {
+}
+
+export interface GetScriptLanguages extends Generic {
 }
 
 export interface GetSource extends Generic {
@@ -519,20 +526,19 @@ export interface GetSource extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
 }
 
 export interface Index<T = any> extends Generic {
   id?: string;
   index: string;
-  type?: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
   refresh?: 'true' | 'false' | 'wait_for';
   routing?: string;
   timeout?: string;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
@@ -576,7 +582,6 @@ export interface IndicesClose extends Generic {
 
 export interface IndicesCreate<T = any> extends Generic {
   index: string;
-  include_type_name?: boolean;
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
@@ -668,7 +673,6 @@ export interface IndicesForcemerge extends Generic {
 
 export interface IndicesGet extends Generic {
   index: string | string[];
-  include_type_name?: boolean;
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -690,7 +694,6 @@ export interface IndicesGetAlias extends Generic {
 export interface IndicesGetFieldMapping extends Generic {
   fields: string | string[];
   index?: string | string[];
-  include_type_name?: boolean;
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -721,7 +724,6 @@ export interface IndicesGetSettings extends Generic {
 
 export interface IndicesGetTemplate extends Generic {
   name?: string | string[];
-  include_type_name?: boolean;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -776,7 +778,6 @@ export interface IndicesPutSettings<T = any> extends Generic {
 
 export interface IndicesPutTemplate<T = any> extends Generic {
   name: string;
-  include_type_name?: boolean;
   order?: number;
   create?: boolean;
   timeout?: string;
@@ -801,7 +802,6 @@ export interface IndicesRefresh extends Generic {
 export interface IndicesRollover<T = any> extends Generic {
   alias: string;
   new_index?: string;
-  include_type_name?: boolean;
   timeout?: string;
   dry_run?: boolean;
   master_timeout?: string;
@@ -971,7 +971,7 @@ export interface Mtermvectors<T = any> extends Generic {
   routing?: string;
   realtime?: boolean;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   body?: T;
 }
 
@@ -1033,6 +1033,7 @@ export interface RankEval<T = any> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   body: T;
 }
 
@@ -1252,7 +1253,7 @@ export interface Termvectors<T = any> extends Generic {
   routing?: string;
   realtime?: boolean;
   version?: number;
-  version_type?: 'internal' | 'external' | 'external_gte' | 'force';
+  version_type?: 'internal' | 'external' | 'external_gte';
   body?: T;
 }
 
@@ -1349,6 +1350,10 @@ export interface CcrGetAutoFollowPattern extends Generic {
   name?: string;
 }
 
+export interface CcrPauseAutoFollowPattern extends Generic {
+  name: string;
+}
+
 export interface CcrPauseFollow extends Generic {
   index: string;
 }
@@ -1356,6 +1361,10 @@ export interface CcrPauseFollow extends Generic {
 export interface CcrPutAutoFollowPattern<T = any> extends Generic {
   name: string;
   body: T;
+}
+
+export interface CcrResumeAutoFollowPattern extends Generic {
+  name: string;
 }
 
 export interface CcrResumeFollow<T = any> extends Generic {
@@ -1368,6 +1377,74 @@ export interface CcrStats extends Generic {
 
 export interface CcrUnfollow extends Generic {
   index: string;
+}
+
+export interface DataFrameTransformDeprecatedDeleteTransform extends Generic {
+  transform_id: string;
+  force?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedGetTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedGetTransformStats extends Generic {
+  transform_id: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedPreviewTransform<T = any> extends Generic {
+  body: T;
+}
+
+export interface DataFrameTransformDeprecatedPutTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
+export interface DataFrameTransformDeprecatedStartTransform extends Generic {
+  transform_id: string;
+  timeout?: string;
+}
+
+export interface DataFrameTransformDeprecatedStopTransform extends Generic {
+  transform_id: string;
+  wait_for_completion?: boolean;
+  timeout?: string;
+  allow_no_match?: boolean;
+}
+
+export interface DataFrameTransformDeprecatedUpdateTransform<T = any> extends Generic {
+  transform_id: string;
+  defer_validation?: boolean;
+  body: T;
+}
+
+export interface EnrichDeletePolicy extends Generic {
+  name: string;
+}
+
+export interface EnrichExecutePolicy extends Generic {
+  name: string;
+  wait_for_completion?: boolean;
+}
+
+export interface EnrichGetPolicy extends Generic {
+  name?: string;
+}
+
+export interface EnrichPutPolicy<T = any> extends Generic {
+  name: string;
+  body: T;
+}
+
+export interface EnrichStats extends Generic {
 }
 
 export interface GraphExplore<T = any> extends Generic {
@@ -1450,6 +1527,7 @@ export interface LicenseDelete extends Generic {
 
 export interface LicenseGet extends Generic {
   local?: boolean;
+  accept_enterprise?: boolean;
 }
 
 export interface LicenseGetBasicStatus extends Generic {
@@ -1532,12 +1610,17 @@ export interface MlDeleteModelSnapshot extends Generic {
   snapshot_id: string;
 }
 
-export interface MlEstimateMemoryUsage<T = any> extends Generic {
-  body: T;
+export interface MlDeleteTrainedModel extends Generic {
+  model_id: string;
 }
 
 export interface MlEvaluateDataFrame<T = any> extends Generic {
   body: T;
+}
+
+export interface MlExplainDataFrameAnalytics<T = any> extends Generic {
+  id?: string;
+  body?: T;
 }
 
 export interface MlFindFileStructure<T = any> extends Generic {
@@ -1701,6 +1784,21 @@ export interface MlGetRecords<T = any> extends Generic {
   sort?: string;
   desc?: boolean;
   body?: T;
+}
+
+export interface MlGetTrainedModels extends Generic {
+  model_id?: string;
+  allow_no_match?: boolean;
+  include_model_definition?: boolean;
+  from?: number;
+  size?: number;
+}
+
+export interface MlGetTrainedModelsStats extends Generic {
+  model_id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
 }
 
 export interface MlInfo extends Generic {
@@ -1932,6 +2030,7 @@ export interface SecurityGetApiKey extends Generic {
   name?: string;
   username?: string;
   realm_name?: string;
+  owner?: boolean;
 }
 
 export interface SecurityGetBuiltinPrivileges extends Generic {
@@ -2005,16 +2104,28 @@ export interface SlmExecuteLifecycle extends Generic {
   policy_id: string;
 }
 
+export interface SlmExecuteRetention extends Generic {
+}
+
 export interface SlmGetLifecycle extends Generic {
-  policy_id?: string;
+  policy_id?: string | string[];
 }
 
 export interface SlmGetStats extends Generic {
 }
 
+export interface SlmGetStatus extends Generic {
+}
+
 export interface SlmPutLifecycle<T = any> extends Generic {
   policy_id: string;
   body?: T;
+}
+
+export interface SlmStart extends Generic {
+}
+
+export interface SlmStop extends Generic {
 }
 
 export interface SqlClearCursor<T = any> extends Generic {
@@ -2069,9 +2180,11 @@ export interface TransformStartTransform extends Generic {
 
 export interface TransformStopTransform extends Generic {
   transform_id: string;
+  force?: boolean;
   wait_for_completion?: boolean;
   timeout?: string;
   allow_no_match?: boolean;
+  wait_for_checkpoint?: boolean;
 }
 
 export interface TransformUpdateTransform<T = any> extends Generic {

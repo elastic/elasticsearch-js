@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlEstimateMemoryUsage (opts) {
+function buildDataFrameTransformDeprecatedPreviewTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 
   /**
-   * Perform a ml.estimate_memory_usage request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
+   * Perform a data_frame_transform_deprecated.preview_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
-  return function mlEstimateMemoryUsage (params, options, callback) {
+  return function dataFrameTransformDeprecatedPreviewTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -58,9 +58,6 @@ function buildMlEstimateMemoryUsage (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
-
     // build request object
     const request = {
       method,
@@ -74,4 +71,4 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 }
 
-module.exports = buildMlEstimateMemoryUsage
+module.exports = buildDataFrameTransformDeprecatedPreviewTransform

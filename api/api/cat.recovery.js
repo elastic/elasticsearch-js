@@ -16,11 +16,11 @@ function buildCatRecovery (opts) {
     'active_only',
     'bytes',
     'detailed',
-    'master_timeout',
     'h',
     'help',
     'index',
     's',
+    'time',
     'v',
     'pretty',
     'human',
@@ -31,7 +31,6 @@ function buildCatRecovery (opts) {
 
   const snakeCase = {
     activeOnly: 'active_only',
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

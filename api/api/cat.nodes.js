@@ -12,6 +12,7 @@ function buildCatNodes (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'bytes',
     'format',
     'full_id',
     'local',
@@ -19,6 +20,7 @@ function buildCatNodes (opts) {
     'h',
     'help',
     's',
+    'time',
     'v',
     'pretty',
     'human',

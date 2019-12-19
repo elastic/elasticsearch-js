@@ -15,6 +15,7 @@ function buildRankEval (opts) {
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'search_type',
     'pretty',
     'human',
     'error_trace',
@@ -26,6 +27,7 @@ function buildRankEval (opts) {
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    searchType: 'search_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

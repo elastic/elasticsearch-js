@@ -13,11 +13,10 @@ function buildCatHealth (opts) {
 
   const acceptedQuerystring = [
     'format',
-    'local',
-    'master_timeout',
     'h',
     'help',
     's',
+    'time',
     'ts',
     'v',
     'pretty',
@@ -28,7 +27,6 @@ function buildCatHealth (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

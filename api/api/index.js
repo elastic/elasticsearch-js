@@ -73,7 +73,7 @@ function buildIndex (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, id, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -83,15 +83,9 @@ function buildIndex (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (id) != null) {
+    if ((index) != null && (id) != null) {
       if (method == null) method = 'PUT'
       path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
     } else {
       if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc'

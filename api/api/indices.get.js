@@ -12,7 +12,6 @@ function buildIndicesGet (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'local',
     'ignore_unavailable',
     'allow_no_indices',
@@ -28,7 +27,6 @@ function buildIndicesGet (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
