@@ -101,8 +101,8 @@ interface ClientOptions {
   cloud?: {
     id: string;
     // TODO: remove username and password here in 8
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
   }
 }
 
