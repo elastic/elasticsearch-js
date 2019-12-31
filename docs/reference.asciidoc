@@ -84,7 +84,7 @@ client.bulk({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   pipeline: string,
-  body: object
+  body: array
 })
 ----
 link:{ref}/docs-bulk.html[Reference]
