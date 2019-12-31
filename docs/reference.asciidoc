@@ -84,7 +84,7 @@ client.bulk({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   pipeline: string,
-  body: array
+  body: object[]
 })
 ----
 link:{ref}/docs-bulk.html[Reference]
@@ -121,7 +121,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - The pipeline id to preprocess incoming documents with
 
 |`body`
-|`array` - The operation definition and data (action-data pairs) are used as array members. Data is optional according to action type. E.g. [action,data,action,action,data]
+|`object[]` - The operation definition and data (action-data pair) objects are used as array members. Data is optional according to action type. E.g. [action,data,action,action,data]
 
 |===
 
