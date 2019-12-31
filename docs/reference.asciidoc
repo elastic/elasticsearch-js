@@ -121,7 +121,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - The pipeline id to preprocess incoming documents with
 
 |`body`
-|`object` - The operation definition and data (action-data pairs), separated by newlines
+|`array` - The operation definition and data (action-data pairs) are used as array members. Data is optional according to action type. E.g. [action,data,action,action,data]
 
 |===
 
