@@ -15,7 +15,6 @@ function buildCatNodes (opts) {
     'bytes',
     'format',
     'full_id',
-    'local',
     'master_timeout',
     'h',
     'help',

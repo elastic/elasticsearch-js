@@ -502,7 +502,6 @@ client.cat.nodes({
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   format: string,
   full_id: boolean,
-  local: boolean,
   master_timeout: string,
   h: string | string[],
   help: boolean,
@@ -522,9 +521,6 @@ link:{ref}/cat-nodes.html[Reference]
 
 |`full_id` or `fullId`
 |`boolean` - Return the full node ID instead of the shortened version (default: false)
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -6288,7 +6284,8 @@ client.ml.deleteCalendarJob({
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
-  id: string
+  id: string,
+  force: boolean
 })
 ----
 link:{ref}/delete-dfanalytics.html[Reference]
@@ -6296,6 +6293,9 @@ link:{ref}/delete-dfanalytics.html[Reference]
 |===
 |`id`
 |`string` - The ID of the data frame analytics to delete
+
+|`force`
+|`boolean` - True if the job should be forcefully deleted
 
 |===
 
@@ -6423,7 +6423,7 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
-link:TODO[Reference]
+link:{ref}/delete-inference.html[Reference]
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7130,11 +7130,12 @@ client.ml.getTrainedModels({
   model_id: string,
   allow_no_match: boolean,
   include_model_definition: boolean,
+  decompress_definition: boolean,
   from: number,
   size: number
 })
 ----
-link:TODO[Reference]
+link:{ref}/get-inference.html[Reference]
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7145,7 +7146,11 @@ link:TODO[Reference]
 _Default:_ `true`
 
 |`include_model_definition` or `includeModelDefinition`
-|`boolean` - Should the full model definition be included in the results. These definitions can be large
+|`boolean` - Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false.
+
+|`decompress_definition` or `decompressDefinition`
+|`boolean` - Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true. +
+_Default:_ `true`
 
 |`from`
 |`number` - skips a number of trained models
@@ -7167,7 +7172,7 @@ client.ml.getTrainedModelsStats({
   size: number
 })
 ----
-link:TODO[Reference]
+link:{ref}/get-inference-stats.html[Reference]
 [cols=2*]
 |===
 |`model_id` or `modelId`

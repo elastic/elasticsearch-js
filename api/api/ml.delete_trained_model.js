@@ -21,7 +21,7 @@ function buildMlDeleteTrainedModel (opts) {
 
   /**
    * Perform a ml.delete_trained_model request
-   * TODO
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference.html
    */
   return function mlDeleteTrainedModel (params, options, callback) {
     options = options || {}
