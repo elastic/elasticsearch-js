@@ -124,7 +124,6 @@ export interface CatNodes extends Generic {
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
   full_id?: boolean;
-  local?: boolean;
   master_timeout?: string;
   h?: string | string[];
   help?: boolean;
@@ -1578,6 +1577,7 @@ export interface MlDeleteCalendarJob extends Generic {
 
 export interface MlDeleteDataFrameAnalytics extends Generic {
   id: string;
+  force?: boolean;
 }
 
 export interface MlDeleteDatafeed extends Generic {
@@ -1790,6 +1790,7 @@ export interface MlGetTrainedModels extends Generic {
   model_id?: string;
   allow_no_match?: boolean;
   include_model_definition?: boolean;
+  decompress_definition?: boolean;
   from?: number;
   size?: number;
 }

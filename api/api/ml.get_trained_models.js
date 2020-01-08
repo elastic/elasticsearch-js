@@ -14,19 +14,21 @@ function buildMlGetTrainedModels (opts) {
   const acceptedQuerystring = [
     'allow_no_match',
     'include_model_definition',
+    'decompress_definition',
     'from',
     'size'
   ]
 
   const snakeCase = {
     allowNoMatch: 'allow_no_match',
-    includeModelDefinition: 'include_model_definition'
+    includeModelDefinition: 'include_model_definition',
+    decompressDefinition: 'decompress_definition'
 
   }
 
   /**
    * Perform a ml.get_trained_models request
-   * TODO
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference.html
    */
   return function mlGetTrainedModels (params, options, callback) {
     options = options || {}
