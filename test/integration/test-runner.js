@@ -6,9 +6,10 @@
 
 /* eslint camelcase: 0 */
 
-const t = require('tap')
+const assert = require('assert')
 const semver = require('semver')
 const helper = require('./helper')
+const deepEqual = require('fast-deep-equal')
 const { ConfigurationError } = require('../../lib/errors')
 
 const { delve, to } = helper
@@ -25,63 +26,58 @@ const supportedFeatures = [
   'arbitrary_key'
 ]
 
-class TestRunner {
-  constructor (opts = {}) {
-    opts = opts || {}
-
-    this.client = opts.client
-    this.esVersion = opts.version
-    this.response = null
-    this.stash = new Map()
-    this.tap = opts.tap || t
-    this.isXPack = opts.isXPack
-  }
+function build (opts = {}) {
+  const client = opts.client
+  const esVersion = opts.version
+  const isXPack = opts.isXPack
+  const stash = new Map()
+  let response = null
 
   /**
    * Runs a cleanup, removes all indices, aliases, templates, and snapshots
    * @returns {Promise}
    */
-  async cleanup () {
-    this.tap.comment('Cleanup')
+  async function cleanup () {
+    // // tap.comment('Cleanup')
 
-    this.response = null
-    this.stash = new Map()
+    response = null
+    stash.clear()
 
     try {
-      await this.client.indices.delete({ index: '_all' }, { ignore: 404 })
+      await client.indices.delete({ index: '_all' }, { ignore: 404 })
     } catch (err) {
-      this.tap.error(err, 'should not error: indices.delete')
+      assert.ifError(err, 'should not error: indices.delete')
     }
 
     try {
-      await this.client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
+      await client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
     } catch (err) {
-      this.tap.error(err, 'should not error: indices.deleteAlias')
+      assert.ifError(err, 'should not error: indices.deleteAlias')
     }
 
     try {
-      const { body: templates } = await this.client.indices.getTemplate()
+      const { body: templates } = await client.indices.getTemplate()
       await helper.runInParallel(
-        this.client, 'indices.deleteTemplate',
+        client, 'indices.deleteTemplate',
         Object.keys(templates).map(t => ({ name: t }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: indices.deleteTemplate')
+      assert.ifError(err, 'should not error: indices.deleteTemplate')
     }
 
     try {
-      const { body: repositories } = await this.client.snapshot.getRepository()
+      const { body: repositories } = await client.snapshot.getRepository()
       for (const repository of Object.keys(repositories)) {
-        const { body: snapshots } = await this.client.snapshot.get({ repository, snapshot: '_all' })
+        const { body: snapshots } = await client.snapshot.get({ repository, snapshot: '_all' })
         await helper.runInParallel(
-          this.client, 'snapshot.delete',
+          client, 'snapshot.delete',
           Object.keys(snapshots).map(snapshot => ({ snapshot, repository })),
           { ignore: [404] }
         )
-        await this.client.snapshot.deleteRepository({ repository }, { ignore: [404] })
+        await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
       }
     } catch (err) {
-      this.tap.error(err, 'should not error: snapshot.delete / snapshot.deleteRepository')
+      assert.ifError(err, 'should not error: snapshot.delete / snapshot.deleteRepository')
     }
   }
 
@@ -90,33 +86,33 @@ class TestRunner {
    * This set of calls should be executed before the final clenup.
    * @returns {Promise}
    */
-  async cleanupXPack () {
-    this.tap.comment('XPack Cleanup')
+  async function cleanupXPack () {
+    // tap.comment('XPack Cleanup')
 
     try {
-      const { body } = await this.client.security.getRole()
+      const { body } = await client.security.getRole()
       const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
       await helper.runInParallel(
-        this.client, 'security.deleteRole',
+        client, 'security.deleteRole',
         roles.map(r => ({ name: r }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: security role cleanup')
+      assert.ifError(err, 'should not error: security role cleanup')
     }
 
     try {
-      const { body } = await this.client.security.getUser()
+      const { body } = await client.security.getUser()
       const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
       await helper.runInParallel(
-        this.client, 'security.deleteUser',
+        client, 'security.deleteUser',
         users.map(r => ({ username: r }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: security user cleanup')
+      assert.ifError(err, 'should not error: security user cleanup')
     }
 
     try {
-      const { body } = await this.client.security.getPrivileges()
+      const { body } = await client.security.getPrivileges()
       const privileges = []
       Object.keys(body).forEach(app => {
         Object.keys(body[app]).forEach(priv => {
@@ -126,52 +122,52 @@ class TestRunner {
           })
         })
       })
-      await helper.runInParallel(this.client, 'security.deletePrivileges', privileges)
+      await helper.runInParallel(client, 'security.deletePrivileges', privileges)
     } catch (err) {
-      this.tap.error(err, 'should not error: security privileges cleanup')
+      assert.ifError(err, 'should not error: security privileges cleanup')
     }
 
     try {
-      await this.client.ml.stopDatafeed({ datafeedId: '*', force: true })
-      const { body } = await this.client.ml.getDatafeeds({ datafeedId: '*' })
+      await client.ml.stopDatafeed({ datafeedId: '*', force: true })
+      const { body } = await client.ml.getDatafeeds({ datafeedId: '*' })
       const feeds = body.datafeeds.map(f => f.datafeed_id)
       await helper.runInParallel(
-        this.client, 'ml.deleteDatafeed',
+        client, 'ml.deleteDatafeed',
         feeds.map(f => ({ datafeedId: f }))
       )
     } catch (err) {
-      this.tap.error(err, 'should error: not ml datafeed cleanup')
+      assert.ifError(err, 'should error: not ml datafeed cleanup')
     }
 
     try {
-      await this.client.ml.closeJob({ jobId: '*', force: true })
-      const { body } = await this.client.ml.getJobs({ jobId: '*' })
+      await client.ml.closeJob({ jobId: '*', force: true })
+      const { body } = await client.ml.getJobs({ jobId: '*' })
       const jobs = body.jobs.map(j => j.job_id)
       await helper.runInParallel(
-        this.client, 'ml.deleteJob',
+        client, 'ml.deleteJob',
         jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: ml job cleanup')
+      assert.ifError(err, 'should not error: ml job cleanup')
     }
 
     try {
-      const { body } = await this.client.rollup.getJobs({ id: '_all' })
+      const { body } = await client.rollup.getJobs({ id: '_all' })
       const jobs = body.jobs.map(j => j.config.id)
       await helper.runInParallel(
-        this.client, 'rollup.stopJob',
+        client, 'rollup.stopJob',
         jobs.map(j => ({ id: j, waitForCompletion: true }))
       )
       await helper.runInParallel(
-        this.client, 'rollup.deleteJob',
+        client, 'rollup.deleteJob',
         jobs.map(j => ({ id: j }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: rollup jobs cleanup')
+      assert.ifError(err, 'should not error: rollup jobs cleanup')
     }
 
     try {
-      const { body } = await this.client.tasks.list()
+      const { body } = await client.tasks.list()
       const tasks = Object.keys(body.nodes)
         .reduce((acc, node) => {
           const { tasks } = body.nodes[node]
@@ -182,24 +178,24 @@ class TestRunner {
         }, [])
 
       await helper.runInParallel(
-        this.client, 'tasks.cancel',
+        client, 'tasks.cancel',
         tasks.map(id => ({ taskId: id }))
       )
     } catch (err) {
-      this.tap.error(err, 'should not error: tasks cleanup')
+      assert.ifError(err, 'should not error: tasks cleanup')
     }
 
     try {
-      await this.client.ilm.removePolicy({ index: '_all' })
+      await client.ilm.removePolicy({ index: '_all' })
     } catch (err) {
-      this.tap.error(err, 'should not error: ilm.removePolicy')
+      assert.ifError(err, 'should not error: ilm.removePolicy')
     }
 
     // refresh the all indexes
     try {
-      await this.client.indices.refresh({ index: '_all' })
+      await client.indices.refresh({ index: '_all' })
     } catch (err) {
-      this.tap.error(err, 'should not error: indices.refresh')
+      assert.ifError(err, 'should not error: indices.refresh')
     }
   }
 
@@ -218,117 +214,37 @@ class TestRunner {
    * @oaram {object} teardown (null if not needed)
    * @returns {Promise}
    */
-  async run (setup, test, teardown) {
+  async function run (setup, test, teardown) {
     // if we should skip a feature in the setup/teardown section
     // we should skip the entire test file
     const skip = getSkip(setup) || getSkip(teardown)
-    if (skip && this.shouldSkip(skip)) {
-      this.skip(skip)
+    if (skip && shouldSkip(esVersion, skip)) {
+      skip(skip)
       return
     }
 
-    if (this.isXPack) {
+    if (isXPack) {
       // Some xpack test requires this user
-      this.tap.comment('Creating x-pack user')
+      // tap.comment('Creating x-pack user')
       try {
-        await this.client.security.putUser({
+        await client.security.putUser({
           username: 'x_pack_rest_user',
           body: { password: 'x-pack-test-password', roles: ['superuser'] }
         })
       } catch (err) {
-        this.tap.error(err, 'should not error: security.putUser')
+        assert.ifError(err, 'should not error: security.putUser')
       }
     }
 
-    if (setup) await this.exec('Setup', setup)
+    if (setup) await exec('Setup', setup)
 
-    await this.exec('Test', test)
+    await exec('Test', test)
 
-    if (teardown) await this.exec('Teardown', teardown)
+    if (teardown) await exec('Teardown', teardown)
 
-    if (this.isXPack) await this.cleanupXPack()
+    if (isXPack) await cleanupXPack()
 
-    await this.cleanup()
-  }
-
-  /**
-   * Logs a skip
-   * @param {object} the actions
-   * @returns {TestRunner}
-   */
-  skip (action) {
-    if (action.reason && action.version) {
-      this.tap.comment(`Skip: ${action.reason} (${action.version})`)
-    } else if (action.features) {
-      this.tap.comment(`Skip: ${JSON.stringify(action.features)})`)
-    } else {
-      this.tap.comment('Skipped')
-    }
-    return this
-  }
-
-  /**
-   * Decides if a test should be skipped
-   * @param {object} the actions
-   * @returns {boolean}
-   */
-  shouldSkip (action) {
-    var shouldSkip = false
-    // skip based on the version
-    if (action.version) {
-      if (action.version.trim() === 'all') return true
-      const [min, max] = action.version.split('-').map(v => v.trim())
-      // if both `min` and `max` are specified
-      if (min && max) {
-        shouldSkip = semver.satisfies(this.esVersion, action.version)
-      // if only `min` is specified
-      } else if (min) {
-        shouldSkip = semver.gte(this.esVersion, min)
-      // if only `max` is specified
-      } else if (max) {
-        shouldSkip = semver.lte(this.esVersion, max)
-      // something went wrong!
-      } else {
-        throw new Error(`skip: Bad version range: ${action.version}`)
-      }
-    }
-
-    if (shouldSkip) return true
-
-    if (action.features) {
-      if (!Array.isArray(action.features)) action.features = [action.features]
-      // returns true if one of the features is not present in the supportedFeatures
-      shouldSkip = !!action.features.filter(f => !~supportedFeatures.indexOf(f)).length
-    }
-
-    if (shouldSkip) return true
-
-    return false
-  }
-
-  /**
-   * Updates the array syntax of keys and values
-   * eg: 'hits.hits.1.stuff' to 'hits.hits[1].stuff'
-   * @param {object} the action to update
-   * @returns {obj} the updated action
-   */
-  updateArraySyntax (obj) {
-    const newObj = {}
-
-    for (const key in obj) {
-      const newKey = key.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
-      const val = obj[key]
-
-      if (typeof val === 'string') {
-        newObj[newKey] = val.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
-      } else if (val !== null && typeof val === 'object') {
-        newObj[newKey] = this.updateArraySyntax(val)
-      } else {
-        newObj[newKey] = val
-      }
-    }
-
-    return newObj
+    await cleanup()
   }
 
   /**
@@ -340,9 +256,9 @@ class TestRunner {
    * @param {object|string} the action to update
    * @returns {object|string} the updated action
    */
-  fillStashedValues (obj) {
+  function fillStashedValues (obj) {
     if (typeof obj === 'string') {
-      return getStashedValues.call(this, obj)
+      return getStashedValues(obj)
     }
     // iterate every key of the object
     for (const key in obj) {
@@ -355,7 +271,7 @@ class TestRunner {
         const start = val.indexOf('${')
         const end = val.indexOf('}', val.indexOf('${'))
         const stashedKey = val.slice(start + 2, end)
-        const stashed = this.stash.get(stashedKey)
+        const stashed = stash.get(stashedKey)
         obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
         continue
       }
@@ -364,7 +280,7 @@ class TestRunner {
         const start = val.indexOf('"$')
         const end = val.indexOf('"', start + 1)
         const stashedKey = val.slice(start + 2, end)
-        const stashed = '"' + this.stash.get(stashedKey) + '"'
+        const stashed = '"' + stash.get(stashedKey) + '"'
         obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
         continue
       }
@@ -372,13 +288,13 @@ class TestRunner {
       // we run the "update value" code
       if (typeof val === 'string' && val.includes('$')) {
         // update the key value
-        obj[key] = getStashedValues.call(this, val)
+        obj[key] = getStashedValues(val)
         continue
       }
 
       // go deep in the object
       if (val !== null && typeof val === 'object') {
-        this.fillStashedValues(val)
+        fillStashedValues(val)
       }
     }
 
@@ -392,7 +308,7 @@ class TestRunner {
         // we update every field that start with '$'
         .map(part => {
           if (part[0] === '$') {
-            const stashed = this.stash.get(part.slice(1))
+            const stashed = stash.get(part.slice(1))
             if (stashed == null) {
               throw new Error(`Cannot find stashed value '${part}' for '${JSON.stringify(obj)}'`)
             }
@@ -414,22 +330,21 @@ class TestRunner {
    * @param {string} the name to identify the stashed value
    * @returns {TestRunner}
    */
-  set (key, name) {
+  function set (key, name) {
     if (key.includes('_arbitrary_key_')) {
       var currentVisit = null
       for (const path of key.split('.')) {
         if (path === '_arbitrary_key_') {
           const keys = Object.keys(currentVisit)
           const arbitraryKey = keys[getRandomInt(0, keys.length)]
-          this.stash.set(name, arbitraryKey)
+          stash.set(name, arbitraryKey)
         } else {
-          currentVisit = delve(this.response, path)
+          currentVisit = delve(response, path)
         }
       }
     } else {
-      this.stash.set(name, delve(this.response, key))
+      stash.set(name, delve(response, key))
     }
-    return this
   }
 
   /**
@@ -438,18 +353,17 @@ class TestRunner {
    * @param {string} the transformation function as string
    * @returns {TestRunner}
    */
-  transform_and_set (name, transform) {
+  function transform_and_set (name, transform) {
     if (/base64EncodeCredentials/.test(transform)) {
       const [user, password] = transform
         .slice(transform.indexOf('(') + 1, -1)
         .replace(/ /g, '')
         .split(',')
-      const userAndPassword = `${delve(this.response, user)}:${delve(this.response, password)}`
-      this.stash.set(name, Buffer.from(userAndPassword).toString('base64'))
+      const userAndPassword = `${delve(response, user)}:${delve(response, password)}`
+      stash.set(name, Buffer.from(userAndPassword).toString('base64'))
     } else {
       throw new Error(`Unknown transform: '${transform}'`)
     }
-    return this
   }
 
   /**
@@ -457,9 +371,9 @@ class TestRunner {
    * @param {object} the action to perform
    * @returns {Promise}
    */
-  async do (action) {
-    const cmd = this.parseDo(action)
-    const api = delve(this.client, cmd.method).bind(this.client)
+  async function doAction (action) {
+    const cmd = parseDo(action)
+    const api = delve(client, cmd.method).bind(client)
 
     const options = { ignore: cmd.params.ignore, headers: action.headers }
     if (cmd.params.ignore) delete cmd.params.ignore
@@ -469,7 +383,7 @@ class TestRunner {
     var body = result ? result.body : null
 
     if (action.warnings && warnings === null) {
-      this.tap.fail('We should get a warning header', action.warnings)
+      assert.fail('We should get a warning header', action.warnings)
     } else if (!action.warnings && warnings !== null) {
       // if there is only the 'default shard will change'
       // warning we skip the check, because the yaml
@@ -482,7 +396,7 @@ class TestRunner {
       })
 
       if (hasDefaultShardsWarning === true && warnings.length > 1) {
-        this.tap.fail('We are not expecting warnings', warnings)
+        assert.fail('We are not expecting warnings', warnings)
       }
     } else if (action.warnings && warnings !== null) {
       // if the yaml warnings do not contain the
@@ -500,22 +414,22 @@ class TestRunner {
         warnings = warnings.filter(h => !h.test(/default\snumber\sof\sshards/g))
       }
 
-      this.tap.deepEqual(warnings, action.warnings)
+      assert.ok(deepEqual(warnings, action.warnings))
     }
 
     if (action.catch) {
-      this.tap.true(
+      assert.ok(
         parseDoError(err, action.catch),
         `the error should be: ${action.catch}`
       )
       try {
-        this.response = JSON.parse(err.body)
+        response = JSON.parse(err.body)
       } catch (e) {
-        this.response = err.body
+        response = err.body
       }
     } else {
-      this.tap.error(err, `should not error: ${cmd.method}`, action)
-      this.response = body
+      assert.ifError(err, `should not error: ${cmd.method}`, action)
+      response = body
     }
   }
 
@@ -525,307 +439,302 @@ class TestRunner {
    * @param {object} the actions to perform
    * @returns {Promise}
    */
-  async exec (name, actions) {
-    this.tap.comment(name)
+  async function exec (name, actions) {
+    // tap.comment(name)
     for (const action of actions) {
       if (action.skip) {
-        if (this.shouldSkip(action.skip)) {
-          this.skip(this.fillStashedValues(action.skip))
+        if (shouldSkip(esVersion, action.skip)) {
+          skip(fillStashedValues(action.skip))
           break
         }
       }
 
       if (action.do) {
-        await this.do(this.fillStashedValues(action.do))
+        await doAction(fillStashedValues(action.do))
       }
 
       if (action.set) {
         const key = Object.keys(action.set)[0]
-        this.set(this.fillStashedValues(key), action.set[key])
+        set(fillStashedValues(key), action.set[key])
       }
 
       if (action.transform_and_set) {
         const key = Object.keys(action.transform_and_set)[0]
-        this.transform_and_set(key, action.transform_and_set[key])
+        transform_and_set(key, action.transform_and_set[key])
       }
 
       if (action.match) {
         const key = Object.keys(action.match)[0]
-        this.match(
+        match(
           // in some cases, the yaml refers to the body with an empty string
           key === '$body' || key === ''
-            ? this.response
-            : delve(this.response, this.fillStashedValues(key)),
+            ? response
+            : delve(response, fillStashedValues(key)),
           key === '$body'
             ? action.match[key]
-            : this.fillStashedValues(action.match)[key],
+            : fillStashedValues(action.match)[key],
           action.match
         )
       }
 
       if (action.lt) {
         const key = Object.keys(action.lt)[0]
-        this.lt(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.lt)[key]
+        lt(
+          delve(response, fillStashedValues(key)),
+          fillStashedValues(action.lt)[key]
         )
       }
 
       if (action.gt) {
         const key = Object.keys(action.gt)[0]
-        this.gt(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.gt)[key]
+        gt(
+          delve(response, fillStashedValues(key)),
+          fillStashedValues(action.gt)[key]
         )
       }
 
       if (action.lte) {
         const key = Object.keys(action.lte)[0]
-        this.lte(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.lte)[key]
+        lte(
+          delve(response, fillStashedValues(key)),
+          fillStashedValues(action.lte)[key]
         )
       }
 
       if (action.gte) {
         const key = Object.keys(action.gte)[0]
-        this.gte(
-          delve(this.response, this.fillStashedValues(key)),
-          this.fillStashedValues(action.gte)[key]
+        gte(
+          delve(response, fillStashedValues(key)),
+          fillStashedValues(action.gte)[key]
         )
       }
 
       if (action.length) {
         const key = Object.keys(action.length)[0]
-        this.length(
+        length(
           key === '$body' || key === ''
-            ? this.response
-            : delve(this.response, this.fillStashedValues(key)),
+            ? response
+            : delve(response, fillStashedValues(key)),
           key === '$body'
             ? action.length[key]
-            : this.fillStashedValues(action.length)[key]
+            : fillStashedValues(action.length)[key]
         )
       }
 
       if (action.is_true) {
-        const isTrue = this.fillStashedValues(action.is_true)
-        this.is_true(
-          delve(this.response, isTrue),
+        const isTrue = fillStashedValues(action.is_true)
+        is_true(
+          delve(response, isTrue),
           isTrue
         )
       }
 
       if (action.is_false) {
-        const isFalse = this.fillStashedValues(action.is_false)
-        this.is_false(
-          delve(this.response, isFalse),
+        const isFalse = fillStashedValues(action.is_false)
+        is_false(
+          delve(response, isFalse),
           isFalse
         )
       }
     }
   }
 
-  /**
-   * Asserts that the given value is truthy
-   * @param {any} the value to check
-   * @param {string} an optional message
-   * @returns {TestRunner}
-   */
-  is_true (val, msg) {
-    this.tap.true(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`)
-    return this
-  }
+  return { run }
+}
 
-  /**
-   * Asserts that the given value is falsey
-   * @param {any} the value to check
-   * @param {string} an optional message
-   * @returns {TestRunner}
-   */
-  is_false (val, msg) {
-    this.tap.false(val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`)
-    return this
-  }
+/**
+ * Asserts that the given value is truthy
+ * @param {any} the value to check
+ * @param {string} an optional message
+ * @returns {TestRunner}
+ */
+function is_true (val, msg) {
+  assert.ok(val, `expect truthy value: ${msg} - value: ${JSON.stringify(val)}`)
+}
 
-  /**
-   * Asserts that two values are the same
-   * @param {any} the first value
-   * @param {any} the second value
-   * @returns {TestRunner}
-   */
-  match (val1, val2, action) {
-    // both values are objects
-    if (typeof val1 === 'object' && typeof val2 === 'object') {
-      this.tap.strictDeepEqual(val1, val2, action)
-    // the first value is the body as string and the second a pattern string
-    } else if (
-      typeof val1 === 'string' && typeof val2 === 'string' &&
-      val2.startsWith('/') && (val2.endsWith('/\n') || val2.endsWith('/'))
-    ) {
-      const regStr = val2
-        // match all comments within a "regexp" match arg
-        .replace(/([\S\s]?)#[^\n]*\n/g, (match, prevChar) => {
-          return prevChar === '\\' ? match : `${prevChar}\n`
-        })
-        // remove all whitespace from the expression, all meaningful
-        // whitespace is represented with \s
-        .replace(/\s/g, '')
-        .slice(1, -1)
-      // 'm' adds the support for multiline regex
-      this.tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
-    // everything else
-    } else {
-      this.tap.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
+/**
+ * Asserts that the given value is falsey
+ * @param {any} the value to check
+ * @param {string} an optional message
+ * @returns {TestRunner}
+ */
+function is_false (val, msg) {
+  assert.ok(!val, `expect falsey value: ${msg} - value: ${JSON.stringify(val)}`)
+}
+
+/**
+ * Asserts that two values are the same
+ * @param {any} the first value
+ * @param {any} the second value
+ * @returns {TestRunner}
+ */
+function match (val1, val2, action) {
+  // both values are objects
+  if (typeof val1 === 'object' && typeof val2 === 'object') {
+    assert.ok(deepEqual(val1, val2), action)
+  // the first value is the body as string and the second a pattern string
+  } else if (
+    typeof val1 === 'string' && typeof val2 === 'string' &&
+    val2.startsWith('/') && (val2.endsWith('/\n') || val2.endsWith('/'))
+  ) {
+    const regStr = val2
+      // match all comments within a "regexp" match arg
+      .replace(/([\S\s]?)#[^\n]*\n/g, (match, prevChar) => {
+        return prevChar === '\\' ? match : `${prevChar}\n`
+      })
+      // remove all whitespace from the expression, all meaningful
+      // whitespace is represented with \s
+      .replace(/\s/g, '')
+      .slice(1, -1)
+    // 'm' adds the support for multiline regex
+    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
+    // tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
+  // everything else
+  } else {
+    assert.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
+  }
+}
+
+/**
+ * Asserts that the first value is less than the second
+ * It also verifies that the two values are numbers
+ * @param {any} the first value
+ * @param {any} the second value
+ * @returns {TestRunner}
+ */
+function lt (val1, val2) {
+  ;[val1, val2] = getNumbers(val1, val2)
+  assert.ok(val1 < val2)
+}
+
+/**
+ * Asserts that the first value is greater than the second
+ * It also verifies that the two values are numbers
+ * @param {any} the first value
+ * @param {any} the second value
+ * @returns {TestRunner}
+ */
+function gt (val1, val2) {
+  ;[val1, val2] = getNumbers(val1, val2)
+  assert.ok(val1 > val2)
+}
+
+/**
+ * Asserts that the first value is less than or equal the second
+ * It also verifies that the two values are numbers
+ * @param {any} the first value
+ * @param {any} the second value
+ * @returns {TestRunner}
+ */
+function lte (val1, val2) {
+  ;[val1, val2] = getNumbers(val1, val2)
+  assert.ok(val1 <= val2)
+}
+
+/**
+ * Asserts that the first value is greater than or equal the second
+ * It also verifies that the two values are numbers
+ * @param {any} the first value
+ * @param {any} the second value
+ * @returns {TestRunner}
+*/
+function gte (val1, val2) {
+  ;[val1, val2] = getNumbers(val1, val2)
+  assert.ok(val1 >= val2)
+}
+
+/**
+ * Asserts that the given value has the specified length
+ * @param {string|object|array} the object to check
+ * @param {number} the expected length
+ * @returns {TestRunner}
+ */
+function length (val, len) {
+  if (typeof val === 'string' || Array.isArray(val)) {
+    assert.strictEqual(val.length, len)
+  } else if (typeof val === 'object' && val !== null) {
+    assert.strictEqual(Object.keys(val).length, len)
+  } else {
+    assert.fail(`length: the given value is invalid: ${val}`)
+  }
+}
+
+/**
+ * Gets a `do` action object and returns a structured object,
+ * where the action is the key and the parameter is the value.
+ * Eg:
+ *   {
+ *     'indices.create': {
+ *       'index': 'test'
+ *     },
+ *     'warnings': [
+ *       '[index] is deprecated'
+ *     ]
+ *   }
+ * becomes
+ *   {
+ *     method: 'indices.create',
+ *     params: {
+ *       index: 'test'
+ *     },
+ *     warnings: [
+ *       '[index] is deprecated'
+ *     ]
+ *   }
+ * @param {object}
+ * @returns {object}
+ */
+function parseDo (action) {
+  return Object.keys(action).reduce((acc, val) => {
+    switch (val) {
+      case 'catch':
+        acc.catch = action.catch
+        break
+      case 'warnings':
+        acc.warnings = action.warnings
+        break
+      case 'node_selector':
+        acc.node_selector = action.node_selector
+        break
+      default:
+        // converts underscore to camelCase
+        // eg: put_mapping => putMapping
+        acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
+        acc.params = camelify(action[val])
     }
-    return this
-  }
+    return acc
+  }, {})
 
-  /**
-   * Asserts that the first value is less than the second
-   * It also verifies that the two values are numbers
-   * @param {any} the first value
-   * @param {any} the second value
-   * @returns {TestRunner}
-   */
-  lt (val1, val2) {
-    ;[val1, val2] = getNumbers(val1, val2)
-    this.tap.true(val1 < val2)
-    return this
-  }
+  function camelify (obj) {
+    const newObj = {}
 
-  /**
-   * Asserts that the first value is greater than the second
-   * It also verifies that the two values are numbers
-   * @param {any} the first value
-   * @param {any} the second value
-   * @returns {TestRunner}
-   */
-  gt (val1, val2) {
-    ;[val1, val2] = getNumbers(val1, val2)
-    this.tap.true(val1 > val2)
-    return this
-  }
+    // TODO: add camelCase support for this fields
+    const doNotCamelify = ['copy_settings']
 
-  /**
-   * Asserts that the first value is less than or equal the second
-   * It also verifies that the two values are numbers
-   * @param {any} the first value
-   * @param {any} the second value
-   * @returns {TestRunner}
-   */
-  lte (val1, val2) {
-    ;[val1, val2] = getNumbers(val1, val2)
-    this.tap.true(val1 <= val2)
-    return this
-  }
-
-  /**
-   * Asserts that the first value is greater than or equal the second
-   * It also verifies that the two values are numbers
-   * @param {any} the first value
-   * @param {any} the second value
-   * @returns {TestRunner}
-  */
-  gte (val1, val2) {
-    ;[val1, val2] = getNumbers(val1, val2)
-    this.tap.true(val1 >= val2)
-    return this
-  }
-
-  /**
-   * Asserts that the given value has the specified length
-   * @param {string|object|array} the object to check
-   * @param {number} the expected length
-   * @returns {TestRunner}
-   */
-  length (val, len) {
-    if (typeof val === 'string' || Array.isArray(val)) {
-      this.tap.strictEqual(val.length, len)
-    } else if (typeof val === 'object' && val !== null) {
-      this.tap.strictEqual(Object.keys(val).length, len)
-    } else {
-      this.tap.fail(`length: the given value is invalid: ${val}`)
-    }
-    return this
-  }
-
-  /**
-   * Gets a `do` action object and returns a structured object,
-   * where the action is the key and the parameter is the value.
-   * Eg:
-   *   {
-   *     'indices.create': {
-   *       'index': 'test'
-   *     },
-   *     'warnings': [
-   *       '[index] is deprecated'
-   *     ]
-   *   }
-   * becomes
-   *   {
-   *     method: 'indices.create',
-   *     params: {
-   *       index: 'test'
-   *     },
-   *     warnings: [
-   *       '[index] is deprecated'
-   *     ]
-   *   }
-   * @param {object}
-   * @returns {object}
-   */
-  parseDo (action) {
-    return Object.keys(action).reduce((acc, val) => {
-      switch (val) {
-        case 'catch':
-          acc.catch = action.catch
-          break
-        case 'warnings':
-          acc.warnings = action.warnings
-          break
-        case 'node_selector':
-          acc.node_selector = action.node_selector
-          break
-        default:
-          // converts underscore to camelCase
-          // eg: put_mapping => putMapping
-          acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
-          acc.params = camelify(action[val])
-      }
-      return acc
-    }, {})
-
-    function camelify (obj) {
-      const newObj = {}
-
-      // TODO: add camelCase support for this fields
-      const doNotCamelify = ['copy_settings']
-
-      for (const key in obj) {
-        const val = obj[key]
-        var newKey = key
-        if (!~doNotCamelify.indexOf(key)) {
-          // if the key starts with `_` we should not camelify the first occurence
-          // eg: _source_include => _sourceInclude
-          newKey = key[0] === '_'
-            ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
-            : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
-        }
-
-        if (
-          val !== null &&
-          typeof val === 'object' &&
-          !Array.isArray(val) &&
-          key !== 'body'
-        ) {
-          newObj[newKey] = camelify(val)
-        } else {
-          newObj[newKey] = val
-        }
+    for (const key in obj) {
+      const val = obj[key]
+      var newKey = key
+      if (!~doNotCamelify.indexOf(key)) {
+        // if the key starts with `_` we should not camelify the first occurence
+        // eg: _source_include => _sourceInclude
+        newKey = key[0] === '_'
+          ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+          : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
       }
 
-      return newObj
+      if (
+        val !== null &&
+        typeof val === 'object' &&
+        !Array.isArray(val) &&
+        key !== 'body'
+      ) {
+        newObj[newKey] = camelify(val)
+      } else {
+        newObj[newKey] = val
+      }
     }
+
+    return newObj
   }
 }
 
@@ -886,4 +795,83 @@ function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-module.exports = TestRunner
+/**
+ * Logs a skip
+ * @param {object} the actions
+ * @returns {TestRunner}
+ */
+function skip (action) {
+  if (action.reason && action.version) {
+    // tap.comment(`Skip: ${action.reason} (${action.version})`)
+  } else if (action.features) {
+    // tap.comment(`Skip: ${JSON.stringify(action.features)})`)
+  } else {
+    // tap.comment('Skipped')
+  }
+}
+
+/**
+ * Decides if a test should be skipped
+ * @param {object} the actions
+ * @returns {boolean}
+ */
+function shouldSkip (esVersion, action) {
+  var shouldSkip = false
+  // skip based on the version
+  if (action.version) {
+    if (action.version.trim() === 'all') return true
+    const [min, max] = action.version.split('-').map(v => v.trim())
+    // if both `min` and `max` are specified
+    if (min && max) {
+      shouldSkip = semver.satisfies(esVersion, action.version)
+    // if only `min` is specified
+    } else if (min) {
+      shouldSkip = semver.gte(esVersion, min)
+    // if only `max` is specified
+    } else if (max) {
+      shouldSkip = semver.lte(esVersion, max)
+    // something went wrong!
+    } else {
+      throw new Error(`skip: Bad version range: ${action.version}`)
+    }
+  }
+
+  if (shouldSkip) return true
+
+  if (action.features) {
+    if (!Array.isArray(action.features)) action.features = [action.features]
+    // returns true if one of the features is not present in the supportedFeatures
+    shouldSkip = !!action.features.filter(f => !~supportedFeatures.indexOf(f)).length
+  }
+
+  if (shouldSkip) return true
+
+  return false
+}
+
+/**
+ * Updates the array syntax of keys and values
+ * eg: 'hits.hits.1.stuff' to 'hits.hits[1].stuff'
+ * @param {object} the action to update
+ * @returns {obj} the updated action
+ */
+// function updateArraySyntax (obj) {
+//   const newObj = {}
+
+//   for (const key in obj) {
+//     const newKey = key.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
+//     const val = obj[key]
+
+//     if (typeof val === 'string') {
+//       newObj[newKey] = val.replace(/\.\d{1,}\./g, v => `[${v.slice(1, -1)}].`)
+//     } else if (val !== null && typeof val === 'object') {
+//       newObj[newKey] = updateArraySyntax(val)
+//     } else {
+//       newObj[newKey] = val
+//     }
+//   }
+
+//   return newObj
+// }
+
+module.exports = build

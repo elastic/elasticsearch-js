@@ -44,6 +44,7 @@
     "dedent": "^0.7.0",
     "deepmerge": "^4.0.0",
     "dezalgo": "^1.0.3",
+    "fast-deep-equal": "^3.1.1",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
     "lolex": "^4.0.1",
