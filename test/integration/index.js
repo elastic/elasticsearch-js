@@ -18,6 +18,10 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 
+const MAX_API_TIME = 1000 * 60
+const MAX_FILE_TIME = 1000 * 10
+const MAX_TEST_TIME = 1000 * 2
+
 const ossSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
@@ -137,6 +141,7 @@ async function start ({ client, isXPack }) {
       return arr
     }, [])
 
+  const totalTime = now()
   for (const folder of folders) {
     // pretty name
     const apiName = folder[0].slice(
@@ -148,6 +153,11 @@ async function start ({ client, isXPack }) {
     const apiTime = now()
 
     for (const file of folder) {
+      const testRunner = build({
+        client,
+        version,
+        isXPack: file.includes('x-pack')
+      })
       const fileTime = now()
       const data = readFileSync(file, 'utf8')
       // get the test yaml (as object), some file has multiple yaml documents inside,
@@ -176,23 +186,34 @@ async function start ({ client, isXPack }) {
         if (name === 'setup' || name === 'teardown') continue
         if (shouldSkip(isXPack, file, name)) continue
         log('        - ' + name)
-        const testRunner = build({
-          client,
-          version,
-          isXPack: file.includes('x-pack')
-        })
         try {
           await testRunner.run(setupTest, test[name], teardownTest)
         } catch (err) {
           console.error(err)
           process.exit(1)
         }
-        log('          took ' + ms(now() - testTime))
+        const totalTestTime = now() - testTime
+        if (totalTestTime > MAX_TEST_TIME) {
+          log('          took too long: ' + ms(totalTestTime))
+        } else {
+          log('          took: ' + ms(totalTestTime))
+        }
       }
-      log(`    ${cleanPath} took ` + ms(now() - fileTime))
+      const totalFileTime = now() - fileTime
+      if (totalFileTime > MAX_FILE_TIME) {
+        log(`    ${cleanPath} took too long: ` + ms(totalFileTime))
+      } else {
+        log(`    ${cleanPath} took: ` + ms(totalFileTime))
+      }
     }
-    log(`${apiName} took ` + ms(now() - apiTime))
+    const totalApiTime = now() - apiTime
+    if (totalApiTime > MAX_API_TIME) {
+      log(`${apiName} took too long: ` + ms(totalApiTime))
+    } else {
+      log(`${apiName} took: ` + ms(totalApiTime))
+    }
   }
+  log(`Total testing time: ${ms(now() - totalTime)}`)
 }
 
 function log (text) {
