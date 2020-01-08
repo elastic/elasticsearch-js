@@ -59,7 +59,11 @@ const xPackBlackList = {
   'ssl/10_basic.yml': ['*'],
   // the test passes, but the regex fails
   'transform/preview_transforms.yml': ['Test preview with non-existing source index'],
-  'transforms_crud.yml': ['Test put transform with invalid source index', 'Test alias scenarios'],
+  'transforms_crud.yml': [
+    'Test put transform with invalid source index',
+    'Test alias scenarios',
+    'Test invalid destination index name'
+  ],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
