@@ -7,23 +7,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlEstimateMemoryUsage (opts) {
+function buildGetScriptLanguages (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a ml.estimate_memory_usage request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
+   * Perform a get_script_languages request
+   * Returns available script types, languages and contexts
    */
-  return function mlEstimateMemoryUsage (params, options, callback) {
+  return function getScriptLanguages (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -33,12 +38,6 @@ function buildMlEstimateMemoryUsage (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -58,14 +57,14 @@ function buildMlEstimateMemoryUsage (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
+    if (method == null) method = 'GET'
+    path = '/' + '_script_language'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -74,4 +73,4 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 }
 
-module.exports = buildMlEstimateMemoryUsage
+module.exports = buildGetScriptLanguages

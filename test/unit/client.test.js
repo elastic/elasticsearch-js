@@ -851,3 +851,87 @@ test('Elastic cloud config', t => {
 
   t.end()
 })
+
+test('Opaque Id support', t => {
+  t.test('No opaqueId', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], undefined)
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('No prefix', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], 'bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, {
+        opaqueId: 'bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('With prefix', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], 'foo-bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`,
+        opaqueIdPrefix: 'foo-'
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, {
+        opaqueId: 'bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.end()
+})

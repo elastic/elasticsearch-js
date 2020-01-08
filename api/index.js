@@ -151,6 +151,8 @@ function ESAPI (opts) {
     getScript: lazyLoad('get_script', opts),
     get_script_context: lazyLoad('get_script_context', opts),
     getScriptContext: lazyLoad('get_script_context', opts),
+    get_script_languages: lazyLoad('get_script_languages', opts),
+    getScriptLanguages: lazyLoad('get_script_languages', opts),
     get_source: lazyLoad('get_source', opts),
     getSource: lazyLoad('get_source', opts),
     graph: {
@@ -294,10 +296,10 @@ function ESAPI (opts) {
       deleteModelSnapshot: lazyLoad('ml.delete_model_snapshot', opts),
       delete_trained_model: lazyLoad('ml.delete_trained_model', opts),
       deleteTrainedModel: lazyLoad('ml.delete_trained_model', opts),
-      estimate_memory_usage: lazyLoad('ml.estimate_memory_usage', opts),
-      estimateMemoryUsage: lazyLoad('ml.estimate_memory_usage', opts),
       evaluate_data_frame: lazyLoad('ml.evaluate_data_frame', opts),
       evaluateDataFrame: lazyLoad('ml.evaluate_data_frame', opts),
+      explain_data_frame_analytics: lazyLoad('ml.explain_data_frame_analytics', opts),
+      explainDataFrameAnalytics: lazyLoad('ml.explain_data_frame_analytics', opts),
       find_file_structure: lazyLoad('ml.find_file_structure', opts),
       findFileStructure: lazyLoad('ml.find_file_structure', opts),
       flush_job: lazyLoad('ml.flush_job', opts),
@@ -498,8 +500,12 @@ function ESAPI (opts) {
       getLifecycle: lazyLoad('slm.get_lifecycle', opts),
       get_stats: lazyLoad('slm.get_stats', opts),
       getStats: lazyLoad('slm.get_stats', opts),
+      get_status: lazyLoad('slm.get_status', opts),
+      getStatus: lazyLoad('slm.get_status', opts),
       put_lifecycle: lazyLoad('slm.put_lifecycle', opts),
-      putLifecycle: lazyLoad('slm.put_lifecycle', opts)
+      putLifecycle: lazyLoad('slm.put_lifecycle', opts),
+      start: lazyLoad('slm.start', opts),
+      stop: lazyLoad('slm.stop', opts)
     },
     snapshot: {
       cleanup_repository: lazyLoad('snapshot.cleanup_repository', opts),

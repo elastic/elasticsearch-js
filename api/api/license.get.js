@@ -12,11 +12,12 @@ function buildLicenseGet (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'local'
+    'local',
+    'accept_enterprise'
   ]
 
   const snakeCase = {
-
+    acceptEnterprise: 'accept_enterprise'
   }
 
   /**
