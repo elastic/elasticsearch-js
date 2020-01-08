@@ -64,6 +64,11 @@ const xPackBlackList = {
     'Test alias scenarios',
     'Test invalid destination index name'
   ],
+  'transforms_update.yml': [
+    'Test put transform with invalid source index',
+    'Test alias scenarios',
+    'Test invalid destination index name'
+  ],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
