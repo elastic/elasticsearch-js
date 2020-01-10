@@ -88,6 +88,7 @@ client.bulk({
 })
 ----
 link:{ref}/docs-bulk.html[Reference]
+<<bulk_examples,Example>>
 [cols=2*]
 |===
 |`index`
