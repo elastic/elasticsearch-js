@@ -47,13 +47,26 @@ ELASTICSEARCH_VERSION="${elasticsearch_image}:${ELASTICSEARCH_VERSION}" \
   SSL_CA="${repo}${cacrt}" \
   bash .ci/run-elasticsearch.sh
 
-docker run \
-  --network=esnet \
-  --env "TEST_ES_SERVER=${elasticsearch_url}" \
-  --env "CODECOV_TOKEN" \
-  --volume $repo:/usr/src/app \
-  --volume /usr/src/app/node_modules \
-  --name elasticsearch-js \
-  --rm \
-  elastic/elasticsearch-js \
-  npm run ci
+if [[ $TEST_SUITE != "xpack" ]]; then
+  docker run \
+    --network=esnet \
+    --env "TEST_ES_SERVER=${elasticsearch_url}" \
+    --env "CODECOV_TOKEN" \
+    --volume $repo:/usr/src/app \
+    --volume /usr/src/app/node_modules \
+    --name elasticsearch-js \
+    --rm \
+    elastic/elasticsearch-js \
+    npm run ci
+else
+  docker run \
+    --network=esnet \
+    --env "TEST_ES_SERVER=${elasticsearch_url}" \
+    --env "CODECOV_TOKEN" \
+    --volume $repo:/usr/src/app \
+    --volume /usr/src/app/node_modules \
+    --name elasticsearch-js \
+    --rm \
+    elastic/elasticsearch-js \
+    npm run test:integration
+fi
