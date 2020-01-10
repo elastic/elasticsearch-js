@@ -18,8 +18,8 @@ const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
 const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 
-const MAX_API_TIME = 1000 * 60
-const MAX_FILE_TIME = 1000 * 10
+const MAX_API_TIME = 1000 * 90
+const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 2
 
 const ossSkips = {
