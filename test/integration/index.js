@@ -121,9 +121,7 @@ async function start ({ client, isXPack }) {
 
   log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
 
-  const folders = []
-    .concat(getAllFiles(yamlFolder))
-    .concat(isXPack ? getAllFiles(xPackYamlFolder) : [])
+  const folders = getAllFiles(isXPack ? xPackYamlFolder : yamlFolder)
     .filter(t => !/(README|TODO)/g.test(t))
     // we cluster the array based on the folder names,
     // to provide a better test log output
