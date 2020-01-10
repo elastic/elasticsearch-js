@@ -1,4 +1,4 @@
-[[bulk_examples]]
+[[reindex_examples]]
 == Reindex
 
 The `reindex` API extracts the document source from the source index and indexes the documents into the destination index. You can copy all documents to the destination index, reindex a subset of the documents or update the source before to reindex it.

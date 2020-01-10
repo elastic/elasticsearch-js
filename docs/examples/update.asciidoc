@@ -1,4 +1,4 @@
-[[get_examples]]
+[[update_examples]]
 == Update
 
 The update API allows updates of a specific document using the given script. +
