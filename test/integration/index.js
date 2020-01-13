@@ -69,6 +69,14 @@ const xPackBlackList = {
     'Test alias scenarios',
     'Test invalid destination index name'
   ],
+  'ml/data_frame_analytics_crud.yml': [
+    'Test put config given dest index contains uppercase chars',
+    'Test put config with missing concrete source index',
+    'Test put config with dest index same as source index',
+    'Test put config with dest index matching multiple indices',
+    'Test put config with dest index included in source via alias',
+    'Test put config with remote source index'
+  ],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
