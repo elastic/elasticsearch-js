@@ -459,6 +459,8 @@ declare class Client extends EventEmitter {
     putFilter: ApiMethod<RequestParams.MlPutFilter>
     put_job: ApiMethod<RequestParams.MlPutJob>
     putJob: ApiMethod<RequestParams.MlPutJob>
+    put_trained_model: ApiMethod<RequestParams.MlPutTrainedModel>
+    putTrainedModel: ApiMethod<RequestParams.MlPutTrainedModel>
     revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     set_upgrade_mode: ApiMethod<RequestParams.MlSetUpgradeMode>

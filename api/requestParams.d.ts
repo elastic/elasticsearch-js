@@ -1855,6 +1855,11 @@ export interface MlPutJob<T = any> extends Generic {
   body: T;
 }
 
+export interface MlPutTrainedModel<T = any> extends Generic {
+  model_id: string;
+  body: T;
+}
+
 export interface MlRevertModelSnapshot<T = any> extends Generic {
   job_id: string;
   snapshot_id: string;
