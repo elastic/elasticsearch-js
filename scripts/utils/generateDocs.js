@@ -6,6 +6,8 @@
 
 const dedent = require('dedent')
 
+const apisWhichHasExample = ['bulk','exists','get','msearch','search];
+
 function generateDocs (common, spec) {
   var doc = dedent`
   [[api-reference]]
@@ -196,7 +198,11 @@ function generateApiDoc (spec) {
   client.${camelify(name)}(${codeParameters.length > 0 ? `{\n    ${codeParameters}\n}` : ''})
   ----\n`
   if (documentationUrl) {
-    doc += `link:${documentationUrl}[Reference]\n`
+    doc += `link:${documentationUrl}[Reference]`
+  }
+
+  if(apisWhichHasExample.some(api => api === name) {
+     doc += `<<${name}_examples,Examples>>\n`
   }
 
   if (params.length !== 0) {
