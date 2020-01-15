@@ -16,7 +16,7 @@ const ms = require('ms')
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
 const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
-const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+// const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
 
 const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
@@ -121,7 +121,8 @@ async function start ({ client, isXPack }) {
 
   log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
 
-  const folders = getAllFiles(isXPack ? xPackYamlFolder : yamlFolder)
+  // const folders = getAllFiles(isXPack ? xPackYamlFolder : yamlFolder)
+  const folders = getAllFiles(yamlFolder)
     .filter(t => !/(README|TODO)/g.test(t))
     // we cluster the array based on the folder names,
     // to provide a better test log output
