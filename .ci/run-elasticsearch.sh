@@ -5,12 +5,18 @@
 #
 # Export the ELASTICSEARCH_VERSION variable, eg. 'elasticsearch:8.0.0-SNAPSHOT'.
 
+# Version 1.0
+# - Initial version of the run-elasticsearch.sh script
+
+
 if [[ -z "$ELASTICSEARCH_VERSION" ]]; then
   echo -e "\033[31;1mERROR:\033[0m Required environment variable [ELASTICSEARCH_VERSION] not set\033[0m"
   exit 1
 fi
 
 set -euxo pipefail
+
+SCRIPT_PATH=$(dirname $(realpath -s $0))
 
 moniker=$(echo "$ELASTICSEARCH_VERSION" | tr -C "[:alnum:]" '-')
 suffix=rest-test
@@ -21,9 +27,10 @@ CLUSTER_NAME=${CLUSTER_NAME-${moniker}${suffix}}
 HTTP_PORT=${HTTP_PORT-9200}
 
 ELASTIC_PASSWORD=${ELASTIC_PASSWORD-changeme}
-SSL_CERT=${SSL_CERT-"$PWD/certs/testnode.crt"}
-SSL_KEY=${SSL_KEY-"$PWD/certs/testnode.key"}
-SSL_CA=${SSL_CA-"$PWD/certs/ca.crt"}
+SSL_CERT=${SSL_CERT-"${SCRIPT_PATH}/certs/testnode.crt"}
+SSL_KEY=${SSL_KEY-"${SCRIPT_PATH}/certs/testnode.key"}
+SSL_CA=${SSL_CA-"${SCRIPT_PATH}/certs/ca.crt"}
+SSL_CA_PEM=${SSL_CA-"${SCRIPT_PATH}/certs/ca.pem"}
 
 DETACH=${DETACH-false}
 CLEANUP=${CLEANUP-false}
@@ -40,8 +47,14 @@ function cleanup_volume {
     (docker volume rm "$1") || true
   fi
 }
+function container_running {
+  if [[ "$(docker ps -q -f name=$1)" ]]; then 
+    return 0;
+    else return 1;
+  fi
+}
 function cleanup_node {
-  if [[ "$(docker ps -q -f name=$1)" ]]; then
+  if container_running "$1"; then
     echo -e "\033[34;1mINFO:\033[0m Removing container $1\033[0m"
     (docker container rm --force --volumes "$1") || true
     cleanup_volume "$1-${suffix}-data"
@@ -125,6 +138,7 @@ END
     --volume $SSL_CERT:/usr/share/elasticsearch/config/certs/testnode.crt
     --volume $SSL_KEY:/usr/share/elasticsearch/config/certs/testnode.key
     --volume $SSL_CA:/usr/share/elasticsearch/config/certs/ca.crt
+    --volume $SSL_CA_PEM:/usr/share/elasticsearch/config/certs/ca.pem
 END
 ))
 fi
@@ -132,6 +146,11 @@ fi
 url="http://$NODE_NAME"
 if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
   url="https://elastic:$ELASTIC_PASSWORD@$NODE_NAME"
+fi
+
+cert_validation_flags="--insecure"
+if [[ "$NODE_NAME" == "instance" ]]; then
+  cert_validation_flags="--cacert /usr/share/elasticsearch/config/certs/ca.pem --resolve ${NODE_NAME}:443:127.0.0.1"
 fi
 
 echo -e "\033[34;1mINFO:\033[0m Starting container $NODE_NAME \033[0m"
@@ -146,7 +165,7 @@ docker run \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
   --detach="$DETACH" \
-  --health-cmd="curl --silent --insecure --fail $url:9200/_cluster/health || exit 1" \
+  --health-cmd="curl $cert_validation_flags --fail $url:9200/_cluster/health || exit 1" \
   --health-interval=2s \
   --health-retries=20 \
   --health-timeout=2s \
@@ -155,14 +174,19 @@ docker run \
 set +x
 
 if [[ "$DETACH" == "true" ]]; then
-  until [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "starting" ]]; do
-    sleep 2;
+  until ! container_running "$NODE_NAME" || (container_running "$NODE_NAME" && [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "starting" ]]); do
     echo ""
+    docker inspect -f "{{range .State.Health.Log}}{{.Output}}{{end}}" ${NODE_NAME}
     echo -e "\033[34;1mINFO:\033[0m waiting for node $NODE_NAME to be up\033[0m"
+    sleep 2;
   done;
-  # Always show the node getting started logs, this is very useful both on CI as well as while developing
-  docker logs "$NODE_NAME"
-  if [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "healthy" ]]; then
+
+  # Always show logs if the container is running, this is very useful both on CI as well as while developing
+  if container_running $NODE_NAME; then
+    docker logs $NODE_NAME
+  fi
+
+  if ! container_running $NODE_NAME || [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "healthy" ]]; then
     cleanup 1
     echo
     echo -e "\033[31;1mERROR:\033[0m Failed to start ${ELASTICSEARCH_VERSION} in detached mode beyond health checks\033[0m"
