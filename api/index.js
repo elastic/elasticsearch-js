@@ -360,6 +360,8 @@ function ESAPI (opts) {
       putFilter: lazyLoad('ml.put_filter', opts),
       put_job: lazyLoad('ml.put_job', opts),
       putJob: lazyLoad('ml.put_job', opts),
+      put_trained_model: lazyLoad('ml.put_trained_model', opts),
+      putTrainedModel: lazyLoad('ml.put_trained_model', opts),
       revert_model_snapshot: lazyLoad('ml.revert_model_snapshot', opts),
       revertModelSnapshot: lazyLoad('ml.revert_model_snapshot', opts),
       set_upgrade_mode: lazyLoad('ml.set_upgrade_mode', opts),
