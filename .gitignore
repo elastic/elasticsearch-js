@@ -45,6 +45,9 @@ jspm_packages
 # vim swap files
 *.swp
 
+#Jetbrains editor folder
+.idea
+
 package-lock.json
 
 # elasticsearch repo or binary files

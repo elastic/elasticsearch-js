@@ -81,7 +81,7 @@ export interface TransportRequestParams {
 }
 
 export interface TransportRequestOptions {
-  ignore?: [number];
+  ignore?: number[];
   requestTimeout?: number | string;
   maxRetries?: number;
   asStream?: boolean;
