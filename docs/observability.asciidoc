@@ -1,15 +1,22 @@
 [[observability]]
 == Observability
 
-The client does not provide a default logger, but instead it offers an event emitter interfaces to hook into internal events, such as `request` and `response`.
+The client does not provide a default logger, but instead it offers an event 
+emitter interfaces to hook into internal events, such as `request` and 
+`response`.
 
-Correlating those events can be quite hard, especially if your applications have a large codebase with many events happening at the same time.
+Correlating those events can be quite hard, especially if your applications have 
+a large codebase with many events happening at the same time.
 
-To help you with this, the client offers you a correlation id system and other features, let's see them in action.
+To help you with this, the client offers you a correlation id system and other 
+features. Let's see them in action.
 
 === Events
-The client is an event emitter, this means that you can listen for its event and add additional logic to your code, without need to change the client internals or your normal usage. +
-You can find the events names by access the `events` key of the client.
+
+The client is an event emitter, this means that you can listen for its event and 
+add additional logic to your code, without need to change the client internals 
+or your normal usage. You can find the events names by access the `events` key 
+of the client.
 
 [source,js]
 ----
@@ -17,7 +24,9 @@ const { events } = require('@elastic/elasticsearch')
 console.log(events)
 ----
 
-The event emitter functionality can be useful if you want to log every request, response and error that is happening during the use of the client.
+
+The event emitter functionality can be useful if you want to log every request, 
+response and error that is happening during the use of the client.
 
 [source,js]
 ----
@@ -34,11 +43,12 @@ client.on('response', (err, result) => {
 })
 ----
 
+
 The client emits the following events:
 [cols=2*]
 |===
 |`request`
-a|Emitted before sending the actual request to Elasticsearch _(emitted multiple times in case of retries)_.
+a|Emitted before sending the actual request to {es} _(emitted multiple times in case of retries)_.
 [source,js]
 ----
 client.on('request', (err, result) => {
@@ -47,7 +57,7 @@ client.on('request', (err, result) => {
 ----
 
 |`response`
-a|Emitted once Elasticsearch response has been received and parsed.
+a|Emitted once {es} response has been received and parsed.
 [source,js]
 ----
 client.on('response', (err, result) => {
@@ -76,6 +86,7 @@ client.on('resurrect', (err, result) => {
 |===
 
 The values of `result` in `request`, `response` and `sniff` will be:
+
 [source,ts]
 ----
 body: any;
@@ -100,7 +111,9 @@ meta: {
 };
 ----
 
+
 While the `result` value in `resurrect` will be:
+
 [source,ts]
 ----
 strategy: string;
@@ -112,8 +125,13 @@ request: {
 };
 ----
 
+
 === Correlation id
-Correlating events can be quite hard, especially if there are many events at the same time. The client offers you an automatic (and configurable) system to help you handle this problem.
+
+Correlating events can be quite hard, especially if there are many events at the 
+same time. The client offers you an automatic (and configurable) system to help 
+you handle this problem.
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -141,7 +159,10 @@ client.search({
 })
 ----
 
-By default the id is an incremental integer, but you can easily configure that with the `generateRequestId` option:
+
+By default the id is an incremental integer, but you can easily configure that 
+with the `generateRequestId` option:
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -156,7 +177,9 @@ const client = new Client({
 })
 ----
 
+
 You can also specify a custom id per request:
+
 [source,js]
 ----
 client.search({
@@ -169,8 +192,12 @@ client.search({
 })
 ----
 
+
 === Context object
-Sometimes, you might need to make some custom data available in your events, you can do that via the `context` option of a request: 
+
+Sometimes, you might need to make some custom data available in your events, you 
+can do that via the `context` option of a request:
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -202,8 +229,14 @@ client.search({
 })
 ----
 
+
 === Client name
-If you are using multiple instances of the client or if you are using multiple child clients _(which is the recommended way to have multiple instances of the client)_, you might need to recognize which client you are using, the `name` options will help you in this regard:
+
+If you are using multiple instances of the client or if you are using multiple 
+child clients _(which is the recommended way to have multiple instances of the 
+client)_, you might need to recognize which client you are using. The `name` 
+options will help you in this regard.
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -249,11 +282,19 @@ child.search({
 })
 ----
 
-=== X-Opaque-Id support
-To improve the overall observability, the client offers an easy way to configure the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this will allow you to discover this identifier in the https://www.elastic.co/guide/en/elasticsearch/reference/master/logging.html#deprecation-logging[deprecation logs], help you with https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] as well as https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks[identifying running tasks].
 
-The `X-Opaque-Id` should be configured in each request, for doing that you can use the `opaqueId` option, as you can see in the following example. +
-The resulting header will be `{ 'X-Opaque-Id': 'my-search' }`.
+=== X-Opaque-Id support
+
+To improve the overall observability, the client offers an easy way to configure 
+the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, 
+this will allow you to discover this identifier in the 
+https://www.elastic.co/guide/en/elasticsearch/reference/master/logging.html#deprecation-logging[deprecation logs], 
+help you with https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
+as well as https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks[identifying running tasks].
+
+The `X-Opaque-Id` should be configured in each request, for doing that you can 
+use the `opaqueId` option, as you can see in the following example. The 
+resulting header will be `{ 'X-Opaque-Id': 'my-search' }`.
 
 [source,js]
 ----
@@ -272,8 +313,13 @@ client.search({
 })
 ----
 
-Sometimes it may be useful to prefix all the `X-Opaque-Id` headers with a specific string, in case you need to identify a specific client or server. For doing this, the client offers a top-level configuration option: `opaqueIdPrefix`. +
-In the following example, the resulting header will be `{ 'X-Opaque-Id': 'proxy-client::my-search' }`.
+
+Sometimes it may be useful to prefix all the `X-Opaque-Id` headers with a 
+specific string, in case you need to identify a specific client or server. For 
+doing this, the client offers a top-level configuration option: 
+`opaqueIdPrefix`. In the following example, the resulting header will be 
+`{ 'X-Opaque-Id': 'proxy-client::my-search' }`.
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
