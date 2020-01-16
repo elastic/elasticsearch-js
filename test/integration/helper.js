@@ -15,6 +15,7 @@ const esDefaultRoles = [
   'data_frame_transforms_user',
   'enrich_user',
   'ingest_admin',
+  'kibana_admin',
   'kibana_dashboard_only_user',
   'kibana_system',
   'kibana_user',
