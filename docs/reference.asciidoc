@@ -100,7 +100,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -1492,7 +1492,7 @@ WARNING: This parameter has been deprecated.
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -1644,7 +1644,7 @@ _Default:_ `open`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -4255,7 +4255,7 @@ link:{ref}/docs-reindex.html[Reference]
 [cols=2*]
 |===
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -5188,7 +5188,7 @@ WARNING: This parameter has been deprecated.
 |`string` - The script language (default: painless)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`retry_on_conflict` or `retryOnConflict`
 |`number` - Specify how many times should the operation be retried when a conflict occurs (default: 0)
@@ -5352,7 +5352,7 @@ _Default:_ `open`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
