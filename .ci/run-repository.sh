@@ -36,13 +36,26 @@ echo -e "\033[1m>>>>> NPM run ci >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
 repo=$(realpath $(dirname $(realpath -s $0))/../)
 
-docker run \
-  --network=${NETWORK_NAME} \
-  --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
-  --env "CODECOV_TOKEN" \
-  --volume $repo:/usr/src/app \
-  --volume /usr/src/app/node_modules \
-  --name elasticsearch-js \
-  --rm \
-  elastic/elasticsearch-js \
-  npm run ci
+if [[ $TEST_SUITE != "xpack" ]]; then
+  docker run \
+    --network=${NETWORK_NAME} \
+    --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+    --env "CODECOV_TOKEN" \
+    --volume $repo:/usr/src/app \
+    --volume /usr/src/app/node_modules \
+    --name elasticsearch-js \
+    --rm \
+    elastic/elasticsearch-js \
+    npm run ci
+else
+  docker run \
+    --network=${NETWORK_NAME} \
+    --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+    --env "CODECOV_TOKEN" \
+    --volume $repo:/usr/src/app \
+    --volume /usr/src/app/node_modules \
+    --name elasticsearch-js \
+    --rm \
+    elastic/elasticsearch-js \
+    npm run test:integration
+fi

@@ -8372,7 +8372,7 @@ client.slm.deleteLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-delete.html[Reference]
+link:{ref}/slm-api-delete-policy.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8388,7 +8388,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute.html[Reference]
+link:{ref}/slm-api-execute-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8413,7 +8413,7 @@ client.slm.getLifecycle({
   policy_id: string | string[]
 })
 ----
-link:{ref}/slm-api-get.html[Reference]
+link:{ref}/slm-api-get-policy.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8427,7 +8427,7 @@ link:{ref}/slm-api-get.html[Reference]
 ----
 client.slm.getStats()
 ----
-link:{ref}/slm-get-stats.html[Reference]
+link:{ref}/slm-api-get-stats.html[Reference]
 
 
 === slm.getStatus
@@ -8436,7 +8436,7 @@ link:{ref}/slm-get-stats.html[Reference]
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-get-status.html[Reference]
+link:{ref}/slm-api-get-status.html[Reference]
 
 
 === slm.putLifecycle
@@ -8448,7 +8448,7 @@ client.slm.putLifecycle({
   body: object
 })
 ----
-link:{ref}/slm-api-put.html[Reference]
+link:{ref}/slm-api-put-policy.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8465,7 +8465,7 @@ link:{ref}/slm-api-put.html[Reference]
 ----
 client.slm.start()
 ----
-link:{ref}/slm-start.html[Reference]
+link:{ref}/slm-api-start.html[Reference]
 
 
 === slm.stop
@@ -8474,7 +8474,7 @@ link:{ref}/slm-start.html[Reference]
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-stop.html[Reference]
+link:{ref}/slm-api-stop.html[Reference]
 
 
 === sql.clearCursor
@@ -8947,3 +8947,4 @@ link:Retrieve information about xpack features usage[Reference]
 |`string` - Specify timeout for watch write operation
 
 |===
+
