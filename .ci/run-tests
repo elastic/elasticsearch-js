@@ -55,4 +55,3 @@ ELASTICSEARCH_CONTAINER=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
   NODE_NAME=${NODE_NAME} \
   ELASTICSEARCH_URL=${elasticsearch_url} \
   bash .ci/run-repository.sh
-
