@@ -219,7 +219,7 @@ function build (opts = {}) {
     // we should skip the entire test file
     const skip = getSkip(setup) || getSkip(teardown)
     if (skip && shouldSkip(esVersion, skip)) {
-      skip(skip)
+      logSkip(skip)
       return
     }
 
@@ -444,7 +444,7 @@ function build (opts = {}) {
     for (const action of actions) {
       if (action.skip) {
         if (shouldSkip(esVersion, action.skip)) {
-          skip(fillStashedValues(action.skip))
+          logSkip(fillStashedValues(action.skip))
           break
         }
       }
@@ -800,13 +800,13 @@ function getRandomInt (min, max) {
  * @param {object} the actions
  * @returns {TestRunner}
  */
-function skip (action) {
+function logSkip (action) {
   if (action.reason && action.version) {
-    // tap.comment(`Skip: ${action.reason} (${action.version})`)
+    console.log(`Skip: ${action.reason} (${action.version})`)
   } else if (action.features) {
-    // tap.comment(`Skip: ${JSON.stringify(action.features)})`)
+    console.log(`Skip: ${JSON.stringify(action.features)})`)
   } else {
-    // tap.comment('Skipped')
+    console.log('Skipped')
   }
 }
 
