@@ -1,59 +1,57 @@
 #!/usr/bin/env bash
-
 #
-# Runs the client tests via Docker with the expectation that the required
-# environment variables have already been exported before running this script.
-#
-# The required environment variables include:
-#
-#   - $ELASTICSEARCH_VERSION
-#   - $NODE_JS_VERSION
-#   - $TEST_SUITE
-#
+# Version 1.0
+# - Moved to .ci folder and seperated out `run-repository.sh`
 
-set -eo pipefail
+if [[ -z $ELASTICSEARCH_VERSION ]]; then
+  echo -e "\033[31;1mERROR:\033[0m Required environment variable [ELASTICSEARCH_VERSION] not set\033[0m"
+  exit 1
+fi
+set -euxo pipefail
 
-set +x
-export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
-export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-js/codecov)
-unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
-set -x
 
-docker build \
-  --file .ci/Dockerfile \
-  --tag elastic/elasticsearch-js \
-  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
-  .
+TEST_SUITE=${TEST_SUITE-oss}
+NODE_NAME=instance
 
-NODE_NAME="es1"
-repo=$(pwd)
-testnodecrt="/.ci/certs/testnode.crt"
-testnodekey="/.ci/certs/testnode.key"
-cacrt="/.ci/certs/ca.crt"
 
-elasticsearch_image="elasticsearch"
-elasticsearch_url="https://elastic:changeme@${NODE_NAME}:9200"
+elasticsearch_image=elasticsearch
+elasticsearch_url=https://elastic:changeme@${NODE_NAME}:9200
 if [[ $TEST_SUITE != "xpack" ]]; then
-  elasticsearch_image="elasticsearch-oss"
-  elasticsearch_url="http://${NODE_NAME}:9200"
+  elasticsearch_image=elasticsearch-${TEST_SUITE}
+  elasticsearch_url=http://${NODE_NAME}:9200
 fi
 
-ELASTICSEARCH_VERSION="${elasticsearch_image}:${ELASTICSEARCH_VERSION}" \
-  NODE_NAME="${NODE_NAME}" \
-  NETWORK_NAME="esnet" \
+function cleanup {
+  status=$?
+  set +x
+  ELASTICSEARCH_VERSION=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
+    NODE_NAME=${NODE_NAME} \
+    NETWORK_NAME=elasticsearch \
+    CLEANUP=true \
+    bash ./.ci/run-elasticsearch.sh
+  # Report status and exit
+  if [[ "$status" == "0" ]]; then
+    echo -e "\n\033[32;1mSUCCESS run-tests\033[0m"
+    exit 0
+  else
+    echo -e "\n\033[31;1mFAILURE during run-tests\033[0m"
+    exit ${status}
+  fi
+}
+trap cleanup EXIT
+
+echo -e "\033[1m>>>>> Start [$ELASTICSEARCH_VERSION container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
+
+ELASTICSEARCH_VERSION=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
+  NODE_NAME=${NODE_NAME} \
+  NETWORK_NAME=elasticsearch \
   DETACH=true \
-  SSL_CERT="${repo}${testnodecrt}" \
-  SSL_KEY="${repo}${testnodekey}" \
-  SSL_CA="${repo}${cacrt}" \
   bash .ci/run-elasticsearch.sh
 
-docker run \
-  --network=esnet \
-  --env "TEST_ES_SERVER=${elasticsearch_url}" \
-  --env "CODECOV_TOKEN" \
-  --volume $repo:/usr/src/app \
-  --volume /usr/src/app/node_modules \
-  --name elasticsearch-js \
-  --rm \
-  elastic/elasticsearch-js \
-  npm run ci
+echo -e "\033[1m>>>>> Repository specific tests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
+
+ELASTICSEARCH_CONTAINER=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
+  NETWORK_NAME=elasticsearch \
+  NODE_NAME=${NODE_NAME} \
+  ELASTICSEARCH_URL=${elasticsearch_url} \
+bash .ci/run-repository.sh
