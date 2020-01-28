@@ -51,7 +51,7 @@
     "minimist": "^1.2.0",
     "ora": "^3.4.0",
     "pretty-hrtime": "^1.0.3",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.1",
     "semver": "^6.0.0",
     "simple-git": "^1.110.0",
     "simple-statistics": "^7.0.2",
