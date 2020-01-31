@@ -4,7 +4,12 @@
 
 'use strict'
 
+const { readdirSync } = require('fs')
+const { join } = require('path')
 const dedent = require('dedent')
+
+const codeExamples = readdirSync(join(__dirname, '..', '..', 'docs', 'examples'))
+  .map(file => file.slice(0, -9))
 
 function generateDocs (common, spec) {
   var doc = dedent`
@@ -197,6 +202,9 @@ function generateApiDoc (spec) {
   ----\n`
   if (documentationUrl) {
     doc += `link:${documentationUrl}[Reference]\n`
+  }
+  if (codeExamples.includes(name)) {
+    doc += `{jsclient}/${name}_examples.html[Example]\n`
   }
 
   if (params.length !== 0) {
