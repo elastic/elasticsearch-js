@@ -7,20 +7,11 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildGetSource (opts) {
+function buildGetScriptLanguages (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'preference',
-    'realtime',
-    'refresh',
-    'routing',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'version',
-    'version_type',
     'pretty',
     'human',
     'error_trace',
@@ -29,19 +20,15 @@ function buildGetSource (opts) {
   ]
 
   const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    versionType: 'version_type',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a get_source request
-   * Returns the source of a document.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   * Perform a get_script_languages request
+   * Returns available script types, languages and contexts
    */
-  return function getSource (params, options, callback) {
+  return function getScriptLanguages (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,16 +40,6 @@ function buildGetSource (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -70,7 +47,7 @@ function buildGetSource (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -80,13 +57,8 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    if (method == null) method = 'GET'
+    path = '/' + '_script_language'
 
     // build request object
     const request = {
@@ -101,4 +73,4 @@ function buildGetSource (opts) {
   }
 }
 
-module.exports = buildGetSource
+module.exports = buildGetScriptLanguages

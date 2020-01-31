@@ -100,7 +100,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -357,7 +357,7 @@ link:{ref}/cat.html[Reference]
 client.cat.indices({
   index: string | string[],
   format: string,
-  bytes: 'b' | 'k' | 'm' | 'g',
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   local: boolean,
   master_timeout: string,
   h: string | string[],
@@ -380,7 +380,7 @@ link:{ref}/cat-indices.html[Reference]
 |`string` - a short version of the Accept header, e.g. json, yaml
 
 |`bytes`
-|`'b' \| 'k' \| 'm' \| 'g'` - The unit in which to display byte values
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -524,7 +524,9 @@ link:{ref}/cat-nodes.html[Reference]
 |`boolean` - Return the full node ID instead of the shortened version (default: false)
 
 |`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+|`boolean` - Calculate the selected nodes using the local cluster state rather than the state from master node (default: false) +
+
+WARNING: This parameter has been deprecated.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -1492,7 +1494,7 @@ WARNING: This parameter has been deprecated.
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -2045,6 +2047,22 @@ link:{ref}/modules-scripting.html[Reference]
 |`string` - Specify timeout for connection to master
 
 |===
+
+=== getScriptContext
+*Stability:* experimental
+[source,ts]
+----
+client.getScriptContext()
+----
+
+
+=== getScriptLanguages
+*Stability:* experimental
+[source,ts]
+----
+client.getScriptLanguages()
+----
+
 
 === getSource
 
@@ -4211,6 +4229,7 @@ client.rankEval({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   body: object
 })
 ----
@@ -4229,6 +4248,9 @@ link:{ref}/search-rank-eval.html[Reference]
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`body`
 |`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
@@ -4255,7 +4277,7 @@ link:{ref}/docs-reindex.html[Reference]
 [cols=2*]
 |===
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -5188,7 +5210,7 @@ WARNING: This parameter has been deprecated.
 |`string` - The script language (default: painless)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`retry_on_conflict` or `retryOnConflict`
 |`number` - Specify how many times should the operation be retried when a conflict occurs (default: 0)
@@ -5352,7 +5374,7 @@ _Default:_ `open`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -5930,7 +5952,7 @@ _Default:_ `closed`
 |===
 
 === indices.reloadSearchAnalyzers
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.reloadSearchAnalyzers({
@@ -6013,7 +6035,8 @@ link:{ref}/delete-license.html[Reference]
 [source,ts]
 ----
 client.license.get({
-  local: boolean
+  local: boolean,
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/get-license.html[Reference]
@@ -6021,6 +6044,9 @@ link:{ref}/get-license.html[Reference]
 |===
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - If the active license is an enterprise license, return type as 'enterprise' (default: false)
 
 |===
 
@@ -6204,7 +6230,8 @@ client.ml.deleteCalendarJob({
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
-  id: string
+  id: string,
+  force: boolean
 })
 ----
 link:{ref}/delete-dfanalytics.html[Reference]
@@ -6212,6 +6239,9 @@ link:{ref}/delete-dfanalytics.html[Reference]
 |===
 |`id`
 |`string` - The ID of the data frame analytics to delete
+
+|`force`
+|`boolean` - True if the job should be forcefully deleted
 
 |===
 
@@ -6331,19 +6361,19 @@ link:{ref}/ml-delete-snapshot.html[Reference]
 
 |===
 
-=== ml.estimateMemoryUsage
+=== ml.deleteTrainedModel
 *Stability:* experimental
 [source,ts]
 ----
-client.ml.estimateMemoryUsage({
-  body: object
+client.ml.deleteTrainedModel({
+  model_id: string
 })
 ----
-https://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html[Reference]
+link:{ref}/delete-inference.html[Reference]
 [cols=2*]
 |===
-|`body`
-|`object` - Memory usage estimation definition
+|`model_id` or `modelId`
+|`string` - The ID of the trained model to delete
 
 |===
 
@@ -6360,6 +6390,26 @@ link:{ref}/evaluate-dfanalytics.html[Reference]
 |===
 |`body`
 |`object` - The evaluation definition
+
+|===
+
+=== ml.explainDataFrameAnalytics
+*Stability:* experimental
+[source,ts]
+----
+client.ml.explainDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/explain-dfanalytics.html[Reference]
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to explain
+
+|`body`
+|`object` - The data frame analytics config to explain
 
 |===
 
@@ -7018,6 +7068,75 @@ link:{ref}/ml-get-record.html[Reference]
 
 |===
 
+=== ml.getTrainedModels
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  include_model_definition: boolean,
+  decompress_definition: boolean,
+  from: number,
+  size: number
+})
+----
+link:{ref}/get-inference.html[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`include_model_definition` or `includeModelDefinition`
+|`boolean` - Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false.
+
+|`decompress_definition` or `decompressDefinition`
+|`boolean` - Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true. +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|===
+
+=== ml.getTrainedModelsStats
+*Stability:* experimental
+[source,ts]
+----
+client.ml.getTrainedModelsStats({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number
+})
+----
+link:{ref}/get-inference-stats.html[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|===
+
 === ml.info
 
 [source,ts]
@@ -7219,6 +7338,26 @@ link:{ref}/ml-put-job.html[Reference]
 
 |`body`
 |`object` - The job
+
+|===
+
+=== ml.putTrainedModel
+*Stability:* experimental
+[source,ts]
+----
+client.ml.putTrainedModel({
+  model_id: string,
+  body: object
+})
+----
+link:TODO[Reference]
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models to store
+
+|`body`
+|`object` - The trained model configuration
 
 |===
 
@@ -8240,6 +8379,15 @@ client.slm.getStats()
 link:{ref}/slm-get-stats.html[Reference]
 
 
+=== slm.getStatus
+
+[source,ts]
+----
+client.slm.getStatus()
+----
+link:{ref}/slm-get-status.html[Reference]
+
+
 === slm.putLifecycle
 
 [source,ts]
@@ -8259,6 +8407,24 @@ link:{ref}/slm-api-put.html[Reference]
 |`object` - The snapshot lifecycle policy definition to register
 
 |===
+
+=== slm.start
+
+[source,ts]
+----
+client.slm.start()
+----
+link:{ref}/slm-start.html[Reference]
+
+
+=== slm.stop
+
+[source,ts]
+----
+client.slm.stop()
+----
+link:{ref}/slm-stop.html[Reference]
+
 
 === sql.clearCursor
 
@@ -8463,9 +8629,11 @@ link:{ref}/start-transform.html[Reference]
 ----
 client.transform.stopTransform({
   transform_id: string,
+  force: boolean,
   wait_for_completion: boolean,
   timeout: string,
-  allow_no_match: boolean
+  allow_no_match: boolean,
+  wait_for_checkpoint: boolean
 })
 ----
 link:{ref}/stop-transform.html[Reference]
@@ -8473,6 +8641,9 @@ link:{ref}/stop-transform.html[Reference]
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to stop
+
+|`force`
+|`boolean` - Whether to force stop a failed transform or not. Default to false
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
@@ -8482,6 +8653,9 @@ link:{ref}/stop-transform.html[Reference]
 
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`wait_for_checkpoint` or `waitForCheckpoint`
+|`boolean` - Whether to wait for the transform to reach a checkpoint before stopping. Default to false
 
 |===
 

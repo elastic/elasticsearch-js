@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlEstimateMemoryUsage (opts) {
+function buildMlDeleteTrainedModel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 
   /**
-   * Perform a ml.estimate_memory_usage request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
+   * Perform a ml.delete_trained_model request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference.html
    */
-  return function mlEstimateMemoryUsage (params, options, callback) {
+  return function mlDeleteTrainedModel (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -36,8 +36,8 @@ function buildMlEstimateMemoryUsage (opts) {
     }
 
     // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['model_id'] == null && params['modelId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: model_id or modelId')
       return handleError(err, callback)
     }
 
@@ -48,7 +48,7 @@ function buildMlEstimateMemoryUsage (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,8 +58,8 @@ function buildMlEstimateMemoryUsage (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_estimate_memory_usage'
+    if (method == null) method = 'DELETE'
+    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
 
     // build request object
     const request = {
@@ -74,4 +74,4 @@ function buildMlEstimateMemoryUsage (opts) {
   }
 }
 
-module.exports = buildMlEstimateMemoryUsage
+module.exports = buildMlDeleteTrainedModel

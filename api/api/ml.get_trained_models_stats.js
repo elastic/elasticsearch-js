@@ -7,41 +7,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildGetSource (opts) {
+function buildMlGetTrainedModelsStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'preference',
-    'realtime',
-    'refresh',
-    'routing',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'version',
-    'version_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'allow_no_match',
+    'from',
+    'size'
   ]
 
   const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    versionType: 'version_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    allowNoMatch: 'allow_no_match'
+
   }
 
   /**
-   * Perform a get_source request
-   * Returns the source of a document.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   * Perform a ml.get_trained_models_stats request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
    */
-  return function getSource (params, options, callback) {
+  return function mlGetTrainedModelsStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -53,16 +38,6 @@ function buildGetSource (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -70,7 +45,7 @@ function buildGetSource (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -80,12 +55,12 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
+    if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
+      path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
+      path = '/' + '_ml' + '/' + 'inference' + '/' + '_stats'
     }
 
     // build request object
@@ -101,4 +76,4 @@ function buildGetSource (opts) {
   }
 }
 
-module.exports = buildGetSource
+module.exports = buildMlGetTrainedModelsStats

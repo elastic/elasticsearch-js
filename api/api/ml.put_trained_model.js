@@ -7,41 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildGetSource (opts) {
+function buildMlPutTrainedModel (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'preference',
-    'realtime',
-    'refresh',
-    'routing',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'version',
-    'version_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    versionType: 'version_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a get_source request
-   * Returns the source of a document.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   * Perform a ml.put_trained_model request
+   * TODO
    */
-  return function getSource (params, options, callback) {
+  return function mlPutTrainedModel (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,12 +36,12 @@ function buildGetSource (opts) {
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params['model_id'] == null && params['modelId'] == null) {
+      const err = new ConfigurationError('Missing required parameter: model_id or modelId')
       return handleError(err, callback)
     }
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -70,7 +52,7 @@ function buildGetSource (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -80,19 +62,14 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    if (method == null) method = 'PUT'
+    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -101,4 +78,4 @@ function buildGetSource (opts) {
   }
 }
 
-module.exports = buildGetSource
+module.exports = buildMlPutTrainedModel

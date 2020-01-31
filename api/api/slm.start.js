@@ -7,37 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildRankEval (opts) {
+function buildSlmStart (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'search_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    searchType: 'search_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a rank_eval request
-   * Allows to evaluate the quality of ranked search results over a set of typical search queries
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html
+   * Perform a slm.start request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-start.html
    */
-  return function rankEval (params, options, callback) {
+  return function slmStart (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -49,12 +35,6 @@ function buildRankEval (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -62,7 +42,7 @@ function buildRankEval (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -72,13 +52,8 @@ function buildRankEval (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_rank_eval'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_rank_eval'
-    }
+    if (method == null) method = 'POST'
+    path = '/' + '_slm' + '/' + 'start'
 
     // build request object
     const request = {
@@ -93,4 +68,4 @@ function buildRankEval (opts) {
   }
 }
 
-module.exports = buildRankEval
+module.exports = buildSlmStart
