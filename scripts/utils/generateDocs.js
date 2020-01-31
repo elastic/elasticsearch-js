@@ -10,6 +10,7 @@ const dedent = require('dedent')
 
 const codeExamples = readdirSync(join(__dirname, '..', '..', 'docs', 'examples'))
   .map(file => file.slice(0, -9))
+  .filter(api => api !== 'index')
 
 function generateDocs (common, spec) {
   var doc = dedent`
