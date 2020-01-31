@@ -7,6 +7,10 @@ Following you can find some examples on how to use the client.
 * Executing a <<bulk_examples,bulk>> request;
 * Executing a <<exists_examples,exists>> request;
 * Executing a <<get_examples,get>> request;
+* Executing a <<sql_query_examples,sql.query>> request;
+* Executing a <<update_examples,update>> request;
+* Executing a <<update_by_query_examples,update by query>> request;
+* Executing a <<reindex_examples,reindex>> request;
 * Use of the <<ignore_examples,ignore>> parameter;
 * Executing a <<msearch_examples,msearch>> request;
 * How do I <<scroll_examples,scroll>>?
@@ -26,3 +30,7 @@ include::search.asciidoc[]
 include::suggest.asciidoc[]
 include::transport.request.asciidoc[]
 include::typescript.asciidoc[]
+include::sql.query.asciidoc[]
+include::update.asciidoc[]
+include::update-by-query.asciidoc[]
+include::reindex.asciidoc[]
