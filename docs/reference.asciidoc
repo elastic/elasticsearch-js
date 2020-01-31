@@ -2138,7 +2138,6 @@ client.index({
 })
 ----
 link:{ref}/docs-index_.html[Reference]
-{jsclient}/index_examples.html[Example]
 [cols=2*]
 |===
 |`id`
