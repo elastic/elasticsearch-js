@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmDeleteLifecycle (opts) {
+function buildEqlSearch (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildSlmDeleteLifecycle (opts) {
   }
 
   /**
-   * Perform a slm.delete_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
+   * Perform a eql.search request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search.html
    */
-  return function slmDeleteLifecycle (params, options, callback) {
+  return function eqlSearch (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -36,8 +36,12 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     // check required parameters
-    if (params['policy_id'] == null && params['policyId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
+    if (params['index'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -48,7 +52,7 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,8 +62,8 @@ function buildSlmDeleteLifecycle (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
 
     // build request object
     const request = {
@@ -74,4 +78,4 @@ function buildSlmDeleteLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmDeleteLifecycle
+module.exports = buildEqlSearch

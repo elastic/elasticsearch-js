@@ -653,13 +653,6 @@ export interface IndicesFlush extends Generic {
   expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
 }
 
-export interface IndicesFlushSynced extends Generic {
-  index?: string | string[];
-  ignore_unavailable?: boolean;
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
-}
-
 export interface IndicesForcemerge extends Generic {
   index?: string | string[];
   flush?: boolean;
@@ -1322,6 +1315,18 @@ export interface UpdateByQueryRethrottle extends Generic {
   requests_per_second: number;
 }
 
+export interface CatMlJobs extends Generic {
+  job_id?: string;
+  allow_no_jobs?: boolean;
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
 export interface CcrDeleteAutoFollowPattern extends Generic {
   name: string;
 }
@@ -1444,6 +1449,11 @@ export interface EnrichPutPolicy<T = any> extends Generic {
 }
 
 export interface EnrichStats extends Generic {
+}
+
+export interface EqlSearch<T = any> extends Generic {
+  index: string;
+  body: T;
 }
 
 export interface GraphExplore<T = any> extends Generic {
@@ -1793,6 +1803,7 @@ export interface MlGetTrainedModels extends Generic {
   decompress_definition?: boolean;
   from?: number;
   size?: number;
+  tags?: string | string[];
 }
 
 export interface MlGetTrainedModelsStats extends Generic {

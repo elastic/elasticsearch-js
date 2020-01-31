@@ -7,35 +7,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesFlushSynced (opts) {
+function buildCatMlJobs (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'allow_no_jobs',
+    'bytes',
+    'format',
+    'h',
+    'help',
+    's',
+    'time',
+    'v'
   ]
 
   const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    allowNoJobs: 'allow_no_jobs'
+
   }
 
   /**
-   * Perform a indices.flush_synced request
-   * Performs a synced flush operation on one or more indices.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush-api.html
+   * Perform a cat.ml.jobs request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
    */
-  return function indicesFlushSynced (params, options, callback) {
+  return function catMlJobs (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +50,7 @@ function buildIndicesFlushSynced (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -64,19 +60,19 @@ function buildIndicesFlushSynced (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_flush' + '/' + 'synced'
+    if ((job_id || jobId) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
     } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_flush' + '/' + 'synced'
+      if (method == null) method = 'GET'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -85,4 +81,4 @@ function buildIndicesFlushSynced (opts) {
   }
 }
 
-module.exports = buildIndicesFlushSynced
+module.exports = buildCatMlJobs

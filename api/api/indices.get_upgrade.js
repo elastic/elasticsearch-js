@@ -32,7 +32,7 @@ function buildIndicesGetUpgrade (opts) {
 
   /**
    * Perform a indices.get_upgrade request
-   * The _upgrade API is no longer useful and will be removed.
+   * DEPRECATED Returns a progress status of current upgrade.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
    */
   return function indicesGetUpgrade (params, options, callback) {
@@ -64,13 +64,8 @@ function buildIndicesGetUpgrade (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_upgrade'
-    }
+    if (method == null) method = 'GET'
+    path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
 
     // build request object
     const request = {

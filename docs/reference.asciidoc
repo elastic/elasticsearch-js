@@ -126,7 +126,7 @@ link:{ref}/docs-bulk.html[Reference]
 |`string` - Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -1510,7 +1510,7 @@ WARNING: This parameter has been deprecated.
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`routing`
 |`string` - Specific routing value
@@ -1658,7 +1658,7 @@ _Default:_ `open`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -4159,7 +4159,7 @@ link:{ref}/docs-reindex.html[Reference]
 [cols=2*]
 |===
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -5085,7 +5085,7 @@ WARNING: This parameter has been deprecated.
 |`string` - The script language (default: painless)
 
 |`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
 
 |`retry_on_conflict` or `retryOnConflict`
 |`number` - Specify how many times should the operation be retried when a conflict occurs (default: 0)
@@ -5241,7 +5241,7 @@ _Default:_ `open`
 |`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
 
 |`refresh`
-|`boolean` - Should the effected indexes be refreshed?
+|`boolean` - Should the affected indexes be refreshed?
 
 |`timeout`
 |`string` - Time each individual bulk request should wait for shards that are unavailable. +
@@ -5286,6 +5286,54 @@ link:{ref}/docs-update-by-query.html[Reference]
 
 |`requests_per_second` or `requestsPerSecond`
 |`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+
+|===
+
+=== cat.ml.jobs
+
+[source,ts]
+----
+client.cat.ml.jobs({
+  job_id: string,
+  allow_no_jobs: boolean,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  v: boolean
+})
+----
+link:{ref}/ml-get-job-stats.html[Reference]
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the jobs stats to fetch
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
 
 |===
 
@@ -5775,6 +5823,26 @@ client.enrich.putPolicy({
 client.enrich.stats()
 ----
 
+
+=== eql.search
+*Stability:* beta
+[source,ts]
+----
+client.eql.search({
+  index: string,
+  body: object
+})
+----
+link:{ref}/eql-search.html[Reference]
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to scope the operation
+
+|`body`
+|`object` - Eql request body. Use the `query` to limit the query scope.
+
+|===
 
 === graph.explore
 
@@ -7129,7 +7197,8 @@ client.ml.getTrainedModels({
   include_model_definition: boolean,
   decompress_definition: boolean,
   from: number,
-  size: number
+  size: number,
+  tags: string | string[]
 })
 ----
 link:{ref}/get-inference.html[Reference]
@@ -7155,6 +7224,9 @@ _Default:_ `true`
 |`size`
 |`number` - specifies a max number of trained models to get +
 _Default:_ `100`
+
+|`tags`
+|`string \| string[]` - A comma-separated list of tags that the model must have.
 
 |===
 
@@ -8388,7 +8460,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute-lifecycle.html[Reference]
+link:{ref}/slm-api-execute-policy.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8436,7 +8508,7 @@ link:{ref}/slm-api-get-stats.html[Reference]
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-api-get-status.html[Reference]
+link:{ref}/slm-get-status.html[Reference]
 
 
 === slm.putLifecycle
@@ -8465,7 +8537,7 @@ link:{ref}/slm-api-put-policy.html[Reference]
 ----
 client.slm.start()
 ----
-link:{ref}/slm-api-start.html[Reference]
+link:{ref}/slm-start.html[Reference]
 
 
 === slm.stop
@@ -8474,7 +8546,7 @@ link:{ref}/slm-api-start.html[Reference]
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-api-stop.html[Reference]
+link:{ref}/slm-stop.html[Reference]
 
 
 === sql.clearCursor
@@ -8947,4 +9019,3 @@ link:Retrieve information about xpack features usage[Reference]
 |`string` - Specify timeout for watch write operation
 
 |===
-

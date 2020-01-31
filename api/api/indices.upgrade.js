@@ -36,7 +36,7 @@ function buildIndicesUpgrade (opts) {
 
   /**
    * Perform a indices.upgrade request
-   * The _upgrade API is no longer useful and will be removed.
+   * DEPRECATED Upgrades to the current version of Lucene.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
    */
   return function indicesUpgrade (params, options, callback) {
@@ -68,13 +68,8 @@ function buildIndicesUpgrade (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_upgrade'
-    }
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
 
     // build request object
     const request = {
