@@ -44,10 +44,20 @@ To install a specific major of the client, run the following command:
 npm install @elastic/elasticsearch@<major>
 ```
 
-#### Browser
+#### Browser support
 
-WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
-We recommend that you write a lightweight proxy that uses this client instead.
+There is no official support for the browser environment and we highly discourage connecting to Elasticsearch from the browser.
+
+*Why?*
+
+Having a secure connection established does not imply that you are safe from attacks.<br/>
+How can you be sure that users of your web app are not sending malicious requests, for example, dropping indices or using the admin APIs for causing any sort of problems?
+You could create an Elasticsearch user with very low permissions, but even if you have search only permissions, a user could craft a complex enough query to cause an overload of Elasticsearch, resulting in an unresponding server.<br/>
+We can summarize all the reasons in one sentence: **never trust user input**.<br/>
+If your Elasticsearch instance is exposed to the world, you have no way to validate the user input.
+Would you ever expose MongoDB, MySQL, or PostgreSQL?
+
+We recommend that you write a lightweight proxy that uses this client instead, so you can safely handle authentication and validation. If this solution is not feasible for you, checkout our [Elastic Site Search](https://www.elastic.co/site-search) solution.
 
 ## Documentation
 
