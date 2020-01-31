@@ -16,7 +16,8 @@ function buildMlGetTrainedModels (opts) {
     'include_model_definition',
     'decompress_definition',
     'from',
-    'size'
+    'size',
+    'tags'
   ]
 
   const snakeCase = {

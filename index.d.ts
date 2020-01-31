@@ -125,6 +125,9 @@ declare class Client extends EventEmitter {
     help: ApiMethod<RequestParams.CatHelp>
     indices: ApiMethod<RequestParams.CatIndices>
     master: ApiMethod<RequestParams.CatMaster>
+    ml: {
+        jobs: ApiMethod<RequestParams.CatMlJobs>
+    }
     nodeattrs: ApiMethod<RequestParams.CatNodeattrs>
     nodes: ApiMethod<RequestParams.CatNodes>
     pending_tasks: ApiMethod<RequestParams.CatPendingTasks>
@@ -239,6 +242,9 @@ declare class Client extends EventEmitter {
     putPolicy: ApiMethod<RequestParams.EnrichPutPolicy>
     stats: ApiMethod<RequestParams.EnrichStats>
   }
+  eql: {
+    search: ApiMethod<RequestParams.EqlSearch>
+  }
   exists: ApiMethod<RequestParams.Exists>
   exists_source: ApiMethod<RequestParams.ExistsSource>
   existsSource: ApiMethod<RequestParams.ExistsSource>
@@ -297,8 +303,6 @@ declare class Client extends EventEmitter {
     exists_type: ApiMethod<RequestParams.IndicesExistsType>
     existsType: ApiMethod<RequestParams.IndicesExistsType>
     flush: ApiMethod<RequestParams.IndicesFlush>
-    flush_synced: ApiMethod<RequestParams.IndicesFlushSynced>
-    flushSynced: ApiMethod<RequestParams.IndicesFlushSynced>
     forcemerge: ApiMethod<RequestParams.IndicesForcemerge>
     freeze: ApiMethod<RequestParams.IndicesFreeze>
     get: ApiMethod<RequestParams.IndicesGet>

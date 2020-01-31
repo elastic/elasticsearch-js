@@ -26,6 +26,9 @@ function ESAPI (opts) {
       help: lazyLoad('cat.help', opts),
       indices: lazyLoad('cat.indices', opts),
       master: lazyLoad('cat.master', opts),
+      ml: {
+        jobs: lazyLoad('cat.ml.jobs', opts)
+      },
       nodeattrs: lazyLoad('cat.nodeattrs', opts),
       nodes: lazyLoad('cat.nodes', opts),
       pending_tasks: lazyLoad('cat.pending_tasks', opts),
@@ -140,6 +143,9 @@ function ESAPI (opts) {
       putPolicy: lazyLoad('enrich.put_policy', opts),
       stats: lazyLoad('enrich.stats', opts)
     },
+    eql: {
+      search: lazyLoad('eql.search', opts)
+    },
     exists: lazyLoad('exists', opts),
     exists_source: lazyLoad('exists_source', opts),
     existsSource: lazyLoad('exists_source', opts),
@@ -198,8 +204,6 @@ function ESAPI (opts) {
       exists_type: lazyLoad('indices.exists_type', opts),
       existsType: lazyLoad('indices.exists_type', opts),
       flush: lazyLoad('indices.flush', opts),
-      flush_synced: lazyLoad('indices.flush_synced', opts),
-      flushSynced: lazyLoad('indices.flush_synced', opts),
       forcemerge: lazyLoad('indices.forcemerge', opts),
       freeze: lazyLoad('indices.freeze', opts),
       get: lazyLoad('indices.get', opts),
