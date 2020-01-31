@@ -114,6 +114,7 @@ client.bulk({
 })
 ----
 link:{ref}/docs-bulk.html[Reference]
+{jsclient}/bulk_examples.html[Example]
 [cols=2*]
 |===
 |`index`
@@ -1750,6 +1751,7 @@ client.exists({
 })
 ----
 link:{ref}/docs-get.html[Reference]
+{jsclient}/exists_examples.html[Example]
 [cols=2*]
 |===
 |`id`
@@ -1982,6 +1984,7 @@ client.get({
 })
 ----
 link:{ref}/docs-get.html[Reference]
+{jsclient}/get_examples.html[Example]
 [cols=2*]
 |===
 |`id`
@@ -2135,6 +2138,7 @@ client.index({
 })
 ----
 link:{ref}/docs-index_.html[Reference]
+{jsclient}/index_examples.html[Example]
 [cols=2*]
 |===
 |`id`
@@ -3745,6 +3749,7 @@ client.msearch({
 })
 ----
 link:{ref}/search-multi-search.html[Reference]
+{jsclient}/msearch_examples.html[Example]
 [cols=2*]
 |===
 |`index`
@@ -4156,6 +4161,7 @@ client.reindex({
 })
 ----
 link:{ref}/docs-reindex.html[Reference]
+{jsclient}/reindex_examples.html[Example]
 [cols=2*]
 |===
 |`refresh`
@@ -4259,6 +4265,7 @@ client.scroll({
 })
 ----
 link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
+{jsclient}/scroll_examples.html[Example]
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4329,6 +4336,7 @@ client.search({
 })
 ----
 link:{ref}/search-search.html[Reference]
+{jsclient}/search_examples.html[Example]
 [cols=2*]
 |===
 |`index`
@@ -5056,6 +5064,7 @@ client.update({
 })
 ----
 link:{ref}/docs-update.html[Reference]
+{jsclient}/update_examples.html[Example]
 [cols=2*]
 |===
 |`id`
@@ -5151,6 +5160,7 @@ client.updateByQuery({
 })
 ----
 link:{ref}/docs-update-by-query.html[Reference]
+{jsclient}/update_by_query_examples.html[Example]
 [cols=2*]
 |===
 |`index`
@@ -8575,6 +8585,7 @@ client.sql.query({
 })
 ----
 link:Execute SQL[Reference]
+{jsclient}/sql.query_examples.html[Example]
 [cols=2*]
 |===
 |`format`
