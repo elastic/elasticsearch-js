@@ -1,12 +1,19 @@
 [[transport_request_examples]]
 == transport.request
 
-It can happen that you need to communicate with Elasticsearch by using an API that is not supported by the client, to mitigate this issue you can directly call `client.transport.request`, which is the internal utility that the client uses to communicate with Elasticsearch when you use an API method.
+It can happen that you need to communicate with {es} by using an API that is not 
+supported by the client, to mitigate this issue you can directly call 
+`client.transport.request`, which is the internal utility that the client uses 
+to communicate with {es} when you use an API method.
 
-NOTE: When using the `transport.request` method you must provide all the parameters needed to perform an HTTP call, such as `method`, `path`, `querystring`, and `body`.
+NOTE: When using the `transport.request` method you must provide all the 
+parameters needed to perform an HTTP call, such as `method`, `path`, 
+`querystring`, and `body`.
 
 
-TIP: If you find yourself use this method too often, take in consideration the use of `client.extend`, which will make your code look cleaner and easier to maintain.
+TIP: If you find yourself use this method too often, take in consideration the 
+use of `client.extend`, which will make your code look cleaner and easier to 
+maintain.
 
 [source,js]
 ----
