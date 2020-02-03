@@ -202,10 +202,10 @@ function generateApiDoc (spec) {
   client.${camelify(name)}(${codeParameters.length > 0 ? `{\n    ${codeParameters}\n}` : ''})
   ----\n`
   if (documentationUrl) {
-    doc += `link:${documentationUrl}[Reference]\n`
+    doc += `link:${documentationUrl}[Documentation] +\n`
   }
   if (codeExamples.includes(name)) {
-    doc += `{jsclient}/${name.replace(/\./g, '_')}_examples.html[Example]\n`
+    doc += `{jsclient}/${name.replace(/\./g, '_')}_examples.html[Code Example] +\n`
   }
 
   if (params.length !== 0) {
