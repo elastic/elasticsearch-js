@@ -99,7 +99,7 @@ function commonParameters (spec) {
   === Common parameters
   Parameters that are accepted by all API endpoints.
 
-  link:{ref}/common-options.html[Reference]
+  link:{ref}/common-options.html[Documentation]
   [cols=2*]
   |===\n`
   Object.keys(spec.params).forEach(key => {
