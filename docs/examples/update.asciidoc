@@ -1,8 +1,9 @@
 [[update_examples]]
 == Update
 
-The update API allows updates of a specific document using the given script. +
-In the following example, we will index a document that also tracks how many times a character has said the given quote, and then we will update the `times` field.
+The update API allows updates of a specific document using the given script. In 
+the following example, we will index a document that also tracks how many times 
+a character has said the given quote, and then we will update the `times` field.
 
 [source,js]
 ---------

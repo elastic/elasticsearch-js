@@ -1,9 +1,11 @@
 [[typescript_examples]]
 == Typescript
 
-The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
+The client offers a first-class support for TypeScript, since it ships the type 
+definitions for every exposed API.
 
-NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
+NOTE: If you are using TypeScript you will be required to use _snake_case_ style 
+to define the API parameters instead of _camelCase_. 
 
 [source,ts]
 ----
