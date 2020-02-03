@@ -4,7 +4,13 @@
 
 'use strict'
 
+const { readdirSync } = require('fs')
+const { join } = require('path')
 const dedent = require('dedent')
+
+const codeExamples = readdirSync(join(__dirname, '..', '..', 'docs', 'examples'))
+  .map(file => file.slice(0, -9))
+  .filter(api => api !== 'index')
 
 function generateDocs (common, spec) {
   var doc = dedent`
@@ -67,7 +73,7 @@ function commonParameters (spec) {
   === Common parameters
   Parameters that are accepted by all API endpoints.
 
-  link:{ref}/common-options.html[Reference]
+  link:{ref}/common-options.html[Documentation]
   [cols=2*]
   |===\n`
   Object.keys(spec.params).forEach(key => {
@@ -170,7 +176,10 @@ function generateApiDoc (spec) {
   client.${camelify(name)}(${codeParameters.length > 0 ? `{\n    ${codeParameters}\n}` : ''})
   ----\n`
   if (documentationUrl) {
-    doc += `link:${documentationUrl}[Reference]\n`
+    doc += `link:${documentationUrl}[Documentation] +\n`
+  }
+  if (codeExamples.includes(name)) {
+    doc += `{jsclient}/${name.replace(/\./g, '_')}_examples.html[Code Example] +\n`
   }
 
   if (params.length !== 0) {
