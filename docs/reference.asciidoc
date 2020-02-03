@@ -1569,7 +1569,7 @@ client.deleteByQuery({
   scroll_size: number,
   wait_for_completion: boolean,
   requests_per_second: number,
-  slices: number,
+  slices: number|string,
   body: object
 })
 ----
@@ -1678,7 +1678,7 @@ _Default:_ `true`
 |`number` - The throttle for this request in sub-requests per second. -1 means no throttle.
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`body`
@@ -5755,6 +5755,7 @@ client.enrich.deletePolicy({
   name: string
 })
 ----
+link:{ref}/delete-enrich-policy-api.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5771,6 +5772,7 @@ client.enrich.executePolicy({
   wait_for_completion: boolean
 })
 ----
+link:{ref}/execute-enrich-policy-api.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5790,6 +5792,7 @@ client.enrich.getPolicy({
   name: string
 })
 ----
+link:{ref}/get-enrich-policy-api.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5806,6 +5809,7 @@ client.enrich.putPolicy({
   body: object
 })
 ----
+link:{ref}/put-enrich-policy-api.html[Reference]
 [cols=2*]
 |===
 |`name`
@@ -5822,6 +5826,7 @@ client.enrich.putPolicy({
 ----
 client.enrich.stats()
 ----
+link:{ref}/enrich-stats-api.html[Reference]
 
 
 === eql.search
@@ -5833,7 +5838,7 @@ client.eql.search({
   body: object
 })
 ----
-link:{ref}/eql-search.html[Reference]
+link:{ref}/eql.html[Reference]
 [cols=2*]
 |===
 |`index`
@@ -8460,7 +8465,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute-policy.html[Reference]
+link:{ref}/slm-api-execute-lifecycle.html[Reference]
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8508,7 +8513,7 @@ link:{ref}/slm-api-get-stats.html[Reference]
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-get-status.html[Reference]
+link:{ref}/slm-api-get-status.html[Reference]
 
 
 === slm.putLifecycle
@@ -8537,7 +8542,7 @@ link:{ref}/slm-api-put-policy.html[Reference]
 ----
 client.slm.start()
 ----
-link:{ref}/slm-start.html[Reference]
+link:{ref}/slm-api-start.html[Reference]
 
 
 === slm.stop
@@ -8546,7 +8551,7 @@ link:{ref}/slm-start.html[Reference]
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-stop.html[Reference]
+link:{ref}/slm-api-stop.html[Reference]
 
 
 === sql.clearCursor
@@ -8557,7 +8562,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:Clear SQL cursor[Reference]
+link:{ref}/sql-pagination.html[Reference]
 [cols=2*]
 |===
 |`body`
@@ -8574,7 +8579,7 @@ client.sql.query({
   body: object
 })
 ----
-link:Execute SQL[Reference]
+link:{ref}/sql-rest-overview.html[Reference]
 [cols=2*]
 |===
 |`format`
@@ -8593,7 +8598,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:Translate SQL into Elasticsearch queries[Reference]
+link:{ref}/sql-translate.html[Reference]
 [cols=2*]
 |===
 |`body`
