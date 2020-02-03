@@ -75,7 +75,7 @@ In this document, you will find the reference of every parameter accepted by the
 === Common parameters
 Parameters that are accepted by all API endpoints.
 
-link:{ref}/common-options.html[Reference]
+link:{ref}/common-options.html[Documentation]
 [cols=2*]
 |===
 |`pretty`
