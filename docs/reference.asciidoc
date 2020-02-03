@@ -113,8 +113,8 @@ client.bulk({
   body: object
 })
 ----
-link:{ref}/docs-bulk.html[Reference]
-{jsclient}/bulk_examples.html[Example]
+link:{ref}/docs-bulk.html[Documentation] +
+{jsclient}/bulk_examples.html[Code Example] +
 [cols=2*]
 |===
 |`index`
@@ -166,7 +166,7 @@ client.cat.aliases({
   v: boolean
 })
 ----
-link:{ref}/cat-alias.html[Reference]
+link:{ref}/cat-alias.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -208,7 +208,7 @@ client.cat.allocation({
   v: boolean
 })
 ----
-link:{ref}/cat-allocation.html[Reference]
+link:{ref}/cat-allocation.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -253,7 +253,7 @@ client.cat.count({
   v: boolean
 })
 ----
-link:{ref}/cat-count.html[Reference]
+link:{ref}/cat-count.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -290,7 +290,7 @@ client.cat.fielddata({
   v: boolean
 })
 ----
-link:{ref}/cat-fielddata.html[Reference]
+link:{ref}/cat-fielddata.html[Documentation] +
 [cols=2*]
 |===
 |`fields`
@@ -330,7 +330,7 @@ client.cat.health({
   v: boolean
 })
 ----
-link:{ref}/cat-health.html[Reference]
+link:{ref}/cat-health.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -366,7 +366,7 @@ client.cat.help({
   s: string | string[]
 })
 ----
-link:{ref}/cat.html[Reference]
+link:{ref}/cat.html[Documentation] +
 [cols=2*]
 |===
 |`help`
@@ -397,7 +397,7 @@ client.cat.indices({
   include_unloaded_segments: boolean
 })
 ----
-link:{ref}/cat-indices.html[Reference]
+link:{ref}/cat-indices.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -455,7 +455,7 @@ client.cat.master({
   v: boolean
 })
 ----
-link:{ref}/cat-master.html[Reference]
+link:{ref}/cat-master.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -495,7 +495,7 @@ client.cat.nodeattrs({
   v: boolean
 })
 ----
-link:{ref}/cat-nodeattrs.html[Reference]
+link:{ref}/cat-nodeattrs.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -537,7 +537,7 @@ client.cat.nodes({
   v: boolean
 })
 ----
-link:{ref}/cat-nodes.html[Reference]
+link:{ref}/cat-nodes.html[Documentation] +
 [cols=2*]
 |===
 |`bytes`
@@ -584,7 +584,7 @@ client.cat.pendingTasks({
   v: boolean
 })
 ----
-link:{ref}/cat-pending-tasks.html[Reference]
+link:{ref}/cat-pending-tasks.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -627,7 +627,7 @@ client.cat.plugins({
   v: boolean
 })
 ----
-link:{ref}/cat-plugins.html[Reference]
+link:{ref}/cat-plugins.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -670,7 +670,7 @@ client.cat.recovery({
   v: boolean
 })
 ----
-link:{ref}/cat-recovery.html[Reference]
+link:{ref}/cat-recovery.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -719,7 +719,7 @@ client.cat.repositories({
   v: boolean
 })
 ----
-link:{ref}/cat-repositories.html[Reference]
+link:{ref}/cat-repositories.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -759,7 +759,7 @@ client.cat.segments({
   v: boolean
 })
 ----
-link:{ref}/cat-segments.html[Reference]
+link:{ref}/cat-segments.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -802,7 +802,7 @@ client.cat.shards({
   v: boolean
 })
 ----
-link:{ref}/cat-shards.html[Reference]
+link:{ref}/cat-shards.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -853,7 +853,7 @@ client.cat.snapshots({
   v: boolean
 })
 ----
-link:{ref}/cat-snapshots.html[Reference]
+link:{ref}/cat-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -902,7 +902,7 @@ client.cat.tasks({
   v: boolean
 })
 ----
-link:{ref}/tasks.html[Reference]
+link:{ref}/tasks.html[Documentation] +
 [cols=2*]
 |===
 |`format`
@@ -952,7 +952,7 @@ client.cat.templates({
   v: boolean
 })
 ----
-link:{ref}/cat-templates.html[Reference]
+link:{ref}/cat-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -997,7 +997,7 @@ client.cat.threadPool({
   v: boolean
 })
 ----
-link:{ref}/cat-thread-pool.html[Reference]
+link:{ref}/cat-thread-pool.html[Documentation] +
 [cols=2*]
 |===
 |`thread_pool_patterns` or `threadPoolPatterns`
@@ -1038,7 +1038,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#_clear_scroll_api[Reference]
+link:{ref}/search-request-body.html#_clear_scroll_api[Documentation] +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -1061,7 +1061,7 @@ client.cluster.allocationExplain({
   body: object
 })
 ----
-link:{ref}/cluster-allocation-explain.html[Reference]
+link:{ref}/cluster-allocation-explain.html[Documentation] +
 [cols=2*]
 |===
 |`include_yes_decisions` or `includeYesDecisions`
@@ -1086,7 +1086,7 @@ client.cluster.getSettings({
   include_defaults: boolean
 })
 ----
-link:{ref}/cluster-update-settings.html[Reference]
+link:{ref}/cluster-update-settings.html[Documentation] +
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -1122,7 +1122,7 @@ client.cluster.health({
   wait_for_status: 'green' | 'yellow' | 'red'
 })
 ----
-link:{ref}/cluster-health.html[Reference]
+link:{ref}/cluster-health.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -1174,7 +1174,7 @@ client.cluster.pendingTasks({
   master_timeout: string
 })
 ----
-link:{ref}/cluster-pending.html[Reference]
+link:{ref}/cluster-pending.html[Documentation] +
 [cols=2*]
 |===
 |`local`
@@ -1196,7 +1196,7 @@ client.cluster.putSettings({
   body: object
 })
 ----
-link:{ref}/cluster-update-settings.html[Reference]
+link:{ref}/cluster-update-settings.html[Documentation] +
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -1219,7 +1219,7 @@ link:{ref}/cluster-update-settings.html[Reference]
 ----
 client.cluster.remoteInfo()
 ----
-link:{ref}/cluster-remote-info.html[Reference]
+link:{ref}/cluster-remote-info.html[Documentation] +
 
 
 === cluster.reroute
@@ -1236,7 +1236,7 @@ client.cluster.reroute({
   body: object
 })
 ----
-link:{ref}/cluster-reroute.html[Reference]
+link:{ref}/cluster-reroute.html[Documentation] +
 [cols=2*]
 |===
 |`dry_run` or `dryRun`
@@ -1279,7 +1279,7 @@ client.cluster.state({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/cluster-state.html[Reference]
+link:{ref}/cluster-state.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -1325,7 +1325,7 @@ client.cluster.stats({
   timeout: string
 })
 ----
-link:{ref}/cluster-stats.html[Reference]
+link:{ref}/cluster-stats.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -1362,7 +1362,7 @@ client.count({
   body: object
 })
 ----
-link:{ref}/search-count.html[Reference]
+link:{ref}/search-count.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -1435,7 +1435,7 @@ client.create({
   body: object
 })
 ----
-link:{ref}/docs-index_.html[Reference]
+link:{ref}/docs-index_.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -1493,7 +1493,7 @@ client.delete({
   version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
-link:{ref}/docs-delete.html[Reference]
+link:{ref}/docs-delete.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -1574,7 +1574,7 @@ client.deleteByQuery({
   body: object
 })
 ----
-link:{ref}/docs-delete-by-query.html[Reference]
+link:{ref}/docs-delete-by-query.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -1696,7 +1696,7 @@ client.deleteByQueryRethrottle({
   requests_per_second: number
 })
 ----
-link:{ref}/docs-delete-by-query.html[Reference]
+link:{ref}/docs-delete-by-query.html[Documentation] +
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -1717,7 +1717,7 @@ client.deleteScript({
   master_timeout: string
 })
 ----
-link:{ref}/modules-scripting.html[Reference]
+link:{ref}/modules-scripting.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -1750,8 +1750,8 @@ client.exists({
   version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
-link:{ref}/docs-get.html[Reference]
-{jsclient}/exists_examples.html[Example]
+link:{ref}/docs-get.html[Documentation] +
+{jsclient}/exists_examples.html[Code Example] +
 [cols=2*]
 |===
 |`id`
@@ -1811,7 +1811,7 @@ client.existsSource({
   version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
-link:{ref}/docs-get.html[Reference]
+link:{ref}/docs-get.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -1876,7 +1876,7 @@ client.explain({
   body: object
 })
 ----
-link:{ref}/search-explain.html[Reference]
+link:{ref}/search-explain.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -1940,7 +1940,7 @@ client.fieldCaps({
   include_unmapped: boolean
 })
 ----
-link:{ref}/search-field-caps.html[Reference]
+link:{ref}/search-field-caps.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -1983,8 +1983,8 @@ client.get({
   version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
-link:{ref}/docs-get.html[Reference]
-{jsclient}/get_examples.html[Example]
+link:{ref}/docs-get.html[Documentation] +
+{jsclient}/get_examples.html[Code Example] +
 [cols=2*]
 |===
 |`id`
@@ -2034,7 +2034,7 @@ client.getScript({
   master_timeout: string
 })
 ----
-link:{ref}/modules-scripting.html[Reference]
+link:{ref}/modules-scripting.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -2079,7 +2079,7 @@ client.getSource({
   version_type: 'internal' | 'external' | 'external_gte'
 })
 ----
-link:{ref}/docs-get.html[Reference]
+link:{ref}/docs-get.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -2137,7 +2137,7 @@ client.index({
   body: object
 })
 ----
-link:{ref}/docs-index_.html[Reference]
+link:{ref}/docs-index_.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -2190,7 +2190,7 @@ client.indices.analyze({
   body: object
 })
 ----
-link:{ref}/indices-analyze.html[Reference]
+link:{ref}/indices-analyze.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2216,7 +2216,7 @@ client.indices.clearCache({
   request: boolean
 })
 ----
-link:{ref}/indices-clearcache.html[Reference]
+link:{ref}/indices-clearcache.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2259,7 +2259,7 @@ client.indices.clone({
   body: object
 })
 ----
-link:{ref}/indices-clone-index.html[Reference]
+link:{ref}/indices-clone-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2296,7 +2296,7 @@ client.indices.close({
   wait_for_active_shards: string
 })
 ----
-link:{ref}/indices-open-close.html[Reference]
+link:{ref}/indices-open-close.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2335,7 +2335,7 @@ client.indices.create({
   body: object
 })
 ----
-link:{ref}/indices-create-index.html[Reference]
+link:{ref}/indices-create-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2368,7 +2368,7 @@ client.indices.delete({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-delete-index.html[Reference]
+link:{ref}/indices-delete-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2403,7 +2403,7 @@ client.indices.deleteAlias({
   master_timeout: string
 })
 ----
-link:{ref}/indices-aliases.html[Reference]
+link:{ref}/indices-aliases.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2430,7 +2430,7 @@ client.indices.deleteTemplate({
   master_timeout: string
 })
 ----
-link:{ref}/indices-templates.html[Reference]
+link:{ref}/indices-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2458,7 +2458,7 @@ client.indices.exists({
   include_defaults: boolean
 })
 ----
-link:{ref}/indices-exists.html[Reference]
+link:{ref}/indices-exists.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2498,7 +2498,7 @@ client.indices.existsAlias({
   local: boolean
 })
 ----
-link:{ref}/indices-aliases.html[Reference]
+link:{ref}/indices-aliases.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2533,7 +2533,7 @@ client.indices.existsTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-templates.html[Reference]
+link:{ref}/indices-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2563,7 +2563,7 @@ client.indices.existsType({
   local: boolean
 })
 ----
-link:{ref}/indices-types-exists.html[Reference]
+link:{ref}/indices-types-exists.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2600,7 +2600,7 @@ client.indices.flush({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-flush.html[Reference]
+link:{ref}/indices-flush.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2638,7 +2638,7 @@ client.indices.forcemerge({
   only_expunge_deletes: boolean
 })
 ----
-link:{ref}/indices-forcemerge.html[Reference]
+link:{ref}/indices-forcemerge.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2680,7 +2680,7 @@ client.indices.get({
   master_timeout: string
 })
 ----
-link:{ref}/indices-get-index.html[Reference]
+link:{ref}/indices-get-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2723,7 +2723,7 @@ client.indices.getAlias({
   local: boolean
 })
 ----
-link:{ref}/indices-aliases.html[Reference]
+link:{ref}/indices-aliases.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2761,7 +2761,7 @@ client.indices.getFieldMapping({
   local: boolean
 })
 ----
-link:{ref}/indices-get-field-mapping.html[Reference]
+link:{ref}/indices-get-field-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`fields`
@@ -2801,7 +2801,7 @@ client.indices.getMapping({
   local: boolean
 })
 ----
-link:{ref}/indices-get-mapping.html[Reference]
+link:{ref}/indices-get-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2841,7 +2841,7 @@ client.indices.getSettings({
   include_defaults: boolean
 })
 ----
-link:{ref}/indices-get-settings.html[Reference]
+link:{ref}/indices-get-settings.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2885,7 +2885,7 @@ client.indices.getTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-templates.html[Reference]
+link:{ref}/indices-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2913,7 +2913,7 @@ client.indices.getUpgrade({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-upgrade.html[Reference]
+link:{ref}/indices-upgrade.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2945,7 +2945,7 @@ client.indices.open({
   wait_for_active_shards: string
 })
 ----
-link:{ref}/indices-open-close.html[Reference]
+link:{ref}/indices-open-close.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2984,7 +2984,7 @@ client.indices.putAlias({
   body: object
 })
 ----
-link:{ref}/indices-aliases.html[Reference]
+link:{ref}/indices-aliases.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3018,7 +3018,7 @@ client.indices.putMapping({
   body: object
 })
 ----
-link:{ref}/indices-put-mapping.html[Reference]
+link:{ref}/indices-put-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3061,7 +3061,7 @@ client.indices.putSettings({
   body: object
 })
 ----
-link:{ref}/indices-update-settings.html[Reference]
+link:{ref}/indices-update-settings.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3108,7 +3108,7 @@ client.indices.putTemplate({
   body: object
 })
 ----
-link:{ref}/indices-templates.html[Reference]
+link:{ref}/indices-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -3144,7 +3144,7 @@ client.indices.recovery({
   active_only: boolean
 })
 ----
-link:{ref}/indices-recovery.html[Reference]
+link:{ref}/indices-recovery.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3169,7 +3169,7 @@ client.indices.refresh({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-refresh.html[Reference]
+link:{ref}/indices-refresh.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3201,7 +3201,7 @@ client.indices.rollover({
   body: object
 })
 ----
-link:{ref}/indices-rollover-index.html[Reference]
+link:{ref}/indices-rollover-index.html[Documentation] +
 [cols=2*]
 |===
 |`alias`
@@ -3239,7 +3239,7 @@ client.indices.segments({
   verbose: boolean
 })
 ----
-link:{ref}/indices-segments.html[Reference]
+link:{ref}/indices-segments.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3272,7 +3272,7 @@ client.indices.shardStores({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-shards-stores.html[Reference]
+link:{ref}/indices-shards-stores.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3306,7 +3306,7 @@ client.indices.shrink({
   body: object
 })
 ----
-link:{ref}/indices-shrink-index.html[Reference]
+link:{ref}/indices-shrink-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3342,7 +3342,7 @@ client.indices.split({
   body: object
 })
 ----
-link:{ref}/indices-split-index.html[Reference]
+link:{ref}/indices-split-index.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3384,7 +3384,7 @@ client.indices.stats({
   forbid_closed_indices: boolean
 })
 ----
-link:{ref}/indices-stats.html[Reference]
+link:{ref}/indices-stats.html[Documentation] +
 [cols=2*]
 |===
 |`metric`
@@ -3438,7 +3438,7 @@ client.indices.updateAliases({
   body: object
 })
 ----
-link:{ref}/indices-aliases.html[Reference]
+link:{ref}/indices-aliases.html[Documentation] +
 [cols=2*]
 |===
 |`timeout`
@@ -3465,7 +3465,7 @@ client.indices.upgrade({
   only_ancient_segments: boolean
 })
 ----
-link:{ref}/indices-upgrade.html[Reference]
+link:{ref}/indices-upgrade.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3511,7 +3511,7 @@ client.indices.validateQuery({
   body: object
 })
 ----
-link:{ref}/search-validate.html[Reference]
+link:{ref}/search-validate.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3571,7 +3571,7 @@ _Default:_ `OR`
 ----
 client.info()
 ----
-link:{ref}/index.html[Reference]
+link:{ref}/index.html[Documentation] +
 
 
 === ingest.deletePipeline
@@ -3584,7 +3584,7 @@ client.ingest.deletePipeline({
   timeout: string
 })
 ----
-link:{ref}/delete-pipeline-api.html[Reference]
+link:{ref}/delete-pipeline-api.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -3607,7 +3607,7 @@ client.ingest.getPipeline({
   master_timeout: string
 })
 ----
-link:{ref}/get-pipeline-api.html[Reference]
+link:{ref}/get-pipeline-api.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -3624,7 +3624,7 @@ link:{ref}/get-pipeline-api.html[Reference]
 ----
 client.ingest.processorGrok()
 ----
-link:{ref}/grok-processor.html#grok-processor-rest-get[Reference]
+link:{ref}/grok-processor.html#grok-processor-rest-get[Documentation] +
 
 
 === ingest.putPipeline
@@ -3638,7 +3638,7 @@ client.ingest.putPipeline({
   body: object
 })
 ----
-link:{ref}/put-pipeline-api.html[Reference]
+link:{ref}/put-pipeline-api.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -3665,7 +3665,7 @@ client.ingest.simulate({
   body: object
 })
 ----
-link:{ref}/simulate-pipeline-api.html[Reference]
+link:{ref}/simulate-pipeline-api.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -3696,7 +3696,7 @@ client.mget({
   body: object
 })
 ----
-link:{ref}/docs-multi-get.html[Reference]
+link:{ref}/docs-multi-get.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3747,8 +3747,8 @@ client.msearch({
   body: object
 })
 ----
-link:{ref}/search-multi-search.html[Reference]
-{jsclient}/msearch_examples.html[Example]
+link:{ref}/search-multi-search.html[Documentation] +
+{jsclient}/msearch_examples.html[Code Example] +
 [cols=2*]
 |===
 |`index`
@@ -3797,7 +3797,7 @@ client.msearchTemplate({
   body: object
 })
 ----
-link:{ref}/search-multi-search.html[Reference]
+link:{ref}/search-multi-search.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3845,7 +3845,7 @@ client.mtermvectors({
   body: object
 })
 ----
-link:{ref}/docs-multi-termvectors.html[Reference]
+link:{ref}/docs-multi-termvectors.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3910,7 +3910,7 @@ client.nodes.hotThreads({
   timeout: string
 })
 ----
-link:{ref}/cluster-nodes-hot-threads.html[Reference]
+link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3947,7 +3947,7 @@ client.nodes.info({
   timeout: string
 })
 ----
-link:{ref}/cluster-nodes-info.html[Reference]
+link:{ref}/cluster-nodes-info.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -3973,7 +3973,7 @@ client.nodes.reloadSecureSettings({
   timeout: string
 })
 ----
-link:{ref}/secure-settings.html#reloadable-secure-settings[Reference]
+link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -4002,7 +4002,7 @@ client.nodes.stats({
   include_segment_file_sizes: boolean
 })
 ----
-link:{ref}/cluster-nodes-stats.html[Reference]
+link:{ref}/cluster-nodes-stats.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -4051,7 +4051,7 @@ client.nodes.usage({
   timeout: string
 })
 ----
-link:{ref}/cluster-nodes-usage.html[Reference]
+link:{ref}/cluster-nodes-usage.html[Documentation] +
 [cols=2*]
 |===
 |`node_id` or `nodeId`
@@ -4071,7 +4071,7 @@ link:{ref}/cluster-nodes-usage.html[Reference]
 ----
 client.ping()
 ----
-link:{ref}/index.html[Reference]
+link:{ref}/index.html[Documentation] +
 
 
 === putScript
@@ -4086,7 +4086,7 @@ client.putScript({
   body: object
 })
 ----
-link:{ref}/modules-scripting.html[Reference]
+link:{ref}/modules-scripting.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -4119,7 +4119,7 @@ client.rankEval({
   body: object
 })
 ----
-link:{ref}/search-rank-eval.html[Reference]
+link:{ref}/search-rank-eval.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -4159,8 +4159,8 @@ client.reindex({
   body: object
 })
 ----
-link:{ref}/docs-reindex.html[Reference]
-{jsclient}/reindex_examples.html[Example]
+link:{ref}/docs-reindex.html[Documentation] +
+{jsclient}/reindex_examples.html[Code Example] +
 [cols=2*]
 |===
 |`refresh`
@@ -4205,7 +4205,7 @@ client.reindexRethrottle({
   requests_per_second: number
 })
 ----
-link:{ref}/docs-reindex.html[Reference]
+link:{ref}/docs-reindex.html[Documentation] +
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -4225,7 +4225,7 @@ client.renderSearchTemplate({
   body: object
 })
 ----
-link:{ref}/search-template.html#_validating_templates[Reference]
+link:{ref}/search-template.html#_validating_templates[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -4244,7 +4244,7 @@ client.scriptsPainlessExecute({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Reference]
+link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -4263,8 +4263,8 @@ client.scroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#request-body-search-scroll[Reference]
-{jsclient}/scroll_examples.html[Example]
+link:{ref}/search-request-body.html#request-body-search-scroll[Documentation] +
+{jsclient}/scroll_examples.html[Code Example] +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -4334,8 +4334,8 @@ client.search({
   body: object
 })
 ----
-link:{ref}/search-search.html[Reference]
-{jsclient}/search_examples.html[Example]
+link:{ref}/search-search.html[Documentation] +
+{jsclient}/search_examples.html[Code Example] +
 [cols=2*]
 |===
 |`index`
@@ -4494,7 +4494,7 @@ client.searchShards({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/search-shards.html[Reference]
+link:{ref}/search-shards.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -4543,7 +4543,7 @@ client.searchTemplate({
   body: object
 })
 ----
-link:{ref}/search-template.html[Reference]
+link:{ref}/search-template.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -4606,7 +4606,7 @@ client.snapshot.cleanupRepository({
   body: object
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4635,7 +4635,7 @@ client.snapshot.create({
   body: object
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4667,7 +4667,7 @@ client.snapshot.createRepository({
   body: object
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4697,7 +4697,7 @@ client.snapshot.delete({
   master_timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4721,7 +4721,7 @@ client.snapshot.deleteRepository({
   timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4747,7 +4747,7 @@ client.snapshot.get({
   verbose: boolean
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4777,7 +4777,7 @@ client.snapshot.getRepository({
   local: boolean
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4803,7 +4803,7 @@ client.snapshot.restore({
   body: object
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4834,7 +4834,7 @@ client.snapshot.status({
   ignore_unavailable: boolean
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4861,7 +4861,7 @@ client.snapshot.verifyRepository({
   timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Reference]
+link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4886,7 +4886,7 @@ client.tasks.cancel({
   parent_task_id: string
 })
 ----
-link:{ref}/tasks.html[Reference]
+link:{ref}/tasks.html[Documentation] +
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -4913,7 +4913,7 @@ client.tasks.get({
   timeout: string
 })
 ----
-link:{ref}/tasks.html[Reference]
+link:{ref}/tasks.html[Documentation] +
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -4941,7 +4941,7 @@ client.tasks.list({
   timeout: string
 })
 ----
-link:{ref}/tasks.html[Reference]
+link:{ref}/tasks.html[Documentation] +
 [cols=2*]
 |===
 |`nodes`
@@ -4989,7 +4989,7 @@ client.termvectors({
   body: object
 })
 ----
-link:{ref}/docs-termvectors.html[Reference]
+link:{ref}/docs-termvectors.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5062,8 +5062,8 @@ client.update({
   body: object
 })
 ----
-link:{ref}/docs-update.html[Reference]
-{jsclient}/update_examples.html[Example]
+link:{ref}/docs-update.html[Documentation] +
+{jsclient}/update_examples.html[Code Example] +
 [cols=2*]
 |===
 |`id`
@@ -5158,8 +5158,8 @@ client.updateByQuery({
   body: object
 })
 ----
-link:{ref}/docs-update-by-query.html[Reference]
-{jsclient}/update_by_query_examples.html[Example]
+link:{ref}/docs-update-by-query.html[Documentation] +
+{jsclient}/update_by_query_examples.html[Code Example] +
 [cols=2*]
 |===
 |`index`
@@ -5287,7 +5287,7 @@ client.updateByQueryRethrottle({
   requests_per_second: number
 })
 ----
-link:{ref}/docs-update-by-query.html[Reference]
+link:{ref}/docs-update-by-query.html[Documentation] +
 [cols=2*]
 |===
 |`task_id` or `taskId`
@@ -5314,7 +5314,7 @@ client.cat.ml.jobs({
   v: boolean
 })
 ----
-link:{ref}/ml-get-job-stats.html[Reference]
+link:{ref}/ml-get-job-stats.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5354,7 +5354,7 @@ client.ccr.deleteAutoFollowPattern({
   name: string
 })
 ----
-link:{ref}/ccr-delete-auto-follow-pattern.html[Reference]
+link:{ref}/ccr-delete-auto-follow-pattern.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5372,7 +5372,7 @@ client.ccr.follow({
   body: object
 })
 ----
-link:{ref}/ccr-put-follow.html[Reference]
+link:{ref}/ccr-put-follow.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5395,7 +5395,7 @@ client.ccr.followInfo({
   index: string | string[]
 })
 ----
-link:{ref}/ccr-get-follow-info.html[Reference]
+link:{ref}/ccr-get-follow-info.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5411,7 +5411,7 @@ client.ccr.followStats({
   index: string | string[]
 })
 ----
-link:{ref}/ccr-get-follow-stats.html[Reference]
+link:{ref}/ccr-get-follow-stats.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5428,7 +5428,7 @@ client.ccr.forgetFollower({
   body: object
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
+link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5447,7 +5447,7 @@ client.ccr.getAutoFollowPattern({
   name: string
 })
 ----
-link:{ref}/ccr-get-auto-follow-pattern.html[Reference]
+link:{ref}/ccr-get-auto-follow-pattern.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5463,7 +5463,7 @@ client.ccr.pauseAutoFollowPattern({
   name: string
 })
 ----
-link:{ref}/ccr-pause-auto-follow-pattern.html[Reference]
+link:{ref}/ccr-pause-auto-follow-pattern.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5479,7 +5479,7 @@ client.ccr.pauseFollow({
   index: string
 })
 ----
-link:{ref}/ccr-post-pause-follow.html[Reference]
+link:{ref}/ccr-post-pause-follow.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5496,7 +5496,7 @@ client.ccr.putAutoFollowPattern({
   body: object
 })
 ----
-link:{ref}/ccr-put-auto-follow-pattern.html[Reference]
+link:{ref}/ccr-put-auto-follow-pattern.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5515,7 +5515,7 @@ client.ccr.resumeAutoFollowPattern({
   name: string
 })
 ----
-link:{ref}/ccr-resume-auto-follow-pattern.html[Reference]
+link:{ref}/ccr-resume-auto-follow-pattern.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5532,7 +5532,7 @@ client.ccr.resumeFollow({
   body: object
 })
 ----
-link:{ref}/ccr-post-resume-follow.html[Reference]
+link:{ref}/ccr-post-resume-follow.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5549,7 +5549,7 @@ link:{ref}/ccr-post-resume-follow.html[Reference]
 ----
 client.ccr.stats()
 ----
-link:{ref}/ccr-get-stats.html[Reference]
+link:{ref}/ccr-get-stats.html[Documentation] +
 
 
 === ccr.unfollow
@@ -5560,7 +5560,7 @@ client.ccr.unfollow({
   index: string
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Reference]
+link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5577,7 +5577,7 @@ client.dataFrameTransformDeprecated.deleteTransform({
   force: boolean
 })
 ----
-link:{ref}/delete-transform.html[Reference]
+link:{ref}/delete-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5599,7 +5599,7 @@ client.dataFrameTransformDeprecated.getTransform({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-transform.html[Reference]
+link:{ref}/get-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5627,7 +5627,7 @@ client.dataFrameTransformDeprecated.getTransformStats({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-transform-stats.html[Reference]
+link:{ref}/get-transform-stats.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5652,7 +5652,7 @@ client.dataFrameTransformDeprecated.previewTransform({
   body: object
 })
 ----
-link:{ref}/preview-transform.html[Reference]
+link:{ref}/preview-transform.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -5670,7 +5670,7 @@ client.dataFrameTransformDeprecated.putTransform({
   body: object
 })
 ----
-link:{ref}/put-transform.html[Reference]
+link:{ref}/put-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5693,7 +5693,7 @@ client.dataFrameTransformDeprecated.startTransform({
   timeout: string
 })
 ----
-link:{ref}/start-transform.html[Reference]
+link:{ref}/start-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5715,7 +5715,7 @@ client.dataFrameTransformDeprecated.stopTransform({
   allow_no_match: boolean
 })
 ----
-link:{ref}/stop-transform.html[Reference]
+link:{ref}/stop-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5742,7 +5742,7 @@ client.dataFrameTransformDeprecated.updateTransform({
   body: object
 })
 ----
-link:{ref}/update-transform.html[Reference]
+link:{ref}/update-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -5764,7 +5764,7 @@ client.enrich.deletePolicy({
   name: string
 })
 ----
-link:{ref}/delete-enrich-policy-api.html[Reference]
+link:{ref}/delete-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5781,7 +5781,7 @@ client.enrich.executePolicy({
   wait_for_completion: boolean
 })
 ----
-link:{ref}/execute-enrich-policy-api.html[Reference]
+link:{ref}/execute-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5801,7 +5801,7 @@ client.enrich.getPolicy({
   name: string
 })
 ----
-link:{ref}/get-enrich-policy-api.html[Reference]
+link:{ref}/get-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5818,7 +5818,7 @@ client.enrich.putPolicy({
   body: object
 })
 ----
-link:{ref}/put-enrich-policy-api.html[Reference]
+link:{ref}/put-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5835,7 +5835,7 @@ link:{ref}/put-enrich-policy-api.html[Reference]
 ----
 client.enrich.stats()
 ----
-link:{ref}/enrich-stats-api.html[Reference]
+link:{ref}/enrich-stats-api.html[Documentation] +
 
 
 === eql.search
@@ -5847,7 +5847,7 @@ client.eql.search({
   body: object
 })
 ----
-link:{ref}/eql.html[Reference]
+link:{ref}/eql.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5869,7 +5869,7 @@ client.graph.explore({
   body: object
 })
 ----
-link:{ref}/graph-explore-api.html[Reference]
+link:{ref}/graph-explore-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5894,7 +5894,7 @@ client.ilm.deleteLifecycle({
   policy: string
 })
 ----
-link:{ref}/ilm-delete-lifecycle.html[Reference]
+link:{ref}/ilm-delete-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy`
@@ -5912,7 +5912,7 @@ client.ilm.explainLifecycle({
   only_errors: boolean
 })
 ----
-link:{ref}/ilm-explain-lifecycle.html[Reference]
+link:{ref}/ilm-explain-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5934,7 +5934,7 @@ client.ilm.getLifecycle({
   policy: string
 })
 ----
-link:{ref}/ilm-get-lifecycle.html[Reference]
+link:{ref}/ilm-get-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy`
@@ -5948,7 +5948,7 @@ link:{ref}/ilm-get-lifecycle.html[Reference]
 ----
 client.ilm.getStatus()
 ----
-link:{ref}/ilm-get-status.html[Reference]
+link:{ref}/ilm-get-status.html[Documentation] +
 
 
 === ilm.moveToStep
@@ -5960,7 +5960,7 @@ client.ilm.moveToStep({
   body: object
 })
 ----
-link:{ref}/ilm-move-to-step.html[Reference]
+link:{ref}/ilm-move-to-step.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5980,7 +5980,7 @@ client.ilm.putLifecycle({
   body: object
 })
 ----
-link:{ref}/ilm-put-lifecycle.html[Reference]
+link:{ref}/ilm-put-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy`
@@ -5999,7 +5999,7 @@ client.ilm.removePolicy({
   index: string
 })
 ----
-link:{ref}/ilm-remove-policy.html[Reference]
+link:{ref}/ilm-remove-policy.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6015,7 +6015,7 @@ client.ilm.retry({
   index: string
 })
 ----
-link:{ref}/ilm-retry-policy.html[Reference]
+link:{ref}/ilm-retry-policy.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6029,7 +6029,7 @@ link:{ref}/ilm-retry-policy.html[Reference]
 ----
 client.ilm.start()
 ----
-link:{ref}/ilm-start.html[Reference]
+link:{ref}/ilm-start.html[Documentation] +
 
 
 === ilm.stop
@@ -6038,7 +6038,7 @@ link:{ref}/ilm-start.html[Reference]
 ----
 client.ilm.stop()
 ----
-link:{ref}/ilm-stop.html[Reference]
+link:{ref}/ilm-stop.html[Documentation] +
 
 
 === indices.freeze
@@ -6055,7 +6055,7 @@ client.indices.freeze({
   wait_for_active_shards: string
 })
 ----
-link:{ref}/freeze-index-api.html[Reference]
+link:{ref}/freeze-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6093,7 +6093,7 @@ client.indices.reloadSearchAnalyzers({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-reload-analyzers.html[Reference]
+link:{ref}/indices-reload-analyzers.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6125,7 +6125,7 @@ client.indices.unfreeze({
   wait_for_active_shards: string
 })
 ----
-link:{ref}/freeze-index-api.html[Reference]
+link:{ref}/freeze-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6158,7 +6158,7 @@ _Default:_ `closed`
 ----
 client.license.delete()
 ----
-link:{ref}/delete-license.html[Reference]
+link:{ref}/delete-license.html[Documentation] +
 
 
 === license.get
@@ -6170,7 +6170,7 @@ client.license.get({
   accept_enterprise: boolean
 })
 ----
-link:{ref}/get-license.html[Reference]
+link:{ref}/get-license.html[Documentation] +
 [cols=2*]
 |===
 |`local`
@@ -6189,7 +6189,7 @@ WARNING: This parameter has been deprecated.
 ----
 client.license.getBasicStatus()
 ----
-link:{ref}/get-basic-status.html[Reference]
+link:{ref}/get-basic-status.html[Documentation] +
 
 
 === license.getTrialStatus
@@ -6198,7 +6198,7 @@ link:{ref}/get-basic-status.html[Reference]
 ----
 client.license.getTrialStatus()
 ----
-link:{ref}/get-trial-status.html[Reference]
+link:{ref}/get-trial-status.html[Documentation] +
 
 
 === license.post
@@ -6210,7 +6210,7 @@ client.license.post({
   body: object
 })
 ----
-link:{ref}/update-license.html[Reference]
+link:{ref}/update-license.html[Documentation] +
 [cols=2*]
 |===
 |`acknowledge`
@@ -6229,7 +6229,7 @@ client.license.postStartBasic({
   acknowledge: boolean
 })
 ----
-link:{ref}/start-basic.html[Reference]
+link:{ref}/start-basic.html[Documentation] +
 [cols=2*]
 |===
 |`acknowledge`
@@ -6246,7 +6246,7 @@ client.license.postStartTrial({
   acknowledge: boolean
 })
 ----
-link:{ref}/start-trial.html[Reference]
+link:{ref}/start-trial.html[Documentation] +
 [cols=2*]
 |===
 |`type`
@@ -6265,7 +6265,7 @@ client.migration.deprecations({
   index: string
 })
 ----
-link:{ref}/migration-api-deprecation.html[Reference]
+link:{ref}/migration-api-deprecation.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6285,7 +6285,7 @@ client.ml.closeJob({
   body: object
 })
 ----
-link:{ref}/ml-close-job.html[Reference]
+link:{ref}/ml-close-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6367,7 +6367,7 @@ client.ml.deleteDataFrameAnalytics({
   force: boolean
 })
 ----
-link:{ref}/delete-dfanalytics.html[Reference]
+link:{ref}/delete-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -6387,7 +6387,7 @@ client.ml.deleteDatafeed({
   force: boolean
 })
 ----
-link:{ref}/ml-delete-datafeed.html[Reference]
+link:{ref}/ml-delete-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -6432,7 +6432,7 @@ client.ml.deleteForecast({
   timeout: string
 })
 ----
-link:{ref}/ml-delete-forecast.html[Reference]
+link:{ref}/ml-delete-forecast.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6459,7 +6459,7 @@ client.ml.deleteJob({
   wait_for_completion: boolean
 })
 ----
-link:{ref}/ml-delete-job.html[Reference]
+link:{ref}/ml-delete-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6483,7 +6483,7 @@ client.ml.deleteModelSnapshot({
   snapshot_id: string
 })
 ----
-link:{ref}/ml-delete-snapshot.html[Reference]
+link:{ref}/ml-delete-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6502,7 +6502,7 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
-link:{ref}/delete-inference.html[Reference]
+link:{ref}/delete-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -6518,7 +6518,7 @@ client.ml.evaluateDataFrame({
   body: object
 })
 ----
-link:{ref}/evaluate-dfanalytics.html[Reference]
+link:{ref}/evaluate-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -6535,7 +6535,7 @@ client.ml.explainDataFrameAnalytics({
   body: object
 })
 ----
-link:{ref}/explain-dfanalytics.html[Reference]
+link:{ref}/explain-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -6568,7 +6568,7 @@ client.ml.findFileStructure({
   body: object
 })
 ----
-link:{ref}/ml-find-file-structure.html[Reference]
+link:{ref}/ml-find-file-structure.html[Documentation] +
 [cols=2*]
 |===
 |`lines_to_sample` or `linesToSample`
@@ -6635,7 +6635,7 @@ client.ml.flushJob({
   body: object
 })
 ----
-link:{ref}/ml-flush-job.html[Reference]
+link:{ref}/ml-flush-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6703,7 +6703,7 @@ client.ml.getBuckets({
   body: object
 })
 ----
-link:{ref}/ml-get-bucket.html[Reference]
+link:{ref}/ml-get-bucket.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6818,7 +6818,7 @@ client.ml.getCategories({
   body: object
 })
 ----
-link:{ref}/ml-get-category.html[Reference]
+link:{ref}/ml-get-category.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6849,7 +6849,7 @@ client.ml.getDataFrameAnalytics({
   size: number
 })
 ----
-link:{ref}/get-dfanalytics.html[Reference]
+link:{ref}/get-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -6879,7 +6879,7 @@ client.ml.getDataFrameAnalyticsStats({
   size: number
 })
 ----
-link:{ref}/get-dfanalytics-stats.html[Reference]
+link:{ref}/get-dfanalytics-stats.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -6907,7 +6907,7 @@ client.ml.getDatafeedStats({
   allow_no_datafeeds: boolean
 })
 ----
-link:{ref}/ml-get-datafeed-stats.html[Reference]
+link:{ref}/ml-get-datafeed-stats.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -6927,7 +6927,7 @@ client.ml.getDatafeeds({
   allow_no_datafeeds: boolean
 })
 ----
-link:{ref}/ml-get-datafeed.html[Reference]
+link:{ref}/ml-get-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -6978,7 +6978,7 @@ client.ml.getInfluencers({
   body: object
 })
 ----
-link:{ref}/ml-get-influencer.html[Reference]
+link:{ref}/ml-get-influencer.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7022,7 +7022,7 @@ client.ml.getJobStats({
   allow_no_jobs: boolean
 })
 ----
-link:{ref}/ml-get-job-stats.html[Reference]
+link:{ref}/ml-get-job-stats.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7042,7 +7042,7 @@ client.ml.getJobs({
   allow_no_jobs: boolean
 })
 ----
-link:{ref}/ml-get-job.html[Reference]
+link:{ref}/ml-get-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7069,7 +7069,7 @@ client.ml.getModelSnapshots({
   body: object
 })
 ----
-link:{ref}/ml-get-snapshot.html[Reference]
+link:{ref}/ml-get-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7117,7 +7117,7 @@ client.ml.getOverallBuckets({
   body: object
 })
 ----
-link:{ref}/ml-get-overall-buckets.html[Reference]
+link:{ref}/ml-get-overall-buckets.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7166,7 +7166,7 @@ client.ml.getRecords({
   body: object
 })
 ----
-link:{ref}/ml-get-record.html[Reference]
+link:{ref}/ml-get-record.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7215,7 +7215,7 @@ client.ml.getTrainedModels({
   tags: string | string[]
 })
 ----
-link:{ref}/get-inference.html[Reference]
+link:{ref}/get-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7255,7 +7255,7 @@ client.ml.getTrainedModelsStats({
   size: number
 })
 ----
-link:{ref}/get-inference-stats.html[Reference]
+link:{ref}/get-inference-stats.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7290,7 +7290,7 @@ client.ml.openJob({
   job_id: string
 })
 ----
-link:{ref}/ml-open-job.html[Reference]
+link:{ref}/ml-open-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7328,7 +7328,7 @@ client.ml.postData({
   body: object
 })
 ----
-link:{ref}/ml-post-data.html[Reference]
+link:{ref}/ml-post-data.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7353,7 +7353,7 @@ client.ml.previewDatafeed({
   datafeed_id: string
 })
 ----
-link:{ref}/ml-preview-datafeed.html[Reference]
+link:{ref}/ml-preview-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -7408,7 +7408,7 @@ client.ml.putDataFrameAnalytics({
   body: object
 })
 ----
-link:{ref}/put-dfanalytics.html[Reference]
+link:{ref}/put-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7428,7 +7428,7 @@ client.ml.putDatafeed({
   body: object
 })
 ----
-link:{ref}/ml-put-datafeed.html[Reference]
+link:{ref}/ml-put-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -7467,7 +7467,7 @@ client.ml.putJob({
   body: object
 })
 ----
-link:{ref}/ml-put-job.html[Reference]
+link:{ref}/ml-put-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7487,7 +7487,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:TODO[Reference]
+link:TODO[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7509,7 +7509,7 @@ client.ml.revertModelSnapshot({
   body: object
 })
 ----
-link:{ref}/ml-revert-snapshot.html[Reference]
+link:{ref}/ml-revert-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7535,7 +7535,7 @@ client.ml.setUpgradeMode({
   timeout: string
 })
 ----
-link:{ref}/ml-set-upgrade-mode.html[Reference]
+link:{ref}/ml-set-upgrade-mode.html[Documentation] +
 [cols=2*]
 |===
 |`enabled`
@@ -7556,7 +7556,7 @@ client.ml.startDataFrameAnalytics({
   body: object
 })
 ----
-link:{ref}/start-dfanalytics.html[Reference]
+link:{ref}/start-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7582,7 +7582,7 @@ client.ml.startDatafeed({
   body: object
 })
 ----
-link:{ref}/ml-start-datafeed.html[Reference]
+link:{ref}/ml-start-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -7614,7 +7614,7 @@ client.ml.stopDataFrameAnalytics({
   body: object
 })
 ----
-link:{ref}/stop-dfanalytics.html[Reference]
+link:{ref}/stop-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7645,7 +7645,7 @@ client.ml.stopDatafeed({
   timeout: string
 })
 ----
-link:{ref}/ml-stop-datafeed.html[Reference]
+link:{ref}/ml-stop-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -7671,7 +7671,7 @@ client.ml.updateDatafeed({
   body: object
 })
 ----
-link:{ref}/ml-update-datafeed.html[Reference]
+link:{ref}/ml-update-datafeed.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -7710,7 +7710,7 @@ client.ml.updateJob({
   body: object
 })
 ----
-link:{ref}/ml-update-job.html[Reference]
+link:{ref}/ml-update-job.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7731,7 +7731,7 @@ client.ml.updateModelSnapshot({
   body: object
 })
 ----
-link:{ref}/ml-update-snapshot.html[Reference]
+link:{ref}/ml-update-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7787,7 +7787,7 @@ client.monitoring.bulk({
   body: object
 })
 ----
-link:{ref}/es-monitoring.html[Reference]
+link:{ref}/es-monitoring.html[Documentation] +
 [cols=2*]
 |===
 |`type`
@@ -7965,7 +7965,7 @@ client.rollup.stopJob({
 ----
 client.security.authenticate()
 ----
-link:{ref}/security-api-authenticate.html[Reference]
+link:{ref}/security-api-authenticate.html[Documentation] +
 
 
 === security.changePassword
@@ -7978,7 +7978,7 @@ client.security.changePassword({
   body: object
 })
 ----
-link:{ref}/security-api-change-password.html[Reference]
+link:{ref}/security-api-change-password.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8001,7 +8001,7 @@ client.security.clearCachedRealms({
   usernames: string | string[]
 })
 ----
-link:{ref}/security-api-clear-cache.html[Reference]
+link:{ref}/security-api-clear-cache.html[Documentation] +
 [cols=2*]
 |===
 |`realms`
@@ -8020,7 +8020,7 @@ client.security.clearCachedRoles({
   name: string | string[]
 })
 ----
-link:{ref}/security-api-clear-role-cache.html[Reference]
+link:{ref}/security-api-clear-role-cache.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8037,7 +8037,7 @@ client.security.createApiKey({
   body: object
 })
 ----
-link:{ref}/security-api-create-api-key.html[Reference]
+link:{ref}/security-api-create-api-key.html[Documentation] +
 [cols=2*]
 |===
 |`refresh`
@@ -8058,7 +8058,7 @@ client.security.deletePrivileges({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:TODO[Reference]
+link:TODO[Documentation] +
 [cols=2*]
 |===
 |`application`
@@ -8081,7 +8081,7 @@ client.security.deleteRole({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:{ref}/security-api-delete-role.html[Reference]
+link:{ref}/security-api-delete-role.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8101,7 +8101,7 @@ client.security.deleteRoleMapping({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:{ref}/security-api-delete-role-mapping.html[Reference]
+link:{ref}/security-api-delete-role-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8121,7 +8121,7 @@ client.security.deleteUser({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:{ref}/security-api-delete-user.html[Reference]
+link:{ref}/security-api-delete-user.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8141,7 +8141,7 @@ client.security.disableUser({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:{ref}/security-api-disable-user.html[Reference]
+link:{ref}/security-api-disable-user.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8161,7 +8161,7 @@ client.security.enableUser({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:{ref}/security-api-enable-user.html[Reference]
+link:{ref}/security-api-enable-user.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8184,7 +8184,7 @@ client.security.getApiKey({
   owner: boolean
 })
 ----
-link:{ref}/security-api-get-api-key.html[Reference]
+link:{ref}/security-api-get-api-key.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8210,7 +8210,7 @@ link:{ref}/security-api-get-api-key.html[Reference]
 ----
 client.security.getBuiltinPrivileges()
 ----
-link:{ref}/security-api-get-builtin-privileges.html[Reference]
+link:{ref}/security-api-get-builtin-privileges.html[Documentation] +
 
 
 === security.getPrivileges
@@ -8222,7 +8222,7 @@ client.security.getPrivileges({
   name: string
 })
 ----
-link:{ref}/security-api-get-privileges.html[Reference]
+link:{ref}/security-api-get-privileges.html[Documentation] +
 [cols=2*]
 |===
 |`application`
@@ -8241,7 +8241,7 @@ client.security.getRole({
   name: string
 })
 ----
-link:{ref}/security-api-get-role.html[Reference]
+link:{ref}/security-api-get-role.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8257,7 +8257,7 @@ client.security.getRoleMapping({
   name: string
 })
 ----
-link:{ref}/security-api-get-role-mapping.html[Reference]
+link:{ref}/security-api-get-role-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8273,7 +8273,7 @@ client.security.getToken({
   body: object
 })
 ----
-link:{ref}/security-api-get-token.html[Reference]
+link:{ref}/security-api-get-token.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8289,7 +8289,7 @@ client.security.getUser({
   username: string | string[]
 })
 ----
-link:{ref}/security-api-get-user.html[Reference]
+link:{ref}/security-api-get-user.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8303,7 +8303,7 @@ link:{ref}/security-api-get-user.html[Reference]
 ----
 client.security.getUserPrivileges()
 ----
-link:{ref}/security-api-get-privileges.html[Reference]
+link:{ref}/security-api-get-privileges.html[Documentation] +
 
 
 === security.hasPrivileges
@@ -8315,7 +8315,7 @@ client.security.hasPrivileges({
   body: object
 })
 ----
-link:{ref}/security-api-has-privileges.html[Reference]
+link:{ref}/security-api-has-privileges.html[Documentation] +
 [cols=2*]
 |===
 |`user`
@@ -8334,7 +8334,7 @@ client.security.invalidateApiKey({
   body: object
 })
 ----
-link:{ref}/security-api-invalidate-api-key.html[Reference]
+link:{ref}/security-api-invalidate-api-key.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8350,7 +8350,7 @@ client.security.invalidateToken({
   body: object
 })
 ----
-link:{ref}/security-api-invalidate-token.html[Reference]
+link:{ref}/security-api-invalidate-token.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8367,7 +8367,7 @@ client.security.putPrivileges({
   body: object
 })
 ----
-link:TODO[Reference]
+link:TODO[Documentation] +
 [cols=2*]
 |===
 |`refresh`
@@ -8388,7 +8388,7 @@ client.security.putRole({
   body: object
 })
 ----
-link:{ref}/security-api-put-role.html[Reference]
+link:{ref}/security-api-put-role.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8412,7 +8412,7 @@ client.security.putRoleMapping({
   body: object
 })
 ----
-link:{ref}/security-api-put-role-mapping.html[Reference]
+link:{ref}/security-api-put-role-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -8436,7 +8436,7 @@ client.security.putUser({
   body: object
 })
 ----
-link:{ref}/security-api-put-user.html[Reference]
+link:{ref}/security-api-put-user.html[Documentation] +
 [cols=2*]
 |===
 |`username`
@@ -8458,7 +8458,7 @@ client.slm.deleteLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-delete-policy.html[Reference]
+link:{ref}/slm-api-delete-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8474,7 +8474,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute-lifecycle.html[Reference]
+link:{ref}/slm-api-execute-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8488,7 +8488,7 @@ link:{ref}/slm-api-execute-lifecycle.html[Reference]
 ----
 client.slm.executeRetention()
 ----
-link:{ref}/slm-api-execute-retention.html[Reference]
+link:{ref}/slm-api-execute-retention.html[Documentation] +
 
 
 === slm.getLifecycle
@@ -8499,7 +8499,7 @@ client.slm.getLifecycle({
   policy_id: string | string[]
 })
 ----
-link:{ref}/slm-api-get-policy.html[Reference]
+link:{ref}/slm-api-get-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8513,7 +8513,7 @@ link:{ref}/slm-api-get-policy.html[Reference]
 ----
 client.slm.getStats()
 ----
-link:{ref}/slm-api-get-stats.html[Reference]
+link:{ref}/slm-api-get-stats.html[Documentation] +
 
 
 === slm.getStatus
@@ -8522,7 +8522,7 @@ link:{ref}/slm-api-get-stats.html[Reference]
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-api-get-status.html[Reference]
+link:{ref}/slm-api-get-status.html[Documentation] +
 
 
 === slm.putLifecycle
@@ -8534,7 +8534,7 @@ client.slm.putLifecycle({
   body: object
 })
 ----
-link:{ref}/slm-api-put-policy.html[Reference]
+link:{ref}/slm-api-put-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8551,7 +8551,7 @@ link:{ref}/slm-api-put-policy.html[Reference]
 ----
 client.slm.start()
 ----
-link:{ref}/slm-api-start.html[Reference]
+link:{ref}/slm-api-start.html[Documentation] +
 
 
 === slm.stop
@@ -8560,7 +8560,7 @@ link:{ref}/slm-api-start.html[Reference]
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-api-stop.html[Reference]
+link:{ref}/slm-api-stop.html[Documentation] +
 
 
 === sql.clearCursor
@@ -8571,7 +8571,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:{ref}/sql-pagination.html[Reference]
+link:{ref}/sql-pagination.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8588,8 +8588,8 @@ client.sql.query({
   body: object
 })
 ----
-link:{ref}/sql-rest-overview.html[Reference]
-{jsclient}/sql_query_examples.html[Example]
+link:{ref}/sql-rest-overview.html[Documentation] +
+{jsclient}/sql_query_examples.html[Code Example] +
 [cols=2*]
 |===
 |`format`
@@ -8608,7 +8608,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:{ref}/sql-translate.html[Reference]
+link:{ref}/sql-translate.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8622,7 +8622,7 @@ link:{ref}/sql-translate.html[Reference]
 ----
 client.ssl.certificates()
 ----
-link:{ref}/security-api-ssl.html[Reference]
+link:{ref}/security-api-ssl.html[Documentation] +
 
 
 === transform.deleteTransform
@@ -8634,7 +8634,7 @@ client.transform.deleteTransform({
   force: boolean
 })
 ----
-link:{ref}/delete-transform.html[Reference]
+link:{ref}/delete-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8656,7 +8656,7 @@ client.transform.getTransform({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-transform.html[Reference]
+link:{ref}/get-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8684,7 +8684,7 @@ client.transform.getTransformStats({
   allow_no_match: boolean
 })
 ----
-link:{ref}/get-transform-stats.html[Reference]
+link:{ref}/get-transform-stats.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8709,7 +8709,7 @@ client.transform.previewTransform({
   body: object
 })
 ----
-link:{ref}/preview-transform.html[Reference]
+link:{ref}/preview-transform.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8727,7 +8727,7 @@ client.transform.putTransform({
   body: object
 })
 ----
-link:{ref}/put-transform.html[Reference]
+link:{ref}/put-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8750,7 +8750,7 @@ client.transform.startTransform({
   timeout: string
 })
 ----
-link:{ref}/start-transform.html[Reference]
+link:{ref}/start-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8774,7 +8774,7 @@ client.transform.stopTransform({
   wait_for_checkpoint: boolean
 })
 ----
-link:{ref}/stop-transform.html[Reference]
+link:{ref}/stop-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8807,7 +8807,7 @@ client.transform.updateTransform({
   body: object
 })
 ----
-link:{ref}/update-transform.html[Reference]
+link:{ref}/update-transform.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
@@ -8830,7 +8830,7 @@ client.watcher.ackWatch({
   action_id: string | string[]
 })
 ----
-link:{ref}/watcher-api-ack-watch.html[Reference]
+link:{ref}/watcher-api-ack-watch.html[Documentation] +
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -8849,7 +8849,7 @@ client.watcher.activateWatch({
   watch_id: string
 })
 ----
-link:{ref}/watcher-api-activate-watch.html[Reference]
+link:{ref}/watcher-api-activate-watch.html[Documentation] +
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -8865,7 +8865,7 @@ client.watcher.deactivateWatch({
   watch_id: string
 })
 ----
-link:{ref}/watcher-api-deactivate-watch.html[Reference]
+link:{ref}/watcher-api-deactivate-watch.html[Documentation] +
 [cols=2*]
 |===
 |`watch_id` or `watchId`
@@ -8881,7 +8881,7 @@ client.watcher.deleteWatch({
   id: string
 })
 ----
-link:{ref}/watcher-api-delete-watch.html[Reference]
+link:{ref}/watcher-api-delete-watch.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8899,7 +8899,7 @@ client.watcher.executeWatch({
   body: object
 })
 ----
-link:{ref}/watcher-api-execute-watch.html[Reference]
+link:{ref}/watcher-api-execute-watch.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8921,7 +8921,7 @@ client.watcher.getWatch({
   id: string
 })
 ----
-link:{ref}/watcher-api-get-watch.html[Reference]
+link:{ref}/watcher-api-get-watch.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8942,7 +8942,7 @@ client.watcher.putWatch({
   body: object
 })
 ----
-link:{ref}/watcher-api-put-watch.html[Reference]
+link:{ref}/watcher-api-put-watch.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8971,7 +8971,7 @@ link:{ref}/watcher-api-put-watch.html[Reference]
 ----
 client.watcher.start()
 ----
-link:{ref}/watcher-api-start.html[Reference]
+link:{ref}/watcher-api-start.html[Documentation] +
 
 
 === watcher.stats
@@ -8983,7 +8983,7 @@ client.watcher.stats({
   emit_stacktraces: boolean
 })
 ----
-link:{ref}/watcher-api-stats.html[Reference]
+link:{ref}/watcher-api-stats.html[Documentation] +
 [cols=2*]
 |===
 |`metric`
@@ -9000,7 +9000,7 @@ link:{ref}/watcher-api-stats.html[Reference]
 ----
 client.watcher.stop()
 ----
-link:{ref}/watcher-api-stop.html[Reference]
+link:{ref}/watcher-api-stop.html[Documentation] +
 
 
 === xpack.info
@@ -9011,7 +9011,7 @@ client.xpack.info({
   categories: string | string[]
 })
 ----
-link:{ref}/info-api.html[Reference]
+link:{ref}/info-api.html[Documentation] +
 [cols=2*]
 |===
 |`categories`
@@ -9027,7 +9027,7 @@ client.xpack.usage({
   master_timeout: string
 })
 ----
-link:Retrieve information about xpack features usage[Reference]
+link:Retrieve information about xpack features usage[Documentation] +
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
