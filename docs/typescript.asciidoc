@@ -1,12 +1,19 @@
 [[typescript]]
 == TypeScript support
 
-The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
+The client offers a first-class support for TypeScript, since it ships the type 
+definitions for every exposed API.
 
-NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_. 
+NOTE: If you are using TypeScript you will be required to use _snake_case_ style 
+to define the API parameters instead of _camelCase_. 
 
-Other than the types for the surface API, the client offers the types for every request method, via the `RequestParams`, if you need the types for a search request for instance, you can access them via `RequestParams.Search`.
-Every API that supports a body, accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the request body, if you don't configure anything, it will default to `any`.
+Other than the types for the surface API, the client offers the types for every 
+request method, via the `RequestParams`, if you need the types for a search 
+request for instance, you can access them via `RequestParams.Search`.
+Every API that supports a body, accepts a 
+https://www.typescriptlang.org/docs/handbook/generics.html[generics] which 
+represents the type of the request body, if you don't configure anything, it 
+will default to `any`.
 
 For example:
 
@@ -40,7 +47,9 @@ const searchParams: RequestParams.Search = {
 }
 ----
 
-You can find the type definiton of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
+You can find the type definiton of a response in `ApiResponse`, which accepts a 
+generics as well if you want to specify the body type, otherwise it defaults to 
+`any`.
 
 [source,ts]
 ----

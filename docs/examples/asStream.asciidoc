@@ -1,7 +1,8 @@
 [[as_stream_examples]]
 == asStream
 
-Instead of getting the parsed body back, you will get the raw Node.js stream of data.
+Instead of getting the parsed body back, you will get the raw Node.js stream of 
+data.
 
 [source,js]
 ----
@@ -76,7 +77,8 @@ async function run () {
 run().catch(console.log)
 ----
 
-TIP: This can be useful if you need to pipe the Elasticsearch's response to a proxy, or send it directly to another source.
+TIP: This can be useful if you need to pipe the {es}'s response to a proxy, or 
+send it directly to another source.
 
 [source,js]
 ----
