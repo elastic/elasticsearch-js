@@ -21,6 +21,7 @@ function buildEnrichDeletePolicy (opts) {
 
   /**
    * Perform a enrich.delete_policy request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-policy-api.html
    */
   return function enrichDeletePolicy (params, options, callback) {
     options = options || {}

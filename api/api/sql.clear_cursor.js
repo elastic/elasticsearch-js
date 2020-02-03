@@ -21,7 +21,8 @@ function buildSqlClearCursor (opts) {
 
   /**
    * Perform a sql.clear_cursor request
-   * Clear SQL cursor
+   * Clears the SQL cursor
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-pagination.html
    */
   return function sqlClearCursor (params, options, callback) {
     options = options || {}

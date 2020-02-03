@@ -21,6 +21,7 @@ function buildEnrichGetPolicy (opts) {
 
   /**
    * Perform a enrich.get_policy request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
    */
   return function enrichGetPolicy (params, options, callback) {
     options = options || {}

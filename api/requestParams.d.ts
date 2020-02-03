@@ -406,7 +406,7 @@ export interface DeleteByQuery<T = any> extends Generic {
   scroll_size?: number;
   wait_for_completion?: boolean;
   requests_per_second?: number;
-  slices?: number;
+  slices?: number|string;
   body: T;
 }
 

@@ -21,7 +21,7 @@ function buildEqlSearch (opts) {
 
   /**
    * Perform a eql.search request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql.html
    */
   return function eqlSearch (params, options, callback) {
     options = options || {}
