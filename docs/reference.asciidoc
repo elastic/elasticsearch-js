@@ -8589,6 +8589,7 @@ client.sql.query({
 })
 ----
 link:{ref}/sql-rest-overview.html[Reference]
+{jsclient}/sql_query_examples.html[Example]
 [cols=2*]
 |===
 |`format`
