@@ -6376,11 +6376,7 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
-<<<<<<< HEAD
-link:{ref}/delete-inference.html[Reference]
-=======
-link:{ref}/estimate-memory-usage-dfanalytics.html[Documentation] +
->>>>>>> e94eefe8... API generation
+link:{ref}/delete-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -6413,7 +6409,7 @@ client.ml.explainDataFrameAnalytics({
   body: object
 })
 ----
-link:{ref}/explain-dfanalytics.html[Reference]
+link:{ref}/explain-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7092,7 +7088,7 @@ client.ml.getTrainedModels({
   size: number
 })
 ----
-link:{ref}/get-inference.html[Reference]
+link:{ref}/get-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7129,7 +7125,7 @@ client.ml.getTrainedModelsStats({
   size: number
 })
 ----
-link:{ref}/get-inference-stats.html[Reference]
+link:{ref}/get-inference-stats.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7361,7 +7357,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:TODO[Reference]
+link:TODO[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -8396,7 +8392,7 @@ link:{ref}/slm-get-stats.html[Documentation] +
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-get-status.html[Reference]
+link:{ref}/slm-get-status.html[Documentation] +
 
 
 === slm.putLifecycle
@@ -8425,7 +8421,7 @@ link:{ref}/slm-api-put.html[Documentation] +
 ----
 client.slm.start()
 ----
-link:{ref}/slm-start.html[Reference]
+link:{ref}/slm-start.html[Documentation] +
 
 
 === slm.stop
@@ -8434,7 +8430,7 @@ link:{ref}/slm-start.html[Reference]
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-stop.html[Reference]
+link:{ref}/slm-stop.html[Documentation] +
 
 
 === sql.clearCursor
