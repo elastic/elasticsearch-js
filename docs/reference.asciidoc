@@ -2657,7 +2657,7 @@ client.indices.flushSynced({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-synced-flush-api.html[Reference]
+link:{ref}/indices-synced-flush-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -4278,7 +4278,6 @@ client.reindex({
 })
 ----
 link:{ref}/docs-reindex.html[Documentation] +
-{jsclient}/reindex_examples.html[Code Example] +
 [cols=2*]
 |===
 |`refresh`
@@ -5188,7 +5187,6 @@ client.update({
 })
 ----
 link:{ref}/docs-update.html[Documentation] +
-{jsclient}/update_examples.html[Code Example] +
 [cols=2*]
 |===
 |`id`
@@ -6378,7 +6376,11 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
+<<<<<<< HEAD
 link:{ref}/delete-inference.html[Reference]
+=======
+link:{ref}/estimate-memory-usage-dfanalytics.html[Documentation] +
+>>>>>>> e94eefe8... API generation
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -8330,7 +8332,7 @@ client.slm.deleteLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-delete.html[Reference]
+link:{ref}/slm-api-delete.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8346,7 +8348,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute.html[Reference]
+link:{ref}/slm-api-execute.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8371,7 +8373,7 @@ client.slm.getLifecycle({
   policy_id: string | string[]
 })
 ----
-link:{ref}/slm-api-get.html[Reference]
+link:{ref}/slm-api-get.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8385,7 +8387,7 @@ link:{ref}/slm-api-get.html[Reference]
 ----
 client.slm.getStats()
 ----
-link:{ref}/slm-get-stats.html[Reference]
+link:{ref}/slm-get-stats.html[Documentation] +
 
 
 === slm.getStatus
@@ -8406,7 +8408,7 @@ client.slm.putLifecycle({
   body: object
 })
 ----
-link:{ref}/slm-api-put.html[Reference]
+link:{ref}/slm-api-put.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8443,7 +8445,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:Clear SQL cursor[Reference]
+link:Clear SQL cursor[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8460,7 +8462,8 @@ client.sql.query({
   body: object
 })
 ----
-link:Execute SQL[Reference]
+link:Execute SQL[Documentation] +
+{jsclient}/sql_query_examples.html[Code Example] +
 [cols=2*]
 |===
 |`format`
@@ -8479,7 +8482,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:Translate SQL into Elasticsearch queries[Reference]
+link:Translate SQL into Elasticsearch queries[Documentation] +
 [cols=2*]
 |===
 |`body`
