@@ -4,17 +4,8 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      range: {
-        timestamp: {
-          time_zone: '+01:00',
-          gte: '2015-01-01 00:00:00',
-          lte: 'now'
-        }
-      }
-    }
-  }
+  index: 'twitter',
+  q: 'tag:wow'
 })
 console.log(response)
 ----
