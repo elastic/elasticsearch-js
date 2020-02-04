@@ -1865,6 +1865,55 @@ test('Compress request', t => {
     }
   })
 
+  t.test('Should skip the compression for empty strings/null/undefined', t => {
+    t.plan(9)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['content-encoding'], undefined)
+      t.strictEqual(req.headers['content-type'], undefined)
+      res.end()
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        compression: 'gzip',
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'DELETE',
+        path: '/hello',
+        body: ''
+      }, (err, { body }) => {
+        t.error(err)
+        transport.request({
+          method: 'GET',
+          path: '/hello',
+          body: null
+        }, (err, { body }) => {
+          t.error(err)
+          transport.request({
+            method: 'GET',
+            path: '/hello',
+            body: undefined
+          }, (err, { body }) => {
+            t.error(err)
+            server.stop()
+          })
+        })
+      })
+    })
+  })
+
   t.end()
 })
 
