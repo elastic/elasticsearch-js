@@ -8328,7 +8328,7 @@ client.slm.deleteLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-delete.html[Documentation] +
+link:{ref}/slm-api-delete-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8344,7 +8344,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute.html[Documentation] +
+link:{ref}/slm-api-execute-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8369,7 +8369,7 @@ client.slm.getLifecycle({
   policy_id: string | string[]
 })
 ----
-link:{ref}/slm-api-get.html[Documentation] +
+link:{ref}/slm-api-get-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8383,7 +8383,7 @@ link:{ref}/slm-api-get.html[Documentation] +
 ----
 client.slm.getStats()
 ----
-link:{ref}/slm-get-stats.html[Documentation] +
+link:{ref}/slm-api-get-stats.html[Documentation] +
 
 
 === slm.getStatus
@@ -8404,7 +8404,7 @@ client.slm.putLifecycle({
   body: object
 })
 ----
-link:{ref}/slm-api-put.html[Documentation] +
+link:{ref}/slm-api-put-policy.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`

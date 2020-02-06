@@ -21,7 +21,7 @@ function buildSlmDeleteLifecycle (opts) {
 
   /**
    * Perform a slm.delete_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
    */
   return function slmDeleteLifecycle (params, options, callback) {
     options = options || {}

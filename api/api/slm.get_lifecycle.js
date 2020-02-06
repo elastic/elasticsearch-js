@@ -21,7 +21,7 @@ function buildSlmGetLifecycle (opts) {
 
   /**
    * Perform a slm.get_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html
    */
   return function slmGetLifecycle (params, options, callback) {
     options = options || {}
