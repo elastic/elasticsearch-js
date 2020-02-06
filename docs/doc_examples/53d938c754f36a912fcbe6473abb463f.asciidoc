@@ -3,8 +3,15 @@
 
 [source, js]
 ----
-const response = await client.cat.health({
-  v: true
+const response = await client.reindex({
+  body: {
+    source: {
+      index: 'users'
+    },
+    dest: {
+      index: 'new_users'
+    }
+  }
 })
 console.log(response)
 ----

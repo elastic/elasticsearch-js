@@ -3,8 +3,8 @@
 
 [source, js]
 ----
-const response = await client.cat.health({
-  v: true
+const response = await client.indices.create({
+  index: 'publications'
 })
 console.log(response)
 ----
