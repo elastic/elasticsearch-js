@@ -21,7 +21,7 @@ function buildMigrationDeprecations (opts) {
 
   /**
    * Perform a migration.deprecations request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
    */
   return function migrationDeprecations (params, options, callback) {
     options = options || {}

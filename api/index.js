@@ -27,7 +27,10 @@ function ESAPI (opts) {
       indices: lazyLoad('cat.indices', opts),
       master: lazyLoad('cat.master', opts),
       ml: {
-        jobs: lazyLoad('cat.ml.jobs', opts)
+        datafeeds: lazyLoad('cat.ml.datafeeds', opts),
+        jobs: lazyLoad('cat.ml.jobs', opts),
+        trained_models: lazyLoad('cat.ml.trained_models', opts),
+        trainedModels: lazyLoad('cat.ml.trained_models', opts)
       },
       nodeattrs: lazyLoad('cat.nodeattrs', opts),
       nodes: lazyLoad('cat.nodes', opts),

@@ -4154,7 +4154,7 @@ client.reindex({
   wait_for_completion: boolean,
   requests_per_second: number,
   scroll: string,
-  slices: number,
+  slices: number|string,
   max_docs: number,
   body: object
 })
@@ -4185,7 +4185,7 @@ _Default:_ `true`
 _Default:_ `5m`
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`max_docs` or `maxDocs`
@@ -5154,7 +5154,7 @@ client.updateByQuery({
   scroll_size: number,
   wait_for_completion: boolean,
   requests_per_second: number,
-  slices: number,
+  slices: number|string,
   body: object
 })
 ----
@@ -5270,7 +5270,7 @@ _Default:_ `true`
 |`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`body`
@@ -5298,6 +5298,50 @@ link:{ref}/docs-update-by-query.html[Documentation] +
 
 |===
 
+=== cat.ml.datafeeds
+
+[source,ts]
+----
+client.cat.ml.datafeeds({
+  datafeed_id: string,
+  allow_no_datafeeds: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  v: boolean
+})
+----
+link:{ref}/ml-get-datafeed-stats.html[Documentation] +
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeeds stats to fetch
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
 === cat.ml.jobs
 
 [source,ts]
@@ -5322,6 +5366,64 @@ link:{ref}/ml-get-job-stats.html[Documentation] +
 
 |`allow_no_jobs` or `allowNoJobs`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.ml.trainedModels
+
+[source,ts]
+----
+client.cat.ml.trainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  v: boolean
+})
+----
+link:{ref}/get-inference-stats.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
@@ -5428,7 +5530,7 @@ client.ccr.forgetFollower({
   body: object
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+link:{ref}/ccr-post-forget-follower.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5560,7 +5662,7 @@ client.ccr.unfollow({
   index: string
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+link:{ref}/ccr-post-unfollow.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -8058,7 +8160,7 @@ client.security.deletePrivileges({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/security-api-delete-privilege.html[Documentation] +
 [cols=2*]
 |===
 |`application`
@@ -8367,7 +8469,7 @@ client.security.putPrivileges({
   body: object
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/security-api-put-privileges.html[Documentation] +
 [cols=2*]
 |===
 |`refresh`
@@ -8626,7 +8728,7 @@ link:{ref}/security-api-ssl.html[Documentation] +
 
 
 === transform.deleteTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.deleteTransform({
@@ -8646,7 +8748,7 @@ link:{ref}/delete-transform.html[Documentation] +
 |===
 
 === transform.getTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.getTransform({
@@ -8674,7 +8776,7 @@ link:{ref}/get-transform.html[Documentation] +
 |===
 
 === transform.getTransformStats
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.getTransformStats({
@@ -8702,7 +8804,7 @@ link:{ref}/get-transform-stats.html[Documentation] +
 |===
 
 === transform.previewTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.previewTransform({
@@ -8718,7 +8820,7 @@ link:{ref}/preview-transform.html[Documentation] +
 |===
 
 === transform.putTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.putTransform({
@@ -8742,7 +8844,7 @@ link:{ref}/put-transform.html[Documentation] +
 |===
 
 === transform.startTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.startTransform({
@@ -8762,7 +8864,7 @@ link:{ref}/start-transform.html[Documentation] +
 |===
 
 === transform.stopTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.stopTransform({
@@ -8798,7 +8900,7 @@ link:{ref}/stop-transform.html[Documentation] +
 |===
 
 === transform.updateTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.updateTransform({

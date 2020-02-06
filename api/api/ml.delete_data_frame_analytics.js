@@ -21,7 +21,7 @@ function buildMlDeleteDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.delete_data_frame_analytics request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
    */
   return function mlDeleteDataFrameAnalytics (params, options, callback) {
     options = options || {}

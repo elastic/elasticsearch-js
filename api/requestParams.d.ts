@@ -1036,7 +1036,7 @@ export interface Reindex<T = any> extends Generic {
   wait_for_completion?: boolean;
   requests_per_second?: number;
   scroll?: string;
-  slices?: number;
+  slices?: number|string;
   max_docs?: number;
   body: T;
 }
@@ -1306,7 +1306,7 @@ export interface UpdateByQuery<T = any> extends Generic {
   scroll_size?: number;
   wait_for_completion?: boolean;
   requests_per_second?: number;
-  slices?: number;
+  slices?: number|string;
   body?: T;
 }
 
@@ -1315,9 +1315,34 @@ export interface UpdateByQueryRethrottle extends Generic {
   requests_per_second: number;
 }
 
+export interface CatMlDatafeeds extends Generic {
+  datafeed_id?: string;
+  allow_no_datafeeds?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
 export interface CatMlJobs extends Generic {
   job_id?: string;
   allow_no_jobs?: boolean;
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
+export interface CatMlTrainedModels extends Generic {
+  model_id?: string;
+  allow_no_match?: boolean;
+  from?: number;
+  size?: number;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
   h?: string | string[];

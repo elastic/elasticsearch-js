@@ -23,7 +23,7 @@ function buildMlStartDatafeed (opts) {
 
   /**
    * Perform a ml.start_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
    */
   return function mlStartDatafeed (params, options, callback) {
     options = options || {}

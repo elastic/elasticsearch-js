@@ -21,7 +21,7 @@ function buildSecurityDeletePrivileges (opts) {
 
   /**
    * Perform a security.delete_privileges request
-   * TODO
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
    */
   return function securityDeletePrivileges (params, options, callback) {
     options = options || {}

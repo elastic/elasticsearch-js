@@ -21,7 +21,7 @@ function buildWatcherStop (opts) {
 
   /**
    * Perform a watcher.stop request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
    */
   return function watcherStop (params, options, callback) {
     options = options || {}

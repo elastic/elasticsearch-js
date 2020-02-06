@@ -23,7 +23,7 @@ function buildMlDeleteForecast (opts) {
 
   /**
    * Perform a ml.delete_forecast request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
    */
   return function mlDeleteForecast (params, options, callback) {
     options = options || {}

@@ -21,7 +21,7 @@ function buildMlGetJobStats (opts) {
 
   /**
    * Perform a ml.get_job_stats request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
    */
   return function mlGetJobStats (params, options, callback) {
     options = options || {}

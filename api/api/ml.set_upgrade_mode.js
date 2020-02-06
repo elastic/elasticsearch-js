@@ -22,7 +22,7 @@ function buildMlSetUpgradeMode (opts) {
 
   /**
    * Perform a ml.set_upgrade_mode request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
    */
   return function mlSetUpgradeMode (params, options, callback) {
     options = options || {}

@@ -23,7 +23,7 @@ function buildMlPostData (opts) {
 
   /**
    * Perform a ml.post_data request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
    */
   return function mlPostData (params, options, callback) {
     options = options || {}

@@ -21,7 +21,7 @@ function buildMlPutDatafeed (opts) {
 
   /**
    * Perform a ml.put_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
    */
   return function mlPutDatafeed (params, options, callback) {
     options = options || {}
