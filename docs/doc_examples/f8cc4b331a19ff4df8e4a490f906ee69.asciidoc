@@ -4,7 +4,7 @@
 [source, js]
 ----
 const response = await client.cat.health({
-  v: ''
+  v: true
 })
 console.log(response)
 ----
