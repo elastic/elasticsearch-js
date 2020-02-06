@@ -20,7 +20,7 @@ const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resou
 
 const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
-const MAX_TEST_TIME = 1000 * 2
+const MAX_TEST_TIME = 1000 * 3
 
 const ossSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
@@ -109,6 +109,12 @@ async function start ({ client, isXPack }) {
 
   log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
 
+  const stats = {
+    total: 0,
+    skip: 0,
+    pass: 0,
+    assertions: 0
+  }
   const folders = getAllFiles(isXPack ? xPackYamlFolder : yamlFolder)
     .filter(t => !/(README|TODO)/g.test(t))
     // we cluster the array based on the folder names,
@@ -170,10 +176,15 @@ async function start ({ client, isXPack }) {
         const testTime = now()
         const name = Object.keys(test)[0]
         if (name === 'setup' || name === 'teardown') continue
-        if (shouldSkip(isXPack, file, name)) continue
+        stats.total += 1
+        if (shouldSkip(isXPack, file, name)) {
+          stats.skip += 1
+          continue
+        }
         log('        - ' + name)
         try {
-          await testRunner.run(setupTest, test[name], teardownTest)
+          await testRunner.run(setupTest, test[name], teardownTest, stats)
+          stats.pass += 1
         } catch (err) {
           console.error(err)
           process.exit(1)
@@ -200,6 +211,12 @@ async function start ({ client, isXPack }) {
     }
   }
   log(`Total testing time: ${ms(now() - totalTime)}`)
+  log(`Test stats:
+  - Total: ${stats.total}
+  - Skip: ${stats.skip}
+  - Pass: ${stats.pass}
+  - Assertions: ${stats.assertions}
+  `)
 }
 
 function log (text) {
