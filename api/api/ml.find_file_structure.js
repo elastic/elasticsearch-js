@@ -42,7 +42,7 @@ function buildMlFindFileStructure (opts) {
 
   /**
    * Perform a ml.find_file_structure request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html
    */
   return function mlFindFileStructure (params, options, callback) {
     options = options || {}

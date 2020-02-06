@@ -7,26 +7,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlGetDataFrameAnalyticsStats (opts) {
+function buildCatMlDatafeeds (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'allow_no_match',
-    'from',
-    'size'
+    'allow_no_datafeeds',
+    'format',
+    'h',
+    'help',
+    's',
+    'time',
+    'v'
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match'
+    allowNoDatafeeds: 'allow_no_datafeeds'
 
   }
 
   /**
-   * Perform a ml.get_data_frame_analytics_stats request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
+   * Perform a cat.ml.datafeeds request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
    */
-  return function mlGetDataFrameAnalyticsStats (params, options, callback) {
+  return function catMlDatafeeds (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -45,7 +49,7 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
     }
 
     var warnings = []
-    var { method, body, id, ...querystring } = params
+    var { method, body, datafeedId, datafeed_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -55,12 +59,12 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
 
     var path = ''
 
-    if ((id) != null) {
+    if ((datafeed_id || datafeedId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stats'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_stats'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds'
     }
 
     // build request object
@@ -76,4 +80,4 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
   }
 }
 
-module.exports = buildMlGetDataFrameAnalyticsStats
+module.exports = buildCatMlDatafeeds

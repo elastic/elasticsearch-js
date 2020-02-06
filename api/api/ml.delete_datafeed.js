@@ -21,7 +21,7 @@ function buildMlDeleteDatafeed (opts) {
 
   /**
    * Perform a ml.delete_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
    */
   return function mlDeleteDatafeed (params, options, callback) {
     options = options || {}

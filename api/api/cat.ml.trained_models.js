@@ -7,14 +7,21 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlGetDataFrameAnalyticsStats (opts) {
+function buildCatMlTrainedModels (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
     'allow_no_match',
     'from',
-    'size'
+    'size',
+    'bytes',
+    'format',
+    'h',
+    'help',
+    's',
+    'time',
+    'v'
   ]
 
   const snakeCase = {
@@ -23,10 +30,10 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
   }
 
   /**
-   * Perform a ml.get_data_frame_analytics_stats request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
+   * Perform a cat.ml.trained_models request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
    */
-  return function mlGetDataFrameAnalyticsStats (params, options, callback) {
+  return function catMlTrainedModels (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -45,7 +52,7 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
     }
 
     var warnings = []
-    var { method, body, id, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -55,12 +62,12 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
 
     var path = ''
 
-    if ((id) != null) {
+    if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stats'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_stats'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models'
     }
 
     // build request object
@@ -76,4 +83,4 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
   }
 }
 
-module.exports = buildMlGetDataFrameAnalyticsStats
+module.exports = buildCatMlTrainedModels

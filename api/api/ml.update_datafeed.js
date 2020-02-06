@@ -21,7 +21,7 @@ function buildMlUpdateDatafeed (opts) {
 
   /**
    * Perform a ml.update_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
    */
   return function mlUpdateDatafeed (params, options, callback) {
     options = options || {}

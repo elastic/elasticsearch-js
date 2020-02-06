@@ -21,7 +21,7 @@ function buildMlPutJob (opts) {
 
   /**
    * Perform a ml.put_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
    */
   return function mlPutJob (params, options, callback) {
     options = options || {}

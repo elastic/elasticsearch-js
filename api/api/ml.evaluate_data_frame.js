@@ -21,7 +21,7 @@ function buildMlEvaluateDataFrame (opts) {
 
   /**
    * Perform a ml.evaluate_data_frame request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
    */
   return function mlEvaluateDataFrame (params, options, callback) {
     options = options || {}

@@ -24,7 +24,7 @@ function buildMlStopDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.stop_data_frame_analytics request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
    */
   return function mlStopDataFrameAnalytics (params, options, callback) {
     options = options || {}

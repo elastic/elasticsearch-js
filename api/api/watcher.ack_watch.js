@@ -21,7 +21,7 @@ function buildWatcherAckWatch (opts) {
 
   /**
    * Perform a watcher.ack_watch request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
    */
   return function watcherAckWatch (params, options, callback) {
     options = options || {}

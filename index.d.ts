@@ -126,7 +126,10 @@ declare class Client extends EventEmitter {
     indices: ApiMethod<RequestParams.CatIndices>
     master: ApiMethod<RequestParams.CatMaster>
     ml: {
+        datafeeds: ApiMethod<RequestParams.CatMlDatafeeds>
         jobs: ApiMethod<RequestParams.CatMlJobs>
+        trained_models: ApiMethod<RequestParams.CatMlTrainedModels>
+        trainedModels: ApiMethod<RequestParams.CatMlTrainedModels>
     }
     nodeattrs: ApiMethod<RequestParams.CatNodeattrs>
     nodes: ApiMethod<RequestParams.CatNodes>

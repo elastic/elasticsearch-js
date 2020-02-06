@@ -22,7 +22,7 @@ function buildMlDeleteJob (opts) {
 
   /**
    * Perform a ml.delete_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
    */
   return function mlDeleteJob (params, options, callback) {
     options = options || {}
