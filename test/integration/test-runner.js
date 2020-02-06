@@ -214,7 +214,7 @@ function build (opts = {}) {
    * @oaram {object} teardown (null if not needed)
    * @returns {Promise}
    */
-  async function run (setup, test, teardown) {
+  async function run (setup, test, teardown, stats) {
     // if we should skip a feature in the setup/teardown section
     // we should skip the entire test file
     const skip = getSkip(setup) || getSkip(teardown)
@@ -236,11 +236,11 @@ function build (opts = {}) {
       }
     }
 
-    if (setup) await exec('Setup', setup)
+    if (setup) await exec('Setup', setup, stats)
 
-    await exec('Test', test)
+    await exec('Test', test, stats)
 
-    if (teardown) await exec('Teardown', teardown)
+    if (teardown) await exec('Teardown', teardown, stats)
 
     if (isXPack) await cleanupXPack()
 
@@ -371,9 +371,14 @@ function build (opts = {}) {
    * @param {object} the action to perform
    * @returns {Promise}
    */
-  async function doAction (action) {
+  async function doAction (action, stats) {
     const cmd = parseDo(action)
-    const api = delve(client, cmd.method).bind(client)
+    try {
+      var api = delve(client, cmd.method).bind(client)
+    } catch (err) {
+      console.error(`\nError: Cannot find the method '${cmd.method}' in the client.\n`)
+      process.exit(1)
+    }
 
     const options = { ignore: cmd.params.ignore, headers: action.headers }
     if (cmd.params.ignore) delete cmd.params.ignore
@@ -414,10 +419,12 @@ function build (opts = {}) {
         warnings = warnings.filter(h => !h.test(/default\snumber\sof\sshards/g))
       }
 
+      stats.assertions += 1
       assert.ok(deepEqual(warnings, action.warnings))
     }
 
     if (action.catch) {
+      stats.assertions += 1
       assert.ok(
         parseDoError(err, action.catch),
         `the error should be: ${action.catch}`
@@ -428,6 +435,7 @@ function build (opts = {}) {
         response = err.body
       }
     } else {
+      stats.assertions += 1
       assert.ifError(err, `should not error: ${cmd.method}`, action)
       response = body
     }
@@ -439,7 +447,7 @@ function build (opts = {}) {
    * @param {object} the actions to perform
    * @returns {Promise}
    */
-  async function exec (name, actions) {
+  async function exec (name, actions, stats) {
     // tap.comment(name)
     for (const action of actions) {
       if (action.skip) {
@@ -450,7 +458,7 @@ function build (opts = {}) {
       }
 
       if (action.do) {
-        await doAction(fillStashedValues(action.do))
+        await doAction(fillStashedValues(action.do), stats)
       }
 
       if (action.set) {
@@ -464,6 +472,7 @@ function build (opts = {}) {
       }
 
       if (action.match) {
+        stats.assertions += 1
         const key = Object.keys(action.match)[0]
         match(
           // in some cases, the yaml refers to the body with an empty string
@@ -478,6 +487,7 @@ function build (opts = {}) {
       }
 
       if (action.lt) {
+        stats.assertions += 1
         const key = Object.keys(action.lt)[0]
         lt(
           delve(response, fillStashedValues(key)),
@@ -486,6 +496,7 @@ function build (opts = {}) {
       }
 
       if (action.gt) {
+        stats.assertions += 1
         const key = Object.keys(action.gt)[0]
         gt(
           delve(response, fillStashedValues(key)),
@@ -494,6 +505,7 @@ function build (opts = {}) {
       }
 
       if (action.lte) {
+        stats.assertions += 1
         const key = Object.keys(action.lte)[0]
         lte(
           delve(response, fillStashedValues(key)),
@@ -502,6 +514,7 @@ function build (opts = {}) {
       }
 
       if (action.gte) {
+        stats.assertions += 1
         const key = Object.keys(action.gte)[0]
         gte(
           delve(response, fillStashedValues(key)),
@@ -510,6 +523,7 @@ function build (opts = {}) {
       }
 
       if (action.length) {
+        stats.assertions += 1
         const key = Object.keys(action.length)[0]
         length(
           key === '$body' || key === ''
@@ -522,6 +536,7 @@ function build (opts = {}) {
       }
 
       if (action.is_true) {
+        stats.assertions += 1
         const isTrue = fillStashedValues(action.is_true)
         is_true(
           delve(response, isTrue),
@@ -530,6 +545,7 @@ function build (opts = {}) {
       }
 
       if (action.is_false) {
+        stats.assertions += 1
         const isFalse = fillStashedValues(action.is_false)
         is_false(
           delve(response, isFalse),
