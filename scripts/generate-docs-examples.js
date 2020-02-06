@@ -44,7 +44,12 @@ const enabledFiles = [
   'indices/create-index.asciidoc',
   'docs/index_.asciidoc',
   'aggregations/bucket/terms-aggregation.asciidoc',
-  'query-dsl/range-query.asciidoc'
+  'query-dsl/range-query.asciidoc',
+  'search/search.asciidoc',
+  'query-dsl/multi-match-query.asciidoc',
+  'docs/bulk.asciidoc',
+  'indices/delete-index.asciidoc',
+  'indices/put-mapping.asciidoc'
 ]
 
 function generate () {

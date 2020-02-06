@@ -3,8 +3,15 @@
 
 [source, js]
 ----
-const response = await client.cat.health({
-  v: true
+const response = await client.indices.putMapping({
+  index: 'twitter',
+  body: {
+    properties: {
+      email: {
+        type: 'keyword'
+      }
+    }
+  }
 })
 console.log(response)
 ----

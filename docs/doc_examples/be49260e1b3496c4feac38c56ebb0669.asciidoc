@@ -3,8 +3,9 @@
 
 [source, js]
 ----
-const response = await client.cat.health({
-  v: true
+const response = await client.search({
+  index: 'twitter',
+  q: 'user:kimchy'
 })
 console.log(response)
 ----
