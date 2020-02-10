@@ -42,8 +42,7 @@ function build (opts = {}) {
     stash.clear()
 
     const { body: allIndices } = await client.indices.get({ index: '_all', expandWildcards: 'all' })
-    const indices = Object.keys(allIndices).filter(index => !index.startsWith('.'))
-
+    const indices = Object.keys(allIndices)
     if (indices.length) {
       try {
         await helper.runInParallel(
@@ -209,12 +208,6 @@ function build (opts = {}) {
       await client.indices.refresh({ index: '_all' })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.refresh')
-    }
-
-    try {
-      await client.indices.delete({ index: '.ml' })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.delete .ml')
     }
   }
 
