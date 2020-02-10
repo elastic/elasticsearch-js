@@ -38,21 +38,26 @@ function build (opts = {}) {
    * @returns {Promise}
    */
   async function cleanup () {
-    // // tap.comment('Cleanup')
-
     response = null
     stash.clear()
 
-    try {
-      await client.indices.delete({ index: '_all' }, { ignore: 404 })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.delete')
-    }
+    const { body: allIndices } = await this.client.indices.get({ index: '_all' })
+    const indices = Object.keys(allIndices)
+      .filter(index => !index.startsWith('.'))
+      .join(',')
 
-    try {
-      await client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.deleteAlias')
+    if (indices.length) {
+      try {
+        await this.client.indices.delete({ index: indices })
+      } catch (err) {
+        assert.ifError(err, 'should not error: indices.delete')
+      }
+
+      try {
+        await this.client.indices.deleteAlias({ index: indices, name: '_all' }, { ignore: 404 })
+      } catch (err) {
+        assert.ifError(err, 'should not error: indices.deleteAlias')
+      }
     }
 
     try {
@@ -196,6 +201,12 @@ function build (opts = {}) {
       await client.indices.refresh({ index: '_all' })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.refresh')
+    }
+
+    try {
+      await this.client.indices.delete({ index: '.ml' })
+    } catch (err) {
+      assert.ifError(err, 'should not error: indices.delete .ml')
     }
   }
 
