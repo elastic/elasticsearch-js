@@ -91,7 +91,7 @@ function build (opts = {}) {
 
     try {
       const { body } = await client.security.getRole()
-      const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
+      const roles = Object.keys(body).filter(n => !body[n].metadata._reserved)
       await helper.runInParallel(
         client, 'security.deleteRole',
         roles.map(r => ({ name: r }))
@@ -102,7 +102,7 @@ function build (opts = {}) {
 
     try {
       const { body } = await client.security.getUser()
-      const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
+      const users = Object.keys(body).filter(n => !body[n].metadata._reserved)
       await helper.runInParallel(
         client, 'security.deleteUser',
         users.map(r => ({ username: r }))
