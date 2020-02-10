@@ -392,7 +392,7 @@ client.cat.indices({
   help: boolean,
   pri: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean,
   include_unloaded_segments: boolean
 })
@@ -431,7 +431,7 @@ link:{ref}/cat-indices.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -533,7 +533,7 @@ client.cat.nodes({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -562,7 +562,7 @@ link:{ref}/cat-nodes.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -580,7 +580,7 @@ client.cat.pendingTasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -606,7 +606,7 @@ link:{ref}/cat-pending-tasks.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -666,7 +666,7 @@ client.cat.recovery({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -698,7 +698,7 @@ link:{ref}/cat-recovery.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -798,7 +798,7 @@ client.cat.shards({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -830,7 +830,7 @@ link:{ref}/cat-shards.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -849,7 +849,7 @@ client.cat.snapshots({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -878,7 +878,7 @@ link:{ref}/cat-snapshots.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -898,7 +898,7 @@ client.cat.tasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -930,7 +930,7 @@ link:{ref}/tasks.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -5298,11 +5298,20 @@ link:{ref}/docs-update-by-query.html[Documentation] +
 
 |===
 
-=== cat.ml.datafeeds
+=== autoscaling.getAutoscalingDecision
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.getAutoscalingDecision()
+----
+link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
+
+
+=== cat.mlDatafeeds
 
 [source,ts]
 ----
-client.cat.ml.datafeeds({
+client.cat.mlDatafeeds({
   datafeed_id: string,
   allow_no_datafeeds: boolean,
   format: string,
@@ -5342,11 +5351,11 @@ link:{ref}/ml-get-datafeed-stats.html[Documentation] +
 
 |===
 
-=== cat.ml.jobs
+=== cat.mlJobs
 
 [source,ts]
 ----
-client.cat.ml.jobs({
+client.cat.mlJobs({
   job_id: string,
   allow_no_jobs: boolean,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
@@ -5390,11 +5399,11 @@ link:{ref}/ml-get-job-stats.html[Documentation] +
 
 |===
 
-=== cat.ml.trainedModels
+=== cat.mlTrainedModels
 
 [source,ts]
 ----
-client.cat.ml.trainedModels({
+client.cat.mlTrainedModels({
   model_id: string,
   allow_no_match: boolean,
   from: number,

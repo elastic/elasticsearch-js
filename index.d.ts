@@ -115,6 +115,10 @@ declare class Client extends EventEmitter {
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
+  autoscaling: {
+    get_autoscaling_decision: ApiMethod<RequestParams.AutoscalingGetAutoscalingDecision>
+    getAutoscalingDecision: ApiMethod<RequestParams.AutoscalingGetAutoscalingDecision>
+  }
   bulk: ApiMethod<RequestParams.Bulk>
   cat: {
     aliases: ApiMethod<RequestParams.CatAliases>
@@ -125,12 +129,12 @@ declare class Client extends EventEmitter {
     help: ApiMethod<RequestParams.CatHelp>
     indices: ApiMethod<RequestParams.CatIndices>
     master: ApiMethod<RequestParams.CatMaster>
-    ml: {
-        datafeeds: ApiMethod<RequestParams.CatMlDatafeeds>
-        jobs: ApiMethod<RequestParams.CatMlJobs>
-        trained_models: ApiMethod<RequestParams.CatMlTrainedModels>
-        trainedModels: ApiMethod<RequestParams.CatMlTrainedModels>
-    }
+    ml_datafeeds: ApiMethod<RequestParams.CatMlDatafeeds>
+    mlDatafeeds: ApiMethod<RequestParams.CatMlDatafeeds>
+    ml_jobs: ApiMethod<RequestParams.CatMlJobs>
+    mlJobs: ApiMethod<RequestParams.CatMlJobs>
+    ml_trained_models: ApiMethod<RequestParams.CatMlTrainedModels>
+    mlTrainedModels: ApiMethod<RequestParams.CatMlTrainedModels>
     nodeattrs: ApiMethod<RequestParams.CatNodeattrs>
     nodes: ApiMethod<RequestParams.CatNodes>
     pending_tasks: ApiMethod<RequestParams.CatPendingTasks>

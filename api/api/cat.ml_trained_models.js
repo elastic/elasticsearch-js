@@ -7,12 +7,15 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatMlDatafeeds (opts) {
+function buildCatMlTrainedModels (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'allow_no_datafeeds',
+    'allow_no_match',
+    'from',
+    'size',
+    'bytes',
     'format',
     'h',
     'help',
@@ -22,15 +25,15 @@ function buildCatMlDatafeeds (opts) {
   ]
 
   const snakeCase = {
-    allowNoDatafeeds: 'allow_no_datafeeds'
+    allowNoMatch: 'allow_no_match'
 
   }
 
   /**
-   * Perform a cat.ml.datafeeds request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+   * Perform a cat.ml_trained_models request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
    */
-  return function catMlDatafeeds (params, options, callback) {
+  return function catMlTrainedModels (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -49,7 +52,7 @@ function buildCatMlDatafeeds (opts) {
     }
 
     var warnings = []
-    var { method, body, datafeedId, datafeed_id, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -59,12 +62,12 @@ function buildCatMlDatafeeds (opts) {
 
     var path = ''
 
-    if ((datafeed_id || datafeedId) != null) {
+    if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models'
     }
 
     // build request object
@@ -80,4 +83,4 @@ function buildCatMlDatafeeds (opts) {
   }
 }
 
-module.exports = buildCatMlDatafeeds
+module.exports = buildCatMlTrainedModels

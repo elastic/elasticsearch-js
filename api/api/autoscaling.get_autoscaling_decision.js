@@ -7,31 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatMlJobs (opts) {
+function buildAutoscalingGetAutoscalingDecision (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'allow_no_jobs',
-    'bytes',
-    'format',
-    'h',
-    'help',
-    's',
-    'time',
-    'v'
+
   ]
 
   const snakeCase = {
-    allowNoJobs: 'allow_no_jobs'
 
   }
 
   /**
-   * Perform a cat.ml.jobs request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+   * Perform a autoscaling.get_autoscaling_decision request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-decision.html
    */
-  return function catMlJobs (params, options, callback) {
+  return function autoscalingGetAutoscalingDecision (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -50,7 +42,7 @@ function buildCatMlJobs (opts) {
     }
 
     var warnings = []
-    var { method, body, jobId, job_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -60,13 +52,8 @@ function buildCatMlJobs (opts) {
 
     var path = ''
 
-    if ((job_id || jobId) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors'
-    }
+    if (method == null) method = 'GET'
+    path = '/' + '_autoscaling' + '/' + 'decision'
 
     // build request object
     const request = {
@@ -81,4 +68,4 @@ function buildCatMlJobs (opts) {
   }
 }
 
-module.exports = buildCatMlJobs
+module.exports = buildAutoscalingGetAutoscalingDecision

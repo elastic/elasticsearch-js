@@ -16,6 +16,10 @@ function ESAPI (opts) {
   opts.snakeCaseKeys = snakeCaseKeys
 
   const apis = {
+    autoscaling: {
+      get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
+      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts)
+    },
     bulk: lazyLoad('bulk', opts),
     cat: {
       aliases: lazyLoad('cat.aliases', opts),
@@ -26,12 +30,12 @@ function ESAPI (opts) {
       help: lazyLoad('cat.help', opts),
       indices: lazyLoad('cat.indices', opts),
       master: lazyLoad('cat.master', opts),
-      ml: {
-        datafeeds: lazyLoad('cat.ml.datafeeds', opts),
-        jobs: lazyLoad('cat.ml.jobs', opts),
-        trained_models: lazyLoad('cat.ml.trained_models', opts),
-        trainedModels: lazyLoad('cat.ml.trained_models', opts)
-      },
+      ml_datafeeds: lazyLoad('cat.ml_datafeeds', opts),
+      mlDatafeeds: lazyLoad('cat.ml_datafeeds', opts),
+      ml_jobs: lazyLoad('cat.ml_jobs', opts),
+      mlJobs: lazyLoad('cat.ml_jobs', opts),
+      ml_trained_models: lazyLoad('cat.ml_trained_models', opts),
+      mlTrainedModels: lazyLoad('cat.ml_trained_models', opts),
       nodeattrs: lazyLoad('cat.nodeattrs', opts),
       nodes: lazyLoad('cat.nodes', opts),
       pending_tasks: lazyLoad('cat.pending_tasks', opts),
