@@ -41,20 +41,20 @@ function build (opts = {}) {
     response = null
     stash.clear()
 
-    const { body: allIndices } = await this.client.indices.get({ index: '_all' })
+    const { body: allIndices } = await client.indices.get({ index: '_all' })
     const indices = Object.keys(allIndices)
       .filter(index => !index.startsWith('.'))
       .join(',')
 
     if (indices.length) {
       try {
-        await this.client.indices.delete({ index: indices })
+        await client.indices.delete({ index: indices })
       } catch (err) {
         assert.ifError(err, 'should not error: indices.delete')
       }
 
       try {
-        await this.client.indices.deleteAlias({ index: indices, name: '_all' }, { ignore: 404 })
+        await client.indices.deleteAlias({ index: indices, name: '_all' }, { ignore: 404 })
       } catch (err) {
         assert.ifError(err, 'should not error: indices.deleteAlias')
       }
@@ -204,7 +204,7 @@ function build (opts = {}) {
     }
 
     try {
-      await this.client.indices.delete({ index: '.ml' })
+      await client.indices.delete({ index: '.ml' })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.delete .ml')
     }
