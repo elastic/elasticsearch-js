@@ -4278,6 +4278,7 @@ client.reindex({
 })
 ----
 link:{ref}/docs-reindex.html[Documentation] +
+{jsclient}/reindex_examples.html[Code Example] +
 [cols=2*]
 |===
 |`refresh`
@@ -5187,6 +5188,7 @@ client.update({
 })
 ----
 link:{ref}/docs-update.html[Documentation] +
+{jsclient}/update_examples.html[Code Example] +
 [cols=2*]
 |===
 |`id`
