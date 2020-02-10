@@ -847,19 +847,22 @@ function shouldSkip (esVersion, action) {
   // skip based on the version
   if (action.version) {
     if (action.version.trim() === 'all') return true
-    const [min, max] = action.version.split('-').map(v => v.trim())
-    // if both `min` and `max` are specified
-    if (min && max) {
-      shouldSkip = semver.satisfies(esVersion, action.version)
-    // if only `min` is specified
-    } else if (min) {
-      shouldSkip = semver.gte(esVersion, min)
-    // if only `max` is specified
-    } else if (max) {
-      shouldSkip = semver.lte(esVersion, max)
-    // something went wrong!
-    } else {
-      throw new Error(`skip: Bad version range: ${action.version}`)
+    const versions = action.version.split(',').filter(Boolean)
+    for (const version of versions) {
+      const [min, max] = version.split('-').map(v => v.trim())
+      // if both `min` and `max` are specified
+      if (min && max) {
+        shouldSkip = semver.satisfies(esVersion, action.version)
+      // if only `min` is specified
+      } else if (min) {
+        shouldSkip = semver.gte(esVersion, min)
+      // if only `max` is specified
+      } else if (max) {
+        shouldSkip = semver.lte(esVersion, max)
+      // something went wrong!
+      } else {
+        throw new Error(`skip: Bad version range: ${action.version}`)
+      }
     }
   }
 
