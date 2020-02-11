@@ -41,30 +41,16 @@ function build (opts = {}) {
     response = null
     stash.clear()
 
-    const { body: allIndices } = await client.indices.get({ index: '_all', expandWildcards: 'all' })
-    const indices = Object.keys(allIndices)
-    if (indices.length) {
-      try {
-        await helper.runInParallel(
-          client, 'indices.deleteAlias',
-          indices.map(index => {
-            const aliases = Object.keys(allIndices[index].aliases)
-            if (aliases.length === 0) return null
-            return {
-              index,
-              name: aliases.join(',')
-            }
-          }).filter(Boolean)
-        )
-      } catch (err) {
-        assert.ifError(err, 'should not error: indices.deleteAlias')
-      }
+    try {
+      await client.indices.deleteAlias({ index: '_all', name: '_all' })
+    } catch (err) {
+      assert.ifError(err, 'should not error: indices.deleteAlias')
+    }
 
-      try {
-        await client.indices.delete({ index: indices.join(',') })
-      } catch (err) {
-        assert.ifError(err, 'should not error: indices.delete')
-      }
+    try {
+      await client.indices.delete({ index: '_all' })
+    } catch (err) {
+      assert.ifError(err, 'should not error: indices.delete')
     }
 
     try {
