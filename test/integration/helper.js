@@ -4,48 +4,6 @@
 
 'use strict'
 
-const esDefaultRoles = [
-  'apm_system',
-  'apm_user',
-  'beats_admin',
-  'beats_system',
-  'code_admin',
-  'code_user',
-  'data_frame_transforms_admin',
-  'data_frame_transforms_user',
-  'enrich_user',
-  'ingest_admin',
-  'kibana_dashboard_only_user',
-  'kibana_system',
-  'kibana_user',
-  'logstash_admin',
-  'logstash_system',
-  'machine_learning_admin',
-  'machine_learning_user',
-  'monitoring_user',
-  'remote_monitoring_agent',
-  'remote_monitoring_collector',
-  'reporting_user',
-  'rollup_admin',
-  'rollup_user',
-  'snapshot_user',
-  'superuser',
-  'transform_admin',
-  'transform_user',
-  'transport_client',
-  'watcher_admin',
-  'watcher_user'
-]
-
-const esDefaultUsers = [
-  'apm_system',
-  'beats_system',
-  'elastic',
-  'logstash_system',
-  'kibana',
-  'remote_monitoring_user'
-]
-
 function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()
   const operations = options.map(opts => {
@@ -76,4 +34,4 @@ function to (promise) {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-module.exports = { runInParallel, esDefaultRoles, esDefaultUsers, delve, to, sleep }
+module.exports = { runInParallel, delve, to, sleep }

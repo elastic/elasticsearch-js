@@ -38,21 +38,19 @@ function build (opts = {}) {
    * @returns {Promise}
    */
   async function cleanup () {
-    // // tap.comment('Cleanup')
-
     response = null
     stash.clear()
-
-    try {
-      await client.indices.delete({ index: '_all' }, { ignore: 404 })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.delete')
-    }
 
     try {
       await client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.deleteAlias')
+    }
+
+    try {
+      await client.indices.delete({ index: '_all' }, { ignore: 404 })
+    } catch (err) {
+      assert.ifError(err, 'should not error: indices.delete')
     }
 
     try {
@@ -91,7 +89,7 @@ function build (opts = {}) {
 
     try {
       const { body } = await client.security.getRole()
-      const roles = Object.keys(body).filter(n => helper.esDefaultRoles.indexOf(n) === -1)
+      const roles = Object.keys(body).filter(n => !body[n].metadata._reserved)
       await helper.runInParallel(
         client, 'security.deleteRole',
         roles.map(r => ({ name: r }))
@@ -102,7 +100,7 @@ function build (opts = {}) {
 
     try {
       const { body } = await client.security.getUser()
-      const users = Object.keys(body).filter(n => helper.esDefaultUsers.indexOf(n) === -1)
+      const users = Object.keys(body).filter(n => !body[n].metadata._reserved)
       await helper.runInParallel(
         client, 'security.deleteUser',
         users.map(r => ({ username: r }))
@@ -836,19 +834,22 @@ function shouldSkip (esVersion, action) {
   // skip based on the version
   if (action.version) {
     if (action.version.trim() === 'all') return true
-    const [min, max] = action.version.split('-').map(v => v.trim())
-    // if both `min` and `max` are specified
-    if (min && max) {
-      shouldSkip = semver.satisfies(esVersion, action.version)
-    // if only `min` is specified
-    } else if (min) {
-      shouldSkip = semver.gte(esVersion, min)
-    // if only `max` is specified
-    } else if (max) {
-      shouldSkip = semver.lte(esVersion, max)
-    // something went wrong!
-    } else {
-      throw new Error(`skip: Bad version range: ${action.version}`)
+    const versions = action.version.split(',').filter(Boolean)
+    for (const version of versions) {
+      const [min, max] = version.split('-').map(v => v.trim())
+      // if both `min` and `max` are specified
+      if (min && max) {
+        shouldSkip = semver.satisfies(esVersion, action.version)
+      // if only `min` is specified
+      } else if (min) {
+        shouldSkip = semver.gte(esVersion, min)
+      // if only `max` is specified
+      } else if (max) {
+        shouldSkip = semver.lte(esVersion, max)
+      // something went wrong!
+      } else {
+        throw new Error(`skip: Bad version range: ${action.version}`)
+      }
     }
   }
 
