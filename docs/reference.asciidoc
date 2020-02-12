@@ -8346,7 +8346,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute-policy.html[Documentation] +
+link:{ref}/slm-api-execute-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8394,7 +8394,7 @@ link:{ref}/slm-api-get-stats.html[Documentation] +
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-get-status.html[Documentation] +
+link:{ref}/slm-api-get-status.html[Documentation] +
 
 
 === slm.putLifecycle
@@ -8423,7 +8423,7 @@ link:{ref}/slm-api-put-policy.html[Documentation] +
 ----
 client.slm.start()
 ----
-link:{ref}/slm-start.html[Documentation] +
+link:{ref}/slm-api-start.html[Documentation] +
 
 
 === slm.stop
@@ -8432,7 +8432,7 @@ link:{ref}/slm-start.html[Documentation] +
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-stop.html[Documentation] +
+link:{ref}/slm-api-stop.html[Documentation] +
 
 
 === sql.clearCursor
