@@ -212,6 +212,10 @@ declare class Client extends EventEmitter {
   get: ApiMethod<RequestParams.Get>
   get_script: ApiMethod<RequestParams.GetScript>
   getScript: ApiMethod<RequestParams.GetScript>
+  get_script_context: ApiMethod<RequestParams.GetScriptContext>
+  getScriptContext: ApiMethod<RequestParams.GetScriptContext>
+  get_script_languages: ApiMethod<RequestParams.GetScriptLanguages>
+  getScriptLanguages: ApiMethod<RequestParams.GetScriptLanguages>
   get_source: ApiMethod<RequestParams.GetSource>
   getSource: ApiMethod<RequestParams.GetSource>
   graph: {
@@ -353,10 +357,12 @@ declare class Client extends EventEmitter {
     deleteJob: ApiMethod<RequestParams.MlDeleteJob>
     delete_model_snapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
     deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
-    estimate_memory_usage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
-    estimateMemoryUsage: ApiMethod<RequestParams.MlEstimateMemoryUsage>
+    delete_trained_model: ApiMethod<RequestParams.MlDeleteTrainedModel>
+    deleteTrainedModel: ApiMethod<RequestParams.MlDeleteTrainedModel>
     evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     evaluateDataFrame: ApiMethod<RequestParams.MlEvaluateDataFrame>
+    explain_data_frame_analytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
+    explainDataFrameAnalytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
     find_file_structure: ApiMethod<RequestParams.MlFindFileStructure>
     findFileStructure: ApiMethod<RequestParams.MlFindFileStructure>
     flush_job: ApiMethod<RequestParams.MlFlushJob>
@@ -392,6 +398,10 @@ declare class Client extends EventEmitter {
     getOverallBuckets: ApiMethod<RequestParams.MlGetOverallBuckets>
     get_records: ApiMethod<RequestParams.MlGetRecords>
     getRecords: ApiMethod<RequestParams.MlGetRecords>
+    get_trained_models: ApiMethod<RequestParams.MlGetTrainedModels>
+    getTrainedModels: ApiMethod<RequestParams.MlGetTrainedModels>
+    get_trained_models_stats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
+    getTrainedModelsStats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
     info: ApiMethod<RequestParams.MlInfo>
     open_job: ApiMethod<RequestParams.MlOpenJob>
     openJob: ApiMethod<RequestParams.MlOpenJob>
@@ -413,6 +423,8 @@ declare class Client extends EventEmitter {
     putFilter: ApiMethod<RequestParams.MlPutFilter>
     put_job: ApiMethod<RequestParams.MlPutJob>
     putJob: ApiMethod<RequestParams.MlPutJob>
+    put_trained_model: ApiMethod<RequestParams.MlPutTrainedModel>
+    putTrainedModel: ApiMethod<RequestParams.MlPutTrainedModel>
     revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
     set_upgrade_mode: ApiMethod<RequestParams.MlSetUpgradeMode>
@@ -553,8 +565,12 @@ declare class Client extends EventEmitter {
     getLifecycle: ApiMethod<RequestParams.SlmGetLifecycle>
     get_stats: ApiMethod<RequestParams.SlmGetStats>
     getStats: ApiMethod<RequestParams.SlmGetStats>
+    get_status: ApiMethod<RequestParams.SlmGetStatus>
+    getStatus: ApiMethod<RequestParams.SlmGetStatus>
     put_lifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
     putLifecycle: ApiMethod<RequestParams.SlmPutLifecycle>
+    start: ApiMethod<RequestParams.SlmStart>
+    stop: ApiMethod<RequestParams.SlmStop>
   }
   snapshot: {
     cleanup_repository: ApiMethod<RequestParams.SnapshotCleanupRepository>

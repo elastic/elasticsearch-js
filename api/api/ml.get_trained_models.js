@@ -7,23 +7,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmDeleteLifecycle (opts) {
+function buildMlGetTrainedModels (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'allow_no_match',
+    'include_model_definition',
+    'decompress_definition',
+    'from',
+    'size'
   ]
 
   const snakeCase = {
+    allowNoMatch: 'allow_no_match',
+    includeModelDefinition: 'include_model_definition',
+    decompressDefinition: 'decompress_definition'
 
   }
 
   /**
-   * Perform a slm.delete_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
+   * Perform a ml.get_trained_models request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference.html
    */
-  return function slmDeleteLifecycle (params, options, callback) {
+  return function mlGetTrainedModels (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +42,6 @@ function buildSlmDeleteLifecycle (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['policy_id'] == null && params['policyId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -48,7 +49,7 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, modelId, model_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,14 +59,19 @@ function buildSlmDeleteLifecycle (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    if ((model_id || modelId) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_ml' + '/' + 'inference'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -74,4 +80,4 @@ function buildSlmDeleteLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmDeleteLifecycle
+module.exports = buildMlGetTrainedModels

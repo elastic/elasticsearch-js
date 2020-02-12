@@ -21,7 +21,7 @@ function buildSlmGetStats (opts) {
 
   /**
    * Perform a slm.get_stats request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-get-stats.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats.html
    */
   return function slmGetStats (params, options, callback) {
     options = options || {}

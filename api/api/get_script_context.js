@@ -7,23 +7,28 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmDeleteLifecycle (opts) {
+function buildGetScriptContext (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a slm.delete_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
+   * Perform a get_script_context request
+   * Returns all script contexts.
    */
-  return function slmDeleteLifecycle (params, options, callback) {
+  return function getScriptContext (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +40,6 @@ function buildSlmDeleteLifecycle (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['policy_id'] == null && params['policyId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -48,7 +47,7 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,14 +57,14 @@ function buildSlmDeleteLifecycle (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    if (method == null) method = 'GET'
+    path = '/' + '_script_context'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -74,4 +73,4 @@ function buildSlmDeleteLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmDeleteLifecycle
+module.exports = buildGetScriptContext

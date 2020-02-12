@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSlmDeleteLifecycle (opts) {
+function buildMlExplainDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,10 +20,10 @@ function buildSlmDeleteLifecycle (opts) {
   }
 
   /**
-   * Perform a slm.delete_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
+   * Perform a ml.explain_data_frame_analytics request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
    */
-  return function slmDeleteLifecycle (params, options, callback) {
+  return function mlExplainDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -35,12 +35,6 @@ function buildSlmDeleteLifecycle (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['policy_id'] == null && params['policyId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -48,7 +42,7 @@ function buildSlmDeleteLifecycle (opts) {
     }
 
     var warnings = []
-    var { method, body, policyId, policy_id, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -58,8 +52,13 @@ function buildSlmDeleteLifecycle (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    if ((id) != null) {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_explain'
+    } else {
+      if (method == null) method = body == null ? 'GET' : 'POST'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_explain'
+    }
 
     // build request object
     const request = {
@@ -74,4 +73,4 @@ function buildSlmDeleteLifecycle (opts) {
   }
 }
 
-module.exports = buildSlmDeleteLifecycle
+module.exports = buildMlExplainDataFrameAnalytics
