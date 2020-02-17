@@ -26,11 +26,7 @@ test('Search should have an additional documents property', async t => {
     index: 'test',
     body: { foo: 'bar' }
   })
-  t.ok(result.body !== undefined)
-  t.ok(result.statusCode !== undefined)
-  t.ok(result.headers !== undefined)
-  t.ok(result.warnings !== undefined)
-  t.deepEqual(result.documents, [
+  t.deepEqual(result, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }
