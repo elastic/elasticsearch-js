@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
-    "test:unit": "tap test/unit/*.test.js -t 300 --no-coverage",
+    "test:unit": "tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage",
     "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
     "test:integration": "node test/integration/index.js",
     "test:types": "tsc --project ./test/types/tsconfig.json",

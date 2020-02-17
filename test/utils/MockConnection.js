@@ -99,6 +99,37 @@ class MockConnectionSniff extends Connection {
     }
   }
 }
+
+function buildMockConnection (opts) {
+  const body = JSON.stringify(opts.body)
+  const onRequest = opts.onRequest || (() => {})
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      onRequest(params)
+      var aborted = false
+      const stream = intoStream(body)
+      stream.statusCode = opts.statusCode || 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        date: new Date().toISOString(),
+        connection: 'keep-alive',
+        'content-length': Buffer.byteLength(body)
+      }
+      process.nextTick(() => {
+        if (!aborted) {
+          callback(null, stream)
+        }
+      })
+      return {
+        abort: () => { aborted = true }
+      }
+    }
+  }
+
+  return MockConnection
+}
+
 function setStatusCode (path) {
   const statusCode = Number(path.slice(1))
   if (Number.isInteger(statusCode)) {
@@ -111,5 +142,6 @@ module.exports = {
   MockConnection,
   MockConnectionTimeout,
   MockConnectionError,
-  MockConnectionSniff
+  MockConnectionSniff,
+  buildMockConnection
 }
