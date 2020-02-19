@@ -1318,6 +1318,18 @@ export interface UpdateByQueryRethrottle extends Generic {
 export interface AutoscalingGetAutoscalingDecision extends Generic {
 }
 
+export interface CatMlDataFrameAnalytics extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
 export interface CatMlDatafeeds extends Generic {
   datafeed_id?: string;
   allow_no_datafeeds?: boolean;
