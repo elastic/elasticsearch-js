@@ -1480,7 +1480,7 @@ export interface EnrichExecutePolicy extends Generic {
 }
 
 export interface EnrichGetPolicy extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface EnrichPutPolicy<T = any> extends Generic {

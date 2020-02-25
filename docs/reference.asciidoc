@@ -5957,14 +5957,14 @@ _Default:_ `true`
 [source,ts]
 ----
 client.enrich.getPolicy({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/get-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name of the enrich policy
+|`string \| string[]` - A comma-separated list of enrich policy names
 
 |===
 
@@ -9186,7 +9186,7 @@ client.xpack.usage({
   master_timeout: string
 })
 ----
-link:Retrieve information about xpack features usage[Documentation] +
+link:{ref}/usage-api.html[Documentation] +
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
