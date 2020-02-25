@@ -37,7 +37,12 @@ const ossSkips = {
   'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
 const xPackBlackList = {
-  // file path: test name
+  // this two test cases are broken, we should
+  // return on those in the future.
+  'analytics/top_metrics.yml': [
+    'sort by keyword field fails',
+    'sort by string script fails'
+  ],
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
