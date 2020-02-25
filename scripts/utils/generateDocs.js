@@ -244,7 +244,7 @@ const LINK_OVERRIDES = {
   'license.post_start_basic': '{ref}/start-basic.html',
   'license.post_start_trial': '{ref}/start-trial.html',
   'migration.deprecations': '{ref}/migration-api-deprecation.html',
-  'monitoring.bulk': '{ref}/es-monitoring.html',
+  'monitoring.bulk': '{ref}/monitor-elasticsearch-cluster.html',
   'ingest.delete_pipeline': '{ref}/delete-pipeline-api.html',
   'ingest.get_pipeline': '{ref}/get-pipeline-api.html',
   'ingest.put_pipeline': '{ref}/put-pipeline-api.html',
