@@ -4,6 +4,7 @@
 
 'use strict'
 
+const assert = require('assert')
 const { Connection } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
 const intoStream = require('into-stream')
@@ -101,15 +102,17 @@ class MockConnectionSniff extends Connection {
 }
 
 function buildMockConnection (opts) {
-  const body = JSON.stringify(opts.body)
-  const onRequest = opts.onRequest || (() => {})
+  assert(opts.onRequest, 'Missing required onRequest option')
 
   class MockConnection extends Connection {
     request (params, callback) {
-      onRequest(params)
+      var { body, statusCode } = opts.onRequest(params)
+      if (typeof body !== 'string') {
+        body = JSON.stringify(body)
+      }
       var aborted = false
       const stream = intoStream(body)
-      stream.statusCode = opts.statusCode || 200
+      stream.statusCode = statusCode || 200
       stream.headers = {
         'content-type': 'application/json;utf=8',
         date: new Date().toISOString(),

@@ -18,13 +18,13 @@ test('bulk index', t => {
     t.test('Should perform a bulk request', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
-        body: { errors: false },
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
+          return { body: { errors: false } }
         }
       })
 
@@ -54,13 +54,13 @@ test('bulk index', t => {
     t.test('Should perform a bulk request (custom action)', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
-        body: { errors: false },
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
+          return { body: { errors: false } }
         }
       })
 
@@ -216,8 +216,12 @@ test('bulk index', t => {
 
     t.test('Server error', async t => {
       const MockConnection = connection.buildMockConnection({
-        statusCode: 500,
-        body: { somothing: 'went wrong' }
+        onRequest (params) {
+          return {
+            statusCode: 500,
+            body: { somothing: 'went wrong' }
+          }
+        }
       })
 
       const client = new Client({
@@ -305,13 +309,13 @@ test('bulk index', t => {
     t.test('Should perform a bulk request', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
-        body: { errors: false },
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
+          return { body: { errors: false } }
         }
       })
 
@@ -350,13 +354,13 @@ test('bulk create', t => {
   t.test('Should perform a bulk request', async t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
-      body: { errors: false },
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
         t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { create: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false } }
       }
     })
 
@@ -390,13 +394,13 @@ test('bulk update', t => {
   t.test('Should perform a bulk request', async t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
-      body: { errors: false },
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
         t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
+        return { body: { errors: false } }
       }
     })
 
@@ -432,11 +436,11 @@ test('bulk delete', t => {
   t.test('Should perform a bulk request', async t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
-      body: { errors: false },
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
         t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
         t.deepEqual(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
+        return { body: { errors: false } }
       }
     })
 

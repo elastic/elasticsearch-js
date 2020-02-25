@@ -6,13 +6,17 @@ const { connection } = require('../../utils')
 
 test('Search should have an additional documents property', async t => {
   const MockConnection = connection.buildMockConnection({
-    body: {
-      hits: {
-        hits: [
-          { _source: { one: 'one' } },
-          { _source: { two: 'two' } },
-          { _source: { three: 'three' } }
-        ]
+    onRequest (params) {
+      return {
+        body: {
+          hits: {
+            hits: [
+              { _source: { one: 'one' } },
+              { _source: { two: 'two' } },
+              { _source: { three: 'three' } }
+            ]
+          }
+        }
       }
     }
   })
