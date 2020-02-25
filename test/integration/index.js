@@ -31,7 +31,10 @@ const ossSkips = {
   'nodes.stats/30_discovery.yml': ['*'],
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
-  'search.aggregation/240_max_buckets.yml': ['*']
+  'search.aggregation/240_max_buckets.yml': ['*'],
+  // the yaml runner assumes that null means "does not exists",
+  // while null is a valid json value, so the check will fail
+  'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
 const xPackBlackList = {
   // file path: test name
