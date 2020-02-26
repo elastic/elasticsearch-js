@@ -5323,7 +5323,7 @@ client.cat.mlDataFrameAnalytics({
   v: boolean
 })
 ----
-link:{ref}/get-dfanalytics-stats.html[Documentation] +
+link:{ref}/cat-dfanalytics.html[Documentation] +
 [cols=2*]
 |===
 |`id`

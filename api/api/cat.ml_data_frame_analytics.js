@@ -29,7 +29,7 @@ function buildCatMlDataFrameAnalytics (opts) {
 
   /**
    * Perform a cat.ml_data_frame_analytics request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-dfanalytics.html
    */
   return function catMlDataFrameAnalytics (params, options, callback) {
     options = options || {}
