@@ -34,7 +34,7 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1
+        flushBytes: 1
       })
 
       b.onDrop(doc => {
@@ -70,7 +70,7 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1
+        flushBytes: 1
       })
 
       b.onDrop(doc => {
@@ -125,7 +125,7 @@ test('bulk index', t => {
       const client = new Client({ node: `http://localhost:${port}` })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1,
+        flushBytes: 1,
         wait: 10,
         retries: 1
       })
@@ -142,6 +142,7 @@ test('bulk index', t => {
 
       const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 2,
@@ -189,7 +190,7 @@ test('bulk index', t => {
       const client = new Client({ node: `http://localhost:${port}` })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1,
+        flushBytes: 1,
         wait: 10
       })
 
@@ -230,7 +231,7 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1
+        flushBytes: 1
       })
 
       b.onDrop(doc => {
@@ -283,7 +284,7 @@ test('bulk index', t => {
       const client = new Client({ node: `http://localhost:${port}` })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        bulkSize: 1,
+        flushBytes: 1,
         wait: 10
       })
 
@@ -326,7 +327,7 @@ test('bulk index', t => {
       const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'small-dataset.ndjson'), 'utf8')
       const b = client.helpers.bulk({
         datasource: stream.pipe(split()),
-        bulkSize: 1
+        flushBytes: 1
       })
 
       b.onDrop(doc => {
@@ -370,7 +371,7 @@ test('bulk create', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      bulkSize: 1
+      flushBytes: 1
     })
 
     b.onDrop(doc => {
@@ -410,7 +411,7 @@ test('bulk update', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      bulkSize: 1
+      flushBytes: 1
     })
 
     b.onDrop(doc => {
@@ -450,7 +451,7 @@ test('bulk delete', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      bulkSize: 1
+      flushBytes: 1
     })
 
     b.onDrop(doc => {
@@ -486,7 +487,7 @@ test('bulk delete', t => {
           took: 0,
           errors: true,
           items: [{
-            index: {
+            delete: {
               status: 400,
               error: { something: 'went wrong' }
             }
@@ -505,7 +506,7 @@ test('bulk delete', t => {
     const client = new Client({ node: `http://localhost:${port}` })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      bulkSize: 1,
+      flushBytes: 1,
       wait: 10
     })
 
