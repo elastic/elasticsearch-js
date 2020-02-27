@@ -34,7 +34,8 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        flushBytes: 1
+        flushBytes: 1,
+        concurrency: 1
       })
 
       b.onDrop(doc => {
@@ -46,6 +47,80 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+
+    t.test('Should perform a bulk request (with concurrency)', async t => {
+      let count = 0
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          t.strictEqual(params.path, '/_bulk')
+          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          const [action, payload] = params.body.split('\n')
+          t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+          t.deepEqual(JSON.parse(payload), dataset[count++])
+          return { body: { errors: false } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const b = client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 3
+      })
+
+      b.onDrop(doc => {
+        t.fail('This should never be called')
+      })
+
+      const result = await b.index({ _index: 'test' })
+      t.type(result.time, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+
+    t.test('Should perform a bulk request (high flush size)', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          t.strictEqual(params.path, '/_bulk')
+          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.strictEqual(params.body.split('\n').filter(Boolean).length, 6)
+          return { body: { errors: false } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const b = client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 5000000,
+        concurrency: 1
+      })
+
+      b.onDrop(doc => {
+        t.fail('This should never be called')
+      })
+
+      const result = await b.index({ _index: 'test' })
+      t.type(result.time, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
         failed: 0,
         aborted: false
       })
@@ -70,7 +145,8 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        flushBytes: 1
+        flushBytes: 1,
+        concurrency: 1
       })
 
       b.onDrop(doc => {
@@ -83,6 +159,7 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 3,
+        retry: 0,
         failed: 0,
         aborted: false
       })
@@ -126,6 +203,7 @@ test('bulk index', t => {
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
+        concurrency: 1,
         wait: 10,
         retries: 1
       })
@@ -146,6 +224,7 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 2,
+        retry: 2,
         failed: 1,
         aborted: false
       })
@@ -191,6 +270,7 @@ test('bulk index', t => {
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
+        concurrency: 1,
         wait: 10
       })
 
@@ -209,6 +289,7 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 2,
+        retry: 0,
         failed: 1,
         aborted: false
       })
@@ -231,7 +312,40 @@ test('bulk index', t => {
       })
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
-        flushBytes: 1
+        flushBytes: 1,
+        concurrency: 1
+      })
+
+      b.onDrop(doc => {
+        t.fail('This should never be called')
+      })
+
+      try {
+        await b.index({ _index: 'test' })
+        t.fail('Should throw')
+      } catch (err) {
+        t.true(err instanceof errors.ResponseError)
+      }
+    })
+
+    t.test('Server error (high flush size, to trigger the finish error)', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          return {
+            statusCode: 500,
+            body: { somothing: 'went wrong' }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const b = client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 5000000,
+        concurrency: 1
       })
 
       b.onDrop(doc => {
@@ -285,6 +399,7 @@ test('bulk index', t => {
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
+        concurrency: 1,
         wait: 10
       })
 
@@ -297,6 +412,7 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 2,
+        retry: 0,
         failed: 1,
         aborted: true
       })
@@ -327,7 +443,8 @@ test('bulk index', t => {
       const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'small-dataset.ndjson'), 'utf8')
       const b = client.helpers.bulk({
         datasource: stream.pipe(split()),
-        flushBytes: 1
+        flushBytes: 1,
+        concurrency: 1
       })
 
       b.onDrop(doc => {
@@ -340,6 +457,7 @@ test('bulk index', t => {
       t.match(result, {
         total: 3,
         successful: 3,
+        retry: 0,
         failed: 0,
         aborted: false
       })
@@ -371,7 +489,8 @@ test('bulk create', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      flushBytes: 1
+      flushBytes: 1,
+      concurrency: 1
     })
 
     b.onDrop(doc => {
@@ -384,6 +503,7 @@ test('bulk create', t => {
     t.match(result, {
       total: 3,
       successful: 3,
+      retry: 0,
       failed: 0,
       aborted: false
     })
@@ -411,7 +531,8 @@ test('bulk update', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      flushBytes: 1
+      flushBytes: 1,
+      concurrency: 1
     })
 
     b.onDrop(doc => {
@@ -426,6 +547,7 @@ test('bulk update', t => {
     t.match(result, {
       total: 3,
       successful: 3,
+      retry: 0,
       failed: 0,
       aborted: false
     })
@@ -451,7 +573,8 @@ test('bulk delete', t => {
     })
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
-      flushBytes: 1
+      flushBytes: 1,
+      concurrency: 1
     })
 
     b.onDrop(doc => {
@@ -464,6 +587,7 @@ test('bulk delete', t => {
     t.match(result, {
       total: 3,
       successful: 3,
+      retry: 0,
       failed: 0,
       aborted: false
     })
@@ -507,6 +631,7 @@ test('bulk delete', t => {
     const b = client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
+      concurrency: 1,
       wait: 10
     })
 
@@ -528,6 +653,7 @@ test('bulk delete', t => {
     t.match(result, {
       total: 3,
       successful: 2,
+      retry: 0,
       failed: 1,
       aborted: false
     })
