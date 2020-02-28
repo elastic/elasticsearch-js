@@ -24,7 +24,7 @@ test('bulk index', t => {
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
-          return { body: { errors: false } }
+          return { body: { errors: false, items: [{}] } }
         }
       })
 
@@ -62,7 +62,7 @@ test('bulk index', t => {
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
-          return { body: { errors: false } }
+          return { body: { errors: false, items: [{}] } }
         }
       })
 
@@ -97,7 +97,7 @@ test('bulk index', t => {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
           t.strictEqual(params.body.split('\n').filter(Boolean).length, 6)
-          return { body: { errors: false } }
+          return { body: { errors: false, items: new Array(3).fill({}) } }
         }
       })
 
@@ -135,7 +135,7 @@ test('bulk index', t => {
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
-          return { body: { errors: false } }
+          return { body: { errors: false, items: [{}] } }
         }
       })
 
@@ -193,7 +193,7 @@ test('bulk index', t => {
           res.end(JSON.stringify({
             took: 0,
             errors: false,
-            items: []
+            items: [{}]
           }))
         }
       }
@@ -260,7 +260,7 @@ test('bulk index', t => {
           res.end(JSON.stringify({
             took: 0,
             errors: false,
-            items: []
+            items: [{}]
           }))
         }
       }
@@ -389,7 +389,7 @@ test('bulk index', t => {
           res.end(JSON.stringify({
             took: 0,
             errors: false,
-            items: []
+            items: [{}]
           }))
         }
       }
@@ -410,8 +410,8 @@ test('bulk index', t => {
       const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
       t.match(result, {
-        total: 3,
-        successful: 2,
+        total: 2,
+        successful: 1,
         retry: 0,
         failed: 1,
         aborted: true
@@ -432,7 +432,7 @@ test('bulk index', t => {
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
-          return { body: { errors: false } }
+          return { body: { errors: false, items: [{}] } }
         }
       })
 
@@ -479,7 +479,7 @@ test('bulk create', t => {
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { create: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), dataset[count++])
-        return { body: { errors: false } }
+        return { body: { errors: false, items: [{}] } }
       }
     })
 
@@ -521,7 +521,7 @@ test('bulk update', t => {
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
-        return { body: { errors: false } }
+        return { body: { errors: false, items: [{}] } }
       }
     })
 
@@ -563,7 +563,7 @@ test('bulk delete', t => {
         t.strictEqual(params.path, '/_bulk')
         t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
         t.deepEqual(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
-        return { body: { errors: false } }
+        return { body: { errors: false, items: [{}] } }
       }
     })
 
@@ -621,7 +621,7 @@ test('bulk delete', t => {
         res.end(JSON.stringify({
           took: 0,
           errors: false,
-          items: []
+          items: [{}]
         }))
       }
     }
