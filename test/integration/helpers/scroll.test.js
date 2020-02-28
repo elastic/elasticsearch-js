@@ -4,6 +4,7 @@ const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
 const { test, beforeEach, afterEach } = require('tap')
+const { waitCluster } = require('../../utils')
 const { Client } = require('../../../')
 
 const INDEX = `test-helpers-${process.pid}`
@@ -12,6 +13,7 @@ const client = new Client({
 })
 
 beforeEach(async () => {
+  await waitCluster(client)
   await client.indices.create({ index: INDEX })
   const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'stackoverflow.ndjson'))
   const b = client.helpers.bulk({
