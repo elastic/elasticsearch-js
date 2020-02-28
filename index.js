@@ -127,7 +127,7 @@ class Client extends EventEmitter {
       opaqueIdPrefix: options.opaqueIdPrefix
     })
 
-    this.helpers = new Helpers(this)
+    this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
 
     const apis = buildApi({
       makeRequest: this.transport.request.bind(this.transport),
