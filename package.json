@@ -20,6 +20,7 @@
     "test:unit": "tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage",
     "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
     "test:integration": "node test/integration/index.js",
+    "test:integration:helpers": "tap test/integration/helpers/*.test.js --no-coverage -J",
     "test:types": "tsc --project ./test/types/tsconfig.json",
     "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "standard",
