@@ -20,6 +20,7 @@ import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
 import { ConnectionPool, ResurrectEvent, BasicAuth, ApiKeyAuth } from './lib/pool';
 import Serializer from './lib/Serializer';
+import Helpers from './lib/Helpers';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
 
@@ -112,6 +113,7 @@ declare class Client extends EventEmitter {
   transport: Transport;
   serializer: Serializer;
   extend: ClientExtends;
+  helpers: Helpers;
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
