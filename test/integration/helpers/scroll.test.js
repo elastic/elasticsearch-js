@@ -16,10 +16,14 @@ beforeEach(async () => {
   await waitCluster(client)
   await client.indices.create({ index: INDEX })
   const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'stackoverflow.ndjson'))
-  const b = client.helpers.bulk({
-    datasource: stream.pipe(split())
+  const result = await client.helpers.bulk({
+    datasource: stream.pipe(split()),
+    onDocument (doc) {
+      return {
+        index: { _index: INDEX }
+      }
+    }
   })
-  const result = await b.index({ _index: INDEX })
   if (result.failed > 0) {
     throw new Error('Failed bulk indexing docs')
   }

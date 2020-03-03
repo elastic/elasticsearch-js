@@ -32,18 +32,22 @@ test('bulk index', t => {
         node: 'http://localhost:9200',
         Connection: MockConnection
       })
-      const b = client.helpers.bulk({
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
-        concurrency: 1
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
-      b.onDrop(doc => {
-        t.fail('This should never be called')
-      })
-
-      const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 3,
@@ -70,18 +74,22 @@ test('bulk index', t => {
         node: 'http://localhost:9200',
         Connection: MockConnection
       })
-      const b = client.helpers.bulk({
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
-        concurrency: 3
+        concurrency: 3,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
-      b.onDrop(doc => {
-        t.fail('This should never be called')
-      })
-
-      const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 3,
@@ -105,18 +113,22 @@ test('bulk index', t => {
         node: 'http://localhost:9200',
         Connection: MockConnection
       })
-      const b = client.helpers.bulk({
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 5000000,
-        concurrency: 1
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
-      b.onDrop(doc => {
-        t.fail('This should never be called')
-      })
-
-      const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 3,
@@ -143,19 +155,26 @@ test('bulk index', t => {
         node: 'http://localhost:9200',
         Connection: MockConnection
       })
-      const b = client.helpers.bulk({
+      let id = 0
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
-        concurrency: 1
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: {
+              _index: 'test',
+              _id: id++
+            }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
-      b.onDrop(doc => {
-        t.fail('This should never be called')
-      })
-
-      let id = 0
-      const result = await b.index({ _index: 'test' }, doc => ({ _id: id++ }))
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 3,
@@ -200,25 +219,28 @@ test('bulk index', t => {
 
       const [{ port }, server] = await buildServer(handler)
       const client = new Client({ node: `http://localhost:${port}` })
-      const b = client.helpers.bulk({
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
         concurrency: 1,
         wait: 10,
-        retries: 1
+        retries: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.deepEqual(doc, {
+            status: 429,
+            error: null,
+            operation: { index: { _index: 'test' } },
+            document: { user: 'arya', age: 18 },
+            retried: true
+          })
+        }
       })
 
-      b.onDrop(doc => {
-        t.deepEqual(doc, {
-          status: 429,
-          error: null,
-          operation: { index: { _index: 'test' } },
-          document: { user: 'arya', age: 18 },
-          retried: true
-        })
-      })
-
-      const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
       t.type(result.bytes, 'number')
       t.match(result, {
@@ -267,25 +289,29 @@ test('bulk index', t => {
 
       const [{ port }, server] = await buildServer(handler)
       const client = new Client({ node: `http://localhost:${port}` })
-      const b = client.helpers.bulk({
+      const result = await client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
         concurrency: 1,
-        wait: 10
+        wait: 10,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.deepEqual(doc, {
+            status: 400,
+            error: { something: 'went wrong' },
+            operation: { index: { _index: 'test' } },
+            document: { user: 'arya', age: 18 },
+            retried: false
+          })
+        }
       })
 
-      b.onDrop(doc => {
-        t.deepEqual(doc, {
-          status: 400,
-          error: { something: 'went wrong' },
-          operation: { index: { _index: 'test' } },
-          document: { user: 'arya', age: 18 },
-          retried: false
-        })
-      })
-
-      const result = await b.index({ _index: 'test' })
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 2,
@@ -313,15 +339,19 @@ test('bulk index', t => {
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 1,
-        concurrency: 1
-      })
-
-      b.onDrop(doc => {
-        t.fail('This should never be called')
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
       try {
-        await b.index({ _index: 'test' })
+        await b
         t.fail('Should throw')
       } catch (err) {
         t.true(err instanceof errors.ResponseError)
@@ -345,15 +375,19 @@ test('bulk index', t => {
       const b = client.helpers.bulk({
         datasource: dataset.slice(),
         flushBytes: 5000000,
-        concurrency: 1
-      })
-
-      b.onDrop(doc => {
-        t.fail('This should never be called')
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
       })
 
       try {
-        await b.index({ _index: 'test' })
+        await b
         t.fail('Should throw')
       } catch (err) {
         t.true(err instanceof errors.ResponseError)
@@ -400,15 +434,20 @@ test('bulk index', t => {
         datasource: dataset.slice(),
         flushBytes: 1,
         concurrency: 1,
-        wait: 10
+        wait: 10,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          b.abort()
+        }
       })
 
-      b.onDrop(doc => {
-        b.abort()
-      })
-
-      const result = await b.index({ _index: 'test' })
+      const result = await b
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 2,
         successful: 1,
@@ -441,19 +480,27 @@ test('bulk index', t => {
         Connection: MockConnection
       })
       const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'small-dataset.ndjson'), 'utf8')
-      const b = client.helpers.bulk({
-        datasource: stream.pipe(split()),
-        flushBytes: 1,
-        concurrency: 1
-      })
-
-      b.onDrop(doc => {
-        t.fail('This should never be called')
-      })
 
       let id = 0
-      const result = await b.index({ _index: 'test' }, doc => ({ _id: id++ }))
+      const result = await client.helpers.bulk({
+        datasource: stream.pipe(split()),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: {
+              _index: 'test',
+              _id: id++
+            }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
+      })
+
       t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
       t.match(result, {
         total: 3,
         successful: 3,
@@ -487,19 +534,26 @@ test('bulk create', t => {
       node: 'http://localhost:9200',
       Connection: MockConnection
     })
-    const b = client.helpers.bulk({
+    let id = 0
+    const result = await client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
-      concurrency: 1
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          create: {
+            _index: 'test',
+            _id: id++
+          }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
     })
 
-    b.onDrop(doc => {
-      t.fail('This should never be called')
-    })
-
-    let id = 0
-    const result = await b.create({ _index: 'test' }, doc => ({ _id: id++ }))
     t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
     t.match(result, {
       total: 3,
       successful: 3,
@@ -529,21 +583,28 @@ test('bulk update', t => {
       node: 'http://localhost:9200',
       Connection: MockConnection
     })
-    const b = client.helpers.bulk({
+    let id = 0
+    const result = await client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
-      concurrency: 1
+      concurrency: 1,
+      onDocument (doc) {
+        return [{
+          update: {
+            _index: 'test',
+            _id: id++
+          }
+        }, {
+          doc_as_upsert: true
+        }]
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
     })
 
-    b.onDrop(doc => {
-      t.fail('This should never be called')
-    })
-
-    let id = 0
-    const result = await b.update({ _index: 'test' }, doc => {
-      return [{ _id: id++ }, { doc_as_upsert: true }]
-    })
     t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
     t.match(result, {
       total: 3,
       successful: 3,
@@ -571,19 +632,26 @@ test('bulk delete', t => {
       node: 'http://localhost:9200',
       Connection: MockConnection
     })
-    const b = client.helpers.bulk({
+    let id = 0
+    const result = await client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
-      concurrency: 1
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          delete: {
+            _index: 'test',
+            _id: id++
+          }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
     })
 
-    b.onDrop(doc => {
-      t.fail('This should never be called')
-    })
-
-    let id = 0
-    const result = await b.delete({ _index: 'test' }, doc => ({ _id: id++ }))
     t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
     t.match(result, {
       total: 3,
       successful: 3,
@@ -628,28 +696,33 @@ test('bulk delete', t => {
 
     const [{ port }, server] = await buildServer(handler)
     const client = new Client({ node: `http://localhost:${port}` })
-    const b = client.helpers.bulk({
+    let id = 0
+    const result = await client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
       concurrency: 1,
-      wait: 10
+      wait: 10,
+      onDocument (doc) {
+        return {
+          delete: {
+            _index: 'test',
+            _id: id++
+          }
+        }
+      },
+      onDrop (doc) {
+        t.deepEqual(doc, {
+          status: 400,
+          error: { something: 'went wrong' },
+          operation: { delete: { _index: 'test', _id: 1 } },
+          document: null,
+          retried: false
+        })
+      }
     })
 
-    b.onDrop(doc => {
-      t.deepEqual(doc, {
-        status: 400,
-        error: { something: 'went wrong' },
-        operation: { delete: { _index: 'test', _id: 1 } },
-        document: null,
-        retried: false
-      })
-    })
-
-    let id = 0
-    const result = await b.delete({ _index: 'test' }, doc => {
-      return { _id: id++ }
-    })
     t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
     t.match(result, {
       total: 3,
       successful: 2,
