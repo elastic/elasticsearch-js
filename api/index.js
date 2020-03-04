@@ -30,6 +30,8 @@ function ESAPI (opts) {
       help: lazyLoad('cat.help', opts),
       indices: lazyLoad('cat.indices', opts),
       master: lazyLoad('cat.master', opts),
+      ml_data_frame_analytics: lazyLoad('cat.ml_data_frame_analytics', opts),
+      mlDataFrameAnalytics: lazyLoad('cat.ml_data_frame_analytics', opts),
       ml_datafeeds: lazyLoad('cat.ml_datafeeds', opts),
       mlDatafeeds: lazyLoad('cat.ml_datafeeds', opts),
       ml_jobs: lazyLoad('cat.ml_jobs', opts),

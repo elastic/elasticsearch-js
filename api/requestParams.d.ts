@@ -1318,6 +1318,18 @@ export interface UpdateByQueryRethrottle extends Generic {
 export interface AutoscalingGetAutoscalingDecision extends Generic {
 }
 
+export interface CatMlDataFrameAnalytics extends Generic {
+  id?: string;
+  allow_no_match?: boolean;
+  bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
 export interface CatMlDatafeeds extends Generic {
   datafeed_id?: string;
   allow_no_datafeeds?: boolean;
@@ -1468,7 +1480,7 @@ export interface EnrichExecutePolicy extends Generic {
 }
 
 export interface EnrichGetPolicy extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface EnrichPutPolicy<T = any> extends Generic {
@@ -1881,6 +1893,10 @@ export interface MlPutDataFrameAnalytics<T = any> extends Generic {
 
 export interface MlPutDatafeed<T = any> extends Generic {
   datafeed_id: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  ignore_throttled?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   body: T;
 }
 
@@ -1942,6 +1958,10 @@ export interface MlStopDatafeed extends Generic {
 
 export interface MlUpdateDatafeed<T = any> extends Generic {
   datafeed_id: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  ignore_throttled?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   body: T;
 }
 

@@ -29,7 +29,7 @@ function buildCatMlJobs (opts) {
 
   /**
    * Perform a cat.ml_jobs request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-anomaly-detectors.html
    */
   return function catMlJobs (params, options, callback) {
     options = options || {}

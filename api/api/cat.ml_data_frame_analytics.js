@@ -7,23 +7,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackUsage (opts) {
+function buildCatMlDataFrameAnalytics (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'master_timeout'
+    'allow_no_match',
+    'bytes',
+    'format',
+    'h',
+    'help',
+    's',
+    'time',
+    'v'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout'
+    allowNoMatch: 'allow_no_match'
+
   }
 
   /**
-   * Perform a xpack.usage request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
+   * Perform a cat.ml_data_frame_analytics request
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-dfanalytics.html
    */
-  return function xpackUsage (params, options, callback) {
+  return function catMlDataFrameAnalytics (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -42,7 +50,7 @@ function buildXpackUsage (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -52,8 +60,13 @@ function buildXpackUsage (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_xpack' + '/' + 'usage'
+    if ((id) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics'
+    }
 
     // build request object
     const request = {
@@ -68,4 +81,4 @@ function buildXpackUsage (opts) {
   }
 }
 
-module.exports = buildXpackUsage
+module.exports = buildCatMlDataFrameAnalytics

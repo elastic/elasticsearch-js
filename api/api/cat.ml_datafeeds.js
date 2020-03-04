@@ -28,7 +28,7 @@ function buildCatMlDatafeeds (opts) {
 
   /**
    * Perform a cat.ml_datafeeds request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+   * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-datafeeds.html
    */
   return function catMlDatafeeds (params, options, callback) {
     options = options || {}
