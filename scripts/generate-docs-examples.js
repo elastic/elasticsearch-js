@@ -49,7 +49,12 @@ const enabledFiles = [
   'query-dsl/multi-match-query.asciidoc',
   'docs/bulk.asciidoc',
   'indices/delete-index.asciidoc',
-  'indices/put-mapping.asciidoc'
+  'indices/put-mapping.asciidoc',
+  'query-dsl/match-all-query.asciidoc',
+  'query-dsl/term-query.asciidoc',
+  'docs/update.asciidoc',
+  'docs/reindex.asciidoc',
+  'indices/templates.asciidoc'
 ]
 
 function generate () {
