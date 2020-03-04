@@ -7659,7 +7659,7 @@ client.monitoring.bulk({
   body: object
 })
 ----
-link:{ref}/es-monitoring.html[Documentation] +
+link:{ref}/monitor-elasticsearch-cluster.html[Documentation] +
 [cols=2*]
 |===
 |`type`
