@@ -18,6 +18,7 @@ beforeEach(async () => {
   const stream = createReadStream(join(__dirname, '..', '..', 'fixtures', 'stackoverflow.ndjson'))
   const result = await client.helpers.bulk({
     datasource: stream.pipe(split()),
+    refreshOnCompletion: true,
     onDocument (doc) {
       return {
         index: { _index: INDEX }
@@ -27,7 +28,6 @@ beforeEach(async () => {
   if (result.failed > 0) {
     throw new Error('Failed bulk indexing docs')
   }
-  await client.indices.refresh()
 })
 
 afterEach(async () => {

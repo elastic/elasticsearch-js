@@ -26,6 +26,7 @@ test('bulk index', async t => {
   const stream = createReadStream(datasetPath)
   const result = await client.helpers.bulk({
     datasource: stream.pipe(split()),
+    refreshOnCompletion: INDEX,
     onDrop (doc) {
       t.fail('It should not drop any document')
     },
@@ -46,7 +47,6 @@ test('bulk index', async t => {
     aborted: false
   })
 
-  await client.indices.refresh({ index: INDEX })
   const { body } = await client.count({ index: INDEX })
   t.match(body, { count: 5000 })
 })
@@ -127,6 +127,7 @@ test('abort the operation on document drop', async t => {
 test('bulk delete', async t => {
   const indexResult = await client.helpers.bulk({
     datasource: createReadStream(datasetPath).pipe(split(JSON.parse)),
+    refreshOnCompletion: true,
     onDrop (doc) {
       t.fail('It should not drop any document')
     },
@@ -150,12 +151,12 @@ test('bulk delete', async t => {
     aborted: false
   })
 
-  await client.indices.refresh({ index: INDEX })
   const { body: afterIndex } = await client.count({ index: INDEX })
   t.match(afterIndex, { count: 5000 })
 
   const deleteResult = await client.helpers.bulk({
     datasource: createReadStream(datasetPath).pipe(split(JSON.parse)),
+    refreshOnCompletion: true,
     onDrop (doc) {
       t.fail('It should not drop any document')
     },
@@ -179,7 +180,6 @@ test('bulk delete', async t => {
     aborted: false
   })
 
-  await client.indices.refresh({ index: INDEX })
   const { body: afterDelete } = await client.count({ index: INDEX })
   t.match(afterDelete, { count: 0 })
 })

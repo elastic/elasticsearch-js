@@ -735,3 +735,58 @@ test('bulk delete', t => {
 
   t.end()
 })
+
+test('errors', t => {
+  t.test('datasource type', async t => {
+    const client = new Client({
+      node: 'http://localhost:9200'
+    })
+    try {
+      await client.helpers.bulk({
+        datasource: 'hello',
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        }
+      })
+    } catch (err) {
+      t.true(err instanceof errors.ConfigurationError)
+      t.is(err.message, 'bulk helper: the datasource must be an array or a buffer or a readable stream')
+    }
+  })
+
+  t.test('missing datasource', async t => {
+    const client = new Client({
+      node: 'http://localhost:9200'
+    })
+    try {
+      await client.helpers.bulk({
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        }
+      })
+    } catch (err) {
+      t.true(err instanceof errors.ConfigurationError)
+      t.is(err.message, 'bulk helper: the datasource is required')
+    }
+  })
+
+  t.test('missing onDocument', async t => {
+    const client = new Client({
+      node: 'http://localhost:9200'
+    })
+    try {
+      await client.helpers.bulk({
+        datasource: dataset.slice()
+      })
+    } catch (err) {
+      t.true(err instanceof errors.ConfigurationError)
+      t.is(err.message, 'bulk helper: the onDocument callback is required')
+    }
+  })
+
+  t.end()
+})

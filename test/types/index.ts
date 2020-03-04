@@ -33,6 +33,18 @@ const nodeOpts: NodeOptions = {
   }
 }
 
+const b = client.helpers.bulk({
+  datasource: [],
+  onDocument (doc) {
+    return {
+      index: { _index: 'test' }
+    }
+  }
+})
+
+b.abort()
+b.then(console.log, console.log)
+
 const client2 = new Client({ node: nodeOpts })
 
 const clientBasicAuth = new Client({
