@@ -2,14 +2,15 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+import { Readable as ReadableStream } from 'stream'
 import { TransportRequestOptions, ApiResponse } from './Transport'
-import { Search } from '../api/requestParams'
+import { Search, Bulk } from '../api/requestParams'
 
 export default class Helpers {
   search<T>(params: Search, options: TransportRequestOptions): Promise<T[]>
   scrollSearch<T, B, C>(params: Search, options: TransportRequestOptions): AsyncIterator<ScrollSearchResult<T, B, C>>
   scrollDocuments<T>(params: Search, options: TransportRequestOptions): AsyncIterator<T>
-  bulk(options: BulkHelperOptions): BulkHelper
+  bulk(options: BulkHelperOptions): BulkHelper<BulkStats>
 }
 
 interface ScrollSearchResult<T= any, B = any, C = any> extends ApiResponse<B, C> {
@@ -17,24 +18,8 @@ interface ScrollSearchResult<T= any, B = any, C = any> extends ApiResponse<B, C>
   documents: T[]
 }
 
-interface BulkHelper {
-  onDrop: (doc: any) => BulkHelper
-  abort: () => BulkHelper
-  index: (action: BulkAction, fn: BulkIndexCallback) => Promise<BulkStats>
-  create: (action: BulkAction, fn: BulkCreateCallback) => Promise<BulkStats>
-  update: (action: BulkAction, fn: BulkUpdateCallback) => Promise<BulkStats>
-  delete: (action: BulkAction, fn: BulkDeleteCallback) => Promise<BulkStats>
-}
-
-type obj = Record<string, any>
-type BulkIndexCallback = (doc: obj) => obj
-type BulkCreateCallback = (doc: obj) => obj
-type BulkUpdateCallback = (doc: obj) => [obj, obj]
-type BulkDeleteCallback = (doc: obj) => obj
-
-interface BulkAction {
-  _index: string
-  [key: string]: any
+interface BulkHelper<T> extends Promise<T> {
+  abort: () => BulkHelper<T>
 }
 
 interface BulkStats {
@@ -47,10 +32,45 @@ interface BulkStats {
   aborted: boolean
 }
 
-interface BulkHelperOptions {
-  datasource: any[]
+interface IndexAction {
+  index: {
+    _index: string
+    [key: string]: any
+  }
+}
+
+interface CreateAction {
+  create: {
+    _index: string
+    [key: string]: any
+  }
+}
+
+interface UpdateActionOperation {
+  update: {
+    _index: string
+    [key: string]: any
+  }
+}
+
+interface DeleteAction {
+  delete: {
+    _index: string
+    [key: string]: any
+  }
+}
+
+type UpdateAction = [UpdateActionOperation, Record<string, any>]
+type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+interface BulkHelperOptions extends Omit<Bulk, 'body'> {
+  datasource: any[] | Buffer | ReadableStream
+  onDocument: (doc: Record<string, any>) => Action
   flushBytes?: number
   concurrency?: number
   retries?: number
-  wait?: number
+  wait?: number,
+  onDrop?: (doc: Record<string, any>) => void,
+  refreshOnCompletion?: boolean | string
 }
