@@ -5370,7 +5370,7 @@ client.cat.mlDatafeeds({
   v: boolean
 })
 ----
-link:{ref}/ml-get-datafeed-stats.html[Documentation] +
+link:{ref}/cat-datafeeds.html[Documentation] +
 [cols=2*]
 |===
 |`datafeed_id` or `datafeedId`
@@ -5415,7 +5415,7 @@ client.cat.mlJobs({
   v: boolean
 })
 ----
-link:{ref}/ml-get-job-stats.html[Documentation] +
+link:{ref}/cat-anomaly-detectors.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -5465,7 +5465,7 @@ client.cat.mlTrainedModels({
   v: boolean
 })
 ----
-link:{ref}/get-inference-stats.html[Documentation] +
+link:{ref}/cat-trained-model.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7584,6 +7584,10 @@ link:{ref}/put-dfanalytics.html[Documentation] +
 ----
 client.ml.putDatafeed({
   datafeed_id: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  ignore_throttled: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -7592,6 +7596,18 @@ link:{ref}/ml-put-datafeed.html[Documentation] +
 |===
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to create
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Ignore unavailable indexes (default: false)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Ignore if the source indices expressions resolves to no concrete indices (default: true)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Ignore indices that are marked as throttled (default: true)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether source index expressions should get expanded to open or closed indices (default: open)
 
 |`body`
 |`object` - The datafeed config
@@ -7827,6 +7843,10 @@ link:{ref}/ml-stop-datafeed.html[Documentation] +
 ----
 client.ml.updateDatafeed({
   datafeed_id: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  ignore_throttled: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -7835,6 +7855,18 @@ link:{ref}/ml-update-datafeed.html[Documentation] +
 |===
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to update
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Ignore unavailable indexes (default: false)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Ignore if the source indices expressions resolves to no concrete indices (default: true)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Ignore indices that are marked as throttled (default: true)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether source index expressions should get expanded to open or closed indices (default: open)
 
 |`body`
 |`object` - The datafeed update settings

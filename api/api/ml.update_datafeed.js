@@ -12,11 +12,17 @@ function buildMlUpdateDatafeed (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'ignore_unavailable',
+    'allow_no_indices',
+    'ignore_throttled',
+    'expand_wildcards'
   ]
 
   const snakeCase = {
-
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    ignoreThrottled: 'ignore_throttled',
+    expandWildcards: 'expand_wildcards'
   }
 
   /**

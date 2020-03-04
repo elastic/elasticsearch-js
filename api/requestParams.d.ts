@@ -1893,6 +1893,10 @@ export interface MlPutDataFrameAnalytics<T = any> extends Generic {
 
 export interface MlPutDatafeed<T = any> extends Generic {
   datafeed_id: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  ignore_throttled?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   body: T;
 }
 
@@ -1954,6 +1958,10 @@ export interface MlStopDatafeed extends Generic {
 
 export interface MlUpdateDatafeed<T = any> extends Generic {
   datafeed_id: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  ignore_throttled?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   body: T;
 }
 

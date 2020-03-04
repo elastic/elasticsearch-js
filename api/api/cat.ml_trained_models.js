@@ -31,7 +31,7 @@ function buildCatMlTrainedModels (opts) {
 
   /**
    * Perform a cat.ml_trained_models request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
    */
   return function catMlTrainedModels (params, options, callback) {
     options = options || {}
