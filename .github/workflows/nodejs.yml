@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   test:
+    name: Test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -36,6 +37,7 @@ jobs:
         npm run test:types
 
   test-node-v8:
+    name: Test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -61,6 +63,7 @@ jobs:
 
 
   license:
+    name: License check
     runs-on: ubuntu-latest
 
     strategy:
