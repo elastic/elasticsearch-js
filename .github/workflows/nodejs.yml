@@ -28,9 +28,13 @@ jobs:
       run: |
         npm run lint
 
-    - name: Test
+    - name: Unit test
       run: |
-        npm run test:coverage
+        npm run test:unit
+
+    - name: Behavior test
+      run: |
+        npm run test:behavior
 
     - name: Type Definitions
       run: |
@@ -59,8 +63,31 @@ jobs:
 
     - name: Test
       run: |
-        npx tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage --node-arg=--harmony-async-iteration
+        npm run test:unit -- --node-arg=--harmony-async-iteration
 
+  code-coverage:
+    name: Code coverage
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Code coverage
+      run: |
+        npm run test:coverage
 
   license:
     name: License check
