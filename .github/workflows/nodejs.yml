@@ -1,0 +1,84 @@
+name: Node CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 13.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install
+      run: |
+        npm install
+    
+    - name: Lint
+      run: |
+        npm run lint
+        
+    - name: Test
+      run: |
+        npm run test:coverage
+        
+    - name: Type Definitions
+      run: |
+        npm run test:types
+  
+  test-node-v8:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [8.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install
+      run: |
+        npm install
+        
+    - name: Test
+      run: |
+        npx tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage --node-arg=--harmony-async-iteration
+        
+
+  license:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install
+      run: |
+        npm install
+    
+    - name: License checker
+      run: |
+        npm run license-checker
