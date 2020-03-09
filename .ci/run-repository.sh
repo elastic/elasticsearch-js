@@ -17,11 +17,9 @@ echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m TEST_SUITE ${TEST_SUITE}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m URL ${ELASTICSEARCH_URL}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m CONTAINER ${elasticsearch_container}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m DOTNET_VERSION ${NODE_JS_VERSION}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m NODE_JS_VERSION ${NODE_JS_VERSION}\033[0m"
 
 echo -e "\033[1m>>>>> Build docker container >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
-
-set -eo pipefail
 
 docker build \
   --file .ci/Dockerfile \
@@ -38,7 +36,7 @@ if [[ "$NODE_JS_VERSION" == "8" ]]; then
 fi
 
 docker run \
-  --network=${NETWORK_NAME} \
+  --network=${network_name} \
   --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
   --volume $repo:/usr/src/app \
   --volume /usr/src/app/node_modules \
