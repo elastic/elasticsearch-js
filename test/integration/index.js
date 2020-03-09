@@ -71,12 +71,17 @@ const xPackBlackList = {
   'ssl/10_basic.yml': ['*'],
   // investigate why this is failing
   'transforms_stats.yml': ['Test get continuous transform stats'],
-  // investingating why this one is failing
+  // very likely, the index template has not been loaded yet.
+  // we should run a indices.existsTemplate, but the name of the
+  // template may vary during time.
   'transforms_crud.yml': [
     'Test basic transform crud',
     'Test transform with query and array of indices in source',
     'Test PUT continuous transform',
     'Test PUT continuous transform without delay set'
+  ],
+  'transforms_force_delete.yml': [
+    'Test force deleting a running transform'
   ],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
