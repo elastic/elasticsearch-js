@@ -3,6 +3,9 @@
 
 The client comes with an handy collection of helpers to give you a more comfortable experience with some APIs.
 
+CAUTION: If you are using the client with Node.js v8 you should run your code with the `--harmony-async-iteration` argument. +
+eg: `node index.js --harmony-async-iteration`
+
 === Bulk Helper
 Running Bulk requests can be complex due to the shape of the API, this helper aims to provide a nicer developer experience around the Bulk API.
 
