@@ -1,57 +1,23 @@
 #!/usr/bin/env bash
 #
-# Version 1.0
+# Version 1.1
 # - Moved to .ci folder and seperated out `run-repository.sh`
+# - Add `$RUNSCRIPTS` env var for running Elasticsearch dependent products
+script_path=$(dirname $(realpath -s $0))
+source $script_path/functions/imports.sh
+set -euo pipefail
 
-if [[ -z $ELASTICSEARCH_VERSION ]]; then
-  echo -e "\033[31;1mERROR:\033[0m Required environment variable [ELASTICSEARCH_VERSION] not set\033[0m"
-  exit 1
+echo -e "\033[1m>>>>> Start [$STACK_VERSION container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
+DETACH=true bash .ci/run-elasticsearch.sh
+
+if [[ -n "$RUNSCRIPTS" ]]; then
+  for RUNSCRIPT in ${RUNSCRIPTS//,/ } ; do
+    echo -e "\033[1m>>>>> Running run-$RUNSCRIPT.sh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
+    CONTAINER_NAME=${RUNSCRIPT} \
+      DETACH=true \
+      bash .ci/run-${RUNSCRIPT}.sh
+  done
 fi
-set -euxo pipefail
-
-
-TEST_SUITE=${TEST_SUITE-oss}
-NODE_NAME=instance
-
-
-elasticsearch_image=elasticsearch
-elasticsearch_url=https://elastic:changeme@${NODE_NAME}:9200
-if [[ $TEST_SUITE != "xpack" ]]; then
-  elasticsearch_image=elasticsearch-${TEST_SUITE}
-  elasticsearch_url=http://${NODE_NAME}:9200
-fi
-
-function cleanup {
-  status=$?
-  set +x
-  ELASTICSEARCH_VERSION=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
-    NODE_NAME=${NODE_NAME} \
-    NETWORK_NAME=elasticsearch \
-    CLEANUP=true \
-    bash ./.ci/run-elasticsearch.sh
-  # Report status and exit
-  if [[ "$status" == "0" ]]; then
-    echo -e "\n\033[32;1mSUCCESS run-tests\033[0m"
-    exit 0
-  else
-    echo -e "\n\033[31;1mFAILURE during run-tests\033[0m"
-    exit ${status}
-  fi
-}
-trap cleanup EXIT
-
-echo -e "\033[1m>>>>> Start [$ELASTICSEARCH_VERSION container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
-
-ELASTICSEARCH_VERSION=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
-  NODE_NAME=${NODE_NAME} \
-  NETWORK_NAME=elasticsearch \
-  DETACH=true \
-  bash .ci/run-elasticsearch.sh
 
 echo -e "\033[1m>>>>> Repository specific tests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
-
-ELASTICSEARCH_CONTAINER=${elasticsearch_image}:${ELASTICSEARCH_VERSION} \
-  NETWORK_NAME=elasticsearch \
-  NODE_NAME=${NODE_NAME} \
-  ELASTICSEARCH_URL=${elasticsearch_url} \
-  bash .ci/run-repository.sh
+bash .ci/run-repository.sh
