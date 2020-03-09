@@ -3,93 +3,34 @@
 # Launch one or more Elasticsearch nodes via the Docker image,
 # to form a cluster suitable for running the REST API tests.
 #
-# Export the ELASTICSEARCH_VERSION variable, eg. 'elasticsearch:8.0.0-SNAPSHOT'.
+# Export the STACK_VERSION variable, eg. '8.0.0-SNAPSHOT'.
+# Export the TEST_SUITE variable, eg. 'oss' or 'xpack' defaults to 'oss'.
+# Export the NUMBER_OF_NODES variable to start more than 1 node
 
-if [[ -z "$ELASTICSEARCH_VERSION" ]]; then
-  echo -e "\033[31;1mERROR:\033[0m Required environment variable [ELASTICSEARCH_VERSION] not set\033[0m"
-  exit 1
-fi
+# Version 1.1.0
+# - Initial version of the run-elasticsearch.sh script
+# - Deleting the volume should not dependent on the container still running
+# - Fixed `ES_JAVA_OPTS` config
+# - Moved to STACK_VERSION and TEST_VERSION
+# - Refactored into functions and imports
+# - Support NUMBER_OF_NODES
 
-set -euxo pipefail
+script_path=$(dirname $(realpath -s $0))
+source $script_path/functions/imports.sh
+set -euo pipefail
 
-moniker=$(echo "$ELASTICSEARCH_VERSION" | tr -C "[:alnum:]" '-')
-suffix=rest-test
+echo -e "\033[34;1mINFO:\033[0m Take down node if called twice with the same arguments (DETACH=true) or on seperate terminals \033[0m"
+cleanup_node $es_node_name
 
-NODE_NAME=${NODE_NAME-${moniker}node1}
-MASTER_NODE_NAME=${MASTER_NODE_NAME-${NODE_NAME}}
-CLUSTER_NAME=${CLUSTER_NAME-${moniker}${suffix}}
-HTTP_PORT=${HTTP_PORT-9200}
+master_node_name=${es_node_name}
+cluster_name=${moniker}${suffix}
 
-ELASTIC_PASSWORD=${ELASTIC_PASSWORD-changeme}
-SSL_CERT=${SSL_CERT-"$PWD/certs/testnode.crt"}
-SSL_KEY=${SSL_KEY-"$PWD/certs/testnode.key"}
-SSL_CA=${SSL_CA-"$PWD/certs/ca.crt"}
-
-DETACH=${DETACH-false}
-CLEANUP=${CLEANUP-false}
-
-volume_name=${NODE_NAME}-${suffix}-data
-network_default=${moniker}${suffix}
-NETWORK_NAME=${NETWORK_NAME-"$network_default"}
-
-set +x
-
-function cleanup_volume {
-  if [[ "$(docker volume ls -q -f name=$1)" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m Removing volume $1\033[0m"
-    (docker volume rm "$1") || true
-  fi
-}
-function cleanup_node {
-  if [[ "$(docker ps -q -f name=$1)" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m Removing container $1\033[0m"
-    (docker container rm --force --volumes "$1") || true
-    cleanup_volume "$1-${suffix}-data"
-  fi
-}
-function cleanup_network {
-  if [[ "$(docker network ls -q -f name=$1)" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m Removing network $1\033[0m"
-    (docker network rm "$1") || true
-  fi
-}
-
-function cleanup {
-  if [[ "$DETACH" != "true" ]] || [[ "$1" == "1" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m clean the node and volume on startup (1) OR on exit if not detached\033[0m"
-    cleanup_node "$NODE_NAME"
-  fi
-  if [[ "$DETACH" != "true" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m clean the network if not detached (start and exit)\033[0m"
-    cleanup_network "$NETWORK_NAME"
-  fi
-};
-trap "cleanup 0" EXIT
-
-if [[ "$CLEANUP" == "true" ]]; then
-  trap - EXIT
-  if [[ -z "$(docker network ls -q -f name=${NETWORK_NAME})" ]]; then
-    echo -e "\033[34;1mINFO:\033[0m $NETWORK_NAME is already deleted\033[0m"
-    exit 0
-  fi
-  containers=$(docker network inspect -f '{{ range $key, $value := .Containers }}{{ printf "%s\n" .Name}}{{ end }}' ${NETWORK_NAME})
-  while read -r container; do
-    cleanup_node "$container"
-  done <<< "$containers"
-  cleanup_network "$NETWORK_NAME"
-  echo -e "\033[32;1mSUCCESS:\033[0m Cleaned up and exiting\033[0m"
-  exit 0
-fi
-
-echo -e "\033[34;1mINFO:\033[0m Making sure previous run leftover infrastructure is removed \033[0m"
-cleanup 1
-
-echo -e "\033[34;1mINFO:\033[0m Creating network $NETWORK_NAME if it does not exist already \033[0m"
-docker network inspect "$NETWORK_NAME" > /dev/null 2>&1 || docker network create "$NETWORK_NAME"
-
+declare -a volumes
 environment=($(cat <<-END
-  --env node.name=$NODE_NAME
-  --env cluster.name=$CLUSTER_NAME
+  --env node.name=$es_node_name
+  --env cluster.name=$cluster_name
+  --env cluster.initial_master_nodes=$master_node_name
+  --env discovery.seed_hosts=$master_node_name
   --env cluster.routing.allocation.disk.threshold_enabled=false
   --env bootstrap.memory_lock=true
   --env node.attr.testattr=test
@@ -97,15 +38,9 @@ environment=($(cat <<-END
   --env repositories.url.allowed_urls=http://snapshot.test*
 END
 ))
-
-volumes=($(cat <<-END
-  --volume $volume_name:/usr/share/elasticsearch/data
-END
-))
-
-if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
+if [[ "$TEST_SUITE" == "xpack" ]]; then
   environment+=($(cat <<-END
-    --env ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+    --env ELASTIC_PASSWORD=$elastic_password
     --env xpack.license.self_generated.type=trial
     --env xpack.security.enabled=true
     --env xpack.security.http.ssl.enabled=true
@@ -120,56 +55,61 @@ if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
 END
 ))
   volumes+=($(cat <<-END
-    --volume $SSL_CERT:/usr/share/elasticsearch/config/certs/testnode.crt
-    --volume $SSL_KEY:/usr/share/elasticsearch/config/certs/testnode.key
-    --volume $SSL_CA:/usr/share/elasticsearch/config/certs/ca.crt
+    --volume $ssl_cert:/usr/share/elasticsearch/config/certs/testnode.crt
+    --volume $ssl_key:/usr/share/elasticsearch/config/certs/testnode.key
+    --volume $ssl_ca:/usr/share/elasticsearch/config/certs/ca.crt
 END
 ))
 fi
 
-url="http://$NODE_NAME"
-if [[ "$ELASTICSEARCH_VERSION" != *oss* ]]; then
-  url="https://elastic:$ELASTIC_PASSWORD@$NODE_NAME"
+cert_validation_flags=""
+if [[ "$TEST_SUITE" == "xpack" ]]; then
+  cert_validation_flags="--insecure --cacert /usr/share/elasticsearch/config/certs/ca.crt --resolve ${es_node_name}:443:127.0.0.1"
 fi
 
-echo -e "\033[34;1mINFO:\033[0m Starting container $NODE_NAME \033[0m"
-set -x
-docker run \
-  --name "$NODE_NAME" \
-  --network "$NETWORK_NAME" \
-  --env ES_JAVA_OPTS=-"Xms1g -Xmx1g" \
-  "${environment[@]}" \
-  "${volumes[@]}" \
-  --publish "$HTTP_PORT":9200 \
-  --ulimit nofile=65536:65536 \
-  --ulimit memlock=-1:-1 \
-  --detach="$DETACH" \
-  --health-cmd="curl --silent --insecure --fail $url:9200/_cluster/health || exit 1" \
-  --health-interval=2s \
-  --health-retries=20 \
-  --health-timeout=2s \
-  --rm \
-  docker.elastic.co/elasticsearch/"$ELASTICSEARCH_VERSION";
-set +x
+NUMBER_OF_NODES=${NUMBER_OF_NODES-1}
+http_port=9200
+for (( i=0; i<$NUMBER_OF_NODES; i++, http_port++ )); do
+  node_name=${es_node_name}$i
+  node_url=${external_elasticsearch_url/9200/${http_port}}$i
+  if [[ "$i" == "0" ]]; then node_name=$es_node_name; fi
+  environment+=($(cat <<-END
+    --env node.name=$node_name
+END
+))
+  echo "$i: $http_port $node_url "
+  volume_name=${node_name}-${suffix}-data
+  volumes+=($(cat <<-END
+    --volume $volume_name:/usr/share/elasticsearch/data${i}
+END
+))
 
-if [[ "$DETACH" == "true" ]]; then
-  until [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "starting" ]]; do
-    sleep 2;
-    echo ""
-    echo -e "\033[34;1mINFO:\033[0m waiting for node $NODE_NAME to be up\033[0m"
-  done;
-  # Always show the node getting started logs, this is very useful both on CI as well as while developing
-  docker logs "$NODE_NAME"
-  if [[ "$(docker inspect -f "{{.State.Health.Status}}" ${NODE_NAME})" != "healthy" ]]; then
-    cleanup 1
-    echo
-    echo -e "\033[31;1mERROR:\033[0m Failed to start ${ELASTICSEARCH_VERSION} in detached mode beyond health checks\033[0m"
-    echo -e "\033[31;1mERROR:\033[0m dumped the docker log before shutting the node down\033[0m"
-    exit 1
-  else
-    echo
-    echo -e "\033[32;1mSUCCESS:\033[0m Detached and healthy: ${NODE_NAME} on docker network: ${NETWORK_NAME}\033[0m"
-    echo -e "\033[32;1mSUCCESS:\033[0m Running on: ${url/$NODE_NAME/localhost}:${HTTP_PORT}\033[0m"
-    exit 0
+  # make sure we detach for all but the last node if DETACH=false (default) so all nodes are started
+  local_detach="true"
+  if [[ "$i" == "$((NUMBER_OF_NODES-1))" ]]; then local_detach=$DETACH; fi
+  echo -e "\033[34;1mINFO:\033[0m Starting container $node_name \033[0m"
+  set -x
+  docker run \
+    --name "$node_name" \
+    --network "$network_name" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+    "${environment[@]}" \
+    "${volumes[@]}" \
+    --publish "$http_port":9200 \
+    --ulimit nofile=65536:65536 \
+    --ulimit memlock=-1:-1 \
+    --detach="$local_detach" \
+    --health-cmd="curl $cert_validation_flags --fail $elasticsearch_url/_cluster/health || exit 1" \
+    --health-interval=2s \
+    --health-retries=20 \
+    --health-timeout=2s \
+    --rm \
+    docker.elastic.co/elasticsearch/"$elasticsearch_container";
+
+  set +x
+  if wait_for_container "$es_node_name" "$network_name"; then
+    echo -e "\033[32;1mSUCCESS:\033[0m Running on: $node_url\033[0m"
   fi
-fi
+
+done
+
