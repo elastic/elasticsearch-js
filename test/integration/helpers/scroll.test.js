@@ -35,7 +35,7 @@ afterEach(async () => {
 })
 
 test('search helper', async t => {
-  const scrollSearch = await client.helpers.scrollSearch({
+  const scrollSearch = client.helpers.scrollSearch({
     index: INDEX,
     body: {
       query: {
@@ -57,7 +57,7 @@ test('search helper', async t => {
 })
 
 test('clear a scroll search', async t => {
-  const scrollSearch = await client.helpers.scrollSearch({
+  const scrollSearch = client.helpers.scrollSearch({
     index: INDEX,
     body: {
       query: {
@@ -79,7 +79,7 @@ test('clear a scroll search', async t => {
 })
 
 test('scroll documents', async t => {
-  const scrollSearch = await client.helpers.scrollDocuments({
+  const scrollSearch = client.helpers.scrollDocuments({
     index: INDEX,
     body: {
       query: {
