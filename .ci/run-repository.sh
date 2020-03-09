@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
 # parameters are available to this script
 
-# ELASTICSEARCH_VERSION -- version e.g Major.Minor.Patch(-Prelease)
-# ELASTICSEARCH_CONTAINER -- the docker moniker as a reference to know which docker image distribution is used
-# ELASTICSEARCH_URL -- The url at which elasticsearch is reachable
-# NETWORK_NAME -- The docker network name
-# NODE_NAME -- The docker container name also used as Elasticsearch node name
+# STACK_VERSION -- version e.g Major.Minor.Patch(-Prelease)
+# TEST_SUITE -- which test suite to run: oss or xpack
+# ELASTICSEARCH_URL -- The url at which elasticsearch is reachable, a default is composed based on STACK_VERSION and TEST_SUITE
 # NODE_JS_VERSION -- node js version (defined in test-matrix.yml, a default is hardcoded here)
+script_path=$(dirname $(realpath -s $0))
+source $script_path/functions/imports.sh
+set -euo pipefail
 
 NODE_JS_VERSION=${NODE_JS_VERSION-12}
+ELASTICSEARCH_URL=${ELASTICSEARCH_URL-"$elasticsearch_url"}
+elasticsearch_container=${elasticsearch_container-}
 
-echo -e "\033[34;1mINFO:\033[0m URL ${ELASTICSEARCH_URL}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m VERSION ${ELASTICSEARCH_VERSION}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m CONTAINER ${ELASTICSEARCH_CONTAINER}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m TEST_SUITE ${TEST_SUITE}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m NODE_JS_VERSION ${NODE_JS_VERSION}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m URL ${ELASTICSEARCH_URL}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m CONTAINER ${elasticsearch_container}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m DOTNET_VERSION ${NODE_JS_VERSION}\033[0m"
 
 echo -e "\033[1m>>>>> Build docker container >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
-
-set -eo pipefail
 
 set +x
 export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
@@ -38,7 +39,7 @@ repo=$(realpath $(dirname $(realpath -s $0))/../)
 
 if [[ $TEST_SUITE != "xpack" ]]; then
   docker run \
-    --network=${NETWORK_NAME} \
+    --network=${network_name} \
     --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
     --env "CODECOV_TOKEN" \
     --volume $repo:/usr/src/app \
@@ -49,7 +50,7 @@ if [[ $TEST_SUITE != "xpack" ]]; then
     npm run ci
 else
   docker run \
-    --network=${NETWORK_NAME} \
+    --network=${network_name} \
     --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
     --env "CODECOV_TOKEN" \
     --volume $repo:/usr/src/app \
