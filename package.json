@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@types/node": "^12.6.2",
-    "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
     "deepmerge": "^4.0.0",
@@ -59,7 +58,6 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
-    "tap-mocha-reporter": "^4.0.1",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },
