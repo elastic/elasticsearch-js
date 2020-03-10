@@ -77,7 +77,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Runs Elasticsearch
-      uses: elastic/elasticsearch-github-action
+      uses: elastic/elasticsearch-github-action@master
       with:
         elasticsearch-version: 8.0.0-SNAPSHOT
 
