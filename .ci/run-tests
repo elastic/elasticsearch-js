@@ -13,6 +13,8 @@
 
 set -eo pipefail
 
+ELASTICSEARCH_VERSION=${STACK_VERSION}
+
 docker build \
   --file .ci/Dockerfile \
   --tag elastic/elasticsearch-js \
