@@ -22,7 +22,7 @@
     "test:integration": "node --harmony-async-iteration test/integration/index.js",
     "test:integration:helpers": "tap test/integration/helpers/*.test.js --no-coverage -J --node-arg=--harmony-async-iteration",
     "test:types": "tsc --project ./test/types/tsconfig.json",
-    "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300  --node-arg=--harmony-async-iteration && nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "ci": "npm run license-checker && npm test && npm run test:integration:helpers && npm run test:integration && npm run test:coverage",
@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@types/node": "^12.6.2",
-    "codecov": "^3.3.0",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
     "deepmerge": "^4.0.0",
@@ -60,7 +59,6 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
-    "tap-mocha-reporter": "^4.0.1",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },

@@ -1,0 +1,120 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 13.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Lint
+      run: |
+        npm run lint
+
+    - name: Unit test
+      run: |
+        npm run test:unit
+
+    - name: Behavior test
+      run: |
+        npm run test:behavior
+
+    - name: Type Definitions
+      run: |
+        npm run test:types
+
+  test-node-v8:
+    name: Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [8.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Test
+      run: |
+        npm run test:unit -- --node-arg=--harmony-async-iteration
+
+  code-coverage:
+    name: Code coverage
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Code coverage
+      run: |
+        npm run test:coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.lcov
+        fail_ci_if_error: true
+
+  license:
+    name: License check
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: License checker
+      run: |
+        npm run license-checker
