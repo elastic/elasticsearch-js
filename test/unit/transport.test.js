@@ -969,7 +969,7 @@ test('sniff', t => {
     })
   })
 
-  t.test('sniffInterval', t => {
+  t.test('sniffInterval', { skip: 'Flaky on CI' }, t => {
     t.plan(9)
 
     class CustomConnectionPool extends ConnectionPool {
