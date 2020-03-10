@@ -43,7 +43,7 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  npm run test:integration ${run_script_args}
+  node ${run_script_args} test/integration/index.js
 
 echo -e "\033[1m>>>>> NPM run test:integration:helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
