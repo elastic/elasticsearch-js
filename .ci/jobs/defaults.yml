@@ -42,7 +42,7 @@
     - axis:
         type: yaml
         filename: .ci/test-matrix.yml
-        name: STACK_VERSION
+        name: ELASTICSEARCH_VERSION
     - axis:
         type: yaml
         filename: .ci/test-matrix.yml
