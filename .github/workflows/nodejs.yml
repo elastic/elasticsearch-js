@@ -76,9 +76,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup vm.max_map_count
-      run: |
-        sudo sysctl -w vm.max_map_count=262144
+    # - name: Setup vm.max_map_count
+    #   run: |
+    #     sudo sysctl -w vm.max_map_count=262144
 
     - name: Runs Elasticsearch
       uses: elastic/elasticsearch-github-action@master
