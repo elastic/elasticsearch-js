@@ -65,6 +65,35 @@ jobs:
       run: |
         npm run test:unit -- --node-arg=--harmony-async-iteration
 
+  helpers-integration-test:
+    name: Helpers integration test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Runs Elasticsearch
+      uses: elastic/elasticsearch-github-action
+      with:
+        elasticsearch-version: 8.0.0-SNAPSHOT
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Integration test
+      run: |
+        npm run test:integration:helpers
+
   code-coverage:
     name: Code coverage
     runs-on: ubuntu-latest
