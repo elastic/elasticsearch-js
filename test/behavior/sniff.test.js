@@ -111,7 +111,7 @@ test('Should handle hostnames in publish_address', t => {
   })
 })
 
-test('Sniff interval', t => {
+test('Sniff interval', { skip: 'Flaky on CI' }, t => {
   t.plan(10)
 
   buildCluster(({ nodes, shutdown, kill }) => {
