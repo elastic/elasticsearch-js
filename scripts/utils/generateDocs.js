@@ -70,7 +70,7 @@ function generateDocs (common, spec) {
     maxRetries: 3
   })
 
-  // calback API
+  // callback API
   client.search({
     index: 'my-index',
     from: 20,
