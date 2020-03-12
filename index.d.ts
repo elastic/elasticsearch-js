@@ -115,6 +115,16 @@ declare class Client extends EventEmitter {
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
+  async_search: {
+    delete: ApiMethod<RequestParams.AsyncSearchDelete>
+    get: ApiMethod<RequestParams.AsyncSearchGet>
+    submit: ApiMethod<RequestParams.AsyncSearchSubmit>
+  }
+  asyncSearch: {
+    delete: ApiMethod<RequestParams.AsyncSearchDelete>
+    get: ApiMethod<RequestParams.AsyncSearchGet>
+    submit: ApiMethod<RequestParams.AsyncSearchSubmit>
+  }
   autoscaling: {
     get_autoscaling_decision: ApiMethod<RequestParams.AutoscalingGetAutoscalingDecision>
     getAutoscalingDecision: ApiMethod<RequestParams.AutoscalingGetAutoscalingDecision>
@@ -408,6 +418,8 @@ declare class Client extends EventEmitter {
     deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
     delete_trained_model: ApiMethod<RequestParams.MlDeleteTrainedModel>
     deleteTrainedModel: ApiMethod<RequestParams.MlDeleteTrainedModel>
+    estimate_model_memory: ApiMethod<RequestParams.MlEstimateModelMemory>
+    estimateModelMemory: ApiMethod<RequestParams.MlEstimateModelMemory>
     evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     evaluateDataFrame: ApiMethod<RequestParams.MlEvaluateDataFrame>
     explain_data_frame_analytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>

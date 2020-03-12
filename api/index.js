@@ -16,6 +16,16 @@ function ESAPI (opts) {
   opts.snakeCaseKeys = snakeCaseKeys
 
   const apis = {
+    async_search: {
+      delete: lazyLoad('async_search.delete', opts),
+      get: lazyLoad('async_search.get', opts),
+      submit: lazyLoad('async_search.submit', opts)
+    },
+    asyncSearch: {
+      delete: lazyLoad('async_search.delete', opts),
+      get: lazyLoad('async_search.get', opts),
+      submit: lazyLoad('async_search.submit', opts)
+    },
     autoscaling: {
       get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
       getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts)
@@ -309,6 +319,8 @@ function ESAPI (opts) {
       deleteModelSnapshot: lazyLoad('ml.delete_model_snapshot', opts),
       delete_trained_model: lazyLoad('ml.delete_trained_model', opts),
       deleteTrainedModel: lazyLoad('ml.delete_trained_model', opts),
+      estimate_model_memory: lazyLoad('ml.estimate_model_memory', opts),
+      estimateModelMemory: lazyLoad('ml.estimate_model_memory', opts),
       evaluate_data_frame: lazyLoad('ml.evaluate_data_frame', opts),
       evaluateDataFrame: lazyLoad('ml.evaluate_data_frame', opts),
       explain_data_frame_analytics: lazyLoad('ml.explain_data_frame_analytics', opts),
