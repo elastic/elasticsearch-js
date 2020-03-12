@@ -44,20 +44,3 @@ docker run \
   --rm \
   elastic/elasticsearch-js \
   node ${run_script_args} test/integration/index.js
-
-echo -e "\033[1m>>>>> NPM run test:integration:helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
-
-run_script_args=""
-if [[ "$NODE_JS_VERSION" == "8" ]]; then
-  run_script_args="-- --node-arg=--harmony-async-iteration"
-fi
-
-docker run \
-  --network=${network_name} \
-  --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
-  --volume $repo:/usr/src/app \
-  --volume /usr/src/app/node_modules \
-  --name elasticsearch-js \
-  --rm \
-  elastic/elasticsearch-js \
-  npm run test:integration:helpers ${run_script_args}
