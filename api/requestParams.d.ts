@@ -1315,6 +1315,65 @@ export interface UpdateByQueryRethrottle extends Generic {
   requests_per_second: number;
 }
 
+export interface AsyncSearchDelete extends Generic {
+  id: string;
+}
+
+export interface AsyncSearchGet extends Generic {
+  id: string;
+  wait_for_completion?: string;
+  keep_alive?: string;
+  typed_keys?: boolean;
+}
+
+export interface AsyncSearchSubmit<T = any> extends Generic {
+  index?: string | string[];
+  _source_exclude?: string | string[];
+  _source_include?: string | string[];
+  wait_for_completion?: string;
+  keep_alive?: string;
+  batched_reduce_size?: number;
+  analyzer?: string;
+  analyze_wildcard?: boolean;
+  default_operator?: 'AND' | 'OR';
+  df?: string;
+  explain?: boolean;
+  stored_fields?: string | string[];
+  docvalue_fields?: string | string[];
+  from?: number;
+  ignore_unavailable?: boolean;
+  ignore_throttled?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  lenient?: boolean;
+  preference?: string;
+  q?: string;
+  routing?: string | string[];
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
+  size?: number;
+  sort?: string | string[];
+  _source?: string | string[];
+  _source_excludes?: string | string[];
+  _source_includes?: string | string[];
+  terminate_after?: number;
+  stats?: string | string[];
+  suggest_field?: string;
+  suggest_mode?: 'missing' | 'popular' | 'always';
+  suggest_size?: number;
+  suggest_text?: string;
+  timeout?: string;
+  track_scores?: boolean;
+  track_total_hits?: boolean;
+  allow_partial_search_results?: boolean;
+  typed_keys?: boolean;
+  version?: boolean;
+  seq_no_primary_term?: boolean;
+  request_cache?: boolean;
+  max_concurrent_shard_requests?: number;
+  clean_on_completion?: boolean;
+  body?: T;
+}
+
 export interface AutoscalingGetAutoscalingDecision extends Generic {
 }
 
@@ -1662,6 +1721,10 @@ export interface MlDeleteModelSnapshot extends Generic {
 
 export interface MlDeleteTrainedModel extends Generic {
   model_id: string;
+}
+
+export interface MlEstimateModelMemory<T = any> extends Generic {
+  body: T;
 }
 
 export interface MlEvaluateDataFrame<T = any> extends Generic {
