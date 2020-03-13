@@ -467,6 +467,62 @@ test('Authentication', t => {
       })
     })
 
+    t.test('ApiKey should take precedence over basic auth (in url)', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://user:pwd@localhost:${port}`,
+          auth: {
+            apiKey: 'Zm9vOmJhcg=='
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
+    t.test('ApiKey should take precedence over basic auth (in opts)', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            apiKey: 'Zm9vOmJhcg==',
+            username: 'user',
+            password: 'pwd'
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
     t.end()
   })
 
@@ -810,6 +866,44 @@ test('Elastic cloud config', t => {
       id: 'https://abcd.localhost/',
       headers: {
         authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
+      },
+      ssl: { secureProtocol: 'TLSv1_2_method' },
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+  })
+
+  t.test('ApiKey should take precedence over basic auth', t => {
+    t.plan(5)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
+      },
+      auth: {
+        username: 'elastic',
+        password: 'changeme',
+        apiKey: 'Zm9vOmJhcg=='
+      }
+    })
+
+    const pool = client.connectionPool
+    t.ok(pool instanceof CloudConnectionPool)
+    t.match(pool.connections.find(c => c.id === 'https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      headers: {
+        authorization: 'ApiKey Zm9vOmJhcg=='
       },
       ssl: { secureProtocol: 'TLSv1_2_method' },
       deadCount: 0,
