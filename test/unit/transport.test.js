@@ -2209,3 +2209,71 @@ test('Should pass request params and options to generateRequestId', t => {
 
   transport.request(params, options, t.error)
 })
+
+test('Secure json parsing', t => {
+  t.test('__proto__ protection', t => {
+    t.plan(2)
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end('{"__proto__":{"a":1}}')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.true(err instanceof DeserializationError)
+        t.is(err.message, 'Object contains forbidden prototype property')
+        server.stop()
+      })
+    })
+  })
+
+  t.test('constructor protection', t => {
+    t.plan(2)
+    function handler (req, res) {
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end('{"constructor":{"prototype":{"bar":"baz"}}}')
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 30000,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'GET',
+        path: '/hello'
+      }, (err, { body }) => {
+        t.true(err instanceof DeserializationError)
+        t.is(err.message, 'Object contains forbidden prototype property')
+        server.stop()
+      })
+    })
+  })
+
+  t.end()
+})
