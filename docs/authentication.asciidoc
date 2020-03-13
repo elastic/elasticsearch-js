@@ -41,6 +41,8 @@ const client = new Client({
 You can provide your credentials by passing the `username` and `password` 
 parameters via the `auth` option.
 
+NOTE: If you provide both basic authentication credentials and the Api Key configuration, the Api Key will take precedence.
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -73,6 +75,8 @@ authentication by passing the `apiKey` parameter via the `auth` option. The
 `apiKey` parameter can be either a base64 encoded string or an object with the 
 values that you can obtain from the 
 https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[create api key endpoint].
+
+NOTE: If you provide both basic authentication credentials and the Api Key configuration, the Api Key will take precedence.
 
 [source,js]
 ----

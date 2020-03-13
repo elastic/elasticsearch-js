@@ -68,7 +68,8 @@
     "into-stream": "^5.1.0",
     "ms": "^2.1.1",
     "once": "^1.4.0",
-    "pump": "^3.0.0"
+    "pump": "^3.0.0",
+    "secure-json-parse": "^2.1.0"
   },
   "license": "Apache-2.0",
   "repository": {
