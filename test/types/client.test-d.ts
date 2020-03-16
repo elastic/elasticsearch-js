@@ -3,22 +3,30 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType } from 'tsd'
-import { Client, ApiError, ApiResponse, RequestEvent } from '../../'
+import { Client, ApiError, ApiResponse, RequestEvent, ResurrectEvent } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
 })
 
-
-// TODO: rewrite event emitter defintiuon and override on
-client.on('request', (err: ApiError, meta: RequestEvent) => {
+client.on('request', (err, meta) => {
   expectType<ApiError>(err)
   expectType<RequestEvent>(meta)
 })
 
-client.on('response', (err: ApiError, meta: RequestEvent) => {
+client.on('response', (err, meta) => {
   expectType<ApiError>(err)
   expectType<RequestEvent>(meta)
+})
+
+client.on('sniff', (err, meta) => {
+  expectType<ApiError>(err)
+  expectType<RequestEvent>(meta)
+})
+
+client.on('resurrect', (err, meta) => {
+  expectType<null>(err)
+  expectType<ResurrectEvent>(meta)
 })
 
 // Callbacks style
