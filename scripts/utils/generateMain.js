@@ -7,10 +7,11 @@
 'use strict'
 
 const { readdirSync } = require('fs')
+const { join } = require('path')
 const dedent = require('dedent')
 const deepmerge = require('deepmerge')
 
-function genFactory (folder) {
+function genFactory (folder, paths) {
   // get all the API files
   const apiFiles = readdirSync(folder)
   const types = apiFiles
@@ -25,15 +26,18 @@ function genFactory (folder) {
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const obj = {
-            [val]: acc === null
-              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
-              : acc
-          }
-          if (isSnakeCased(val)) {
-            obj[camelify(val)] = acc === null
-              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
-              : acc
+          const body = hasBody(paths, file.slice(0, -3))
+          const methods = acc === null ? buildMethodDefinition(val, name, body) : null
+          const obj = {}
+          if (methods) {
+            for (const m of methods) {
+              obj[m.key] = m.val
+            }
+          } else {
+            obj[val] = acc
+            if (isSnakeCased(val)) {
+              obj[camelify(val)] = acc
+            }
           }
           return obj
         }, null)
@@ -83,7 +87,7 @@ function genFactory (folder) {
     .join('\n')
     // remove useless quotes and commas
     .replace(/"/g, '')
-    .replace(/,/g, '')
+    .replace(/,$/gm, '')
 
   const fn = dedent`
   // Licensed to Elasticsearch B.V under one or more agreements.
@@ -158,6 +162,68 @@ function camelify (str) {
 
 function isSnakeCased (str) {
   return !!~str.indexOf('_')
+}
+
+function buildMethodDefinition (api, name, body) {
+  const Name = name[0].toUpperCase() + name.slice(1)
+  if (body) {
+    let methods = [
+      { key: `${api}<T = any, B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>)`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<T = any, B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+    ]
+    if (isSnakeCased(api)) {
+      methods = methods.concat([
+        { key: `${camelify(api)}<T = any, B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>)`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<T = any, B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+      ])
+    }
+    return methods
+  } else {
+    let methods = [
+      { key: `${api}<B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<B = any, C = any> (params: RequestParams.${Name})`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
+      { key: `${api}<B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+    ]
+    if (isSnakeCased(api)) {
+      methods = methods.concat([
+        { key: `${camelify(api)}<B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name})`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
+        { key: `${camelify(api)}<B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+      ])
+    }
+    return methods
+  }
+}
+
+function hasBody (paths, file) {
+  const spec = readSpec()
+  return !!spec[file].body
+
+  function readSpec () {
+    try {
+      return require(join(paths[0], file))
+    } catch (err) {}
+
+    try {
+      return require(join(paths[1], file))
+    } catch (err) {}
+
+    throw new Error(`Cannot read spec file ${file}`)
+  }
 }
 
 module.exports = genFactory
