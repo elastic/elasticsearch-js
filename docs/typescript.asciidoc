@@ -137,19 +137,43 @@ interface Source {
   foo: string
 }
 
-async function run (): Promise<void> {
-  // Define the search parameters
-  const searchParams: RequestParams.Search<SearchBody> = {
+async function run () {
+  // All of the examples below are valid code, by default,
+  // both the request body and response will be `any`.
+  const response = await client.search({
     index: 'test',
     body: {
       query: {
         match: { foo: 'bar' }
       }
     }
-  }
+  })
+  // body here is `any`
+  console.log(response.body)
 
-  // Craft the final type definition
-  const response: ApiResponse<SearchResponse<Source>> = await client.search(searchParams)
+  // The first generic is the request body
+  const response = await client.search<SearchBody>({
+    index: 'test',
+    // Here the body must follow the `SearchBody` interface
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  })
+  // body here is `any`
+  console.log(response.body)
+
+  const response = await client.search<SearchBody, SearchResponse<Source>>({
+    index: 'test',
+    // Here the body must follow the `SearchBody` interface
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  })
+  // Now you can have full type definition of the response
   console.log(response.body)
 }
 
