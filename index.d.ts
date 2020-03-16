@@ -102,7 +102,7 @@ declare class Client<T = any, B = any, C = any> extends EventEmitter {
   transport: Transport;
   serializer: Serializer;
   extend: ClientExtends;
-  child(opts?: ClientOptions): Client<T>;
+  child(opts?: ClientOptions): Client<T, B, C>;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
   async_search: {
