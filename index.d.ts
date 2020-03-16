@@ -4,7 +4,6 @@
 
 /// <reference types="node" />
 
-import { EventEmitter } from 'events';
 import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 import Transport, {
   ApiResponse,
@@ -3392,6 +3391,34 @@ declare class Client<T = any, B = any, C = any> extends EventEmitter {
     usage<B = any, C = any> (params: RequestParams.XpackUsage, options: TransportRequestOptions, callback: callbackFn<B, C>): TransportRequestCallback
   }
   /* /GENERATED */
+}
+
+// We must redeclare the EventEmitter class so we can provide
+// better type definitions for our events, otherwise the default
+// signature is `(event: string | symbol, listener: (...args: any[]) => void): this;`
+declare class EventEmitter {
+  addListener(event: string | symbol, listener: (...args: any[]) => void): this;
+  on(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  once(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
+  off(event: string | symbol, listener: (...args: any[]) => void): this;
+  removeAllListeners(event?: string | symbol): this;
+  setMaxListeners(n: number): this;
+  getMaxListeners(): number;
+  listeners(event: string | symbol): Function[];
+  rawListeners(event: string | symbol): Function[];
+  emit(event: string | symbol, ...args: any[]): boolean;
+  listenerCount(type: string | symbol): number;
+  // Added in Node 6...
+  prependListener(event: string | symbol, listener: (...args: any[]) => void): this;
+  prependOnceListener(event: string | symbol, listener: (...args: any[]) => void): this;
+  eventNames(): Array<string | symbol>;
 }
 
 declare const events: {
