@@ -20,7 +20,7 @@
     "test:unit": "tap test/unit/*.test.js -t 300 --no-coverage",
     "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
     "test:integration": "node test/integration/index.js",
-    "test:types": "tsc --project ./test/types/tsconfig.json",
+    "test:types": "tsd",
     "test:coverage": "nyc tap test/unit/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov",
     "lint": "standard",
     "lint:fix": "standard --fix",
@@ -58,6 +58,7 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
+    "tsd": "^0.11.0",
     "typescript": "^3.4.5",
     "workq": "^2.1.0"
   },
@@ -80,5 +81,8 @@
   },
   "engines": {
     "node": ">=8"
+  },
+  "tsd": {
+    "directory": "test/types"
   }
 }
