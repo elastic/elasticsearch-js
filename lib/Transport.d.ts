@@ -35,7 +35,7 @@ interface TransportOptions {
   sniffOnStart: boolean;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: string | nodeSelectorFn;
-  headers?: anyObject;
+  headers?: Record<string, any>;
   generateRequestId?: generateRequestIdFn;
   name: string;
   opaqueIdPrefix?: string;
@@ -44,7 +44,7 @@ interface TransportOptions {
 export interface RequestEvent<T = any, C = any> {
   body: T;
   statusCode: number | null;
-  headers: anyObject | null;
+  headers: Record<string, any> | null;
   warnings: string[] | null;
   meta: {
     context: C;
@@ -68,16 +68,12 @@ export interface RequestEvent<T = any, C = any> {
 // we are doing this for have more clear names
 export interface ApiResponse<T = any, C = any> extends RequestEvent<T, C> {}
 
-declare type anyObject = {
-  [key: string]: any;
-};
-
 export interface TransportRequestParams {
   method: string;
   path: string;
-  body?: anyObject;
-  bulkBody?: anyObject;
-  querystring?: anyObject;
+  body?: Record<string, any>;
+  bulkBody?: Record<string, any>[];
+  querystring?: Record<string, any>;
 }
 
 export interface TransportRequestOptions {
@@ -85,12 +81,12 @@ export interface TransportRequestOptions {
   requestTimeout?: number | string;
   maxRetries?: number;
   asStream?: boolean;
-  headers?: anyObject;
-  querystring?: anyObject;
-  compression?: string;
+  headers?: Record<string, any>;
+  querystring?: Record<string, any>;
+  compression?: 'gzip';
   id?: any;
   context?: any;
-  warnings?: [string];
+  warnings?: string[];
   opaqueId?: string;
 }
 
@@ -134,5 +130,3 @@ export default class Transport {
   getConnection(opts: TransportGetConnectionOptions): Connection | null;
   sniff(opts?: TransportSniffOptions, callback?: (...args: any[]) => void): void;
 }
-
-export {};

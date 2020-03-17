@@ -54,6 +54,6 @@ export declare class ResponseError extends ElasticsearchClientError {
   meta: ApiResponse;
   body: any;
   statusCode: number;
-  headers: any;
+  headers: Record<string, any>;
   constructor(meta: ApiResponse);
 }

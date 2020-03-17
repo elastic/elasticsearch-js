@@ -5,10 +5,10 @@
 /// <reference types="node" />
 
 import { URL } from 'url';
-import { inspect, InspectOptions } from 'util';
+import { inspect, InspectOptions } from 'util'
 import { ApiKeyAuth, BasicAuth } from './pool'
-import * as http from 'http';
-import { ConnectionOptions as TlsConnectionOptions } from 'tls';
+import * as http from 'http'
+import { ConnectionOptions as TlsConnectionOptions } from 'tls'
 
 export declare type agentFn = () => any;
 
@@ -16,11 +16,18 @@ interface ConnectionOptions {
   url: URL;
   ssl?: TlsConnectionOptions;
   id?: string;
-  headers?: any;
+  headers?: Record<string, any>;
   agent?: AgentOptions | agentFn;
   status?: string;
-  roles?: any;
+  roles?: ConnectionRoles;
   auth?: BasicAuth | ApiKeyAuth;
+}
+
+interface ConnectionRoles {
+  master?: boolean
+  data?: boolean
+  ingest?: boolean
+  ml?: boolean
 }
 
 interface RequestOptions extends http.ClientRequestArgs {
@@ -30,10 +37,10 @@ interface RequestOptions extends http.ClientRequestArgs {
 }
 
 export interface AgentOptions {
-  keepAlive: boolean;
-  keepAliveMsecs: number;
-  maxSockets: number;
-  maxFreeSockets: number;
+  keepAlive?: boolean;
+  keepAliveMsecs?: number;
+  maxSockets?: number;
+  maxFreeSockets?: number;
 }
 
 export default class Connection {
@@ -47,27 +54,26 @@ export default class Connection {
     INGEST: string;
     ML: string;
   };
-  url: URL;
-  ssl: TlsConnectionOptions | null;
-  id: string;
-  headers: any;
-  deadCount: number;
-  resurrectTimeout: number;
-  statuses: any;
-  roles: any;
-  makeRequest: any;
-  _openRequests: number;
-  _status: string;
-  _agent: http.Agent;
-  constructor(opts?: ConnectionOptions);
-  request(params: RequestOptions, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest;
-  close(): Connection;
-  setRole(role: string, enabled: boolean): Connection;
-  status: string;
-  buildRequestObject(params: any): http.ClientRequestArgs;
+  url: URL
+  ssl: TlsConnectionOptions | null
+  id: string
+  headers: Record<string, any>
+  status: string
+  roles: ConnectionRoles
+  deadCount: number
+  resurrectTimeout: number
+  makeRequest: any
+  _openRequests: number
+  _status: string
+  _agent: http.Agent
+  constructor(opts?: ConnectionOptions)
+  request(params: RequestOptions, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest
+  close(): Connection
+  setRole(role: string, enabled: boolean): Connection
+  buildRequestObject(params: any): http.ClientRequestArgs
   // @ts-ignore
-  [inspect.custom](object: any, options: InspectOptions): string;
-  toJSON(): any;
+  [inspect.custom](object: any, options: InspectOptions): string
+  toJSON(): any
 }
 
 export {};
