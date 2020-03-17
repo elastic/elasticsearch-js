@@ -18,6 +18,7 @@ function buildCatAliases (opts) {
     'help',
     's',
     'v',
+    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -26,6 +27,7 @@ function buildCatAliases (opts) {
   ]
 
   const snakeCase = {
+    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

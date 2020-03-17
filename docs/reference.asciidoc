@@ -54,7 +54,7 @@ const result = await client.search({
   maxRetries: 3
 })
 
-// calback API
+// callback API
 client.search({
   index: 'my-index',
   from: 20,
@@ -163,7 +163,8 @@ client.cat.aliases({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  v: boolean
+  v: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cat-alias.html[Documentation] +
@@ -189,6 +190,10 @@ link:{ref}/cat-alias.html[Documentation] +
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `all`
 
 |===
 
@@ -394,7 +399,8 @@ client.cat.indices({
   s: string | string[],
   time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean,
-  include_unloaded_segments: boolean
+  include_unloaded_segments: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cat-indices.html[Documentation] +
@@ -438,6 +444,10 @@ link:{ref}/cat-indices.html[Documentation] +
 
 |`include_unloaded_segments` or `includeUnloadedSegments`
 |`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `all`
 
 |===
 
@@ -1109,7 +1119,7 @@ link:{ref}/cluster-update-settings.html[Documentation] +
 ----
 client.cluster.health({
   index: string | string[],
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   level: 'cluster' | 'indices' | 'shards',
   local: boolean,
   master_timeout: string,
@@ -1129,7 +1139,7 @@ link:{ref}/cluster-health.html[Documentation] +
 |`string \| string[]` - Limit the information returned to a specific index
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`level`
@@ -1276,7 +1286,7 @@ client.cluster.state({
   wait_for_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cluster-state.html[Documentation] +
@@ -1310,7 +1320,7 @@ link:{ref}/cluster-state.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -1348,7 +1358,7 @@ client.count({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   min_score: number,
   preference: string,
   routing: string | string[],
@@ -1378,7 +1388,7 @@ link:{ref}/search-count.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`min_score` or `minScore`
@@ -1547,7 +1557,7 @@ client.deleteByQuery({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   conflicts: 'abort' | 'proceed',
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   preference: string,
   q: string,
@@ -1607,7 +1617,7 @@ _Default:_ `OR`
 _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -1936,7 +1946,7 @@ client.fieldCaps({
   fields: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   include_unmapped: boolean
 })
 ----
@@ -1956,7 +1966,7 @@ link:{ref}/search-field-caps.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`include_unmapped` or `includeUnmapped`
@@ -2212,7 +2222,7 @@ client.indices.clearCache({
   query: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   request: boolean
 })
 ----
@@ -2238,7 +2248,7 @@ link:{ref}/indices-clearcache.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`request`
@@ -2292,7 +2302,7 @@ client.indices.close({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -2315,7 +2325,7 @@ link:{ref}/indices-open-close.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -2365,7 +2375,7 @@ client.indices.delete({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-delete-index.html[Documentation] +
@@ -2387,7 +2397,7 @@ link:{ref}/indices-delete-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |===
@@ -2453,7 +2463,7 @@ client.indices.exists({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   include_defaults: boolean
 })
@@ -2474,7 +2484,7 @@ link:{ref}/indices-exists.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -2494,7 +2504,7 @@ client.indices.existsAlias({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2514,7 +2524,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`local`
@@ -2559,7 +2569,7 @@ client.indices.existsType({
   type: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2579,7 +2589,7 @@ link:{ref}/indices-types-exists.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`local`
@@ -2597,7 +2607,7 @@ client.indices.flush({
   wait_if_ongoing: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-flush.html[Documentation] +
@@ -2619,7 +2629,7 @@ link:{ref}/indices-flush.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -2633,7 +2643,7 @@ client.indices.forcemerge({
   flush: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   max_num_segments: number,
   only_expunge_deletes: boolean
 })
@@ -2654,7 +2664,7 @@ link:{ref}/indices-forcemerge.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`max_num_segments` or `maxNumSegments`
@@ -2674,7 +2684,7 @@ client.indices.get({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   include_defaults: boolean,
   master_timeout: string
@@ -2696,7 +2706,7 @@ link:{ref}/indices-get-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -2719,7 +2729,7 @@ client.indices.getAlias({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2739,7 +2749,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`local`
@@ -2757,7 +2767,7 @@ client.indices.getFieldMapping({
   include_defaults: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2780,7 +2790,7 @@ link:{ref}/indices-get-field-mapping.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`local`
@@ -2796,7 +2806,7 @@ client.indices.getMapping({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   master_timeout: string,
   local: boolean
 })
@@ -2814,7 +2824,7 @@ link:{ref}/indices-get-mapping.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`master_timeout` or `masterTimeout`
@@ -2835,7 +2845,7 @@ client.indices.getSettings({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   local: boolean,
   include_defaults: boolean
@@ -2860,7 +2870,7 @@ link:{ref}/indices-get-settings.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open,closed`
 
 |`flat_settings` or `flatSettings`
@@ -2910,7 +2920,7 @@ client.indices.getUpgrade({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-upgrade.html[Documentation] +
@@ -2926,7 +2936,7 @@ link:{ref}/indices-upgrade.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -2941,7 +2951,7 @@ client.indices.open({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -2964,7 +2974,7 @@ link:{ref}/indices-open-close.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -3014,7 +3024,7 @@ client.indices.putMapping({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -3037,7 +3047,7 @@ link:{ref}/indices-put-mapping.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`body`
@@ -3056,7 +3066,7 @@ client.indices.putSettings({
   preserve_existing: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   body: object
 })
@@ -3083,7 +3093,7 @@ link:{ref}/indices-update-settings.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -3166,7 +3176,7 @@ client.indices.refresh({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-refresh.html[Documentation] +
@@ -3182,7 +3192,7 @@ link:{ref}/indices-refresh.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -3235,7 +3245,7 @@ client.indices.segments({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   verbose: boolean
 })
 ----
@@ -3252,7 +3262,7 @@ link:{ref}/indices-segments.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`verbose`
@@ -3269,7 +3279,7 @@ client.indices.shardStores({
   status: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-shards-stores.html[Documentation] +
@@ -3288,7 +3298,7 @@ link:{ref}/indices-shards-stores.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -3380,7 +3390,7 @@ client.indices.stats({
   types: string | string[],
   include_segment_file_sizes: boolean,
   include_unloaded_segments: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   forbid_closed_indices: boolean
 })
 ----
@@ -3419,7 +3429,7 @@ _Default:_ `indices`
 |`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`forbid_closed_indices` or `forbidClosedIndices`
@@ -3459,7 +3469,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 client.indices.upgrade({
   index: string | string[],
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   ignore_unavailable: boolean,
   wait_for_completion: boolean,
   only_ancient_segments: boolean
@@ -3475,7 +3485,7 @@ link:{ref}/indices-upgrade.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`ignore_unavailable` or `ignoreUnavailable`
@@ -3499,7 +3509,7 @@ client.indices.validateQuery({
   explain: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   q: string,
   analyzer: string,
   analyze_wildcard: boolean,
@@ -3532,7 +3542,7 @@ WARNING: This parameter has been deprecated.
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`q`
@@ -4114,7 +4124,7 @@ client.rankEval({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   body: object
 })
@@ -4132,7 +4142,7 @@ link:{ref}/search-rank-eval.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`search_type` or `searchType`
@@ -4301,7 +4311,7 @@ client.search({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   preference: string,
   q: string,
@@ -4380,7 +4390,7 @@ _Default:_ `OR`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -4491,7 +4501,7 @@ client.searchShards({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/search-shards.html[Documentation] +
@@ -4516,7 +4526,7 @@ link:{ref}/search-shards.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -4530,7 +4540,7 @@ client.searchTemplate({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   preference: string,
   routing: string | string[],
   scroll: string,
@@ -4559,7 +4569,7 @@ link:{ref}/search-template.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`preference`
@@ -5129,7 +5139,7 @@ client.updateByQuery({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   conflicts: 'abort' | 'proceed',
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   pipeline: string,
   preference: string,
@@ -5192,7 +5202,7 @@ _Default:_ `OR`
 _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
