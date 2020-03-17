@@ -5,6 +5,12 @@
 import { ConnectionPool, CloudConnectionPool } from './pool';
 import Connection from './Connection';
 import Serializer from './Serializer';
+import * as errors from './errors';
+
+export type ApiError = errors.ConfigurationError | errors.ConnectionError |
+                       errors.DeserializationError | errors.SerializationError |
+                       errors.NoLivingConnectionsError | errors.ResponseError |
+                       errors.TimeoutError
 
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;
@@ -18,26 +24,23 @@ export interface generateRequestIdFn {
   (params: TransportRequestParams, options: TransportRequestOptions): any;
 }
 
-declare type noopFn = (...args: any[]) => void;
-declare type emitFn = (event: string | symbol, ...args: any[]) => boolean;
-
 interface TransportOptions {
-  emit: emitFn & noopFn;
+  emit: (event: string | symbol, ...args: any[]) => boolean;
   connectionPool: ConnectionPool | CloudConnectionPool;
   serializer: Serializer;
   maxRetries: number;
   requestTimeout: number | string;
-  suggestCompression: boolean;
+  suggestCompression?: boolean;
   compression?: 'gzip';
-  sniffInterval: number;
-  sniffOnConnectionFault: boolean;
+  sniffInterval?: number;
+  sniffOnConnectionFault?: boolean;
   sniffEndpoint: string;
-  sniffOnStart: boolean;
+  sniffOnStart?: boolean;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: string | nodeSelectorFn;
   headers?: Record<string, any>;
   generateRequestId?: generateRequestIdFn;
-  name: string;
+  name?: string;
   opaqueIdPrefix?: string;
 }
 
@@ -110,7 +113,7 @@ export default class Transport {
     SNIFF_ON_CONNECTION_FAULT: string;
     DEFAULT: string;
   };
-  emit: emitFn & noopFn;
+  emit: (event: string | symbol, ...args: any[]) => boolean;
   connectionPool: ConnectionPool | CloudConnectionPool;
   serializer: Serializer;
   maxRetries: number;
@@ -126,7 +129,7 @@ export default class Transport {
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
   request(params: TransportRequestParams, options?: TransportRequestOptions): Promise<ApiResponse>;
-  request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: Error | null, result: ApiResponse) => void): TransportRequestCallback;
+  request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: ApiError, result: ApiResponse) => void): TransportRequestCallback;
   getConnection(opts: TransportGetConnectionOptions): Connection | null;
   sniff(opts?: TransportSniffOptions, callback?: (...args: any[]) => void): void;
 }

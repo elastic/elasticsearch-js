@@ -6,6 +6,7 @@
 
 import { ConnectionOptions as TlsConnectionOptions } from 'tls';
 import Transport, {
+  ApiError,
   ApiResponse,
   RequestEvent,
   TransportRequestParams,
@@ -28,11 +29,6 @@ import {
 import Serializer from './lib/Serializer';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
-
-type ApiError = errors.ConfigurationError | errors.ConnectionError |
-                errors.DeserializationError | errors.SerializationError |
-                errors.NoLivingConnectionsError | errors.ResponseError |
-                errors.TimeoutError
 
 declare type callbackFn<T, C> = (err: ApiError, result: ApiResponse<T, C>) => void;
 
