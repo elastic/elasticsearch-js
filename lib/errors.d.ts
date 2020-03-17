@@ -40,8 +40,8 @@ export declare class SerializationError extends ElasticsearchClientError {
 export declare class DeserializationError extends ElasticsearchClientError {
   name: string;
   message: string;
-  data: object;
-  constructor(message: string, data: object);
+  data: string;
+  constructor(message: string, data: string);
 }
 
 export declare class ConfigurationError extends ElasticsearchClientError {

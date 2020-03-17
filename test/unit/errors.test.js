@@ -44,6 +44,7 @@ test('SerializationError', t => {
   t.true(err instanceof Error)
   t.true(err instanceof errors.ElasticsearchClientError)
   t.false(err.hasOwnProperty('meta'))
+  t.true(err.hasOwnProperty('data'))
   t.end()
 })
 
@@ -52,6 +53,7 @@ test('DeserializationError', t => {
   t.true(err instanceof Error)
   t.true(err instanceof errors.ElasticsearchClientError)
   t.false(err.hasOwnProperty('meta'))
+  t.true(err.hasOwnProperty('data'))
   t.end()
 })
 
