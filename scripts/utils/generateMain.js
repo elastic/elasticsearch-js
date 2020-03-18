@@ -164,45 +164,49 @@ function isSnakeCased (str) {
   return !!~str.indexOf('_')
 }
 
+function toPascalCase (str) {
+  return str[0].toUpperCase() + str.slice(1)
+}
+
 function buildMethodDefinition (api, name, body) {
-  const Name = name[0].toUpperCase() + name.slice(1)
+  const Name = toPascalCase(name)
   if (body) {
     let methods = [
-      { key: `${api}<T = any, B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>)`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<T = any, B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-      { key: `${api}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
     ]
     if (isSnakeCased(api)) {
       methods = methods.concat([
-        { key: `${camelify(api)}<T = any, B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>)`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<T = any, B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<T = any, B = any, C = any> (params: RequestParams.${Name}<T>, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
       ])
     }
     return methods
   } else {
     let methods = [
-      { key: `${api}<B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<B = any, C = any> (params: RequestParams.${Name})`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
-      { key: `${api}<B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-      { key: `${api}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+      { key: `${api}<Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<Response = any, Context = unknown>(params: RequestParams.${Name})`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<Response = any, Context = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<Response = any, Context = unknown>(params: RequestParams.${Name}, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<Response = any, Context = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
     ]
     if (isSnakeCased(api)) {
       methods = methods.concat([
-        { key: `${camelify(api)}<B = any, C = any> ()`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name})`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<B, C>>` },
-        { key: `${camelify(api)}<B = any, C = any> (callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<B = any, C = any> (params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<B, C>)`, val: `TransportRequestCallback` }
+        { key: `${camelify(api)}<Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<Response = any, Context = unknown>(params: RequestParams.${Name})`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<Response = any, Context = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<Response = any, Context = unknown>(params: RequestParams.${Name}, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<Response = any, Context = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
       ])
     }
     return methods
