@@ -30,7 +30,7 @@ function buildTransformCatTransform (opts) {
 
   /**
    * Perform a transform.cat_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transform.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html
    */
   return function transformCatTransform (params, options, callback) {
     options = options || {}

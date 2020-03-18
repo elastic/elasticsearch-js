@@ -9175,7 +9175,7 @@ client.transform.catTransform({
   v: boolean
 })
 ----
-link:{ref}/cat-transform.html[Documentation] +
+link:{ref}/cat-transforms.html[Documentation] +
 [cols=2*]
 |===
 |`transform_id` or `transformId`
