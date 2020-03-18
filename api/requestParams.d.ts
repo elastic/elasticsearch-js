@@ -260,6 +260,18 @@ export interface ClusterAllocationExplain<T = any> extends Generic {
   body?: T;
 }
 
+export interface ClusterDeleteComponentTemplate extends Generic {
+  name: string;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface ClusterGetComponentTemplate extends Generic {
+  name?: string | string[];
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface ClusterGetSettings extends Generic {
   flat_settings?: boolean;
   master_timeout?: string;
@@ -285,6 +297,14 @@ export interface ClusterHealth extends Generic {
 export interface ClusterPendingTasks extends Generic {
   local?: boolean;
   master_timeout?: string;
+}
+
+export interface ClusterPutComponentTemplate<T = any> extends Generic {
+  name: string;
+  create?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface ClusterPutSettings<T = any> extends Generic {
@@ -2272,6 +2292,19 @@ export interface SqlTranslate<T = any> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
+}
+
+export interface TransformCatTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {
