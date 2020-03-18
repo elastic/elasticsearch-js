@@ -14,7 +14,7 @@ const client = new Client({
   const response = await client.cat.count({ index: 'test' })
 
   expectType<any>(response.body)
-  expectType<any>(response.meta.context)
+  expectType<unknown>(response.meta.context)
 }
 
 // Define only the request body
@@ -22,7 +22,7 @@ const client = new Client({
   const response = await client.cat.count<string>({ index: 'test' })
 
   expectType<string>(response.body)
-  expectType<any>(response.meta.context)
+  expectType<unknown>(response.meta.context)
 }
 
 // Define request body and  the context

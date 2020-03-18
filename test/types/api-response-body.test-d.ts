@@ -70,7 +70,7 @@ interface Source {
   })
 
   expectType<any>(response.body)
-  expectType<any>(response.meta.context)
+  expectType<unknown>(response.meta.context)
 }
 
 // Define only the request body
@@ -85,7 +85,7 @@ interface Source {
   })
 
   expectType<any>(response.body)
-  expectType<any>(response.meta.context)
+  expectType<unknown>(response.meta.context)
 }
 
 // Define request body and response body
@@ -100,7 +100,7 @@ interface Source {
   })
 
   expectType<SearchResponse<Source>>(response.body)
-  expectType<any>(response.meta.context)
+  expectType<unknown>(response.meta.context)
 }
 
 // Define request body, response body and the context
