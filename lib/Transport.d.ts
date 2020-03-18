@@ -44,13 +44,13 @@ interface TransportOptions {
   opaqueIdPrefix?: string;
 }
 
-export interface RequestEvent<T = any, C = any> {
-  body: T;
+export interface RequestEvent<Response = any, Context = unknown> {
+  body: Response;
   statusCode: number | null;
   headers: Record<string, any> | null;
   warnings: string[] | null;
   meta: {
-    context: C;
+    context: Context;
     name: string;
     request: {
       params: TransportRequestParams;
@@ -69,7 +69,7 @@ export interface RequestEvent<T = any, C = any> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<T = any, C = any> extends RequestEvent<T, C> {}
+export interface ApiResponse<Response = any, Context = unknown> extends RequestEvent<Response, Context> {}
 
 export interface TransportRequestParams {
   method: string;
