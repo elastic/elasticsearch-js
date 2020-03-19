@@ -502,7 +502,6 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
   clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   cluster: {
-<<<<<<< HEAD
     allocation_explain<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>): Promise<ApiResponse<Response, Context>>
     allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -515,6 +514,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     allocationExplain<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
     allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    delete_component_template<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate): Promise<ApiResponse<Response, Context>>
+    delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    delete_component_template<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, callback: callbackFn<Response, Context>): TransportRequestCallback
+    delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    deleteComponentTemplate<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    deleteComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate): Promise<ApiResponse<Response, Context>>
+    deleteComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    deleteComponentTemplate<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    deleteComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, callback: callbackFn<Response, Context>): TransportRequestCallback
+    deleteComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_component_template<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate): Promise<ApiResponse<Response, Context>>
+    get_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_component_template<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getComponentTemplate<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate): Promise<ApiResponse<Response, Context>>
+    getComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getComponentTemplate<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getComponentTemplate<Response = any, Context = unknown>(params: RequestParams.ClusterGetComponentTemplate, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_settings<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_settings<Response = any, Context = unknown>(params: RequestParams.ClusterGetSettings): Promise<ApiResponse<Response, Context>>
     get_settings<Response = any, Context = unknown>(params: RequestParams.ClusterGetSettings, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -545,6 +568,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     pendingTasks<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     pendingTasks<Response = any, Context = unknown>(params: RequestParams.ClusterPendingTasks, callback: callbackFn<Response, Context>): TransportRequestCallback
     pendingTasks<Response = any, Context = unknown>(params: RequestParams.ClusterPendingTasks, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     put_settings<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
     put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -600,31 +635,6 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   create<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
   create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-=======
-    allocation_explain: ApiMethod<RequestParams.ClusterAllocationExplain>
-    allocationExplain: ApiMethod<RequestParams.ClusterAllocationExplain>
-    delete_component_template: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
-    deleteComponentTemplate: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
-    get_component_template: ApiMethod<RequestParams.ClusterGetComponentTemplate>
-    getComponentTemplate: ApiMethod<RequestParams.ClusterGetComponentTemplate>
-    get_settings: ApiMethod<RequestParams.ClusterGetSettings>
-    getSettings: ApiMethod<RequestParams.ClusterGetSettings>
-    health: ApiMethod<RequestParams.ClusterHealth>
-    pending_tasks: ApiMethod<RequestParams.ClusterPendingTasks>
-    pendingTasks: ApiMethod<RequestParams.ClusterPendingTasks>
-    put_component_template: ApiMethod<RequestParams.ClusterPutComponentTemplate>
-    putComponentTemplate: ApiMethod<RequestParams.ClusterPutComponentTemplate>
-    put_settings: ApiMethod<RequestParams.ClusterPutSettings>
-    putSettings: ApiMethod<RequestParams.ClusterPutSettings>
-    remote_info: ApiMethod<RequestParams.ClusterRemoteInfo>
-    remoteInfo: ApiMethod<RequestParams.ClusterRemoteInfo>
-    reroute: ApiMethod<RequestParams.ClusterReroute>
-    state: ApiMethod<RequestParams.ClusterState>
-    stats: ApiMethod<RequestParams.ClusterStats>
-  }
-  count: ApiMethod<RequestParams.Count>
-  create: ApiMethod<RequestParams.Create>
->>>>>>> master
   data_frame_transform_deprecated: {
     delete_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform): Promise<ApiResponse<Response, Context>>
@@ -3174,7 +3184,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
   termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   transform: {
-<<<<<<< HEAD
+    cat_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    cat_transform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform): Promise<ApiResponse<Response, Context>>
+    cat_transform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    cat_transform<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    cat_transform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, callback: callbackFn<Response, Context>): TransportRequestCallback
+    cat_transform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    catTransform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    catTransform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform): Promise<ApiResponse<Response, Context>>
+    catTransform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    catTransform<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    catTransform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, callback: callbackFn<Response, Context>): TransportRequestCallback
+    catTransform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_transform<Response = any, Context = unknown>(params: RequestParams.TransformDeleteTransform): Promise<ApiResponse<Response, Context>>
     delete_transform<Response = any, Context = unknown>(params: RequestParams.TransformDeleteTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3302,32 +3323,6 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   updateByQueryRethrottle<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   updateByQueryRethrottle<Response = any, Context = unknown>(params: RequestParams.UpdateByQueryRethrottle, callback: callbackFn<Response, Context>): TransportRequestCallback
   updateByQueryRethrottle<Response = any, Context = unknown>(params: RequestParams.UpdateByQueryRethrottle, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-=======
-    cat_transform: ApiMethod<RequestParams.TransformCatTransform>
-    catTransform: ApiMethod<RequestParams.TransformCatTransform>
-    delete_transform: ApiMethod<RequestParams.TransformDeleteTransform>
-    deleteTransform: ApiMethod<RequestParams.TransformDeleteTransform>
-    get_transform: ApiMethod<RequestParams.TransformGetTransform>
-    getTransform: ApiMethod<RequestParams.TransformGetTransform>
-    get_transform_stats: ApiMethod<RequestParams.TransformGetTransformStats>
-    getTransformStats: ApiMethod<RequestParams.TransformGetTransformStats>
-    preview_transform: ApiMethod<RequestParams.TransformPreviewTransform>
-    previewTransform: ApiMethod<RequestParams.TransformPreviewTransform>
-    put_transform: ApiMethod<RequestParams.TransformPutTransform>
-    putTransform: ApiMethod<RequestParams.TransformPutTransform>
-    start_transform: ApiMethod<RequestParams.TransformStartTransform>
-    startTransform: ApiMethod<RequestParams.TransformStartTransform>
-    stop_transform: ApiMethod<RequestParams.TransformStopTransform>
-    stopTransform: ApiMethod<RequestParams.TransformStopTransform>
-    update_transform: ApiMethod<RequestParams.TransformUpdateTransform>
-    updateTransform: ApiMethod<RequestParams.TransformUpdateTransform>
-  }
-  update: ApiMethod<RequestParams.Update>
-  update_by_query: ApiMethod<RequestParams.UpdateByQuery>
-  updateByQuery: ApiMethod<RequestParams.UpdateByQuery>
-  update_by_query_rethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
-  updateByQueryRethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
->>>>>>> master
   watcher: {
     ack_watch<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     ack_watch<Response = any, Context = unknown>(params: RequestParams.WatcherAckWatch): Promise<ApiResponse<Response, Context>>
