@@ -30,7 +30,7 @@ function buildTransformCatTransform (opts) {
 
   /**
    * Perform a transform.cat_transform request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
    */
   return function transformCatTransform (params, options, callback) {
     options = options || {}
@@ -63,10 +63,10 @@ function buildTransformCatTransform (opts) {
 
     if ((transform_id || transformId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'transform' + '/' + encodeURIComponent(transform_id || transformId)
+      path = '/' + '_cat' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'transform'
+      path = '/' + '_cat' + '/' + 'transforms'
     }
 
     // build request object
