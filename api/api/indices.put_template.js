@@ -14,9 +14,7 @@ function buildIndicesPutTemplate (opts) {
   const acceptedQuerystring = [
     'order',
     'create',
-    'timeout',
     'master_timeout',
-    'flat_settings',
     'pretty',
     'human',
     'error_trace',
@@ -26,7 +24,6 @@ function buildIndicesPutTemplate (opts) {
 
   const snakeCase = {
     masterTimeout: 'master_timeout',
-    flatSettings: 'flat_settings',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

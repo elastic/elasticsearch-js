@@ -36,6 +36,7 @@ export interface CatAliases extends Generic {
   help?: boolean;
   s?: string | string[];
   v?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface CatAllocation extends Generic {
@@ -98,6 +99,7 @@ export interface CatIndices extends Generic {
   time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
   include_unloaded_segments?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface CatMaster extends Generic {
@@ -258,6 +260,18 @@ export interface ClusterAllocationExplain<T = any> extends Generic {
   body?: T;
 }
 
+export interface ClusterDeleteComponentTemplate extends Generic {
+  name: string;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface ClusterGetComponentTemplate extends Generic {
+  name?: string | string[];
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface ClusterGetSettings extends Generic {
   flat_settings?: boolean;
   master_timeout?: string;
@@ -267,7 +281,7 @@ export interface ClusterGetSettings extends Generic {
 
 export interface ClusterHealth extends Generic {
   index?: string | string[];
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   level?: 'cluster' | 'indices' | 'shards';
   local?: boolean;
   master_timeout?: string;
@@ -283,6 +297,14 @@ export interface ClusterHealth extends Generic {
 export interface ClusterPendingTasks extends Generic {
   local?: boolean;
   master_timeout?: string;
+}
+
+export interface ClusterPutComponentTemplate<T = any> extends Generic {
+  name: string;
+  create?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface ClusterPutSettings<T = any> extends Generic {
@@ -315,7 +337,7 @@ export interface ClusterState extends Generic {
   wait_for_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface ClusterStats extends Generic {
@@ -329,7 +351,7 @@ export interface Count<T = any> extends Generic {
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   min_score?: number;
   preference?: string;
   routing?: string | string[];
@@ -383,7 +405,7 @@ export interface DeleteByQuery<T = any> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   conflicts?: 'abort' | 'proceed';
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   lenient?: boolean;
   preference?: string;
   q?: string;
@@ -480,7 +502,7 @@ export interface FieldCaps extends Generic {
   fields?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   include_unmapped?: boolean;
 }
 
@@ -556,7 +578,7 @@ export interface IndicesClearCache extends Generic {
   query?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   request?: boolean;
 }
 
@@ -575,7 +597,7 @@ export interface IndicesClose extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
 }
 
@@ -593,7 +615,7 @@ export interface IndicesDelete extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesDeleteAlias extends Generic {
@@ -614,7 +636,7 @@ export interface IndicesExists extends Generic {
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   flat_settings?: boolean;
   include_defaults?: boolean;
 }
@@ -624,7 +646,7 @@ export interface IndicesExistsAlias extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
 }
 
@@ -640,7 +662,7 @@ export interface IndicesExistsType extends Generic {
   type: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
 }
 
@@ -650,7 +672,7 @@ export interface IndicesFlush extends Generic {
   wait_if_ongoing?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesForcemerge extends Generic {
@@ -658,7 +680,7 @@ export interface IndicesForcemerge extends Generic {
   flush?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   max_num_segments?: number;
   only_expunge_deletes?: boolean;
 }
@@ -668,7 +690,7 @@ export interface IndicesGet extends Generic {
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   flat_settings?: boolean;
   include_defaults?: boolean;
   master_timeout?: string;
@@ -679,7 +701,7 @@ export interface IndicesGetAlias extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
 }
 
@@ -689,7 +711,7 @@ export interface IndicesGetFieldMapping extends Generic {
   include_defaults?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
 }
 
@@ -697,7 +719,7 @@ export interface IndicesGetMapping extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   master_timeout?: string;
   local?: boolean;
 }
@@ -708,7 +730,7 @@ export interface IndicesGetSettings extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   flat_settings?: boolean;
   local?: boolean;
   include_defaults?: boolean;
@@ -725,7 +747,7 @@ export interface IndicesGetUpgrade extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesOpen extends Generic {
@@ -734,7 +756,7 @@ export interface IndicesOpen extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
 }
 
@@ -752,7 +774,7 @@ export interface IndicesPutMapping<T = any> extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   body: T;
 }
 
@@ -763,7 +785,7 @@ export interface IndicesPutSettings<T = any> extends Generic {
   preserve_existing?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   flat_settings?: boolean;
   body: T;
 }
@@ -772,9 +794,7 @@ export interface IndicesPutTemplate<T = any> extends Generic {
   name: string;
   order?: number;
   create?: boolean;
-  timeout?: string;
   master_timeout?: string;
-  flat_settings?: boolean;
   body: T;
 }
 
@@ -788,7 +808,7 @@ export interface IndicesRefresh extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesRollover<T = any> extends Generic {
@@ -805,7 +825,7 @@ export interface IndicesSegments extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   verbose?: boolean;
 }
 
@@ -814,7 +834,7 @@ export interface IndicesShardStores extends Generic {
   status?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesShrink<T = any> extends Generic {
@@ -846,7 +866,7 @@ export interface IndicesStats extends Generic {
   types?: string | string[];
   include_segment_file_sizes?: boolean;
   include_unloaded_segments?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   forbid_closed_indices?: boolean;
 }
 
@@ -859,7 +879,7 @@ export interface IndicesUpdateAliases<T = any> extends Generic {
 export interface IndicesUpgrade extends Generic {
   index?: string | string[];
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   ignore_unavailable?: boolean;
   wait_for_completion?: boolean;
   only_ancient_segments?: boolean;
@@ -871,7 +891,7 @@ export interface IndicesValidateQuery<T = any> extends Generic {
   explain?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   q?: string;
   analyzer?: string;
   analyze_wildcard?: boolean;
@@ -1024,7 +1044,7 @@ export interface RankEval<T = any> extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   body: T;
 }
@@ -1078,7 +1098,7 @@ export interface Search<T = any> extends Generic {
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   lenient?: boolean;
   preference?: string;
   q?: string;
@@ -1118,7 +1138,7 @@ export interface SearchShards extends Generic {
   local?: boolean;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface SearchTemplate<T = any> extends Generic {
@@ -1126,7 +1146,7 @@ export interface SearchTemplate<T = any> extends Generic {
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   preference?: string;
   routing?: string | string[];
   scroll?: string;
@@ -1281,7 +1301,7 @@ export interface UpdateByQuery<T = any> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   conflicts?: 'abort' | 'proceed';
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   lenient?: boolean;
   pipeline?: string;
   preference?: string;
@@ -2270,6 +2290,19 @@ export interface SqlTranslate<T = any> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
+}
+
+export interface TransformCatTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {

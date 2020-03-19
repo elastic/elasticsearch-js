@@ -7,45 +7,32 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildTransformCatTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'from',
+    'size',
+    'allow_no_match',
     'format',
-    'bytes',
-    'local',
-    'master_timeout',
     'h',
-    'health',
     'help',
-    'pri',
     's',
     'time',
-    'v',
-    'include_unloaded_segments',
-    'expand_wildcards',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'v'
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    expandWildcards: 'expand_wildcards',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    allowNoMatch: 'allow_no_match'
+
   }
 
   /**
-   * Perform a cat.indices request
-   * Returns information about indices: number of primaries and replicas, document counts, disk size, ...
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+   * Perform a transform.cat_transform request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
    */
-  return function catIndices (params, options, callback) {
+  return function transformCatTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -64,7 +51,7 @@ function buildCatIndices (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, transformId, transform_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -74,12 +61,12 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
+    if ((transform_id || transformId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices'
+      path = '/' + '_cat' + '/' + 'transforms'
     }
 
     // build request object
@@ -95,4 +82,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildTransformCatTransform

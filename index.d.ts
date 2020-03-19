@@ -194,11 +194,17 @@ declare class Client extends EventEmitter {
   cluster: {
     allocation_explain: ApiMethod<RequestParams.ClusterAllocationExplain>
     allocationExplain: ApiMethod<RequestParams.ClusterAllocationExplain>
+    delete_component_template: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
+    deleteComponentTemplate: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
+    get_component_template: ApiMethod<RequestParams.ClusterGetComponentTemplate>
+    getComponentTemplate: ApiMethod<RequestParams.ClusterGetComponentTemplate>
     get_settings: ApiMethod<RequestParams.ClusterGetSettings>
     getSettings: ApiMethod<RequestParams.ClusterGetSettings>
     health: ApiMethod<RequestParams.ClusterHealth>
     pending_tasks: ApiMethod<RequestParams.ClusterPendingTasks>
     pendingTasks: ApiMethod<RequestParams.ClusterPendingTasks>
+    put_component_template: ApiMethod<RequestParams.ClusterPutComponentTemplate>
+    putComponentTemplate: ApiMethod<RequestParams.ClusterPutComponentTemplate>
     put_settings: ApiMethod<RequestParams.ClusterPutSettings>
     putSettings: ApiMethod<RequestParams.ClusterPutSettings>
     remote_info: ApiMethod<RequestParams.ClusterRemoteInfo>
@@ -668,6 +674,8 @@ declare class Client extends EventEmitter {
   }
   termvectors: ApiMethod<RequestParams.Termvectors>
   transform: {
+    cat_transform: ApiMethod<RequestParams.TransformCatTransform>
+    catTransform: ApiMethod<RequestParams.TransformCatTransform>
     delete_transform: ApiMethod<RequestParams.TransformDeleteTransform>
     deleteTransform: ApiMethod<RequestParams.TransformDeleteTransform>
     get_transform: ApiMethod<RequestParams.TransformGetTransform>

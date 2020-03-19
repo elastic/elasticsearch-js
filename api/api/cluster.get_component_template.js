@@ -7,24 +7,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildClusterGetComponentTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
     'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'time',
-    'v',
-    'include_unloaded_segments',
-    'expand_wildcards',
+    'local',
     'pretty',
     'human',
     'error_trace',
@@ -34,18 +23,16 @@ function buildCatIndices (opts) {
 
   const snakeCase = {
     masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a cat.indices request
-   * Returns information about indices: number of primaries and replicas, document counts, disk size, ...
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+   * Perform a cluster.get_component_template request
+   * Returns one or more component templates
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
    */
-  return function catIndices (params, options, callback) {
+  return function clusterGetComponentTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -64,7 +51,7 @@ function buildCatIndices (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -74,12 +61,12 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
+    if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
+      path = '/' + '_component_template' + '/' + encodeURIComponent(name)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices'
+      path = '/' + '_component_template'
     }
 
     // build request object
@@ -95,4 +82,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildClusterGetComponentTemplate

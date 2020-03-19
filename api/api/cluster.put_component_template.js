@@ -7,24 +7,14 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCatIndices (opts) {
+function buildClusterPutComponentTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'format',
-    'bytes',
-    'local',
+    'create',
+    'timeout',
     'master_timeout',
-    'h',
-    'health',
-    'help',
-    'pri',
-    's',
-    'time',
-    'v',
-    'include_unloaded_segments',
-    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -34,18 +24,16 @@ function buildCatIndices (opts) {
 
   const snakeCase = {
     masterTimeout: 'master_timeout',
-    includeUnloadedSegments: 'include_unloaded_segments',
-    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a cat.indices request
-   * Returns information about indices: number of primaries and replicas, document counts, disk size, ...
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+   * Perform a cluster.put_component_template request
+   * Creates or updates a component template
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
    */
-  return function catIndices (params, options, callback) {
+  return function clusterPutComponentTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -57,6 +45,16 @@ function buildCatIndices (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -64,7 +62,7 @@ function buildCatIndices (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -74,19 +72,14 @@ function buildCatIndices (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices'
-    }
+    if (method == null) method = 'PUT'
+    path = '/' + '_component_template' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -95,4 +88,4 @@ function buildCatIndices (opts) {
   }
 }
 
-module.exports = buildCatIndices
+module.exports = buildClusterPutComponentTemplate
