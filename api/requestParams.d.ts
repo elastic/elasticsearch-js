@@ -794,9 +794,7 @@ export interface IndicesPutTemplate<T = any> extends Generic {
   name: string;
   order?: number;
   create?: boolean;
-  timeout?: string;
   master_timeout?: string;
-  flat_settings?: boolean;
   body: T;
 }
 

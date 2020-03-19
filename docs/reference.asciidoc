@@ -3192,9 +3192,7 @@ client.indices.putTemplate({
   name: string,
   order: number,
   create: boolean,
-  timeout: string,
   master_timeout: string,
-  flat_settings: boolean,
   body: object
 })
 ----
@@ -3210,14 +3208,8 @@ link:{ref}/indices-templates.html[Documentation] +
 |`create`
 |`boolean` - Whether the index template should only be added if new or can also replace an existing one
 
-|`timeout`
-|`string` - Explicit operation timeout
-
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
-
-|`flat_settings` or `flatSettings`
-|`boolean` - Return settings in flat format (default: false)
 
 |`body`
 |`object` - The template definition
