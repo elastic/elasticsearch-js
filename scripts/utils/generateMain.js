@@ -168,9 +168,9 @@ function toPascalCase (str) {
   return str[0].toUpperCase() + str.slice(1)
 }
 
-function buildMethodDefinition (api, name, body) {
+function buildMethodDefinition (api, name, hasBody) {
   const Name = toPascalCase(name)
-  if (body) {
+  if (hasBody) {
     let methods = [
       { key: `${api}<RequestBody = any, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
       { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
