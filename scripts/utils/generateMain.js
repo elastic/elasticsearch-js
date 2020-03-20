@@ -10,6 +10,15 @@ const { readdirSync } = require('fs')
 const { join } = require('path')
 const dedent = require('dedent')
 const deepmerge = require('deepmerge')
+const { ndjsonApi } = require('./generateApis')
+
+const ndjsonApiKey = ndjsonApi
+  .map(api => {
+    return api
+      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+      .replace(/_([a-z])/g, k => k[1].toUpperCase())
+  })
+  .map(toPascalCase)
 
 function genFactory (folder, paths) {
   // get all the API files
@@ -170,23 +179,25 @@ function toPascalCase (str) {
 
 function buildMethodDefinition (api, name, hasBody) {
   const Name = toPascalCase(name)
+  const bodyType = ndjsonApiKey.includes(Name) ? 'NDBodyType' : 'BodyType'
+
   if (hasBody) {
     let methods = [
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
-      { key: `${api}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+      { key: `${api}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
     ]
     if (isSnakeCased(api)) {
       methods = methods.concat([
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
-        { key: `${camelify(api)}<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>()`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>)`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions)`, val: `Promise<ApiResponse<Response, Context>>` },
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>(callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<RequestBody = ${bodyType}, Response = any, Context = unknown>(params: RequestParams.${Name}<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>)`, val: `TransportRequestCallback` }
       ])
     }
     return methods
