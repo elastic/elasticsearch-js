@@ -45,13 +45,13 @@ interface TransportOptions {
   opaqueIdPrefix?: string;
 }
 
-export interface RequestEvent<Response = BodyType, Context = unknown> {
-  body: Response;
+export interface RequestEvent<TResponse = ResponseBody, TContext = unknown> {
+  body: TResponse;
   statusCode: number | null;
   headers: Record<string, any> | null;
   warnings: string[] | null;
   meta: {
-    context: Context;
+    context: TContext;
     name: string;
     request: {
       params: TransportRequestParams;
@@ -70,16 +70,17 @@ export interface RequestEvent<Response = BodyType, Context = unknown> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<Response = BodyType, Context = unknown> extends RequestEvent<Response, Context> {}
+export interface ApiResponse<TResponse = ResponseBody, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
 
-export type BodyType<T = Record<string, any>> = T | string | Buffer | ReadableStream
-export type NDBodyType<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
+export type RequestBody<T = Record<string, any>> = T | string | Buffer | ReadableStream
+export type RequestNDBody<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
+export type ResponseBody<T = Record<string, any>> = T | string | boolean | ReadableStream
 
 export interface TransportRequestParams {
   method: string;
   path: string;
-  body?: BodyType;
-  bulkBody?: NDBodyType;
+  body?: RequestBody;
+  bulkBody?: RequestNDBody;
   querystring?: Record<string, any>;
 }
 
