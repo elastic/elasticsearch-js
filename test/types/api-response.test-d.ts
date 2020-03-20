@@ -3,7 +3,8 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType } from 'tsd'
-import { Client, ApiResponse } from '../../'
+import { BodyType } from '../../lib/Transport'
+import { Client } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -13,7 +14,7 @@ const client = new Client({
 {
   const response = await client.cat.count({ index: 'test' })
 
-  expectType<any>(response.body)
+  expectType<BodyType>(response.body)
   expectType<unknown>(response.meta.context)
 }
 

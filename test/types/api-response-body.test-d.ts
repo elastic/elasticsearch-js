@@ -2,8 +2,9 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-import { expectType } from 'tsd'
-import { Client, ApiResponse } from '../../'
+import { expectType, expectError } from 'tsd'
+import { BodyType } from '../../lib/Transport'
+import { Client } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -58,6 +59,14 @@ interface Source {
   foo: string
 }
 
+// Use a bad body
+expectError(
+  client.search({
+    index: 'hello',
+    body: 42
+  }).then(console.log)
+)
+
 // No generics
 {
   const response = await client.search({
@@ -69,7 +78,7 @@ interface Source {
     }
   })
 
-  expectType<any>(response.body)
+  expectType<BodyType>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
@@ -84,7 +93,7 @@ interface Source {
     }
   })
 
-  expectType<any>(response.body)
+  expectType<BodyType>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
