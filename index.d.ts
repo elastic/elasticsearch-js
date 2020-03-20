@@ -100,13 +100,13 @@ interface ClientOptions {
   }
 }
 
-declare class Client<RequestBody = any, Response = any, Context = unknown> extends EventEmitter {
+declare class Client extends EventEmitter {
   constructor(opts?: ClientOptions);
   connectionPool: ConnectionPool;
   transport: Transport;
   serializer: Serializer;
   extend: ClientExtends;
-  child(opts?: ClientOptions): Client<RequestBody, Response, Context>;
+  child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
   async_search: {
